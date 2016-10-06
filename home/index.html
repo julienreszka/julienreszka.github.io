@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<meta name="description" content="My very own alternative to Momentum">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<style type="text/css">
+html {
+	height:100vh;
+}
+body {
+	margin: 0px;
+}
+#main-container {
+	background-image: url(rocks-in-water.jpg);
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: rgba(0,0,0,0.3);
+	min-height: 100vh;
+
+}
+#hello, #name{
+	color:white;
+	font-size: 4rem;
+	font-weight: 600;
+	text-shadow: 2px 2px rgba(0,0,0,0.3);
+	font-family: Georgia, serif;
+}
+.center {
+	text-align: center;
+}
+.container {
+	max-width: 400px;
+	margin : 0 auto;
+}
+/*
+li {
+	color : black;
+	font-family: Roboto, sans-serif;
+	font-size: 1.2rem;
+	text-shadow: 1px 1px white;
+	padding: 5px;
+}
+*/
+.upper-space {
+	min-height: 25vh;
+}
+#time {
+	color:white;
+	font-size: 8rem;
+	font-weight: 600;
+	text-shadow: 2px 2px rgba(0,0,0,0.3);
+}
+#nameInput{
+	font-size: 4rem;
+	width: 20rem;
+	background-color: rgba(255, 255, 255, 0.3);
+	border-width: 0px 0px 3px 0px;
+	text-align: center;
+	color:white;
+	text-shadow: 2px 2px rgba(0,0,0,0.7);
+	font-family: Georgia, serif;
+	font-weight: 600;
+}
+
+#mainTodoInput{
+	font-size: 3rem;
+	width: 42rem;
+	background-color: rgba(255, 255, 255, 0.3);
+	border-width: 0px 0px 3px 0px;
+	text-align: center;
+	color:white;
+	text-shadow: 2px 2px rgba(0,0,0,0.7);
+	font-family: Roboto, sans-serif;
+	font-weight: 600;
+}
+
+#mainTodo{
+	font-size: 3rem;
+	text-align: center;
+	color:white;
+	text-shadow: 2px 2px rgba(0,0,0,0.3);
+	font-family: Roboto, sans-serif;
+	font-weight: 600;
+}
+
+#objectif {
+	font-size: 2rem;
+	color: white;
+	font-weight: 600;
+	text-shadow: 2px 2px rgba(0,0,0,0.3);
+	font-family: Roboto, sans-serif;
+}
+#aujourdhui {
+	font-size: 1.3rem;
+	color: white;
+	font-weight: 600;
+	text-shadow: 2px 2px rgba(0,0,0,0.3);
+	font-family: Roboto, sans-serif;
+}
+
+</style>
+</head>
+<body>
+<div id="main-container" >
+	<div class="center">
+	<div class="upper-space">
+		
+	</div>
+	<div id="greeting">
+		<span id="hello">Bonjour </span>
+		<span id="name" onclick="editName();"></span>
+		<input 	type = "text"
+			id="nameInput"
+			placeholder="Prénom"
+			onkeydown = "if (event.keyCode == 13) saveName()"
+		/>
+	</div>
+	<div id="time"></div>
+	
+	<br>
+	<div>
+		<!--
+		<p id="objectif">
+			Objectif principal aujourd'hui :
+		</p>
+	-->
+		<div id="aujourdhui">
+			Aujourd'hui
+		</div>
+		<span id="mainTodo" onclick="editMainTodo();"></span>
+		<input 	type = "text"
+			id="mainTodoInput"
+			placeholder="Ecrire l'objectif de la journée"
+			onkeydown = "if (event.keyCode == 13) saveMainTodo()"
+		/>
+	</div>
+	</div>
+	<!--
+	<div id="todosList" class="container">
+		<p></p>
+	</div>
+	-->
+</div>
+</body>
+</html>
+<script type="text/javascript">
+(function () {
+	function checkTime(i) {
+		return (i < 10) ? "0" + i : i;
+	}
+
+	function startTime() {
+		var today = new Date(),
+			h = checkTime(today.getHours()),
+			m = checkTime(today.getMinutes()),
+			s = checkTime(today.getSeconds());
+		document.getElementById('time').innerHTML = h + ":" + m;
+//		document.getElementById('time').innerHTML = h + ":" + m + ":" + s;
+		t = setTimeout(function () {
+			startTime()
+		}, 500);
+	}
+	startTime();
+	if (localStorage['nameValue'] && localStorage['nameValue'][0] != ' ') {
+		console.log("il y a un nom"); 
+		document.getElementById('name').innerHTML=localStorage['nameValue'];
+		document.getElementById('nameInput').style.display="none";
+	}
+	if (localStorage['mainTodoValue'] && localStorage['mainTodoValue'][0] != ' ') {
+		console.log("il y a un todo"); 
+		document.getElementById('mainTodo').innerHTML=localStorage['mainTodoValue'];
+		document.getElementById('mainTodoInput').style.display="none";
+	}
+	
+})();
+var saveName = function() {
+	document.getElementById('name').innerHTML=document.getElementById('nameInput').value;
+	localStorage.setItem('nameValue', document.getElementById('nameInput').value);
+	console.log("Nouveau nom ajoute : " + localStorage['nameValue']);
+	document.getElementById('nameInput').style.display="none";
+	document.getElementById('name').style.display="inline";
+
+};
+var editName = function() {
+	document.getElementById('name').style.display="none";
+	document.getElementById('nameInput').style.display="inline";
+};
+var saveMainTodo = function() {
+	document.getElementById('mainTodo').innerHTML=document.getElementById('mainTodoInput').value;
+	localStorage.setItem('mainTodoValue', document.getElementById('mainTodoInput').value);
+	console.log("Nouveau todo ajoute : " + localStorage['mainTodoValue']);
+	document.getElementById('mainTodoInput').style.display="none";
+	document.getElementById('mainTodo').style.display="inline";
+
+};
+var editMainTodo = function() {
+	document.getElementById('mainTodo').style.display="none";
+	document.getElementById('mainTodoInput').style.display="inline";
+};
+/*
+var todos = [
+	"Faire le cafe", 
+	"Finir Learnyounode",
+	"Faire quelques fonctions de la libft"
+	];
+var i = 0;
+	while (i < todos.length){
+		var node = document.createElement("LI");
+		var textnode = document.createTextNode(todos[i]);
+		node.appendChild(textnode);
+		document.getElementById('todosList').appendChild(node);
+		console.log(todos[i]);
+	i++;
+	}
+*/
+</script>
