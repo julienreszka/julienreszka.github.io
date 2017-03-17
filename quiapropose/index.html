@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title></title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+<link rel="stylesheet" type="text/css" href="css/styles.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script  src="js/app.js"></script>
+</head>
+  <body ng-app="app" 
+    class="grey lighten-4" >
+
+    <div class="navbar" id="top">
+      <nav class="black">
+        <div class="nav-wrapper">
+          <span class=" waves-effect waves-light">
+          <a  href="/" 
+            class="logo white-text " 
+            style="padding-left:15px; padding-right:15px; font-size:1.2em;">
+          Qui a proposé de ... ?
+          </a> 
+          </span>
+          
+        </div>
+      </nav>
+    </div>
+
+    <main>
+    <br>
+    <div  ng-controller="PostController">
+      <div class="container">
+        <div class="nav-wrapper">
+          <div class="search-wrapper card">
+            <i  class="material-icons"
+              id="search-icon"
+              >
+            search
+            </i>
+            <input  ng-model="q" 
+              type="search" 
+              id="search"
+              class="black-text"
+              placeholder="Filtrer avec des mots clés"
+              >
+          </div>
+        </div>
+      </div>
+
+      <div class="container " ng-cloak>
+        <span>
+          <b>{{results.length}}</b> propositions  
+        </span>
+        <span ng-hide="q == null || q == ''">
+          pour la recherche 
+        </span>
+        <span>
+            <b>{{q | uppercase}}</b>
+          </span>
+        : 
+        <div
+          ng-repeat="
+                  post in posts 
+                  | orderBy:'rank' 
+                  | advanceFilter: q  as results track by $index">
+        <div class="card-panel">
+          {{post.proposition}}
+          <br>
+
+          <div class="center">
+            <button
+              class="btn" 
+              ng-click="post.open=true;"
+              ng-hide="post.open"
+              >
+            Qui ?
+            </button>
+            <br>
+            <div 
+              ng-show="post.open"
+            >
+              <img  
+                ng-src="photos-candidats/{{post.candidat}}.jpg" 
+                class="responsive-img " 
+                style="max-height:50vh"
+              >
+              <br>
+              {{post.candidat}}
+              
+            </div>
+          </div>
+        </div>
+        </div>
+        <div  class="card-panel center"
+              ng-show="results.length == 0">
+          <i class="material-icons">
+            announcement
+          </i>
+          <br>
+          Désolé on a rien trouvé
+          <br>
+          Assayez d'autre mots clés, s'il vous plait.
+        </div>
+      </div>
+    </div>
+
+    <br>
+    <div  class="fixed-action-btn" 
+      style="bottom: 35px; right: 24px;" 
+      title="Remonter en haut de page">
+    <a  href="#top" 
+        class="btn-floating btn-large grey waves-effect waves-light"
+      >
+    <i  class="material-icons"
+      >
+    vertical_align_top
+    </i>
+    </a>
+    </div>
+    </main>
+    <footer>
+      <div class="center">
+      L'auteur du site web ne peut etre tenu responsable en cas d'erreurs.
+      <br>
+      C'est le devoir de chaque citoyen de recouper les sources et conserver un regard critique sur l'information.
+      
+      <br>
+      <br>
+      Créé par 
+      <a 
+        href="https://twitter.com/JulienReszka"
+        target="_blank" 
+      >
+      Julien Reszka
+      </a>
+      </div>
+      <br>
+    </footer>
+  </body>
+</html>
