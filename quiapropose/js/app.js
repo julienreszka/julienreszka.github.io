@@ -22,8 +22,8 @@ app.controller('PostController', ['$scope', 'posts', function($scope, posts) {
   		});
 	});
 
-
-
+	$scope.firstRound = new Date(2017, 3, 23);
+	$scope.date = new Date();
 }]);
 
 app.filter('advanceFilter', ['$filter', function($filter){

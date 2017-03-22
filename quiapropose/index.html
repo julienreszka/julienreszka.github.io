@@ -62,6 +62,18 @@
     <br>
     <div  ng-controller="PostController">
       <div class="container">
+        <div class="card-panel blue lighten-4" ng-show="firstRound - date >= 0">
+          <b >
+            {{ (firstRound - date) / 1000 / 60 / 60 / 24 | number:0}} 
+          </b>
+
+            Jours avant le premier tour de l'<a href="https://fr.wikipedia.org/wiki/%C3%89lection_pr%C3%A9sidentielle_fran%C3%A7aise_de_2017"
+          target="_blank"
+          >Élection présidentielle française de 2017
+          </a>
+        
+        </div>
+        <br>
         <div class="nav-wrapper">
           <div class="search-wrapper card">
             <i  class="material-icons"
@@ -73,7 +85,7 @@
               type="search" 
               id="search"
               class="black-text"
-              placeholder="Filtrer avec des mots clés, exemple : travail"
+              placeholder="Filtrer avec un mot clé, exemple : travail"
               >
           </div>
         </div>
@@ -117,8 +129,12 @@
                 style="max-height:50vh"
               >
               <br>
+              <a 
+                ng-href="https://fr.wikipedia.org/wiki/{{post.candidat}}" 
+                target="_blank"
+                >
               {{post.candidat}}
-              
+              </a>
             </div>
           </div>
         </div>
