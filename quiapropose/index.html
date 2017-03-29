@@ -123,6 +123,12 @@
 
 			<div  ng-controller="PostController">
 				<div class="container">
+					<select class="browser-default" ng-model="q">
+					<option value="" selected>Choisir un thème</option>
+						<option ng-repeat="theme in themes" value="{{theme}}">
+						{{theme}}
+						</option>
+					</select>
 					<div class="nav-wrapper">
 						<div class="search-wrapper card">
 							<i  class="material-icons"
@@ -138,6 +144,7 @@
 								>
 						</div>
 					</div>
+					
 				</div>
 				<div class="container " ng-cloak>
 					<span>
@@ -153,7 +160,7 @@
 					<div
 						ng-repeat="
 						post in posts 
-						| orderBy:'rank' 
+						| orderBy:'rank'
 						| advanceFilter: q  as results track by $index">
 						<div class="card-panel">
 							<div class="proposition">
@@ -200,6 +207,7 @@
 					</div>
 				</div>
 			</div>
+			
 			<br>
 			<div  class="fixed-action-btn" 
 				style="bottom: 35px; right: 24px;" 

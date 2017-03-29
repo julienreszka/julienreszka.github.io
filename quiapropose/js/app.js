@@ -25,14 +25,14 @@ app.controller('DateController', ['$scope', function($scope) {
 
 app.controller('PostController', ['$scope', 'posts', function($scope, posts) {
 	posts.success(function(data) {
+		$scope.themes = ["europe","france","entreprise","politique","favoriser","publique","développement","nation","travail","recherche","publics","euro","droit","mer","union","services","formation","territoire","logement","financements","handicap","enseignement","protection","justice","culture","innovation","investissement","apprentissage","environnement","aide","smic","autonomie","patrimoine"];
 		$scope.posts = data;
 		angular.forEach($scope.posts, function(post) {
 			post.rank = Math.random();
 		});
 	});
 
-	$scope.firstRound = new Date(2017, 3, 23);
-	$scope.date = new Date();
+	
 }]);
 
 
