@@ -1,7 +1,7 @@
 var app = angular.module('app', []);
 
 app.factory('posts', ['$http', function($http) {
-	var url = "data.json"
+	var url = "data.min.json"
     return $http.get(url, {withCredentials: true })
         .success(function(data) {
             return data;
