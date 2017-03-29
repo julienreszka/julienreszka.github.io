@@ -23,6 +23,7 @@
 			.btn:hover {
 			background-color:#EC1920;
 			}
+			
 		</style>
 	</head>
 	<body ng-app="app" 
@@ -57,7 +58,8 @@
 
 		<br>
 		<main>
-			
+
+
 			<div class="container" ng-controller="DateController">
 				<div class="card-panel blue lighten-4" ng-show="date >= 0">
 					<b  ng-cloak>
@@ -69,6 +71,55 @@
 					</a>
 				</div>
 			</div>
+			
+			<!--
+			<div class="container" >
+				<div >
+					Proportions du nombre de propositions dans l'ordre décroissant : 
+					<br>
+					Fillon (54%), Asselineau (22%), Le Pen (14%), Macron (10%)
+					<svg 
+						id="stats"
+						width="100%"
+						height="60px"
+						>
+						<rect 	x="" 
+								y="" 
+								width="54%" 
+								height="100%" 
+								fill="#23408F" 
+								stroke="none" 
+								stroke-width=""
+								/>
+						
+						<rect 	x="54%" 
+								y="" 
+								width="22%" 
+								height="100%" 
+								fill="#057C85" 
+								stroke="none" 
+								stroke-width=""
+								/>
+						<rect 	x="76%" 
+								y="" 
+								width="14%" 
+								height="100%" 
+								fill="#302F87" 
+								stroke="none" 
+								stroke-width=""
+								/>
+						<rect 	x="90%" 
+								y="" 
+								width="9.2%" 
+								height="100%" 
+								fill="#01B2FB" 
+								stroke="none" 
+								stroke-width=""
+								/>
+					</svg>
+				</div>
+			</div>
+			-->
 
 			<div  ng-controller="PostController">
 				<div class="container">
@@ -105,7 +156,9 @@
 						| orderBy:'rank' 
 						| advanceFilter: q  as results track by $index">
 						<div class="card-panel">
+							<div class="proposition">
 							{{post.proposition}}
+							</div>
 							<br>
 							<div class="center">
 								<button
