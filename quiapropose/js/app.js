@@ -1,7 +1,7 @@
 var app = angular.module('app', []);
 
 app.factory('posts', ['$http', function($http) {
-	var url = "data.min.json"
+	var url = "data.json"
     return $http.get(url, {withCredentials: true })
         .success(function(data) {
             return data;
@@ -16,7 +16,7 @@ app.factory('posts', ['$http', function($http) {
 
 app.controller('DateController', ['$scope', function($scope) {
 
-	var firstRound = new Date(2017, 3, 23);
+	var firstRound = new Date(2017, 4, 7);
 	var current = new Date();
 	var datum = ((firstRound - current) / 1000 / 60 / 60 / 24) ;
 
