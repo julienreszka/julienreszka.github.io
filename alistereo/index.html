@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>AliStereo - Your Mood Your DnB</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta property="og:image"
+			content="" 
+			/>
+		<meta name="twitter:image" 
+			content=""
+			>
+		<link rel="icon" href="favicon.ico?">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+		<script  src="js/app.js"></script>
+		<style type="text/css">
+			.btn {
+			background-color:#051440;
+			}
+			.btn:hover {
+			background-color:#EC1920;
+			}
+			
+		</style>
+	</head>
+	<body ng-app="app" 
+		class="grey lighten-4" >
+		<svg 
+			width="100%"
+			height="20px"
+			>
+			<rect x="" y="" width="100%" height="20px" fill="#C7FE02" stroke="none" stroke-width=""/>
+		</svg>
+		<div class="navbar" >
+			<nav class="black">
+				<div class="nav-wrapper">
+					<span class=" waves-effect waves-light">
+					<a  href="/" 
+						class="logo white-text " 
+						style="padding-left:15px; padding-right:15px; font-size:1.2em;">
+						AliStereo
+					</a> 
+					</span>
+					<span class="">
+						Your Mood Your DnB
+					</span>
+
+					
+				</div>
+			</nav>
+		</div>
+
+		<br>
+		<main>
+			<div  ng-controller="PostController">
+				<div class="container">
+					<select class="browser-default" ng-model="q">
+					<option value="" selected>Choose a mood</option>
+						<option ng-repeat="mood in moods" value="{{mood}}">
+							{{mood | uppercase}}
+						</option>
+					</select>
+					<div class="nav-wrapper">
+						<div class="search-wrapper card">
+							<i  class="material-icons"
+								id="search-icon"
+								>
+							search
+							</i>
+							<input  ng-model="q" 
+								type="search" 
+								id="search"
+								class="black-text"
+								placeholder="Filter with keywords"
+								>
+						</div>
+					</div>
+					
+				</div>
+				<div class="container " ng-cloak>
+					<span>
+					<b>{{results.length}}</b> propositions  
+					</span>
+					<span ng-hide="q == null || q == ''">
+					pour la recherche 
+					</span>
+					<span>
+					<b>{{q | uppercase}}</b>
+					</span>
+					: 
+					<div
+						ng-repeat="
+						post in posts 
+						| orderBy:'rank'
+						| advanceFilter: q  as results track by $index">
+						<div class="card-panel">
+							<div class="center">
+							{{post.title}}
+							<br>
+								<a 
+									ng-href="{{post.youtubeLink}}" 
+									target="_blank"
+									>
+								{{post.youtubeLink}}
+								</a>
+								
+							</div>
+						</div>
+					</div>
+					<div  class="card-panel center"
+						ng-show="results.length == 0">
+						<i class="material-icons">
+						announcement
+						</i>
+						<br>
+						Désolé on a rien trouvé
+						<br>
+						Assayez d'autre mots clés, s'il vous plait.
+					</div>
+				</div>
+			</div>
+			
+			<br>
+			<div  class="fixed-action-btn" 
+				style="bottom: 35px; right: 24px;" 
+				title="Remonter en haut de page">
+				<a  href="#top" 
+					class="btn-floating btn-large grey waves-effect waves-light"
+					>
+				<i  class="material-icons"
+					>
+				vertical_align_top
+				</i>
+				</a>
+			</div>
+		</main>
+		<footer>
+			<div class="center">
+				
+				Created by
+
+				<a 
+					href="https://www.facebook.com/alisouleiman.sebbar"
+					target="_blank" 
+					>
+				Ali Sbbr
+				</a>
+				&
+				<a 
+					href="https://twitter.com/JulienReszka"
+					target="_blank" 
+					>
+				Julien Reszka
+				</a>
+				
+
+			</div>
+
+			<br>
+		</footer>
+		<svg 
+			width="100%"
+			height="20px"
+			>
+			<rect x="" y="" width="100%" height="20px" fill="#C7FE02" stroke="none" stroke-width=""/>
+		</svg>
+	</body>
+</html>
