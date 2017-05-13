@@ -31,6 +31,10 @@
 			.card-panel.Chill {
 				background-color: rgba(0,255,0,0.1);
 			}
+
+			.mood-icon {
+				width: 50px;
+			}
 			
 		</style>
 	</head>
@@ -66,13 +70,15 @@
 			<div  >
 				<div class="container">
 					<select class="browser-default" ng-model="q">
-					<option value="" selected>Choose a mood</option>
-						<option ng-repeat="mood in moods" 
-								value="{{mood}}" 
-								
-								>
-							{{mood }}
-						</option>
+					<option value="" selected>
+						Choose a mood
+					</option>
+					<option ng-repeat="mood in moods" 
+							value="{{mood}}" 
+
+							>
+						{{mood}}
+					</option>
 					</select>
 					<div class="nav-wrapper">
 						<div class="search-wrapper card">
@@ -101,7 +107,30 @@
 					<span>
 					<b>{{q | uppercase}}</b>
 					</span>
-					: 
+					:
+
+					<div 	class="center"
+							ng-show="q==null || q==''">
+						<img 
+							class="mood-icon"
+							src="moods-icons/random.svg"
+						>
+					</div>
+					<div 	class="center"
+							ng-show="q=='Angry'">
+						<img 
+							class="mood-icon"
+							src="moods-icons/angry.svg"
+						>
+					</div>
+					<div 	class="center"
+							ng-show="q=='Chill'">
+						<img 
+							class="mood-icon"
+							src="moods-icons/chill.svg"
+						>
+					</div>
+
 					<div
 						ng-repeat="
 						post in posts 
