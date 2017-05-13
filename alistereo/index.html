@@ -23,10 +23,18 @@
 			.btn:hover {
 			background-color:#EC1920;
 			}
+
+			.card-panel.Angry {
+				background-color: rgba(255,0,0,0.1);
+			}
+
+			.card-panel.Chill {
+				background-color: rgba(0,255,0,0.1);
+			}
 			
 		</style>
 	</head>
-	<body ng-app="app" 
+	<body ng-app="app" ng-controller="PostController"
 		class="grey lighten-4" >
 		<svg 
 			width="100%"
@@ -55,12 +63,15 @@
 
 		<br>
 		<main>
-			<div  ng-controller="PostController">
+			<div  >
 				<div class="container">
 					<select class="browser-default" ng-model="q">
 					<option value="" selected>Choose a mood</option>
-						<option ng-repeat="mood in moods" value="{{mood}}">
-							{{mood | uppercase}}
+						<option ng-repeat="mood in moods" 
+								value="{{mood}}" 
+								
+								>
+							{{mood }}
 						</option>
 					</select>
 					<div class="nav-wrapper">
@@ -96,7 +107,7 @@
 						post in posts 
 						| orderBy:'rank'
 						| advanceFilter: q  as results track by $index">
-						<div class="card-panel">
+						<div class="card-panel" ng-class="post.mood">
 							<div class="center">
 							{{post.title}}
 							<br>
@@ -119,6 +130,13 @@
 						Sorry
 						<br>
 						We found nothing (YET)
+						<br>
+						<br>		
+						<a 	href="" class="btn-large ">
+							Submit a song
+						</a>
+						<br>
+						<br>	
 					</div>
 				</div>
 			</div>
