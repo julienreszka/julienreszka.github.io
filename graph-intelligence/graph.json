@@ -2,69 +2,93 @@
   "nodes": [
     {
       "name": "Perception",
+      "objectif":"Generaliser",
+      "outil":"Filtres",
       "label": "Module de traitement d'information",
       "id": 1
     },
     {
       "name": "Représentation du monde",
+      "objectif":"Unifier",
+      "outil":"Motifs",
       "label": "Module de traitement d'information",
       "id": 2
     },
     {
       "name": "Reflexion",
+      "objectif":"Diffuser",
+      "outil":"Modules",
       "label": "Module de traitement d'information",
       "id": 3
     },
     {
       "name": "Jugement",
+      "objectif":"Specialiser",
+      "outil":"Classements",
       "label": "Module de traitement d'information",
       "id": 4
     },
     {
       "name": "Identité",
+      "objectif":"Separarer",
+      "outil":"Chemins",
       "label": "Module de traitement d'information",
       "id": 5
     },
     {
       "name": "Interaction avec l'environnement",
+      "objectif":"Concentrer",
+      "outil":"Retours d'exprience",
       "label": "Module de traitement d'information",
       "id": 6
     },
     {
       "name": "Environnement",
+      "objectif":"Synchroniser Auto avec Demo",
+      "outil":"",
       "label": "Memoire",
       "id": 7
     },
     {
       "name": "Monde",
+      "objectif":"Synchroniser Demo avec Theo",
+      "outil":"",
       "label": "Memoire",
       "id": 8
     },
     {
       "name": "Culture",
+      "objectif":"Synchroniser Theo avec Auto",
+      "outil":"",
       "label": "Memoire",
       "id": 9
     },
     {
       "name": "Theocratique",
+      "objectif":"Réguler la dependance",
+      "outil":"logique",
       "label": "Pouvoir d'interétation",
       "id": 10
     },
     {
       "name": "Democratique",
+      "objectif":"Réguler l'étalement",
+      "outil":"Arithmétique",
       "label": "Pouvoir d'interétation",
       "id": 11
     },
     {
       "name": "Autocratique",
+      "objectif":"Réguler la diversité",
+      "outil":"Analyse",
       "label": "Pouvoir d'interétation",
       "id": 12
-    }
-
-    ,
+    },
     {
-      "name": "Equilibre institutionnel",
-      "label": "Filtre temporel",
+      "name": "Chronometre",
+      "objectif":"Mesurer l'équilibre institutionnel",
+      "outil":"Equations differentielles/recursion",
+      "label": "Regulateur temporel",
       "id": 13
     }
 
@@ -73,79 +97,79 @@
     {
       "source": 2,
       "target": 1,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 1,
       "target": 2,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 6,
       "target": 1,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 1,
       "target": 6,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 1,
       "target": 4,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 5,
       "target": 2,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 3,
       "target": 6,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     
     {
       "source": 2,
       "target": 3,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 3,
       "target": 2,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 4,
       "target": 3,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 3,
       "target": 4,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
 
     {
       "source": 4,
       "target": 5,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 5,
       "target": 4,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 6,
       "target": 5,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
     {
       "source": 5,
       "target": 6,
-      "type": "BIAISE"
+      "type": "BIAISÉ PAR"
     },
 
     {

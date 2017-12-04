@@ -131,7 +131,7 @@
 
         node.append("text")
             .attr("dy", -3)
-            .text(function (d) {return d.name+":"+d.label;})
+            .text(function (d) {return d.name+":"+d.label+":"+d.objectif+":"+d.outil;})
             .style("text-shadow", "1px 1px white")
             .style("font-family", "sans-serif")
             .style("fill", function (d, i) {return colors(d.id);})
