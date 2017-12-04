@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Test</title>
+	<title>Surligner la semantique d'un texte en français</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" 
+	      content=" width=device-width, 
+	                initial-scale=1.0, 
+	                maximum-scale=1.0, 
+	                user-scalable=no"
+	      />
 </head>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.0/jquery.mark.es6.min.js"></script>
 
 <style type="text/css">
 
-span{
-	opacity: 0.9;
-}
-
 input{
 	width: 100%;
 	height: 30px;
+}
+.context {
+    border-style: dotted;
+    padding: 15px;
 }
 
 .verbe{
@@ -40,7 +47,7 @@ input{
 	color: white;
 }
 
-.ville{
+.Capitale{
 	background: grey;
 	color: white;
 }
@@ -61,21 +68,27 @@ input{
 </style>
 
 <body>
-<div>
-<input id="lecontenu" type="text" placeholder="Coller le texte de l'article ici">
-<button id="lebouton">
-	Analyser la semantique
-</button>
-</div>
+
 <br>
-<div class="context">
-Réseau comprenant plusieurs centaines de dirigeants de l'industrie des communications, les Napoleons sont une sorte de cénacle visant à promouvoir "l'innovation à la Française". "Une communauté BtoB, digitale et physique", est-il expliqué sur leur site. Ou encore un "networking de qualité". En clair ? Un club de rencontre à la fois en ligne, via un réseau social, et dans la vraie vie : depuis 2015, les Napoleons se réunissent deux fois par an, l'hiver à Val-d'Isère et Arles en été. On paye pour être présents, rencontrer nos pairs, réseauter dans un environnement agréable", explique un participant à "Libération".  Pourquoi ce nom ?  Le choix rend hommage à ce "grand innovateur", génie militaire et organisateur hors pair qu'était Bonaparte, il y a un peu plus de deux siècles. "L'imagination dirige le monde", a d'ailleurs clamé le tyran, avant de tout perdre. Le nom a aussi le mérite d'être mondialement connu. "Dans le monde entier, s'il y a une personnalité qui incarne une forme d'audace à la française, c'est Napoléon", selon un des organisateurs cité par "Le Monde".  Deux hommes à la manœuvre  Le projet est porté par deux publicitaires qui se sont connus au sein de l'agence RSCG, Mondher Abdennadher et Olivier Moulierac. Ces deux quinquas sont parvenus en quelques années à se faire une place sur le marché de la communication événementielle. Né en Tunisie, Mondher Abdennadher récuse l'étiquette de "pubard". "Ce n'est pas une réalité, j'ai fait du développement et du business", explique-t-il au "Figaro". Il a notamment travaillé cinq années aux Etats-Unis, au début des années 90. Olivier Moulierac, pour sa part, a été un créatif en vue au côté de Jacques Séguéla : "J'ai fait de jolies campagnes", dit-il.  Parmi les Napoleons, on compte aussi Anne Méaux, présidente d'Image 7 et ex-communicante de François Fillon, ou encore Fleur Pellerin et l'entrepreneur Henri Seydoux, selon "Libération". Le club est aussi parrainé par le ministère de la Culture et de la Communication et par la French Tech.  La surprise Obama  La participation de Barack Obama est sans conteste une belle prise, qui assure au happening parisien une publicité mondiale. Le prix Nobel de la Paix ne pouvant pas se rendre à Val-d'Isère en janvier, le rendez-vous a été fixé à Paris, ce samedi 2 décembre. Barack Obama fera une brève escale, entre une conférence à New Delhi, en Inde, le vendredi, et un dîner à l'Economic Club de Chicago le 5 décembre.   Le lieu de la conférence est longtemps resté secret, pour des raisons de sécurité. Ce sera finalement la Maison de la Radio. La plupart des 800 participants sont invités par les sponsors (Orange, la SNCF, EDF, La Poste…).  400.000 euros ?  Le chiffre a été lâché par le "Canard enchaîné" : le prix d'une conférence de Barack Obama s'élèverait à 400.000 euros, excusez du peu. Selon l'hebdomadaire satirique, c'est Orange, le géant des télécoms, qui devrait payer la somme. C'est d'ailleurs son président Stéphane Richard qui sera sur scène pour interroger Obama. Ça tombe bien, Richard est en campagne pour un nouveau mandat à la tête de l'entreprise.  Un président et deux "ex"  Barack Obama profitera de sa venue à Paris pour honorer quelques rendez-vous prestigieux. L'ancien président sera l'hôte d'Emmanuel Macron pour un "déjeuner privé" à l'Elysée samedi midi. Selon RTL, il rencontrera aussi un autre "ex", François Hollande. Au menu : des échanges autour de leurs fondations respectives. Aucune rencontre avec Nicolas Sarkozy n'est au programme.
+Ecrire ou coller le texte à analyser ci dessous
+<div class="context" contenteditable>
 
 </div>
-<br>
-<br>
-<br>
-Legende
+<div>
+
+<button id="bouton-obtenir-exemple">
+	Demo
+</button>
+<button id="bouton-reset">
+	Reset
+</button>
+
+<button id="bouton-analyser">
+	Analyser
+</button>
+</div>
+<p>
+	Legende
 <br>
 <span class="nombre">
 	nombre
@@ -92,8 +105,8 @@ Legende
 <span class="verbe">
 	verbe
 </span> 
-<span class="ville">
-	Ville
+<span class="Capitale">
+	Capitale
 </span> 
 <span class="pays">
 	Pays
@@ -106,566 +119,57 @@ Legende
 </span> 
 <span class="personne">
 	Personne
-</span> 
-
+</span>  
 <span class="organisation">
 	Organisation
 </span>
-
-
+</p>
 </body>
 
 
 
 <script type="text/javascript">
 
-$("#lebouton").on("click", function(event) {
+$("#bouton-reset").on("click", function(event) {
 
-var content = $("#lecontenu").val();
-content = content.replace(/(\.\s+)/g,"\$1<br>");
-$(".context").html(content)
+var content = "";
+$(".context").html(content);
 
-
-$(".context").mark([
-	"emplacement",
-	"contre",
-	"Au",
-	"depuis",
-	"Au centre",
-	"près d'un",
-	"pres de",
-	"à travers",
-	"pres",
-	"près,",
-	"loin",
-	"à coté",
-	"avant",
-	"après",
-	"dans",
-	"devant",
-	"sous",
-	"dessus",
-	"derrière",
-	"sur"
-	], {
-"accuracy": "exactly",
-"wildcards": "enabled",
-"separateWordSearch": false,
-"element": "span",
-"className": "emplacement",
-"ignorePunctuation":["'", ",", "."]
 });
 
-$(".context").mark([
-	"temps",
-	"jamais",
-	"futur*",
-	"toujours",
-	"maintenant",
-	"actuel*",
-	"désormais",
-	"présent",
-	"avenir*",
-	"*midi*",
-	"hier*",
-	"lendemain",
-	"*époque*",
-	"*aujourd*hui*",
-	"demain*",
-	"récemment*",
-	"lundi*",
-	"mardi*",
-	"mercredi*",
-	"jeudi*",
-	"Vendredi*",
+$("#bouton-obtenir-exemple").on("click", function(event) {
 
-	"samedi*",
-	"dimanche*",
-	"week-end*",
-	"matin*",
-	"après-midi*",
-	"soir*",
-	"janvier*",
-	"fevrier*",
-	"mars",
-	"avril*",
-	"mai",
-	"juin*",
-	"juillet*",
-	"aout",
-	"septembre*",
-	"octobre*",
-	"novembre*",
-	"décembre*",
-	"Noël*"
-	], {
-"accuracy": "exactly",
-"wildcards": "enabled",
-"element": "span",
-"className": "temps"
+var content = "Le chiffre a été lâché par le Canard enchaîné : le prix d'une conférence de Barack Obama s'élèverait à 400.000 euros, excusez du peu. Selon l'hebdomadaire satirique, c'est Orange, le géant des télécoms, qui devrait payer la somme. C'est d'ailleurs son président Stéphane Richard qui sera sur scène pour interroger Obama. Ça tombe bien, Richard est en campagne pour un nouveau mandat à la tête de l'entreprise.";
+$(".context").html(content);
+$("#bouton-analyser").click();
+
 });
 
-$(".context").mark([
-	"Pays",
-	"Italie",
-	"Allemagne",
-	"Russie",
-	"Pologne",
-	"France",
-	"Norvège",
-	"Lituanie",
-	"Inde",
-	"Pakistan",
-	"Pays-Bas",
-	"*Iran*",
-	"Syrie",
-	"Amérique",
-	"Etats-Unis",
-	"Tunisie",
-	"le monde"
-	], {
-"wildcards": "enabled",
-"caseSensitive": true,
+$("#bouton-analyser").on("click", function(event) {
+
+var content; 
+content = $(".context").html();
+
+$(".context").html(content);
+
+/*$.getJSON("liste-verbes.json", function( data ){
+	console.log(data);
+
+
+$(".context").mark(data, {
 "element": "span",
-"className": "pays",
-"exclude:": "à",
-"diacritics": true
-});
-
-
-$(".context").mark([
-	"Ville",
-	"Potsdam",
-	"Berlin",
-	"Hambourg",
-	"Paris",
-	"Washington",
-	"Varsovie",
-	"Cracovie",
-	"Fontainebleau",
-	"Téhéran",
-	"New Delhi",
-	"Arles",
-	"New York",
-	"Marseille",
-	"Toulouse",
-	"Amsterdam",
-	"Bruxelles",
-	"Chicago"
-	], {
 "wildcards": "enabled",
-"caseSensitive": true,
-"element": "span",
-"className": "ville",
-"exclude:": "à",
-"diacritics": true
-});
-
-
-$(".context").mark([
-	"verbe",
-	"estim*",
-	"permett*",
-	"révèl*",
-	"devenir",
-	"compren*",
-	"venir",
-	"existe*",
-	"plaidé",
-	"organise*",
-	"réduire",
-	"aurait",
-	"étudi*",
-	"*être",,
-	"bénéficie*",
-	"fait",
-	"limite*",
-	"relier",
-	"résum*",
-	"dispos*",
-	"conserver*",
-	"touche",
-	"suivons",
-	"dépend*",
-	"export*",
-	"sont",
-	"honore*",
-	"baisser",
-	"devrait",
-	"écoule*",
-	"*annonce",
-	"écri*",
-	"s'agit",
-	"utilise*",
-	"interroge*",
-	"s'abat",
-	"placer**",
-	"réalis*",
-	"filme*",
-	"affich*",
-	"terminer",
-	"découvert*",
-	"perpétré*",
-	"parier",
-	"déposé",
-	"trouvait",
-	"contenait",
-	"précisé",
-	"alerté",
-	"ordonné",
-	"inscrire",
-	"évacu*",
-	"emploient",
-	"quittent",
-	"dire",
-	"entendu",
-	"convainc*",
-	"mesure*",
-	"avait",
-	"profitera",
-	"profite",
-	"profitait",
-	"profitons",
-	"revendiquée*",
-	"réaffirmé*",
-	"démarré",
-	"motivé",
-	"contente*",
-	"estiment",
-	"commence*",
-	"felicite*",
-	"progress*",
-	"réussi*",
-	"fourni*",
-	"compar*",
-	"passe*",
-	"inverse*",
-	"déroule*",
-	"faudra",
-	"retir*",
-	"importer",
-	"harmonise",
-	"héberge*",
-	"déclar*",
-	"discut*",
-	"sortir",
-	"engager",
-	"décide*",
-	"avons",
-	"former",
-	"devrions",
-	"parler",
-	"semble*",
-	"adopte*",
-	"vais",
-	"propos*",
-	"qualifie*",
-	"indiqu*",
-	"pourrai*",
-	"renforce*",
-	"réfléchi*",
-	"peut",
-	"présum*",
-	"exécut*",
-	"positionne*",
-	"expliqué",
-	"affecte*",
-	"promouvoir",
-	"espér*",
-	"doi*",
-	"fournir",
-	"saisie",
-	"versé*",
-	"repose*",
-	"promulgue*",
-	"provien*",
-	"montre*",
-	"ajoute*",
-	"seront",
-
-	"suivi",
-	"impose*",
-	"distingu*",
-	"demande*",
-	"remont*",
-	"observe*",
-	"était",
-	"vont",
-	"parvenu",
-	"expliqu*",
-	"entamer",
-	"racheté*",
-	"protéger",
-	"fusionne*",
-	"souhaite*",
-	"subsiste*",
-	"justifie",
-	"exploite*",
-	"garantir",
-	"édicté*",
-	"accroître",
-	"finance*",
-	"assurer",
-	"mise*",
-	"confie*",
-	"exprime*",
-	"sommes",
-	"achete*",
-	"concerne*",
-	"continue*",
-	"investi*",
-	"peuvent",
-	"présenté",
-	"jugés",
-	"démontr*",
-	"changer",
-	"devra",
-	"purger",
-	"augment*",
-	"lire",
-	"contacté",
-	"fonctionne*",
-	"minimisé",
-	"dissimul*",
-	"prévoi*",
-	"abordé",
-	"avoir",
-	"prend",
-	"dispose*",
-	"rallier",
-	"enfermer",
-	"confirme*",
-	"menée*",
-	"travailler",
-	"travaillent",
-	"travaille",
-	"travaillons",
-	"travaillez",
-	"apporter*",
-	"protest*",
-	"produi*",
-	"rédigé*",
-	"aurai*",
-	"rassembl*",
-	"soient",
-	"manifest*",
-	"reverse*",
-	"représente*",
-	"représentait",
-	"étaient",
-	"évalu*",
-	"incite*",
-	"pensons",
-	"allége*",
-	"rapatrie*",
-	"souscri*",
-	"juge*",
-	"réduire",
-	"réduit",
-	"réduis",
-	"réduisent",
-	"tenir",
-	"indui*",
-	"entraîn*",
-	"tourne*",
-	"versait",
-	"exempte*",
-	"réunissent",
-	"réunit",
-	"verse*",
-	"presente*",
-	"rencontrer*",
-	"débray*",
-	"dénonç*",
-	"articuler",
-	"brise*",
-	"arrêt*",
-	"vote*",
-	"redouble*",
-	"argu*",
-	"distribu*",
-	"accorde*",
-	"payer",
-	"interpell*",
-	"atten*",
-	"constitu*",
-	"monte*",
-	"faire",
-	"savoir",
-	"mett*",
-	"associe*",
-	"croi*",
-	"affirm*",
-	"sera",
-	"aggrave*",
-	"évoque*",
-	"reconnaî*",
-	"découvr*",
-	"détach*",
-	"persist*",
-	"réforme*",
-	"menace*",
-	"gagne*",
-	"pense*",
-	"assure*",
-	"dit-",
-	"merite*",
-	"rend*",
-	"enregistr*",
-	"compt*",
-	"masqu*",
-	"dope*",
-	"abaiss*",
-	" est ",
-	" va ",
-	" dit ",
-	" paye ",
-	"dirige*",
-	"clame*",
-	"récuse",
-	"élimine*",
-	"porte*",
-	"marqu*",
-	"établi*",
-	"grimpe*",
-	"baisse*",
-	"dépense*",
-	"trouve*",
-	"compense*",
-	"épargner",
-	"reste*",
-	"calcule*",
-	"franchi*",
-	"influe*",
-	"incarne*",
-	"cessent",
-	"offre",
-	"parti*",
-	"couper",
-	"commente*",
-	"critiqu*"
-	], {
-"wildcards": "enabled",
-"element": "span",
 "className": "verbe",
-"exclude:": ["à", "située"],
-"diacritics": true
 });
 
+});*/
 
-
-
-
-$(".context").mark([
-	"jaune",
-	"orange",
-	"bleu",
-	"blanc",
-	"noir",
-	"rouge",
-	], {
-"ignorePunctuation":["'",","],
-"accuracy": "exactly",
+$(".context").mark(["verbe","estim*","permett*","révèl*","devenir","compren*","a été *","venir","existe*","plaidé","organise*","réduire","aurait","étudi*","*être","bénéficie*","fait","limite*","relier","résum*","dispos*","conserver*","touche","suivons","dépend*","export*","sont","honore*","baisser","devrait ","écoule*","tombe","*annonce","écri*","s'agit","utilise*","interroge*","s'abat","placer**","réalis*","filme*","affich*","terminer","découvert*","perpétré*","parier","déposé","trouvait","contenait","précisé","alerté","ordonné","inscrire","évacu*","emploient","quittent","dire","entendu","convainc*","mesure*","avait","profitera","profite","profitait","profitons","revendiquée*","réaffirmé*","démarré","motivé","contente*","estiment","commence*","felicite*","progress*","réussi*","fourni*","compar*","passe*","inverse*","déroule*","faudra","retir*","importer","harmonise","héberge*","déclar*","discut*","sortir","engager","décide*","avons","former","devrions","parler","semble*","adopte*","vais","propos*","qualifie*","indiqu*","pourrai*","renforce*","réfléchi*","peut","présum*","exécut*","positionne*","expliqué","affecte*","promouvoir","espér*","doi*","fournir","saisie","versé*","repose*","promulgue*","provien*","montre*","ajoute*","seront","suivi","impose*","distingu*","demande*","remont*","observe*","était","vont","parvenu","expliqu*","entamer","racheté*","protéger","fusionne*","souhaite*","subsiste*","justifie","exploite*","garantir","édicté*","accroître","finance*","assurer","mise*","confie*","exprime*","sommes","achete*","concerne*","continue*","investi*","peuvent","présenté","jugés","démontr*","changer","devra","purger","augment*","lire","contacté","fonctionne*","minimisé","dissimul*","prévoi*","abordé","avoir","prend","dispose*","rallier","enfermer","confirme*","menée*","travailler","travaillent","travaille","travaillons","travaillez","apporter*","protest*","produi*","rédigé*","aurai*","rassembl*","soient","manifest*","reverse*","représente*","représentait","étaient","évalu*","incite*","pensons","allége*","rapatrie*","souscri*","juge*","réduire","réduit","réduis","réduisent","tenir","indui*","entraîn*","tourne*","versait","exempte*","réunissent","réunit","verse*","presente*","rencontrer*","débray*","dénonç*","articuler","brise*","arrêt*","vote*","redouble*","argu*","distribu*","accorde*","payer","interpell*","atten*","constitu*","monte*","faire","savoir","mett*","associe*","croi*","affirm*","sera","aggrave*","évoque*","reconnaî*","découvr*","détach*","persist*","réforme*","menace*","gagne*","pense*","assure*","dit-","merite*","rend*","enregistr*","compt*","masqu*","dope*","abaiss*"," est "," va "," dit "," paye ","dirige*","clame*","récuse","élimine*","porte*","marqu*","établi*","grimpe*","baisse*","dépense*","trouve*","compense*","épargner","reste*","calcule*","franchi*","influe*","incarne*","cessent","manger","offre","parti*","couper","commente*","critiqu*"," abandonn*"," accept*"," accompagn*"," achet*"," ador*"," agir"," aid*"," aim*"," all*"," amen*"," amus*"," appartenir"," appel*"," apport*"," apprendre"," approch*"," appréci*"," arrang*"," arriv*"," arrêt*"," asseoir"," assur*"," attaqu*"," attendre"," attrap*"," avanc*"," avoir"," bais*"," battre"," bless*"," boire"," boss*"," boug*"," brûl*"," cach*"," calm*"," cass*"," cess*"," chang*"," chant*"," charg*"," cherch*"," choisir"," commenc*"," comprendre"," compt*"," conduire"," connaître"," construire"," continu*"," couch*"," coup*"," courir"," couvrir"," coût*"," craindre"," crev*"," cri*"," croire"," cré*"," dans*"," demand*"," descendre"," devenir"," devin*"," devoir"," dire"," dirig*"," discut*"," disparaître"," donn*"," dormir"," dout*"," dur*"," décid*"," découvrir"," défendre"," dégag*"," dépêch*"," dérang*"," désir*"," désol*"," détest*"," détruire"," dîn*"," échapp*"," écout*"," écrire"," embrass*"," emmen*"," emport*"," empêch*"," enfuir"," engag*"," enlev*"," entendre"," entr*"," envoy*"," épous*"," espér*"," essay*"," être"," étudi*"," évit*"," excus*"," exist*"," expliqu*"," faire"," falloir"," fatigu*"," ferm*"," fich*"," fil*"," finir"," forc*"," foutre"," frapp*"," fuir"," fum*"," gagn*"," gard*"," grandir"," habit*"," ignor*"," imagin*"," import*"," inquiét*"," install*"," intéress*"," invit*"," jet*"," jou*"," jur*"," laiss*"," lanc*"," lav*"," lev*"," libér*"," lire"," lâch*"," maintenir"," mang*"," manqu*"," march*"," mari*"," men*"," mentir"," mettre"," mont*"," montr*"," moqu*"," mourir"," mérit*"," naître"," oblig*"," obtenir"," occup*"," offrir"," os*"," oubli*"," ouvrir"," paraître"," pardonn*"," pari*"," parl*"," partag*"," partir"," pass*"," pay*"," pens*"," perdre"," permettre"," plaire"," plaisant*"," pleuvoir"," port*"," pos*"," poursuivre"," pouss*"," pouvoir"," prendre"," profit*"," promettre"," propos*"," protég*"," prouv*"," préfér*"," prépar*"," présent*"," prévenir"," prévoir"," quitt*"," racont*"," ramen*"," rappel*"," rat*"," ravir"," recevoir"," recommenc*"," reconnaître"," refus*"," regard*"," regrett*"," rejoindre"," remarqu*"," remerci*"," remettre"," remont*"," rencontr*"," rendre"," rentr*"," repos*"," reprendre"," respect*"," respir*"," ressentir"," ressembl*"," rest*"," retenir"," retir*"," retourn*"," retrouv*"," revenir"," revoir"," rire"," risqu*"," réalis*"," récupér*"," réfléchir"," régl*"," répar*"," répondre"," répét*"," réussir"," réveill*"," rêv*"," saut*"," sauv*"," savoir"," sembl*"," sentir"," servir"," sign*"," signifi*"," sonn*"," sortir"," souffrir"," souhait*"," souvenir"," suffire"," suivre"," suppos*"," support*"," surveill*"," sépar*"," taire"," tenir"," tent*"," termin*"," tir*"," tomb*"," touch*"," tourn*"," trait*"," travaill*"," travers*"," traîn*"," tromp*"," trouv*"," tu*"," utilis*"," valoir"," vendre"," venir"," vir*"," vivre"," voir"," vol*"," vouloir"," vérifi*"," devrait ","*elever*"], {
 "element": "span",
-"className": "adjectif"
-});
-
-
-
-$(".context").mark([
-"adjectif",
-"*national*", "absolue", "absolument", "accrue", "accusés", "actionnaire*", "adapté*", "adjoint*", "alternatives", "ambitieuse", "ancien", "anecdotique*", "antiterroriste*", "antérieure*", "appropriées", "approuvé*", "apprécié*", "apte", "armé*", "atomique", "attentivement", "audible", "autrui", "avancé", "blessé*", "cadres", "central", "centrale*", "centraux", "certain*", "certainement", "champion*", "changé", "cher*", "cimentier*", "citoyens", " climatique", "comble*", "communautaire*", "complexe*", "comptable", "concernés", "condamné", "connectés", "connu*", "consécutive", "contemporain", "cossu*", "coupable", "coupables", "court", "courte", "crucial", "dernier*", "différent*", "directement", "disparate", "divergent*", "diversifié*", "divulgué*", "durable", "dynamique*", "débouté", "décarboné*", "découvert", "dégoûtante", "délicate", "démocrate", "démoli*", "désamorcé*", "efficace", "employ*", "enclavé*", "engagé*", "ennuyé*", "enregistrée", "envisagé*", "essentiel*", "ex-", "exact", "explosif", "explosive", "exposé", "extérieur", "faible", "fausses", "financier*", "fiscal", "fiscaux", "fixés", "flottant*", "fort*", "fous", "frauduleuses", "fréquenté*", "grand*", "gros", "général", "géographique", "habitable", "haut*", "hivernal*", "identifié*", "imaginaires", "immatériel*", "important*", "improbable*", "incarcéré", "incontournable*", "inculpé", "indispensable*", "industriel*", "inférieur", "ingénieur*", "ininterrompue*", "initial", "innocents", "installateurs", "installé", "institutionnel*", "instructeur*", "intermédiaire*", "international*", "interne*", "intitulé", "intégré*", "intérieur*", "islamique", " jeune*", "jihadiste", "judiciaire", "juif*", "largement", "léger*", "membre", "mensuel*", "meurtrière", "moindre", "mondial", "monopolistique", "mort*", "moyenne", "métropolitaine*", "nationaux", "neigeux", " net ", "neutre", "nombreuse*", "notamment", "nouvelle", "nucléaire*", "nus", "nécessaire", "offensive", "opérationnel*", "orientés", "ouverte", "parallèle*", "particuliers", "politique*", "possible", "premier", "primordiale", "principal*", "principaux", "prioritaire*", "probablement", "proch*", "provocatrice", "précédent", "précédente", "publie*", "publiques", "pétrolier*", "qualifiés", "radical*", "radicaux", "rapidement", "rare*", "rebel*", "relativement", "remarquable", "renouvelable*", "responsable", "récent*", "récoltés", "réduit*", "régionale", "réglementaire*", "régulièrement", "régulé", "révisé*", "salariés", "satisfaisant*", "scientifique*", "signé*", "similaire", "similaires", "social", "sociaux", "solaire*", "solennelle*", "solidaire", "soupçonné*", "spectaculaire", "stable*", "stratégique", "structurelle", "successeur", "supensive", "supplémentaire*", "supérieure*", "surprenant*", "symbolique*", "syrienne", "sélectionné", "tardifs", "tardive", "temporairement", "terminées", "terroriste*", "totale", "touristique", "traditionnellement", "trouble*", "ultime", "unique", "valorisé", "variable", "vendu*", "vieux", "violents", "visuelle", "écologique", "économique", "également", "électrique*", "élevé", "émergent*", "énergétique*", "éolienne*", "érotiques",
-"massive*",
-"majeur*",
-"éventuelle*",
-"petit*",
-"électoral*",
-"événementiel*",
-"tyran",
-"génie",
-" bien ",
-" belle ",
-"sans conteste",
-"innovateur",
-" mal ",
-"hors pair*",
-"souvent", 
-"communicant*",
-"privé*",
-"militaire",
-"hésitant*",
-"publicitaire*",
-"dirigeant*",
-"*étranger",
-"organisateur",
-"centriste*",
-"pratiquement",
-"pénible*",
-"sénateur",
-"charge*",
-"républicain*",
-"définitif*",
-"parisien*",
-"définitive*",
-"bonne*",
-"rapproché*",
-"final*",
-"sponsor*",
-"joli*",
-"prestigieu*",
-"meilleur*",
-"digital*",
-"physique*",
-"travailleur*",
-"travailleuse*",
-"élaboré*",
-"lobbyiste*",
-"difficile*",
-"riche*",
-"fixé",
-"géant",
-"satirique",
-"mobile*",
-"respective*",
-"vrai*",
-"mondialement",
-"parrainé",
-"nouveau*",
-"président*",
-"vainement",
-"créatif*",
-"créative*",
-"secrèt*",
-"ami*",
-"nocturne*",
-"budgétaire"
-
-	], {
 "wildcards": "enabled",
-"ignorePunctuation":["'",","],
-"element": "span",
-"className": "adjectif"
+"className": "verbe",
 });
 
-$(".context").mark([
-"nationalité",
-	"tunisien*",
-	"*allemand*",
-	"français*",
-	"*americain*",
-	"russe*",
-	"polonais*",
-	"hongrois*",
-	"britannique",
-	"*européen*",
-	"*italien*",
-	"syrien*"
-	], {
-"ignorePunctuation":["'",","],
-"wildcards": "enabled",
-"element": "span",
-"className": "nationalite"
-});
 
 $(".context").mark([
 "nombre",
@@ -678,7 +182,8 @@ $(".context").mark([
 	"troisième",
 	"plus",
 	"moins",
-	"peu",
+	" peu ",
+	"peu.",
 	"peu,",
 	"très",
 	"tout",
@@ -686,13 +191,12 @@ $(".context").mark([
 	"tous",
 	"toutes",
 	"aucun*",
-
 	"une",
 	"une,",
 	"quelque*",
 	"plusieurs",
 	"un",
-	"*'un",
+	"'un",
 	"seul*",
 	"Des",
 	"moitié*",
@@ -730,6 +234,8 @@ $(".context").mark([
 	"tonne",
 	"tonnes",
 	"heures",
+	"heures,",
+	"heures.",
 	"minute*",
 	"an",
 	"an,",
@@ -753,19 +259,19 @@ $(".context").mark([
 
 $(".context").mark([
 	"Personne",
-	"Donald Trump",
-	"Hillary Clinton",
-	"Barack Obama",
-	"Vladimir Poutine",
-	"Ronald Reagan",
-	"Mitch McConnell",
-	"François Fillon",
-	"Emmanuel Macron",
+	"Donald Trump",
+	"Hillary Clinton",
+	"Barack Obama",
+	"Vladimir Poutine",
+	"Ronald Reagan",
+	"Mitch McConnell",
+	"François Fillon",
+	"Emmanuel Macron",
 	"Fleur Pellerin",
-	"Nicolas Sarkozy",
-	"Henri Seydoux",
-	"Stéphane Richard",
-	"François Hollande"
+	"Nicolas Sarkozy",
+	"Henri Seydoux",
+	"Stéphane Richard",
+	"François Hollande"
 	], {
 "ignorePunctuation":["'",","],
 "caseSensitive": true,
@@ -781,18 +287,20 @@ $(".context").mark([
 	"*Google*",
 	"*Twitter*",
 	"*Facebook*",
-	"*Canard enchaîné*",
+	"*Canard enchaîné*",
 	"La Poste",
 	"RTL",
 	"Economic Club",
 	"Image 7",
-	"French Tech",
-	"Maison  de la Radio",
+	"French Tech",
+	"Maison de la Radio",
 	"Libération",
 	"Le Monde",
 	"Elysée",
 	"RSCG",
-	"Figaro",
+	"Le Figaro",
+	"Radio France",
+	"Maison de la radio",
 	"ministère de la Culture et de la Communication"
 	], {
 "wildcards": "enabled",
@@ -808,7 +316,168 @@ $(".context").markRegExp(/\d/g, {
 });
 
 
+
+$(".context").mark([
+"temps",
+"jamais",
+"futur*",
+"toujours",
+"maintenant",
+"actuel*",
+"désormais",
+"présent",
+"avenir*",
+"*midi*",
+"hier*",
+"lendemain",
+"*époque*",
+"*aujourd*hui*",
+"demain*",
+"récemment*",
+"lundi*",
+"mardi*",
+"mercredi*",
+"jeudi*",
+"Vendredi*",
+"samedi*",
+"dimanche*",
+"week-end*",
+"matin*",
+"après-midi*",
+"soir*",
+"janvier*",
+"fevrier*",
+"mars",
+"avril*",
+"mai",
+"juin*",
+"juillet*",
+"aout",
+"septembre*",
+"octobre*",
+"novembre*",
+"décembre*",
+"Noël*"
+	], {
+"accuracy": "exactly",
+"wildcards": "enabled",
+"element": "span",
+"className": "temps"
 });
+
+$(".context").mark([
+"Pays",
+"Afghanistan","Albanie","Antarctique","Algérie","Samoa Américaines","Andorre","Angola","Antigua-et-Barbuda","Azerbaïdjan","Argentine","Australie","Autriche","Bahamas","Bahreïn","Bangladesh","Arménie","Barbade","Belgique","Bermudes","Bhoutan","Bolivie","Bosnie-Herzégovine","Botswana","Île Bouvet","Brésil","Belize","Territoire Britannique de l'Océan Indien","Îles Salomon","Îles Vierges Britanniques","Brunéi Darussalam","Bulgarie","Myanmar","Burundi","Bélarus","Cambodge","Cameroun","Canada","Cap-vert","Îles Caïmanes","République Centrafricaine","Sri Lanka","Tchad","Chili","Chine","Taïwan","Île Christmas","Îles Cocos (Keeling)","Colombie","Comores","Mayotte","République du Congo","République Démocratique du Congo","Îles Cook","Costa Rica","Croatie","Cuba","Chypre","République Tchèque","Bénin","Danemark","Dominique","République Dominicaine","Équateur","El Salvador","Guinée Équatoriale","Éthiopie","Érythrée","Estonie","Îles Féroé","Îles (malvinas) Falkland","Géorgie du Sud et les Îles Sandwich du Sud","Fidji","Finlande","Îles Åland","France","Guyane Française","Polynésie Française","Terres Australes Françaises","Djibouti","Gabon","Géorgie","Gambie","Territoire Palestinien Occupé","Allemagne","Ghana","Gibraltar","Kiribati","Grèce","Groenland","Grenade","Guadeloupe","Guam","Guatemala","Guinée","Guyana","Haïti","Îles Heard et Mcdonald","Saint-Siège (état de la Cité du Vatican)","Honduras","Hong-Kong","Hongrie","Islande","Inde","Indonésie","République Islamique d'Iran","Iraq","Irlande","Israël","Italie","Côte d'Ivoire","Jamaïque","Japon","Kazakhstan","Jordanie","Kenya","République Populaire Démocratique de Corée","République de Corée","Koweït","Kirghizistan","République Démocratique Populaire Lao","Liban","Lesotho","Lettonie","Libéria","Jamahiriya Arabe Libyenne","Liechtenstein","Lituanie","Luxembourg","Macao","Madagascar","Malawi","Malaisie","Maldives","Mali","Malte","Martinique","Mauritanie","Maurice","Mexique","Monaco","Mongolie","République de Moldova","Montserrat","Maroc","Mozambique","Oman","Namibie","Nauru","Népal","Pays-Bas","Antilles Néerlandaises","Aruba","Nouvelle-Calédonie","Vanuatu","Nouvelle-Zélande","Nicaragua","Niger","Nigéria","Niué","Île Norfolk","Norvège","Îles Mariannes du Nord","Îles Mineures Éloignées des États-Unis","États Fédérés de Micronésie","Îles Marshall","Palaos","Pakistan","Panama","Papouasie-Nouvelle-Guinée","Paraguay","Pérou","Philippines","Pitcairn","Pologne","Portugal","Guinée-Bissau","Timor-Leste","Porto Rico","Qatar","Réunion","Roumanie","Fédération de Russie","Rwanda","Sainte-Hélène","Saint-Kitts-et-Nevis","Anguilla","Sainte-Lucie","Saint-Pierre-et-Miquelon","Saint-Vincent-et-les Grenadines","Saint-Marin","Sao Tomé-et-Principe","Arabie Saoudite","Sénégal","Seychelles","Sierra Leone","Singapour","Slovaquie","Viet Nam","Slovénie","Somalie","Afrique du Sud","Zimbabwe","Espagne","Sahara Occidental","Soudan","Suriname","Svalbard etÎle Jan Mayen","Swaziland","Suède","Suisse","République Arabe Syrienne","Tadjikistan","Thaïlande","Togo","Tokelau","Tonga","Trinité-et-Tobago","Émirats Arabes Unis","Tunisie","Turquie","Turkménistan","Îles Turks et Caïques","Tuvalu","Ouganda","Ukraine","L'ex-République Yougoslave de Macédoine","Égypte","Royaume-Uni","Île de Man","République-Unie de Tanzanie","États-Unis","Îles Vierges des États-Unis","Burkina Faso","Uruguay","Ouzbékistan","Venezuela","Wallis et Futuna","Samoa","Yémen","Serbie-et-Monténégro","Zambie",
+"le monde"
+	], {
+"wildcards": "enabled",
+"caseSensitive": true,
+"element": "span",
+"className": "pays",
+"exclude:": "à",
+"diacritics": true
+});
+
+
+$(".context").mark([
+	"Capitale",
+"Kaboul","Prétoria","Tirana","Alger","Berlin","Andorre-la-Vieille","Luanda","Saint John's","Riyad","Buenos Aires","Erevan","Canberra","Vienne","Bakou","Nassau","Manama","Dacca","Bridgetown","Bruxelles","Belmopan","Porto-Novo","Thimphou","Minsk","Naypyidaw","La Paz","Sarajevo","Gaborone","Brasilia","Bandar Seri Begawan","Sofia","Ouagadougou","Bujumbura","Phnom Penh","Yaoundé","Ottawa","Praia","Bangui","Santiago","Pékin","Nicosie","Bogota","Moroni","Brazzaville","Kinshasa","Pyongyang","Séoul","San José","Yamoussoukro","Zagreb","La Havane","Copenhague","Djibouti","Saint-Domingue","Roseau","Le Caire","Abou Dabi","Quito","Asmara","Madrid","Tallinn","Washington","Addis Abeba","Suva","Helsinki","Paris","Libreville","Banjul","Tbilissi","Accra","Athénes","Saint-Georges","Guatémala","Conakry","Bissao","Malabo","Georgetown","Port-au-Prince","Tégucigalpa","Budapest","New Delhi","Jakarta","Bagdad","Téhéran","Dublin","Reykjavik","Rome","Kingston","Tokyo","Amman","Astana","Nairobi","Bichkek","Bairiki","Tarawa","Pristina","Koweét","Vientiane","Maseru","Riga","Beyrouth","Monrovia","Tripoli","Vaduz","Vilnius","Luxembourg","Skopje","Antananarivo ","Tananarive","Kuala Lumpur","Lilongwé","Malé","Bamako","La Valette","Rabat","Delap-Uliga-Darrit ","Majuro","Port-Louis","Nouakchott","Mexico","Palikir","Chisinau","Monaco","Oulan-Bator","Podgorica","Maputo","Windhoek","Yaren","Katmandou","Managua","Niamey","Abuja","Oslo","Wellington","Mascate","Kampala","Tachkent","Islamabad","Melekeok","Panama","Port Moresby","Asuncion","Amsterdam","Lima","Manille","Varsovie","Lisbonne","Doha","Bucarest","Londres","Moscou","Kigali","Basseterre","Castries","Saint-Marin","Kingstown","Honiara","San Salvador","Apia","Sao Tomé","Dakar","Belgrade","Victoria","Freetown","Singapour","Bratislava","Ljubljana","Mogadiscio","Khartoum","Djouba ou Juba","Sri Jayewardenepura Kotte ","Colombo","Stockholm","Berne","Paramaribo","Mbabané","Damas","Douchanbé","Dodoma","Ndjamena","Prague","Bangkok","Dili","Lomé","Nuku'alofa","Port of Spain","Tunis","Achgabat","Ankara","Vaiaku","Funafuti","Kiev","Montévidéo","Port-Vila","Caracas","Hanoé","Sanaa","Lusaka","Hararé"
+	], {
+"wildcards": "enabled",
+"caseSensitive": true,
+"element": "span",
+"className": "Capitale",
+"exclude:": "à",
+"diacritics": true
+});
+
+$(".context").mark(["adjectif","*national*","absolue","absolument","accrue","accusés","actionnaire*","adapté*","adjoint*","alternatives","ambitieuse","ancien","anecdotique*","antiterroriste*","antérieure*","appropriées","approuvé*","apprécié*","apte","armé*","atomique","attentivement","audible","autrui","avancé","blessé*","cadres","central","centrale*","centraux","certain*","certainement","champion*","changé"," cher ", " chers", " chere", " cheres", "cimentier*","citoyens"," climatique","comble*","communautaire*","complexe*","comptable","concernés","condamné","connectés","connu*","consécutive","contemporain","cossu*","coupable","coupables","court","courte","crucial","dernier*","différent*","directement","disparate","divergent*","diversifié*","divulgué*","durable","dynamique*","débouté","décarboné*","découvert","dégoûtante","délicate","démocrate","démoli*","désamorcé*","efficace","employ*","enclavé*","engagé*","ennuyé*","enregistrée","envisagé*","essentiel*","ex-","exact","explosif","explosive","exposé","extérieur","faible","fausses","financier*","fiscal","fiscaux","fixés","flottant*","fort*","fous","frauduleuses","fréquenté*","grand ", "grands", "grande", "grandes", "gros","général","géographique","habitable","haut*","hivernal*","identifié*","imaginaires","immatériel*","important*","improbable*","incarcéré","incontournable*","inculpé","indispensable*","industriel*","inférieur","ingénieur*","ininterrompue*","initial","innocents","installateurs","installé","institutionnel*","instructeur*","intermédiaire*","international*","interne*","intitulé","intégré*","intérieur*","islamique"," jeune*","jihadiste","judiciaire","juif*","largement","léger*","membre","mensuel*","meurtrière","moindre","mondial","monopolistique","mort*","moyenne","métropolitaine*","nationaux","neigeux"," net ","neutre","nombreuse*","notamment","nouvelle","nucléaire*","nus","nécessaire","offensive","opérationnel*","orientés","ouverte","parallèle*","particuliers","politique*","possible","premier","primordiale","principal*","principaux","prioritaire*","probablement","proche","provocatrice","précédent","précédente","publie*","publiques","pétrolier*","qualifiés","radical*","radicaux","rapidement","rare*","rebel*","relativement","remarquable","renouvelable*","responsable","récent*","récoltés","réduit*","régionale","réglementaire*","régulièrement","régulé","révisé*","salariés","satisfaisant*","scientifique*","signé*","similaire","similaires","social","sociaux","solaire*","solennelle*","solidaire","soupçonné*","spectaculaire","stable*","stratégique","structurelle","successeur","supensive","supplémentaire*","supérieure*","surprenant*","symbolique*","syrienne","sélectionné","tardifs","tardive","temporairement","terminées","terroriste*","totale","touristique","traditionnellement","trouble*","ultime","unique","valorisé","variable","vendu*","vieux","violents","visuelle","écologique","économique","également","électrique*"," élevé ", " élevée ","émergent*","énergétique*","éolienne*","érotiques","massive*","majeur*","éventuelle*","petit*","électoral*","événementiel*","tyran","génie"," bien "," belle ","sans conteste","innovateur"," mal ","hors pair*","souvent","communicant*","privé*","militaire","hésitant*","publicitaire*","dirigeant*","*étranger","organisateur","centriste*","pratiquement","pénible*","sénateur","charge*","républicain*","définitif*","parisien*","définitive*","bonne*","rapproché*","final*","sponsor*","joli*","prestigieu*","meilleur*","digital*","physique*","travailleur*","travailleuse*","élaboré*","lobbyiste*","difficile*","riche*","fixé","géant","satirique","mobile*","respective*", "mondialement","parrainé","nouveau*","président*","vainement","créatif*","créative*","secrèt*","ami*","nocturne*","budgétaire",
+"jubilatoire",
+"balancé*",
+"nuancé*",
+"décontracté*",
+"optimiste",
+"nourris",
+"vedette",
+"ambitieux",
+"long",
+"Debout",
+"présents",
+"longue",
+"longiligne",
+"souple",
+"Précédé*",
+"leader"
+
+],
+{
+"wildcards": "enabled",
+"ignorePunctuation":["'",","],
+"element": "span",
+"className": "adjectif"
+});
+
+
+
+$(".context").mark([
+	"jaune",
+	"orange",
+	"bleu",
+	"blanc",
+	"noir",
+	"rouge",
+	], {
+"ignorePunctuation":["'",","],
+"accuracy": "exactly",
+"element": "span",
+"className": "adjectif"
+});
+
+
+
+
+
+$(".context").mark([
+	"chypriote","chypriote","cubain","cubaine","africain","africaine","algérien","algérienne","allemand","allemande","anglais","anglaise","argentin","argentine","asiatique","asiatique","australien","australienne","autrichien","autrichienne","égyptien","égyptienne","équatorien","équatorienne","espagnol","espagnole","estonien","estonienne","européen","européenne","indien","indienne","indonésien","indonésienne","irlandais","irlandaise","italien","italienne","océanien","océanienne","uruguayen","uruguayenne","belge","belge","bolivien","bolivienne","bulgare","bulgare","chinois","chinoise","colombien","colombienne","coréen","coréenne","finlandais","finnois","finlandaise","finnoise","français","française","grec","grecque","hongrois","hongroise","jamaïcain","jamaïcaine","letton","lettonne","lituanien","lituanienne","norvégien","norvégienne","néo-calédonien","néo-calédonienne","néo-zélandais","néo-zélandaise","polonais","polonaise","congolais","congolaise","dominicain","dominicaine","tchèque","tchèque","roumain","roumaine","russe","russe","suédois","suédoise","suisse","suisse / suissesse","syrien","syrienne","tunisien","tunisienne","turc","turque","brésilien","brésilienne","camerounais","camerounaise","canadien","canadienne","chilien","chilienne","costaricien","costaricienne","danois","danoise","guatémaltèque","guatémaltèque","hondurien","hondurienne","japonais","japonaise","luxembourgeois","luxembourgeoise","marocain","marocaine","mexicain","mexicaine","pakFistanais","pakistanaise","panaméen","panaméenne","paraguayen","paraguayenne","péruvien","péruvienne","portoricain","portoricaine","portugais","portugaise","salvadorien","salvadorienne","vénézuélien","vénézuélienne","vietnamien","vietnamienne","américain","américaine","américain","états-unien","américaine","états-unienne","hollandais","hollandaise","philippin","philippine","maltais","maltaise","tahitien","tahitienne"
+	], {
+"ignorePunctuation":["'",","],
+"wildcards": "enabled",
+"element": "span",
+"className": "nationalite"
+});
+
+$(".context").mark([
+"emplacement",
+" contre ",
+" Au ",
+" aux ",
+" depuis ",
+" au centre ",
+" près d'un ",
+"pres de",
+"à travers",
+"pres ",
+"près,",
+"loin",
+"à coté",
+"avant",
+"après",
+"dans ",
+"devant",
+"sous",
+"dessus",
+"derrière",
+"sur "
+	], {
+"wildcards": "enabled",
+"separateWordSearch": false,
+"element": "span",
+"className": "emplacement",
+"ignorePunctuation":["'", ",", "."]
+});
+
+});
+
 
 
 
