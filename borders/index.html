@@ -14,6 +14,11 @@ svg{
   z-index:0;
 }
 
+line {
+opacity: 0.6;
+
+  }
+
 .nodes, .labels:hover{
   cursor: pointer;
 }
@@ -22,6 +27,8 @@ svg{
 
 <body>
  
+<a href="https://en.wikipedia.org/wiki/List_of_countries_by_length_of_coastline">Source pour les côtes CIA</a>
+<a href="https://fr.wikipedia.org/wiki/Liste_des_fronti%C3%A8res_terrestres_par_pays">Source pour les frontières terrestres</a> Toutes les côtes n'ont pas encore été remplie dans la base de données
 </body> 
 <link rel = "stylesheet" href = "http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -47,7 +54,7 @@ var forceLink = d3.forceLink().id(function(d) { return d.id; });
   
 var simulation = d3.forceSimulation()
     .force("link", d3.forceLink().id(function(d) { return d.id; }))
-    .force("charge", d3.forceManyBody().strength(-40))
+    .force("charge", d3.forceManyBody().strength(-50))
     .force("center", d3.forceCenter(width / 2, height / 2));
 
 d3.json("data-relations.json", function(error, graph) {
@@ -57,7 +64,12 @@ d3.json("data-relations.json", function(error, graph) {
                 .selectAll("line")
                 .data(graph.links)
                 .enter().append("line")
-                .attr("stroke-width", function(d) { return Math.sqrt(d.value)/10; });
+                .attr("stroke-width", function(d) { return Math.sqrt(d.value)/10; })
+                .style("stroke", function (d) {
+                  if (d.target == "Océan mondial")
+                    return "#2B65EC";
+                  return "#aaa";
+                })
                 ;
 
   var node = svg.append("g")
