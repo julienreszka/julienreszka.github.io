@@ -74,15 +74,18 @@ d3.json("data-relations.json", function(error, graph) {
 
   var node = svg.append("g")
             .attr("class", "nodes")
-  .selectAll("circle")
+            .selectAll("circle")
             .data(graph.nodes)
-  .enter().append("circle")
-      .attr("r", 7)
-      .style("fill", function(d){return color(d.id);})
-  .call(d3.drag()
-              .on("start", dragstarted)
-              .on("drag", dragged)
-              .on("end", dragended));
+            .enter().append("circle")
+            .attr("stroke", "white")
+            .attr("stroke-width", 1)
+            .attr("r", 7)
+            // .attr("r", function(d){return Math.sqrt(d.superficie)/500 + 7;})
+            .style("fill", function(d){return color(d.id);})
+            .call(d3.drag()
+                    .on("start", dragstarted)
+                    .on("drag", dragged)
+                    .on("end", dragended));
 
 
   var label = svg.append("g")
