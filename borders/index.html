@@ -15,7 +15,7 @@ svg{
 }
 
 line {
-opacity: 0.6;
+opacity: 0.2;
 
   }
 
@@ -68,7 +68,7 @@ d3.json("data-relations.json", function(error, graph) {
                 .style("stroke", function (d) {
                   if (d.target == "Océan mondial")
                     return "#2B65EC";
-                  return "#aaa";
+                  return "grey";
                 })
                 ;
 
@@ -87,6 +87,28 @@ d3.json("data-relations.json", function(error, graph) {
                     .on("drag", dragged)
                     .on("end", dragended));
 
+node.on("mouseover", function (d) {
+  console.log("hey");
+  node.attr("r", function(n) {
+    if (d === n)
+      return 14
+    else
+      return 7
+  });
+  node.attr("stroke", function(n) {
+    if (d === n)
+      return "black"
+    else
+      return "white"
+  });
+  link.style('opacity', function(l) {
+    if (d === l.source || d === l.target)
+      return 1;
+    else 
+      return 0.2;
+    
+  });
+})
 
   var label = svg.append("g")
       .attr("class", "labels")
