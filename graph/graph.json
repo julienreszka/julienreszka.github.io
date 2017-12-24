@@ -1,242 +1,325 @@
 {
-  "nodes": [
-    {
-      "name": "Donald Tusk",
-      "label": "Personne",
-      "id": 1
-    },
-    {
-      "name": "Peuple",
-      "label": "Institution",
-      "id": 2
-    },
-    {
-      "name": "Parlement européen",
-      "label": "Institution",
-      "id": 3
-    },
-    {
-      "name": "Chefs d'états ou chefs de gouvernements de la zone euro",
-      "label": "Institution",
-      "id": 4
-    },
-    {
-      "name": "Président du Conseil européen",
-      "label": "Institution",
-      "id": 5
-    },
-    {
-      "name": "Union européenne",
-      "label": "Institution",
-      "id": 6
-    },
-    {
-      "name": "Conseil européen",
-      "label": "Institution",
-      "id": 7
-    },
-    {
-      "name": "Chefs d'Etat ou chef de gouvernements",
-      "label": "Institution",
-      "id": 8
-    },
-    {
-      "name": "Président de la commission européenne",
-      "label": "Institution",
-      "id": 9
-    },
-    {
-      "name": "Commission européenne",
-      "label": "Institution",
-      "id": 10
-    },
-    {
-      "name": "Ministres",
-      "label": "Institution",
-      "id": 11
-    },
-    {
-      "name": "Conseil de l'Union européenne",
-      "label": "Institution",
-      "id": 12
-    },
-    {
-      "name": "Directoire",
-      "label": "Institution",
-      "id": 13
-    },
-    {
-      "name": "Banque centrale européenne",
-      "label": "Institution",
-      "id": 14
-    },
-    {
-      "name": "Monétaire",
-      "label": "Politique",
-      "id": 15
-    },
-    {
-      "name": "Marché intérieur",
-      "label": "Politique",
-      "id": 16
-    },
-    {
-      "name": "Fiscalité et Social",
-      "label": "Politique",
-      "id": 17
-    },
-    {
-      "name": "Tarifs douaniers et agricoles",
-      "label": "Politique",
-      "id": 18
-    },
-    {
-      "name": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
-      "label": "Institution",
-      "id": 19
-    },
-    {
-      "name": "Jean Claude Juncker",
-      "label": "Personne",
-      "id": 20
-    },
-    {
-      "name": "Federica Mogherini",
-      "label": "Personne",
-      "id": 21
-    }
-
-  ],
   "links": [
     {
-      "source": 2,
-      "target": 8,
+      "source": "Peuple",
+      "target": "Chefs d'Etat ou chef de gouvernements",
       "type": "ELIT"
     },
     {
-      "source": 2,
-      "target": 3,
+      "source": "Peuple",
+      "target": "Parlement européen",
       "type": "ELIT"
     },
     {
-      "source": 3,
-      "target": 10,
+      "source": "Parlement européen",
+      "target": "Commission européenne",
       "type": "CONTROLE ET CENSURE"
     },
     {
-      "source": 1,
-      "target": 5,
+      "source": "Donald Tusk",
+      "target": "Président du Conseil européen",
       "type": "REPRESENTE"
     },
     {
-      "source": 5,
-      "target": 6,
+      "source": "Président du Conseil européen",
+      "target": "Union européenne",
       "type": "REPRESENTE DANS LE MONDE"
     },
     {
-      "source": 5,
-      "target": 7,
+      "source": "Président du Conseil européen",
+      "target": "Conseil européen",
       "type": "PRESIDE ET CONDUIT LES TRAVAUX DU"
     },
     {
-      "source": 7,
-      "target": 5,
+      "source": "Conseil européen",
+      "target": "Président du Conseil européen",
       "type": "ELIT"
     },
     {
-      "source": 8,
-      "target": 7,
+      "source": "Chefs d'Etat ou chef de gouvernements",
+      "target": "Conseil européen",
       "type": "COMPOSENT"
     },
     {
-      "source": 9,
-      "target": 10,
+      "source": "Président de la commission européenne",
+      "target": "Commission européenne",
       "type": "PRESIDE"
     },
     {
-      "source": 8,
-      "target": 11,
+      "source": "Chefs d'Etat ou chef de gouvernements",
+      "target": "Ministres",
       "type": "NOMME"
     },
     {
-      "source": 11,
-      "target": 12,
+      "source": "Ministres",
+      "target": "Conseil de l'Union européenne",
       "type": "COMPOSENT"
     },
     {
-      "source": 4,
-      "target": 8,
+      "source": "Chefs d'Etats ou chefs de gouvernements de la zone euro",
+      "target": "Chefs d'Etat ou chef de gouvernements",
       "type": "FONT PARTIE DES"
     },
     {
-      "source": 13,
-      "target": 14,
+      "source": "Directoire",
+      "target": "Banque centrale européenne",
       "type": "FAIT PARTIE DE"
     },
     {
-      "source": 4,
-      "target": 13,
+      "source": "Chefs d'Etats ou chefs de gouvernements de la zone euro",
+      "target": "Directoire",
       "type": "NOMMENT"
     },
     {
-      "source": 14,
-      "target": 15,
+      "source": "Banque centrale européenne",
+      "target": "Monétaire",
       "type": "DETERMINE"
     },
     {
-      "source": 10,
-      "target": 15,
+      "source": "Commission européenne",
+      "target": "Monétaire",
       "type": "MET EN OEUVRE"
     },
     {
-      "source": 12,
-      "target": 15,
+      "source": "Conseil de l'Union européenne",
+      "target": "Monétaire",
       "type": "MET EN OEUVRE"
     },
     {
-      "source": 12,
-      "target": 16,
+      "source": "Conseil de l'Union européenne",
+      "target": "Marché intérieur",
       "type": "MET EN OEUVRE"
     },
     {
-      "source": 12,
-      "target": 17,
+      "source": "Conseil de l'Union européenne",
+      "target": "Fiscalité et Social",
       "type": "MET EN OEUVRE"
     },
     {
-      "source": 12,
-      "target": 18,
+      "source": "Conseil de l'Union européenne",
+      "target": "Tarifs douaniers et agricoles",
       "type": "MET EN OEUVRE"
     },
     {
-      "source": 7,
-      "target": 19,
+      "source": "Conseil européen",
+      "target": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
       "type": "ELIT"
     },
     {
-      "source": 19,
-      "target": 10,
+      "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "target": "Commission européenne",
       "type": "COMPOSE"
     },
     {
-      "source": 20,
-      "target": 9,
+      "source": "Jean Claude Juncker",
+      "target": "Président de la commission européenne",
       "type": "REPRESENTE"
     },
     {
-      "source": 21,
-      "target": 19,
+      "source": "Federica Mogherini",
+      "target": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
       "type": "REPRESENTE"
     },
     {
-      "source": 3,
-      "target": 7,
+      "source": "Parlement européen",
+      "target": "Conseil européen",
       "type": "APPROUVE"
     },
     {
-      "source": 9,
-      "target": 7,
+      "source": "Président de la commission européenne",
+      "target": "Conseil européen",
       "type": "COMPOSE"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Strasbourg",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Bruxelles",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Luxembourg",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Conseil européen",
+      "target": "Bruxelles",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Bruxelles",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Bruxelles",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Cour de justice de l'Union européenne",
+      "target": "Luxembourg",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Banque centrale européenne",
+      "target": "Francfort",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Président de la Banque centrale européenne",
+      "target": "Banque centrale européenne",
+      "type": "REPRESENTE LORS DES REUNIONS INTERNATIONALES"
+    },
+    {
+      "source": "Mario Draghi",
+      "target": "Président de la Banque centrale européenne",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Cour des comptes européenne",
+      "target": "Luxembourg",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Président de la Cour des comptes européenne",
+      "target": "Cour des comptes européenne",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Klaus-Heiner Lehne",
+      "target": "Président de la Cour des comptes européenne",
+      "type": "REPRESENTE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Donald Tusk",
+      "label": "Personne"
+    },
+    {
+      "id": "Klaus-Heiner Lehne",
+      "label": "Personne"
+    },
+    {
+      "id": "Mario Draghi",
+      "label": "Personne"
+    },
+    {
+      "id": "Président de la Cour des comptes européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la Banque centrale européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Cour des comptes européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Peuple",
+      "label": "Institution"
+    },
+    {
+      "id": "Parlement européen",
+      "label": "Institution"
+    },
+    {
+      "id": "Chefs d'Etats ou chefs de gouvernements de la zone euro",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du Conseil européen",
+      "label": "Institution"
+    },
+    {
+      "id": "Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseil européen",
+      "label": "Institution"
+    },
+    {
+      "id": "Chefs d'Etat ou chef de gouvernements",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la commission européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Commission européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministres",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseil de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Directoire",
+      "label": "Institution"
+    },
+    {
+      "id": "Banque centrale européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Monétaire",
+      "label": "Politique"
+    },
+    {
+      "id": "Marché intérieur",
+      "label": "Politique"
+    },
+    {
+      "id": "Fiscalité et Social",
+      "label": "Politique"
+    },
+    {
+      "id": "Tarifs douaniers et agricoles",
+      "label": "Politique"
+    },
+    {
+      "id": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "label": "Institution"
+    },
+    {
+      "id": "Jean Claude Juncker",
+      "label": "Personne"
+    },
+    {
+      "id": "Federica Mogherini",
+      "label": "Personne"
+    },
+    {
+      "id": "Strasbourg",
+      "label": "Ville"
+    },
+    {
+      "id": "Bruxelles",
+      "label": "Ville"
+    },
+    {
+      "id": "Luxembourg",
+      "label": "Ville"
+    },
+    {
+      "id": "Cour de justice de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Francfort",
+      "label": "Ville"
     }
   ]
 }

@@ -30,7 +30,7 @@
 <script src="https://d3js.org/d3-selection-multi.v1.js"></script>
 <script type="text/javascript">
 var color = d3.scaleOrdinal(d3.schemeCategory20);
-var labelColors = d3.scaleOrdinal(['#404040', 'white', '#ffd617', '#004494' ]);
+var labelColors = d3.scaleOrdinal(['#404040', 'white', '#ffd617' ]);
 var idColors = d3.scaleOrdinal(
 	[
 	'DarkOrange ',
@@ -177,7 +177,7 @@ label = svg
 	.style("font-size", 10)
 	.style("fill", "black")
 	.attr("stroke-width", "1px")
-	.text(function (d) {return d.id})
+	.text(function (d) {return d.name})
 	.call(d3
 		.drag()
 		.on("start", dragstarted)
