@@ -2,7 +2,7 @@
   "links": [
     {
       "source": "Peuple",
-      "target": "Chefs d'Etat ou chef de gouvernements",
+      "target": "Chefs d'Etat ou Chefs de gouvernements",
       "type": "ELIT"
     },
     {
@@ -36,7 +36,7 @@
       "type": "ELIT"
     },
     {
-      "source": "Chefs d'Etat ou chef de gouvernements",
+      "source": "Chefs d'Etat ou Chefs de gouvernements",
       "target": "Conseil européen",
       "type": "COMPOSENT"
     },
@@ -46,9 +46,9 @@
       "type": "PRESIDE"
     },
     {
-      "source": "Chefs d'Etat ou chef de gouvernements",
+      "source": "Chefs d'Etat ou Chefs de gouvernements",
       "target": "Ministres",
-      "type": "NOMME"
+      "type": "NOMMENT"
     },
     {
       "source": "Ministres",
@@ -56,8 +56,8 @@
       "type": "COMPOSENT"
     },
     {
-      "source": "Chefs d'Etats ou chefs de gouvernements de la zone euro",
-      "target": "Chefs d'Etat ou chef de gouvernements",
+      "source": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "target": "Chefs d'Etat ou Chefs de gouvernements",
       "type": "FONT PARTIE DES"
     },
     {
@@ -66,7 +66,7 @@
       "type": "FAIT PARTIE DE"
     },
     {
-      "source": "Chefs d'Etats ou chefs de gouvernements de la zone euro",
+      "source": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
       "target": "Directoire",
       "type": "NOMMENT"
     },
@@ -230,7 +230,7 @@
       "label": "Institution"
     },
     {
-      "id": "Chefs d'Etats ou chefs de gouvernements de la zone euro",
+      "id": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
       "label": "Institution"
     },
     {
@@ -246,7 +246,7 @@
       "label": "Institution"
     },
     {
-      "id": "Chefs d'Etat ou chef de gouvernements",
+      "id": "Chefs d'Etat ou Chefs de gouvernements",
       "label": "Institution"
     },
     {
