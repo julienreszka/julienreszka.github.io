@@ -1,0 +1,654 @@
+{
+  "links": [
+    {
+      "source": "Pouvoirs d'interprétation",
+      "target": "Mémoires",
+      "type": "Réajustent les"
+    },
+    {
+      "source": "Mémoires",
+      "target": "Modules d'intelligence",
+      "type": "Réajustent les"
+    },
+    {
+      "source": "Modules d'intelligence",
+      "target": "Chronomètres",
+      "type": "Réajustent les"
+    },
+    {
+      "source": "Chronomètres",
+      "target": "Pouvoirs d'interprétation",
+      "type": "Réajustent les"
+    },
+    {
+      "source": "Théocratique",
+      "target": "Pouvoirs d'interprétation",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Autocratique",
+      "target": "Pouvoirs d'interprétation",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Démocratique",
+      "target": "Pouvoirs d'interprétation",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Culture",
+      "target": "Mémoires",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Monde",
+      "target": "Mémoires",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Environnement",
+      "target": "Mémoires",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Changeant",
+      "target": "Chronomètres",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Durant",
+      "target": "Chronomètres",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Périodique",
+      "target": "Chronomètres",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Perception",
+      "target": "Modules d'intelligence",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Représentation du monde",
+      "target": "Modules d'intelligence",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Réflexion",
+      "target": "Modules d'intelligence",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Jugement",
+      "target": "Modules d'intelligence",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Identité",
+      "target": "Modules d'intelligence",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Interaction avec l'environnement",
+      "target": "Modules d'intelligence",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Perception",
+      "target": "Représentation du monde",
+      "type": "Influence"
+    },
+    {
+      "source": "Perception",
+      "target": "Interaction avec l'environnement",
+      "type": "Influence"
+    },
+    {
+      "source": "Réflexion",
+      "target": "Représentation du monde",
+      "type": "Influence"
+    },
+    {
+      "source": "Réflexion",
+      "target": "Jugement",
+      "type": "Influence"
+    },
+    {
+      "source": "Identité",
+      "target": "Interaction avec l'environnement",
+      "type": "Influence"
+    },
+    {
+      "source": "Identité",
+      "target": "Jugement",
+      "type": "Influence"
+    },
+    {
+      "source": "Interaction avec l'environnement",
+      "target": "Environnement",
+      "type": "Influence"
+    },
+    {
+      "source": "Jugement",
+      "target": "Culture",
+      "type": "Influence"
+    },
+    {
+      "source": "Représentation du monde",
+      "target": "Monde",
+      "type": "Influence"
+    },
+    {
+      "source": "Environnement",
+      "target": "Perception",
+      "type": "Influence"
+    },
+    {
+      "source": "Culture",
+      "target": "Identité",
+      "type": "Influence"
+    },
+    {
+      "source": "Monde",
+      "target": "Réflexion",
+      "type": "Influence"
+    },
+    {
+      "source": "Ponctuel",
+      "target": "Périodique",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Tendanciel",
+      "target": "Périodique",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Répété",
+      "target": "Périodique",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Éternel",
+      "target": "Durant",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Éphémère",
+      "target": "Durant",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Instantané",
+      "target": "Durant",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Passé",
+      "target": "Changeant",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Présent",
+      "target": "Changeant",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Futur",
+      "target": "Changeant",
+      "type": "Fait partie du"
+    },
+    {
+      "source": "Théocratique",
+      "target": "Culture",
+      "type": "Influence"
+    },
+    {
+      "source": "Monde",
+      "target": "Théocratique",
+      "type": "Influence"
+    },
+    {
+      "source": "Démocratique",
+      "target": "Monde",
+      "type": "Influence"
+    },
+    {
+      "source": "Environnement",
+      "target": "Démocratique",
+      "type": "Influence"
+    },
+    {
+      "source": "Autocratique",
+      "target": "Environnement",
+      "type": "Influence"
+    },
+    {
+      "source": "Culture",
+      "target": "Autocratique",
+      "type": "Influence"
+    },
+    {
+      "source": "Perception",
+      "target": "Généralisation",
+      "type": "Crée des politiques de"
+    },
+    {
+      "source": "Représentation du monde",
+      "target": "Unification",
+      "type": "Crée des politiques de"
+    },
+    {
+      "source": "Réflexion",
+      "target": "Diffusion",
+      "type": "Crée des politiques de"
+    },
+    {
+      "source": "Jugement",
+      "target": "Spécialisation",
+      "type": "Crée des politiques de"
+    },
+    {
+      "source": "Identité",
+      "target": "Séparation",
+      "type": "Crée des politiques de"
+    },
+    {
+      "source": "Interaction avec l'environnement",
+      "target": "Concentration",
+      "type": "Crée des politiques de"
+    },
+    {
+      "source": "Généralisation",
+      "target": "Politiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Spécialisation",
+      "target": "Politiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Concentration",
+      "target": "Politiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Diffusion",
+      "target": "Politiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Séparation",
+      "target": "Politiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Unification",
+      "target": "Politiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Unification",
+      "target": "Dépendance",
+      "type": "Influence"
+    },
+    {
+      "source": "Séparation",
+      "target": "Dépendance",
+      "type": "Influence"
+    },
+    {
+      "source": "Concentration",
+      "target": "Étalement",
+      "type": "Influence"
+    },
+    {
+      "source": "Diffusion",
+      "target": "Étalement",
+      "type": "Influence"
+    },
+    {
+      "source": "Généralisation",
+      "target": "Diversité",
+      "type": "Influence"
+    },
+    {
+      "source": "Spécialisation",
+      "target": "Diversité",
+      "type": "Influence"
+    },
+    {
+      "source": "Diversité",
+      "target": "Espaces topologiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Étalement",
+      "target": "Espaces topologiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Dépendance",
+      "target": "Espaces topologiques",
+      "type": "Fait partie des"
+    },
+    {
+      "source": "Théocratique",
+      "target": "Logique",
+      "type": "Utilise"
+    },
+    {
+      "source": "Autocratique",
+      "target": "Analyse",
+      "type": "Utilise"
+    },
+    {
+      "source": "Démocratique",
+      "target": "Arithmétique",
+      "type": "Utilise"
+    },
+    {
+      "source": "Logique",
+      "target": "Dépendance",
+      "type": "Régule"
+    },
+    {
+      "source": "Analyse",
+      "target": "Diversité",
+      "type": "Régule"
+    },
+    {
+      "source": "Arithmétique",
+      "target": "Étalement",
+      "type": "Régule"
+    },
+    {
+      "source": "Politiques",
+      "target": "Chronomètres",
+      "type": "Influencent"
+    },
+    {
+      "source": "Perception",
+      "target": "Filtres",
+      "type": "Utilise"
+    },
+    {
+      "source": "Représentation du monde",
+      "target": "Motifs",
+      "type": "Utilise"
+    },
+    {
+      "source": "Réflexion",
+      "target": "Modules",
+      "type": "Utilise"
+    },
+    {
+      "source": "Jugement",
+      "target": "Classements",
+      "type": "Utilise"
+    },
+    {
+      "source": "Identité",
+      "target": "Chemins",
+      "type": "Utilise"
+    },
+    {
+      "source": "Interaction avec l'environnement",
+      "target": "Retours d'expérience",
+      "type": "Utilise"
+    },
+    {
+      "source": "Filtres",
+      "target": "Bruits",
+      "type": "Mesurent"
+    },
+    {
+      "source": "Motifs",
+      "target": "Désordres",
+      "type": "Mesurent"
+    },
+    {
+      "source": "Modules",
+      "target": "Conflits",
+      "type": "Mesurent"
+    },
+    {
+      "source": "Classements",
+      "target": "Redondances",
+      "type": "Mesurent"
+    },
+    {
+      "source": "Chemins",
+      "target": "Incertitudes",
+      "type": "Mesurent"
+    },
+    {
+      "source": "Retours d'expérience",
+      "target": "Contraintes",
+      "type": "Mesurent"
+    }
+
+
+  ],
+  "nodes": [
+    {
+      "id": "Pouvoirs d'interprétation",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Espaces topologiques",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Politiques",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Mémoires",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Modules d'intelligence",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Chronomètres",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Théocratique",
+      "label": "Pouvoir d'interprétation"
+    },
+    {
+      "id": "Autocratique",
+      "label": "Pouvoir d'interprétation"
+    },
+    {
+      "id": "Démocratique",
+      "label": "Pouvoir d'interprétation"
+    },
+    {
+      "id": "Culture",
+      "label": "Mémoire"
+    },
+    {
+      "id": "Monde",
+      "label": "Mémoire"
+    },
+    {
+      "id": "Environnement",
+      "label": "Mémoire"
+    },
+    {
+      "id": "Changeant",
+      "label": "Chronomètre"
+    },
+    {
+      "id": "Durant",
+      "label": "Chronomètre"
+    },
+    {
+      "id": "Périodique",
+      "label": "Chronomètre"
+    },
+    {
+      "id": "Perception",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Représentation du monde",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Réflexion",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Jugement",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Identité",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Interaction avec l'environnement",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Ponctuel",
+      "label": "Période"
+    },
+    {
+      "id": "Tendanciel",
+      "label": "Période"
+    },
+    {
+      "id": "Répété",
+      "label": "Période"
+    },
+    {
+      "id": "Éternel",
+      "label": "Durée"
+    },
+    {
+      "id": "Éphémère",
+      "label": "Durée"
+    },
+    {
+      "id": "Instantané",
+      "label": "Durée"
+    },
+    {
+      "id": "Passé",
+      "label": "Changement"
+    },
+    {
+      "id": "Présent",
+      "label": "Changement"
+    },
+    {
+      "id": "Futur",
+      "label": "Changement"
+    },
+    {
+      "id": "Généralisation",
+      "label": "Politique"
+    },
+    {
+      "id": "Unification",
+      "label": "Politique"
+    },
+    {
+      "id": "Diffusion",
+      "label": "Politique"
+    },
+    {
+      "id": "Spécialisation",
+      "label": "Politique"
+    },
+    {
+      "id": "Séparation",
+      "label": "Politique"
+    },
+    {
+      "id": "Concentration",
+      "label": "Politique"
+    },
+    {
+      "id": "Bruits",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Désordres",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Conflits",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Redondances",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Incertitudes",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Contraintes",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Filtres",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Motifs",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Modules",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Classements",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Chemins",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Retours d'expérience",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Dépendance",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Étalement",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Diversité",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Logique",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Analyse",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Arithmétique",
+      "label": "Espace topologique"
+    }
+  ]
+}

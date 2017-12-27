@@ -2,7 +2,7 @@
   "links": [
     {
       "source": "Peuple",
-      "target": "Chefs d'Etat ou Chefs de gouvernements",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
       "type": "ELIT"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "source": "Président du Conseil européen",
-      "target": "Union européenne",
+      "target": "Institutions de l'Union européenne",
       "type": "REPRESENTE DANS LE MONDE"
     },
     {
@@ -36,17 +36,17 @@
       "type": "ELIT"
     },
     {
-      "source": "Chefs d'Etat ou Chefs de gouvernements",
+      "source": "Chefs d’État et de gouvernement des pays de l’UE",
       "target": "Conseil européen",
       "type": "COMPOSENT"
     },
     {
-      "source": "Président de la commission européenne",
+      "source": "Président de la Commission européenne",
       "target": "Commission européenne",
       "type": "PRESIDE"
     },
     {
-      "source": "Chefs d'Etat ou Chefs de gouvernements",
+      "source": "Chefs d’État et de gouvernement des pays de l’UE",
       "target": "Ministres",
       "type": "NOMMENT"
     },
@@ -57,13 +57,13 @@
     },
     {
       "source": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "target": "Chefs d'Etat ou Chefs de gouvernements",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
       "type": "FONT PARTIE DES"
     },
     {
       "source": "Directoire",
-      "target": "Banque centrale européenne",
-      "type": "FAIT PARTIE DE"
+      "target": "Banque centrale européenne (BCE)",
+      "type": "GERE QUOTIDIENNEMENT"
     },
     {
       "source": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
@@ -71,18 +71,18 @@
       "type": "NOMMENT"
     },
     {
-      "source": "Banque centrale européenne",
-      "target": "Monétaire",
+      "source": "Banque centrale européenne (BCE)",
+      "target": "Politique monétaire de la zone euro",
       "type": "DETERMINE"
     },
     {
       "source": "Commission européenne",
-      "target": "Monétaire",
+      "target": "Politique monétaire de la zone euro",
       "type": "MET EN OEUVRE"
     },
     {
       "source": "Conseil de l'Union européenne",
-      "target": "Monétaire",
+      "target": "Politique monétaire de la zone euro",
       "type": "MET EN OEUVRE"
     },
     {
@@ -108,11 +108,11 @@
     {
       "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
       "target": "Commission européenne",
-      "type": "COMPOSE"
+      "type": "VICE PRESIDE"
     },
     {
       "source": "Jean Claude Juncker",
-      "target": "Président de la commission européenne",
+      "target": "Président de la Commission européenne",
       "type": "REPRESENTE"
     },
     {
@@ -126,7 +126,7 @@
       "type": "APPROUVE"
     },
     {
-      "source": "Président de la commission européenne",
+      "source": "Président de la Commission européenne",
       "target": "Conseil européen",
       "type": "COMPOSE"
     },
@@ -161,19 +161,24 @@
       "type": "SIEGE A"
     },
     {
-      "source": "Cour de justice de l'Union européenne",
+      "source": "Cour de justice de l'Union européenne (CJUE)",
       "target": "Luxembourg",
       "type": "SIEGE A"
     },
     {
-      "source": "Banque centrale européenne",
+      "source": "Banque centrale européenne (BCE)",
       "target": "Francfort",
       "type": "SIEGE A"
     },
     {
       "source": "Président de la Banque centrale européenne",
-      "target": "Banque centrale européenne",
+      "target": "Banque centrale européenne (BCE)",
       "type": "REPRESENTE LORS DES REUNIONS INTERNATIONALES"
+    },
+    {
+      "source": "Président de la Banque centrale européenne",
+      "target": "Directoire",
+      "type": "COMPOSE"
     },
     {
       "source": "Mario Draghi",
@@ -194,18 +199,201 @@
       "source": "Klaus-Heiner Lehne",
       "target": "Président de la Cour des comptes européenne",
       "type": "REPRESENTE"
+    },
+    {
+      "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "target": "Politique étrangère et de sécurité de l'Union européenne",
+      "type": "MENE"
+    },
+    {
+      "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "target": "Conseil européen",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Conseil européen",
+      "target": "Politique étrangère et de sécurité de l'Union européenne",
+      "type": "DEFINIT"
+    },
+    {
+      "source": "Service européen pour l’action extérieure (SEAE)",
+      "target": "Bruxelles",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Service européen pour l’action extérieure (SEAE)",
+      "target": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "type": "AIDE"
+    },
+    {
+      "source": "Service européen pour l’action extérieure (SEAE)",
+      "target": "Relations diplomatiques et les partenariats stratégiques avec les pays non membres de l'UE",
+      "type": "GERE"
+    },
+    {
+      "source": "Service européen pour l’action extérieure (SEAE)",
+      "target": "Services diplomatiques des pays de l'UE",
+      "type": "COOPERE AVEC"
+    },
+    {
+      "source": "Service européen pour l’action extérieure (SEAE)",
+      "target": "Nations unies",
+      "type": "COOPERE AVEC"
+    },
+    {
+      "source": "Service européen pour l’action extérieure (SEAE)",
+      "target": "Grandes puissances",
+      "type": "COOPERE AVEC"
+    },
+    {
+      "source": "Georges Dassis",
+      "target": "Comité économique et social européen (CESE)",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Comité économique et social européen (CESE)",
+      "type": "CONSULTE"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Comité économique et social européen (CESE)",
+      "type": "CONSULTE"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Comité économique et social européen (CESE)",
+      "type": "CONSULTE"
+    },
+    {
+      "source": "Antonio Tajani",
+      "target": "Président du Parlement européen",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Président du Parlement européen",
+      "target": "Parlement européen",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Législation de l'Union européenne",
+      "type": "PROPOSE"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Législation de l'Union européenne",
+      "type": "ADOPTE"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Législation de l'Union européenne",
+      "type": "ADOPTE"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Budget de l'Union européenne",
+      "type": "ETABLIT"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Budget de l'Union européenne",
+      "type": "ETABLIT"
+    },
+    {
+      "source": "Conseil européen",
+      "target": "Président de la Commission européenne",
+      "type": "PROPOSE"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Président de la Commission européenne",
+      "type": "ELIT"
+    },
+    {
+      "source": "Président du Conseil de l'Union européenne",
+      "target": "Conseil de l'Union européenne",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Jüri Ratas",
+      "target": "Président du Conseil de l'Union européenne",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Markku Markkulas",
+      "target": "Président du Comité européen des régions",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Président du Comité européen des régions",
+      "target": "Comité européen des régions (CdR)",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Comité européen des régions (CdR)",
+      "type": "CONSULTE"
+    },
+    {
+      "source": "Comité européen des régions (CdR)",
+      "target": "Cour de justice de l'Union européenne (CJUE)",
+      "type": "POUR LA SAUVEGARDE DE SES PRÉROGATIVES ET DU PRINCIPE DE SUBSIDIARITÉ A LE DROIT DE SAISIR LA"
+    },
+    {
+      "source": "Cour de justice de l'Union européenne (CJUE)",
+      "target": "Législation de l'Union européenne",
+      "type": "AFIN D’EN GARANTIR L'APPLICATION UNIFORME INTERPRETE LA"
+    },
+    {
+      "source": "Cour de justice de l'Union européenne (CJUE)",
+      "target": "Cour de justice",
+      "type": "COMPREND"
+    },
+    {
+      "source": "Cour de justice de l'Union européenne (CJUE)",
+      "target": "Tribunal",
+      "type": "COMPREND"
+    },
+    {
+      "source": "Cour de justice de l'Union européenne (CJUE)",
+      "target": "Institutions de l'Union européenne",
+      "type": "SANCTIONNE"
+    },
+    {
+      "source": "Président de la Cour de justice",
+      "target": "Cour de justice",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Président du Tribunal",
+      "target": "Tribunal",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Koen Lenaerts",
+      "target": "Président de la Cour de justice",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Marc Jaeger",
+      "target": "Président du Tribunal",
+      "type": "REPRESENTE"
     }
   ],
   "nodes": [
     {
+      "Nationalité": "Pologne",
       "id": "Donald Tusk",
       "label": "Personne"
     },
     {
+      "Nationalité": "Allemagne",
       "id": "Klaus-Heiner Lehne",
       "label": "Personne"
     },
     {
+      "Nationalité": "Italie",
       "id": "Mario Draghi",
       "label": "Personne"
     },
@@ -238,7 +426,7 @@
       "label": "Institution"
     },
     {
-      "id": "Union européenne",
+      "id": "Institutions de l'Union européenne",
       "label": "Institution"
     },
     {
@@ -246,11 +434,11 @@
       "label": "Institution"
     },
     {
-      "id": "Chefs d'Etat ou Chefs de gouvernements",
+      "id": "Chefs d’État et de gouvernement des pays de l’UE",
       "label": "Institution"
     },
     {
-      "id": "Président de la commission européenne",
+      "id": "Président de la Commission européenne",
       "label": "Institution"
     },
     {
@@ -270,11 +458,12 @@
       "label": "Institution"
     },
     {
-      "id": "Banque centrale européenne",
-      "label": "Institution"
+      "id": "Banque centrale européenne (BCE)",
+      "label": "Institution",
+      "Date de créaction":"1998-06-01"
     },
     {
-      "id": "Monétaire",
+      "id": "Politique monétaire de la zone euro",
       "label": "Politique"
     },
     {
@@ -298,8 +487,10 @@
       "label": "Personne"
     },
     {
+      "E-mail": "federica.mogherini@ec.europa.eu",
       "id": "Federica Mogherini",
-      "label": "Personne"
+      "label": "Personne",
+      "Nationalité":"Italie"
     },
     {
       "id": "Strasbourg",
@@ -314,12 +505,125 @@
       "label": "Ville"
     },
     {
-      "id": "Cour de justice de l'Union européenne",
+      "Date de créaction": "1952-01-01",
+      "id": "Cour de justice de l'Union européenne (CJUE)",
       "label": "Institution"
     },
     {
       "id": "Francfort",
       "label": "Ville"
+    },
+    {
+      "Budget annuel": [
+        {
+          "Année": 2017,
+          "Valeur en euros": 657000000
+        },
+        {
+          "Année": 2015,
+          "Valeur en euros": 657000000
+        }
+      ],
+      "Date de créaction": "2010-12-01",
+      "Effectifs annuels": [
+        {
+          "Année": 2016,
+          "Effectifs": 1628
+        }
+      ],
+      "id": "Service européen pour l’action extérieure (SEAE)",
+      "label": "Institution"
+    },
+    {
+      "id": "Relations diplomatiques et les partenariats stratégiques avec les pays non membres de l'UE",
+      "label": "Politique"
+    },
+    {
+      "id": "Politique étrangère et de sécurité de l'Union européenne",
+      "label": "Politique"
+    },
+    {
+      "id": "Services diplomatiques des pays de l'UE",
+      "label": "Institution"
+    },
+    {
+      "id": "Nations unies",
+      "label": "Institution"
+    },
+    {
+      "id": "Grandes puissances",
+      "label": "Institution"
+    },
+    {
+      "Date de créaction": "1957-03-25",
+      "id": "Comité économique et social européen (CESE)",
+      "label": "Institution"
+    },
+    {
+      "id": "Georges Dassis",
+      "label": "Personne"
+    },
+    {
+      "id": "Antonio Tajani",
+      "label": "Personne"
+    },
+    {
+      "id": "Président du Parlement européen",
+      "label": "Institution"
+    },
+    {
+      "id": "Budget de l'Union européenne",
+      "label": "Politique"
+    },
+    {
+      "id": "Législation de l'Union européenne",
+      "label": "Politique"
+    },
+    {
+      "id": "Président du Conseil de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Jüri Ratas",
+      "label": "Personne"
+    },
+    {
+      "id": "Markku Markkulas",
+      "label": "Personne"
+    },
+    {
+      "Date de créaction": "1994-01-01",
+      "id": "Comité européen des régions (CdR)",
+      "label": "Institution"
+    },
+    {
+      "Date de créaction": "1994-01-01",
+      "id": "Président du Comité européen des régions",
+      "label": "Institution"
+    },
+    {
+      "id": "Cour de justice",
+      "label": "Institution"
+    },
+    {
+      "id": "Tribunal",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la Cour de justice",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du Tribunal",
+      "label": "Institution"
+    },
+    {
+      "id": "Koen Lenaerts",
+      "label": "Personne"
+    },
+    {
+      "id": "Marc Jaeger",
+      "label": "Personne"
     }
   ]
 }

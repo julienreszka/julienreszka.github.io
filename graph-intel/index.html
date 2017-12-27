@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,10 +29,7 @@
 </head>
 <body>
 <div>
-	Fonctionnement de l'Union Européenne 
-	<a href="https://europa.eu/european-union/about-eu/institutions-bodies_fr">
-		Sources
-	</a>
+	Fonctionnement d'un agent intelligent
 </div>
 </body>
 <script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
@@ -199,6 +196,7 @@ node
 	.on("mouseover", function (d) {
 		node
 			.style('opacity', function(n) {
+				console.log(d)
 				if (d === n)
 					return 0.9;
 				else

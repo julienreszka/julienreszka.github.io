@@ -1,0 +1,341 @@
+{
+  "links": [
+    
+    {
+      "source": "Perception",
+      "target": "Représentation du monde",
+      "type": "Influence"
+    },
+    {
+      "source": "Perception",
+      "target": "Interaction avec l'environnement",
+      "type": "Influence"
+    },
+    {
+      "source": "Réflexion",
+      "target": "Représentation du monde",
+      "type": "Influence"
+    },
+    {
+      "source": "Réflexion",
+      "target": "Jugement",
+      "type": "Influence"
+    },
+    {
+      "source": "Identité",
+      "target": "Interaction avec l'environnement",
+      "type": "Influence"
+    },
+    {
+      "source": "Identité",
+      "target": "Jugement",
+      "type": "Influence"
+    }
+
+    ,
+    {
+      "source": "Perception",
+      "target": "Filtres",
+      "type": ""
+    },
+    {
+      "source": "Représentation du monde",
+      "target": "Motifs",
+      "type": ""
+    },
+    {
+      "source": "Réflexion",
+      "target": "Modules",
+      "type": ""
+    },
+    {
+      "source": "Jugement",
+      "target": "Classements",
+      "type": ""
+    },
+    {
+      "source": "Identité",
+      "target": "Chemins",
+      "type": ""
+    },
+    {
+      "source": "Interaction avec l'environnement",
+      "target": "Retours d'expérience",
+      "type": ""
+    }
+
+    ,
+    {
+      "source": "Filtres",
+      "target": "Généralisation",
+      "type": ""
+    },
+    {
+      "source": "Motifs",
+      "target": "Unification",
+      "type": ""
+    },
+    {
+      "source": "Modules",
+      "target": "Diffusion",
+      "type": ""
+    },
+    {
+      "source": "Classements",
+      "target": "Spécialisation",
+      "type": ""
+    },
+    {
+      "source": "Chemins",
+      "target": "Séparation",
+      "type": ""
+    },
+    {
+      "source": "Retours d'expérience",
+      "target": "Concentration",
+      "type": ""
+    }
+
+    ,
+    {
+      "source": "Chronomètre",
+      "target": "Perception",
+      "type": ""
+    },
+    {
+      "source": "Chronomètre",
+      "target": "Réflexion",
+      "type": ""
+    },
+    {
+      "source": "Chronomètre",
+      "target": "Identité",
+      "type": ""
+    }
+
+
+
+  ],
+  "nodes": [
+    {
+      "id": "Pouvoirs d'interprétation",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Espaces topologiques",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Politiques",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Mémoires",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Modules d'intelligence",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Chronomètres",
+      "label": "Groupement conceptuel"
+    },
+    {
+      "id": "Théocratique",
+      "label": "Pouvoir d'interprétation"
+    },
+    {
+      "id": "Autocratique",
+      "label": "Pouvoir d'interprétation"
+    },
+    {
+      "id": "Démocratique",
+      "label": "Pouvoir d'interprétation"
+    },
+    {
+      "id": "Culture",
+      "label": "Mémoire"
+    },
+    {
+      "id": "Monde",
+      "label": "Mémoire"
+    },
+    {
+      "id": "Environnement",
+      "label": "Mémoire"
+    },
+    {
+      "id": "Changeant",
+      "label": "Chronomètre"
+    },
+    {
+      "id": "Durant",
+      "label": "Chronomètre"
+    },
+    {
+      "id": "Périodique",
+      "label": "Chronomètre"
+    },
+    {
+      "id": "Perception",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Représentation du monde",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Réflexion",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Jugement",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Identité",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Interaction avec l'environnement",
+      "label": "Module d'intelligence"
+    },
+    {
+      "id": "Ponctuel",
+      "label": "Période"
+    },
+    {
+      "id": "Tendanciel",
+      "label": "Période"
+    },
+    {
+      "id": "Répété",
+      "label": "Période"
+    },
+    {
+      "id": "Éternel",
+      "label": "Durée"
+    },
+    {
+      "id": "Éphémère",
+      "label": "Durée"
+    },
+    {
+      "id": "Instantané",
+      "label": "Durée"
+    },
+    {
+      "id": "Passé",
+      "label": "Changement"
+    },
+    {
+      "id": "Présent",
+      "label": "Changement"
+    },
+    {
+      "id": "Futur",
+      "label": "Changement"
+    },
+    {
+      "id": "Généralisation",
+      "label": "Politique"
+    },
+    {
+      "id": "Unification",
+      "label": "Politique"
+    },
+    {
+      "id": "Diffusion",
+      "label": "Politique"
+    },
+    {
+      "id": "Spécialisation",
+      "label": "Politique"
+    },
+    {
+      "id": "Séparation",
+      "label": "Politique"
+    },
+    {
+      "id": "Concentration",
+      "label": "Politique"
+    },
+    {
+      "id": "Bruits",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Désordres",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Conflits",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Redondances",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Incertitudes",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Contraintes",
+      "label": "Imperfection"
+    },
+    {
+      "id": "Filtres",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Motifs",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Modules",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Classements",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Chemins",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Retours d'expérience",
+      "label": "Intermédiaire"
+    },
+    {
+      "id": "Dépendance",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Étalement",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Diversité",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Logique",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Analyse",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Arithmétique",
+      "label": "Espace topologique"
+    },
+    {
+      "id": "Chronomètre",
+      "label": "Espace topologique"
+    }
+  ]
+}

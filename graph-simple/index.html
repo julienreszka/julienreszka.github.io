@@ -14,23 +14,29 @@
 			paint-order: stroke;
 			stroke-opacity: 0.5;
 		}
+		.node, .labels:hover{
+			cursor: pointer;
+		}
 		/*.edgelabel {
 			stroke: black;
 			paint-order: stroke;
 			stroke-opacity: 0.2;
 		}*/
+		svg:active{
+			cursor: move;
+		}
 	</style>
 </head>
 <body>
 <div>
-	Fonctionnement de l'Union Européenne
+	Fonctionnement d'un agent intelligent
 </div>
 </body>
 <script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
 <script src="https://d3js.org/d3-selection-multi.v1.js"></script>
 <script type="text/javascript">
 var color = d3.scaleOrdinal(d3.schemeCategory20);
-var labelColors = d3.scaleOrdinal(['#404040', 'white', '#ffd617' ]);
+var labelColors = d3.scaleOrdinal(['#404040', 'white', '#ffd617', '#004494' ]);
 var idColors = d3.scaleOrdinal(
 	[
 	'DarkOrange ',
@@ -85,13 +91,9 @@ var simulation = d3
 	.force("link", d3
 		.forceLink()
 		.id(function (d) {return d.id;})
-		.distance(function(d){ 
-			console.log(d.type.length + 100);
-			return (d.type.length * 2 + 100)
-		})
-	)
+		.distance(150))
 	// .force("collide",d3.forceCollide(function(d){return d.id + 0.5}).strength(1))
-	.force("charge", d3.forceManyBody().strength(-1800))
+	.force("charge", d3.forceManyBody().strength(-1500))
 	.force("center", d3.forceCenter(width / 2, height / 2))
 ;
 d3.json("graph.json", function (error, graph) {
@@ -99,6 +101,7 @@ if (error) throw error;
 update(graph.links, graph.nodes);
 })
 function update(links, nodes) {
+
 link = svg
 	.selectAll(".link")
 	.data(links)
@@ -160,8 +163,8 @@ node = svg
 	.attr("stroke-width", 1)
 	.style("fill", function (d, i) {return color(d.id);})
 	.call(d3.drag()
-			.on("start", dragstarted)
-			.on("drag", dragged)
+		.on("start", dragstarted)
+		.on("drag", dragged)
 			// .on("end", dragended)
 	);
 
@@ -177,7 +180,7 @@ label = svg
 	.style("font-size", 10)
 	.style("fill", "black")
 	.attr("stroke-width", "1px")
-	.text(function (d) {return d.name})
+	.text(function (d) {return d.id})
 	.call(d3
 		.drag()
 		.on("start", dragstarted)
@@ -189,9 +192,10 @@ label = svg
 node
 	.on("mouseover", function (d) {
 		node
-			.style('opacity', function(l) {
-				if (d === l )
-					return 1;
+			.style('opacity', function(n) {
+				console.log(d)
+				if (d === n)
+					return 0.9;
 				else
 					return 0.5;
 			
@@ -206,7 +210,7 @@ node
 		});
 		link
 			.style('opacity', function(l) {
-				if (d === l.source )
+				if (d === l.source || d === l.target)
 					return 1;
 				else
 					return 0.5;
@@ -214,10 +218,17 @@ node
 		});
 		link
 			.style('stroke-width', function(l) {
-				if (d === l.source )
-					return 2;
+				if (d === l.source || d === l.target)
+					return 2.5;
 				else
 					return 1;
+		});
+		link
+			.style('stroke-dasharray', function(l) {
+				if (d === l.target)
+					return "5, 5";
+				else
+					return null;
 		});
 })
 
@@ -230,6 +241,9 @@ simulation
 }
 
 function ticked() {
+
+	svg
+		.attr("width", window.innerWidth);
 	link
 		.attr("x1", function (d) {return d.source.x;})
 		.attr("y1", function (d) {return d.source.y;})
