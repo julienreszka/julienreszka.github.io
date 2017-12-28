@@ -1,14 +1,14 @@
 {
   "links": [
     {
-      "source": "Peuple",
+      "source": "Citoyens de l'Union Européenne de plus de 18 ans",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type": "ELIT"
+      "type": "ELISENT"
     },
     {
-      "source": "Peuple",
+      "source": "Citoyens de l'Union Européenne de plus de 18 ans",
       "target": "Parlement européen",
-      "type": "ELIT"
+      "type": "ELISENT"
     },
     {
       "source": "Parlement européen",
@@ -107,8 +107,8 @@
     },
     {
       "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
-      "target": "Commission européenne",
-      "type": "VICE PRESIDE"
+      "target": "Vice-Présidents de la Commission européenne",
+      "type": "COMPOSE"
     },
     {
       "source": "Jean Claude Juncker",
@@ -246,9 +246,14 @@
       "type": "COOPERE AVEC"
     },
     {
-      "source": "Georges Dassis",
+      "source": "Président du Comité économique et social européen (CESE)",
       "target": "Comité économique et social européen (CESE)",
       "type": "PRESIDE"
+    },
+    {
+      "source": "Georges Dassis",
+      "target": "Président du Comité économique et social européen (CESE)",
+      "type": "REPRESENTE"
     },
     {
       "source": "Parlement européen",
@@ -346,14 +351,14 @@
       "type": "AFIN D’EN GARANTIR L'APPLICATION UNIFORME INTERPRETE LA"
     },
     {
-      "source": "Cour de justice de l'Union européenne (CJUE)",
-      "target": "Cour de justice",
-      "type": "COMPREND"
+      "source": "Cour de justice",
+      "target": "Cour de justice de l'Union européenne (CJUE)",
+      "type": "COMPOSE"
     },
     {
-      "source": "Cour de justice de l'Union européenne (CJUE)",
-      "target": "Tribunal",
-      "type": "COMPREND"
+      "source": "Tribunal",
+      "target": "Cour de justice de l'Union européenne (CJUE)",
+      "type": "COMPOSE"
     },
     {
       "source": "Cour de justice de l'Union européenne (CJUE)",
@@ -378,6 +383,86 @@
     {
       "source": "Marc Jaeger",
       "target": "Président du Tribunal",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Législation de l'Union européenne",
+      "target": "Intérêts de l'Union européenne",
+      "type": "DANS DES DOMAINES QUI NE PEUVENT ÊTRE TRAITÉS EFFICACEMENT À L'ÉCHELON NATIONAL, DOIT PROTEGER LES"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Priorités budgétaires de l'Union européenne",
+      "type": "FIXE LES"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Priorités budgétaires de l'Union européenne",
+      "type": "APPROUVE LES"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Priorités budgétaires de l'Union européenne",
+      "type": "APPROUVE LES"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Utilisation des fonds de l'Union européenne",
+      "type": "CONTROLE"
+    },
+    {
+      "source": "Cour des comptes européenne",
+      "target": "Utilisation des fonds de l'Union européenne",
+      "type": "SURVEILLE"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Accords internationaux engageant l'Union européenne",
+      "type": "NEGOCIE"
+    },
+    {
+      "source": "Collège des commissaires de l'Union européenne",
+      "target": "Commission européenne",
+      "type": "DIRIGE LA POLITIQUE DE LA"
+    },
+    {
+      "source": "Personnel de la Commission européenne",
+      "target": "Commission européenne",
+      "type": "GERE"
+    },
+    {
+      "source": "Président de la Commission européenne",
+      "target": "Collège des commissaires de l'Union européenne",
+      "type": "DÉCIDE DE L'ATTRIBUTION DES RESPONSABILITÉS ET COMPOSE"
+    },
+    {
+      "source": "Vice-Présidents de la Commission européenne",
+      "target": "Commission européenne",
+      "type": "VICE PRESIDENT"
+    },
+    {
+      "source": "Vice-Présidents de la Commission européenne",
+      "target": "Collège des commissaires de l'Union européenne",
+      "type": "COMPOSENT"
+    },
+    {
+      "source": "Commissaires européens",
+      "target": "Collège des commissaires de l'Union européenne",
+      "type": "COMPOSENT"
+    },
+    {
+      "source": "Banque européenne d'investissement (BEI)",
+      "target": "Luxembourg",
+      "type": "SIEGE A"
+    },
+    {
+      "source": "Président de la Banque européenne d'investissement (BEI)",
+      "target": "Banque européenne d'investissement (BEI)",
+      "type": "PRESIDE"
+    },
+    {
+      "source": "Werner Hoyer",
+      "target": "Président de la Banque européenne d'investissement (BEI)",
       "type": "REPRESENTE"
     }
   ],
@@ -407,10 +492,11 @@
     },
     {
       "id": "Cour des comptes européenne",
-      "label": "Institution"
+      "label": "Institution",
+      "Date de création":"1977-10-18"
     },
     {
-      "id": "Peuple",
+      "id": "Citoyens de l'Union Européenne de plus de 18 ans",
       "label": "Institution"
     },
     {
@@ -460,7 +546,7 @@
     {
       "id": "Banque centrale européenne (BCE)",
       "label": "Institution",
-      "Date de créaction":"1998-06-01"
+      "Date de création":"1998-06-01"
     },
     {
       "id": "Politique monétaire de la zone euro",
@@ -505,7 +591,7 @@
       "label": "Ville"
     },
     {
-      "Date de créaction": "1952-01-01",
+      "Date de création": "1952-01-01",
       "id": "Cour de justice de l'Union européenne (CJUE)",
       "label": "Institution"
     },
@@ -524,7 +610,7 @@
           "Valeur en euros": 657000000
         }
       ],
-      "Date de créaction": "2010-12-01",
+      "Date de création": "2010-12-01",
       "Effectifs annuels": [
         {
           "Année": 2016,
@@ -555,8 +641,13 @@
       "label": "Institution"
     },
     {
-      "Date de créaction": "1957-03-25",
+      "Date de création": "1957-03-25",
       "id": "Comité économique et social européen (CESE)",
+      "label": "Institution"
+    },
+    {
+      "Date de création": "1957-03-25",
+      "id": "Président du Comité économique et social européen (CESE)",
       "label": "Institution"
     },
     {
@@ -592,12 +683,12 @@
       "label": "Personne"
     },
     {
-      "Date de créaction": "1994-01-01",
+      "Date de création": "1994-01-01",
       "id": "Comité européen des régions (CdR)",
       "label": "Institution"
     },
     {
-      "Date de créaction": "1994-01-01",
+      "Date de création": "1994-01-01",
       "id": "Président du Comité européen des régions",
       "label": "Institution"
     },
@@ -623,6 +714,51 @@
     },
     {
       "id": "Marc Jaeger",
+      "label": "Personne"
+    },
+    {
+      "id": "Intérêts de l'Union européenne",
+      "label": "Politique"
+    },
+    {
+      "id": "Priorités budgétaires de l'Union européenne",
+      "label": "Politique"
+    },
+    {
+      "id": "Utilisation des fonds de l'Union européenne",
+      "label": "Politique"
+    },
+    {
+      "id": "Accords internationaux engageant l'Union européenne",
+      "label": "Politique"
+    },
+    {
+      "id": "Collège des commissaires de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Personnel de la Commission européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Vice-Présidents de la Commission européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaires européens",
+      "label": "Institution"
+    },
+    {
+      "id": "Banque européenne d'investissement (BEI)",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la Banque européenne d'investissement (BEI)",
+      "label": "Institution",
+      "Date de création":"1958-01-01"
+    },
+    {
+      "id": "Werner Hoyer",
       "label": "Personne"
     }
   ]
