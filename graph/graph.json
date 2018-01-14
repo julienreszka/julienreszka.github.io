@@ -1,14 +1,14 @@
 {
   "links": [
     {
-      "source": "Citoyens de l'Union Européenne de plus de 18 ans",
+      "source": "Citoyens de l'Union européenne de plus de 18 ans",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
       "type": "ELISENT"
     },
     {
-      "source": "Citoyens de l'Union Européenne de plus de 18 ans",
+      "source": "Citoyens de l'Union européenne de plus de 18 ans",
       "target": "Députés européens",
-      "type": "ELISENT"
+      "type": "ELISENT LES ET CANDIDATENT EN TANT QUE"
     },
     {
       "source": "Députés européens",
@@ -368,7 +368,7 @@
     {
       "source": "Cour de justice de l'Union européenne (CJUE)",
       "target": "Institutions de l'Union européenne",
-      "type": "SANCTIONNE"
+      "type": "COMPOSE ET SANCTIONNE"
     },
     {
       "source": "Président de la Cour de justice",
@@ -494,6 +494,341 @@
       "source": "Wojciech Wiewiórowski",
       "target": "Contrôleur adjoint européen de la protection des données",
       "type": "REPRESENTE"
+    },
+    {
+      "source": "Chargé de l'Amélioration de la législation, des Relations inter-institutionnelles, des Règles de droit, de la Charte des droits fondamentaux et du Développement durable",
+      "target": "Vice-Présidents de la Commission européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Chargé du Budget et des Ressources humaines",
+      "target": "Vice-Présidents de la Commission européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Chargé du Marché numérique unique",
+      "target": "Vice-Présidents de la Commission européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Chargé de l'Union énergétique",
+      "target": "Vice-Présidents de la Commission européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Chargé de l'Euro et du Dialogue social",
+      "target": "Vice-Présidents de la Commission européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Chargé des Emplois, de la Croissance, des Investissements et de la Compétitivité",
+      "target": "Vice-Présidents de la Commission européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Frans Timmermans",
+      "target": "Chargé de l'Amélioration de la législation, des Relations inter-institutionnelles, des Règles de droit, de la Charte des droits fondamentaux et du Développement durable",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Kristalina Gueorguieva",
+      "target": "Chargé du Budget et des Ressources humaines",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Andrus Ansip",
+      "target": "Chargé du Marché numérique unique",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Maroš Šefčovič",
+      "target": "Chargé de l'Union énergétique",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Valdis Dombrovskis",
+      "target": "Chargé de l'Euro et du Dialogue social",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Jyrki Katainen",
+      "target": "Chargé des Emplois, de la Croissance, des Investissements et de la Compétitivité",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Institutions de l'Union européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Conseil européen",
+      "target": "Institutions de l'Union européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Institutions de l'Union européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Institutions de l'Union européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Banque centrale européenne (BCE)",
+      "target": "Institutions de l'Union européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Cour des comptes européenne",
+      "target": "Institutions de l'Union européenne",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Citoyens de l'Union européenne de plus de 18 ans",
+      "target": "Citoyens de l'Union européenne",
+      "type": "FONT PARTIE DES"
+    },
+    {
+      "source": "Citoyens de l'Union européenne",
+      "target": "Habitants de l'Union européenne",
+      "type": "FONT PARTIE DES"
+    },
+    {
+      "source": "Chancelier fédéral de la République fédérale d'Allemagne",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Chancelier fédéral d'Autriche",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Belgique",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Bulgarie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président de la République de Chypre",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Croatie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre du Danemark",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du gouvernement d’Espagne",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre d'Estonie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Finlande",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président de la République française",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Grèce",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Hongrie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Taoiseach",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du Conseil des ministres de la République italienne",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Lettonie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président de la République de Lituanie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre du Grand-duché de Luxembourg",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de la République de Malte",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre des Pays-Bas",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du Conseil des ministres polonais",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Portugal",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président de Roumanie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre du Royaume-Uni",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du gouvernement de la République slovaque",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du gouvernement de la République de Slovénie",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Suède",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du gouvernement de la République tchèque",
+      "target": "Chefs d’État et de gouvernement des pays de l’UE",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Chancelier fédéral de la République fédérale d'Allemagne",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Chancelier fédéral d'Autriche",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Belgique",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président de la République de Chypre",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du gouvernement d’Espagne",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre d'Estonie",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Finlande",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président de la République française",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Grèce",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Taoiseach",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du Conseil des ministres de la République italienne",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Lettonie",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président de la République de Lituanie",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre du Grand-duché de Luxembourg",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de la République de Malte",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre des Pays-Bas",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Premier ministre de Portugal",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du gouvernement de la République slovaque",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
+    },
+    {
+      "source": "Président du gouvernement de la République de Slovénie",
+      "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "type":"COMPOSE"
     }
   ],
   "nodes": [
@@ -526,7 +861,7 @@
       "Date de création":"1977-10-18"
     },
     {
-      "id": "Citoyens de l'Union Européenne de plus de 18 ans",
+      "id": "Citoyens de l'Union européenne de plus de 18 ans",
       "label": "Institution"
     },
     {
@@ -822,6 +1157,185 @@
     {
       "id": "Députés européens",
       "label": "Institution"
+    },
+    {
+      "id": "Frans Timmermans",
+      "label": "Personne",
+      "Nationalité":"Pays-Bas"
+    },
+    {
+      "id": "Kristalina Gueorguieva",
+      "label": "Personne",
+      "Nationalité":"Bulgarie"
+    },
+    {
+      "id": "Andrus Ansip",
+      "label": "Personne",
+      "Nationalité":"Estonie"
+    },
+    {
+      "id": "Maroš Šefčovič",
+      "label": "Personne",
+      "Nationalité":"Slovaquie"
+    },
+    {
+      "id": "Valdis Dombrovskis",
+      "label": "Personne",
+      "Nationalité":"Lettonie"
+    },
+    {
+      "id": "Jyrki Katainen",
+      "label": "Personne",
+      "Nationalité":"Finlande"
+    },
+    {
+      "id": "Chargé de l'Amélioration de la législation, des Relations inter-institutionnelles, des Règles de droit, de la Charte des droits fondamentaux et du Développement durable",
+      "label": "Institution"
+    },
+    {
+      "id": "Chargé du Budget et des Ressources humaines",
+      "label": "Institution"
+    },
+    {
+      "id": "Chargé du Marché numérique unique",
+      "label": "Institution"
+    },
+    {
+      "id": "Chargé de l'Union énergétique",
+      "label": "Institution"
+    },
+    {
+      "id": "Chargé de l'Euro et du Dialogue social",
+      "label": "Institution"
+    },
+    {
+      "id": "Chargé des Emplois, de la Croissance, des Investissements et de la Compétitivité",
+      "label": "Institution"
+    },
+    {
+      "id": "Citoyens de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Habitants de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "États membres de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Chancelier fédéral de la République fédérale d'Allemagne",
+      "label": "Institution"
+    },
+    {
+      "id": "Chancelier fédéral d'Autriche",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Belgique",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Bulgarie",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la République de Chypre",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Croatie",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre du Danemark",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du gouvernement d’Espagne",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre d'Estonie",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Finlande",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la République française",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Grèce",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Hongrie",
+      "label": "Institution"
+    },
+    {
+      "id": "Taoiseach",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du Conseil des ministres de la République italienne",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Lettonie",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la République de Lituanie",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre du Grand-duché de Luxembourg",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de la République de Malte",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre des Pays-Bas",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du Conseil des ministres polonais",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Portugal",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de Roumanie",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre du Royaume-Uni",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du gouvernement de la République slovaque",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du gouvernement de la République de Slovénie",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre de Suède",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du gouvernement de la République tchèque",
+      "label": "Institution"
     }
+
   ]
 }

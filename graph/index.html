@@ -98,7 +98,7 @@ var simulation = d3
 			return (d.type.length * 2 + 100)
 		})
 	)
-	// .force("collide",d3.forceCollide(function(d){return d.id + 0.5}).strength(1))
+	.force("collide",d3.forceCollide(function(d){return d.id + 0.5}).strength(1).radius(40))
 	.force("charge", d3.forceManyBody().strength(-1800))
 	.force("center", d3.forceCenter(width / 2, height / 2))
 ;
