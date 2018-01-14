@@ -172,7 +172,7 @@
     },
     {
       "source": "Banque centrale européenne (BCE)",
-      "target": "Francfort",
+      "target": "Francfort-sur-le-Main",
       "type": "SIEGE A"
     },
     {
@@ -186,8 +186,18 @@
       "type": "COMPOSE"
     },
     {
+      "source": "Vice-Président de la Banque centrale européenne",
+      "target": "Directoire",
+      "type": "COMPOSE"
+    },
+    {
       "source": "Mario Draghi",
       "target": "Président de la Banque centrale européenne",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Vítor Constâncio",
+      "target": "Vice-Président de la Banque centrale européenne",
       "type": "REPRESENTE"
     },
     {
@@ -711,6 +721,11 @@
       "type": "COMPOSE"
     },
     {
+      "source": "Chefs d’État et de gouvernement des pays de l’UE",
+      "target": "États membres de l'Union européenne",
+      "type": "REPRESENTENT"
+    },
+    {
       "source": "Président de Roumanie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
       "type": "COMPOSE"
@@ -1184,6 +1199,31 @@
       "source": "Andrej Babiš",
       "target": "Président du gouvernement de la République tchèque",
       "type": "REPRESENTE"
+    },
+    {
+      "source": "Membres du Directoire",
+      "target": "Directoire",
+      "type": "COMPOSENT"
+    },
+    {
+      "source": "Benoît Cœuré",
+      "target": "Membres du Directoire",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Sabine Lautenschläger",
+      "target": "Membres du Directoire",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Yves Mersch",
+      "target": "Membres du Directoire",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Peter Praet",
+      "target": "Membres du Directoire",
+      "type": "COMPOSE"
     }
 
   ],
@@ -1317,7 +1357,7 @@
       "label": "Institution"
     },
     {
-      "id": "Francfort",
+      "id": "Francfort-sur-le-Main",
       "label": "Ville"
     },
     {
@@ -1498,11 +1538,6 @@
     },
     {
       "Nationalité": "Pologne",
-      "id": "Wojciech Wiewiórowski",
-      "label": "Personne"
-    },
-    {
-      "Nationalité": "Italie",
       "id": "Wojciech Wiewiórowski",
       "label": "Personne"
     },
@@ -1825,10 +1860,6 @@
     "label": "Personne"
   },
   {
-    "id": "Valdis Dombrovskis",
-    "label": "Personne"
-  },
-  {
     "id": "Julian King",
     "label": "Personne"
   },
@@ -1890,10 +1921,6 @@
     },
     {
       "id": "Mariano Rajoy",
-      "label":"Personne"
-    },
-    {
-      "id": "Jüri Ratas",
       "label":"Personne"
     },
     {
@@ -1970,6 +1997,34 @@
     },
     {
       "id": "Andrej Babiš",
+      "label":"Personne"
+    },
+    {
+      "id": "Vítor Constâncio",
+      "label":"Personne"
+    },
+    {
+      "id": "Vice-Président de la Banque centrale européenne",
+      "label":"Institution"
+    },
+    {
+      "id": "Membres du Directoire",
+      "label":"Institution"
+    },
+    {
+      "id": "Benoît Cœuré",
+      "label":"Personne"
+    },
+    {
+      "id": "Sabine Lautenschläger",
+      "label":"Personne"
+    },
+    {
+      "id": "Yves Mersch",
+      "label":"Personne"
+    },
+    {
+      "id": "Peter Praet",
       "label":"Personne"
     }
   ]
