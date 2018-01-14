@@ -7,8 +7,13 @@
     },
     {
       "source": "Citoyens de l'Union Européenne de plus de 18 ans",
-      "target": "Parlement européen",
+      "target": "Députés européens",
       "type": "ELISENT"
+    },
+    {
+      "source": "Députés européens",
+      "target": "Parlement européen",
+      "type": "COMPOSENT"
     },
     {
       "source": "Parlement européen",
@@ -464,6 +469,31 @@
       "source": "Werner Hoyer",
       "target": "Président de la Banque européenne d'investissement (BEI)",
       "type": "REPRESENTE"
+    },
+    {
+      "source": "Contrôleur européen de la protection des données",
+      "target": "Activités de traitement de données à caractère personnel",
+      "type": "SUPERVISE"
+    },
+    {
+      "source": "Contrôleur adjoint européen de la protection des données",
+      "target": "Activités de traitement de données à caractère personnel",
+      "type": "SUPERVISE"
+    },
+    {
+      "source": "Institutions de l'Union européenne",
+      "target": "Activités de traitement de données à caractère personnel",
+      "type": "EXERCENT DES"
+    },
+    {
+      "source": "Giovanni Buttarelli",
+      "target": "Contrôleur européen de la protection des données",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Wojciech Wiewiórowski",
+      "target": "Contrôleur adjoint européen de la protection des données",
+      "type": "REPRESENTE"
     }
   ],
   "nodes": [
@@ -760,6 +790,38 @@
     {
       "id": "Werner Hoyer",
       "label": "Personne"
+    },
+    {
+      "id": "Contrôleur européen de la protection des données",
+      "label": "Institution",
+      "Date de création":"2004-01-17"
+    },
+    {
+      "id": "Contrôleur adjoint européen de la protection des données",
+      "label": "Institution",
+      "Date de création":"2004-01-17"
+    },
+    {
+      "id": "Giovanni Buttarelli",
+      "label": "Personne"
+    },
+    {
+      "id": "Wojciech Wiewiórowski",
+      "label": "Personne",
+      "Nationalité":"Pologne"
+    },
+    {
+      "id": "Wojciech Wiewiórowski",
+      "label": "Personne",
+      "Nationalité":"Italie"
+    },
+    {
+      "id": "Activités de traitement de données à caractère personnel",
+      "label": "Politique"
+    },
+    {
+      "id": "Députés européens",
+      "label": "Institution"
     }
   ]
 }
