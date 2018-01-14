@@ -138,17 +138,17 @@
     {
       "source": "Parlement européen",
       "target": "Strasbourg",
-      "type": "SIEGE A"
+      "type": "SIEGE A ET TIENT SES SEANCES PLENIERES à"
     },
     {
       "source": "Parlement européen",
       "target": "Bruxelles",
-      "type": "SIEGE A"
+      "type": "TIENT SES COMMISSIONS ET SEANCES ADDITIONNELLS à"
     },
     {
       "source": "Parlement européen",
       "target": "Luxembourg",
-      "type": "SIEGE A"
+      "type": "A SON SECRETARIAT GENERAL à"
     },
     {
       "source": "Conseil européen",
@@ -571,6 +571,11 @@
       "type": "COMPOSE"
     },
     {
+      "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "target": "Conseil de l'Union européenne",
+      "type": "PRESIDE LE CONSEIL DES AFFAIRES ETRANGERES"
+    },
+    {
       "source": "Commission européenne",
       "target": "Institutions de l'Union européenne",
       "type": "COMPOSE"
@@ -929,7 +934,258 @@
       "source": "Commissaire européen à la recherche, à la science et à l'innovation",
       "target": "Commissaires européens",
       "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la sécurité de l'Union",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+"source":"Günther Oettinger",
+"target":"Commissaire européen à l'économie et à la société numériques",
+"type":"REPRESENTE"
+},
+{
+"source":"Johannes Hahn",
+"target":"Commissaire européen à la politique européenne de voisinage et aux négociations d'élargissement",
+"type":"REPRESENTE"
+},
+{
+"source":"Cecilia Malmström",
+"target":"Commissaire européen au commerce",
+"type":"REPRESENTE"
+},
+{
+"source":"Neven Mimica",
+"target":"Commissaire européen à la coopération internationale et au développement",
+"type":"REPRESENTE"
+},
+{
+"source":"Miguel Arias Cañete",
+"target":"Commissaire européen à l'action pour le climat et à énergie",
+"type":"REPRESENTE"
+},
+{
+"source":"Karmenu Vella",
+"target":"Commissaire européen à l'environnement, aux affaires maritimes et à la pêche",
+"type":"REPRESENTE"
+},
+{
+"source":"Vytenis Andriukaitis",
+"target":"Commissaire européen à la santé et à la sécurité alimentaire",
+"type":"REPRESENTE"
+},
+{
+"source":"Dimítris Avramópoulos",
+"target":"Commissaire européen aux migrations, aux affaires intérieures et à la citoyenneté",
+"type":"REPRESENTE"
+},
+{
+"source":"Marianne Thyssen",
+"target":"Commissaire européen à l'emploi, aux affaires sociales, aux compétences et à la mobilité",
+"type":"REPRESENTE"
+},
+{
+"source":"Pierre Moscovici",
+"target":"Commissaire européen aux affaires économiques et financières, à la fiscalité et à l'union douanière",
+"type":"REPRESENTE"
+},
+{
+"source":"Chrístos Stylianídis",
+"target":"Commissaire européen à l'aide humanitaire et à la réaction aux crises",
+"type":"REPRESENTE"
+},
+{
+"source":"Phil Hogan",
+"target":"Commissaire européen à l'agriculture et au développement rural",
+"type":"REPRESENTE"
+},
+{
+"source":"Valdis Dombrovskis",
+"target":"Commissaire européen à la stabilité financière, aux services financiers et à l'union du marché des capitaux",
+"type":"REPRESENTE"
+},
+{
+"source":"Julian King",
+"target":"Commissaire européen à la sécurité de l'Union",
+"type":"REPRESENTE"
+},
+{
+"source":"Violeta Bulc",
+"target":"Commissaire européen aux transports",
+"type":"REPRESENTE"
+},
+{
+"source":"Elżbieta Bieńkowska",
+"target":"Commissaire européen au marché intérieur, à l'industrie, à l'entrepreneuriat et aux PME",
+"type":"REPRESENTE"
+},
+{
+"source":"Věra Jourová",
+"target":"Commissaire européen à la justice, aux consommateurs et à l'égalité des genres",
+"type":"REPRESENTE"
+},
+{
+"source":"Tibor Navracsics",
+"target":"Commissaire européen à l'éducation, à la culture, à la jeunesse et aux sports",
+"type":"REPRESENTE"
+},
+{
+"source":"Corina Crețu",
+"target":"Commissaire européen à la politique régionale",
+"type":"REPRESENTE"
+},
+{
+"source":"Margrethe Vestager",
+"target":"Commissaire européen à la concurrence",
+"type":"REPRESENTE"
+},
+{
+"source":"Carlos Moedas",
+"target":"Commissaire européen à la recherche, à la science et à l'innovation",
+"type":"REPRESENTE"
+},
+{
+      "source": "Angela Merkel",
+      "target": "Chancelier fédéral de la République fédérale d'Allemagne",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Sebastian Kurz",
+      "target": "Chancelier fédéral d'Autriche",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Charles Michel",
+      "target": "Premier ministre de Belgique",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Boïko Borissov",
+      "target": "Premier ministre de Bulgarie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Nicos Anastasiades",
+      "target": "Président de la République de Chypre",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Andrej Plenković",
+      "target": "Premier ministre de Croatie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Lars Løkke Rasmussen",
+      "target": "Premier ministre du Danemark",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Mariano Rajoy",
+      "target": "Président du gouvernement d’Espagne",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Jüri Ratas",
+      "target": "Premier ministre d'Estonie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Juha Sipilä",
+      "target": "Premier ministre de Finlande",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Emmanuel Macron",
+      "target": "Président de la République française",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Aléxis Tsípras",
+      "target": "Premier ministre de Grèce",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Viktor Orbán",
+      "target": "Premier ministre de Hongrie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Leo Varadkar",
+      "target": "Taoiseach",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Paolo Gentiloni",
+      "target": "Président du Conseil des ministres de la République italienne",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Māris Kučinskis",
+      "target": "Premier ministre de Lettonie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Dalia Grybauskaitė",
+      "target": "Président de la République de Lituanie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Xavier Bettel",
+      "target": "Premier ministre du Grand-duché de Luxembourg",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Joseph Muscat",
+      "target": "Premier ministre de la République de Malte",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Mark Rutte",
+      "target": "Premier ministre des Pays-Bas",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Mateusz Morawiecki",
+      "target": "Président du Conseil des ministres polonais",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "António Costa",
+      "target": "Premier ministre de Portugal",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Klaus Iohannis",
+      "target": "Président de Roumanie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Theresa May",
+      "target": "Premier ministre du Royaume-Uni",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Robert Fico",
+      "target": "Président du gouvernement de la République slovaque",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Miro Cerar",
+      "target": "Président du gouvernement de la République de Slovénie",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Stefan Löfven",
+      "target": "Premier ministre de Suède",
+      "type": "REPRESENTE"
+    },
+    {
+      "source": "Andrej Babiš",
+      "target": "Président du gouvernement de la République tchèque",
+      "type": "REPRESENTE"
     }
+
   ],
   "nodes": [
     {
@@ -1493,6 +1749,10 @@
       "label": "Institution"
     },
     {
+      "id": "Commissaire européen à la sécurité de l'Union",
+      "label": "Institution"
+    },
+    {
       "id": "Commissaire européen au marché intérieur, à l'industrie, à l'entrepreneuriat et aux PME",
       "label": "Institution"
     },
@@ -1515,6 +1775,202 @@
     {
       "id": "Commissaire européen à la recherche, à la science et à l'innovation",
       "label": "Institution"
+    },
+      {
+    "id": "Günther Oettinger",
+    "label": "Personne"
+  },
+  {
+    "id": "Johannes Hahn",
+    "label": "Personne"
+  },
+  {
+    "id": "Cecilia Malmström",
+    "label": "Personne"
+  },
+  {
+    "id": "Neven Mimica",
+    "label": "Personne"
+  },
+  {
+    "id": "Miguel Arias Cañete",
+    "label": "Personne"
+  },
+  {
+    "id": "Karmenu Vella",
+    "label": "Personne"
+  },
+  {
+    "id": "Vytenis Andriukaitis",
+    "label": "Personne"
+  },
+  {
+    "id": "Dimítris Avramópoulos",
+    "label": "Personne"
+  },
+  {
+    "id": "Marianne Thyssen",
+    "label": "Personne"
+  },
+  {
+    "id": "Pierre Moscovici",
+    "label": "Personne"
+  },
+  {
+    "id": "Chrístos Stylianídis",
+    "label": "Personne"
+  },
+  {
+    "id": "Phil Hogan",
+    "label": "Personne"
+  },
+  {
+    "id": "Valdis Dombrovskis",
+    "label": "Personne"
+  },
+  {
+    "id": "Julian King",
+    "label": "Personne"
+  },
+  {
+    "id": "Violeta Bulc",
+    "label": "Personne"
+  },
+  {
+    "id": "Elżbieta Bieńkowska",
+    "label": "Personne"
+  },
+  {
+    "id": "Věra Jourová",
+    "label": "Personne"
+  },
+  {
+    "id": "Tibor Navracsics",
+    "label": "Personne"
+  },
+  {
+    "id": "Corina Crețu",
+    "label": "Personne"
+  },
+  {
+    "id": "Margrethe Vestager",
+    "label": "Personne"
+  },
+  {
+    "id": "Carlos Moedas",
+    "label": "Personne"
+  },
+   {
+      "id": "Angela Merkel",
+      "label":"Personne"
+    },
+    {
+      "id": "Sebastian Kurz",
+      "label":"Personne"
+    },
+    {
+      "id": "Charles Michel",
+      "label":"Personne"
+    },
+    {
+      "id": "Boïko Borissov",
+      "label":"Personne"
+    },
+    {
+      "id": "Nicos Anastasiades",
+      "label":"Personne"
+    },
+    {
+      "id": "Andrej Plenković",
+      "label":"Personne"
+    },
+    {
+      "id": "Lars Løkke Rasmussen",
+      "label":"Personne"
+    },
+    {
+      "id": "Mariano Rajoy",
+      "label":"Personne"
+    },
+    {
+      "id": "Jüri Ratas",
+      "label":"Personne"
+    },
+    {
+      "id": "Juha Sipilä",
+      "label":"Personne"
+    },
+    {
+      "id": "Emmanuel Macron",
+      "label":"Personne"
+    },
+    {
+      "id": "Aléxis Tsípras",
+      "label":"Personne"
+    },
+    {
+      "id": "Viktor Orbán",
+      "label":"Personne"
+    },
+    {
+      "id": "Leo Varadkar",
+      "label":"Personne"
+    },
+    {
+      "id": "Paolo Gentiloni",
+      "label":"Personne"
+    },
+    {
+      "id": "Māris Kučinskis",
+      "label":"Personne"
+    },
+    {
+      "id": "Dalia Grybauskaitė",
+      "label":"Personne"
+    },
+    {
+      "id": "Xavier Bettel",
+      "label":"Personne"
+    },
+    {
+      "id": "Joseph Muscat",
+      "label":"Personne"
+    },
+    {
+      "id": "Mark Rutte",
+      "label":"Personne"
+    },
+    {
+      "id": "Mateusz Morawiecki",
+      "label":"Personne"
+    },
+    {
+      "id": "António Costa",
+      "label":"Personne"
+    },
+    {
+      "id": "Klaus Iohannis",
+      "label":"Personne"
+    },
+    {
+      "id": "Theresa May",
+      "label":"Personne"
+    },
+    {
+      "id": "Robert Fico",
+      "label":"Personne"
+    },
+    {
+      "id": "Miro Cerar",
+      "label":"Personne"
+    },
+    {
+      "id": "Stefan Löfven",
+      "label":"Personne"
+    },
+    {
+      "id": "Andrej Babiš",
+      "label":"Personne"
     }
   ]
 }
