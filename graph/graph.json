@@ -598,237 +598,337 @@
     {
       "source": "Chancelier fédéral de la République fédérale d'Allemagne",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Chancelier fédéral d'Autriche",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Belgique",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Bulgarie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président de la République de Chypre",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Croatie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre du Danemark",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du gouvernement d’Espagne",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre d'Estonie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Finlande",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président de la République française",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Grèce",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Hongrie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Taoiseach",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du Conseil des ministres de la République italienne",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Lettonie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président de la République de Lituanie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre du Grand-duché de Luxembourg",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de la République de Malte",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre des Pays-Bas",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du Conseil des ministres polonais",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Portugal",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président de Roumanie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre du Royaume-Uni",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du gouvernement de la République slovaque",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du gouvernement de la République de Slovénie",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Suède",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du gouvernement de la République tchèque",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Chancelier fédéral de la République fédérale d'Allemagne",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Chancelier fédéral d'Autriche",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Belgique",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président de la République de Chypre",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du gouvernement d’Espagne",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre d'Estonie",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Finlande",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président de la République française",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Grèce",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Taoiseach",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du Conseil des ministres de la République italienne",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Lettonie",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président de la République de Lituanie",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre du Grand-duché de Luxembourg",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de la République de Malte",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre des Pays-Bas",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Premier ministre de Portugal",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du gouvernement de la République slovaque",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
     },
     {
       "source": "Président du gouvernement de la République de Slovénie",
       "target": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
-      "type":"COMPOSE"
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen aux transports",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à l'économie et à la société numériques",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la politique européenne de voisinage et aux négociations d'élargissement",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen au commerce",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la coopération internationale et au développement",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à l'action pour le climat et à énergie",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à l'environnement, aux affaires maritimes et à la pêche",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la santé et à la sécurité alimentaire",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen aux migrations, aux affaires intérieures et à la citoyenneté",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à l'emploi, aux affaires sociales, aux compétences et à la mobilité",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen aux affaires économiques et financières, à la fiscalité et à l'union douanière",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à l'aide humanitaire et à la réaction aux crises",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à l'agriculture et au développement rural",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la stabilité financière, aux services financiers et à l'union du marché des capitaux",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen au marché intérieur, à l'industrie, à l'entrepreneuriat et aux PME",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la justice, aux consommateurs et à l'égalité des genres",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à l'éducation, à la culture, à la jeunesse et aux sports",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la politique régionale",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la concurrence",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
+    },
+    {
+      "source": "Commissaire européen à la recherche, à la science et à l'innovation",
+      "target": "Commissaires européens",
+      "type": "COMPOSE"
     }
   ],
   "nodes": [
@@ -856,9 +956,9 @@
       "label": "Institution"
     },
     {
+      "Date de création": "1977-10-18",
       "id": "Cour des comptes européenne",
-      "label": "Institution",
-      "Date de création":"1977-10-18"
+      "label": "Institution"
     },
     {
       "id": "Citoyens de l'Union européenne de plus de 18 ans",
@@ -909,9 +1009,9 @@
       "label": "Institution"
     },
     {
+      "Date de création": "1998-06-01",
       "id": "Banque centrale européenne (BCE)",
-      "label": "Institution",
-      "Date de création":"1998-06-01"
+      "label": "Institution"
     },
     {
       "id": "Politique monétaire de la zone euro",
@@ -939,9 +1039,9 @@
     },
     {
       "E-mail": "federica.mogherini@ec.europa.eu",
+      "Nationalité": "Italie",
       "id": "Federica Mogherini",
-      "label": "Personne",
-      "Nationalité":"Italie"
+      "label": "Personne"
     },
     {
       "id": "Strasbourg",
@@ -1118,37 +1218,37 @@
       "label": "Institution"
     },
     {
+      "Date de création": "1958-01-01",
       "id": "Président de la Banque européenne d'investissement (BEI)",
-      "label": "Institution",
-      "Date de création":"1958-01-01"
+      "label": "Institution"
     },
     {
       "id": "Werner Hoyer",
       "label": "Personne"
     },
     {
+      "Date de création": "2004-01-17",
       "id": "Contrôleur européen de la protection des données",
-      "label": "Institution",
-      "Date de création":"2004-01-17"
+      "label": "Institution"
     },
     {
+      "Date de création": "2004-01-17",
       "id": "Contrôleur adjoint européen de la protection des données",
-      "label": "Institution",
-      "Date de création":"2004-01-17"
+      "label": "Institution"
     },
     {
       "id": "Giovanni Buttarelli",
       "label": "Personne"
     },
     {
+      "Nationalité": "Pologne",
       "id": "Wojciech Wiewiórowski",
-      "label": "Personne",
-      "Nationalité":"Pologne"
+      "label": "Personne"
     },
     {
+      "Nationalité": "Italie",
       "id": "Wojciech Wiewiórowski",
-      "label": "Personne",
-      "Nationalité":"Italie"
+      "label": "Personne"
     },
     {
       "id": "Activités de traitement de données à caractère personnel",
@@ -1159,34 +1259,34 @@
       "label": "Institution"
     },
     {
+      "Nationalité": "Pays-Bas",
       "id": "Frans Timmermans",
-      "label": "Personne",
-      "Nationalité":"Pays-Bas"
+      "label": "Personne"
     },
     {
+      "Nationalité": "Bulgarie",
       "id": "Kristalina Gueorguieva",
-      "label": "Personne",
-      "Nationalité":"Bulgarie"
+      "label": "Personne"
     },
     {
+      "Nationalité": "Estonie",
       "id": "Andrus Ansip",
-      "label": "Personne",
-      "Nationalité":"Estonie"
+      "label": "Personne"
     },
     {
+      "Nationalité": "Slovaquie",
       "id": "Maroš Šefčovič",
-      "label": "Personne",
-      "Nationalité":"Slovaquie"
+      "label": "Personne"
     },
     {
+      "Nationalité": "Lettonie",
       "id": "Valdis Dombrovskis",
-      "label": "Personne",
-      "Nationalité":"Lettonie"
+      "label": "Personne"
     },
     {
+      "Nationalité": "Finlande",
       "id": "Jyrki Katainen",
-      "label": "Personne",
-      "Nationalité":"Finlande"
+      "label": "Personne"
     },
     {
       "id": "Chargé de l'Amélioration de la législation, des Relations inter-institutionnelles, des Règles de droit, de la Charte des droits fondamentaux et du Développement durable",
@@ -1335,7 +1435,86 @@
     {
       "id": "Président du gouvernement de la République tchèque",
       "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen aux transports",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à l'économie et à la société numériques",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la politique européenne de voisinage et aux négociations d'élargissement",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen au commerce",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la coopération internationale et au développement",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à l'action pour le climat et à énergie",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à l'environnement, aux affaires maritimes et à la pêche",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la santé et à la sécurité alimentaire",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen aux migrations, aux affaires intérieures et à la citoyenneté",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à l'emploi, aux affaires sociales, aux compétences et à la mobilité",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen aux affaires économiques et financières, à la fiscalité et à l'union douanière",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à l'aide humanitaire et à la réaction aux crises",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à l'agriculture et au développement rural",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la stabilité financière, aux services financiers et à l'union du marché des capitaux",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen au marché intérieur, à l'industrie, à l'entrepreneuriat et aux PME",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la justice, aux consommateurs et à l'égalité des genres",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à l'éducation, à la culture, à la jeunesse et aux sports",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la politique régionale",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la concurrence",
+      "label": "Institution"
+    },
+    {
+      "id": "Commissaire européen à la recherche, à la science et à l'innovation",
+      "label": "Institution"
     }
-
   ]
 }
