@@ -32,7 +32,8 @@
 	Fonctionnement de l'Union Européenne 
 	<a href="https://europa.eu/european-union/about-eu/institutions-bodies_fr">
 		Sources
-	</a>
+	</a> 
+	<a href="/3d/">En 3D</a>
 </div>
 </body>
 <script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
@@ -99,11 +100,18 @@ var simulation = d3
 		})
 	)
 	.force("collide",d3.forceCollide(function(d){return d.id + 0.5}).strength(1).radius(40))
-	.force("charge", d3.forceManyBody().strength(-1800))
+	// .force("collide",d3.forceCollide())
+	.force("charge", d3.forceManyBody().strength(-1500))
 	.force("center", d3.forceCenter(width / 2, height / 2))
 ;
 d3.json("graph.json", function (error, graph) {
 if (error) throw error;
+
+graph.links = graph.links.filter(l => l.type != ("REPRESENTE"));
+graph.links = graph.links.filter(l => l.type != ("EST AFFILIE AU PARTI"));
+graph.links = graph.links.filter(l => l.type != ("FAIT PARTIE DES"));
+
+graph.nodes = graph.nodes.filter(n => n.label != ("Personne"));
 update(graph.links, graph.nodes);
 })
 function update(links, nodes) {
