@@ -1,0 +1,92 @@
+{
+  "links": [
+    {
+      "source": "Total",
+      "target": "Compétitivité",
+      "value": 77.534
+    },
+    {
+      "source": "Compétitivité",
+      "target": "Fonds européen pour les investissements stratégiques (EFSI)",
+      "value": 2
+    },
+    {
+      "source": "Compétitivité",
+      "target": "Fonds structurels et d'investissement européens (Fonds ESI)",
+      "value": 55.552
+    },
+    {
+      "source": "Compétitivité",
+      "target": "Soutien des petites et moyennes entreprises (compétitivité des petites et moyennes entreprises, programme COSME)",
+      "value": 0.354
+    },
+    {
+      "source": "Compétitivité",
+      "target": "Horizon 2020, le programme de financement de la recherche et de l'innovation",
+      "value": 11.2
+    },
+    {
+      "source": "Total",
+      "target": "Agriculture",
+      "value": 59
+    },
+    {
+      "source": "Total",
+      "target": "Initiative pour l'emploi des jeunes",
+      "value": 0.350
+    },
+    {
+      "source": "Total",
+      "target": "Fonds européen de la défense",
+      "value": 0.350
+    },
+    {
+      "source": "Total",
+      "target": "Gestion des migrations et sécurité",
+      "value": 4.1
+    }
+
+  ],
+  "nodes": [
+    {
+      "id": "Total",
+      "value":160.114
+    },
+    {
+      "id": "Compétitivité",
+      "value":77.534
+    },
+    {
+      "id": "Agriculture",
+      "value":59
+    },
+    {
+      "id": "Fonds européen pour les investissements stratégiques (EFSI)",
+      "value":2
+    },
+    {
+      "id": "Fonds structurels et d'investissement européens (Fonds ESI)",
+      "value":55.552
+    },
+    {
+      "id": "Horizon 2020, le programme de financement de la recherche et de l'innovation",
+      "value":11.2
+    },
+    {
+      "id": "Soutien des petites et moyennes entreprises (compétitivité des petites et moyennes entreprises, programme COSME)",
+      "value":0.354
+    },
+    {
+      "id": "Initiative pour l'emploi des jeunes",
+      "value":0.350
+    },
+    {
+      "id": "Fonds européen de la défense",
+      "value":0.040
+    },
+    {
+      "id": "Gestion des migrations et sécurité",
+      "value":4.1
+    }
+  ]
+}
