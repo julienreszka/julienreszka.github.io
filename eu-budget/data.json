@@ -2,48 +2,55 @@
   "links": [
     {
       "source": "Total",
-      "target": "Compétitivité",
-      "value": 77.534
+      "target": "Compétitivité"
     },
     {
       "source": "Compétitivité",
-      "target": "Fonds européen pour les investissements stratégiques (EFSI)",
-      "value": 2
+      "target": "Fonds européen pour les investissements stratégiques (EFSI)"
     },
     {
       "source": "Compétitivité",
-      "target": "Fonds structurels et d'investissement européens (Fonds ESI)",
-      "value": 55.552
+      "target": "Fonds structurels et d'investissement européens (Fonds ESI)"
     },
     {
       "source": "Compétitivité",
-      "target": "Soutien des petites et moyennes entreprises (compétitivité des petites et moyennes entreprises, programme COSME)",
-      "value": 0.354
+      "target": "Soutien des petites et moyennes entreprises (compétitivité des petites et moyennes entreprises, programme COSME)"
     },
     {
       "source": "Compétitivité",
-      "target": "Horizon 2020, le programme de financement de la recherche et de l'innovation",
-      "value": 11.2
+      "target": "Horizon 2020, le programme de financement de la recherche et de l'innovation"
     },
     {
       "source": "Total",
-      "target": "Agriculture",
-      "value": 59
+      "target": "Agriculture"
     },
     {
       "source": "Total",
-      "target": "Initiative pour l'emploi des jeunes",
-      "value": 0.350
+      "target": "Initiative pour l'emploi des jeunes"
     },
     {
       "source": "Total",
-      "target": "Fonds européen de la défense",
-      "value": 0.350
+      "target": "Fonds européen de la défense"
     },
     {
       "source": "Total",
-      "target": "Gestion des migrations et sécurité",
-      "value": 4.1
+      "target": "Gestion des migrations et sécurité"
+    },
+    {
+      "source": "Total",
+      "target": "Administration"
+    },
+    {
+      "source": "Administration",
+      "target": "Pensions et écoles européennes"
+    },
+    {
+      "source": "Administration",
+      "target": "Dépenses administratives des institutions"
+    },
+    {
+      "source": "Dépenses administratives des institutions",
+      "target": "Commission"
     }
 
   ],
@@ -87,6 +94,22 @@
     {
       "id": "Gestion des migrations et sécurité",
       "value":4.1
+    },
+    {
+      "id": "Administration",
+      "value":8.6605
+    },
+    {
+      "id": "Pensions et écoles européennes",
+      "value":1.7199
+    },
+    {
+      "id": "Dépenses administratives des institutions",
+      "value":6.9412
+    },
+    {
+      "id": "Commission",
+      "value":3.2750
     }
   ]
 }
