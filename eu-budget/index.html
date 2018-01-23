@@ -61,7 +61,7 @@ var simulation = d3.forceSimulation()
     .force("collide",d3
       .forceCollide(function(d){return d.id})
       .strength(1)
-      .radius(function(d) {return d.value + 50}))
+      .radius(function(d) {return d.value + 10}))
     .force("link", d3
       .forceLink()
       .id(function (d) {return d.id;})
@@ -117,6 +117,13 @@ node.on("mouseover", function (d) {
       return 0.2;
     
   });
+  link
+      .style('stroke-dasharray', function(l) {
+        if (d === l.target)
+          return "5, 5";
+        else
+          return null;
+    });
 })
 
   var label = svg.append("g")
@@ -151,6 +158,13 @@ label.on("mouseover", function (d) {
       return 0.2;
     
   });
+  link
+      .style('stroke-dasharray', function(l) {
+        if (d === l.target)
+          return "5, 5";
+        else
+          return null;
+    });
 })
 
 
