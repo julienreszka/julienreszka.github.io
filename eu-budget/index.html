@@ -1,252 +1,259 @@
 <!DOCTYPE html>
-
+<html lang="fr">
 <head>
-<title>
-Visualiser le budget de l’UE pour 2018 <a href="http://www.consilium.europa.eu/fr/policies/eu-annual-budget/2018/">Source</a>
-</title>
-<meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style type="text/css">
+		
+		circle {
+			opacity: 0.5;
+		}
+		text {
+			paint-order: stroke;
+			stroke-opacity: 0.5;
+		}
+		.node, .labels:hover{
+			cursor: pointer;
+		}
+		svg:active{
+			cursor: move;
+		}
+	</style>
 </head>
-
-<style>
-  
-svg{
-  position: relative;
-  z-index:0;
-}
-
-text {
-      paint-order: stroke;
-      stroke-opacity: 0.5;
-    }
-
-line {
-opacity: 0.2;
-
-  }
-
-.nodes, .labels:hover{
-  cursor: pointer;
-}
-
-</style>
-
 <body>
-
-Budget de l’UE pour 2018
-
-</body> 
-<link rel = "stylesheet" href = "http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://d3js.org/d3.v4.min.js"></script>
-<link href="https://fonts.googleapis.com/css?family=Architects+Daughter" rel="stylesheet">
-<script>
-
+<div>
+	Budget simplifié de l'Union Européenne 
+	
+</div>
+</body>
+<script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
+<script src="https://d3js.org/d3-selection-multi.v1.js"></script>
+<script type="text/javascript">
 var color = d3.scaleOrdinal(d3.schemeCategory20);
-  
-// chart dimensions
-var width  = window.innerWidth - 40, height = window.innerHeight - 40, radius = 0;
-
-var node;
-
-// set up svg  
+var labelColors = d3.scaleOrdinal(['#404040', 'white', '#ffd617', '#004494' ]);
+var idColors = d3.scaleOrdinal(
+	[
+	'DarkOrange ',
+	'DarkRed',
+	"DarkGreen",
+	"DarkMagenta",
+	"DarkCyan",
+	"DarkBlue",
+	"DarkSalmon"
+	]);
+var width = window.innerWidth - 40, height = window.innerHeight - 40, radius = 0;
 var svg = d3.select("body")
-  .append("svg")
-  .attr("width", width)
-  .attr("height", height)
-  .call(d3
-    .zoom()
-    .on("zoom", redraw)
-  )
-  .append("g");
+.append("svg")
+.attr("width", width)
+.attr("height", height)
+.call(d3
+	.zoom()
+	.on("zoom", function () {
+		svg
+		.attr("transform", d3
+			.event
+			.transform
+		)
+	})
+)
+.append("g");
+var node;
+var link;
+var label;
 
-function redraw() {
-  svg.attr("transform", d3.event.transform)
-  node.attr("font-size", (15 / d3.event.scale) + "px");
-}
 
-// var forceLink = d3.forceLink().id(function(d) { return d.id; });
-  
-var simulation = d3.forceSimulation()
-    .force("collide",d3
-      .forceCollide(function(d){return d.id})
-      .strength(1)
-      .radius(function(d) {return d.value + 10}))
-    .force("link", d3
-      .forceLink()
-      .id(function (d) {return d.id;})
-      // .distance(function(d){ 
-      //   return (d.type.length * 2 + 100)})
-    )
-    .force("charge", d3.forceManyBody().strength(-2000))
-    .force("center", d3.forceCenter(width / 2, height / 2));
 
-d3.json("data.json", function(error, graph) {
-  
-  var link = svg.append("g")
-                .style("stroke", "#aaa")
-                .selectAll("line")
-                .data(graph.links)
-                .enter().append("line")
-                // .attr("stroke-width", function(d) {
-                //   // console.log(d.target);
-                //   return (d.target.value); })
-                ;
+var simulation = d3
+	.forceSimulation()
+	.force("link", d3
+		.forceLink()
+		.id(function (d) {return d.id;})
+	)
+	.force("collide",d3.forceCollide((d)=>{return d.id}).strength(1).radius((d) => {return d.value * 4}).iterations(1))
+	.force("center", d3.forceCenter(width / 2, height / 2))
+  ;
+d3.json("data.json", function (error, graph) {
+if (error) throw error;
+update(graph.links, graph.nodes);
+})
+function update(links, nodes) {
 
+link = svg
+	.selectAll(".link")
+	.data(links)
+	.enter()
+	.append("line")
+	.attr("class", "link")
+	.style("stroke", "grey")
+
+
+edgepaths = svg
+	.selectAll(".edgepath")
+	.data(links)
+	.enter()
+	.append('path')
+	.attrs({
+		'class': 'edgepath',
+		'fill-opacity': 0,
+		'stroke-opacity': 0,
+		'id': function (d, i) {return 'edgepath' + i}
+	})
+	.style("pointer-events", "none");
+
+edgelabels = svg
+	.selectAll(".edgelabel")
+	.data(links)
+	.enter()
+	.append('text')
+	.style("pointer-events", "none")
+	.attrs({
+		'class': 'edgelabel',
+		'id': function (d, i) {return 'edgelabel' + i},
+		'font-size': 10,
+		'font-family': "Roboto",
+		'fill': 'black'
+	})
+	;
 
 
 node = svg
-            .append("g")
-            .attr("class", "nodes")
-            .selectAll("circle")
-            .data(graph.nodes)
-            .enter()
-            .append("circle")
-            .attr("stroke", "white")
-            .attr("stroke-width", 1)
-            // .attr("r", 7)
-            .attr("r", function(d){return (d.value/2);})
-            .style("fill", function(d){return color(d.id);})
-            .call(d3.drag()
-                    .on("start", dragstarted)
-                    .on("drag", dragged)
-                    .on("end", dragended)
-            );
+	.append("g")
+	.attr("class", "node")
+	.selectAll("circle")
+	.data(nodes)
+	.enter()
+	.append("circle")
+	.attr("r", (d) => {return d.value})
+	.attr("stroke", "black")
+	.style("fill", "grey")
+	.call(d3.drag()
+		.on("start", dragstarted)
+		.on("drag", dragged)
+			// .on("end", dragended)
+	);
 
-node.on("mouseover", function (d) {
-  node.attr("stroke", function(n) {
-    if (d === n)
-      return "black"
-    else
-      return "white"
-  });
-  link.style('opacity', function(l) {
-    if (d === l.source || d === l.target)
-      return 1;
-    else 
-      return 0.2;
-    
-  });
-  link
-      .style('stroke-dasharray', function(l) {
-        if (d === l.target)
-          return "5, 5";
-        else
-          return null;
-    });
+label = svg
+	.append("g")
+	.attr("class", "labels")
+	.selectAll("text")
+	.data(nodes)
+	.enter()
+	.append("text")
+	.attr('text-anchor', 'middle')
+	.style("font-family", "Roboto")
+	.style("font-size", (d)=>{return d.value})
+	.style("fill", "black")
+	.text(function (d) {return d.id + " " + d.value + "Mds euros"})
+	.call(d3
+		.drag()
+		.on("start", dragstarted)
+		.on("drag", dragged)
+	)
+
+
+node
+	.on("mouseover", function (d) {
+		node
+			.style('opacity', function(n) {
+				if (d === n)
+					return 0.9;
+				else
+					return 0.5;
+			
+		});
+		// node
+		// 	.style('r', function(l) {
+		// 		if (d === l )
+		// 			return 30;
+		// 		else
+		// 			return 20;
+			
+		// });
+		link
+			.style('opacity', function(l) {
+				if (d === l.source || d === l.target)
+					return 1;
+				else
+					return 0.5;
+			
+		});
+		// link
+		// 	.style('stroke-width', function(l) {
+		// 		if (d === l.source || d === l.target)
+		// 			return 2.5;
+		// 		else
+		// 			return 1;
+		// });
+		// link
+		// 	.style('stroke-dasharray', function(l) {
+		// 		if (d === l.target)
+		// 			return "5, 5";
+		// 		else
+		// 			return null;
+		// });
 })
-
-  var label = svg.append("g")
-      .attr("class", "labels")
-      .selectAll("text")
-      .data(graph.nodes)
-      .enter()
-      .append("text")
-      .attr('text-anchor', 'middle')
-        .attr('dominant-baseline', 'central')
-        .style('font-family', "Roboto")
-        // .style('font-size','1rem')
-        .text(function (d) {return d.id + "\n" + d.value + " Milliards €";})
-        .attr("stroke", "white")
-        .attr("stroke-width", "1px")
-        .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended));
-
-label.on("mouseover", function (d) {
-  node.attr("stroke", function(n) {
-    if (d === n)
-      return "black"
-    else
-      return "white"
-  });
-  link.style('opacity', function(l) {
-    if (d === l.source || d === l.target)
-      return 1;
-    else 
-      return 0.2;
-    
-  });
-  link
-      .style('stroke-dasharray', function(l) {
-        if (d === l.target)
-          return "5, 5";
-        else
-          return null;
-    });
-})
-
-
-/*  var label = svg.append("g")
-      .attr("class", "labels")
-      .selectAll("text")
-      .data(graph.nodes)
-      .enter().append("image")
-      .attr("xlink:href", "https://github.com/favicon.ico")
-      .attr("x", -8)
-      .attr("y", -8)
-      .attr("width", 16)
-      .attr("height", 16)
-        .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended));*/
-
-label.append("title")
-      .text(function(d) { return d.id; });
 
 simulation
-    .nodes(graph.nodes)
-    .on("tick", ticked);
+	.nodes(nodes)
+	.on("tick", ticked);
+simulation
+	.force("link")
+	.links(links);
+}
 
-  simulation.force("link")
-    .links(graph.links);
-  
-  function ticked() {
-    
-    //update link positions
-    link
-      .attr("x1", function(d) { return d.source.x; })
-      .attr("y1", function(d) { return d.source.y; })
-      .attr("x2", function(d) { return d.target.x; })
-      .attr("y2", function(d) { return d.target.y; })
-    // update link stroke width
-      .attr("stroke-width", function(d){return (d.target.value)})
-    // update node positions    
-    // note in this example we bound the positions
-    node.attr("cx", function(d) { 
-      return d.x = Math.max(radius, Math.min(width - radius, d.x));
-    })
-      .attr("cy", function(d) { 
-      return d.y = Math.max(radius, Math.min(height - radius, d.y)); 
-    });
-    
-    // update label positions
-    label
-    		.attr("x", function(d) { return d.x; })
-        .attr("y", function (d) { return d.y; })
-        
-  }
-  
+function ticked() {
 
-});
-    
+	svg
+		.attr("width", window.innerWidth);
+	link
+		.attr("x1", function (d) {return d.source.x;})
+		.attr("y1", function (d) {return d.source.y;})
+		.attr("x2", function (d) {return d.target.x;})
+		.attr("y2", function (d) {return d.target.y;})
+    .attr("stroke-width", function(d){return (d.target.value * 2)})
+    .text(function (d) {return d.target.value;});
+    ;
+	node
+		.attr("transform", function (d) {return "translate(" + d.x + ", " + d.y + ")";});
+	edgepaths
+		.attr('d', function (d) {
+			return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
+		})
+		;
+	edgelabels.attr('transform', function (d) {
+		if (d.target.x < d.source.x) {
+			var bbox = this
+				.getBBox();
+			rx = bbox.x + bbox.width / 2;
+			ry = bbox.y + bbox.height / 2 ;
+			return 'rotate(180 ' + rx + ' ' + ry + ')';
+		}
+		else {
+			return 'rotate(0)';
+		}
+	});
+	label
+		.attr("x", function(d) { return d.x; })
+		.attr("y", function (d) { return d.y; })
+}
+
 function dragstarted(d) {
-  if (!d3.event.active) simulation.alphaTarget(0.3).restart()
-  d.fx = d.x;
-  d.fy = d.y;
+	if (!d3.event.active) simulation.alphaTarget(0.3).restart()
+	d.fx = d.x;
+	d.fy = d.y;
 }
 
 function dragged(d) {
-  d.fx = d3.event.x;
-  d.fy = d3.event.y;
+	d.fx = d3.event.x;
+	d.fy = d3.event.y;
 }
 
 function dragended(d) {
 	if (!d3.event.active) simulation.alphaTarget(0);
-  d.fx = null;
-  d.fy = null;
+	d.fx = undefined;
+	d.fy = undefined;
 }
 
-// {"source": "", "target": "", "value":},
-
 </script>
+</html>

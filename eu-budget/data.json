@@ -51,65 +51,72 @@
     {
       "source": "Dépenses administratives des institutions",
       "target": "Commission"
+    },
+    {
+      "source": "Dépenses administratives des institutions",
+      "target": "Autres institutions"
     }
-
   ],
   "nodes": [
     {
       "id": "Total",
-      "value":160.114
+      "value": 160
     },
     {
       "id": "Compétitivité",
-      "value":77.534
+      "value": 77
     },
     {
       "id": "Agriculture",
-      "value":59
+      "value": 59
     },
     {
       "id": "Fonds européen pour les investissements stratégiques (EFSI)",
-      "value":2
+      "value": 2
     },
     {
       "id": "Fonds structurels et d'investissement européens (Fonds ESI)",
-      "value":55.552
+      "value": 55
     },
     {
       "id": "Horizon 2020, le programme de financement de la recherche et de l'innovation",
-      "value":11.2
+      "value": 11
     },
     {
       "id": "Soutien des petites et moyennes entreprises (compétitivité des petites et moyennes entreprises, programme COSME)",
-      "value":0.354
+      "value": 3
     },
     {
       "id": "Initiative pour l'emploi des jeunes",
-      "value":0.350
+      "value": 3
     },
     {
       "id": "Fonds européen de la défense",
-      "value":0.040
+      "value": 4
     },
     {
       "id": "Gestion des migrations et sécurité",
-      "value":4.1
+      "value": 4
     },
     {
       "id": "Administration",
-      "value":8.6605
+      "value": 8
     },
     {
       "id": "Pensions et écoles européennes",
-      "value":1.7199
+      "value": 1
     },
     {
       "id": "Dépenses administratives des institutions",
-      "value":6.9412
+      "value": 6
     },
     {
       "id": "Commission",
-      "value":3.2750
+      "value": 3
+    },
+    {
+      "id": "Autres institutions",
+      "value": 3
     }
   ]
 }
