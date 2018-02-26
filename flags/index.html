@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Flags </title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<meta property="og:image"
+			content="https://julienreszka.github.io/quiapropose/banner.png" 
+			/>
+		<meta name="twitter:image" 
+			content="https://julienreszka.github.io/quiapropose/banner.png"
+			>
+		<link rel="icon" href="favicon.ico?">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+		<link rel="stylesheet" type="text/css" href="css/styles.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+		<script  src="js/app.js"></script>
+		<style type="text/css">
+			.btn {
+			background-color:#051440;
+			}
+			.btn:hover {
+			background-color:#EC1920;
+			}
+			
+			img {
+				max-width: 100%
+			}
+		</style>
+	</head>
+	<body ng-app="app" 
+		class="grey lighten-4" >
+		<svg 
+			id="top"
+			width="100%"
+			height="20px"
+			>
+			<rect x="" y="" width="100%" height="20px" fill="#051440" stroke="none" stroke-width=""/>
+
+		</svg>
+		<div class="navbar" >
+			<nav class="black">
+				<div class="nav-wrapper">
+					<span class=" waves-effect waves-light">
+					<a  href="/" 
+						class="logo white-text " 
+						style="padding-left:15px; padding-right:15px; font-size:1.2em;">
+						Flags
+					</a> 
+					</span>
+					<span class="hide-on-med-and-down">
+						Guess flag for country name 
+					</span>
+
+					
+				</div>
+			</nav>
+		</div>
+
+		<br>
+		<main>
+
+
+			<div class="container" ng-controller="DateController">
+
+				<div class="card-panel blue lighten-4" ng-show="date >= 0">
+					<b  ng-cloak>
+					{{ date | number:0}} 
+					</b>
+					jours avant le second tour de l'<a href="https://fr.wikipedia.org/wiki/%C3%89lection_pr%C3%A9sidentielle_fran%C3%A7aise_de_2017"
+						target="_blank"
+						>Élection présidentielle française de 2017
+					</a>
+				</div>
+			</div>
+
+			 
+
+			<div  ng-controller="PostController">
+				<div class="container">
+					<select class="browser-default" ng-model="q">
+					<option value="" selected>Choisir un thème</option>
+						<option ng-repeat="theme in themes" value="{{theme}}">
+						{{theme}}
+						</option>
+					</select>
+					<div class="nav-wrapper">
+						<div class="search-wrapper card">
+							<i  class="material-icons"
+								id="search-icon"
+								>
+							search
+							</i>
+							<input  ng-model="q" 
+								type="search" 
+								id="search"
+								class="black-text"
+								placeholder="Filtrer avec un mot clé, exemple : travail"
+								>
+						</div>
+					</div>
+					
+				</div>
+				<div class="container " ng-cloak>
+					<span>
+					<b>{{results.length}}</b> propositions  
+					</span>
+					<span ng-hide="q == null || q == ''">
+					pour la recherche 
+					</span>
+					<span>
+					<b>{{q | uppercase}}</b>
+					</span>
+					: 
+					<div
+						ng-repeat="
+						post in posts 
+						| orderBy:'rank'
+						| advanceFilter: q  as results track by $index">
+						<div class="card-panel">
+							<div class="proposition center">
+							<a ng-href="https://en.wikipedia.org/wiki/{{post.name}}" target="_blank">{{post.name}}</a> 
+							</div>
+							<br>
+							<div class="center">
+								<button
+									class="btn" 
+									ng-click="post.open=true;"
+									ng-hide="post.open"
+									>
+								Show flag
+								</button>
+								<br>
+								<div 
+									ng-if="post.open"
+									>
+									<img  
+										ng-src="{{post.flagUrl}}" 
+										class="responsive-img " 
+										>
+									<br>
+
+								
+								</div>
+								<br>
+								<button
+									class="btn" 
+									ng-click="post.map=true;"
+									ng-hide="post.map"
+									>
+								Show Map
+								</button>
+								<div 
+									ng-if="post.map"
+									>
+									<img width="640" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{post.name}}
+									&zoom=3
+									&scale=1
+									&size=640x640
+									&maptype=roadmap&format=png
+									&visual_refresh=true
+									&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7C{{post.name}}">
+									<!-- <img width="640" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{post.name}}
+									&zoom=6
+									&scale=1
+									&size=640x640
+									&maptype=roadmap&format=png
+									&visual_refresh=true
+									&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7C{{post.name}}">
+									<img width="640" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{post.name}}
+									&zoom=9
+									&scale=1
+									&size=640x640
+									&maptype=roadmap&format=png
+									&visual_refresh=true
+									&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7C{{post.name}}">
+									<img width="640" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{post.name}}
+									&zoom=12
+									&scale=1
+									&size=640x640
+									&maptype=hybrid&format=png
+									&visual_refresh=true
+									&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7C{{post.name}}">
+
+									<img width="640" ng-src="https://maps.googleapis.com/maps/api/staticmap?center={{post.name}}
+									&zoom=15
+									&scale=1
+									&size=640x640
+									&maptype=hybrid&format=png
+									&visual_refresh=true
+									&markers=size:mid%7Ccolor:0xff0000%7Clabel:1%7C{{post.name}}"> -->
+									<br>
+								
+								</div>
+							</div>
+						</div>
+					</div>
+					<div  class="card-panel center"
+						ng-show="results.length == 0">
+						<i class="material-icons">
+						announcement
+						</i>
+						<br>
+						Désolé on a rien trouvé
+						<br>
+						Assayez d'autre mots clés, s'il vous plait.
+					</div>
+				</div>
+			</div>
+			
+			<br>
+			<div  class="fixed-action-btn" 
+				style="bottom: 35px; right: 24px;" 
+				title="Remonter en haut de page">
+				<a  href="#top" 
+					class="btn-floating btn-large grey waves-effect waves-light"
+					>
+				<i  class="material-icons"
+					>
+				vertical_align_top
+				</i>
+				</a>
+			</div>
+		</main>
+		<footer>
+			<div class="center">
+				
+				Designed by 
+				<a 
+					href="https://twitter.com/JulienReszka"
+					target="_blank" 
+					>
+				Julien Reszka
+				</a>
+			</div>
+			<br>
+		</footer>
+		<svg 
+			width="100%"
+			height="20px"
+			>
+			<rect x="" y="" width="34%" height="20px" fill="#051440" stroke="none" stroke-width=""/>
+			<rect x="33%" y="" width="34%" height="20px" fill="#FFFFFF" stroke="none" stroke-width=""/>
+			<rect x="66%" y="" width="34%" height="20px" fill="#EC1920" stroke="none" stroke-width=""/>
+		</svg>
+	</body>
+</html>

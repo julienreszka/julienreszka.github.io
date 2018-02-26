@@ -32,6 +32,14 @@
 				background-color: rgba(0,255,0,0.1);
 			}
 
+			.card-panel.Uplifting {
+				background-color: rgba(0,0,255,0.1);
+			}
+
+			.card-panel.Third-Type {
+				background-color: rgba(255,255,0,0.1);
+			}
+
 			.mood-icon {
 				width: 50px;
 			}
@@ -130,6 +138,20 @@
 							src="moods-icons/chill.svg"
 						>
 					</div>
+					<div 	class="center"
+							ng-show="q=='Uplifting'">
+						<img 
+							class="mood-icon"
+							src="moods-icons/uplifting.svg"
+						>
+					</div>
+					<div 	class="center"
+							ng-show="q=='Third-Type'">
+						<img 
+							class="mood-icon"
+							src="moods-icons/third-type.svg"
+						>
+					</div>
 
 					<div
 						ng-repeat="
@@ -161,7 +183,7 @@
 						We found nothing (YET)
 						<br>
 						<br>		
-						<a 	href="" class="btn-large ">
+						<a 	href="" class="btn-large " style="background-color:#C7FE02;">
 							Submit a song
 						</a>
 						<br>

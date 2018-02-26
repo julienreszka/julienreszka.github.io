@@ -1,0 +1,998 @@
+[
+  {
+    "name": "Afghanistan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/af-lgflag.gif"
+  },
+  {
+    "name": "Akrotiri",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ax-lgflag.gif"
+  },
+  {
+    "name": "Albania",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/al-lgflag.gif"
+  },
+  {
+    "name": "Algeria",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ag-lgflag.gif"
+  },
+  {
+    "name": "American Samoa",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/aq-lgflag.gif"
+  },
+  {
+    "name": "Andorra",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/an-lgflag.gif"
+  },
+  {
+    "name": "Angola",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ao-lgflag.gif"
+  },
+  {
+    "name": "Anguilla",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/av-lgflag.gif"
+  },
+  {
+    "name": "Antigua and Barbuda",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ac-lgflag.gif"
+  },
+  {
+    "name": "Argentina",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ar-lgflag.gif"
+  },
+  {
+    "name": "Armenia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/am-lgflag.gif"
+  },
+  {
+    "name": "Aruba",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/aa-lgflag.gif"
+  },
+  {
+    "name": "Ashmore and Cartier Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/at-lgflag.gif"
+  },
+  {
+    "name": "Australia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/as-lgflag.gif"
+  },
+  {
+    "name": "Austria",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/au-lgflag.gif"
+  },
+  {
+    "name": "Azerbaijan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/aj-lgflag.gif"
+  },
+  {
+    "name": "Bahamas, The",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bf-lgflag.gif"
+  },
+  {
+    "name": "Bahrain",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ba-lgflag.gif"
+  },
+  {
+    "name": "Bangladesh",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bg-lgflag.gif"
+  },
+  {
+    "name": "Barbados",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bb-lgflag.gif"
+  },
+  {
+    "name": "Belarus",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bo-lgflag.gif"
+  },
+  {
+    "name": "Belgium",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/be-lgflag.gif"
+  },
+  {
+    "name": "Belize",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bh-lgflag.gif"
+  },
+  {
+    "name": "Benin",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bn-lgflag.gif"
+  },
+  {
+    "name": "Bermuda",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bd-lgflag.gif"
+  },
+  {
+    "name": "Bhutan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bt-lgflag.gif"
+  },
+  {
+    "name": "Bolivia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bl-lgflag.gif"
+  },
+  {
+    "name": "Bosnia and Herzegovina",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bk-lgflag.gif"
+  },
+  {
+    "name": "Botswana",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bc-lgflag.gif"
+  },
+  {
+    "name": "Bouvet Island",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bv-lgflag.gif"
+  },
+  {
+    "name": "Brazil",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/br-lgflag.gif"
+  },
+  {
+    "name": "British Indian Ocean Territory",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/io-lgflag.gif"
+  },
+  {
+    "name": "British Virgin Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/vi-lgflag.gif"
+  },
+  {
+    "name": "Brunei",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bx-lgflag.gif"
+  },
+  {
+    "name": "Bulgaria",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bu-lgflag.gif"
+  },
+  {
+    "name": "Burkina Faso",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/uv-lgflag.gif"
+  },
+  {
+    "name": "Burma",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bm-lgflag.gif"
+  },
+  {
+    "name": "Burundi",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/by-lgflag.gif"
+  },
+  {
+    "name": "Cabo Verde",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cv-lgflag.gif"
+  },
+  {
+    "name": "Cambodia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cb-lgflag.gif"
+  },
+  {
+    "name": "Cameroon",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cm-lgflag.gif"
+  },
+  {
+    "name": "Canada",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ca-lgflag.gif"
+  },
+  {
+    "name": "Cayman Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cj-lgflag.gif"
+  },
+  {
+    "name": "Central African Republic",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ct-lgflag.gif"
+  },
+  {
+    "name": "Chad",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cd-lgflag.gif"
+  },
+  {
+    "name": "Chile",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ci-lgflag.gif"
+  },
+  {
+    "name": "China",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ch-lgflag.gif"
+  },
+  {
+    "name": "Christmas Island",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/kt-lgflag.gif"
+  },
+  {
+    "name": "Clipperton Island",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ip-lgflag.gif"
+  },
+  {
+    "name": "Cocos (Keeling) Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ck-lgflag.gif"
+  },
+  {
+    "name": "Colombia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/co-lgflag.gif"
+  },
+  {
+    "name": "Comoros",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cn-lgflag.gif"
+  },
+  {
+    "name": "Congo, Democratic Republic of the",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cg-lgflag.gif"
+  },
+  {
+    "name": "Congo, Republic of the",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cf-lgflag.gif"
+  },
+  {
+    "name": "Cook Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cw-lgflag.gif"
+  },
+  {
+    "name": "Coral Sea Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cr-lgflag.gif"
+  },
+  {
+    "name": "Costa Rica",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cs-lgflag.gif"
+  },
+  {
+    "name": "Cote d'Ivoire",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/iv-lgflag.gif"
+  },
+  {
+    "name": "Croatia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/hr-lgflag.gif"
+  },
+  {
+    "name": "Cuba",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cu-lgflag.gif"
+  },
+  {
+    "name": "Curacao",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cc-lgflag.gif"
+  },
+  {
+    "name": "Cyprus",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cy-lgflag.gif"
+  },
+  {
+    "name": "Czechia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ez-lgflag.gif"
+  },
+  {
+    "name": "Denmark",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/da-lgflag.gif"
+  },
+  {
+    "name": "Dhekelia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/dx-lgflag.gif"
+  },
+  {
+    "name": "Djibouti",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/dj-lgflag.gif"
+  },
+  {
+    "name": "Dominica",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/do-lgflag.gif"
+  },
+  {
+    "name": "Dominican Republic",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/dr-lgflag.gif"
+  },
+  {
+    "name": "Ecuador",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ec-lgflag.gif"
+  },
+  {
+    "name": "Egypt",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/eg-lgflag.gif"
+  },
+  {
+    "name": "El Salvador",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/es-lgflag.gif"
+  },
+  {
+    "name": "Equatorial Guinea",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ek-lgflag.gif"
+  },
+  {
+    "name": "Eritrea",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/er-lgflag.gif"
+  },
+  {
+    "name": "Estonia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/en-lgflag.gif"
+  },
+  {
+    "name": "Ethiopia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/et-lgflag.gif"
+  },
+  {
+    "name": "Falkland Islands (Islas Malvinas)",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fk-lgflag.gif"
+  },
+  {
+    "name": "Faroe Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fo-lgflag.gif"
+  },
+  {
+    "name": "Fiji",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fj-lgflag.gif"
+  },
+  {
+    "name": "Finland",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fi-lgflag.gif"
+  },
+  {
+    "name": "France",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fr-lgflag.gif"
+  },
+  {
+    "name": "French Polynesia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fp-lgflag.gif"
+  },
+  {
+    "name": "French Southern and Antarctic Lands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fs-lgflag.gif"
+  },
+  {
+    "name": "Gabon",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gb-lgflag.gif"
+  },
+  {
+    "name": "Gambia, The",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ga-lgflag.gif"
+  },
+  {
+    "name": "Georgia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gg-lgflag.gif"
+  },
+  {
+    "name": "Germany",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gm-lgflag.gif"
+  },
+  {
+    "name": "Ghana",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gh-lgflag.gif"
+  },
+  {
+    "name": "Gibraltar",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gi-lgflag.gif"
+  },
+  {
+    "name": "Greece",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gr-lgflag.gif"
+  },
+  {
+    "name": "Greenland",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gl-lgflag.gif"
+  },
+  {
+    "name": "Grenada",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gj-lgflag.gif"
+  },
+  {
+    "name": "Guam",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gq-lgflag.gif"
+  },
+  {
+    "name": "Guatemala",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gt-lgflag.gif"
+  },
+  {
+    "name": "Guernsey",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gk-lgflag.gif"
+  },
+  {
+    "name": "Guinea",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gv-lgflag.gif"
+  },
+  {
+    "name": "Guinea-Bissau",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pu-lgflag.gif"
+  },
+  {
+    "name": "Guyana",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/gy-lgflag.gif"
+  },
+  {
+    "name": "Haiti",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ha-lgflag.gif"
+  },
+  {
+    "name": "Heard Island and McDonald Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/hm-lgflag.gif"
+  },
+  {
+    "name": "Holy See (Vatican City)",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/vt-lgflag.gif"
+  },
+  {
+    "name": "Honduras",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ho-lgflag.gif"
+  },
+  {
+    "name": "Hong Kong",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/hk-lgflag.gif"
+  },
+  {
+    "name": "Hungary",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/hu-lgflag.gif"
+  },
+  {
+    "name": "Iceland",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ic-lgflag.gif"
+  },
+  {
+    "name": "India",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/in-lgflag.gif"
+  },
+  {
+    "name": "Indonesia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/id-lgflag.gif"
+  },
+  {
+    "name": "Iran",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ir-lgflag.gif"
+  },
+  {
+    "name": "Iraq",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/iz-lgflag.gif"
+  },
+  {
+    "name": "Ireland",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ei-lgflag.gif"
+  },
+  {
+    "name": "Isle of Man",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/im-lgflag.gif"
+  },
+  {
+    "name": "Israel",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/is-lgflag.gif"
+  },
+  {
+    "name": "Italy",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/it-lgflag.gif"
+  },
+  {
+    "name": "Jamaica",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/jm-lgflag.gif"
+  },
+  {
+    "name": "Jan Mayen",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/jn-lgflag.gif"
+  },
+  {
+    "name": "Japan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ja-lgflag.gif"
+  },
+  {
+    "name": "Jersey",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/je-lgflag.gif"
+  },
+  {
+    "name": "Jordan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/jo-lgflag.gif"
+  },
+  {
+    "name": "Kazakhstan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/kz-lgflag.gif"
+  },
+  {
+    "name": "Kenya",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ke-lgflag.gif"
+  },
+  {
+    "name": "Kiribati",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/kr-lgflag.gif"
+  },
+  {
+    "name": "Korea, North",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/kn-lgflag.gif"
+  },
+  {
+    "name": "Korea, South",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ks-lgflag.gif"
+  },
+  {
+    "name": "Kosovo",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/kv-lgflag.gif"
+  },
+  {
+    "name": "Kuwait",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ku-lgflag.gif"
+  },
+  {
+    "name": "Kyrgyzstan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/kg-lgflag.gif"
+  },
+  {
+    "name": "Laos",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/la-lgflag.gif"
+  },
+  {
+    "name": "Latvia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/lg-lgflag.gif"
+  },
+  {
+    "name": "Lebanon",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/le-lgflag.gif"
+  },
+  {
+    "name": "Lesotho",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/lt-lgflag.gif"
+  },
+  {
+    "name": "Liberia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/li-lgflag.gif"
+  },
+  {
+    "name": "Libya",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ly-lgflag.gif"
+  },
+  {
+    "name": "Liechtenstein",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ls-lgflag.gif"
+  },
+  {
+    "name": "Lithuania",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/lh-lgflag.gif"
+  },
+  {
+    "name": "Luxembourg",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/lu-lgflag.gif"
+  },
+  {
+    "name": "Macau",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mc-lgflag.gif"
+  },
+  {
+    "name": "Macedonia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mk-lgflag.gif"
+  },
+  {
+    "name": "Madagascar",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ma-lgflag.gif"
+  },
+  {
+    "name": "Malawi",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mi-lgflag.gif"
+  },
+  {
+    "name": "Malaysia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/my-lgflag.gif"
+  },
+  {
+    "name": "Maldives",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mv-lgflag.gif"
+  },
+  {
+    "name": "Mali",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ml-lgflag.gif"
+  },
+  {
+    "name": "Malta",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mt-lgflag.gif"
+  },
+  {
+    "name": "Marshall Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/rm-lgflag.gif"
+  },
+  {
+    "name": "Mauritania",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mr-lgflag.gif"
+  },
+  {
+    "name": "Mauritius",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mp-lgflag.gif"
+  },
+  {
+    "name": "Mexico",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mx-lgflag.gif"
+  },
+  {
+    "name": "Micronesia, Federated States of",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/fm-lgflag.gif"
+  },
+  {
+    "name": "Moldova",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/md-lgflag.gif"
+  },
+  {
+    "name": "Monaco",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mn-lgflag.gif"
+  },
+  {
+    "name": "Mongolia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mg-lgflag.gif"
+  },
+  {
+    "name": "Montenegro",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mj-lgflag.gif"
+  },
+  {
+    "name": "Montserrat",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mh-lgflag.gif"
+  },
+  {
+    "name": "Morocco",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mo-lgflag.gif"
+  },
+  {
+    "name": "Mozambique",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mz-lgflag.gif"
+  },
+  {
+    "name": "Namibia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/wa-lgflag.gif"
+  },
+  {
+    "name": "Nauru",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/nr-lgflag.gif"
+  },
+  {
+    "name": "Navassa Island",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bq-lgflag.gif"
+  },
+  {
+    "name": "Nepal",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/np-lgflag.gif"
+  },
+  {
+    "name": "Netherlands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/nl-lgflag.gif"
+  },
+  {
+    "name": "New Caledonia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/nc-lgflag.gif"
+  },
+  {
+    "name": "New Zealand",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/nz-lgflag.gif"
+  },
+  {
+    "name": "Nicaragua",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/nu-lgflag.gif"
+  },
+  {
+    "name": "Niger",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ng-lgflag.gif"
+  },
+  {
+    "name": "Nigeria",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ni-lgflag.gif"
+  },
+  {
+    "name": "Niue",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ne-lgflag.gif"
+  },
+  {
+    "name": "Norfolk Island",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/nf-lgflag.gif"
+  },
+  {
+    "name": "Northern Mariana Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/cq-lgflag.gif"
+  },
+  {
+    "name": "Norway",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/no-lgflag.gif"
+  },
+  {
+    "name": "Oman",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/mu-lgflag.gif"
+  },
+  {
+    "name": "Pakistan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pk-lgflag.gif"
+  },
+  {
+    "name": "Palau",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ps-lgflag.gif"
+  },
+  {
+    "name": "Panama",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pm-lgflag.gif"
+  },
+  {
+    "name": "Papua New Guinea",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pp-lgflag.gif"
+  },
+  {
+    "name": "Paraguay",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pa-lgflag.gif"
+  },
+  {
+    "name": "Peru",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pe-lgflag.gif"
+  },
+  {
+    "name": "Philippines",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/rp-lgflag.gif"
+  },
+  {
+    "name": "Pitcairn Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pc-lgflag.gif"
+  },
+  {
+    "name": "Poland",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/pl-lgflag.gif"
+  },
+  {
+    "name": "Portugal",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/po-lgflag.gif"
+  },
+  {
+    "name": "Puerto Rico",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/rq-lgflag.gif"
+  },
+  {
+    "name": "Qatar",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/qa-lgflag.gif"
+  },
+  {
+    "name": "Romania",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ro-lgflag.gif"
+  },
+  {
+    "name": "Russia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/rs-lgflag.gif"
+  },
+  {
+    "name": "Rwanda",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/rw-lgflag.gif"
+  },
+  {
+    "name": "Saint Barthelemy",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tb-lgflag.gif"
+  },
+  {
+    "name": "Saint Helena, Ascension, and Tristan da Cunha",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sh-lgflag.gif"
+  },
+  {
+    "name": "Saint Kitts and Nevis",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sc-lgflag.gif"
+  },
+  {
+    "name": "Saint Lucia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/st-lgflag.gif"
+  },
+  {
+    "name": "Saint Martin",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/rn-lgflag.gif"
+  },
+  {
+    "name": "Saint Pierre and Miquelon",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sb-lgflag.gif"
+  },
+  {
+    "name": "Saint Vincent and the Grenadines",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/vc-lgflag.gif"
+  },
+  {
+    "name": "Samoa",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ws-lgflag.gif"
+  },
+  {
+    "name": "San Marino",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sm-lgflag.gif"
+  },
+  {
+    "name": "Sao Tome and Principe",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tp-lgflag.gif"
+  },
+  {
+    "name": "Saudi Arabia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sa-lgflag.gif"
+  },
+  {
+    "name": "Senegal",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sg-lgflag.gif"
+  },
+  {
+    "name": "Serbia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ri-lgflag.gif"
+  },
+  {
+    "name": "Seychelles",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/se-lgflag.gif"
+  },
+  {
+    "name": "Sierra Leone",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sl-lgflag.gif"
+  },
+  {
+    "name": "Singapore",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sn-lgflag.gif"
+  },
+  {
+    "name": "Sint Maarten",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sk-lgflag.gif"
+  },
+  {
+    "name": "Slovakia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/lo-lgflag.gif"
+  },
+  {
+    "name": "Slovenia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/si-lgflag.gif"
+  },
+  {
+    "name": "Solomon Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/bp-lgflag.gif"
+  },
+  {
+    "name": "Somalia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/so-lgflag.gif"
+  },
+  {
+    "name": "South Africa",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sf-lgflag.gif"
+  },
+  {
+    "name": "South Georgia and South Sandwich Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sx-lgflag.gif"
+  },
+  {
+    "name": "South Sudan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/od-lgflag.gif"
+  },
+  {
+    "name": "Spain",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sp-lgflag.gif"
+  },
+  {
+    "name": "Sri Lanka",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ce-lgflag.gif"
+  },
+  {
+    "name": "Sudan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/su-lgflag.gif"
+  },
+  {
+    "name": "Suriname",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ns-lgflag.gif"
+  },
+  {
+    "name": "Svalbard",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sv-lgflag.gif"
+  },
+  {
+    "name": "Swaziland",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/wz-lgflag.gif"
+  },
+  {
+    "name": "Sweden",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sw-lgflag.gif"
+  },
+  {
+    "name": "Switzerland",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sz-lgflag.gif"
+  },
+  {
+    "name": "Syria",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/sy-lgflag.gif"
+  },
+  {
+    "name": "Taiwan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tw-lgflag.gif"
+  },
+  {
+    "name": "Tajikistan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ti-lgflag.gif"
+  },
+  {
+    "name": "Tanzania",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tz-lgflag.gif"
+  },
+  {
+    "name": "Thailand",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/th-lgflag.gif"
+  },
+  {
+    "name": "Timor-Leste",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tt-lgflag.gif"
+  },
+  {
+    "name": "Togo",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/to-lgflag.gif"
+  },
+  {
+    "name": "Tokelau",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tl-lgflag.gif"
+  },
+  {
+    "name": "Tonga",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tn-lgflag.gif"
+  },
+  {
+    "name": "Trinidad and Tobago",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/td-lgflag.gif"
+  },
+  {
+    "name": "Tunisia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ts-lgflag.gif"
+  },
+  {
+    "name": "Turkey",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tu-lgflag.gif"
+  },
+  {
+    "name": "Turkmenistan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tx-lgflag.gif"
+  },
+  {
+    "name": "Turks and Caicos Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tk-lgflag.gif"
+  },
+  {
+    "name": "Tuvalu",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/tv-lgflag.gif"
+  },
+  {
+    "name": "Uganda",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ug-lgflag.gif"
+  },
+  {
+    "name": "Ukraine",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/up-lgflag.gif"
+  },
+  {
+    "name": "United Arab Emirates",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ae-lgflag.gif"
+  },
+  {
+    "name": "United Kingdom",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/uk-lgflag.gif"
+  },
+  {
+    "name": "United States",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/us-lgflag.gif"
+  },
+  {
+    "name": "United States Pacific Island Wildlife Refuges",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/um-lgflag.gif"
+  },
+  {
+    "name": "Uruguay",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/uy-lgflag.gif"
+  },
+  {
+    "name": "Uzbekistan",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/uz-lgflag.gif"
+  },
+  {
+    "name": "Vanuatu",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/nh-lgflag.gif"
+  },
+  {
+    "name": "Venezuela",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ve-lgflag.gif"
+  },
+  {
+    "name": "Vietnam",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/vm-lgflag.gif"
+  },
+  {
+    "name": "Virgin Islands",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/vq-lgflag.gif"
+  },
+  {
+    "name": "Wake Island",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/wq-lgflag.gif"
+  },
+  {
+    "name": "Wallis and Futuna",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/wf-lgflag.gif"
+  },
+  {
+    "name": "Yemen",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ym-lgflag.gif"
+  },
+  {
+    "name": "Zambia",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/za-lgflag.gif"
+  },
+  {
+    "name": "Zimbabwe",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/zi-lgflag.gif"
+  },
+  {
+    "name": "European Union",
+    "flagUrl": "https://www.cia.gov/library/publications/the-world-factbook/graphics/flags/large/ee-lgflag.gif"
+  }
+]
