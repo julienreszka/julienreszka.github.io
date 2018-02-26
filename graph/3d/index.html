@@ -1,21 +1,74 @@
-
 <head>
-    <!-- <script src="//unpkg.com/3d-force-graph@1/dist/3d-force-graph.min.js"></script> -->
-    <script src="3d-force-graph.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/qwest/4.4.5/qwest.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.4/papaparse.min.js"></script>
+  <style> 
+  body { margin: 0; } 
+  .graph-tooltip {color:black; background: rgba(100,100,100,0.8)}
+</style>
 
-    <script src="data-set-loader.js"></script>
-
-    <link rel="stylesheet" href="style.css">
+  <!-- <script src="//unpkg.com/3d-force-graph"></script> -->
+  <!--<script src="../../dist/3d-force-graph.js"></script>-->
+  <script src="3d-force-graph.js"></script>
 </head>
 
 <body>
-    <div class="graph-data">
-<!--         <span id="graph-data-description"></span>
-        <button class="toggle-data-btn" onClick="toggleData()">Show me something else</button> -->
-    </div>
-    <div id="3d-graph"></div>
+  <div id="3d-graph">
+      
+      <div id="tooltip"></div>
+  </div>
 
-    <script src="index.js"></script>
+  <script>
+    // Random tree
+    // const NODES = 300;
+    // const GROUPS = 12;
+    // const gData = {
+    //   nodes: [...Array(NODES).keys()].map(i => ({
+    //     id: i,
+    //     group: Math.ceil(Math.random() * GROUPS)
+    //   })),
+    //   links: [...Array(NODES).keys()]
+    //     .filter(id => id)
+    //     .map(id => ({
+    //       source: id,
+    //       target: Math.round(Math.random() * (id-1))
+    //     }))
+    // }
+
+    console
+
+    const Graph = ForceGraph3D()
+      (document.getElementById('3d-graph'))
+        .jsonUrl("../graph.json")
+        .forceEngine('ngraph')
+        .nodeId('id')
+        .nodeAutoColorBy("label")
+        // .nodeAutoColorBy(d => console.log(d))
+        .nodeLabel('id')
+        // .linkAutoColorBy(d => console.log(d))
+        // .linkAutoColorBy(d => gData.nodes[d.source].group)
+        .linkOpacity(0.7)
+        .linkLabel("type")
+        .numDimensions(3)
+        .linkColor(d => "#000000")
+        .backgroundColor("#FFFFFF")
+        // .linkHoverPrecision(30)
+        .onLinkHover((currentNode, prevNode) => {
+            if (currentNode !== null) {
+                document.querySelectorAll('.graph-tooltip')[0].textContent = currentNode.source + " " + currentNode.type + " " + currentNode.target;
+            }
+            if (prevNode !== null) {
+                document.querySelectorAll('.graph-tooltip')[0].textContent =""
+
+            }
+        })
+        .onNodeHover(d => {
+            if (d) {
+                document.querySelectorAll('.graph-tooltip')[0].textContent = d.id;
+            }
+            else {
+                document.querySelectorAll('.graph-tooltip')[0].textContent =""
+            }
+        })
+        // .graphData(gData);
+    
+    // console.log(Graph)
+  </script>
 </body>

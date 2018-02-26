@@ -99,7 +99,8 @@ var simulation = d3
 			return (d.type.length * 2 + 100)
 		})
 	)
-	.force("collide",d3.forceCollide(function(d){return d.id}).strength(1).radius(5).iterations(1))
+	.force("collide",d3.forceCollide(function(d){return d.id + 0.5}).strength(1).radius(40))
+	// .force("collide",d3.forceCollide())
 	.force("charge", d3.forceManyBody().strength(-1500))
 	.force("center", d3.forceCenter(width / 2, height / 2))
 ;
@@ -110,7 +111,7 @@ graph.links = graph.links.filter(l => l.type != ("REPRESENTE"));
 graph.links = graph.links.filter(l => l.type != ("EST AFFILIE AU PARTI"));
 graph.links = graph.links.filter(l => l.type != ("FAIT PARTIE DES"));
 
-// graph.nodes = graph.nodes.filter(n => n.label != ("Personne"));
+graph.nodes = graph.nodes.filter(n => n.label != ("Personne"));
 update(graph.links, graph.nodes);
 })
 function update(links, nodes) {
@@ -172,7 +173,7 @@ node = svg
 	.data(nodes)
 	.enter()
 	.append("circle")
-	.attr("r", 5)
+	.attr("r", 20)
 	.attr("stroke", "black")
 	.attr("stroke-width", 1)
 	.style("fill", function (d, i) {return color(d.id);})
@@ -213,14 +214,14 @@ node
 					return 0.5;
 			
 		});
-		// node
-		// 	.style('r', function(l) {
-		// 		if (d === l )
-		// 			return 30;
-		// 		else
-		// 			return 20;
+		node
+			.style('r', function(l) {
+				if (d === l )
+					return 30;
+				else
+					return 20;
 			
-		// });
+		});
 		link
 			.style('opacity', function(l) {
 				if (d === l.source || d === l.target)
@@ -229,15 +230,13 @@ node
 					return 0.5;
 			
 		});
-		// link
-		// 	.style('stroke-width', function(l) {
-		// 		if (d === l.source)
-		// 			return 3;
-		// 		if (d === l.target)
-		// 			return 2
-		// 		else
-		// 			return 1;
-		// });
+		link
+			.style('stroke-width', function(l) {
+				if (d === l.source || d === l.target)
+					return 2.5;
+				else
+					return 1;
+		});
 		link
 			.style('stroke-dasharray', function(l) {
 				if (d === l.target)
@@ -255,11 +254,7 @@ simulation
 	.links(links);
 }
 
-simulation.alphaMin(0.2)
-
 function ticked() {
-
-	console.log(simulation.alpha());
 
 	svg
 		.attr("width", window.innerWidth);
