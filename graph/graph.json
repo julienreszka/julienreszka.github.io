@@ -641,6 +641,46 @@
       "type": "ELISENT"
     },
     {
+      "source": "Citoyens polonais de plus de 18 ans",
+      "target": "Citoyens de l'Union européenne de plus de 18 ans",
+      "type": "Composent"
+    },
+    {
+      "source": "Citoyens polonais de plus de 18 ans",
+      "target": "Citoyens polonais",
+      "type": "Font partie des"
+    },
+    {
+      "source": "Citoyens polonais",
+      "target": "Citoyens de l'Union européenne",
+      "type": "Font partie des"
+    },
+    {
+      "source": "Citoyens polonais de plus de 18 ans",
+      "target": "Président de la République de Pologne",
+      "type": "Elisent"
+    },
+    {
+      "source": "Citoyens polonais de plus de 18 ans",
+      "target": "Députés polonais",
+      "type": "Elisent"
+    },
+    {
+      "source": "Députés polonais",
+      "target": "Diète de la République de Pologne",
+      "type": "Composent"
+    },
+    {
+      "source": "Président de la République de Pologne",
+      "target": "Président du Conseil des ministres de Pologne",
+      "type": "Peut nommer"
+    },
+    {
+      "source": "Diète de la République de Pologne",
+      "target": "Président du Conseil des ministres de Pologne",
+      "type": "Peut élire"
+    },
+    {
       "source": "Citoyens de l'Union européenne de plus de 18 ans",
       "target": "Députés européens",
       "type": "ELISENT LES ET CANDIDATENT EN TANT QUE"
@@ -1356,7 +1396,7 @@
       "type": "COMPOSE"
     },
     {
-      "source": "Président du Conseil des ministres polonais",
+      "source": "Président du Conseil des ministres de Pologne",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
       "type": "COMPOSE"
     },
@@ -1807,7 +1847,7 @@
     },
     {
       "source": "Mateusz Morawiecki",
-      "target": "Président du Conseil des ministres polonais",
+      "target": "Président du Conseil des ministres de Pologne",
       "type": "REPRESENTE"
     },
     {
@@ -12092,6 +12132,10 @@
       "label": "Institution"
     },
     {
+      "id": "Députés polonais",
+      "label": "Institution"
+    },
+    {
       "id": "Président de la Banque centrale européenne",
       "label": "Institution"
     },
@@ -12118,6 +12162,10 @@
     },
     {
       "id": "Institutions de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Diète de la République de Pologne",
       "label": "Institution"
     },
     {
@@ -12577,7 +12625,7 @@
       "label": "Institution"
     },
     {
-      "id": "Président du Conseil des ministres polonais",
+      "id": "Président du Conseil des ministres de Pologne",
       "label": "Institution"
     },
     {
@@ -15558,6 +15606,10 @@
     },
     {
       "id": "Citoyens français",
+      "label": "Institution"
+    },
+    {
+      "id": "Citoyens polonais",
       "label": "Institution"
     },
     {
@@ -18593,6 +18645,10 @@
     "label":"Institution"
   },
   {
+    "id":"Citoyens polonais de plus de 18 ans",
+    "label":"Institution"
+  },
+  {
     "id":"Administration publique centrale française (APUC)",
     "label":"Institution"
   },
@@ -18642,6 +18698,10 @@
   },
   {
     "id":"Président de la République française",
+    "label":"Institution"
+  },
+  {
+    "id":"Président de la République de Pologne",
     "label":"Institution"
   },
   {
