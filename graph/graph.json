@@ -21,6 +21,61 @@
     "target":"Direction générale des Finances publiques (DGFiP)"
   },
   {
+    "source":"Grands électeurs français",
+    "type":"Elisent",
+    "target":"Sénateurs français"
+  },
+  {
+    "source":"Conseillers régionaux français",
+    "type":"Composent",
+    "target":"Grands électeurs français"
+  },
+  {
+    "source":"Conseillers départementaux français",
+    "type":"Composent",
+    "target":"Grands électeurs français"
+  },
+  {
+    "source":"Délégués des conseils municipaux français",
+    "type":"Composent",
+    "target":"Grands électeurs français"
+  },
+  {
+    "source":"Députés français",
+    "type":"Composent",
+    "target":"Grands électeurs français"
+  },
+  {
+    "source":"Élus non municipaux ultramarins français",
+    "type":"Composent",
+    "target":"Grands électeurs français"
+  },
+  {
+    "source":"Conseillers municipaux français",
+    "type":"Composent",
+    "target":"Délégués des conseils municipaux français"
+  },
+  {
+    "source":"Délégués supplémentaires français",
+    "type":"Composent",
+    "target":"Délégués des conseils municipaux français"
+  },
+  {
+    "source":"Citoyens français de plus de 18 ans",
+    "type":"Elisent",
+    "target":"Conseillers départementaux français"
+  },
+  {
+    "source":"Citoyens français de plus de 18 ans",
+    "type":"Elisent",
+    "target":"Conseillers régionaux français"
+  },
+  {
+    "source":"Citoyens français de plus de 18 ans",
+    "type":"Elisent",
+    "target":"Conseillers municipaux français"
+  },
+  {
     "source":"Bruno Parent",
     "type":"Représente",
     "target":"Directeur général de la DGFiP"
@@ -34,6 +89,46 @@
     "source":"Citoyens français de plus de 18 ans",
     "type":"Elisent",
     "target":"Président de la République française"
+  },
+  {
+    "source":"Citoyens français de plus de 18 ans",
+    "type":"Composent",
+    "target":"Citoyens de l'Union européenne de plus de 18 ans"
+  },
+  {
+    "source":"Citoyens français de plus de 18 ans",
+    "type":"Font partie",
+    "target":"Citoyens français"
+  },
+  {
+    "source":"Citoyens français",
+    "type":"Font partie",
+    "target":"Habitants de la France"
+  },
+  {
+    "source":"Citoyens français",
+    "type":"Font partie",
+    "target":"Citoyens de l'Union européenne"
+  },
+  {
+    "source":"Habitants de la France",
+    "type":"Font partie",
+    "target":"Habitants de l'Union européenne"
+  },
+  {
+    "source":"Députés français",
+    "type":"Composent",
+    "target":"Assemblée nationale française"
+  },
+  {
+    "source":"Citoyens français de plus de 18 ans",
+    "type":"Elisent",
+    "target":"Députés français"
+  },
+  {
+    "source":"Sénateurs français",
+    "type":"Composent",
+    "target":"Sénat français"
   },
   {
     "source":"Premier ministre français",
@@ -12224,6 +12319,30 @@
       "label": "Institution"
     },
     {
+      "id": "Sénateurs français",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseillers départementaux français",
+      "label": "Institution"
+    },
+    {
+      "id": "Grands électeurs français",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseillers régionaux français",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseillers municipaux français",
+      "label": "Institution"
+    },
+    {
+      "id": "Délégués des conseils municipaux français",
+      "label": "Institution"
+    },
+    {
       "id": "Koen Lenaerts",
       "label": "Personne"
     },
@@ -12375,6 +12494,14 @@
     },
     {
       "id": "Chancelier fédéral d'Autriche",
+      "label": "Institution"
+    },
+    {
+      "id": "Élus non municipaux ultramarins français",
+      "label": "Institution"
+    },
+    {
+      "id": "Délégués supplémentaires français",
       "label": "Institution"
     },
     {
@@ -15422,7 +15549,19 @@
       "label": "Institution"
     },
     {
+      "id": "Députés français",
+      "label": "Institution"
+    },
+    {
       "id": "Suppléants du CdR",
+      "label": "Institution"
+    },
+    {
+      "id": "Citoyens français",
+      "label": "Institution"
+    },
+    {
+      "id": "Habitants de la France",
       "label": "Institution"
     },
     {

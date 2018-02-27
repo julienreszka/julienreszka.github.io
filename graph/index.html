@@ -95,9 +95,9 @@ var simulation = d3
 	.force("link", d3
 		.forceLink()
 		.id(function (d) {return d.id;})
-		.distance(function(d){ 
-			return (d.type.length * 2 + 100)
-		})
+		// .distance(function(d){ 
+		// 	return (d.type.length * 2 + 100)
+		// })
 	)
 	.force("collide",d3.forceCollide(function(d){return d.id}).strength(1).radius(5).iterations(1))
 	.force("charge", d3.forceManyBody().strength(-1500))
@@ -176,11 +176,12 @@ node = svg
 	.attr("stroke", "black")
 	.attr("stroke-width", 1)
 	.style("fill", function (d, i) {return color(d.id);})
-	.call(d3.drag()
-		.on("start", dragstarted)
-		.on("drag", dragged)
+	// .call(d3
+		// .drag()
+		// .on("start", dragstarted)
+		// .on("drag", dragged)
 			// .on("end", dragended)
-	);
+	// );
 
 label = svg
 	.append("g")
@@ -195,11 +196,11 @@ label = svg
 	.style("fill", "black")
 	.attr("stroke-width", "1px")
 	.text(function (d) {return d.id})
-	.call(d3
-		.drag()
-		.on("start", dragstarted)
-		.on("drag", dragged)
-	)
+	// .call(d3
+		// .drag()
+		// .on("start", dragstarted)
+		// .on("drag", dragged)
+	// )
 	.attr("stroke", function (d) {return labelColors(d.label)})
 	;
 
@@ -259,7 +260,7 @@ simulation.alphaMin(0.2)
 
 function ticked() {
 
-	console.log(simulation.alpha());
+	// console.log(simulation.alpha());
 
 	svg
 		.attr("width", window.innerWidth);
