@@ -1,0 +1,61 @@
+{
+  "links": [
+    
+    {
+      "source": "Idea",
+      "target": "Concept",
+      "type": ""
+    },
+    {
+      "source": "Concept",
+      "target": "Product",
+      "type": ""
+    },
+    {
+      "source": "Product",
+      "target": "Sale",
+      "type": ""
+    },
+    {
+      "source": "Sale",
+      "target": "Investment",
+      "type": ""
+    },
+    {
+      "source": "Investment",
+      "target": "Profit",
+      "type": ""
+    },
+    {
+      "source": "Profit",
+      "target": "Idea",
+      "type": ""
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Idea",
+      "label": ""
+    },
+    {
+      "id": "Concept",
+      "label": ""
+    },
+    {
+      "id": "Product",
+      "label": ""
+    },
+    {
+      "id": "Sale",
+      "label": ""
+    },
+    {
+      "id": "Investment",
+      "label": ""
+    },
+    {
+      "id": "Profit",
+      "label": ""
+    }
+  ]
+}
