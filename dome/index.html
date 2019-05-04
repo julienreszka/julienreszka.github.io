@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dome</title>
+  
+</head>
+<body>
+    
+<style>
+/* .recursiveiframe {
+width: 100vw;
+height: 100vh;
+} */
+
+html, body {
+  margin:0px;
+  margin-right:40px;
+}
+body    {overflow-y:scroll;}
+/* iframe {
+  width:calc(100vw - 40px);
+  height:33vh;
+} */
+
+</style>
+  <!-- <h1>
+    Recursive Dome
+  </h1>
+  <iframe 
+    src="index.html" 
+    frameborder="1"
+    class="recursiveiframe"
+  ></iframe> -->
+
+<div id="toplist">
+  <iframe is="x-frame-bypass" src="https://www.google.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.youtube.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.facebook.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.baidu.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.instagram.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.twitter.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.pornhub.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.yahoo.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.xvideos.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.wikipedia.org"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.vk.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.xnxx.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.yandex.ru"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.amazon.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.live.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.ampproject.org"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.mail.ru"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.netflix.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.xhamster.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.ok.ru"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.reddit.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.yahoo.co.jp"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.qq.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.ebay.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.bing.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.google.com.br"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.linkedin.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.whatsapp.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.aliexpress.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.google.de"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.sogou.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.pinterest.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.office.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.msn.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.naver.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.google.co.jp"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.twitch.tv"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.paypal.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.google.fr"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.imdb.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.google.co.uk"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.craigslist.org"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.taobao.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.github.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.amazon.de"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.microsoft.com"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.amazon.co.jp"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.google.it"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.google.co.in"></iframe>
+  <iframe is="x-frame-bypass" src="https://www.m.sm.cn"></iframe>
+    
+</div>
+<!-- <script>
+list = [
+"google.com",
+"youtube.com",
+"facebook.com",
+"baidu.com",
+"instagram.com",
+"twitter.com",
+"pornhub.com",
+"yahoo.com",
+"xvideos.com",
+"wikipedia.org",
+"vk.com",
+"xnxx.com",
+"yandex.ru",
+"amazon.com",
+"live.com",
+"ampproject.org",
+"mail.ru",
+"netflix.com",
+"xhamster.com",
+"ok.ru",
+"reddit.com",
+"yahoo.co.jp",
+"qq.com",
+"ebay.com",
+"bing.com",
+"google.com.br",
+"linkedin.com",
+"whatsapp.com",
+"aliexpress.com",
+"google.de",
+"sogou.com",
+"pinterest.com",
+"office.com",
+"msn.com",
+"naver.com",
+"google.co.jp",
+"twitch.tv",
+"paypal.com",
+"google.fr",
+"imdb.com",
+"google.co.uk",
+"craigslist.org",
+"taobao.com",
+"github.com",
+"amazon.de",
+"microsoft.com",
+"amazon.co.jp",
+"google.it",
+"google.co.in",
+"m.sm.cn"
+]
+
+var elToplist = document
+  .querySelector(
+    `#toplist`
+  )
+
+list.forEach(website => {
+  var iframe = document.createElement('iframe')
+  iframe.setAttribute("is","x-frame-bypass")
+  iframe.setAttribute("src", `https://www.${website}`)
+  
+  elToplist.appendChild(
+    iframe
+  )
+});
+</script> -->
+<script src="https://unpkg.com/@ungap/custom-elements-builtin"></script>
+<script type="module" src="https://unpkg.com/x-frame-bypass"></script>
+</body>
+</html>
