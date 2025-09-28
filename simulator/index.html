@@ -56,9 +56,41 @@
         curve and optimal spending level.
       </p>
 
+      <details>
+        <summary>About the Armey Curve</summary>
+        <div style="margin-top: 15px; line-height: 1.6;">
+          <p>The Armey curve is an economic model that describes the relationship between the size of government spending and economic growth. It posits that as government spending increases from zero, economic growth initially rises because essential public goods—like infrastructure, the legal system, and education—boost prosperity and stability. However, after reaching an optimal point, further increases in government size lead to diminishing returns, inefficiency, and crowding out of private investment, so economic growth then declines.</p>
+          
+          <h3>Curve Structure</h3>
+          <p>The Armey curve is typically illustrated as an inverted U-shaped (parabolic) graph. On the horizontal axis is government spending (often as a percentage of GDP), and on the vertical axis is economic growth or societal welfare. The "peak" of the curve represents the optimal government size for maximum growth. Empirical research commonly situates this optimum between 20% and 30% of GDP, though the exact figure varies by country and time period.</p>
+          
+          <h3>Mathematical Formulation</h3>
+          <p>The curve is often expressed with a quadratic equation:</p>
+          <p style="text-align: center; font-style: italic;">Y = α + β₁ · G + β₂ · G²</p>
+          <p>where Y is economic growth, G is government spending, and coefficients β₁ > 0, β₂ < 0 capture the concave shape—positive effects at first, negative effects after the turning point.</p>
+          
+          <h3>Policy Implications</h3>
+          <ul>
+            <li>An undersized government fails to provide basic public goods, resulting in low growth due to lack of order, security, and infrastructure.</li>
+            <li>An oversized government leads to inefficiencies, less incentive for private enterprise, and lower economic growth due to excessive regulation, high taxation, and crowding out.</li>
+          </ul>
+          
+          <h3>Historical Context</h3>
+          <p>The Armey curve is named after U.S. Representative Dick Armey, who popularized it in the 1990s. Its logic parallels the Laffer curve, but focuses on the broader scope of government spending rather than just tax rates.</p>
+          
+          <h3>Comparative Findings</h3>
+          <ul>
+            <li>Optimal government size can vary with factors like openness of the economy, population size, and national context.</li>
+            <li>Empirical studies find different threshold values for optimal government size in countries such as the U.S., France, Kenya, Turkey, and Georgia—ranging from less than 20% up to 30% of GDP.</li>
+          </ul>
+          
+          <p>In summary, the Armey curve highlights that both too little and too much government spending can harm economic growth, and seeks to identify the optimal share that maximizes prosperity.</p>
+        </div>
+      </details>
+
       <form id="paramsForm">
-        <label for="beta0">Intercept (β₀, base growth, e.g., 2):</label>
-        <input type="number" id="beta0" value="2" step="0.1" />
+        <label for="beta0">Intercept (β₀, base growth, e.g., 4.5):</label>
+        <input type="number" id="beta0" value="4.5" step="0.1" />
 
         <label for="beta1">Linear coefficient (β₁, positive, e.g., 0.5):</label>
         <input type="number" id="beta1" value="0.5" step="0.01" />
@@ -133,7 +165,7 @@
       });
 
       // Initial simulation
-      simulateCurve(2, 0.5, -0.01);
+      simulateCurve(4.5, 0.5, -0.01);
     </script>
   </body>
 </html>
