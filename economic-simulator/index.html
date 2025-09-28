@@ -44,6 +44,28 @@
         width: 100%;
         padding: 8px;
       }
+      @media (min-width: 1024px) {
+        form {
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr 200px;
+          gap: 15px;
+          align-items: end;
+        }
+        .param-group {
+          display: flex;
+          flex-direction: column;
+        }
+        .param-group label {
+          margin: 0 0 5px 0;
+          font-size: 14px;
+        }
+        .param-group input {
+          width: 100%;
+        }
+        form button {
+          margin: 0;
+        }
+      }
       button {
         padding: 10px 20px;
         background: #007bff;
@@ -77,11 +99,13 @@
       }
 
       details {
-        max-height: 30svh;
-        overflow: auto;
         border: 1px solid #ccc;
         padding: 10px;
         border-radius: 5px;
+      }
+      details > div {
+        max-height: 30svh;
+        overflow-y: auto;
       }
     </style>
   </head>
@@ -264,20 +288,31 @@
           </details>
 
           <form id="paramsFormArmey">
-            <label for="beta0-armey"
-              >Intercept (β₀, base growth, e.g., 4.5):</label
-            >
-            <input type="number" id="beta0-armey" value="4.5" step="0.1" />
+            <div class="param-group">
+              <label for="beta0-armey"
+                >Intercept (β₀, base growth, e.g., 4.5):</label
+              >
+              <input type="number" id="beta0-armey" value="4.5" step="0.1" />
+            </div>
 
-            <label for="beta1-armey"
-              >Linear coefficient (β₁, positive, e.g., 0.5):</label
-            >
-            <input type="number" id="beta1-armey" value="0.5" step="0.01" />
+            <div class="param-group">
+              <label for="beta1-armey"
+                >Linear coefficient (β₁, positive, e.g., 0.5):</label
+              >
+              <input type="number" id="beta1-armey" value="0.5" step="0.01" />
+            </div>
 
-            <label for="beta2-armey"
-              >Quadratic coefficient (β₂, negative, e.g., -0.01):</label
-            >
-            <input type="number" id="beta2-armey" value="-0.01" step="0.001" />
+            <div class="param-group">
+              <label for="beta2-armey"
+                >Quadratic coefficient (β₂, negative, e.g., -0.01):</label
+              >
+              <input
+                type="number"
+                id="beta2-armey"
+                value="-0.01"
+                step="0.001"
+              />
+            </div>
 
             <button type="submit">Simulate Armey Curve</button>
           </form>
@@ -455,20 +490,31 @@
           </details>
 
           <form id="paramsFormLaffer">
-            <label for="beta0-laffer"
-              >Intercept (β₀, base revenue, e.g., 0):</label
-            >
-            <input type="number" id="beta0-laffer" value="0" step="0.1" />
+            <div class="param-group">
+              <label for="beta0-laffer"
+                >Intercept (β₀, base revenue, e.g., 0):</label
+              >
+              <input type="number" id="beta0-laffer" value="0" step="0.1" />
+            </div>
 
-            <label for="beta1-laffer"
-              >Linear coefficient (β₁, positive, e.g., 1):</label
-            >
-            <input type="number" id="beta1-laffer" value="1" step="0.01" />
+            <div class="param-group">
+              <label for="beta1-laffer"
+                >Linear coefficient (β₁, positive, e.g., 1):</label
+              >
+              <input type="number" id="beta1-laffer" value="1" step="0.01" />
+            </div>
 
-            <label for="beta2-laffer"
-              >Quadratic coefficient (β₂, negative, e.g., -0.02):</label
-            >
-            <input type="number" id="beta2-laffer" value="-0.02" step="0.001" />
+            <div class="param-group">
+              <label for="beta2-laffer"
+                >Quadratic coefficient (β₂, negative, e.g., -0.02):</label
+              >
+              <input
+                type="number"
+                id="beta2-laffer"
+                value="-0.02"
+                step="0.001"
+              />
+            </div>
 
             <button type="submit">Simulate Laffer Curve</button>
           </form>
