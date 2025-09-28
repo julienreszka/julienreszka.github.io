@@ -598,7 +598,7 @@
 
       // Add resize event listener with debouncing for better performance
       let resizeTimeout;
-      window.addEventListener('resize', () => {
+      window.addEventListener("resize", () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(handleResize, 100);
       });
