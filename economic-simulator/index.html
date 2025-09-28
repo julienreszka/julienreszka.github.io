@@ -63,6 +63,13 @@
           margin-bottom: 20px;
         }
       }
+      summary {
+        font-weight: bold;
+        cursor: pointer;
+      }
+      details summary::after {
+        content: " (click to expand)";
+      }
     </style>
   </head>
   <body>
@@ -70,9 +77,10 @@
       <h1>Economic Curves Simulator: Armey and Laffer</h1>
       <p>
         This web app simulates two key economic curves: the Armey curve (public
-        spending vs. economic growth) and the Laffer curve (tax rates vs. tax
-        revenue). Both use quadratic models to illustrate inverted U-shaped
-        relationships. Adjust parameters to explore different scenarios.
+        spending vs. economic growth) and the Laffer curve (tax rates vs.
+        consent to taxation). Both use quadratic models to illustrate inverted
+        U-shaped relationships. Adjust parameters to explore different
+        scenarios.
       </p>
 
       <div id="curves-grid">
