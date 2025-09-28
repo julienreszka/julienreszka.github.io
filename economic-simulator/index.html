@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Economic Curves Simulator: Armey and Laffer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #container {
+        max-width: 800px;
+        margin: auto;
+      }
+      canvas {
+        width: 100%;
+        height: 400px;
+      }
+      form {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 5px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+      }
+      button {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      #optimal-armey,
+      #optimal-laffer {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      section {
+        margin-bottom: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Economic Curves Simulator: Armey and Laffer</h1>
+      <p>
+        This web app simulates two key economic curves: the Armey curve (public
+        spending vs. economic growth) and the Laffer curve (tax rates vs. tax
+        revenue). Both use quadratic models to illustrate inverted U-shaped
+        relationships. Adjust parameters to explore different scenarios.
+      </p>
+
+      <section id="armey-section">
+        <h2>Armey Curve</h2>
+
+        <details>
+          <summary>About the Armey Curve</summary>
+          <div style="margin-top: 15px; line-height: 1.6">
+            <p>
+              The Armey curve is an economic model that describes the
+              relationship between the size of government spending and economic
+              growth. It posits that as government spending increases from zero,
+              economic growth initially rises because essential public
+              goods—like infrastructure, the legal system, and education—boost
+              prosperity and stability. However, after reaching an optimal
+              point, further increases in government size lead to diminishing
+              returns, inefficiency, and crowding out of private investment, so
+              economic growth then declines.
+            </p>
+
+            <h3>Curve Structure</h3>
+            <p>
+              The Armey curve is typically illustrated as an inverted U-shaped
+              (parabolic) graph. On the horizontal axis is government spending
+              (often as a percentage of GDP), and on the vertical axis is
+              economic growth or societal welfare. The "peak" of the curve
+              represents the optimal government size for maximum growth.
+              Empirical research commonly situates this optimum between 20% and
+              30% of GDP, though the exact figure varies by country and time
+              period.
+            </p>
+
+            <h3>Mathematical Formulation</h3>
+            <p>The curve is often expressed with a quadratic equation:</p>
+            <p style="text-align: center; font-style: italic">
+              Y = α + β₁ · G + β₂ · G²
+            </p>
+            <p>
+              where Y is economic growth, G is government spending, and
+              coefficients β₁ > 0, β₂ < 0 capture the concave shape—positive
+              effects at first, negative effects after the turning point.
+            </p>
+
+            <h3>Policy Implications</h3>
+            <ul>
+              <li>
+                An undersized government fails to provide basic public goods,
+                resulting in low growth due to lack of order, security, and
+                infrastructure.
+              </li>
+              <li>
+                An oversized government leads to inefficiencies, less incentive
+                for private enterprise, and lower economic growth due to
+                excessive regulation, high taxation, and crowding out.
+              </li>
+            </ul>
+
+            <h3>Historical Context</h3>
+            <p>
+              The Armey curve is named after U.S. Representative Dick Armey, who
+              popularized it in the 1990s. Its logic parallels the Laffer curve,
+              but focuses on the broader scope of government spending rather
+              than just tax rates.
+            </p>
+
+            <h3>Comparative Findings</h3>
+            <ul>
+              <li>
+                Optimal government size can vary with factors like openness of
+                the economy, population size, and national context.
+              </li>
+              <li>
+                Empirical studies find different threshold values for optimal
+                government size in countries such as the U.S., France, Kenya,
+                Turkey, and Georgia—ranging from less than 20% up to 30% of GDP.
+              </li>
+            </ul>
+
+            <p>
+              In summary, the Armey curve highlights that both too little and
+              too much government spending can harm economic growth, and seeks
+              to identify the optimal share that maximizes prosperity.
+            </p>
+          </div>
+        </details>
+
+        <form id="paramsFormArmey">
+          <label for="beta0-armey"
+            >Intercept (β₀, base growth, e.g., 4.5):</label
+          >
+          <input type="number" id="beta0-armey" value="4.5" step="0.1" />
+
+          <label for="beta1-armey"
+            >Linear coefficient (β₁, positive, e.g., 0.5):</label
+          >
+          <input type="number" id="beta1-armey" value="0.5" step="0.01" />
+
+          <label for="beta2-armey"
+            >Quadratic coefficient (β₂, negative, e.g., -0.01):</label
+          >
+          <input type="number" id="beta2-armey" value="-0.01" step="0.001" />
+
+          <button type="submit">Simulate Armey Curve</button>
+        </form>
+
+        <canvas id="growthChartArmey"></canvas>
+        <div id="optimal-armey"></div>
+      </section>
+
+      <section id="laffer-section">
+        <h2>Laffer Curve</h2>
+
+        <details>
+          <summary>About the Laffer Curve</summary>
+          <div style="margin-top: 15px; line-height: 1.6">
+            <p>
+              The Laffer curve illustrates the theoretical relationship between
+              rates of taxation and the resulting levels of consent to taxation.
+              It suggests that at a tax rate of 0%, consent is zero (no taxes means
+              no need for consent), and at 100%, consent becomes -100% because there is no incentive to
+              work or produce under complete confiscation. Between these extremes, consent rises to a
+              maximum and then falls.
+            </p>
+
+            <h3>Curve Structure</h3>
+            <p>
+              The Laffer curve is depicted as an inverted U-shaped graph. The
+              horizontal axis represents the tax rate (from 0% to 100%), and the
+              vertical axis shows tax revenue. The peak indicates the
+              revenue-maximizing tax rate, beyond which higher rates reduce
+              revenue due to disincentives and evasion.
+            </p>
+            <p>
+              <strong>Important note on the y-axis:</strong> The y-axis doesn't
+              measure literal revenue but rather the theoretical economic health
+              and viability of the tax system. Thus, negative values serve as a
+              warning of extreme disincentives and economic dysfunction rather
+              than actual negative tax revenue.
+            </p>
+
+            <h3>Mathematical Formulation</h3>
+            <p>The curve can be modeled with a quadratic equation:</p>
+            <p style="text-align: center; font-style: italic">
+              R = β₀ + β₁ · t + β₂ · t²
+            </p>
+            <p>
+              where R is tax revenue, t is the tax rate, β₀ is often 0, β₁ > 0,
+              and β₂ < 0 to create the parabolic shape. More advanced models may
+              use different functional forms.
+            </p>
+
+            <h3>Policy Implications</h3>
+            <ul>
+              <li>
+                If tax rates are below the peak, increasing them can boost
+                revenue.
+              </li>
+              <li>
+                If rates are above the peak, cutting taxes can stimulate
+                economic activity, leading to higher revenue over time.
+              </li>
+              <li>
+                It highlights the trade-off between tax rates and economic
+                incentives, influencing debates on supply-side economics.
+              </li>
+            </ul>
+
+            <h3>Historical Context</h3>
+            <p>
+              Popularized by economist Arthur Laffer in 1974 during a meeting
+              with U.S. policymakers, the concept has roots in earlier thinkers
+              like Ibn Khaldun (14th century) and John Maynard Keynes. It gained
+              prominence in the 1980s under Reagan's tax cuts.
+            </p>
+
+            <h3>Understanding Negative Revenue Values</h3>
+            <p>
+              In the mathematical model, tax rates above 50% produce negative
+              revenue values. While negative tax revenue is impossible in
+              reality, these values represent theoretical economic collapse
+              scenarios:
+            </p>
+            <ul>
+              <li>
+                <strong>Economic collapse:</strong> Extremely high tax rates
+                (above 50% in this model) create such massive disincentives that
+                economic activity collapses to the point where the government
+                would theoretically need to pay people to engage in economic
+                activity.
+              </li>
+              <li>
+                <strong>Underground economy:</strong> People completely exit the
+                formal, taxable economy and move to barter, black markets, or
+                simply stop productive activity altogether.
+              </li>
+              <li>
+                <strong>Capital flight:</strong> Businesses and wealthy
+                individuals leave the country entirely, taking their economic
+                activity with them.
+              </li>
+              <li>
+                <strong>Disincentive effects:</strong> Work, investment, and
+                entrepreneurship become so unprofitable that they essentially
+                cease, creating a death spiral where the tax base evaporates.
+              </li>
+            </ul>
+            <p>
+              In practice, governments would see revenue approach zero rather
+              than go negative, as the economy would collapse or transform into
+              an untaxable shadow economy.
+            </p>
+
+            <h3>Comparative Findings</h3>
+            <ul>
+              <li>
+                Empirical studies vary: For the U.S., the revenue-maximizing
+                rate is often estimated around 25% for a balanced budget
+                maximizing long term growth.
+              </li>
+            </ul>
+
+            <p>
+              In summary, the Laffer curve demonstrates that tax rates and
+              revenue are not linearly related, emphasizing the need to find the
+              optimal rate that maximizes government income without stifling
+              economic growth.
+            </p>
+          </div>
+        </details>
+
+        <form id="paramsFormLaffer">
+          <label for="beta0-laffer"
+            >Intercept (β₀, base revenue, e.g., 0):</label
+          >
+          <input type="number" id="beta0-laffer" value="0" step="0.1" />
+
+          <label for="beta1-laffer"
+            >Linear coefficient (β₁, positive, e.g., 1):</label
+          >
+          <input type="number" id="beta1-laffer" value="1" step="0.01" />
+
+          <label for="beta2-laffer"
+            >Quadratic coefficient (β₂, negative, e.g., -0.02):</label
+          >
+          <input type="number" id="beta2-laffer" value="-0.02" step="0.001" />
+
+          <button type="submit">Simulate Laffer Curve</button>
+        </form>
+
+        <canvas id="growthChartLaffer"></canvas>
+        <div id="optimal-laffer"></div>
+      </section>
+    </div>
+
+    <script>
+      // Armey Curve
+      const ctxArmey = document
+        .getElementById("growthChartArmey")
+        .getContext("2d");
+      let chartArmey;
+
+      function simulateCurveArmey(beta0, beta1, beta2) {
+        const spending = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
+        const growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
+
+        if (chartArmey) chartArmey.destroy();
+        chartArmey = new Chart(ctxArmey, {
+          type: "line",
+          data: {
+            labels: spending,
+            datasets: [
+              {
+                label: "Growth Rate (%)",
+                data: growth,
+                borderColor: "blue",
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              x: {
+                title: { display: true, text: "Public Spending (% of GDP)" },
+              },
+              y: { title: { display: true, text: "GDP Growth Rate (%)" } },
+            },
+          },
+        });
+
+        // Calculate optimal
+        const optimal = -beta1 / (2 * beta2);
+        document.getElementById(
+          "optimal-armey"
+        ).innerText = `Optimal Spending: ${optimal.toFixed(
+          2
+        )}% of GDP (where growth is maximized at ${(
+          beta0 +
+          beta1 * optimal +
+          beta2 * optimal * optimal
+        ).toFixed(2)}%)`;
+      }
+
+      document
+        .getElementById("paramsFormArmey")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const beta0 = parseFloat(
+            document.getElementById("beta0-armey").value
+          );
+          const beta1 = parseFloat(
+            document.getElementById("beta1-armey").value
+          );
+          const beta2 = parseFloat(
+            document.getElementById("beta2-armey").value
+          );
+          if (beta2 >= 0) {
+            alert("β₂ should be negative for an inverted U-shape.");
+            return;
+          }
+          simulateCurveArmey(beta0, beta1, beta2);
+        });
+
+      // Initial simulation for Armey
+      simulateCurveArmey(4.5, 0.5, -0.01);
+
+      // Laffer Curve
+      const ctxLaffer = document
+        .getElementById("growthChartLaffer")
+        .getContext("2d");
+      let chartLaffer;
+
+      function simulateCurveLaffer(beta0, beta1, beta2) {
+        const taxRate = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
+        const revenue = taxRate.map((t) => beta0 + beta1 * t + beta2 * t * t);
+
+        if (chartLaffer) chartLaffer.destroy();
+        chartLaffer = new Chart(ctxLaffer, {
+          type: "line",
+          data: {
+            labels: taxRate,
+            datasets: [
+              {
+                label: "Consent to Taxation",
+                data: revenue,
+                borderColor: "green",
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              x: {
+                title: { display: true, text: "Tax Rate (%)" },
+              },
+              y: { title: { display: true, text: "Consent to Taxation" } },
+            },
+          },
+        });
+
+        // Calculate optimal
+        const optimal = -beta1 / (2 * beta2);
+        document.getElementById(
+          "optimal-laffer"
+        ).innerText = `Optimal Tax Rate: ${optimal.toFixed(
+          2
+        )}% (where taxation consent is maximized at ${(
+          beta0 +
+          beta1 * optimal +
+          beta2 * optimal * optimal
+        ).toFixed(2)})`;
+      }
+
+      document
+        .getElementById("paramsFormLaffer")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const beta0 = parseFloat(
+            document.getElementById("beta0-laffer").value
+          );
+          const beta1 = parseFloat(
+            document.getElementById("beta1-laffer").value
+          );
+          const beta2 = parseFloat(
+            document.getElementById("beta2-laffer").value
+          );
+          if (beta2 >= 0) {
+            alert("β₂ should be negative for an inverted U-shape.");
+            return;
+          }
+          simulateCurveLaffer(beta0, beta1, beta2);
+        });
+
+      // Initial simulation for Laffer
+      simulateCurveLaffer(0, 1, -0.02);
+    </script>
+  </body>
+</html>
