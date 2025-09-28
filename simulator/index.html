@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Optimal Public Spending Simulator</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      #container {
+        max-width: 800px;
+        margin: auto;
+      }
+      canvas {
+        width: 100%;
+        height: 400px;
+      }
+      form {
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin: 10px 0 5px;
+      }
+      input {
+        width: 100%;
+        padding: 8px;
+      }
+      button {
+        padding: 10px 20px;
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      #optimal {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>Optimal Public Spending Simulator</h1>
+      <p>
+        This web app simulates the Armey curve, showing the relationship between
+        public spending (% of GDP) and economic growth rate using a quadratic
+        model: Growth = β₀ + β₁*(G/Y) + β₂*(G/Y)². Adjust parameters to see the
+        curve and optimal spending level.
+      </p>
+
+      <form id="paramsForm">
+        <label for="beta0">Intercept (β₀, base growth, e.g., 2):</label>
+        <input type="number" id="beta0" value="2" step="0.1" />
+
+        <label for="beta1">Linear coefficient (β₁, positive, e.g., 0.5):</label>
+        <input type="number" id="beta1" value="0.5" step="0.01" />
+
+        <label for="beta2"
+          >Quadratic coefficient (β₂, negative, e.g., -0.01):</label
+        >
+        <input type="number" id="beta2" value="-0.01" step="0.001" />
+
+        <button type="submit">Simulate</button>
+      </form>
+
+      <canvas id="growthChart"></canvas>
+      <div id="optimal"></div>
+    </div>
+
+    <script>
+      const ctx = document.getElementById("growthChart").getContext("2d");
+      let chart;
+
+      function simulateCurve(beta0, beta1, beta2) {
+        const spending = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
+        const growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
+
+        if (chart) chart.destroy();
+        chart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: spending,
+            datasets: [
+              {
+                label: "Growth Rate (%)",
+                data: growth,
+                borderColor: "blue",
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              x: {
+                title: { display: true, text: "Public Spending (% of GDP)" },
+              },
+              y: { title: { display: true, text: "GDP Growth Rate (%)" } },
+            },
+          },
+        });
+
+        // Calculate optimal
+        const optimal = -beta1 / (2 * beta2);
+        document.getElementById(
+          "optimal"
+        ).innerText = `Optimal Spending: ${optimal.toFixed(
+          2
+        )}% of GDP (where growth is maximized at ${(
+          beta0 +
+          beta1 * optimal +
+          beta2 * optimal * optimal
+        ).toFixed(2)}%)`;
+      }
+
+      document.getElementById("paramsForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const beta0 = parseFloat(document.getElementById("beta0").value);
+        const beta1 = parseFloat(document.getElementById("beta1").value);
+        const beta2 = parseFloat(document.getElementById("beta2").value);
+        if (beta2 >= 0) {
+          alert("β₂ should be negative for an inverted U-shape.");
+          return;
+        }
+        simulateCurve(beta0, beta1, beta2);
+      });
+
+      // Initial simulation
+      simulateCurve(2, 0.5, -0.01);
+    </script>
+  </body>
+</html>
