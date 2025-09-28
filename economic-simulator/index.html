@@ -24,9 +24,14 @@
           grid-template-columns: 1fr 1fr;
         }
       }
-      canvas {
-        width: 100%;
+      .chart-container {
+        position: relative;
         height: 400px;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+      canvas {
+        display: block;
       }
       form {
         margin-bottom: 20px;
@@ -69,6 +74,14 @@
       }
       details summary::after {
         content: " (click to expand)";
+      }
+
+      details {
+        max-height: 30svh;
+        overflow: auto;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
       }
     </style>
   </head>
@@ -229,7 +242,9 @@
             <button type="submit">Simulate Armey Curve</button>
           </form>
 
-          <canvas id="growthChartArmey"></canvas>
+          <div class="chart-container">
+            <canvas id="growthChartArmey"></canvas>
+          </div>
           <div id="optimal-armey"></div>
         </section>
 
@@ -418,7 +433,9 @@
             <button type="submit">Simulate Laffer Curve</button>
           </form>
 
-          <canvas id="growthChartLaffer"></canvas>
+          <div class="chart-container">
+            <canvas id="growthChartLaffer"></canvas>
+          </div>
           <div id="optimal-laffer"></div>
         </section>
       </div>
@@ -450,6 +467,8 @@
             ],
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
               x: {
                 title: { display: true, text: "Public Spending (% of GDP)" },
@@ -520,6 +539,8 @@
             ],
           },
           options: {
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
               x: {
                 title: { display: true, text: "Tax Rate (%)" },
@@ -564,6 +585,23 @@
 
       // Initial simulation for Laffer
       simulateCurveLaffer(0, 1, -0.02);
+
+      // Handle window resize
+      function handleResize() {
+        if (chartArmey) {
+          chartArmey.resize();
+        }
+        if (chartLaffer) {
+          chartLaffer.resize();
+        }
+      }
+
+      // Add resize event listener with debouncing for better performance
+      let resizeTimeout;
+      window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(handleResize, 100);
+      });
     </script>
   </body>
 </html>
