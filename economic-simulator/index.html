@@ -4,17 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      Economic Curves Simulator: Armey, Laffer, and J-Curve Analysis Tool
+      Economic Curves Simulator: Armey, Laffer, J-Curve, and Supply-Demand
+      Analysis Tool
     </title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Interactive economic simulator for Armey, Laffer, and J-Curves. Explore the relationship between government spending, tax rates, economic shocks, and recovery with real-time visualizations and adjustable parameters."
+      content="Interactive economic simulator for Armey, Laffer, J-Curves, and Supply-Demand. Explore the relationship between government spending, tax rates, economic shocks, recovery, and market equilibria with real-time visualizations and adjustable parameters."
     />
     <meta
       name="keywords"
-      content="economic simulator, Armey curve, Laffer curve, J-Curve, government spending, tax rates, economic growth, fiscal policy, devaluation, shock therapy, public economics, interactive economics, economic visualization, GDP growth, taxation theory, Milei Argentina"
+      content="economic simulator, Armey curve, Laffer curve, J-Curve, supply demand, government spending, tax rates, economic growth, fiscal policy, devaluation, shock therapy, public economics, interactive economics, economic visualization, GDP growth, taxation theory, Milei Argentina, market equilibrium"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -24,11 +25,11 @@
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta
       property="og:title"
-      content="Economic Curves Simulator: Interactive Armey, Laffer, and J-Curve Analysis"
+      content="Economic Curves Simulator: Interactive Armey, Laffer, J-Curve, and Supply-Demand Analysis"
     />
     <meta
       property="og:description"
-      content="Explore economic theory with interactive Armey, Laffer, and J-Curves. Adjust parameters to see how government spending, tax rates, and policy shocks affect economic growth, taxation consent, and recovery."
+      content="Explore economic theory with interactive Armey, Laffer, J-Curves, and Supply-Demand. Adjust parameters to see how government spending, tax rates, policy shocks, and market forces affect economic growth, taxation consent, recovery, and equilibria."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -48,11 +49,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Economic Curves Simulator: Interactive Armey, Laffer, and J-Curve Analysis"
+      content="Economic Curves Simulator: Interactive Armey, Laffer, J-Curve, and Supply-Demand Analysis"
     />
     <meta
       name="twitter:description"
-      content="Interactive tool for exploring Armey, Laffer, and J-Curves with real-time parameter adjustments and economic visualizations."
+      content="Interactive tool for exploring Armey, Laffer, J-Curves, and Supply-Demand with real-time parameter adjustments and economic visualizations."
     />
     <meta
       name="twitter:image"
@@ -91,7 +92,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Economic Curves Simulator",
-        "description": "Interactive economic simulator for exploring Armey, Laffer, and J-Curves, demonstrating the relationship between government spending, tax rates, policy shocks, economic growth, and taxation consent.",
+        "description": "Interactive economic simulator for exploring Armey, Laffer, J-Curves, and Supply-Demand, demonstrating the relationship between government spending, tax rates, policy shocks, market forces, economic growth, and taxation consent.",
         "url": "https://julienreszka.github.io/economic-simulator/",
         "applicationCategory": "EducationalApplication",
         "operatingSystem": "Any",
@@ -119,6 +120,7 @@
           "Armey Curve",
           "Laffer Curve",
           "J-Curve",
+          "Supply and Demand",
           "Economic Theory",
           "Government Spending",
           "Tax Policy",
@@ -127,7 +129,8 @@
           "Devaluation",
           "Shock Therapy",
           "Public Economics",
-          "Milei Argentina"
+          "Milei Argentina",
+          "Market Equilibrium"
         ],
         "about": [
           {
@@ -144,6 +147,11 @@
             "@type": "Thing",
             "name": "J-Curve",
             "description": "Economic phenomenon showing initial deterioration followed by improvement after a policy shock like devaluation"
+          },
+          {
+            "@type": "Thing",
+            "name": "Supply and Demand",
+            "description": "Fundamental economic model showing how prices and quantities reach equilibrium in markets"
           }
         ],
         "offers": {
@@ -202,6 +210,11 @@
           grid-template-columns: 1fr 1fr 1fr;
         }
       }
+      @media (min-width: 1800px) {
+        #curves-grid {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+      }
       .chart-container {
         position: relative;
         height: 350px;
@@ -229,7 +242,8 @@
           gap: 15px;
           align-items: end;
         }
-        #paramsFormJCurve {
+        #paramsFormJCurve,
+        #paramsFormSupplyDemand {
           grid-template-columns: 1fr 1fr 1fr 1fr 90px;
         }
         .param-group {
@@ -259,7 +273,8 @@
       }
       #optimal-armey,
       #optimal-laffer,
-      #jcurve-insights {
+      #jcurve-insights,
+      #equilibrium-supplydemand {
         font-size: 18px;
         font-weight: bold;
         margin-top: 0px;
@@ -322,13 +337,16 @@
   </head>
   <body>
     <div id="container">
-      <h1>Economic Curves Simulator: Armey, Laffer, and J-Curve</h1>
+      <h1>
+        Economic Curves Simulator: Armey, Laffer, J-Curve, and Supply-Demand
+      </h1>
       <p>
-        This web app simulates three key economic curves: the Armey curve
-        (public spending vs. economic growth), the Laffer curve (tax rates vs.
-        consent to taxation), and the J-Curve (policy shocks vs. economic
-        recovery). All use parametric models to illustrate dynamic
-        relationships. Adjust parameters to explore different scenarios.
+        This web app simulates four key economic curves: the Armey curve (public
+        spending vs. economic growth), the Laffer curve (tax rates vs. consent
+        to taxation), the J-Curve (policy shocks vs. economic recovery), and
+        Supply-Demand (market forces vs. equilibrium). All use parametric models
+        to illustrate dynamic relationships. Adjust parameters to explore
+        different scenarios.
       </p>
 
       <div id="curves-grid">
@@ -1245,6 +1263,313 @@
           </div>
           <div id="jcurve-insights" aria-live="polite"></div>
         </section>
+
+        <section
+          id="supplydemand-section"
+          aria-labelledby="supplydemand-heading"
+        >
+          <details open>
+            <summary>About Supply and Demand</summary>
+            <div style="margin-top: 15px; line-height: 1.6">
+              <p>
+                The supply and demand model is the cornerstone of economics,
+                illustrating how buyers (demand) and sellers (supply) interact
+                to determine price and quantity in a market. Demand slopes
+                downward: as price falls, more is bought. Supply slopes upward:
+                as price rises, more is sold. Their intersection yields
+                equilibrium—the price where quantity demanded equals quantity
+                supplied, and markets clear without surplus or shortage.
+              </p>
+
+              <h3>Curve Structure</h3>
+              <p>
+                The graph plots price (vertical axis) against quantity
+                (horizontal axis). The demand curve descends from left to right;
+                the supply curve ascends. Shifts in either curve (due to taxes,
+                subsidies, preferences, or costs) alter equilibrium, revealing
+                surpluses (excess supply) or shortages (excess demand).
+              </p>
+
+              <h3>Mathematical Formulation</h3>
+              <p>Demand: <em>P = a - bQ</em> (a: max price, b: sensitivity)</p>
+              <p>Supply: <em>P = c + dQ</em> (c: min price, d: sensitivity)</p>
+              <p>Equilibrium: Q* = (a - c)/(b + d), P* = c + dQ*</p>
+
+              <h3>Understanding the Parameters (For Beginners)</h3>
+
+              <h4>Demand Parameters</h4>
+              <p><strong>a - Demand Intercept (Maximum Price):</strong></p>
+              <p>
+                This is the highest price any consumer would be willing to pay
+                for the product. Think of it as the "dream price" for luxury
+                buyers who really want the item regardless of cost. When
+                quantity is zero, this is where the demand curve starts on the
+                price axis. For example, if a = 120, it means at least one
+                person would pay up to $120 for the very first unit.
+              </p>
+
+              <p><strong>b - Demand Slope (Price Sensitivity):</strong></p>
+              <p>
+                This measures how much the price needs to drop to get people to
+                buy one more unit. A higher 'b' means demand is very sensitive
+                to price changes (people buy a lot more when prices drop just a
+                little). A lower 'b' means demand is less sensitive (people
+                don't buy much more even if prices drop a lot). For example, if
+                b = 2, the price needs to drop by $2 for every additional unit
+                consumers want to buy.
+              </p>
+
+              <h4>Supply Parameters</h4>
+              <p><strong>c - Supply Intercept (Minimum Price):</strong></p>
+              <p>
+                This is the minimum price producers need to receive to start
+                selling their product at all. It covers their basic costs
+                (materials, labor, overhead). If the market price falls below
+                this, producers won't sell anything because they'd lose money.
+                For example, if c = 20, producers need at least $20 to make it
+                worthwhile to produce and sell even the first unit.
+              </p>
+
+              <p>
+                <strong>d - Supply Slope (Production Cost Increase):</strong>
+              </p>
+              <p>
+                This measures how much the price needs to rise for producers to
+                supply one more unit. As producers make more, their costs
+                typically go up (overtime wages, less efficient equipment,
+                higher material costs). A higher 'd' means it gets expensive
+                quickly to produce more. For example, if d = 2, producers need
+                $2 more per unit to justify producing each additional item.
+              </p>
+
+              <h4>How These Work Together</h4>
+              <p>
+                The equilibrium happens where these curves intersect—where the
+                price consumers are willing to pay exactly equals the price
+                producers need to receive. At this point, the quantity demanded
+                equals the quantity supplied, and the market clears naturally
+                without government intervention.
+              </p>
+
+              <h3>Understanding Negative Prices</h3>
+              <p>
+                In the mathematical model, you may see negative prices on the
+                chart at very high quantities. While negative prices are unusual
+                in real markets, they can occur in special circumstances and
+                help illustrate important economic concepts:
+              </p>
+
+              <h4>On the Demand Curve (Negative Willingness to Pay)</h4>
+              <p>
+                When the demand curve drops below zero, it means consumers would
+                need to be paid to take the product. Real-world examples
+                include:
+              </p>
+              <ul>
+                <li>
+                  <strong>Waste disposal:</strong> If you produce too many
+                  widgets that nobody wants, you might have to pay people to
+                  haul them away
+                </li>
+                <li>
+                  <strong>Negative oil prices (2020):</strong> During COVID-19,
+                  oil storage filled up and producers literally paid buyers to
+                  take oil off their hands rather than shut down wells
+                </li>
+                <li>
+                  <strong>Perishable goods:</strong> A restaurant with too much
+                  food at closing time might give it away free or even pay to
+                  have it removed
+                </li>
+                <li>
+                  <strong>Excess inventory:</strong> Companies sometimes pay
+                  liquidators to clear out unsold merchandise
+                </li>
+              </ul>
+
+              <h4>On the Supply Curve (Negative Production Costs)</h4>
+              <p>
+                When the supply curve goes below zero at low quantities, it
+                represents a theoretical scenario where producers would pay to
+                produce. While rare, this can happen when:
+              </p>
+              <ul>
+                <li>
+                  <strong>Byproduct value:</strong> Manufacturing a product
+                  generates valuable byproducts that offset costs (though this
+                  usually adjusts the cost structure)
+                </li>
+                <li>
+                  <strong>Government subsidies:</strong> Producers receive
+                  payments that exceed their production costs
+                </li>
+                <li>
+                  <strong>Learning by doing:</strong> Early production builds
+                  skills and knowledge worth more than the cost
+                </li>
+              </ul>
+
+              <h4>Practical Note</h4>
+              <p>
+                In most real markets, producers simply stop supplying when
+                prices fall too low, and consumers stop demanding at very high
+                prices. Negative prices represent extreme theoretical scenarios
+                that help us understand the mathematical model. For educational
+                purposes, they demonstrate that these are linear projections—in
+                reality, markets don't operate at these extreme quantities.
+              </p>
+
+              <h3>Policy Implications</h3>
+              <ul>
+                <li>Price ceilings create shortages; floors, surpluses.</li>
+                <li>
+                  Taxes shift supply up, reducing quantity; subsidies shift
+                  down, increasing it.
+                </li>
+                <li>
+                  <strong>Elasticity (b, d) shows responsiveness:</strong> This
+                  measures how much quantity changes when price changes.
+                  <ul>
+                    <li>
+                      <strong
+                        >Steep curves (high b or d values) = Inelastic/Rigid
+                        markets:</strong
+                      >
+                      Quantity doesn't change much even with big price changes.
+                      Examples: insulin (people need it regardless of price),
+                      gasoline in the short term (you still need to drive to
+                      work), salt (you use about the same amount no matter the
+                      price). The curve is steep/vertical because quantity is
+                      relatively fixed.
+                    </li>
+                    <li>
+                      <strong
+                        >Flat curves (low b or d values) = Elastic/Flexible
+                        markets:</strong
+                      >
+                      Quantity changes a lot with small price changes. Examples:
+                      restaurant meals (if one place raises prices, people
+                      easily switch to competitors), luxury goods (if designer
+                      bags get too expensive, people skip them), seasonal fruits
+                      (if strawberries are expensive, buy blueberries instead).
+                      The curve is flat/horizontal because consumers or
+                      producers react strongly to price.
+                    </li>
+                    <li>
+                      <strong>Why this matters for policy:</strong> Taxing
+                      inelastic goods (like cigarettes or gasoline) raises lots
+                      of revenue because people keep buying. Taxing elastic
+                      goods raises less revenue because people quickly switch to
+                      alternatives. Similarly, subsidizing inelastic goods
+                      doesn't boost consumption much, but subsidizing elastic
+                      goods can dramatically increase purchases.
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+
+              <h3>Historical Context</h3>
+              <p>
+                Rooted in Adam Smith's "invisible hand" (1776), formalized by
+                Alfred Marshall in 1890. It underpins modern microeconomics,
+                guiding antitrust, trade, and regulation.
+              </p>
+
+              <p>
+                In summary, supply and demand reveals the invisible forces that
+                balance markets—or disrupt them under princely decree.
+              </p>
+            </div>
+          </details>
+
+          <form
+            id="paramsFormSupplyDemand"
+            aria-labelledby="supplydemand-heading"
+          >
+            <div class="param-group">
+              <label for="a-supplydemand"
+                >Demand Intercept (a, maximum price, e.g., 120):</label
+              >
+              <input
+                type="number"
+                id="a-supplydemand"
+                value="120"
+                step="1"
+                aria-describedby="a-supplydemand-help"
+              />
+              <small id="a-supplydemand-help" class="sr-only"
+                >Max price consumers will pay</small
+              >
+            </div>
+
+            <div class="param-group">
+              <label for="b-supplydemand"
+                >Demand Slope (b, price sensitivity, positive, e.g., 2):</label
+              >
+              <input
+                type="number"
+                id="b-supplydemand"
+                value="2"
+                step="0.1"
+                aria-describedby="b-supplydemand-help"
+              />
+              <small id="b-supplydemand-help" class="sr-only"
+                >Price sensitivity of demand</small
+              >
+            </div>
+
+            <div class="param-group">
+              <label for="c-supplydemand"
+                >Supply Intercept (c, minimum price, e.g., 20):</label
+              >
+              <input
+                type="number"
+                id="c-supplydemand"
+                value="20"
+                step="1"
+                aria-describedby="c-supplydemand-help"
+              />
+              <small id="c-supplydemand-help" class="sr-only"
+                >Min price producers accept</small
+              >
+            </div>
+
+            <div class="param-group">
+              <label for="d-supplydemand"
+                >Supply Slope (d, production cost increase, positive, e.g.,
+                2):</label
+              >
+              <input
+                type="number"
+                id="d-supplydemand"
+                value="2"
+                step="0.1"
+                aria-describedby="d-supplydemand-help"
+              />
+              <small id="d-supplydemand-help" class="sr-only"
+                >Price sensitivity of supply</small
+              >
+            </div>
+
+            <button type="submit">Simulate</button>
+          </form>
+
+          <div
+            class="chart-container"
+            role="img"
+            aria-labelledby="supplydemand-chart-label"
+          >
+            <canvas
+              id="growthChartSupplyDemand"
+              aria-label="Interactive Supply and Demand curves showing market equilibrium"
+            ></canvas>
+            <div id="supplydemand-chart-label" class="sr-only">
+              Chart displaying Supply and Demand with quantity on x-axis and
+              price on y-axis
+            </div>
+          </div>
+          <div id="equilibrium-supplydemand" aria-live="polite"></div>
+        </section>
       </div>
     </div>
 
@@ -1469,6 +1794,144 @@
       // Initial simulation for J-Curve
       simulateCurveJCurve(0, 10, 2, 1);
 
+      // Supply and Demand
+      const ctxSupplyDemand = document
+        .getElementById("growthChartSupplyDemand")
+        .getContext("2d");
+      let chartSupplyDemand;
+
+      function simulateSupplyDemand(a, b, c, d) {
+        // Calculate equilibrium first to set appropriate range
+        const eqQ = (a - c) / (b + d);
+        const eqP = c + d * eqQ;
+
+        // Check for invalid equilibrium (negative values)
+        if (eqQ < 0 || eqP < 0 || isNaN(eqQ) || isNaN(eqP)) {
+          alert(
+            "No positive equilibrium exists with these parameters. Please adjust values so demand intercept (a) > supply intercept (c)."
+          );
+          return;
+        }
+
+        // Dynamic range: show up to 150% of equilibrium or minimum of 100
+        const maxQ = Math.ceil(Math.max(100, eqQ * 1.5));
+        // Use integer quantities for clean axis labels
+        const quantity = Array.from({ length: maxQ + 1 }, (_, i) => i);
+        const demandPrice = quantity.map((q) => a - b * q);
+        const supplyPrice = quantity.map((q) => c + d * q);
+
+        if (chartSupplyDemand) chartSupplyDemand.destroy();
+        chartSupplyDemand = new Chart(ctxSupplyDemand, {
+          type: "line",
+          data: {
+            labels: quantity,
+            datasets: [
+              {
+                label: "Demand",
+                data: demandPrice,
+                borderColor: "purple",
+                fill: false,
+              },
+              {
+                label: "Supply",
+                data: supplyPrice,
+                borderColor: "orange",
+                fill: false,
+              },
+              {
+                label: "Equilibrium",
+                data: [{ x: Math.round(eqQ), y: eqP }],
+                pointRadius: 20,
+                pointHoverRadius: 22,
+                pointBackgroundColor: "red",
+                pointBorderColor: "darkred",
+                pointBorderWidth: 2,
+                pointHoverBorderWidth: 3,
+                showLine: false,
+                type: "scatter",
+                xAxisID: "x",
+                yAxisID: "y",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    if (context.dataset.label === "Equilibrium") {
+                      return `Equilibrium: Quantity ${Math.round(
+                        context.parsed.x
+                      )}, Price $${context.parsed.y.toFixed(2)}`;
+                    }
+                    if (context.dataset.label === "Demand") {
+                      return `Demand curve: At quantity ${context.parsed.x.toFixed(
+                        0
+                      )}, consumers will pay $${context.parsed.y.toFixed(2)}`;
+                    }
+                    if (context.dataset.label === "Supply") {
+                      return `Supply curve: At quantity ${context.parsed.x.toFixed(
+                        0
+                      )}, producers need $${context.parsed.y.toFixed(2)}`;
+                    }
+                    return `${
+                      context.dataset.label
+                    }: $${context.parsed.y.toFixed(2)}`;
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Quantity" },
+                ticks: {
+                  maxTicksLimit: 10,
+                  callback: function (value, index, ticks) {
+                    return Number.isInteger(value) ? value : value.toFixed(0);
+                  },
+                },
+              },
+              y: {
+                title: { display: true, text: "Price" },
+                ticks: {
+                  maxTicksLimit: 10,
+                },
+              },
+            },
+          },
+        });
+
+        // Display equilibrium values (already calculated at the top)
+        document.getElementById(
+          "equilibrium-supplydemand"
+        ).innerHTML = `<strong>Market Equilibrium (where supply meets demand):</strong><br>
+        • Equilibrium Quantity: ${Math.round(eqQ)} units<br>
+        • Equilibrium Price: $${eqP.toFixed(2)}<br>
+        <em style="font-size: 14px; font-weight: normal;">At this point, buyers want to purchase exactly the amount sellers want to sell. The market is balanced with no shortage or surplus.</em>`;
+      }
+
+      document
+        .getElementById("paramsFormSupplyDemand")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const a = parseFloat(document.getElementById("a-supplydemand").value);
+          const b = parseFloat(document.getElementById("b-supplydemand").value);
+          const c = parseFloat(document.getElementById("c-supplydemand").value);
+          const d = parseFloat(document.getElementById("d-supplydemand").value);
+          if (b <= 0 || d <= 0) {
+            alert("Slopes b and d should be positive.");
+            return;
+          }
+          simulateSupplyDemand(a, b, c, d);
+        });
+
+      // Initial simulation for Supply-Demand
+      // Formula: Q* = (a-c)/(b+d), P* = c + d*Q*
+      // For integer price: a=120, b=2, c=20, d=2 gives Q*=(120-20)/(2+2)=25, P*=20+2*25=70 ✓
+      simulateSupplyDemand(120, 2, 20, 2);
+
       // Handle window resize
       function handleResize() {
         if (chartArmey) {
@@ -1479,6 +1942,9 @@
         }
         if (chartJCurve) {
           chartJCurve.resize();
+        }
+        if (chartSupplyDemand) {
+          chartSupplyDemand.resize();
         }
       }
 
