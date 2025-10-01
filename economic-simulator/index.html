@@ -3,175 +3,145 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Economic Curves Simulator: Interactive Armey a  <body>
-    <header>
-      <div id="con      details > div {
-        max-height: 25svh;
-        overflow-y: auto;
-      }
-      
-      /* Footer styling */
-      footer {
-        margin-top: 60px;
-        padding: 40px 20px 20px;
-        border-top: 1px solid #e0e0e0;
-        background-color: #f8f9fa;
-      }
-      footer nav ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-      }
-      footer nav ul li a {
-        color: #007bff;
-        text-decoration: none;
-      }
-      footer nav ul li a:hover {
-        text-decoration: underline;
-      }
-      footer h3 {
-        margin-bottom: 15px;
-        font-size: 16px;
-      }
-      @media (max-width: 768px) {
-        footer nav ul {
-          flex-direction: column;
-          gap: 10px;
-        }
-      }er">
-        <h1>Economic Curves Simulator: Armey and Laffer</h1>
-        <p>
-          This web app simulates two key economic curves: the Armey curve (public
-          spending vs. eco          <div class="chart-container" role="img" aria-labelledby="armey-chart-label">
-            <canvas id="growthChartArmey" aria-label="Interactive Armey Curve showing relationship between government spending and economic growth"></canvas>
-            <div id="armey-chart-label" class="sr-only">Chart displaying the Armey Curve with government spending on x-axis and GDP growth rate on y-axis</div>
-          </div>
-          <div id="optimal-armey" aria-live="polite"></div>
-        </section>
+    <title>Economic Curves Simulator: Armey and Laffer Analysis Tool</title>
 
-        <section id="laffer-section" aria-labelledby="laffer-heading">
-          <h2 id="laffer-heading">Laffer Curve Analysis</h2>
-          <details>owth) and the Laffer curve (tax rates vs.
-          consent to taxation). Both use quadratic models to illustrate inverted
-          U-shaped relationships. Adjust parameters to explore different
-          scenarios.
-        </p>
-      </div>
-    </header>
-
-    <main>
-      <div id="container">
-        <div id="curves-grid">
-          <section id="armey-section" aria-labelledby="armey-heading">
-            <h2 id="armey-heading">Armey Curve Analysis</h2>
-            <details>
-              <summary>About the Armey Curve</summary> Analysis Tool</title>
-    
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Interactive economic simulator for Armey and Laffer curves. Explore the relationship between government spending, tax rates, economic growth, and taxation consent with real-time visualizations and adjustable parameters." />
-    <meta name="keywords" content="economic simulator, Armey curve, Laffer curve, government spending, tax rates, economic growth, fiscal policy, public economics, interactive economics, economic visualization, GDP growth, taxation theory" />
+    <meta
+      name="description"
+      content="Interactive economic simulator for Armey and Laffer curves. Explore the relationship between government spending, tax rates, economic growth, and taxation consent with real-time visualizations and adjustable parameters."
+    />
+    <meta
+      name="keywords"
+      content="economic simulator, Armey curve, Laffer curve, government spending, tax rates, economic growth, fiscal policy, public economics, interactive economics, economic visualization, GDP growth, taxation theory"
+    />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
     <meta name="language" content="English" />
     <meta name="theme-color" content="#007bff" />
-    
+
     <!-- Open Graph Meta Tags for Social Sharing -->
-    <meta property="og:title" content="Economic Curves Simulator: Interactive Armey and Laffer Curve Analysis" />
-    <meta property="og:description" content="Explore economic theory with interactive Armey and Laffer curves. Adjust parameters to see how government spending and tax rates affect economic growth and taxation consent." />
+    <meta
+      property="og:title"
+      content="Economic Curves Simulator: Interactive Armey and Laffer Curve Analysis"
+    />
+    <meta
+      property="og:description"
+      content="Explore economic theory with interactive Armey and Laffer curves. Adjust parameters to see how government spending and tax rates affect economic growth and taxation consent."
+    />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://julienreszka.github.io/economic-simulator/" />
-    <meta property="og:image" content="https://julienreszka.github.io/economic-simulator/og-image.png" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/"
+    />
+    <meta
+      property="og:image"
+      content="https://julienreszka.github.io/economic-simulator/og-image.png"
+    />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="Julien Reszka's Economic Tools" />
     <meta property="og:locale" content="en_US" />
-    
+
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Economic Curves Simulator: Interactive Armey and Laffer Analysis" />
-    <meta name="twitter:description" content="Interactive tool for exploring Armey and Laffer curves with real-time parameter adjustments and economic visualizations." />
-    <meta name="twitter:image" content="https://julienreszka.github.io/economic-simulator/twitter-card.png" />
+    <meta
+      name="twitter:title"
+      content="Economic Curves Simulator: Interactive Armey and Laffer Analysis"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive tool for exploring Armey and Laffer curves with real-time parameter adjustments and economic visualizations."
+    />
+    <meta
+      name="twitter:image"
+      content="https://julienreszka.github.io/economic-simulator/twitter-card.png"
+    />
     <meta name="twitter:creator" content="@julienreszka" />
-    
+
     <!-- Canonical URL -->
-    <link rel="canonical" href="https://julienreszka.github.io/economic-simulator/" />
-    
+    <link
+      rel="canonical"
+      href="https://julienreszka.github.io/economic-simulator/"
+    />
+
     <!-- Additional SEO elements -->
-    <link rel="sitemap" type="application/xml" href="https://julienreszka.github.io/sitemap.xml" />
-    
+    <link
+      rel="sitemap"
+      type="application/xml"
+      href="https://julienreszka.github.io/sitemap.xml"
+    />
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
-    
+
     <!-- Favicon (assuming it exists) -->
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Economic Curves Simulator",
-      "description": "Interactive economic simulator for exploring Armey and Laffer curves, demonstrating the relationship between government spending, tax rates, economic growth, and taxation consent.",
-      "url": "https://julienreszka.github.io/economic-simulator/",
-      "applicationCategory": "EducationalApplication",
-      "operatingSystem": "Any",
-      "browserRequirements": "Modern web browser with JavaScript support",
-      "author": {
-        "@type": "Person",
-        "name": "Julien Reszka",
-        "url": "https://julienreszka.github.io/"
-      },
-      "creator": {
-        "@type": "Person",
-        "name": "Julien Reszka"
-      },
-      "datePublished": "2024-01-01",
-      "dateModified": "2025-09-28",
-      "inLanguage": "en-US",
-      "isAccessibleForFree": true,
-      "educationalUse": [
-        "Economics Education",
-        "Policy Analysis",
-        "Academic Research",
-        "Interactive Learning"
-      ],
-      "keywords": [
-        "Armey Curve",
-        "Laffer Curve",
-        "Economic Theory",
-        "Government Spending",
-        "Tax Policy",
-        "Economic Growth",
-        "Fiscal Policy",
-        "Public Economics"
-      ],
-      "about": [
-        {
-          "@type": "Thing",
-          "name": "Armey Curve",
-          "description": "Economic model describing the relationship between government spending and economic growth"
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Economic Curves Simulator",
+        "description": "Interactive economic simulator for exploring Armey and Laffer curves, demonstrating the relationship between government spending, tax rates, economic growth, and taxation consent.",
+        "url": "https://julienreszka.github.io/economic-simulator/",
+        "applicationCategory": "EducationalApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Modern web browser with JavaScript support",
+        "author": {
+          "@type": "Person",
+          "name": "Julien Reszka",
+          "url": "https://julienreszka.github.io/"
         },
-        {
-          "@type": "Thing",
-          "name": "Laffer Curve",
-          "description": "Economic theory illustrating the relationship between tax rates and tax revenue collection"
+        "creator": {
+          "@type": "Person",
+          "name": "Julien Reszka"
+        },
+        "datePublished": "2024-01-01",
+        "dateModified": "2025-09-28",
+        "inLanguage": "en-US",
+        "isAccessibleForFree": true,
+        "educationalUse": [
+          "Economics Education",
+          "Policy Analysis",
+          "Academic Research",
+          "Interactive Learning"
+        ],
+        "keywords": [
+          "Armey Curve",
+          "Laffer Curve",
+          "Economic Theory",
+          "Government Spending",
+          "Tax Policy",
+          "Economic Growth",
+          "Fiscal Policy",
+          "Public Economics"
+        ],
+        "about": [
+          {
+            "@type": "Thing",
+            "name": "Armey Curve",
+            "description": "Economic model describing the relationship between government spending and economic growth"
+          },
+          {
+            "@type": "Thing",
+            "name": "Laffer Curve",
+            "description": "Economic theory illustrating the relationship between tax rates and tax revenue collection"
+          }
+        ],
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock"
         }
-      ],
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD",
-        "availability": "https://schema.org/InStock"
       }
-    }
     </script>
     <style>
       body {
@@ -289,8 +259,40 @@
         border-radius: 5px;
       }
       details > div {
-        max-height: 20svh;
+        max-height: 25svh;
         overflow-y: auto;
+      }
+
+      /* Footer styling */
+      footer {
+        margin-top: 60px;
+        padding: 40px 20px 20px;
+        border-top: 1px solid #e0e0e0;
+        background-color: #f8f9fa;
+      }
+      footer nav ul {
+        list-style: none;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      footer nav ul li a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      footer nav ul li a:hover {
+        text-decoration: underline;
+      }
+      footer h3 {
+        margin-bottom: 15px;
+        font-size: 16px;
+      }
+      @media (max-width: 768px) {
+        footer nav ul {
+          flex-direction: column;
+          gap: 10px;
+        }
       }
     </style>
   </head>
@@ -306,7 +308,8 @@
       </p>
 
       <div id="curves-grid">
-        <section id="armey-section">
+        <section id="armey-section" aria-labelledby="armey-heading">
+          <h2 id="armey-heading">Armey Curve Analysis</h2>
           <details open>
             <summary>About the Armey Curve</summary>
             <div style="margin-top: 15px; line-height: 1.6">
@@ -475,16 +478,32 @@
               <label for="beta0-armey"
                 >Intercept (β₀, base growth, e.g., 4.5):</label
               >
-              <input type="number" id="beta0-armey" value="4.5" step="0.1" aria-describedby="beta0-armey-help" />
-              <small id="beta0-armey-help" class="sr-only">Natural growth rate without government intervention</small>
+              <input
+                type="number"
+                id="beta0-armey"
+                value="4.5"
+                step="0.1"
+                aria-describedby="beta0-armey-help"
+              />
+              <small id="beta0-armey-help" class="sr-only"
+                >Natural growth rate without government intervention</small
+              >
             </div>
 
             <div class="param-group">
               <label for="beta1-armey"
                 >Linear coefficient (β₁, positive, e.g., 0.5):</label
               >
-              <input type="number" id="beta1-armey" value="0.5" step="0.01" aria-describedby="beta1-armey-help" />
-              <small id="beta1-armey-help" class="sr-only">Initial positive effect of government spending</small>
+              <input
+                type="number"
+                id="beta1-armey"
+                value="0.5"
+                step="0.01"
+                aria-describedby="beta1-armey-help"
+              />
+              <small id="beta1-armey-help" class="sr-only"
+                >Initial positive effect of government spending</small
+              >
             </div>
 
             <div class="param-group">
@@ -498,19 +517,33 @@
                 step="0.001"
                 aria-describedby="beta2-armey-help"
               />
-              <small id="beta2-armey-help" class="sr-only">Diminishing returns effect (must be negative)</small>
+              <small id="beta2-armey-help" class="sr-only"
+                >Diminishing returns effect (must be negative)</small
+              >
             </div>
 
             <button type="submit">Simulate Armey Curve</button>
           </form>
 
-          <div class="chart-container">
-            <canvas id="growthChartArmey"></canvas>
+          <div
+            class="chart-container"
+            role="img"
+            aria-labelledby="armey-chart-label"
+          >
+            <canvas
+              id="growthChartArmey"
+              aria-label="Interactive Armey Curve showing relationship between government spending and economic growth"
+            ></canvas>
+            <div id="armey-chart-label" class="sr-only">
+              Chart displaying the Armey Curve with government spending on
+              x-axis and GDP growth rate on y-axis
+            </div>
           </div>
-          <div id="optimal-armey"></div>
+          <div id="optimal-armey" aria-live="polite"></div>
         </section>
 
-        <section id="laffer-section">
+        <section id="laffer-section" aria-labelledby="laffer-heading">
+          <h2 id="laffer-heading">Laffer Curve Analysis</h2>
           <details open>
             <summary>About the Laffer Curve</summary>
             <div style="margin-top: 15px; line-height: 1.6">
@@ -678,16 +711,32 @@
               <label for="beta0-laffer"
                 >Intercept (β₀, base revenue, e.g., 0):</label
               >
-              <input type="number" id="beta0-laffer" value="0" step="0.1" aria-describedby="beta0-laffer-help" />
-              <small id="beta0-laffer-help" class="sr-only">Base taxation consent level</small>
+              <input
+                type="number"
+                id="beta0-laffer"
+                value="0"
+                step="0.1"
+                aria-describedby="beta0-laffer-help"
+              />
+              <small id="beta0-laffer-help" class="sr-only"
+                >Base taxation consent level</small
+              >
             </div>
 
             <div class="param-group">
               <label for="beta1-laffer"
                 >Linear coefficient (β₁, positive, e.g., 1):</label
               >
-              <input type="number" id="beta1-laffer" value="1" step="0.01" aria-describedby="beta1-laffer-help" />
-              <small id="beta1-laffer-help" class="sr-only">Initial positive effect of taxation</small>
+              <input
+                type="number"
+                id="beta1-laffer"
+                value="1"
+                step="0.01"
+                aria-describedby="beta1-laffer-help"
+              />
+              <small id="beta1-laffer-help" class="sr-only"
+                >Initial positive effect of taxation</small
+              >
             </div>
 
             <div class="param-group">
@@ -701,21 +750,32 @@
                 step="0.001"
                 aria-describedby="beta2-laffer-help"
               />
-              <small id="beta2-laffer-help" class="sr-only">Diminishing returns effect (must be negative)</small>
+              <small id="beta2-laffer-help" class="sr-only"
+                >Diminishing returns effect (must be negative)</small
+              >
             </div>
 
             <button type="submit">Simulate Laffer Curve</button>
           </form>
 
-          <div class="chart-container" role="img" aria-labelledby="laffer-chart-label">
-            <canvas id="growthChartLaffer" aria-label="Interactive Laffer Curve showing relationship between tax rates and consent to taxation"></canvas>
-            <div id="laffer-chart-label" class="sr-only">Chart displaying the Laffer Curve with tax rate on x-axis and consent to taxation on y-axis</div>
+          <div
+            class="chart-container"
+            role="img"
+            aria-labelledby="laffer-chart-label"
+          >
+            <canvas
+              id="growthChartLaffer"
+              aria-label="Interactive Laffer Curve showing relationship between tax rates and consent to taxation"
+            ></canvas>
+            <div id="laffer-chart-label" class="sr-only">
+              Chart displaying the Laffer Curve with tax rate on x-axis and
+              consent to taxation on y-axis
+            </div>
           </div>
           <div id="optimal-laffer" aria-live="polite"></div>
         </section>
       </div>
-    </main>
-
+    </div>
 
     <script>
       // Armey Curve
