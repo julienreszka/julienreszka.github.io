@@ -4,18 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      Economic Curves Simulator: Armey, Laffer, J-Curve, and Supply-Demand
-      Analysis Tool
+      Economic Curves Simulator: Armey, Laffer, J-Curve, Supply-Demand &
+      Division of Labor
     </title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Interactive economic simulator for Armey, Laffer, J-Curves, and Supply-Demand. Explore the relationship between government spending, tax rates, economic shocks, recovery, and market equilibria with real-time visualizations and adjustable parameters."
+      content="Interactive economic simulator featuring 5 key curves: Armey, Laffer, J-Curve, Supply-Demand, and Adam Smith's Division of Labor. Explore government spending, taxation, economic shocks, market equilibria, and productivity gains from specialization championed by Javier Milei."
     />
     <meta
       name="keywords"
-      content="economic simulator, Armey curve, Laffer curve, J-Curve, supply demand, government spending, tax rates, economic growth, fiscal policy, devaluation, shock therapy, public economics, interactive economics, economic visualization, GDP growth, taxation theory, Milei Argentina, market equilibrium"
+      content="economic simulator, Armey curve, Laffer curve, J-Curve, supply demand, division of labor, Adam Smith, pin factory, government spending, tax rates, economic growth, fiscal policy, specialization, increasing returns, Javier Milei, Austrian economics, market size, productivity, free trade, public economics, interactive economics, economic visualization"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -25,11 +25,11 @@
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta
       property="og:title"
-      content="Economic Curves Simulator: Interactive Armey, Laffer, J-Curve, and Supply-Demand Analysis"
+      content="Economic Curves Simulator: 5 Interactive Models Including Adam Smith's Division of Labor"
     />
     <meta
       property="og:description"
-      content="Explore economic theory with interactive Armey, Laffer, J-Curves, and Supply-Demand. Adjust parameters to see how government spending, tax rates, policy shocks, and market forces affect economic growth, taxation consent, recovery, and equilibria."
+      content="Explore 5 economic curves: Armey, Laffer, J-Curve, Supply-Demand, and Division of Labor. See how government policy and market size affect growth, taxation, and productivity. Based on theories championed by Javier Milei."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -49,11 +49,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Economic Curves Simulator: Interactive Armey, Laffer, J-Curve, and Supply-Demand Analysis"
+      content="Economic Curves Simulator: 5 Interactive Models + Division of Labor"
     />
     <meta
       name="twitter:description"
-      content="Interactive tool for exploring Armey, Laffer, J-Curves, and Supply-Demand with real-time parameter adjustments and economic visualizations."
+      content="Explore Armey, Laffer, J-Curve, Supply-Demand, and Adam Smith's Division of Labor curves. Interactive tool showing how specialization and free markets drive prosperity."
     />
     <meta
       name="twitter:image"
@@ -91,8 +91,8 @@
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Economic Curves Simulator",
-        "description": "Interactive economic simulator for exploring Armey, Laffer, J-Curves, and Supply-Demand, demonstrating the relationship between government spending, tax rates, policy shocks, market forces, economic growth, and taxation consent.",
+        "name": "Economic Curves Simulator - v3.0-MILEI",
+        "description": "Interactive economic simulator featuring 5 fundamental curves: Armey Curve (government spending vs growth), Laffer Curve (taxation), J-Curve (economic shocks), Supply-Demand (market equilibrium), and Division of Labor (Adam Smith's Pin Factory demonstrating increasing returns to scale). Based on economic theories championed by Javier Milei.",
         "url": "https://julienreszka.github.io/economic-simulator/",
         "applicationCategory": "EducationalApplication",
         "operatingSystem": "Any",
@@ -246,6 +246,11 @@
         #paramsFormSupplyDemand {
           grid-template-columns: 1fr 1fr 1fr 1fr 90px;
         }
+        #paramsFormDivision {
+          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          gap: 15px;
+        }
+
         .param-group {
           display: flex;
           flex-direction: column;
@@ -338,16 +343,19 @@
   <body>
     <div id="container">
       <h1>
-        Economic Curves Simulator: Armey, Laffer, J-Curve, and Supply-Demand
-        [v2.0-FIXED]
+        Economic Curves Simulator: 5 Key Models Including Adam Smith's Division
+        of Labor [v3.0-MILEI]
       </h1>
       <p>
-        This web app simulates four key economic curves: the Armey curve (public
-        spending vs. economic growth), the Laffer curve (tax rates vs. consent
-        to taxation), the J-Curve (policy shocks vs. economic recovery), and
-        Supply-Demand (market forces vs. equilibrium). All use parametric models
-        to illustrate dynamic relationships. Adjust parameters to explore
-        different scenarios.
+        This web app simulates five fundamental economic curves championed by
+        Javier Milei and Austrian/classical economics:
+        <strong>(1)</strong> Armey curve (government spending vs growth),
+        <strong>(2)</strong> Laffer curve (tax rates vs revenue),
+        <strong>(3)</strong> J-Curve (economic shocks vs recovery),
+        <strong>(4)</strong> Supply-Demand (market equilibrium), and
+        <strong>(5)</strong> Division of Labor (Adam Smith's Pin Factory showing
+        increasing returns to scale). Adjust parameters to explore how policy,
+        market size, and specialization affect prosperity.
       </p>
 
       <div id="curves-grid">
@@ -1282,6 +1290,57 @@
                 supplied, and markets clear without surplus or shortage.
               </p>
 
+              <h3>Historical Development of the Supply and Demand Diagram</h3>
+              <p>
+                The visual representation of supply and demand evolved over more
+                than 50 years through the contributions of several pioneering
+                economists:
+              </p>
+              <ul>
+                <li>
+                  <strong>1838 - Augustin Cournot:</strong> The French
+                  mathematician and economist drew the
+                  <strong>first demand curve</strong> in his groundbreaking work
+                  <em
+                    >"Recherches sur les Principes Mathématiques de la Théorie
+                    des Richesses"</em
+                  >
+                  (Mathematical Principles of the Theory of Wealth). Cournot was
+                  the first to graphically represent the inverse relationship
+                  between price and quantity demanded.
+                </li>
+                <li>
+                  <strong>1870 - Fleeming Jenkin:</strong> The Scottish engineer
+                  and economist introduced the <strong>supply curve</strong> and
+                  created the first combined graphical representation in his
+                  paper
+                  <em
+                    >"The Graphic Representation of the Laws of Supply and
+                    Demand."</em
+                  >
+                  Jenkin showed how both curves could be plotted together to
+                  find equilibrium.
+                </li>
+                <li>
+                  <strong>1890 - Alfred Marshall:</strong> The British economist
+                  popularized the joint supply-and-demand diagram in his
+                  influential textbook
+                  <em>"Principles of Economics."</em> Marshall's clear
+                  exposition and pedagogical approach—now commonly called the
+                  <strong>"Marshallian cross"</strong>—cemented the
+                  supply-and-demand framework as central to economic analysis.
+                  His work made the diagram the standard tool it remains today.
+                </li>
+              </ul>
+              <p>
+                <strong>Historical Timeline:</strong>
+                1838 (Cournot - demand curve) → 1870 (Jenkin - supply curve &
+                combination) → 1890 (Marshall - popularization). This gradual
+                development shows how economic tools evolve through the
+                collaborative efforts of thinkers building on each other's
+                insights.
+              </p>
+
               <h3>Why Curved Lines? (Not Straight Lines)</h3>
               <p>
                 <strong
@@ -2019,6 +2078,274 @@
           </div>
           <div id="equilibrium-supplydemand" aria-live="polite"></div>
         </section>
+
+        <section id="division-section" aria-labelledby="division-heading">
+          <details open>
+            <summary>About the Division of Labor & Market Size Curve</summary>
+            <div style="margin-top: 15px; line-height: 1.6">
+              <p>
+                The Division of Labor & Market Size curve, based on
+                <strong>Adam Smith's famous "Pin Factory" example</strong>,
+                demonstrates one of the most powerful insights in economics that
+                Javier Milei champions in his book
+                <em>Capitalism, Socialism, and the Neoclassical Trap</em>:
+                <strong
+                  >the division of labor—limited by the extent of the market—is
+                  the primary engine of productivity growth and
+                  prosperity.</strong
+                >
+              </p>
+
+              <h3>The Pin Factory: Adam Smith's Revolutionary Insight</h3>
+              <p>
+                In <em>The Wealth of Nations</em> (1776), Adam Smith observed
+                that a single worker making pins alone could produce perhaps
+                <strong>20 pins per day</strong>. But when the process was
+                divided into 18 specialized tasks shared among 10 workers, each
+                worker could produce an astonishing
+                <strong>4,800 pins per day</strong>—a 240-fold increase in
+                productivity! This wasn't just efficiency; it was a complete
+                transformation of economic output.
+              </p>
+
+              <h3>Why Milei Champions This Model</h3>
+              <p>
+                Unlike the Solow-Swan neoclassical growth model (which Milei
+                critiques for explaining only 15% of economic growth through
+                capital accumulation), the Division of Labor model demonstrates
+                <strong>increasing returns to scale</strong>—the true driver of
+                the 100-fold increase in per capita GDP over the last 250 years.
+                Milei emphasizes:
+              </p>
+              <ul>
+                <li>
+                  <strong>Increasing returns, not diminishing returns:</strong>
+                  As markets grow and specialization deepens, productivity
+                  increases exponentially—not marginally. This is the "pin
+                  factory" vs. the neoclassical trap.
+                </li>
+                <li>
+                  <strong>Market size enables specialization:</strong> Smith
+                  wrote: "the division of labor is limited by the extent of the
+                  market." Larger markets allow more specialized workers,
+                  leading to dramatic productivity gains.
+                </li>
+                <li>
+                  <strong>Free trade expands prosperity:</strong> By expanding
+                  market size beyond national borders, free trade enables even
+                  greater specialization and wealth creation.
+                </li>
+                <li>
+                  <strong
+                    >Social cooperation through voluntary exchange:</strong
+                  >
+                  The division of labor requires peaceful cooperation. As
+                  Frédéric Bastiat said: "Where commerce enters, bullets do
+                  not."
+                </li>
+                <li>
+                  <strong>Entrepreneurship and spontaneous order:</strong> No
+                  central planner designs the division of labor—it emerges
+                  spontaneously through the market process and the "invisible
+                  hand."
+                </li>
+              </ul>
+
+              <h3>The Mathematics of Increasing Returns</h3>
+              <p>
+                The model shows productivity as a function of specialization
+                enabled by market size:
+              </p>
+              <p style="text-align: center; font-style: italic">
+                Productivity = Base × (1 + Workers × Specialization Factor)<sup
+                  >Returns Parameter</sup
+                >
+              </p>
+              <p>Where:</p>
+              <ul>
+                <li>
+                  <strong>Base productivity:</strong> Output per worker in
+                  isolation (e.g., 20 pins/day)
+                </li>
+                <li>
+                  <strong>Workers:</strong> Number of workers (representing
+                  market size/population)
+                </li>
+                <li>
+                  <strong>Specialization factor:</strong> How much
+                  specialization each additional worker enables
+                </li>
+                <li>
+                  <strong>Returns parameter:</strong> Degree of increasing
+                  returns (>1 means increasing returns to scale)
+                </li>
+              </ul>
+
+              <h3>Why This Matters for Policy</h3>
+
+              <h4>Free Markets Enable Specialization</h4>
+              <p>
+                Government intervention—through regulation, trade barriers,
+                taxes, and restrictions—limits market size and prevents
+                specialization. This destroys the very mechanism that creates
+                prosperity. Milei argues that the 380,000+ regulations in
+                Argentina are a primary cause of its economic decline.
+              </p>
+
+              <h4>Private Property is Essential</h4>
+              <p>
+                The division of labor requires secure private property rights
+                and voluntary exchange. Without property rights, there's no
+                basis for specialized production and trade. This is why
+                socialism—which attacks private property—inevitably leads to
+                poverty.
+              </p>
+
+              <h4>Population Growth is Good</h4>
+              <p>
+                Contrary to Malthusian pessimism, more people mean larger
+                markets, more specialization, and higher productivity for
+                everyone. The world population multiplied 7x from 1810 to 2000,
+                yet per capita output grew 9.2x—productivity grew
+                <em>faster</em> than population!
+              </p>
+
+              <h4>Trade Barriers Destroy Wealth</h4>
+              <p>
+                Protectionism artificially limits market size, forcing people
+                back toward self-sufficiency (like the solitary pin-maker
+                producing only 20 pins). Free trade expands markets and enables
+                the specialization that creates wealth.
+              </p>
+
+              <h3>Historical Evidence</h3>
+              <p>
+                From year 0 to 1800, per capita GDP grew only 48% (0.02%
+                annually) under conditions of limited trade and small markets.
+                From 1800 to 2000, with expanding free trade and market
+                integration, per capita GDP grew 820% (multiplied by 9.2x). The
+                difference?
+                <strong
+                  >Increasing returns from expanding division of labor in larger
+                  markets.</strong
+                >
+              </p>
+
+              <h3>Interactive Controls</h3>
+              <p>
+                Adjust the parameters below to see how market size,
+                specialization depth, and the degree of increasing returns
+                affect productivity. Notice how small increases in market size
+                (enabling more workers/specialization) create exponential
+                productivity gains—not linear ones. This is Adam Smith's insight
+                and the foundation of modern prosperity.
+              </p>
+
+              <h4>Parameter Explanations</h4>
+              <ul>
+                <li>
+                  <strong>Base Productivity:</strong> Output when a worker
+                  produces alone (Smith's example: 20 pins/day)
+                </li>
+                <li>
+                  <strong>Maximum Workers (Market Size):</strong> Number of
+                  workers that can specialize (represents market size)
+                </li>
+                <li>
+                  <strong>Specialization Factor:</strong> How much each
+                  additional specialized worker boosts productivity (calibrated
+                  to Smith's 240× gain)
+                </li>
+                <li>
+                  <strong>Returns to Scale Parameter:</strong> Degree of
+                  increasing returns (1.5 = strong increasing returns matching
+                  Smith's observations)
+                </li>
+              </ul>
+            </div>
+          </details>
+
+          <form
+            id="paramsFormDivision"
+            aria-label="Division of Labor Parameters"
+          >
+            <div class="param-group">
+              <label for="baseproductivity-division"
+                >Base Productivity (output per worker alone):</label
+              >
+              <input
+                type="number"
+                id="baseproductivity-division"
+                step="1"
+                value="20"
+                min="1"
+                max="100"
+                required
+              />
+            </div>
+
+            <div class="param-group">
+              <label for="maxworkers-division"
+                >Maximum Workers (Market Size):</label
+              >
+              <input
+                type="number"
+                id="maxworkers-division"
+                step="1"
+                value="10"
+                min="1"
+                max="100"
+                required
+              />
+            </div>
+
+            <div class="param-group">
+              <label for="specialization-division"
+                >Specialization Factor (per worker):</label
+              >
+              <input
+                type="number"
+                id="specialization-division"
+                step="0.01"
+                value="4.23"
+                min="0.01"
+                max="10"
+                required
+              />
+            </div>
+
+            <div class="param-group">
+              <label for="returns-division">Returns to Scale Parameter:</label>
+              <input
+                type="number"
+                id="returns-division"
+                step="0.1"
+                value="1.5"
+                min="0.5"
+                max="3"
+                required
+              />
+            </div>
+
+            <button type="submit">Simulate</button>
+          </form>
+
+          <div
+            class="chart-container"
+            role="img"
+            aria-labelledby="division-chart-label"
+          >
+            <canvas
+              id="growthChartDivision"
+              aria-label="Interactive Division of Labor curve showing productivity gains from specialization"
+            ></canvas>
+            <div id="division-chart-label" class="sr-only">
+              Chart displaying productivity per worker as a function of number
+              of specialized workers (market size)
+            </div>
+          </div>
+          <div id="results-division" aria-live="polite"></div>
+        </section>
       </div>
     </div>
 
@@ -2478,6 +2805,209 @@
       // Adjusted parameters for good visualization with curved model
       simulateSupplyDemand(150, 0.02, 10, 0.5);
 
+      // Division of Labor & Market Size Curve (Adam Smith's Pin Factory)
+      const ctxDivision = document
+        .getElementById("growthChartDivision")
+        .getContext("2d");
+      let chartDivision;
+
+      function simulateDivisionOfLabor(
+        baseProductivity,
+        maxWorkers,
+        specializationFactor,
+        returnsParameter
+      ) {
+        // Generate array of worker counts (market sizes) from 1 to maxWorkers
+        const workers = Array.from({ length: maxWorkers }, (_, i) => i + 1);
+
+        // Calculate productivity per worker based on division of labor
+        // Formula: Productivity = base × (1 + workers × specializationFactor)^returnsParameter
+        // This captures increasing returns to scale from specialization
+        const productivity = workers.map((w) => {
+          const specializationBoost = 1 + (w - 1) * specializationFactor;
+          return (
+            baseProductivity * Math.pow(specializationBoost, returnsParameter)
+          );
+        });
+
+        // Calculate total output (productivity × workers)
+        const totalOutput = workers.map((w, i) => productivity[i] * w);
+
+        if (chartDivision) chartDivision.destroy();
+
+        chartDivision = new Chart(ctxDivision, {
+          type: "line",
+          data: {
+            labels: workers,
+            datasets: [
+              {
+                label: "Productivity per Worker (output/worker)",
+                data: productivity,
+                borderColor: "rgb(75, 192, 192)",
+                backgroundColor: "rgba(75, 192, 192, 0.1)",
+                fill: false,
+                yAxisID: "y",
+                tension: 0.3,
+              },
+              {
+                label: "Total Output (all workers combined)",
+                data: totalOutput,
+                borderColor: "rgb(255, 99, 132)",
+                backgroundColor: "rgba(255, 99, 132, 0.1)",
+                fill: false,
+                yAxisID: "y1",
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              mode: "index",
+              intersect: false,
+            },
+            plugins: {
+              title: {
+                display: true,
+                text: "Adam Smith's Pin Factory: Productivity Gains from Division of Labor",
+              },
+              tooltip: {
+                callbacks: {
+                  afterLabel: function (context) {
+                    const workerCount = context.parsed.x;
+                    if (context.datasetIndex === 0) {
+                      return `Each worker produces ${context.parsed.y.toFixed(
+                        1
+                      )} units`;
+                    } else {
+                      return `${workerCount} workers × productivity = total output`;
+                    }
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Number of Specialized Workers (Market Size)",
+                  font: { size: 13, weight: "bold" },
+                },
+                ticks: {
+                  stepSize: 1,
+                },
+              },
+              y: {
+                type: "linear",
+                display: true,
+                position: "left",
+                title: {
+                  display: true,
+                  text: "Productivity per Worker",
+                  color: "rgb(75, 192, 192)",
+                  font: { size: 13, weight: "bold" },
+                },
+                ticks: {
+                  color: "rgb(75, 192, 192)",
+                },
+              },
+              y1: {
+                type: "linear",
+                display: true,
+                position: "right",
+                title: {
+                  display: true,
+                  text: "Total Output",
+                  color: "rgb(255, 99, 132)",
+                  font: { size: 13, weight: "bold" },
+                },
+                ticks: {
+                  color: "rgb(255, 99, 132)",
+                },
+                grid: {
+                  drawOnChartArea: false,
+                },
+              },
+            },
+          },
+        });
+
+        // Calculate and display results
+        const productivityGain =
+          (productivity[maxWorkers - 1] / baseProductivity - 1) * 100;
+        const productivityMultiplier =
+          productivity[maxWorkers - 1] / baseProductivity;
+        const smithActualGain = 4800 / 20; // Smith's actual example: 4800 vs 20 pins
+
+        document.getElementById("results-division").innerHTML = `
+          <strong>Division of Labor Results:</strong><br>
+          • Productivity with 1 worker (alone): ${baseProductivity.toFixed(
+            1
+          )} units/worker<br>
+          • Productivity with ${maxWorkers} specialized workers: ${productivity[
+          maxWorkers - 1
+        ].toFixed(1)} units/worker<br>
+          • <strong>Productivity gain: ${productivityMultiplier.toFixed(
+            1
+          )}× (${productivityGain.toFixed(0)}% increase)</strong><br>
+          • Total output with specialization: ${totalOutput[
+            maxWorkers - 1
+          ].toFixed(0)} units<br>
+          <br>
+          <em style="font-size: 14px; font-weight: normal;">
+            Adam Smith's actual pin factory example: 20 pins/day alone → 4,800 pins/day per worker with division of labor 
+            (${smithActualGain}× increase). This demonstrates <strong>increasing returns to scale</strong>—the foundation 
+            of economic growth that Milei emphasizes. Notice: as market size grows (more workers), productivity per worker 
+            <em>increases</em> rather than decreases. This is the opposite of diminishing returns and explains why larger, 
+            freer markets create exponentially more prosperity.
+          </em>
+        `;
+      }
+
+      document
+        .getElementById("paramsFormDivision")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const baseProductivity = parseFloat(
+            document.getElementById("baseproductivity-division").value
+          );
+          const maxWorkers = parseInt(
+            document.getElementById("maxworkers-division").value
+          );
+          const specializationFactor = parseFloat(
+            document.getElementById("specialization-division").value
+          );
+          const returnsParameter = parseFloat(
+            document.getElementById("returns-division").value
+          );
+
+          if (
+            baseProductivity <= 0 ||
+            maxWorkers <= 0 ||
+            specializationFactor <= 0 ||
+            returnsParameter <= 0
+          ) {
+            alert("All parameters must be positive.");
+            return;
+          }
+
+          simulateDivisionOfLabor(
+            baseProductivity,
+            maxWorkers,
+            specializationFactor,
+            returnsParameter
+          );
+        });
+
+      // Initial simulation for Division of Labor
+      // Adam Smith's exact Pin Factory values:
+      // - 1 worker alone: 20 pins/day
+      // - 10 workers with specialization: 4,800 pins/day per worker (48,000 total)
+      // - 240× productivity multiplier
+      // Parameters calibrated to match Smith's observed 240× gain
+      simulateDivisionOfLabor(20, 10, 4.23, 1.5);
+
       // Handle window resize
       function handleResize() {
         if (chartArmey) {
@@ -2491,6 +3021,9 @@
         }
         if (chartSupplyDemand) {
           chartSupplyDemand.resize();
+        }
+        if (chartDivision) {
+          chartDivision.resize();
         }
       }
 
