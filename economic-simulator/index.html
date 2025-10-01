@@ -339,6 +339,7 @@
     <div id="container">
       <h1>
         Economic Curves Simulator: Armey, Laffer, J-Curve, and Supply-Demand
+        [v2.0-FIXED]
       </h1>
       <p>
         This web app simulates four key economic curves: the Armey curve (public
@@ -1281,6 +1282,42 @@
                 supplied, and markets clear without surplus or shortage.
               </p>
 
+              <h3>Why Curved Lines? (Not Straight Lines)</h3>
+              <p>
+                <strong
+                  >This simulator uses curved supply and demand lines, which is
+                  more realistic than the straight lines often shown in
+                  textbooks.</strong
+                >
+                Here's why:
+              </p>
+              <ul>
+                <li>
+                  <strong>Demand curves down (convex to origin):</strong> The
+                  first unit of anything provides the most satisfaction. Your
+                  first cup of coffee in the morning is amazing, the second is
+                  good, the tenth makes you jittery. This "diminishing marginal
+                  utility" means price must drop more dramatically to get people
+                  to buy additional units. The curve starts steep (high value
+                  for first units) then flattens (low value for last units).
+                </li>
+                <li>
+                  <strong>Supply curves up (convex from origin):</strong> The
+                  first units are cheap to produce using your best resources and
+                  most efficient methods. But as you scale up, you face
+                  "increasing marginal costs"—overtime pay, less productive
+                  equipment, higher input prices. The curve starts flat (easy to
+                  produce more initially) then steepens (expensive to keep
+                  expanding).
+                </li>
+              </ul>
+              <p>
+                <strong>Straight lines are simpler for teaching basics,</strong>
+                but curved lines better represent how real markets actually
+                work. You'll see these curved shapes in actual economic data and
+                professional analysis.
+              </p>
+
               <h3>Spontaneous Order and the Market Discovery Process</h3>
               <p>
                 The supply and demand model reveals one of economics' most
@@ -1602,64 +1639,165 @@
               </p>
 
               <h3>Mathematical Formulation</h3>
-              <p>Demand: <em>P = a - bQ</em> (a: max price, b: sensitivity)</p>
-              <p>Supply: <em>P = c + dQ</em> (c: min price, d: sensitivity)</p>
-              <p>Equilibrium: Q* = (a - c)/(b + d), P* = c + dQ*</p>
+              <p>
+                <strong>Curved Demand (Realistic Model):</strong>
+                <em>P = a / (1 + bQ)^0.5</em> <br />This creates a convex curve
+                showing diminishing marginal utility—each additional unit
+                provides less value to consumers.
+              </p>
+              <p>
+                <strong>Curved Supply (Realistic Model):</strong>
+                <em>P = c + d·Q^1.3</em> <br />This creates a convex curve
+                showing increasing marginal costs—each additional unit becomes
+                more expensive to produce.
+              </p>
+              <p>
+                <strong>Equilibrium:</strong> Found where demand price equals
+                supply price (solved numerically)
+              </p>
+
+              <h3>Why Decimal Quantities? (Understanding Continuous Models)</h3>
+              <p>
+                You might notice the equilibrium shows decimal quantities like
+                "55.75 units" instead of whole numbers. This isn't a
+                mistake—it's how economic models work in practice:
+              </p>
+              <ul>
+                <li>
+                  <strong>Aggregate Market Scale:</strong> The curves represent
+                  entire markets, not individual purchases. "55.75 units" might
+                  mean 55.75 million smartphones per quarter, 55.75 thousand
+                  cars per month, or 55.75 tons of steel. The decimal represents
+                  a large-scale aggregate across all buyers and sellers in the
+                  market.
+                </li>
+                <li>
+                  <strong>Continuous Production:</strong> Many goods are
+                  naturally measured in decimals— 55.75 barrels of oil, 55.75
+                  gallons of milk, 55.75 kilowatt-hours of electricity, 55.75
+                  cubic meters of lumber, or 55.75 hours of labor services.
+                  These aren't discrete individual items but continuous
+                  quantities.
+                </li>
+                <li>
+                  <strong>Time-Based Rates:</strong> Quantities often represent
+                  rates over time periods. For example, "55.75 units" could mean
+                  an average production/consumption rate: a factory might
+                  produce 55 units one day and 56 the next, averaging 55.75 over
+                  the period.
+                </li>
+                <li>
+                  <strong>Mathematical Smoothness:</strong> Real markets involve
+                  millions of transactions by countless buyers and sellers.
+                  Treating quantity as a continuous variable (using calculus and
+                  smooth curves) provides a much simpler and more elegant model
+                  than trying to track each discrete transaction. The curves are
+                  smooth approximations that capture aggregate behavior.
+                </li>
+                <li>
+                  <strong>Professional Standard:</strong> In academic economics,
+                  government analysis, and business forecasting, decimal
+                  quantities are the norm. Economists routinely work with values
+                  like "GDP grew by 2.3%" or "unemployment is 4.7%"—precision
+                  matters for policy and investment decisions.
+                </li>
+              </ul>
+              <p>
+                <strong>Bottom line:</strong> While buying 0.75 of an individual
+                apple doesn't make sense, an economy producing or consuming
+                55.75 million apples per year, or a market clearing at 55.75
+                tons of apples, is perfectly reasonable. The model represents
+                aggregate market behavior, not individual purchases.
+              </p>
 
               <h3>Understanding the Parameters (For Beginners)</h3>
 
               <h4>Demand Parameters</h4>
-              <p><strong>a - Demand Intercept (Maximum Price):</strong></p>
+              <p><strong>a - Demand Scale Factor:</strong></p>
               <p>
-                This is the highest price any consumer would be willing to pay
-                for the product. Think of it as the "dream price" for luxury
-                buyers who really want the item regardless of cost. When
-                quantity is zero, this is where the demand curve starts on the
-                price axis. For example, if a = 120, it means at least one
-                person would pay up to $120 for the very first unit.
+                This controls the overall level of the demand curve—how high it
+                sits on the price axis. A higher 'a' means consumers are willing
+                to pay more at any given quantity. Think of it as the "value
+                intensity"—how much consumers value this product. For luxury
+                goods or essentials, this would be high. For low-value items, it
+                would be low. For example, if a = 120, consumers place high
+                value on the product and are willing to pay premium prices.
               </p>
 
-              <p><strong>b - Demand Slope (Price Sensitivity):</strong></p>
               <p>
-                This measures how much the price needs to drop to get people to
-                buy one more unit. A higher 'b' means demand is very sensitive
-                to price changes (people buy a lot more when prices drop just a
-                little). A lower 'b' means demand is less sensitive (people
-                don't buy much more even if prices drop a lot). For example, if
-                b = 2, the price needs to drop by $2 for every additional unit
-                consumers want to buy.
+                <strong
+                  >b - Demand Curvature (Diminishing Utility Rate):</strong
+                >
+              </p>
+              <p>
+                This controls how quickly consumer willingness to pay decreases
+                as they buy more. A higher 'b' means the curve drops faster—each
+                additional unit loses value more rapidly (strong diminishing
+                marginal utility). A lower 'b' means consumers maintain their
+                willingness to pay longer as quantity increases. For example, if
+                b = 2, consumer valuations drop moderately with each additional
+                purchase. Think: the first ice cream is worth $5, the second $3,
+                the third $1.
               </p>
 
               <h4>Supply Parameters</h4>
-              <p><strong>c - Supply Intercept (Minimum Price):</strong></p>
+              <p><strong>c - Minimum Production Cost (Supply Base):</strong></p>
               <p>
-                This is the minimum price producers need to receive to start
-                selling their product at all. It covers their basic costs
-                (materials, labor, overhead). If the market price falls below
-                this, producers won't sell anything because they'd lose money.
-                For example, if c = 20, producers need at least $20 to make it
-                worthwhile to produce and sell even the first unit.
+                This is the base cost of production—the minimum price producers
+                need even for small quantities. It represents fixed costs and
+                baseline variable costs. If the market price falls below this,
+                producers won't supply anything because they'd lose money on
+                every unit. For example, if c = 20, producers need at least $20
+                per unit to cover their basic costs of materials, labor, and
+                overhead.
               </p>
 
               <p>
-                <strong>d - Supply Slope (Production Cost Increase):</strong>
+                <strong>d - Marginal Cost Growth Rate:</strong>
               </p>
               <p>
-                This measures how much the price needs to rise for producers to
-                supply one more unit. As producers make more, their costs
-                typically go up (overtime wages, less efficient equipment,
-                higher material costs). A higher 'd' means it gets expensive
-                quickly to produce more. For example, if d = 2, producers need
-                $2 more per unit to justify producing each additional item.
+                This controls how rapidly production costs accelerate as output
+                increases. A higher 'd' means costs rise very quickly with more
+                production (steep curve)—you quickly hit capacity constraints,
+                need expensive overtime, less efficient equipment, etc. A lower
+                'd' means costs rise more gradually. For example, if d = 2,
+                costs accelerate moderately. The curve shape (Q^1.3) means
+                producing the 100th unit costs much more than the 10th
+                unit—capturing the reality of diminishing returns and capacity
+                constraints.
               </p>
 
-              <h4>How These Work Together</h4>
+              <h4>How These Work Together (Curved Model)</h4>
               <p>
-                The equilibrium happens where these curves intersect—where the
-                price consumers are willing to pay exactly equals the price
-                producers need to receive. At this point, the quantity demanded
-                equals the quantity supplied, and the market clears naturally
-                without government intervention.
+                The realistic curved model captures key economic realities that
+                linear models miss:
+              </p>
+              <ul>
+                <li>
+                  <strong>Demand curves down more steeply at first</strong> then
+                  flatten—the first few units have high value, but eventually
+                  everyone who really wants the product has bought it, leaving
+                  only marginal buyers.
+                </li>
+                <li>
+                  <strong>Supply curves up more gradually at first</strong> then
+                  steepen—initial production uses the best resources and most
+                  efficient methods, but expanding requires increasingly costly
+                  approaches (overtime, new facilities, less productive
+                  workers).
+                </li>
+                <li>
+                  <strong>Equilibrium emerges naturally</strong> where these
+                  curved forces balance—where the marginal consumer's
+                  willingness to pay exactly matches the marginal producer's
+                  cost.
+                </li>
+              </ul>
+              <p>
+                This curved model is more realistic than straight lines because
+                it reflects how people actually behave: diminishing marginal
+                utility for consumers and increasing marginal costs for
+                producers.
               </p>
 
               <h3>Understanding Negative Prices</h3>
@@ -1799,66 +1937,66 @@
           >
             <div class="param-group">
               <label for="a-supplydemand"
-                >Demand Intercept (a, maximum price, e.g., 120):</label
+                >Demand Scale (a, value intensity, e.g., 150):</label
               >
               <input
                 type="number"
                 id="a-supplydemand"
-                value="120"
+                value="150"
                 step="1"
                 aria-describedby="a-supplydemand-help"
               />
               <small id="a-supplydemand-help" class="sr-only"
-                >Max price consumers will pay</small
+                >Overall demand level - how much consumers value the
+                product</small
               >
             </div>
 
             <div class="param-group">
               <label for="b-supplydemand"
-                >Demand Slope (b, price sensitivity, positive, e.g., 2):</label
+                >Demand Curvature (b, utility decline rate, e.g., 0.02):</label
               >
               <input
                 type="number"
                 id="b-supplydemand"
-                value="2"
-                step="0.1"
+                value="0.02"
+                step="0.01"
                 aria-describedby="b-supplydemand-help"
               />
               <small id="b-supplydemand-help" class="sr-only"
-                >Price sensitivity of demand</small
+                >How fast marginal utility diminishes</small
               >
             </div>
 
             <div class="param-group">
               <label for="c-supplydemand"
-                >Supply Intercept (c, minimum price, e.g., 20):</label
+                >Supply Base Cost (c, minimum price, e.g., 10):</label
               >
               <input
                 type="number"
                 id="c-supplydemand"
-                value="20"
+                value="10"
                 step="1"
                 aria-describedby="c-supplydemand-help"
               />
               <small id="c-supplydemand-help" class="sr-only"
-                >Min price producers accept</small
+                >Baseline production cost</small
               >
             </div>
 
             <div class="param-group">
               <label for="d-supplydemand"
-                >Supply Slope (d, production cost increase, positive, e.g.,
-                2):</label
+                >Supply Cost Growth (d, marginal cost rate, e.g., 0.5):</label
               >
               <input
                 type="number"
                 id="d-supplydemand"
-                value="2"
+                value="0.5"
                 step="0.1"
                 aria-describedby="d-supplydemand-help"
               />
               <small id="d-supplydemand-help" class="sr-only"
-                >Price sensitivity of supply</small
+                >How fast costs accelerate with production</small
               >
             </div>
 
@@ -2112,46 +2250,146 @@
       let chartSupplyDemand;
 
       function simulateSupplyDemand(a, b, c, d) {
-        // Calculate equilibrium first to set appropriate range
-        const eqQ = (a - c) / (b + d);
-        const eqP = c + d * eqQ;
+        // For curved supply and demand:
+        // Demand: P = a / (1 + b*Q)^0.5 - more realistic diminishing marginal utility
+        // Supply: P = c + d * Q^1.3 - increasing marginal costs
+
+        // Find equilibrium where demand price = supply price
+        // Use bisection method for robust convergence
+        let qLow = 0.01;
+        let qHigh = 500;
+        let eqQ = 50;
+
+        // Helper functions
+        const calcDemandPrice = (q) => a / Math.pow(1 + b * q, 0.5);
+        const calcSupplyPrice = (q) => c + d * Math.pow(q, 1.3);
+        const excessDemand = (q) => calcDemandPrice(q) - calcSupplyPrice(q);
+
+        // Check if equilibrium exists in range
+        const edLow = excessDemand(qLow);
+        const edHigh = excessDemand(qHigh);
+
+        console.log(
+          "=== Supply-Demand Simulator v2.0 (Curved Model with Fixed Equilibrium) ==="
+        );
+        console.log("Initial check:", {
+          qLow,
+          qHigh,
+          demandAtLow: calcDemandPrice(qLow),
+          supplyAtLow: calcSupplyPrice(qLow),
+          demandAtHigh: calcDemandPrice(qHigh),
+          supplyAtHigh: calcSupplyPrice(qHigh),
+          edLow,
+          edHigh,
+        });
+
+        if (edLow * edHigh > 0) {
+          if (edLow < 0) {
+            alert(
+              "No equilibrium found: Supply is always above demand. Try increasing 'a' or decreasing 'c' or 'd'."
+            );
+            return;
+          } else {
+            alert(
+              "No equilibrium found: Demand is always above supply. Try decreasing 'a' or increasing 'c' or 'd'."
+            );
+            return;
+          }
+        }
+
+        // Bisection method
+        console.log("Starting bisection method...");
+        for (let i = 0; i < 100; i++) {
+          eqQ = (qLow + qHigh) / 2;
+          const ed = excessDemand(eqQ);
+
+          if (i < 5 || i % 10 === 0) {
+            console.log(
+              `Iteration ${i}: Q=${eqQ.toFixed(2)}, ED=${ed.toFixed(
+                2
+              )}, range=[${qLow.toFixed(2)}, ${qHigh.toFixed(2)}]`
+            );
+          }
+
+          if (Math.abs(ed) < 0.001) {
+            console.log(`Converged in ${i} iterations at Q=${eqQ.toFixed(2)}`);
+            break;
+          }
+
+          if (ed > 0) {
+            // Demand > Supply, need higher quantity
+            qLow = eqQ;
+          } else {
+            // Supply > Demand, need lower quantity
+            qHigh = eqQ;
+          }
+
+          if (i === 99) {
+            console.log("Max iterations reached");
+          }
+        }
+
+        const eqP = calcDemandPrice(eqQ);
+
+        console.log("Equilibrium found:", {
+          quantity: eqQ,
+          price: eqP,
+          demandAtEq: calcDemandPrice(eqQ),
+          supplyAtEq: calcSupplyPrice(eqQ),
+          difference: Math.abs(calcDemandPrice(eqQ) - calcSupplyPrice(eqQ)),
+        });
 
         // Check for invalid equilibrium (negative values)
         if (eqQ < 0 || eqP < 0 || isNaN(eqQ) || isNaN(eqP)) {
           alert(
-            "No positive equilibrium exists with these parameters. Please adjust values so demand intercept (a) > supply intercept (c)."
+            "No positive equilibrium exists with these parameters. Please adjust values."
           );
           return;
         }
 
         // Dynamic range: show up to 150% of equilibrium or minimum of 100
         const maxQ = Math.ceil(Math.max(100, eqQ * 1.5));
-        // Use integer quantities for clean axis labels
-        const quantity = Array.from({ length: maxQ + 1 }, (_, i) => i);
-        const demandPrice = quantity.map((q) => a - b * q);
-        const supplyPrice = quantity.map((q) => c + d * q);
+        // Use fewer data points for cleaner visualization (avoids tooltip overlap)
+        const numPoints = 50;
+        const quantity = Array.from(
+          { length: numPoints },
+          (_, i) => (i * maxQ) / (numPoints - 1)
+        );
+
+        // Curved demand: diminishing marginal utility (convex to origin)
+        const demandPrice = quantity.map((q) => a / Math.pow(1 + b * q, 0.5));
+
+        // Curved supply: increasing marginal costs (convex from origin)
+        const supplyPrice = quantity.map((q) => c + d * Math.pow(q, 1.3));
 
         if (chartSupplyDemand) chartSupplyDemand.destroy();
         chartSupplyDemand = new Chart(ctxSupplyDemand, {
-          type: "line",
+          type: "scatter",
           data: {
-            labels: quantity,
             datasets: [
               {
                 label: "Demand",
-                data: demandPrice,
+                data: quantity.map((q, i) => ({ x: q, y: demandPrice[i] })),
                 borderColor: "purple",
+                backgroundColor: "purple",
+                showLine: true,
                 fill: false,
+                pointRadius: 3,
+                pointHoverRadius: 5,
               },
               {
                 label: "Supply",
-                data: supplyPrice,
+                data: quantity.map((q, i) => ({ x: q, y: supplyPrice[i] })),
                 borderColor: "orange",
+                backgroundColor: "orange",
+                showLine: true,
                 fill: false,
+                pointRadius: 3,
+                pointHoverRadius: 5,
               },
               {
                 label: "Equilibrium",
-                data: [{ x: Math.round(eqQ), y: eqP }],
+                data: [{ x: eqQ, y: eqP }],
                 pointRadius: 20,
                 pointHoverRadius: 22,
                 pointBackgroundColor: "red",
@@ -2159,9 +2397,6 @@
                 pointBorderWidth: 2,
                 pointHoverBorderWidth: 3,
                 showLine: false,
-                type: "scatter",
-                xAxisID: "x",
-                yAxisID: "y",
               },
             ],
           },
@@ -2173,18 +2408,18 @@
                 callbacks: {
                   label: function (context) {
                     if (context.dataset.label === "Equilibrium") {
-                      return `Equilibrium: Quantity ${Math.round(
-                        context.parsed.x
+                      return `Equilibrium: Quantity ${context.parsed.x.toFixed(
+                        2
                       )}, Price $${context.parsed.y.toFixed(2)}`;
                     }
                     if (context.dataset.label === "Demand") {
                       return `Demand curve: At quantity ${context.parsed.x.toFixed(
-                        0
+                        1
                       )}, consumers will pay $${context.parsed.y.toFixed(2)}`;
                     }
                     if (context.dataset.label === "Supply") {
                       return `Supply curve: At quantity ${context.parsed.x.toFixed(
-                        0
+                        1
                       )}, producers need $${context.parsed.y.toFixed(2)}`;
                     }
                     return `${
@@ -2218,7 +2453,7 @@
         document.getElementById(
           "equilibrium-supplydemand"
         ).innerHTML = `<strong>Market Equilibrium (where supply meets demand):</strong><br>
-        • Equilibrium Quantity: ${Math.round(eqQ)} units<br>
+        • Equilibrium Quantity: ${eqQ.toFixed(2)} units<br>
         • Equilibrium Price: $${eqP.toFixed(2)}<br>
         <em style="font-size: 14px; font-weight: normal;">At this point, buyers want to purchase exactly the amount sellers want to sell. The market is balanced with no shortage or surplus.</em>`;
       }
@@ -2239,9 +2474,9 @@
         });
 
       // Initial simulation for Supply-Demand
-      // Formula: Q* = (a-c)/(b+d), P* = c + d*Q*
-      // For integer price: a=120, b=2, c=20, d=2 gives Q*=(120-20)/(2+2)=25, P*=20+2*25=70 ✓
-      simulateSupplyDemand(120, 2, 20, 2);
+      // Curved model: Demand P = a/(1+bQ)^0.5, Supply P = c + d*Q^1.3
+      // Adjusted parameters for good visualization with curved model
+      simulateSupplyDemand(150, 0.02, 10, 0.5);
 
       // Handle window resize
       function handleResize() {
