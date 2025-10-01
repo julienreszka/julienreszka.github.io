@@ -2722,7 +2722,7 @@
         // Dynamic range: show up to 150% of equilibrium or minimum of 100
         const maxQ = Math.ceil(Math.max(100, eqQ * 1.5));
         // Use fewer data points for cleaner visualization (avoids tooltip overlap)
-        const numPoints = 50;
+        const numPoints = 15;
         const quantity = Array.from(
           { length: numPoints },
           (_, i) => (i * maxQ) / (numPoints - 1)
