@@ -3,16 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Economic Curves Simulator: Armey and Laffer Analysis Tool</title>
+    <title>
+      Economic Curves Simulator: Armey, Laffer, and J-Curve Analysis Tool
+    </title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Interactive economic simulator for Armey and Laffer curves. Explore the relationship between government spending, tax rates, economic growth, and taxation consent with real-time visualizations and adjustable parameters."
+      content="Interactive economic simulator for Armey, Laffer, and J-Curves. Explore the relationship between government spending, tax rates, economic shocks, and recovery with real-time visualizations and adjustable parameters."
     />
     <meta
       name="keywords"
-      content="economic simulator, Armey curve, Laffer curve, government spending, tax rates, economic growth, fiscal policy, public economics, interactive economics, economic visualization, GDP growth, taxation theory"
+      content="economic simulator, Armey curve, Laffer curve, J-Curve, government spending, tax rates, economic growth, fiscal policy, devaluation, shock therapy, public economics, interactive economics, economic visualization, GDP growth, taxation theory, Milei Argentina"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -22,11 +24,11 @@
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta
       property="og:title"
-      content="Economic Curves Simulator: Interactive Armey and Laffer Curve Analysis"
+      content="Economic Curves Simulator: Interactive Armey, Laffer, and J-Curve Analysis"
     />
     <meta
       property="og:description"
-      content="Explore economic theory with interactive Armey and Laffer curves. Adjust parameters to see how government spending and tax rates affect economic growth and taxation consent."
+      content="Explore economic theory with interactive Armey, Laffer, and J-Curves. Adjust parameters to see how government spending, tax rates, and policy shocks affect economic growth, taxation consent, and recovery."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -46,11 +48,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Economic Curves Simulator: Interactive Armey and Laffer Analysis"
+      content="Economic Curves Simulator: Interactive Armey, Laffer, and J-Curve Analysis"
     />
     <meta
       name="twitter:description"
-      content="Interactive tool for exploring Armey and Laffer curves with real-time parameter adjustments and economic visualizations."
+      content="Interactive tool for exploring Armey, Laffer, and J-Curves with real-time parameter adjustments and economic visualizations."
     />
     <meta
       name="twitter:image"
@@ -89,7 +91,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Economic Curves Simulator",
-        "description": "Interactive economic simulator for exploring Armey and Laffer curves, demonstrating the relationship between government spending, tax rates, economic growth, and taxation consent.",
+        "description": "Interactive economic simulator for exploring Armey, Laffer, and J-Curves, demonstrating the relationship between government spending, tax rates, policy shocks, economic growth, and taxation consent.",
         "url": "https://julienreszka.github.io/economic-simulator/",
         "applicationCategory": "EducationalApplication",
         "operatingSystem": "Any",
@@ -104,7 +106,7 @@
           "name": "Julien Reszka"
         },
         "datePublished": "2024-01-01",
-        "dateModified": "2025-09-28",
+        "dateModified": "2025-10-01",
         "inLanguage": "en-US",
         "isAccessibleForFree": true,
         "educationalUse": [
@@ -116,12 +118,16 @@
         "keywords": [
           "Armey Curve",
           "Laffer Curve",
+          "J-Curve",
           "Economic Theory",
           "Government Spending",
           "Tax Policy",
           "Economic Growth",
           "Fiscal Policy",
-          "Public Economics"
+          "Devaluation",
+          "Shock Therapy",
+          "Public Economics",
+          "Milei Argentina"
         ],
         "about": [
           {
@@ -133,6 +139,11 @@
             "@type": "Thing",
             "name": "Laffer Curve",
             "description": "Economic theory illustrating the relationship between tax rates and tax revenue collection"
+          },
+          {
+            "@type": "Thing",
+            "name": "J-Curve",
+            "description": "Economic phenomenon showing initial deterioration followed by improvement after a policy shock like devaluation"
           }
         ],
         "offers": {
@@ -149,13 +160,17 @@
         margin: 20px;
       }
       #container {
-        max-width: 1600px;
+        max-width: 2400px;
         margin: auto;
       }
       #curves-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 20px;
+      }
+      p {
+        margin: 0px;
+        margin-bottom: 10px;
       }
       h1 {
         font-size: 20px;
@@ -177,22 +192,27 @@
         white-space: nowrap;
         border: 0;
       }
-      @media (min-width: 1024px) {
+      @media (min-width: 768px) {
         #curves-grid {
           grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (min-width: 1400px) {
+        #curves-grid {
+          grid-template-columns: 1fr 1fr 1fr;
         }
       }
       .chart-container {
         position: relative;
         height: 350px;
         width: 100%;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
       }
       canvas {
         display: block;
       }
       form {
-        margin-bottom: 20px;
+        margin-bottom: 0px;
       }
       label {
         display: block;
@@ -205,9 +225,12 @@
       @media (min-width: 1024px) {
         form {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr 200px;
+          grid-template-columns: 1fr 1fr 1fr 90px;
           gap: 15px;
           align-items: end;
+        }
+        #paramsFormJCurve {
+          grid-template-columns: 1fr 1fr 1fr 1fr 90px;
         }
         .param-group {
           display: flex;
@@ -215,7 +238,7 @@
         }
         .param-group label {
           margin: 0 0 5px 0;
-          font-size: 14px;
+          font-size: 10px;
         }
         .param-group input {
           width: 100%;
@@ -235,10 +258,11 @@
         background: #0056b3;
       }
       #optimal-armey,
-      #optimal-laffer {
+      #optimal-laffer,
+      #jcurve-insights {
         font-size: 18px;
         font-weight: bold;
-        margin-top: 20px;
+        margin-top: 0px;
       }
       section {
         margin-bottom: 50px;
@@ -259,7 +283,7 @@
         border-radius: 5px;
       }
       details > div {
-        max-height: 25svh;
+        max-height: 20svh;
         overflow-y: auto;
       }
 
@@ -298,18 +322,17 @@
   </head>
   <body>
     <div id="container">
-      <h1>Economic Curves Simulator: Armey and Laffer</h1>
+      <h1>Economic Curves Simulator: Armey, Laffer, and J-Curve</h1>
       <p>
-        This web app simulates two key economic curves: the Armey curve (public
-        spending vs. economic growth) and the Laffer curve (tax rates vs.
-        consent to taxation). Both use quadratic models to illustrate inverted
-        U-shaped relationships. Adjust parameters to explore different
-        scenarios.
+        This web app simulates three key economic curves: the Armey curve
+        (public spending vs. economic growth), the Laffer curve (tax rates vs.
+        consent to taxation), and the J-Curve (policy shocks vs. economic
+        recovery). All use parametric models to illustrate dynamic
+        relationships. Adjust parameters to explore different scenarios.
       </p>
 
       <div id="curves-grid">
         <section id="armey-section" aria-labelledby="armey-heading">
-          <h2 id="armey-heading">Armey Curve Analysis</h2>
           <details open>
             <summary>About the Armey Curve</summary>
             <div style="margin-top: 15px; line-height: 1.6">
@@ -522,7 +545,7 @@
               >
             </div>
 
-            <button type="submit">Simulate Armey Curve</button>
+            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -543,7 +566,6 @@
         </section>
 
         <section id="laffer-section" aria-labelledby="laffer-heading">
-          <h2 id="laffer-heading">Laffer Curve Analysis</h2>
           <details open>
             <summary>About the Laffer Curve</summary>
             <div style="margin-top: 15px; line-height: 1.6">
@@ -708,9 +730,9 @@
 
           <form id="paramsFormLaffer" aria-labelledby="laffer-heading">
             <div class="param-group">
-              <label for="beta0-laffer"
-                >Intercept (β₀, base revenue, e.g., 0):</label
-              >
+              <label for="beta0-laffer">
+                Intercept (β₀, base consent, e.g., 0):
+              </label>
               <input
                 type="number"
                 id="beta0-laffer"
@@ -755,7 +777,7 @@
               >
             </div>
 
-            <button type="submit">Simulate Laffer Curve</button>
+            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -773,6 +795,263 @@
             </div>
           </div>
           <div id="optimal-laffer" aria-live="polite"></div>
+        </section>
+
+        <section id="jcurve-section" aria-labelledby="jcurve-heading">
+          <details open>
+            <summary>About the J-Curve</summary>
+            <div style="margin-top: 15px; line-height: 1.6">
+              <p>
+                The J-Curve shows what happens to an economy after a major
+                policy change, like when a country suddenly devalues its
+                currency or implements drastic budget cuts. The name comes from
+                the "J" shape of the curve: things get worse before they get
+                better. First, the economy dips down (the bottom of the J), then
+                gradually recovers and eventually improves beyond where it
+                started (the upward hook of the J).
+              </p>
+
+              <h3>How It Works</h3>
+              <p>
+                Imagine the graph: time moves along the bottom (months or
+                years), and economic health goes up and down on the side. When a
+                big policy change happens, the economy starts at a normal level,
+                immediately drops to a low point, then slowly climbs back up and
+                eventually rises higher than before. This creates a shape that
+                looks like the letter "J".
+              </p>
+
+              <h3>The Math Behind It</h3>
+              <p>The curve follows this pattern:</p>
+              <p style="text-align: center; font-style: italic">
+                Y(t) = Base + Slope · t - Depth · (1 - e^{-t / τ})
+              </p>
+              <p>
+                <strong>What this means in plain English:</strong>
+              </p>
+              <ul>
+                <li>
+                  <strong>Base:</strong> Where the economy started before the
+                  shock
+                </li>
+                <li>
+                  <strong>Depth:</strong> How bad things get initially (the
+                  deeper the dip, the harder it hits)
+                </li>
+                <li>
+                  <strong>τ (tau):</strong> How long the pain lasts (higher
+                  number = longer recovery time)
+                </li>
+                <li>
+                  <strong>Slope:</strong> How fast the economy improves in the
+                  long run
+                </li>
+              </ul>
+
+              <h3>Why Does It Get Worse First?</h3>
+              <p>
+                When a government makes a big change, the negative effects hit
+                immediately while the positive effects take time to materialize:
+              </p>
+              <ul>
+                <li>
+                  <strong>Immediate price shocks:</strong> If a currency loses
+                  value, imports become more expensive right away, but it takes
+                  time for exports to increase (people still buy the same things
+                  out of habit).
+                </li>
+                <li>
+                  <strong>Loss of confidence:</strong> People and businesses
+                  panic and cut back spending, making things worse temporarily.
+                </li>
+                <li>
+                  <strong>Budget cuts hurt first:</strong> When government
+                  spending gets slashed, jobs are lost and services disappear
+                  before new private sector growth can replace them.
+                </li>
+              </ul>
+
+              <h3>What This Means for Policy</h3>
+              <ul>
+                <li>
+                  <strong>Patience required:</strong> Governments must endure
+                  the difficult period to reach the recovery phase.
+                </li>
+                <li>
+                  <strong>Support helps:</strong> Providing temporary assistance
+                  (like unemployment benefits or food aid) can make the dip less
+                  severe.
+                </li>
+                <li>
+                  <strong>Warning sign:</strong> If the economy doesn't start
+                  recovering after the expected time, the policy might not be
+                  working (the J turns into an L - permanent decline).
+                </li>
+              </ul>
+
+              <h3>Real-World Example: Argentina's Economic Shock</h3>
+              <p>
+                President Javier Milei took office in Argentina in late 2023 and
+                immediately implemented radical economic changes, creating a
+                textbook J-Curve scenario:
+              </p>
+
+              <h4>The Reforms (What He Did)</h4>
+              <ol>
+                <li>
+                  <strong>Currency devaluation:</strong> Let the peso drop in
+                  value from 400 to 800 per US dollar
+                </li>
+                <li>
+                  <strong>Budget cuts:</strong> Slashed government spending from
+                  over 5% deficit to achieve a surplus
+                </li>
+                <li>
+                  <strong>Deregulation:</strong> Removed many government
+                  controls on business and markets
+                </li>
+              </ol>
+
+              <h4>The Dip (Things Got Worse)</h4>
+              <ul>
+                <li>Economy shrank: -1.6% in 2023, -3.5% in 2024</li>
+                <li>Inflation soared to 237% per year</li>
+                <li>Poverty jumped from 38% to 53% initially</li>
+                <li>Many people lost jobs and businesses struggled</li>
+              </ul>
+
+              <h4>The Recovery (Things Got Better)</h4>
+              <ul>
+                <li>Inflation dropped dramatically to under 3% per month</li>
+                <li>Poverty fell back to 38% by end of 2024</li>
+                <li>Economy projected to grow +5% in 2025</li>
+                <li>
+                  First budget surplus in 14 years (government income exceeds
+                  spending)
+                </li>
+                <li>Argentina's credit rating improved</li>
+                <li>Currency stabilized with only 1% monthly devaluation</li>
+              </ul>
+
+              <h4>The Ongoing Challenge</h4>
+              <p>
+                By mid-2025, the recovery showed some fragility. The economy
+                contracted again in Q2 2025, showing that J-Curves aren't always
+                smooth. Global economic conditions and other factors can slow
+                the recovery, reminding us that these reforms are risky and
+                don't always work as planned.
+              </p>
+
+              <h3>Key Takeaways</h3>
+              <ul>
+                <li>
+                  <strong>Timing matters:</strong> The worst part usually lasts
+                  6-18 months, but recovery can take years
+                </li>
+                <li>
+                  <strong>Context matters:</strong> Countries that trade a lot
+                  with other nations (like Argentina) tend to see sharper
+                  J-Curves - deeper dips but faster recoveries
+                </li>
+                <li>
+                  <strong>Not guaranteed:</strong> Just because you make painful
+                  reforms doesn't mean recovery is certain - the economy could
+                  stay depressed (an L-shape instead of a J-shape)
+                </li>
+              </ul>
+
+              <h3>Understanding Negative Values on the Chart</h3>
+              <p>
+                When the curve dips below zero, it represents a genuine economic
+                crisis: businesses closing, people losing jobs, money fleeing
+                the country, and widespread hardship. These negative values show
+                the real human cost of economic shocks before recovery begins.
+              </p>
+
+              <p>
+                <strong>Bottom line:</strong> The J-Curve teaches us that major
+                economic reforms often cause significant pain before delivering
+                benefits. It's like economic surgery - the recovery period is
+                tough, but the goal is to emerge healthier than before.
+              </p>
+            </div>
+          </details>
+
+          <form id="paramsFormJCurve" aria-labelledby="jcurve-heading">
+            <div class="param-group">
+              <label for="base-jcurve">Base Level (e.g., 0):</label>
+              <input
+                type="number"
+                id="base-jcurve"
+                value="0"
+                step="0.1"
+                aria-describedby="base-jcurve-help"
+              />
+              <small id="base-jcurve-help" class="sr-only"
+                >Pre-shock economic indicator</small
+              >
+            </div>
+
+            <div class="param-group">
+              <label for="depth-jcurve">Dip Depth (positive, e.g., 10):</label>
+              <input
+                type="number"
+                id="depth-jcurve"
+                value="10"
+                step="0.1"
+                aria-describedby="depth-jcurve-help"
+              />
+              <small id="depth-jcurve-help" class="sr-only"
+                >Initial shock severity</small
+              >
+            </div>
+
+            <div class="param-group">
+              <label for="tau-jcurve">Adjustment Time (τ, e.g., 2):</label>
+              <input
+                type="number"
+                id="tau-jcurve"
+                value="2"
+                step="0.1"
+                aria-describedby="tau-jcurve-help"
+              />
+              <small id="tau-jcurve-help" class="sr-only"
+                >Time constant for recovery (higher = slower)</small
+              >
+            </div>
+
+            <div class="param-group">
+              <label for="slope-jcurve">Recovery Slope (e.g., 1):</label>
+              <input
+                type="number"
+                id="slope-jcurve"
+                value="1"
+                step="0.1"
+                aria-describedby="slope-jcurve-help"
+              />
+              <small id="slope-jcurve-help" class="sr-only"
+                >Long-term improvement rate</small
+              >
+            </div>
+
+            <button type="submit">Simulate</button>
+          </form>
+
+          <div
+            class="chart-container"
+            role="img"
+            aria-labelledby="jcurve-chart-label"
+          >
+            <canvas
+              id="growthChartJCurve"
+              aria-label="Interactive J-Curve showing economic recovery after policy shock"
+            ></canvas>
+            <div id="jcurve-chart-label" class="sr-only">
+              Chart displaying the J-Curve with time on x-axis and economic
+              indicator on y-axis
+            </div>
+          </div>
+          <div id="jcurve-insights" aria-live="polite"></div>
         </section>
       </div>
     </div>
@@ -922,6 +1201,82 @@
       // Initial simulation for Laffer
       simulateCurveLaffer(0, 1, -0.02);
 
+      // J-Curve
+      const ctxJCurve = document
+        .getElementById("growthChartJCurve")
+        .getContext("2d");
+      let chartJCurve;
+
+      function simulateCurveJCurve(base, depth, tau, slope) {
+        const time = Array.from({ length: 21 }, (_, i) => i); // 0 to 20 periods
+        const indicator = time.map(
+          (t) => base + slope * t - depth * (1 - Math.exp(-t / tau))
+        );
+
+        if (chartJCurve) chartJCurve.destroy();
+        chartJCurve = new Chart(ctxJCurve, {
+          type: "line",
+          data: {
+            labels: time,
+            datasets: [
+              {
+                label: "Economic Indicator (e.g., Trade Balance % GDP)",
+                data: indicator,
+                borderColor: "red",
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                title: { display: true, text: "Time (Years/Quarters)" },
+              },
+              y: { title: { display: true, text: "Indicator Value" } },
+            },
+          },
+        });
+
+        // Insights: e.g., time to breakeven (trough where dY/dt = 0)
+        let troughTime = 0;
+        if ((slope * tau) / depth < 1) {
+          troughTime = -tau * Math.log((slope * tau) / depth);
+        }
+        const recoveryValue =
+          base + slope * 10 - depth * (1 - Math.exp(-10 / tau));
+        document.getElementById(
+          "jcurve-insights"
+        ).innerText = `Trough ~${troughTime.toFixed(
+          1
+        )} periods; 10-period value: ${recoveryValue.toFixed(
+          2
+        )} (max dip: ~-${depth.toFixed(1)})`;
+      }
+
+      document
+        .getElementById("paramsFormJCurve")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const base = parseFloat(document.getElementById("base-jcurve").value);
+          const depth = parseFloat(
+            document.getElementById("depth-jcurve").value
+          );
+          const tau = parseFloat(document.getElementById("tau-jcurve").value);
+          const slope = parseFloat(
+            document.getElementById("slope-jcurve").value
+          );
+          if (depth <= 0 || tau <= 0 || slope <= 0) {
+            alert("Depth, τ, and Slope should be positive for a J-shape.");
+            return;
+          }
+          simulateCurveJCurve(base, depth, tau, slope);
+        });
+
+      // Initial simulation for J-Curve
+      simulateCurveJCurve(0, 10, 2, 1);
+
       // Handle window resize
       function handleResize() {
         if (chartArmey) {
@@ -929,6 +1284,9 @@
         }
         if (chartLaffer) {
           chartLaffer.resize();
+        }
+        if (chartJCurve) {
+          chartJCurve.resize();
         }
       }
 
