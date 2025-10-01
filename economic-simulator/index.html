@@ -4,18 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      Economic Curves Simulator: Armey, Laffer, J-Curve, Supply-Demand &
-      Division of Labor
+      Economic Curves Simulator: 6 Curves Including The Hockey Stick
     </title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Interactive economic simulator featuring 5 key curves: Armey, Laffer, J-Curve, Supply-Demand, and Adam Smith's Division of Labor. Explore government spending, taxation, economic shocks, market equilibria, and productivity gains from specialization championed by Javier Milei."
+      content="Interactive economic simulator featuring 6 key curves: Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and The Hockey Stick showing capitalism's prosperity explosion. Explore economic theories championed by Javier Milei."
     />
     <meta
       name="keywords"
-      content="economic simulator, Armey curve, Laffer curve, J-Curve, supply demand, division of labor, Adam Smith, pin factory, government spending, tax rates, economic growth, fiscal policy, specialization, increasing returns, Javier Milei, Austrian economics, market size, productivity, free trade, public economics, interactive economics, economic visualization"
+      content="economic simulator, Armey curve, Laffer curve, J-Curve, supply demand, division of labor, hockey stick curve, capitalism, Adam Smith, pin factory, government spending, tax rates, economic growth, per capita GDP, prosperity, Javier Milei, Austrian economics, free markets, industrial revolution, fiscal policy, specialization, increasing returns, market size, productivity, free trade, public economics, interactive economics, economic visualization"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -25,11 +24,11 @@
     <!-- Open Graph Meta Tags for Social Sharing -->
     <meta
       property="og:title"
-      content="Economic Curves Simulator: 5 Interactive Models Including Adam Smith's Division of Labor"
+      content="Economic Curves Simulator: 6 Interactive Models Including The Hockey Stick"
     />
     <meta
       property="og:description"
-      content="Explore 5 economic curves: Armey, Laffer, J-Curve, Supply-Demand, and Division of Labor. See how government policy and market size affect growth, taxation, and productivity. Based on theories championed by Javier Milei."
+      content="Explore 6 economic curves: Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and The Hockey Stick showing capitalism's prosperity explosion. Based on theories championed by Javier Milei."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -49,11 +48,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Economic Curves Simulator: 5 Interactive Models + Division of Labor"
+      content="Economic Curves Simulator: 6 Interactive Models "
     />
     <meta
       name="twitter:description"
-      content="Explore Armey, Laffer, J-Curve, Supply-Demand, and Adam Smith's Division of Labor curves. Interactive tool showing how specialization and free markets drive prosperity."
+      content="Explore Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and The Hockey Stick curves. Interactive tools."
     />
     <meta
       name="twitter:image"
@@ -91,8 +90,8 @@
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Economic Curves Simulator - v3.0-MILEI",
-        "description": "Interactive economic simulator featuring 5 fundamental curves: Armey Curve (government spending vs growth), Laffer Curve (taxation), J-Curve (economic shocks), Supply-Demand (market equilibrium), and Division of Labor (Adam Smith's Pin Factory demonstrating increasing returns to scale). Based on economic theories championed by Javier Milei.",
+        "name": "Economic Curves Simulator - v4.0-MILEI",
+        "description": "Interactive economic simulator featuring 6 fundamental curves: Armey Curve (government spending vs growth), Laffer Curve (taxation), J-Curve (economic shocks), Supply-Demand (market equilibrium), Division of Labor (Adam Smith's Pin Factory), and The Hockey Stick (capitalism's prosperity explosion). Based on economic theories championed by Javier Milei.",
         "url": "https://julienreszka.github.io/economic-simulator/",
         "applicationCategory": "EducationalApplication",
         "operatingSystem": "Any",
@@ -250,6 +249,10 @@
           grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
           gap: 15px;
         }
+        #paramsFormHockey {
+          grid-template-columns: 1fr 1fr 1fr 120px;
+          gap: 15px;
+        }
 
         .param-group {
           display: flex;
@@ -388,19 +391,19 @@
   <body>
     <div id="container">
       <h1>
-        Economic Curves Simulator: 5 Key Models Including Adam Smith's Division
-        of Labor
+        Economic Curves Simulator: 6 Key Models Including The Hockey Stick
       </h1>
       <p>
-        This web app simulates five fundamental economic curves championed by
+        This web app simulates six fundamental economic curves championed by
         Javier Milei and Austrian/classical economics:
-        <strong>(1)</strong> Armey curve (government spending vs growth),
-        <strong>(2)</strong> Laffer curve (tax rates vs revenue),
+        <strong>(1)</strong> Armey Curve (government spending vs growth),
+        <strong>(2)</strong> Laffer Curve (tax rates vs revenue),
         <strong>(3)</strong> J-Curve (economic shocks vs recovery),
-        <strong>(4)</strong> Supply-Demand (market equilibrium), and
-        <strong>(5)</strong> Division of Labor (Adam Smith's Pin Factory showing
-        increasing returns to scale). Adjust parameters to explore how policy,
-        market size, and specialization affect prosperity.
+        <strong>(4)</strong> Supply-Demand (market equilibrium),
+        <strong>(5)</strong> Division of Labor (Adam Smith's Pin Factory), and
+        <strong>(6)</strong> The Hockey Stick (capitalism's prosperity
+        explosion). Adjust parameters to explore how policy, market forces, and
+        economic freedom affect prosperity.
       </p>
 
       <div id="curves-grid">
@@ -2391,6 +2394,314 @@
           </div>
           <div id="results-division" aria-live="polite"></div>
         </section>
+
+        <section id="hockey-section" aria-labelledby="hockey-heading">
+          <details open>
+            <summary>
+              About Hockey Stick: Capitalism's Prosperity Explosion
+            </summary>
+            <div style="margin-top: 15px; line-height: 1.6">
+              <p>
+                <strong>"The Hockey Stick"</strong> is Javier Milei's flagship
+                argument for capitalism, showing the most dramatic economic
+                transformation in human history. In his book
+                <em>Capitalism, Socialism, and the Neoclassical Trap</em>, Milei
+                repeatedly emphasizes this stunning visual pattern:
+                <strong
+                  >for 1,800 years, per capita GDP barely moved—then suddenly
+                  exploded after 1800 when capitalism emerged.</strong
+                >
+              </p>
+
+              <h3>The Most Important Graph in Economics</h3>
+              <p>
+                When you plot per capita GDP from year 0 to present, the curve
+                looks exactly like a hockey stick: flat for millennia (the
+                handle), then shooting upward exponentially (the blade). This
+                isn't a gradual improvement—it's a complete rupture with all
+                prior human history.
+              </p>
+
+              <h3>Milei's Historical Data</h3>
+              <p>
+                From his book, here are the precise numbers that demonstrate
+                capitalism's miracle:
+              </p>
+              <ul>
+                <li>
+                  <strong>Year 0 - 1800 (1,800 years):</strong> Per capita GDP
+                  rose only 48% over eighteen centuries—a compound annual growth
+                  rate of just 0.02%. At that pace, it would take 3,500 years to
+                  double living standards!
+                </li>
+                <li>
+                  <strong>1800-1900 (Industrial Revolution):</strong> Growth
+                  rate jumped to 0.66% annually. Doubling time: 107 years.
+                </li>
+                <li>
+                  <strong>1900-1950:</strong> Growth accelerated to 1.66%
+                  annually. Doubling time: 66 years.
+                </li>
+                <li>
+                  <strong>1950-2000:</strong> Growth rate reached 2.1% annually.
+                  Doubling time: 33 years.
+                </li>
+                <li>
+                  <strong>2000-2025:</strong> Growth hit 3.0% annually. Doubling
+                  time: only 23 years!
+                </li>
+              </ul>
+              <p>
+                <strong>Bottom line:</strong> From 1800 to present, per capita
+                GDP multiplied by <strong>more than 15 times</strong> globally.
+                This happened in just 200 years after 1,800 years of near-total
+                stagnation. The growth rate is still accelerating!
+              </p>
+
+              <h3>The Poverty Miracle</h3>
+              <p>
+                The Hockey Stick isn't just about wealth—it's about lifting
+                humanity from misery:
+              </p>
+              <ul>
+                <li>
+                  <strong>1810:</strong> 95% of humanity lived in extreme
+                  poverty (less than $1/day equivalent)
+                </li>
+                <li><strong>1900:</strong> Still around 90%</li>
+                <li><strong>2000:</strong> Down to 15%</li>
+                <li>
+                  <strong>2020 (pre-pandemic):</strong> Only 5% in extreme
+                  poverty
+                </li>
+              </ul>
+              <p>
+                As Milei emphasizes:
+                <em
+                  >"Capitalism lifted 90% of the world's population out of
+                  extreme poverty—and does so ever faster."</em
+                >
+              </p>
+
+              <h3>Why The Hockey Stick Matters</h3>
+              <p>
+                Milei uses this curve to make his central argument: the
+                explosion occurred precisely when humanity adopted:
+              </p>
+              <ol>
+                <li>
+                  <strong>Private property rights</strong> (secure ownership
+                  enabling long-term investment)
+                </li>
+                <li>
+                  <strong>Free markets</strong> (voluntary exchange without
+                  state coercion)
+                </li>
+                <li>
+                  <strong>Limited government</strong> (rule of law, not rule of
+                  bureaucrats)
+                </li>
+                <li>
+                  <strong>Division of labor</strong> (enabled by market
+                  expansion and free trade)
+                </li>
+                <li>
+                  <strong>Economic freedom</strong> (entrepreneurs free to
+                  innovate and compete)
+                </li>
+              </ol>
+              <p>
+                The timing is too perfect to be coincidence. For 1,800 years
+                under feudalism, monarchy, and central planning, humanity was
+                trapped in poverty. Then came Adam Smith's
+                <em>Wealth of Nations</em> (1776), the American Revolution
+                (1776), and the unleashing of market forces—and suddenly the
+                hockey stick begins.
+              </p>
+
+              <h3>The Interactive Model</h3>
+              <p>
+                This simulator lets you explore different scenarios by adjusting
+                the "capitalism adoption year." See what happens if capitalism
+                had emerged earlier—or later. The model uses Milei's actual
+                historical data to show:
+              </p>
+              <ul>
+                <li>
+                  <strong>Before capitalism:</strong> Flat growth (0.02% annual)
+                  - the handle
+                </li>
+                <li>
+                  <strong>After capitalism:</strong> Exponential acceleration -
+                  the blade
+                </li>
+              </ul>
+
+              <h3>Milei's Challenge to Critics</h3>
+              <p>
+                As Milei asks in his speeches:
+                <em
+                  >"How can anyone demonize an economic system that not only
+                  lifted 90% of the world's population out of extreme poverty,
+                  but is also just and morally superior? There has never been,
+                  in all of human history, a time of greater prosperity than the
+                  one we live in today."</em
+                >
+              </p>
+              <p>
+                The Hockey Stick is visual proof that capitalism isn't just
+                efficient—it's the greatest humanitarian achievement in human
+                history.
+              </p>
+
+              <p>
+                The simulator uses a piecewise function matching Milei's
+                historical phases. In the two centuries since capitalism's
+                adoption (typically 1800), per capita GDP has multiplied by
+                approximately <strong>15-40×</strong> depending on the region,
+                lifting billions out of poverty. Today's world average is around
+                <strong>$25,000 PPP per capita</strong> (2023 IMF data), up from
+                ~$600-700 in year 0 / ~$650 in 1800.
+              </p>
+              <p style="text-align: center; font-style: italic">
+                GDP(year) = { Pre-Capitalism: Base × (1.0002)<sup
+                  >(year - 0)</sup
+                >
+                } <br />
+                { Post-Capitalism: Accelerating Exponential Growth }
+              </p>
+              <p>
+                Where growth rates shift through the five historical phases
+                Milei documents.
+              </p>
+
+              <h3>Key Insights</h3>
+              <ul>
+                <li>
+                  The flat handle represents
+                  <strong>all of pre-capitalist human history</strong>—empires,
+                  kingdoms, feudalism, mercantilism
+                </li>
+                <li>
+                  The explosive blade begins
+                  <strong>exactly when free markets and property rights</strong>
+                  emerged
+                </li>
+                <li>
+                  Growth is <strong>accelerating</strong>, not slowing—contrary
+                  to neo-Malthusian doomsayers
+                </li>
+                <li>
+                  Population grew 7× from 1810-2000, yet per capita GDP grew
+                  9.2× (total GDP: 63×!)
+                </li>
+                <li>
+                  This demolishes the neoclassical assumption of
+                  <strong>diminishing returns</strong>—we see increasing returns
+                </li>
+              </ul>
+
+              <h3>The Austrian Perspective</h3>
+              <p>
+                Unlike neoclassical models that struggle to explain the Hockey
+                Stick (Solow-Swan only accounts for 15% of growth via capital
+                accumulation), Milei's Austrian approach emphasizes:
+              </p>
+              <ul>
+                <li>
+                  <strong>Entrepreneurial discovery</strong> as the driver of
+                  innovation
+                </li>
+                <li>
+                  <strong>Knowledge accumulation</strong> and human action, not
+                  just capital and labor
+                </li>
+                <li>
+                  <strong>Institutional quality</strong>—secure property rights
+                  create incentives for wealth creation
+                </li>
+                <li>
+                  <strong>Spontaneous order</strong>—no central planner designed
+                  this prosperity
+                </li>
+              </ul>
+
+              <h3>Why It's Called "The Hockey Stick"</h3>
+              <p>
+                The name comes from the unmistakable shape: lay a hockey stick
+                on its side, and that's what history looks like. Milei uses this
+                term repeatedly in his book because it's the most intuitive way
+                to grasp the magnitude of capitalism's achievement.
+              </p>
+            </div>
+          </details>
+
+          <form id="paramsFormHockey">
+            <div class="param-group">
+              <label for="base-hockey"
+                >Base GDP (Year 0) - in constant dollars
+              </label>
+              <input
+                type="number"
+                id="base-hockey"
+                step="100"
+                value="600"
+                min="100"
+                max="2000"
+                required
+              />
+            </div>
+
+            <div class="param-group">
+              <label for="capitalism-year-hockey"
+                >Capitalism Adoption Year - when free markets & property rights
+                emerged
+              </label>
+              <input
+                type="number"
+                id="capitalism-year-hockey"
+                step="50"
+                value="1800"
+                min="0"
+                max="2000"
+                required
+              />
+            </div>
+
+            <div class="param-group">
+              <label for="acceleration-hockey"
+                >Growth Acceleration Factor
+              </label>
+              <input
+                type="number"
+                id="acceleration-hockey"
+                step="0.1"
+                value="1.0"
+                min="0.5"
+                max="3.0"
+                required
+              />
+            </div>
+
+            <button type="submit">Simulate</button>
+          </form>
+
+          <div
+            class="chart-container"
+            role="img"
+            aria-labelledby="hockey-chart-label"
+          >
+            <canvas
+              id="growthChartHockey"
+              aria-label="Interactive Hockey Stick curve showing per capita GDP explosion under capitalism"
+            ></canvas>
+            <div id="hockey-chart-label" class="sr-only">
+              Chart displaying per capita GDP from year 0 to 2025, showing flat
+              growth pre-capitalism and exponential explosion post-capitalism
+            </div>
+          </div>
+          <div id="results-hockey" aria-live="polite"></div>
+        </section>
       </div>
     </div>
 
@@ -3053,6 +3364,277 @@
       // Parameters calibrated to match Smith's observed 240× gain
       simulateDivisionOfLabor(20, 10, 4.23, 1.5);
 
+      // Hockey Stick Curve
+      const ctxHockey = document
+        .getElementById("growthChartHockey")
+        .getContext("2d");
+      let chartHockey;
+
+      function simulateHockeyStick(
+        baseGDP,
+        capitalismYear,
+        accelerationFactor
+      ) {
+        // Create year range from 0 to 2023
+        const years = [];
+        const gdpPerCapita = [];
+
+        // Pre-capitalism growth rate (0.02% annual from Milei's book)
+        const preCapitalismRate = 0.0002;
+
+        // Post-capitalism growth rates (from Milei's book, accelerating over time)
+        const growthPhases = [
+          {
+            startYear: capitalismYear,
+            endYear: capitalismYear + 100,
+            rate: 0.0066,
+          }, // 1800-1900: 0.66%
+          {
+            startYear: capitalismYear + 100,
+            endYear: capitalismYear + 150,
+            rate: 0.0166,
+          }, // 1900-1950: 1.66%
+          {
+            startYear: capitalismYear + 150,
+            endYear: capitalismYear + 200,
+            rate: 0.021,
+          }, // 1950-2000: 2.1%
+          {
+            startYear: capitalismYear + 200,
+            endYear: 2025,
+            rate: 0.03,
+          }, // 2000-2025: 3.0%
+        ];
+
+        // Generate data points (key years for visualization)
+        const keyYears = [0, 500, 1000, 1500];
+
+        // Add years around capitalism transition
+        if (capitalismYear > 50) {
+          keyYears.push(capitalismYear - 50);
+        }
+        keyYears.push(capitalismYear);
+
+        // Add post-capitalism years
+        for (let i = capitalismYear + 25; i <= 2025; i += 25) {
+          keyYears.push(i);
+        }
+        if (!keyYears.includes(2025)) {
+          keyYears.push(2025);
+        }
+
+        // Calculate GDP for each key year
+        for (let year of [...new Set(keyYears)].sort((a, b) => a - b)) {
+          if (year < 0) continue;
+          if (year > 2025) break;
+
+          let currentGDP;
+
+          if (year <= capitalismYear) {
+            // Pre-capitalism: slow compounding growth
+            const yearsElapsed = year;
+            currentGDP =
+              baseGDP * Math.pow(1 + preCapitalismRate, yearsElapsed);
+          } else {
+            // Start from GDP at capitalism year
+            currentGDP =
+              baseGDP * Math.pow(1 + preCapitalismRate, capitalismYear);
+
+            // Apply each phase's growth sequentially
+            let yearCursor = capitalismYear;
+
+            for (let phase of growthPhases) {
+              if (year > phase.startYear) {
+                const phaseStart = Math.max(yearCursor, phase.startYear);
+                const phaseEnd = Math.min(year, phase.endYear);
+                const yearsInPhase = phaseEnd - phaseStart;
+
+                if (yearsInPhase > 0) {
+                  // Apply acceleration factor
+                  const adjustedRate = phase.rate * accelerationFactor;
+                  currentGDP *= Math.pow(1 + adjustedRate, yearsInPhase);
+                  yearCursor = phaseEnd;
+                }
+              }
+            }
+          }
+
+          years.push(year);
+          gdpPerCapita.push(Math.round(currentGDP));
+        }
+
+        // Destroy previous chart if it exists
+        if (chartHockey) chartHockey.destroy();
+
+        chartHockey = new Chart(ctxHockey, {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: [
+              {
+                label: "Per Capita GDP (constant $)",
+                data: gdpPerCapita,
+                borderColor: "rgb(231, 76, 60)",
+                backgroundColor: "rgba(231, 76, 60, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointRadius: years.map((y) =>
+                  y === capitalismYear ? 8 : y >= capitalismYear ? 4 : 2
+                ),
+                pointBackgroundColor: years.map((y) =>
+                  y === capitalismYear
+                    ? "rgb(46, 204, 113)"
+                    : "rgb(231, 76, 60)"
+                ),
+                pointBorderColor: years.map((y) =>
+                  y === capitalismYear ? "rgb(39, 174, 96)" : "rgb(192, 57, 43)"
+                ),
+                pointBorderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Year (CE)",
+                  font: { size: 14, weight: "bold" },
+                },
+                ticks: {
+                  callback: function (value, index, values) {
+                    const year = this.getLabelForValue(value);
+                    return year;
+                  },
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Per Capita GDP (constant $)",
+                  font: { size: 14, weight: "bold" },
+                },
+                beginAtZero: false,
+                ticks: {
+                  callback: function (value) {
+                    return "$" + value.toLocaleString();
+                  },
+                },
+              },
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  label: function (context) {
+                    let label = context.dataset.label || "";
+                    if (label) {
+                      label += ": ";
+                    }
+                    label += "$" + context.parsed.y.toLocaleString();
+                    if (context.parsed.x === capitalismYear) {
+                      label += " 🚀 CAPITALISM BEGINS!";
+                    }
+                    return label;
+                  },
+                },
+              },
+              annotation: {
+                annotations: {
+                  capitalismLine: {
+                    type: "line",
+                    xMin: capitalismYear,
+                    xMax: capitalismYear,
+                    borderColor: "rgb(46, 204, 113)",
+                    borderWidth: 2,
+                    borderDash: [5, 5],
+                    label: {
+                      display: true,
+                      content: `Capitalism (${capitalismYear})`,
+                      position: "start",
+                    },
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        // Calculate and display results
+        const gdpAtCapitalism =
+          gdpPerCapita[years.findIndex((y) => y === capitalismYear)];
+        const gdpNow = gdpPerCapita[gdpPerCapita.length - 1];
+        const multiplier = (gdpNow / baseGDP).toFixed(1);
+        const postCapitalismMultiplier = (gdpNow / gdpAtCapitalism).toFixed(1);
+
+        const resultsDiv = document.getElementById("results-hockey");
+        resultsDiv.innerHTML = `
+          <h3>🏒 The Hockey Stick Results</h3>
+          <div class="result-item">
+            <strong>Starting Point (Year 0):</strong> $${baseGDP.toLocaleString()} per capita
+          </div>
+          <div class="result-item">
+            <strong>At Capitalism Adoption (${capitalismYear}):</strong> $${gdpAtCapitalism.toLocaleString()} per capita
+          </div>
+          <div class="result-item">
+            <strong>Today (2025):</strong> $${gdpNow.toLocaleString()} per capita
+          </div>
+          <div class="result-item">
+            <strong>Total Multiplication:</strong> ${multiplier}× increase from year 0 to today
+          </div>
+          <div class="result-item">
+            <strong>Post-Capitalism Explosion:</strong> ${postCapitalismMultiplier}× increase since ${capitalismYear}
+          </div>
+          <div class="result-item">
+            <strong>Pre-Capitalism (0-${capitalismYear}):</strong> ${(
+          (gdpAtCapitalism / baseGDP - 1) *
+          100
+        ).toFixed(1)}% growth over ${capitalismYear} years (handle)
+          </div>
+          <div class="result-item">
+            <strong>Post-Capitalism (${capitalismYear}-2025):</strong> ${(
+          (gdpNow / gdpAtCapitalism - 1) *
+          100
+        ).toFixed(0)}% growth in just ${2025 - capitalismYear} years (blade)
+          </div>
+      
+        `;
+      }
+
+      document
+        .getElementById("paramsFormHockey")
+        .addEventListener("submit", (e) => {
+          e.preventDefault();
+          const baseGDP = parseFloat(
+            document.getElementById("base-hockey").value
+          );
+          const capitalismYear = parseInt(
+            document.getElementById("capitalism-year-hockey").value
+          );
+          const accelerationFactor = parseFloat(
+            document.getElementById("acceleration-hockey").value
+          );
+
+          if (baseGDP <= 0 || capitalismYear < 0 || capitalismYear > 2000) {
+            alert(
+              "Invalid parameters. Base GDP must be positive, and capitalism year must be between 0 and 2000."
+            );
+            return;
+          }
+
+          simulateHockeyStick(baseGDP, capitalismYear, accelerationFactor);
+        });
+
+      // Initial simulation for Hockey Stick
+      // Using Milei's historical data: base ~$600, capitalism at 1800, acceleration 1.0 (historical rates)
+      simulateHockeyStick(600, 1800, 1.0);
+
       // Handle window resize
       function handleResize() {
         if (chartArmey) {
@@ -3069,6 +3651,9 @@
         }
         if (chartDivision) {
           chartDivision.resize();
+        }
+        if (chartHockey) {
+          chartHockey.resize();
         }
       }
 
