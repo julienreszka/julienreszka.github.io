@@ -733,6 +733,39 @@
           font-style: italic;
         }
 
+        /* Explanation box styles */
+        .explanation-box {
+          background: #f0f8ff;
+          border: 1px solid #b0d4f1;
+          border-radius: 6px;
+          padding: 12px;
+          margin-bottom: 20px;
+          font-size: 10px;
+        }
+
+        .explanation-box strong {
+          color: #2c5aa0;
+          font-size: 11px;
+        }
+
+        .explanation-grid {
+          margin-top: 8px;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          gap: 10px;
+        }
+
+        .explanation-grid div small {
+          color: #666;
+        }
+
+        .explanation-note {
+          margin: 8px 0 0 0;
+          text-align: center;
+          font-style: italic;
+          color: #5a5a5a;
+        }
+
         /* Dark mode equity scenarios */
         @media (prefers-color-scheme: dark) {
           #equity-scenarios {
@@ -1049,6 +1082,138 @@
         .regime-detail-card.special h4 {
           background: #4a3429;
           color: #ffb74d;
+        }
+
+        /* Mode sombre - styles manquants */
+        body {
+          background: #1a1a1a;
+          color: #e0e0e0;
+        }
+
+        h1 {
+          color: #ff6b6b;
+          border-bottom-color: #ff6b6b;
+        }
+
+        form {
+          background: #2d2d2d;
+          border: 1px solid #555;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        label {
+          color: #e0e0e0;
+        }
+
+        input,
+        select {
+          background: #3d3d3d;
+          color: #e0e0e0;
+          border: 1px solid #555;
+        }
+
+        input:focus,
+        select:focus {
+          border-color: #ff6b6b;
+          outline: none;
+          box-shadow: 0 0 5px rgba(255, 107, 107, 0.3);
+        }
+
+        #results {
+          background: #2a2a2a;
+          border: 1px solid #555;
+        }
+
+        .result-item {
+          background: #3d3d3d;
+          color: #e0e0e0;
+          border-left-color: #ff6b6b;
+        }
+
+        .warning {
+          color: #ff6b6b;
+        }
+
+        /* Sources dark mode */
+        #sources {
+          background: linear-gradient(135deg, #3d2e2e 0%, #452c2c 100%);
+          border-color: #5a3838;
+          box-shadow: 0 2px 6px rgba(255, 107, 107, 0.1);
+        }
+
+        #sources strong {
+          color: #ff6b6b;
+          border-bottom-color: #5a3838;
+        }
+
+        #sources li:hover {
+          border-left-color: #ff6b6b;
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        #sources a {
+          color: #c4a484;
+        }
+
+        #sources a:hover {
+          color: #ff6b6b;
+        }
+
+        #sources a:visited {
+          color: #b39583;
+        }
+
+        #sources p {
+          color: #a08070;
+          border-top-color: #5a3838;
+        }
+
+        /* Chart dark mode */
+        .chart-container {
+          background: #2d2d2d;
+          border-color: #555;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .chart-title {
+          color: #ff6b6b;
+          border-bottom-color: #ff6b6b;
+        }
+
+        .chart-bar-container {
+          background: #555;
+        }
+
+        .chart-value {
+          color: #e0e0e0;
+        }
+
+        .section-title {
+          color: #ff6b6b;
+          border-bottom-color: #555;
+        }
+
+        /* Explication box dark mode */
+        .explanation-box {
+          background: #2a3a4a;
+          border-color: #4a5a6a;
+          color: #e0e0e0;
+        }
+
+        .explanation-box strong {
+          color: #64b5f6;
+        }
+
+        .explanation-grid div small {
+          color: #aaa;
+        }
+
+        .explanation-note {
+          color: #ccc;
+        }
+
+        .explanation-note strong {
+          color: #64b5f6;
         }
       }
     </style>
@@ -2139,6 +2304,29 @@
             <p style="text-align: center; font-size: 11px; color: #666; margin-bottom: 20px;">
               Calculs des ajustements nécessaires pour atteindre le ratio retour/cotisation souhaité
             </p>
+
+            
+            
+            <div class="explanation-box">
+              <strong>💡 Légende des colonnes "OK" (faisabilité) :</strong><br>
+              <div class="explanation-grid">
+                <div>
+                  <strong>📅 Âge :</strong> ✅ si ajustement entre -2 et +3 ans<br>
+                  <small>Au-delà = résistance sociale</small>
+                </div>
+                <div>
+                  <strong>💰 Cotisations :</strong> ✅ si variation ≤ 30%<br>
+                  <small>Au-delà = trop lourd économiquement</small>
+                </div>
+                <div>
+                  <strong>🏦 Pensions :</strong> ✅ si -25% à +15%<br>
+                  <small>Au-delà = impact social majeur</small>
+                </div>
+              </div>
+              <p style="margin: 8px 0 0 0; text-align: center; font-style: italic; color: #5a5a5a;">
+                ⚖️ <strong>Réforme Équilibrée</strong> = toujours faisable car combine plusieurs ajustements modérés
+              </p>
+            </div>
             
             <div class="scenarios-table-container">
               <table class="scenarios-table">
@@ -2363,6 +2551,27 @@
         const equityAdjustments = calculateEquityAdjustments(results);
 
         const tableHTML = `
+          <div class="explanation-box">
+            <strong>💡 Légende des colonnes "OK" (faisabilité) :</strong><br>
+            <div class="explanation-grid">
+              <div>
+                <strong>📅 Âge :</strong> ✅ si ajustement entre -2 et +3 ans<br>
+                <small>Au-delà = résistance sociale</small>
+              </div>
+              <div>
+                <strong>💰 Cotisations :</strong> ✅ si variation ≤ 30%<br>
+                <small>Au-delà = trop lourd économiquement</small>
+              </div>
+              <div>
+                <strong>🏦 Pensions :</strong> ✅ si -25% à +15%<br>
+                <small>Au-delà = impact social majeur</small>
+              </div>
+            </div>
+            <p class="explanation-note">
+              ⚖️ <strong>Réforme Équilibrée</strong> = toujours faisable car combine plusieurs ajustements modérés
+            </p>
+          </div>
+          
           <div class="scenarios-table-container">
             <table class="scenarios-table">
               <thead>
