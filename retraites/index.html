@@ -731,9 +731,11 @@
 
         // Calcul des salaires de référence et superbrut
         const salaireAnnuelBrut = salaireMensuel * 12;
-        const salaireAnnuelSuperbrutBoomer = salaireAnnuelBrut * PARAMETRES_RETRAITE.superbrut.annees1980;
-        const salaireAnnuelSuperbrutVous = salaireAnnuelBrut * PARAMETRES_RETRAITE.superbrut.annees2025;
-        
+        const salaireAnnuelSuperbrutBoomer =
+          salaireAnnuelBrut * PARAMETRES_RETRAITE.superbrut.annees1980;
+        const salaireAnnuelSuperbrutVous =
+          salaireAnnuelBrut * PARAMETRES_RETRAITE.superbrut.annees2025;
+
         const salaireReferenceBoomer =
           salaireAnnuelBrut * regimeConfig.bonificationSalaire;
         const salaireReferenceVous =
@@ -756,8 +758,12 @@
         const pensionVousMensuel = pensionVousAnnuel / 12;
 
         // Calcul des cotisations avec coût superbrut (salarié + employeur + charges)
-        const cotisationsBoomerTotales = salaireAnnuelSuperbrutBoomer * cotisationConfig.historique * anneesBoomer;
-        const cotisationsVousTotales = salaireAnnuelSuperbrutVous * cotisationConfig.actuel * anneesVous;
+        const cotisationsBoomerTotales =
+          salaireAnnuelSuperbrutBoomer *
+          cotisationConfig.historique *
+          anneesBoomer;
+        const cotisationsVousTotales =
+          salaireAnnuelSuperbrutVous * cotisationConfig.actuel * anneesVous;
 
         // Calcul durée de retraite et pensions totales
         const ageRetraiteBoomer = ageConfig.boomer;
@@ -778,7 +784,8 @@
           pensionsRecuesVous / cotisationsVousTotales;
 
         // Ratio d'équité générationnelle (proche de 1 = équitable)
-        const ratioEquiteGenerationnelle = ratioRecuperationVous / ratioRecuperationBoomer;
+        const ratioEquiteGenerationnelle =
+          ratioRecuperationVous / ratioRecuperationBoomer;
 
         return {
           regimeType,
@@ -809,10 +816,12 @@
       }
 
       // Fonction utilitaire pour formater les montants en français
-      function formatMontant(montant, unite = 'k€') {
-        return (montant / 1000).toLocaleString('fr-FR', { 
-          maximumFractionDigits: 0 
-        }) + unite;
+      function formatMontant(montant, unite = "k€") {
+        return (
+          (montant / 1000).toLocaleString("fr-FR", {
+            maximumFractionDigits: 0,
+          }) + unite
+        );
       }
 
       function displaySingleRegime(result) {
@@ -845,7 +854,9 @@
           <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${formatMontant(
             result.pensionsRecuesBoomer
           )} vs Vous ${formatMontant(result.pensionsRecuesVous)}</div>
-          <div class="result-item"><strong>Équité générationnelle :</strong> ${result.ratioEquiteGenerationnelle.toFixed(2)} 
+          <div class="result-item"><strong>Équité générationnelle :</strong> ${result.ratioEquiteGenerationnelle.toFixed(
+            2
+          )} 
             <small>(1.00 = parfaitement équitable)</small></div>
           <p class="warning">Ratio retraité/cotisant — Boomers : ${result.ratioRecuperationBoomer.toFixed(
             1
@@ -891,13 +902,19 @@
         );
         const bestEquite = results.reduce((best, current) => {
           const bestDistance = Math.abs(best.ratioEquiteGenerationnelle - 1.0);
-          const currentDistance = Math.abs(current.ratioEquiteGenerationnelle - 1.0);
+          const currentDistance = Math.abs(
+            current.ratioEquiteGenerationnelle - 1.0
+          );
           return currentDistance < bestDistance ? current : best;
         }).ratioEquiteGenerationnelle;
-        
+
         const worstEquite = results.reduce((worst, current) => {
-          const worstDistance = Math.abs(worst.ratioEquiteGenerationnelle - 1.0);
-          const currentDistance = Math.abs(current.ratioEquiteGenerationnelle - 1.0);
+          const worstDistance = Math.abs(
+            worst.ratioEquiteGenerationnelle - 1.0
+          );
+          const currentDistance = Math.abs(
+            current.ratioEquiteGenerationnelle - 1.0
+          );
           return currentDistance > worstDistance ? current : worst;
         }).ratioEquiteGenerationnelle;
 
@@ -1088,7 +1105,9 @@
                         ? "worst-value"
                         : ""
                     }">
-                      <strong>${r.ratioEquiteGenerationnelle.toFixed(2)}</strong><br>
+                      <strong>${r.ratioEquiteGenerationnelle.toFixed(
+                        2
+                      )}</strong><br>
                       <small style="color: #666;">(1.00 = équitable)</small>
                     </td>
                   `
