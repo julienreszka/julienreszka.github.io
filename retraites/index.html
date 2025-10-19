@@ -109,19 +109,116 @@
         font-size: 14px;
       }
       #results {
-        max-width: 530px;
+        max-width: 600px;
         margin: 10px auto 0;
-        padding: 10px;
+        padding: 15px;
         background: #f9f5e7;
         border-radius: 5px;
         font-size: 12px;
       }
+      .main-comparison-table {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .main-comparison-table h3 {
+        text-align: center;
+        color: #8b0000;
+        margin-bottom: 20px;
+        font-size: 16px;
+        border-bottom: 2px solid #8b0000;
+        padding-bottom: 10px;
+      }
+      .main-comparison-table table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 12px;
+      }
+      .main-comparison-table th {
+        background: #f8f8f8;
+        padding: 12px 8px;
+        border: 1px solid #ddd;
+        font-weight: bold;
+        text-align: center;
+        color: #333;
+      }
+      .main-comparison-table td {
+        padding: 10px 8px;
+        border: 1px solid #ddd;
+        text-align: center;
+      }
+      .regime-header {
+        font-weight: bold;
+        font-size: 13px;
+        padding: 12px 8px !important;
+        background: #f5f5f5 !important;
+        color: #333 !important;
+        border-left: 3px solid #8b0000 !important;
+      }
+      .metric-primary {
+        background: #f0f0f0 !important;
+        font-weight: bold;
+      }
+      .metric-secondary {
+        background: #f8f8f8 !important;
+      }
+      .best-value {
+        background: #e8f5e8 !important;
+        font-weight: bold;
+        color: #2e7d32;
+      }
+      .worst-value {
+        background: #ffebee !important;
+        font-weight: bold;
+        color: #c62828;
+      }
       .result-item {
         margin: 5px 0;
         padding: 5px;
-        background: white;
+        background: #f9f9f9;
         border-left: 3px solid #8b0000;
         font-size: 11px;
+      }
+      .regime-details {
+        margin-top: 15px;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+      }
+      .regime-detail-card {
+        background: white;
+        border-radius: 5px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        font-size: 11px;
+      }
+      .regime-detail-card h4 {
+        margin: 0 0 10px 0;
+        font-size: 12px;
+        text-align: center;
+        padding: 8px;
+        border-radius: 3px;
+      }
+      .regime-detail-card .description {
+        font-size: 10px;
+        color: #666;
+        text-align: center;
+        line-height: 1.3;
+      }
+      .regime-detail-card.prive h4 {
+        background: #e3f2fd;
+        color: #1976d2;
+      }
+      .regime-detail-card.public h4 {
+        background: #f3e5f5;
+        color: #7b1fa2;
+      }
+      .regime-detail-card.special h4 {
+        background: #fff3e0;
+        color: #f57c00;
       }
       .warning {
         color: #8b0000;
@@ -281,6 +378,82 @@
           color: #999;
           border-top-color: #4a3535;
         }
+
+        /* Dark mode regime sections */
+        .main-comparison-table {
+          background: #2d2d2d;
+          border-color: #555;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        .main-comparison-table h3 {
+          color: #ff6b6b;
+          border-bottom-color: #ff6b6b;
+        }
+        .main-comparison-table th {
+          background: #404040;
+          color: #f0f0f0;
+          border-color: #555;
+        }
+        .main-comparison-table td {
+          color: #e0e0e0;
+          border-color: #555;
+          background: #383838;
+        }
+        .main-comparison-table .regime-header {
+          background: #555 !important;
+          color: #f0f0f0 !important;
+          border-left: 3px solid #ff6b6b !important;
+        }
+        .main-comparison-table .metric-primary {
+          background: #4a4a4a !important;
+          color: #f0f0f0 !important;
+        }
+        .main-comparison-table .metric-secondary {
+          background: #454545 !important;
+          color: #e0e0e0 !important;
+        }
+        .regime-header.prive {
+          background: #1e3a5f;
+          color: #64b5f6;
+        }
+        .regime-header.public {
+          background: #3e2c4a;
+          color: #ba68c8;
+        }
+        .regime-header.special {
+          background: #4a3429;
+          color: #ffb74d;
+        }
+        .best-value {
+          background: #2e5a2e !important;
+          color: #a5d6a7 !important;
+          border: 1px solid #4caf50 !important;
+        }
+        .worst-value {
+          background: #5a2e2e !important;
+          color: #ef9a9a !important;
+          border: 1px solid #f44336 !important;
+        }
+        .regime-detail-card {
+          background: #3d3d3d;
+          border-color: #555;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .regime-detail-card .description {
+          color: #bbb;
+        }
+        .regime-detail-card.prive h4 {
+          background: #1e3a5f;
+          color: #64b5f6;
+        }
+        .regime-detail-card.public h4 {
+          background: #3e2c4a;
+          color: #ba68c8;
+        }
+        .regime-detail-card.special h4 {
+          background: #4a3429;
+          color: #ffb74d;
+        }
       }
     </style>
   </head>
@@ -306,14 +479,15 @@
           role="form"
           aria-label="Formulaire de calcul des droits retraite"
         >
-          <label for="regime">Régime :</label>
+          <label for="regime">Mode d'affichage :</label>
           <select id="regime" aria-describedby="regime-help">
-            <option value="prive">Privé (CNAV + Agirc-Arrco)</option>
-            <option value="public">Public (CNRACL, État)</option>
-            <option value="special">Spécial (SNCF, RATP...)</option>
+            <option value="all">Comparer tous les régimes</option>
+            <option value="prive">Privé uniquement (CNAV + Agirc-Arrco)</option>
+            <option value="public">Public uniquement (CNRACL, État)</option>
+            <option value="special">Spécial uniquement (SNCF, RATP...)</option>
           </select>
           <small id="regime-help" style="font-size: 10px; color: #666">
-            Sélectionnez votre régime de retraite
+            Sélectionnez pour comparer tous les régimes ou voir un seul
           </small>
 
           <label for="salaireBrut">Salaire brut mensuel (€) :</label>
@@ -455,23 +629,14 @@
       </p>
     </footer>
     <script>
-      function calculate() {
-        const regime = document.getElementById("regime").value;
-        const salaireMensuel =
-          parseFloat(document.getElementById("salaireBrut").value) || 0;
-        const anneesBoomer =
-          parseInt(document.getElementById("anneesBoomer").value) || 0;
-        const anneesVous =
-          parseInt(document.getElementById("anneesVous").value) || 0;
-        const genBoomer =
-          parseInt(document.getElementById("generationBoomer").value) || 1955;
-        const genVous =
-          parseInt(document.getElementById("generationVous").value) || 1990;
-        if (salaireMensuel === 0 || anneesBoomer === 0 || anneesVous === 0) {
-          document.getElementById("results").innerHTML =
-            '<p class="warning">Saisissez des valeurs.</p>';
-          return;
-        }
+      function calculateRegime(
+        regimeType,
+        salaireMensuel,
+        anneesBoomer,
+        anneesVous,
+        genBoomer,
+        genVous
+      ) {
         // Trimestres requis
         const requisBoomer =
           genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
@@ -482,31 +647,33 @@
           multiplicateurSuperbrut2025 = 1.42;
         let tauxRetraite1980Brut = 0.13,
           multiplicateurSuperbrut1980 = 1.35;
+
         // Ajustements par régime
         let tauxPensionBase = 0.5; // taux plein
         let salaireReferenceBoomer, salaireReferenceVous;
         let noteRegime = "";
-        if (regime === "prive") {
-          // CNAV + complémentaire
-          salaireReferenceBoomer = salaireMensuel * 12; // moyenne carrière pour simplification
+        let regimeName = "";
+
+        if (regimeType === "prive") {
+          regimeName = "Privé (CNAV + Agirc-Arrco)";
+          salaireReferenceBoomer = salaireMensuel * 12;
           salaireReferenceVous = salaireMensuel * 12;
-          noteRegime =
-            "Privé : pension sur salaire moyen de carrière, taux plein 50%. Points complémentaires non simulés.";
-        } else if (regime === "public") {
-          // CNRACL, État - dernier traitement/salaire
-          salaireReferenceBoomer = salaireMensuel * 12 * 1.15; // estimation du dernier traitement supérieur à la moyenne de carrière
+          noteRegime = "Pension sur salaire moyen de carrière, taux plein 50%";
+        } else if (regimeType === "public") {
+          regimeName = "Public (CNRACL, État)";
+          salaireReferenceBoomer = salaireMensuel * 12 * 1.15;
           salaireReferenceVous = salaireMensuel * 12 * 1.15;
-          tauxPensionBase = 0.75; // taux plein commun (prof, fonctionnaire)
-          noteRegime =
-            "Public : pension sur dernier traitement indiciaire (estimé à 15% de plus que la moyenne carrière). Taux plein 75%.";
-        } else if (regime === "special") {
-          // Spécial - règles particulières
+          tauxPensionBase = 0.75;
+          noteRegime = "Pension sur dernier traitement (+15%), taux plein 75%";
+        } else if (regimeType === "special") {
+          regimeName = "Spécial (SNCF, RATP...)";
           salaireReferenceBoomer = salaireMensuel * 12 * 1.25;
           salaireReferenceVous = salaireMensuel * 12 * 1.25;
           tauxPensionBase = 0.8;
           noteRegime =
-            "Spécial : pension sur dernier salaire majoré (simulé à 25% supérieur). Taux plein 80%. Décotes particulières ignorées.";
+            "Pension sur dernier salaire majoré (+25%), taux plein 80%";
         }
+
         const trimestresBoomer = anneesBoomer * 4;
         const trimestresVous = anneesVous * 4;
 
@@ -515,9 +682,9 @@
           tauxPensionBase * (trimestresBoomer / requisBoomer);
         const tauxPensionVous = tauxPensionBase * (trimestresVous / requisVous);
         const pensionBoomerAnnuel = salaireReferenceBoomer * tauxPensionBoomer;
-        const pensionBoomerMensuel = (pensionBoomerAnnuel / 12).toFixed(0);
+        const pensionBoomerMensuel = pensionBoomerAnnuel / 12;
         const pensionVousAnnuel = salaireReferenceVous * tauxPensionVous;
-        const pensionVousMensuel = (pensionVousAnnuel / 12).toFixed(0);
+        const pensionVousMensuel = pensionVousAnnuel / 12;
 
         // Cotisations
         const salaireAnnuel = salaireMensuel * 12;
@@ -528,48 +695,335 @@
 
         // Année de départ et espérance vie
         const ageRetraiteBoomer =
-          regime === "special" ? 57 : regime === "public" ? 62 : 62;
+          regimeType === "special" ? 57 : regimeType === "public" ? 62 : 62;
         const ageRetraiteVous =
-          regime === "special" ? 60 : regime === "public" ? 64 : 64;
-        const esperanceVieBoomer = regime === "special" ? 78 : 82;
-        const esperanceVieVous = regime === "special" ? 82 : 85;
+          regimeType === "special" ? 60 : regimeType === "public" ? 64 : 64;
+        const esperanceVieBoomer = regimeType === "special" ? 78 : 82;
+        const esperanceVieVous = regimeType === "special" ? 82 : 85;
 
         const anneesRetraiteBoomer = esperanceVieBoomer - ageRetraiteBoomer;
         const anneesRetraiteVous = esperanceVieVous - ageRetraiteVous;
         const pensionsRecuesBoomer = pensionBoomerAnnuel * anneesRetraiteBoomer;
         const pensionsRecuesVous = pensionVousAnnuel * anneesRetraiteVous;
 
-        const ratioRecuperationBoomer = (
-          pensionsRecuesBoomer / cotisationsBoomerTotales
-        ).toFixed(1);
-        const ratioRecuperationVous = (
-          pensionsRecuesVous / cotisationsVousTotales
-        ).toFixed(1);
+        const ratioRecuperationBoomer =
+          pensionsRecuesBoomer / cotisationsBoomerTotales;
+        const ratioRecuperationVous =
+          pensionsRecuesVous / cotisationsVousTotales;
 
-        // Affichage
-        const results = document.getElementById("results");
-        results.innerHTML = `
-          <div class="result-item"><strong>Régime :</strong> ${noteRegime}</div>
-          <div class="result-item"><strong>Pension boomer :</strong> ${pensionBoomerMensuel}€/mois (${(
-          tauxPensionBoomer * 100
-        ).toFixed(1)}% ; ${anneesBoomer} ans, ${requisBoomer} trim.)</div>
-          <div class="result-item"><strong>Votre pension :</strong> ${pensionVousMensuel}€/mois (${(
-          tauxPensionVous * 100
-        ).toFixed(1)}% ; ${anneesVous} ans, ${requisVous} trim.)</div>
-          <div class="result-item"><strong>Trimestres :</strong> Boomers ${trimestresBoomer} vs Vous ${trimestresVous}</div>
+        return {
+          regimeType,
+          regimeName,
+          noteRegime,
+          pensionBoomerMensuel,
+          pensionVousMensuel,
+          tauxPensionBoomer,
+          tauxPensionVous,
+          trimestresBoomer,
+          trimestresVous,
+          requisBoomer,
+          requisVous,
+          cotisationsBoomerTotales,
+          cotisationsVousTotales,
+          pensionsRecuesBoomer,
+          pensionsRecuesVous,
+          ratioRecuperationBoomer,
+          ratioRecuperationVous,
+          anneesBoomer,
+          anneesVous,
+        };
+      }
+
+      function displaySingleRegime(result) {
+        return `
+          <div class="result-item"><strong>Régime :</strong> ${
+            result.noteRegime
+          }</div>
+          <div class="result-item"><strong>Pension boomer :</strong> ${result.pensionBoomerMensuel.toFixed(
+            0
+          )}€/mois (${(result.tauxPensionBoomer * 100).toFixed(1)}% ; ${
+          result.anneesBoomer
+        } ans, ${result.requisBoomer} trim.)</div>
+          <div class="result-item"><strong>Votre pension :</strong> ${result.pensionVousMensuel.toFixed(
+            0
+          )}€/mois (${(result.tauxPensionVous * 100).toFixed(1)}% ; ${
+          result.anneesVous
+        } ans, ${result.requisVous} trim.)</div>
+          <div class="result-item"><strong>Trimestres :</strong> Boomers ${
+            result.trimestresBoomer
+          } vs Vous ${result.trimestresVous}</div>
           <div class="result-item"><strong>Cotisations totales :</strong> Boomers ${(
-            cotisationsBoomerTotales / 1000
-          ).toFixed(0)}k€ vs Vous ${(cotisationsVousTotales / 1000).toFixed(
-          0
-        )}k€</div>
+            result.cotisationsBoomerTotales / 1000
+          ).toFixed(0)}k€ vs Vous ${(
+          result.cotisationsVousTotales / 1000
+        ).toFixed(0)}k€</div>
           <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${(
-            pensionsRecuesBoomer / 1000
-          ).toFixed(0)}k€ vs Vous ${(pensionsRecuesVous / 1000).toFixed(
+            result.pensionsRecuesBoomer / 1000
+          ).toFixed(0)}k€ vs Vous ${(result.pensionsRecuesVous / 1000).toFixed(
           0
         )}k€</div>
-          <p class="warning">Ratio retraité/cotisant — Boomers : ${ratioRecuperationBoomer}x ; Vous : ${ratioRecuperationVous}x.</p>
+          <p class="warning">Ratio retraité/cotisant — Boomers : ${result.ratioRecuperationBoomer.toFixed(
+            1
+          )}x ; Vous : ${result.ratioRecuperationVous.toFixed(1)}x.</p>
         `;
       }
+
+      function displayRegimeSection(result, isBest, isWorst) {
+        return `
+          <div class="regime-detail-card ${result.regimeType}">
+            <h4>${result.regimeName}</h4>
+            <div class="description">
+              ${result.noteRegime}
+            </div>
+          </div>
+        `;
+      }
+
+      function createMainComparisonTable(results) {
+        const bestPensionVous = Math.max(
+          ...results.map((r) => r.pensionVousMensuel)
+        );
+        const worstPensionVous = Math.min(
+          ...results.map((r) => r.pensionVousMensuel)
+        );
+        const bestPensionBoomer = Math.max(
+          ...results.map((r) => r.pensionBoomerMensuel)
+        );
+        const worstPensionBoomer = Math.min(
+          ...results.map((r) => r.pensionBoomerMensuel)
+        );
+        const bestRatioVous = Math.max(
+          ...results.map((r) => r.ratioRecuperationVous)
+        );
+        const worstRatioVous = Math.min(
+          ...results.map((r) => r.ratioRecuperationVous)
+        );
+        const bestRatioBoomer = Math.max(
+          ...results.map((r) => r.ratioRecuperationBoomer)
+        );
+        const worstRatioBoomer = Math.min(
+          ...results.map((r) => r.ratioRecuperationBoomer)
+        );
+
+        return `
+          <div class="main-comparison-table">
+            <h3>Comparaison des 3 régimes de retraite</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 20%;">Métrique</th>
+                  <th style="width: 20%;">Privé (CNAV)</th>
+                  <th style="width: 20%;">Public (CNRACL)</th>
+                  <th style="width: 20%;">Spécial (SNCF/RATP)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="regime-header metric-primary">
+                    <strong>Votre pension mensuelle</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td class="${
+                      r.pensionVousMensuel === bestPensionVous
+                        ? "best-value"
+                        : r.pensionVousMensuel === worstPensionVous
+                        ? "worst-value"
+                        : ""
+                    }">
+                      <strong>${r.pensionVousMensuel.toFixed(0)}€</strong><br>
+                      <small style="color: #666;">(${(
+                        r.tauxPensionVous * 100
+                      ).toFixed(1)}%)</small>
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
+                <tr>
+                  <td class="regime-header metric-secondary">
+                    <strong>Pension boomer mensuelle</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td class="${
+                      r.pensionBoomerMensuel === bestPensionBoomer
+                        ? "best-value"
+                        : r.pensionBoomerMensuel === worstPensionBoomer
+                        ? "worst-value"
+                        : ""
+                    }">
+                      <strong>${r.pensionBoomerMensuel.toFixed(0)}€</strong><br>
+                      <small style="color: #666;">(${(
+                        r.tauxPensionBoomer * 100
+                      ).toFixed(1)}%)</small>
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
+                <tr>
+                  <td class="regime-header metric-secondary">
+                    <strong>Trimestres requis</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td>
+                      Boomers: ${r.requisBoomer}<br>
+                      Vous: ${r.requisVous}
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
+                <tr>
+                  <td class="regime-header metric-secondary">
+                    <strong>Vos cotisations totales</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td>
+                      <strong>${(r.cotisationsVousTotales / 1000).toFixed(
+                        0
+                      )}k€</strong><br>
+                      <small style="color: #666;">(${r.anneesVous} ans)</small>
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
+                <tr>
+                  <td class="regime-header metric-secondary">
+                    <strong>Vos pensions totales</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td>
+                      <strong>${(r.pensionsRecuesVous / 1000).toFixed(
+                        0
+                      )}k€</strong>
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
+                <tr>
+                  <td class="regime-header metric-primary">
+                    <strong>Votre ratio retour/cotisé</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td class="${
+                      r.ratioRecuperationVous === bestRatioVous
+                        ? "best-value"
+                        : r.ratioRecuperationVous === worstRatioVous
+                        ? "worst-value"
+                        : ""
+                    }">
+                      <strong>${r.ratioRecuperationVous.toFixed(1)}x</strong>
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
+                <tr>
+                  <td class="regime-header metric-secondary">
+                    <strong>Ratio boomer</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td class="${
+                      r.ratioRecuperationBoomer === bestRatioBoomer
+                        ? "best-value"
+                        : r.ratioRecuperationBoomer === worstRatioBoomer
+                        ? "worst-value"
+                        : ""
+                    }">
+                      <strong>${r.ratioRecuperationBoomer.toFixed(1)}x</strong>
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
+              </tbody>
+            </table>
+            <p style="font-size: 11px; color: #666; text-align: center; margin-top: 15px;">
+              🟢 <strong>Meilleures valeurs</strong> | 🔴 <strong>Moins bonnes valeurs</strong> | 
+              Ratios = total perçu / total cotisé
+            </p>
+          </div>
+        `;
+      }
+
+      function createSummaryTable(results) {
+        return `
+          <div class="regime-details">
+            ${results.map((result) => displayRegimeSection(result)).join("")}
+          </div>
+        `;
+      }
+
+      function calculate() {
+        const selectedRegime = document.getElementById("regime").value;
+        const salaireMensuel =
+          parseFloat(document.getElementById("salaireBrut").value) || 0;
+        const anneesBoomer =
+          parseInt(document.getElementById("anneesBoomer").value) || 0;
+        const anneesVous =
+          parseInt(document.getElementById("anneesVous").value) || 0;
+        const genBoomer =
+          parseInt(document.getElementById("generationBoomer").value) || 1955;
+        const genVous =
+          parseInt(document.getElementById("generationVous").value) || 1990;
+
+        if (salaireMensuel === 0 || anneesBoomer === 0 || anneesVous === 0) {
+          document.getElementById("results").innerHTML =
+            '<p class="warning">Saisissez des valeurs.</p>';
+          return;
+        }
+
+        const results = document.getElementById("results");
+
+        if (selectedRegime === "all") {
+          // Calculate all 3 regimes
+          const regimeResults = ["prive", "public", "special"].map((regime) =>
+            calculateRegime(
+              regime,
+              salaireMensuel,
+              anneesBoomer,
+              anneesVous,
+              genBoomer,
+              genVous
+            )
+          );
+
+          const comparisonHtml = `
+            ${createMainComparisonTable(regimeResults)}
+            ${createSummaryTable(regimeResults)}
+          `;
+
+          results.innerHTML = comparisonHtml;
+        } else {
+          // Calculate single regime
+          const result = calculateRegime(
+            selectedRegime,
+            salaireMensuel,
+            anneesBoomer,
+            anneesVous,
+            genBoomer,
+            genVous
+          );
+          results.innerHTML = displaySingleRegime(result);
+        }
+      }
+
       const inputs = document.querySelectorAll(
         "#calcForm input, #calcForm select"
       );
