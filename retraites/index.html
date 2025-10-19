@@ -304,6 +304,75 @@
         border-top: 1px solid #e8d1d0;
       }
 
+      /* Styles pour la visualisation graphique */
+      .chart-container {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+      .chart-title {
+        text-align: center;
+        color: #8b0000;
+        margin-bottom: 20px;
+        font-size: 16px;
+        border-bottom: 2px solid #8b0000;
+        padding-bottom: 10px;
+      }
+      .chart-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 12px;
+      }
+      .chart-label {
+        width: 120px;
+        font-weight: bold;
+        text-align: right;
+        padding-right: 15px;
+      }
+      .chart-bar-container {
+        flex: 1;
+        height: 24px;
+        background: #f0f0f0;
+        border-radius: 12px;
+        position: relative;
+        margin-right: 10px;
+      }
+      .chart-bar {
+        height: 100%;
+        border-radius: 12px;
+        transition: width 0.3s ease;
+        position: relative;
+      }
+      .chart-bar.prive {
+        background: linear-gradient(90deg, #2196f3, #64b5f6);
+      }
+      .chart-bar.public {
+        background: linear-gradient(90deg, #9c27b0, #ba68c8);
+      }
+      .chart-bar.special {
+        background: linear-gradient(90deg, #ff9800, #ffb74d);
+      }
+      .chart-value {
+        width: 60px;
+        text-align: left;
+        font-weight: bold;
+        color: #333;
+      }
+      .section-title {
+        color: #8b0000;
+        font-size: 13px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+      .section-title.margin-top {
+        margin-top: 20px;
+      }
+
       /* Dark mode styles */
       @media (prefers-color-scheme: dark) {
         body {
@@ -343,6 +412,30 @@
         small,
         footer {
           color: #aaa !important;
+        }
+
+        /* Dark mode chart styles */
+        .chart-container {
+          background: #2d2d2d;
+          border-color: #555;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        .chart-title {
+          color: #ff6b6b;
+          border-bottom-color: #ff6b6b;
+        }
+        .chart-label {
+          color: #e0e0e0;
+        }
+        .chart-bar-container {
+          background: #404040;
+        }
+        .chart-value {
+          color: #e0e0e0;
+        }
+        .section-title {
+          color: #ff6b6b;
+          border-bottom-color: #555;
         }
 
         /* Dark mode sources styles */
@@ -719,7 +812,7 @@
           // Régime général et public : mêmes règles de durée
           requisBoomer =
             genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
-          requisVous = genVous >= 1973 ? 172 : 166;
+          requisVous = genVous >= 2000 ? 172 : 170;
         }
 
         // Récupération des paramètres du régime
@@ -824,6 +917,167 @@
         );
       }
 
+      function getEquityGradient(ratio) {
+        const distance = Math.abs(ratio - 1.0);
+        if (distance <= 0.1) return "linear-gradient(90deg, #4caf50, #81c784)"; // Vert excellent
+        if (distance <= 0.25) return "linear-gradient(90deg, #8bc34a, #aed581)"; // Vert bon
+        if (distance <= 0.5) return "linear-gradient(90deg, #ff9800, #ffb74d)"; // Orange moyen
+        return "linear-gradient(90deg, #f44336, #ef5350)"; // Rouge faible
+      }
+
+      function createVisualizationChart(results) {
+        const maxRatio = Math.max(
+          ...results.map((r) =>
+            Math.max(r.ratioRecuperationBoomer, r.ratioRecuperationVous)
+          )
+        );
+
+        // Pour l'équité, on centre autour de 1.0 (100%) avec une échelle qui commence à 0%
+        const maxEquity = Math.max(
+          ...results.map((r) => r.ratioEquiteGenerationnelle)
+        );
+        const minEquity = Math.min(
+          ...results.map((r) => r.ratioEquiteGenerationnelle)
+        );
+
+        // Échelle fixe de 0% à 150% pour une meilleure lisibilité
+        const equityMin = 0;
+        const equityMax = 1.5; // 150%
+        const equityRange = equityMax - equityMin;
+
+        return `
+          <div class="chart-container">
+            <h3 class="chart-title">Visualisation : Ratios Retour/Cotisation par Régime</h3>
+            
+            <!-- Ratios "Vous" -->
+            <h4 class="section-title">
+              📊 Vos ratios retour/cotisation
+            </h4>
+            ${results
+              .map(
+                (result) => `
+              <div class="chart-row">
+                <div class="chart-label">${
+                  result.regimeType === "prive"
+                    ? "Privé"
+                    : result.regimeType === "public"
+                    ? "Public"
+                    : "Spécial"
+                }</div>
+                <div class="chart-bar-container">
+                  <div class="chart-bar ${result.regimeType}" 
+                       style="width: ${
+                         (result.ratioRecuperationVous / maxRatio) * 100
+                       }%">
+                  </div>
+                </div>
+                <div class="chart-value">${result.ratioRecuperationVous.toFixed(
+                  1
+                )}x</div>
+              </div>
+            `
+              )
+              .join("")}
+            
+            <!-- Ratios Boomers -->
+            <h4 class="section-title margin-top">
+              👴 Ratios boomers retour/cotisation
+            </h4>
+            ${results
+              .map(
+                (result) => `
+              <div class="chart-row">
+                <div class="chart-label">${
+                  result.regimeType === "prive"
+                    ? "Privé"
+                    : result.regimeType === "public"
+                    ? "Public"
+                    : "Spécial"
+                }</div>
+                <div class="chart-bar-container">
+                  <div class="chart-bar ${result.regimeType}" 
+                       style="width: ${
+                         (result.ratioRecuperationBoomer / maxRatio) * 100
+                       }%; opacity: 0.7;">
+                  </div>
+                </div>
+                <div class="chart-value">${result.ratioRecuperationBoomer.toFixed(
+                  1
+                )}x</div>
+              </div>
+            `
+              )
+              .join("")}
+            
+            <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid #ddd;">
+              <h4 class="chart-title">
+                Équité Générationnelle par Régime
+              </h4>
+              
+              <!-- Graphique en barres horizontales pour l'équité -->
+              <div style="margin-bottom: 20px;">
+                ${results
+                  .map((result) => {
+                    const perfectEquityPosition =
+                      ((1.0 - equityMin) / equityRange) * 100;
+                    const currentEquityPosition =
+                      ((result.ratioEquiteGenerationnelle - equityMin) /
+                        equityRange) *
+                      100;
+
+                    return `
+                    <div style="margin-bottom: 8px;">
+                      <div style="display: flex; align-items: center; margin-bottom: 4px;">
+                        <div style="width: 80px; font-size: 11px; font-weight: bold; text-align: right; padding-right: 10px;">
+                          ${
+                            result.regimeType === "prive"
+                              ? "Privé"
+                              : result.regimeType === "public"
+                              ? "Public"
+                              : "Spécial"
+                          }
+                        </div>
+                        <div style="flex: 1; height: 20px; background: #f0f0f0; border-radius: 10px; position: relative; margin-right: 10px;">
+                          <!-- Ligne de référence à 100% -->
+                          <div style="position: absolute; left: ${perfectEquityPosition}%; top: 0; bottom: 0; width: 2px; background: #e74c3c; z-index: 3;"></div>
+                          <div style="position: absolute; left: ${
+                            perfectEquityPosition - 2
+                          }%; top: -15px; font-size: 9px; color: #e74c3c; font-weight: bold; white-space: nowrap;">100%</div>
+                          
+                          <!-- Barre d'équité - commence toujours à 0 et va jusqu'à la position calculée -->
+                          <div style="position: absolute; left: 0; top: 2px; bottom: 2px; width: ${currentEquityPosition}%; background: ${getEquityGradient(
+                      result.ratioEquiteGenerationnelle
+                    )}; border-radius: 8px; z-index: 1;"></div>
+                        </div>
+                        <div style="width: 50px; font-size: 11px; font-weight: bold;">
+                          ${(result.ratioEquiteGenerationnelle * 100).toFixed(
+                            0
+                          )}%
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                  })
+                  .join("")}
+                <div style="display: flex; align-items: center; margin-top: 10px; font-size: 10px; color: #666;">
+                  <div style="width: 90px;"></div>
+                  <div style="flex: 1; display: flex; justify-content: space-between;">
+                    <span>0%</span>
+                    <span style="color: #e74c3c; font-weight: bold;">← 100% (Équité parfaite) →</span>
+                    <span>150%</span>
+                  </div>
+                  <div style="width: 60px;"></div>
+                </div>
+              </div>
+              <p style="font-size: 10px; color: #666; text-align: center; margin-top: 15px;">
+                💡 <strong>Ligne rouge = 100%</strong> = parité parfaite boomer/actif<br>
+                📊 <strong>Vous vs Boomers</strong> = comparaison des ratios | <strong>Équité</strong> = justice intergénérationnelle
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
       function displaySingleRegime(result) {
         return `
           <div class="result-item"><strong>Régime :</strong> ${
@@ -854,10 +1108,12 @@
           <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${formatMontant(
             result.pensionsRecuesBoomer
           )} vs Vous ${formatMontant(result.pensionsRecuesVous)}</div>
-          <div class="result-item"><strong>Équité générationnelle :</strong> ${result.ratioEquiteGenerationnelle.toFixed(
-            2
-          )} 
-            <small>(1.00 = parfaitement équitable)</small></div>
+          <div class="result-item"><strong>Équité générationnelle :</strong> ${(
+            result.ratioEquiteGenerationnelle * 100
+          ).toFixed(0)}% 
+            <small>(${result.ratioEquiteGenerationnelle.toFixed(
+              2
+            )} - 100% = parfaitement équitable)</small></div>
           <p class="warning">Ratio retraité/cotisant — Boomers : ${result.ratioRecuperationBoomer.toFixed(
             1
           )}x ; Vous : ${result.ratioRecuperationVous.toFixed(1)}x.</p>
@@ -900,23 +1156,20 @@
         const worstRatioBoomer = Math.min(
           ...results.map((r) => r.ratioRecuperationBoomer)
         );
-        const bestEquite = results.reduce((best, current) => {
-          const bestDistance = Math.abs(best.ratioEquiteGenerationnelle - 1.0);
-          const currentDistance = Math.abs(
-            current.ratioEquiteGenerationnelle - 1.0
-          );
-          return currentDistance < bestDistance ? current : best;
-        }).ratioEquiteGenerationnelle;
-
-        const worstEquite = results.reduce((worst, current) => {
-          const worstDistance = Math.abs(
-            worst.ratioEquiteGenerationnelle - 1.0
-          );
-          const currentDistance = Math.abs(
-            current.ratioEquiteGenerationnelle - 1.0
-          );
-          return currentDistance > worstDistance ? current : worst;
-        }).ratioEquiteGenerationnelle;
+        const [bestEquite, worstEquite] = results
+          .reduce(
+            ([best, worst], r) => {
+              const dist = Math.abs(r.ratioEquiteGenerationnelle - 1);
+              return [
+                dist < Math.abs(best.ratioEquiteGenerationnelle - 1) ? r : best,
+                dist > Math.abs(worst.ratioEquiteGenerationnelle - 1)
+                  ? r
+                  : worst,
+              ];
+            },
+            [results[0], results[0]]
+          )
+          .map((r) => r.ratioEquiteGenerationnelle);
 
         return `
           <div class="main-comparison-table">
@@ -1105,10 +1358,12 @@
                         ? "worst-value"
                         : ""
                     }">
-                      <strong>${r.ratioEquiteGenerationnelle.toFixed(
+                      <strong>${(r.ratioEquiteGenerationnelle * 100).toFixed(
+                        0
+                      )}%</strong><br>
+                      <small style="color: #666;">(${r.ratioEquiteGenerationnelle.toFixed(
                         2
-                      )}</strong><br>
-                      <small style="color: #666;">(1.00 = équitable)</small>
+                      )} - 100% = équitable)</small>
                     </td>
                   `
                     )
@@ -1169,6 +1424,7 @@
           );
 
           const comparisonHtml = `
+            ${createVisualizationChart(regimeResults)}
             ${createMainComparisonTable(regimeResults)}
             ${createSummaryTable(regimeResults)}
           `;
