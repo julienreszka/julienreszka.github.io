@@ -703,6 +703,10 @@
         genBoomer,
         genVous
       ) {
+        // Validation et plafonnement des années de cotisation
+        anneesBoomer = Math.min(Math.max(anneesBoomer, 30), 45);
+        anneesVous = Math.min(Math.max(anneesVous, 30), 45);
+
         // Trimestres requis selon génération et régime
         let requisBoomer, requisVous;
 
@@ -725,8 +729,11 @@
           PARAMETRES_RETRAITE.demographics.ageRetraite[regimeType];
         const esperanceConfig = PARAMETRES_RETRAITE.demographics.esperanceVie;
 
-        // Calcul des salaires de référence
+        // Calcul des salaires de référence et superbrut
         const salaireAnnuelBrut = salaireMensuel * 12;
+        const salaireAnnuelSuperbrutBoomer = salaireAnnuelBrut * PARAMETRES_RETRAITE.superbrut.annees1980;
+        const salaireAnnuelSuperbrutVous = salaireAnnuelBrut * PARAMETRES_RETRAITE.superbrut.annees2025;
+        
         const salaireReferenceBoomer =
           salaireAnnuelBrut * regimeConfig.bonificationSalaire;
         const salaireReferenceVous =
@@ -748,18 +755,9 @@
         const pensionVousAnnuel = salaireReferenceVous * tauxPensionVous;
         const pensionVousMensuel = pensionVousAnnuel / 12;
 
-        // Calcul des cotisations AVEC multiplicateur superbrut (coût réel système)
-        const cotisationsBoomerTotales =
-          salaireAnnuelBrut *
-          PARAMETRES_RETRAITE.superbrut.annees1980 *
-          cotisationConfig.historique *
-          anneesBoomer;
-
-        const cotisationsVousTotales =
-          salaireAnnuelBrut *
-          PARAMETRES_RETRAITE.superbrut.annees2025 *
-          cotisationConfig.actuel *
-          anneesVous;
+        // Calcul des cotisations avec coût superbrut (salarié + employeur + charges)
+        const cotisationsBoomerTotales = salaireAnnuelSuperbrutBoomer * cotisationConfig.historique * anneesBoomer;
+        const cotisationsVousTotales = salaireAnnuelSuperbrutVous * cotisationConfig.actuel * anneesVous;
 
         // Calcul durée de retraite et pensions totales
         const ageRetraiteBoomer = ageConfig.boomer;
@@ -779,6 +777,9 @@
         const ratioRecuperationVous =
           pensionsRecuesVous / cotisationsVousTotales;
 
+        // Ratio d'équité générationnelle (proche de 1 = équitable)
+        const ratioEquiteGenerationnelle = ratioRecuperationVous / ratioRecuperationBoomer;
+
         return {
           regimeType,
           regimeName: regimeConfig.nom,
@@ -797,6 +798,7 @@
           pensionsRecuesVous,
           ratioRecuperationBoomer,
           ratioRecuperationVous,
+          ratioEquiteGenerationnelle,
           anneesBoomer,
           anneesVous,
           ageRetraiteBoomer,
@@ -804,6 +806,13 @@
           anneesRetraiteBoomer,
           anneesRetraiteVous,
         };
+      }
+
+      // Fonction utilitaire pour formater les montants en français
+      function formatMontant(montant, unite = 'k€') {
+        return (montant / 1000).toLocaleString('fr-FR', { 
+          maximumFractionDigits: 0 
+        }) + unite;
       }
 
       function displaySingleRegime(result) {
@@ -830,16 +839,14 @@
           <div class="result-item"><strong>Durée retraite :</strong> Boomers ${
             result.anneesRetraiteBoomer
           } ans vs Vous ${result.anneesRetraiteVous} ans</div>
-          <div class="result-item"><strong>Cotisations totales (superbrut incl.) :</strong> Boomers ${(
-            result.cotisationsBoomerTotales / 1000
-          ).toFixed(0)}k€ vs Vous ${(
-          result.cotisationsVousTotales / 1000
-        ).toFixed(0)}k€</div>
-          <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${(
-            result.pensionsRecuesBoomer / 1000
-          ).toFixed(0)}k€ vs Vous ${(result.pensionsRecuesVous / 1000).toFixed(
-          0
-        )}k€</div>
+          <div class="result-item"><strong>Cotisations totales (superbrut incl.) :</strong> Boomers ${formatMontant(
+            result.cotisationsBoomerTotales
+          )} vs Vous ${formatMontant(result.cotisationsVousTotales)}</div>
+          <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${formatMontant(
+            result.pensionsRecuesBoomer
+          )} vs Vous ${formatMontant(result.pensionsRecuesVous)}</div>
+          <div class="result-item"><strong>Équité générationnelle :</strong> ${result.ratioEquiteGenerationnelle.toFixed(2)} 
+            <small>(1.00 = parfaitement équitable)</small></div>
           <p class="warning">Ratio retraité/cotisant — Boomers : ${result.ratioRecuperationBoomer.toFixed(
             1
           )}x ; Vous : ${result.ratioRecuperationVous.toFixed(1)}x.</p>
@@ -882,6 +889,17 @@
         const worstRatioBoomer = Math.min(
           ...results.map((r) => r.ratioRecuperationBoomer)
         );
+        const bestEquite = results.reduce((best, current) => {
+          const bestDistance = Math.abs(best.ratioEquiteGenerationnelle - 1.0);
+          const currentDistance = Math.abs(current.ratioEquiteGenerationnelle - 1.0);
+          return currentDistance < bestDistance ? current : best;
+        }).ratioEquiteGenerationnelle;
+        
+        const worstEquite = results.reduce((worst, current) => {
+          const worstDistance = Math.abs(worst.ratioEquiteGenerationnelle - 1.0);
+          const currentDistance = Math.abs(current.ratioEquiteGenerationnelle - 1.0);
+          return currentDistance > worstDistance ? current : worst;
+        }).ratioEquiteGenerationnelle;
 
         return `
           <div class="main-comparison-table">
@@ -995,27 +1013,8 @@
                     .map(
                       (r) => `
                     <td>
-                      Boomers: ${(r.cotisationsBoomerTotales / 1000).toFixed(
-                        0
-                      )}k€<br>
-                      Vous: ${(r.cotisationsVousTotales / 1000).toFixed(0)}k€
-                    </td>
-                  `
-                    )
-                    .join("")}
-                </tr>
-                <tr>
-                  <td class="regime-header metric-secondary">
-                    <strong>Vos cotisations totales</strong>
-                  </td>
-                  ${results
-                    .map(
-                      (r) => `
-                    <td>
-                      <strong>${(r.cotisationsVousTotales / 1000).toFixed(
-                        0
-                      )}k€</strong><br>
-                      <small style="color: #666;">(${r.anneesVous} ans)</small>
+                      Boomers: ${formatMontant(r.cotisationsBoomerTotales)}<br>
+                      Vous: ${formatMontant(r.cotisationsVousTotales)}
                     </td>
                   `
                     )
@@ -1029,9 +1028,7 @@
                     .map(
                       (r) => `
                     <td>
-                      <strong>${(r.pensionsRecuesVous / 1000).toFixed(
-                        0
-                      )}k€</strong>
+                      <strong>${formatMontant(r.pensionsRecuesVous)}</strong>
                     </td>
                   `
                     )
@@ -1077,12 +1074,34 @@
                     )
                     .join("")}
                 </tr>
+                <tr>
+                  <td class="regime-header metric-primary">
+                    <strong>Équité générationnelle</strong>
+                  </td>
+                  ${results
+                    .map(
+                      (r) => `
+                    <td class="${
+                      r.ratioEquiteGenerationnelle === bestEquite
+                        ? "best-value"
+                        : r.ratioEquiteGenerationnelle === worstEquite
+                        ? "worst-value"
+                        : ""
+                    }">
+                      <strong>${r.ratioEquiteGenerationnelle.toFixed(2)}</strong><br>
+                      <small style="color: #666;">(1.00 = équitable)</small>
+                    </td>
+                  `
+                    )
+                    .join("")}
+                </tr>
               </tbody>
             </table>
             <p style="font-size: 11px; color: #666; text-align: center; margin-top: 15px;">
               🟢 <strong>Meilleures valeurs</strong> | 🔴 <strong>Moins bonnes valeurs</strong> | 
               Ratios = total perçu / total cotisé<br>
-              <strong>Cotisations "superbrut"</strong> = coût réel système (salarié + employeur + charges)
+              <strong>Cotisations "superbrut"</strong> = coût réel système (salarié + employeur + charges)<br>
+              <strong>Équité générationnelle</strong> = votre ratio ÷ ratio boomer (plus proche de 1.00 = plus équitable)
             </p>
           </div>
         `;
