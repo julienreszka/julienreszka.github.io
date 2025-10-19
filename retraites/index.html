@@ -7,6 +7,67 @@
       Calculateur Retraites France : Cotisations et Pensions – Baby-Boomers vs
       Actifs
     </title>
+    <meta
+      name="description"
+      content="Calculateur gratuit pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs. Simulez vos droits retraite selon votre salaire et année de naissance."
+    />
+    <meta
+      name="keywords"
+      content="calculateur retraite, cotisations retraite France, pension retraite, baby-boomers, système retraite français, simulation retraite, trimestres retraite"
+    />
+    <meta name="author" content="Julien Reszka" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://julienreszka.github.io/retraites/" />
+
+    <!-- Open Graph tags -->
+    <meta
+      property="og:title"
+      content="Calculateur Retraites France : Cotisations et Pensions"
+    />
+    <meta
+      property="og:description"
+      content="Calculateur gratuit pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/retraites/"
+    />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter Card tags -->
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Calculateur Retraites France : Cotisations et Pensions"
+    />
+    <meta
+      name="twitter:description"
+      content="Calculateur gratuit pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs."
+    />
+
+    <!-- JSON-LD structured data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Calculateur Retraites France",
+        "description": "Calculateur pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs en France",
+        "url": "https://julienreszka.github.io/retraites/",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "Julien Reszka"
+        },
+        "inLanguage": "fr"
+      }
+    </script>
     <style>
       body {
         font-family: "Georgia", serif;
@@ -48,7 +109,8 @@
         font-size: 14px;
       }
       #results {
-        margin-top: 10px;
+        max-width: 500px;
+        margin: 10px auto 0;
         padding: 10px;
         background: #f9f5e7;
         border-radius: 5px;
@@ -71,60 +133,106 @@
     </style>
   </head>
   <body>
-    <h1>
-      Calculateur Retraites France : Cotisations et Pensions – Baby-Boomers vs
-      Actifs
-    </h1>
-    <p class="warning">
-      Approx. : 2025 (28% brut, superbrut x1.42) ; 1980 (13% brut, x1.35). Trim.
-      = ann. x4. Pension = 50% SAM x (trim./req.).
-    </p>
+    <header>
+      <h1>
+        Calculateur Retraites France : Cotisations et Pensions – Baby-Boomers vs
+        Actifs
+      </h1>
+      <p class="warning">
+        Approx. : 2025 (28% brut, superbrut x1.42) ; 1980 (13% brut, x1.35).
+        Trim. = ann. x4. Pension = 50% SAM x (trim./req.).
+      </p>
+    </header>
 
-    <form id="calcForm">
-      <label for="salaireBrut">Salaire brut mensuel (€) :</label>
-      <input
-        type="number"
-        id="salaireBrut"
-        value="3000"
-        min="1000"
-        step="100"
-        required
-      />
+    <main>
+      <section id="calculator">
+        <form
+          id="calcForm"
+          role="form"
+          aria-label="Formulaire de calcul des droits retraite"
+        >
+          <label for="salaireBrut">Salaire brut mensuel (€) :</label>
+          <input
+            type="number"
+            id="salaireBrut"
+            value="3000"
+            min="1000"
+            step="100"
+            required
+            aria-describedby="salaire-help"
+          />
+          <small id="salaire-help" style="font-size: 10px; color: #666"
+            >Saisissez votre salaire brut mensuel</small
+          >
 
-      <label for="anneesBoomer">Annuités boomer (années) :</label>
-      <input
-        type="number"
-        id="anneesBoomer"
-        value="41"
-        min="30"
-        max="45"
-        required
-      />
+          <label for="anneesBoomer">Annuités boomer (années) :</label>
+          <input
+            type="number"
+            id="anneesBoomer"
+            value="41"
+            min="30"
+            max="45"
+            required
+            aria-describedby="boomer-help"
+          />
+          <small id="boomer-help" style="font-size: 10px; color: #666"
+            >Années de cotisation de la génération baby-boomer</small
+          >
 
-      <label for="anneesVous">Vos annuités (années) :</label>
-      <input
-        type="number"
-        id="anneesVous"
-        value="43"
-        min="30"
-        max="45"
-        required
-      />
+          <label for="anneesVous">Vos annuités (années) :</label>
+          <input
+            type="number"
+            id="anneesVous"
+            value="43"
+            min="30"
+            max="45"
+            required
+            aria-describedby="vous-help"
+          />
+          <small id="vous-help" style="font-size: 10px; color: #666"
+            >Vos années de cotisation prévues</small
+          >
 
-      <label for="generationBoomer">Boomer (naissance) :</label>
-      <select id="generationBoomer">
-        <option value="1955">1955 (166 trim.)</option>
-        <option value="1960">1960 (170 trim.)</option>
-      </select>
+          <label for="generationBoomer">Boomer (naissance) :</label>
+          <select id="generationBoomer" aria-describedby="gen-boomer-help">
+            <option value="1955">1955 (166 trim.)</option>
+            <option value="1960">1960 (170 trim.)</option>
+          </select>
+          <small id="gen-boomer-help" style="font-size: 10px; color: #666"
+            >Année de naissance du baby-boomer</small
+          >
 
-      <label for="generationVous">Vous (naissance) :</label>
-      <select id="generationVous">
-        <option value="1990">1990 (172 trim.)</option>
-        <option value="2000">2000 (172 trim.)</option>
-      </select>
-    </form>
+          <label for="generationVous">Vous (naissance) :</label>
+          <select id="generationVous" aria-describedby="gen-vous-help">
+            <option value="1990">1990 (172 trim.)</option>
+            <option value="2000">2000 (172 trim.)</option>
+          </select>
+          <small id="gen-vous-help" style="font-size: 10px; color: #666"
+            >Votre année de naissance</small
+          >
+        </form>
 
-    <div id="results"></div>
+        <section
+          id="results"
+          role="region"
+          aria-live="polite"
+          aria-label="Résultats du calcul"
+        ></section>
+      </section>
+    </main>
+
+    <footer
+      style="text-align: center; margin-top: 20px; font-size: 11px; color: #666"
+    >
+      <p>
+        Calculateur de retraite France - Comparaison intergénérationnelle des
+        cotisations et pensions
+      </p>
+      <p>
+        Données approximatives basées sur le système de retraite français en
+        vigueur
+      </p>
+    </footer>
 
     <script>
       function calculate() {
@@ -178,6 +286,32 @@
         const pensionVousAnnuel = salaireAnnuel * tauxPensionVous;
         const pensionVousMensuel = (pensionVousAnnuel / 12).toFixed(0);
 
+        // Calculate contribution recovery ratios
+        const cotisationsBoomerTotales = contribRetraite1980 * anneesBoomer;
+        const cotisationsVousTotales = contribRetraite2025 * anneesVous;
+
+        // Estimate years of pension (life expectancy - retirement age)
+        const ageRetraiteBoomer = 62; // Approximate retirement age for boomers
+        const ageRetraiteVous = 64; // Approximate retirement age for current generation
+        const esperanceVieBoomer = 82; // Life expectancy for boomers
+        const esperanceVieVous = 85; // Life expectancy for current generation
+
+        const anneesRetraiteBoomer = esperanceVieBoomer - ageRetraiteBoomer;
+        const anneesRetraiteVous = esperanceVieVous - ageRetraiteVous;
+
+        const pensionsRecuesBoomer = pensionBoomerAnnuel * anneesRetraiteBoomer;
+        const pensionsRecuesVous = pensionVousAnnuel * anneesRetraiteVous;
+
+        const ratioRecuperationBoomer = (
+          pensionsRecuesBoomer / cotisationsBoomerTotales
+        ).toFixed(1);
+        const ratioRecuperationVous = (
+          pensionsRecuesVous / cotisationsVousTotales
+        ).toFixed(1);
+
+        // Calculate the ratio between contribution rates
+        const ratioCotisations = (tauxReel2025 / tauxReel1980).toFixed(1);
+
         const results = document.getElementById("results");
         results.innerHTML = `
                 <div class="result-item"><strong>2025 (superbrut) :</strong> ${tauxReel2025}% (${superbrut2025.toFixed(
@@ -185,7 +319,7 @@
         )}€/an)</div>
                 <div class="result-item"><strong>1980 (superbrut) :</strong> ${tauxReel1980}% (${superbrut1980.toFixed(
           0
-        )}€/an) – Double pour vous!</div>
+        )}€/an) – ${ratioCotisations}x plus pour vous!</div>
                 <div class="result-item"><strong>Pension boomer :</strong> ${pensionBoomerMensuel}€/mois (${(
           tauxPensionBoomer * 100
         ).toFixed(1)}% ; ${anneesBoomer} ans, ${requisBoomer} trim.)</div>
@@ -193,7 +327,21 @@
           tauxPensionVous * 100
         ).toFixed(1)}% ; ${anneesVous} ans, ${requisVous} trim.)</div>
                 <div class="result-item"><strong>Annuités :</strong> ${trimestresBoomer} vs ${trimestresVous} trim. – Moins pour eux, plus pour vous.</div>
-                <p class="warning">Boomers : 2x cotisations récupérées. Vous : 1/3. Réagissez, Nicolas.</p>
+                <div class="result-item"><strong>Cotisations totales :</strong> Boomers ${(
+                  cotisationsBoomerTotales / 1000
+                ).toFixed(0)}k€ vs Vous ${(
+          cotisationsVousTotales / 1000
+        ).toFixed(0)}k€</div>
+                <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${(
+                  pensionsRecuesBoomer / 1000
+                ).toFixed(0)}k€ vs Vous ${(pensionsRecuesVous / 1000).toFixed(
+          0
+        )}k€</div>
+                <p class="warning">Boomers : ${ratioRecuperationBoomer}x cotisations récupérées. Vous : ${ratioRecuperationVous}x. ${
+          ratioRecuperationBoomer > ratioRecuperationVous
+            ? "Inéquité générationnelle! Réagissez Nicolas"
+            : "Équité retrouvée!"
+        }</p>
             `;
       }
 
