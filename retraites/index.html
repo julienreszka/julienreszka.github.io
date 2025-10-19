@@ -663,18 +663,23 @@
         let salaireReferenceBoomer, salaireReferenceVous;
         let noteRegime = "";
         let regimeName = "";
+        let tauxCotisationBoomer, tauxCotisationVous;
 
         if (regimeType === "prive") {
           regimeName = "Privé (CNAV + Agirc-Arrco)";
           salaireReferenceBoomer = salaireMensuel * 12;
           salaireReferenceVous = salaireMensuel * 12;
           noteRegime = "Pension sur salaire moyen de carrière, taux plein 50%";
+          tauxCotisationBoomer = tauxRetraite1980Brut;
+          tauxCotisationVous = tauxRetraite2025Brut;
         } else if (regimeType === "public") {
           regimeName = "Public (CNRACL, État)";
           salaireReferenceBoomer = salaireMensuel * 12 * 1.15;
           salaireReferenceVous = salaireMensuel * 12 * 1.15;
           tauxPensionBase = 0.75;
           noteRegime = "Pension sur dernier traitement (+15%), taux plein 75%";
+          tauxCotisationBoomer = 0.11; // Taux historique fonction publique
+          tauxCotisationVous = 0.31; // Taux actuel fonction publique plus élevé
         } else if (regimeType === "special") {
           regimeName = "Spécial (SNCF, RATP...)";
           salaireReferenceBoomer = salaireMensuel * 12 * 1.25;
@@ -682,6 +687,8 @@
           tauxPensionBase = 0.8;
           noteRegime =
             "Pension sur dernier salaire majoré (+25%), taux plein 80%";
+          tauxCotisationBoomer = 0.09; // Taux historique régimes spéciaux
+          tauxCotisationVous = 0.25; // Taux actuel régimes spéciaux
         }
 
         const trimestresBoomer = anneesBoomer * 4;
@@ -699,9 +706,9 @@
         // Cotisations
         const salaireAnnuel = salaireMensuel * 12;
         const cotisationsBoomerTotales =
-          salaireAnnuel * tauxRetraite1980Brut * anneesBoomer;
+          salaireAnnuel * tauxCotisationBoomer * anneesBoomer;
         const cotisationsVousTotales =
-          salaireAnnuel * tauxRetraite2025Brut * anneesVous;
+          salaireAnnuel * tauxCotisationVous * anneesVous;
 
         // Année de départ et espérance vie
         const ageRetraiteBoomer =
