@@ -4,16 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>
-      Calculateur Retraites France : Cotisations et Pensions – Baby-Boomers vs
-      Actifs
+      Calculateur Retraites France : Régimes – Cotisations et Pensions –
+      Baby-Boomers vs Actifs
     </title>
     <meta
       name="description"
-      content="Calculateur gratuit pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs. Simulez vos droits retraite selon votre salaire et année de naissance."
+      content="Calculateur gratuit pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs selon les régimes français (privé, public, spéciaux)."
     />
     <meta
       name="keywords"
-      content="calculateur retraite, cotisations retraite France, pension retraite, baby-boomers, système retraite français, simulation retraite, trimestres retraite"
+      content="calculateur retraite, cotisations retraite France, pension retraite, baby-boomers, régime général, régime public, régime spécial, simulation retraite"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -22,11 +22,11 @@
     <!-- Open Graph tags -->
     <meta
       property="og:title"
-      content="Calculateur Retraites France : Cotisations et Pensions"
+      content="Calculateur Retraites France : Régimes Cotisations et Pensions"
     />
     <meta
       property="og:description"
-      content="Calculateur gratuit pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs."
+      content="Calculateur gratuit pour comparer les cotisations retraite et pensions selon les régimes français."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -39,20 +39,20 @@
     <meta name="twitter:card" content="summary" />
     <meta
       name="twitter:title"
-      content="Calculateur Retraites France : Cotisations et Pensions"
+      content="Calculateur Retraites France : Régimes Cotisations et Pensions"
     />
     <meta
       name="twitter:description"
-      content="Calculateur gratuit pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs."
+      content="Comparateur retraite baby-boomers vs actifs, selon régime général, public ou spécial."
     />
 
-    <!-- JSON-LD structured data -->
+    <!-- JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Calculateur Retraites France",
-        "description": "Calculateur pour comparer les cotisations retraite et pensions entre générations baby-boomers et actifs en France",
+        "description": "Calculateur comparant les cotisations retraite et pensions par régime (privé, public, spécial)",
         "url": "https://julienreszka.github.io/retraites/",
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "Web",
@@ -86,7 +86,7 @@
         font-size: 18px;
       }
       form {
-        max-width: 500px;
+        max-width: 530px;
         margin: 0 auto;
         background: #fff;
         padding: 10px;
@@ -109,7 +109,7 @@
         font-size: 14px;
       }
       #results {
-        max-width: 500px;
+        max-width: 530px;
         margin: 10px auto 0;
         padding: 10px;
         background: #f9f5e7;
@@ -131,60 +131,155 @@
         margin: 5px 0;
       }
 
+      /* Sources section styles */
+      #sources {
+        max-width: 540px;
+        margin: 0 auto 10px;
+        margin-top: 20px;
+        font-size: 11px;
+        background: linear-gradient(135deg, #f5e3e2 0%, #f0d8d7 100%);
+        border-radius: 8px;
+        padding: 15px 20px;
+        border: 1px solid #e0c5c4;
+        box-shadow: 0 2px 6px rgba(139, 0, 0, 0.08);
+      }
+
+      #sources strong {
+        color: #8b0000;
+        font-size: 12px;
+        display: block;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #e0c5c4;
+        padding-bottom: 4px;
+      }
+
+      #sources ul {
+        margin: 8px 0 12px 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      #sources li {
+        margin: 6px 0;
+        padding: 6px 0 6px 20px;
+        position: relative;
+        border-left: 2px solid transparent;
+        transition: all 0.2s ease;
+      }
+
+      #sources li:hover {
+        border-left-color: #8b0000;
+        background: rgba(255, 255, 255, 0.5);
+        padding-left: 24px;
+      }
+
+      #sources li::before {
+        content: "📄";
+        position: absolute;
+        left: 0;
+        top: 6px;
+        font-size: 10px;
+      }
+
+      #sources a {
+        color: #5d4037;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+      }
+
+      #sources a:hover {
+        color: #8b0000;
+        text-decoration: underline;
+      }
+
+      #sources a:visited {
+        color: #6d4c41;
+      }
+
+      #sources p {
+        margin: 8px 0 0 0;
+        font-style: italic;
+        color: #795548;
+        font-size: 10px;
+        text-align: center;
+        padding-top: 8px;
+        border-top: 1px solid #e8d1d0;
+      }
+
       /* Dark mode styles */
       @media (prefers-color-scheme: dark) {
         body {
           background: #1a1a1a;
           color: #e0e0e0;
         }
-
         h1 {
           color: #ff6b6b;
           border-bottom-color: #ff6b6b;
         }
-
-        h2 {
-          color: #ff6b6b !important;
-        }
-
         form {
           background: #2d2d2d;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-
         input,
         select {
           background: #3d3d3d;
           color: #e0e0e0;
           border-color: #555;
         }
-
         input:focus,
         select:focus {
           border-color: #ff6b6b;
           outline: none;
         }
-
         #results {
           background: #2a2a2a;
         }
-
         .result-item {
           background: #3d3d3d;
           border-left-color: #ff6b6b;
           color: #e0e0e0;
         }
-
         .warning {
           color: #ff6b6b;
         }
-
-        small {
+        small,
+        footer {
           color: #aaa !important;
         }
 
-        footer {
-          color: #aaa !important;
+        /* Dark mode sources styles */
+        #sources {
+          background: linear-gradient(135deg, #2a1f1f 0%, #3d2c2c 100%);
+          border-color: #4a3535;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #sources strong {
+          color: #ff6b6b;
+          border-bottom-color: #4a3535;
+        }
+
+        #sources li:hover {
+          border-left-color: #ff6b6b;
+          background: rgba(255, 107, 107, 0.1);
+        }
+
+        #sources a {
+          color: #d7b899;
+        }
+
+        #sources a:hover {
+          color: #ff6b6b;
+        }
+
+        #sources a:visited {
+          color: #c4a484;
+        }
+
+        #sources p {
+          color: #999;
+          border-top-color: #4a3535;
         }
       }
     </style>
@@ -192,15 +287,18 @@
   <body>
     <header>
       <h1>
-        Calculateur Retraites France : Cotisations et Pensions – Baby-Boomers vs
-        Actifs
+        Calculateur Retraites France : Régimes – Cotisations et Pensions –
+        Baby-Boomers vs Actifs
       </h1>
       <p class="warning">
-        Approx. : 2025 (28% brut, superbrut x1.42) ; 1980 (13% brut, x1.35).
-        Trim. = ann. x4. Pension = 50% SAM x (trim./req.).
+        Choisissez votre régime : privé, public ou spécial.<br />
+        Règles : 2025 (28% brut, superbrut x1.42) ; 1980 (13% brut, x1.35).
+        Public: pension sur dernier traitement, privé: sur salaire moyen,
+        spécial: règles particulières.<br />
+        Pension de base = taux x salaire de référence x (trimestres obtenus /
+        requis).
       </p>
     </header>
-
     <main>
       <section id="calculator">
         <form
@@ -208,6 +306,16 @@
           role="form"
           aria-label="Formulaire de calcul des droits retraite"
         >
+          <label for="regime">Régime :</label>
+          <select id="regime" aria-describedby="regime-help">
+            <option value="prive">Privé (CNAV + Agirc-Arrco)</option>
+            <option value="public">Public (CNRACL, État)</option>
+            <option value="special">Spécial (SNCF, RATP...)</option>
+          </select>
+          <small id="regime-help" style="font-size: 10px; color: #666">
+            Sélectionnez votre régime de retraite
+          </small>
+
           <label for="salaireBrut">Salaire brut mensuel (€) :</label>
           <input
             type="number"
@@ -219,7 +327,7 @@
             aria-describedby="salaire-help"
           />
           <small id="salaire-help" style="font-size: 10px; color: #666"
-            >Saisissez votre salaire brut mensuel</small
+            >Salaire brut mensuel estimé</small
           >
 
           <label for="anneesBoomer">Annuités boomer (années) :</label>
@@ -268,7 +376,6 @@
             >Votre année de naissance</small
           >
         </form>
-
         <section
           id="results"
           role="region"
@@ -277,25 +384,81 @@
         ></section>
       </section>
     </main>
+    <section id="sources">
+      <strong>Sources officielles :</strong>
+      <ul>
+        <li>
+          <a
+            href="https://www.service-public.fr/particuliers/vosdroits/N144"
+            target="_blank"
+            rel="noopener"
+            >Règles régime général CNAV (service-public.fr)</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.agirc-arrco.fr/particuliers/comprendre-la-retraite-complementaire/calcul-points/"
+            target="_blank"
+            rel="noopener"
+            >Système complémentaire Agirc-Arrco</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.cdc.retraites.fr/particuliers/ma-retraite/la-retraite-des-fonctionnaires/mon-calcul-de-retraite"
+            target="_blank"
+            rel="noopener"
+            >Calcul retraite fonction publique (CNRACL/CDG)</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://fr.wikipedia.org/wiki/R%C3%A9gimes_sp%C3%A9ciaux_de_retraite"
+            target="_blank"
+            rel="noopener"
+            >Régimes spéciaux détail (Wikipedia)</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.insee.fr/fr/statistiques/2381474"
+            target="_blank"
+            rel="noopener"
+            >Données INSEE : taux cotisation, espérance de vie</a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www2.assemblee-nationale.fr/static/rapport_retraites_2023.pdf"
+            target="_blank"
+            rel="noopener"
+            >Rapport retraite Assemblée nationale (2023-2024)</a
+          >
+        </li>
+      </ul>
+      <p>
+        Simulateur simplifié pour l'illustration – voir chaque régime pour les
+        détails complets.
+      </p>
+    </section>
 
     <footer
       style="text-align: center; margin-top: 20px; font-size: 11px; color: #666"
     >
       <p>
-        Calculateur de retraite France - Comparaison intergénérationnelle des
-        cotisations et pensions
+        Comparaison intergénérationnelle selon les principaux régimes retraités
+        français
       </p>
       <p>
-        Données approximatives basées sur le système de retraite français en
-        vigueur
+        Données simulées, simplifiées - règles CNAV, CNRACL, régimes spéciaux
+        pour estimation
       </p>
     </footer>
-
     <script>
       function calculate() {
+        const regime = document.getElementById("regime").value;
         const salaireMensuel =
           parseFloat(document.getElementById("salaireBrut").value) || 0;
-        const salaireAnnuel = salaireMensuel * 12;
         const anneesBoomer =
           parseInt(document.getElementById("anneesBoomer").value) || 0;
         const anneesVous =
@@ -304,58 +467,75 @@
           parseInt(document.getElementById("generationBoomer").value) || 1955;
         const genVous =
           parseInt(document.getElementById("generationVous").value) || 1990;
-
         if (salaireMensuel === 0 || anneesBoomer === 0 || anneesVous === 0) {
           document.getElementById("results").innerHTML =
             '<p class="warning">Saisissez des valeurs.</p>';
           return;
         }
-
+        // Trimestres requis
         const requisBoomer =
           genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
         const requisVous = genVous >= 1973 ? 172 : 166;
 
-        const tauxRetraite2025Brut = 0.28;
-        const multiplicateurSuperbrut2025 = 1.42;
-        const superbrut2025 = salaireAnnuel * multiplicateurSuperbrut2025;
-        const contribRetraite2025 = salaireAnnuel * tauxRetraite2025Brut;
-        const tauxReel2025 = (
-          (contribRetraite2025 / superbrut2025) *
-          100
-        ).toFixed(2);
-
-        const tauxRetraite1980Brut = 0.13;
-        const multiplicateurSuperbrut1980 = 1.35;
-        const superbrut1980 = salaireAnnuel * multiplicateurSuperbrut1980;
-        const contribRetraite1980 = salaireAnnuel * tauxRetraite1980Brut;
-        const tauxReel1980 = (
-          (contribRetraite1980 / superbrut1980) *
-          100
-        ).toFixed(2);
-
+        // Barèmes cotisation + superbrut par époque
+        let tauxRetraite2025Brut = 0.28,
+          multiplicateurSuperbrut2025 = 1.42;
+        let tauxRetraite1980Brut = 0.13,
+          multiplicateurSuperbrut1980 = 1.35;
+        // Ajustements par régime
+        let tauxPensionBase = 0.5; // taux plein
+        let salaireReferenceBoomer, salaireReferenceVous;
+        let noteRegime = "";
+        if (regime === "prive") {
+          // CNAV + complémentaire
+          salaireReferenceBoomer = salaireMensuel * 12; // moyenne carrière pour simplification
+          salaireReferenceVous = salaireMensuel * 12;
+          noteRegime =
+            "Privé : pension sur salaire moyen de carrière, taux plein 50%. Points complémentaires non simulés.";
+        } else if (regime === "public") {
+          // CNRACL, État - dernier traitement/salaire
+          salaireReferenceBoomer = salaireMensuel * 12 * 1.15; // estimation du dernier traitement supérieur à la moyenne de carrière
+          salaireReferenceVous = salaireMensuel * 12 * 1.15;
+          tauxPensionBase = 0.75; // taux plein commun (prof, fonctionnaire)
+          noteRegime =
+            "Public : pension sur dernier traitement indiciaire (estimé à 15% de plus que la moyenne carrière). Taux plein 75%.";
+        } else if (regime === "special") {
+          // Spécial - règles particulières
+          salaireReferenceBoomer = salaireMensuel * 12 * 1.25;
+          salaireReferenceVous = salaireMensuel * 12 * 1.25;
+          tauxPensionBase = 0.8;
+          noteRegime =
+            "Spécial : pension sur dernier salaire majoré (simulé à 25% supérieur). Taux plein 80%. Décotes particulières ignorées.";
+        }
         const trimestresBoomer = anneesBoomer * 4;
-        const tauxPensionBoomer = 0.5 * (trimestresBoomer / requisBoomer);
-        const pensionBoomerAnnuel = salaireAnnuel * tauxPensionBoomer;
-        const pensionBoomerMensuel = (pensionBoomerAnnuel / 12).toFixed(0);
-
         const trimestresVous = anneesVous * 4;
-        const tauxPensionVous = 0.5 * (trimestresVous / requisVous);
-        const pensionVousAnnuel = salaireAnnuel * tauxPensionVous;
+
+        // Pension annuelle et mensuelle
+        const tauxPensionBoomer =
+          tauxPensionBase * (trimestresBoomer / requisBoomer);
+        const tauxPensionVous = tauxPensionBase * (trimestresVous / requisVous);
+        const pensionBoomerAnnuel = salaireReferenceBoomer * tauxPensionBoomer;
+        const pensionBoomerMensuel = (pensionBoomerAnnuel / 12).toFixed(0);
+        const pensionVousAnnuel = salaireReferenceVous * tauxPensionVous;
         const pensionVousMensuel = (pensionVousAnnuel / 12).toFixed(0);
 
-        // Calculate contribution recovery ratios
-        const cotisationsBoomerTotales = contribRetraite1980 * anneesBoomer;
-        const cotisationsVousTotales = contribRetraite2025 * anneesVous;
+        // Cotisations
+        const salaireAnnuel = salaireMensuel * 12;
+        const cotisationsBoomerTotales =
+          salaireAnnuel * tauxRetraite1980Brut * anneesBoomer;
+        const cotisationsVousTotales =
+          salaireAnnuel * tauxRetraite2025Brut * anneesVous;
 
-        // Estimate years of pension (life expectancy - retirement age)
-        const ageRetraiteBoomer = 62; // Approximate retirement age for boomers
-        const ageRetraiteVous = 64; // Approximate retirement age for current generation
-        const esperanceVieBoomer = 82; // Life expectancy for boomers
-        const esperanceVieVous = 85; // Life expectancy for current generation
+        // Année de départ et espérance vie
+        const ageRetraiteBoomer =
+          regime === "special" ? 57 : regime === "public" ? 62 : 62;
+        const ageRetraiteVous =
+          regime === "special" ? 60 : regime === "public" ? 64 : 64;
+        const esperanceVieBoomer = regime === "special" ? 78 : 82;
+        const esperanceVieVous = regime === "special" ? 82 : 85;
 
         const anneesRetraiteBoomer = esperanceVieBoomer - ageRetraiteBoomer;
         const anneesRetraiteVous = esperanceVieVous - ageRetraiteVous;
-
         const pensionsRecuesBoomer = pensionBoomerAnnuel * anneesRetraiteBoomer;
         const pensionsRecuesVous = pensionVousAnnuel * anneesRetraiteVous;
 
@@ -366,42 +546,30 @@
           pensionsRecuesVous / cotisationsVousTotales
         ).toFixed(1);
 
-        // Calculate the ratio between contribution rates
-        const ratioCotisations = (tauxReel2025 / tauxReel1980).toFixed(1);
-
+        // Affichage
         const results = document.getElementById("results");
         results.innerHTML = `
-                <div class="result-item"><strong>2025 (superbrut) :</strong> ${tauxReel2025}% (${superbrut2025.toFixed(
-          0
-        )}€/an)</div>
-                <div class="result-item"><strong>1980 (superbrut) :</strong> ${tauxReel1980}% (${superbrut1980.toFixed(
-          0
-        )}€/an) – ${ratioCotisations}x plus pour vous!</div>
-                <div class="result-item"><strong>Pension boomer :</strong> ${pensionBoomerMensuel}€/mois (${(
+          <div class="result-item"><strong>Régime :</strong> ${noteRegime}</div>
+          <div class="result-item"><strong>Pension boomer :</strong> ${pensionBoomerMensuel}€/mois (${(
           tauxPensionBoomer * 100
         ).toFixed(1)}% ; ${anneesBoomer} ans, ${requisBoomer} trim.)</div>
-                <div class="result-item"><strong>Votre pension :</strong> ${pensionVousMensuel}€/mois (${(
+          <div class="result-item"><strong>Votre pension :</strong> ${pensionVousMensuel}€/mois (${(
           tauxPensionVous * 100
         ).toFixed(1)}% ; ${anneesVous} ans, ${requisVous} trim.)</div>
-                <div class="result-item"><strong>Annuités :</strong> ${trimestresBoomer} vs ${trimestresVous} trim. – Moins pour eux, plus pour vous.</div>
-                <div class="result-item"><strong>Cotisations totales :</strong> Boomers ${(
-                  cotisationsBoomerTotales / 1000
-                ).toFixed(0)}k€ vs Vous ${(
-          cotisationsVousTotales / 1000
-        ).toFixed(0)}k€</div>
-                <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${(
-                  pensionsRecuesBoomer / 1000
-                ).toFixed(0)}k€ vs Vous ${(pensionsRecuesVous / 1000).toFixed(
+          <div class="result-item"><strong>Trimestres :</strong> Boomers ${trimestresBoomer} vs Vous ${trimestresVous}</div>
+          <div class="result-item"><strong>Cotisations totales :</strong> Boomers ${(
+            cotisationsBoomerTotales / 1000
+          ).toFixed(0)}k€ vs Vous ${(cotisationsVousTotales / 1000).toFixed(
           0
         )}k€</div>
-                <p class="warning">Boomers : ${ratioRecuperationBoomer}x cotisations récupérées. Vous : ${ratioRecuperationVous}x. ${
-          ratioRecuperationBoomer > ratioRecuperationVous
-            ? "Inéquité générationnelle! Réagissez Nicolas"
-            : "Équité retrouvée!"
-        }</p>
-            `;
+          <div class="result-item"><strong>Pensions totales estimées :</strong> Boomers ${(
+            pensionsRecuesBoomer / 1000
+          ).toFixed(0)}k€ vs Vous ${(pensionsRecuesVous / 1000).toFixed(
+          0
+        )}k€</div>
+          <p class="warning">Ratio retraité/cotisant — Boomers : ${ratioRecuperationBoomer}x ; Vous : ${ratioRecuperationVous}x.</p>
+        `;
       }
-
       const inputs = document.querySelectorAll(
         "#calcForm input, #calcForm select"
       );
