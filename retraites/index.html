@@ -536,25 +536,26 @@
             grid-template-columns: 1fr 1fr 1fr 1fr;
             gap: 10px;
           }
-          
+
           .scenario-card {
             padding: 8px;
           }
-          
+
           .scenario-card h4 {
             font-size: 11px;
             margin: 0 0 6px 0;
             padding-bottom: 3px;
           }
-          
+
           .adjustment-item {
             margin: 4px 0;
             padding: 4px 6px;
             font-size: 9px;
             line-height: 1.2;
           }
-          
-          .adjustment-value, .adjustment-negative {
+
+          .adjustment-value,
+          .adjustment-negative {
             font-size: 9px;
           }
         }
@@ -565,29 +566,30 @@
             margin: 20px auto 0;
             padding: 20px;
           }
-          
+
           .scenario-grid {
             gap: 12px;
           }
-          
+
           .scenario-card {
             padding: 10px;
           }
-          
+
           .scenario-card h4 {
             font-size: 12px;
             margin: 0 0 8px 0;
             padding-bottom: 4px;
           }
-          
+
           .adjustment-item {
             margin: 5px 0;
             padding: 5px 8px;
             font-size: 10px;
             line-height: 1.3;
           }
-          
-          .adjustment-value, .adjustment-negative {
+
+          .adjustment-value,
+          .adjustment-negative {
             font-size: 10px;
           }
         }
@@ -596,17 +598,17 @@
           .scenario-grid {
             gap: 15px;
           }
-          
+
           .scenario-card {
             padding: 12px;
           }
-          
+
           .scenario-card h4 {
             font-size: 13px;
             margin: 0 0 10px 0;
             padding-bottom: 5px;
           }
-          
+
           .adjustment-item {
             margin: 6px 0;
             padding: 6px 10px;
@@ -807,173 +809,173 @@
             border-color: #555;
           }
 
-        .ratio-selector small {
-          color: #aaa;
-        }
-
-        /* Dark mode responsive adjustments */
-        @media (min-width: 768px) {
-          .scenario-card {
-            background: #404040;
-          }
-        }
-
-        /* Scenarios table styles */
-        .scenarios-table-container {
-          overflow-x: auto;
-          margin: 20px 0;
-          border-radius: 8px;
-        }
-
-        .scenarios-table {
-          width: 100%;
-          border-collapse: collapse;
-          font-size: 11px;
-          background: white;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .scenarios-table th {
-          background: #f5f5f5;
-          color: #333;
-          padding: 8px 6px;
-          text-align: center;
-          font-size: 10px;
-          font-weight: 600;
-          border: 1px solid #ddd;
-          white-space: nowrap;
-        }
-
-        .scenarios-table thead tr:first-child th {
-          background: #e9e9e9;
-          font-size: 11px;
-          font-weight: 700;
-          padding: 10px 8px;
-          color: #222;
-        }
-
-        .scenarios-table thead tr:last-child th {
-          background: #f5f5f5;
-          font-size: 10px;
-          font-weight: 500;
-          padding: 8px 6px;
-          color: #444;
-        }
-
-        .scenarios-table td {
-          padding: 8px 6px;
-          text-align: center;
-          border: 1px solid #ddd;
-          font-size: 10px;
-          line-height: 1.3;
-        }
-
-        .scenarios-table .regime-name {
-          background: #f8f8f8;
-          font-weight: bold;
-          text-align: left;
-          padding-left: 10px;
-          min-width: 120px;
-        }
-
-        .scenarios-table .equity-current {
-          background: #fff3cd;
-          font-weight: bold;
-        }
-
-        .scenarios-table .adjustment-value {
-          color: #2e7d32;
-          font-weight: bold;
-        }
-
-        .scenarios-table .adjustment-negative {
-          color: #c62828;
-          font-weight: bold;
-        }
-
-        .scenarios-table .feasibility {
-          font-size: 14px;
-          min-width: 40px;
-        }
-
-        .scenarios-table .feasible {
-          background: #e8f5e8;
-        }
-
-        .scenarios-table .not-feasible {
-          background: #ffebee;
-        }
-
-        .scenarios-table small {
-          font-size: 8px;
-          color: #666;
-          font-style: italic;
-          display: block;
-        }
-
-        /* Dark mode scenarios table */
-        @media (prefers-color-scheme: dark) {
-          .scenarios-table {
-            background: #2d2d2d;
-          }
-
-          .scenarios-table th {
-            background: #404040;
-            color: #e0e0e0;
-            border-color: #555;
-          }
-
-          .scenarios-table thead tr:first-child th {
-            background: #353535;
-            color: #f0f0f0;
-          }
-
-          .scenarios-table thead tr:last-child th {
-            background: #404040;
-            color: #e0e0e0;
-          }
-
-          .scenarios-table td {
-            border-color: #555;
-            color: #e0e0e0;
-          }
-
-          .scenarios-table .regime-name {
-            background: #404040;
-          }
-
-          .scenarios-table .equity-current {
-            background: #4a3d00;
-            color: #fff3cd;
-          }
-
-          .scenarios-table .adjustment-value {
-            color: #a5d6a7;
-          }
-
-          .scenarios-table .adjustment-negative {
-            color: #ef9a9a;
-          }
-
-          .scenarios-table .feasible {
-            background: #2e5a2e;
-          }
-
-          .scenarios-table .not-feasible {
-            background: #5a2e2e;
-          }
-
-          .scenarios-table small {
+          .ratio-selector small {
             color: #aaa;
           }
 
-          .scenarios-table-container {
-            background: #2a2a2a;
+          /* Dark mode responsive adjustments */
+          @media (min-width: 768px) {
+            .scenario-card {
+              background: #404040;
+            }
           }
-        }
-      }        /* Dark mode regime sections */
+
+          /* Scenarios table styles */
+          .scenarios-table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: 8px;
+          }
+
+          .scenarios-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          }
+
+          .scenarios-table th {
+            background: #f5f5f5;
+            color: #333;
+            padding: 8px 6px;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 600;
+            border: 1px solid #ddd;
+            white-space: nowrap;
+          }
+
+          .scenarios-table thead tr:first-child th {
+            background: #e9e9e9;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 10px 8px;
+            color: #222;
+          }
+
+          .scenarios-table thead tr:last-child th {
+            background: #f5f5f5;
+            font-size: 10px;
+            font-weight: 500;
+            padding: 8px 6px;
+            color: #444;
+          }
+
+          .scenarios-table td {
+            padding: 8px 6px;
+            text-align: center;
+            border: 1px solid #ddd;
+            font-size: 10px;
+            line-height: 1.3;
+          }
+
+          .scenarios-table .regime-name {
+            background: #f8f8f8;
+            font-weight: bold;
+            text-align: left;
+            padding-left: 10px;
+            min-width: 120px;
+          }
+
+          .scenarios-table .equity-current {
+            background: #fff3cd;
+            font-weight: bold;
+          }
+
+          .scenarios-table .adjustment-value {
+            color: #2e7d32;
+            font-weight: bold;
+          }
+
+          .scenarios-table .adjustment-negative {
+            color: #c62828;
+            font-weight: bold;
+          }
+
+          .scenarios-table .feasibility {
+            font-size: 14px;
+            min-width: 40px;
+          }
+
+          .scenarios-table .feasible {
+            background: #e8f5e8;
+          }
+
+          .scenarios-table .not-feasible {
+            background: #ffebee;
+          }
+
+          .scenarios-table small {
+            font-size: 8px;
+            color: #666;
+            font-style: italic;
+            display: block;
+          }
+
+          /* Dark mode scenarios table */
+          @media (prefers-color-scheme: dark) {
+            .scenarios-table {
+              background: #2d2d2d;
+            }
+
+            .scenarios-table th {
+              background: #404040;
+              color: #e0e0e0;
+              border-color: #555;
+            }
+
+            .scenarios-table thead tr:first-child th {
+              background: #353535;
+              color: #f0f0f0;
+            }
+
+            .scenarios-table thead tr:last-child th {
+              background: #404040;
+              color: #e0e0e0;
+            }
+
+            .scenarios-table td {
+              border-color: #555;
+              color: #e0e0e0;
+            }
+
+            .scenarios-table .regime-name {
+              background: #404040;
+            }
+
+            .scenarios-table .equity-current {
+              background: #4a3d00;
+              color: #fff3cd;
+            }
+
+            .scenarios-table .adjustment-value {
+              color: #a5d6a7;
+            }
+
+            .scenarios-table .adjustment-negative {
+              color: #ef9a9a;
+            }
+
+            .scenarios-table .feasible {
+              background: #2e5a2e;
+            }
+
+            .scenarios-table .not-feasible {
+              background: #5a2e2e;
+            }
+
+            .scenarios-table small {
+              color: #aaa;
+            }
+
+            .scenarios-table-container {
+              background: #2a2a2a;
+            }
+          }
+        } /* Dark mode regime sections */
         .main-comparison-table {
           background: #2d2d2d;
           border-color: #555;
@@ -1159,47 +1161,64 @@
           role="region"
           aria-label="Scénarios d'équité générationnelle"
         >
-          <div class="equity-container" style="display: none;">
-            <h3 class="equity-title">🎯 Scénarios pour l'Équité Générationnelle Ciblée</h3>
-            
+          <div class="equity-container" style="display: none">
+            <h3 class="equity-title">
+              🎯 Scénarios pour l'Équité Générationnelle Ciblée
+            </h3>
+
             <div class="ratio-selector">
               <label for="ratioTarget">Ratio d'équité ciblé :</label>
               <select id="ratioTarget" aria-describedby="ratio-help">
-                <option value="0.8">0.8 (Acceptable - compromis politique)</option>
+                <option value="0.8">
+                  0.8 (Acceptable - compromis politique)
+                </option>
                 <option value="0.9">0.9 (Bon - ajustement modéré)</option>
                 <option value="1.0" selected>1.0 (Équité parfaite)</option>
                 <option value="1.1">1.1 (Sécurisé - marge de sécurité)</option>
                 <option value="1.2">1.2 (Compensation inflation future)</option>
               </select>
               <small id="ratio-help">
-                🎯 Changez le ratio pour voir l'impact sur les ajustements nécessaires
+                🎯 Changez le ratio pour voir l'impact sur les ajustements
+                nécessaires
               </small>
             </div>
-            
-            <p style="text-align: center; font-size: 11px; color: #666; margin-bottom: 20px;">
-              Calculs des ajustements nécessaires pour atteindre le ratio retour/cotisation souhaité
+
+            <p
+              style="
+                text-align: center;
+                font-size: 11px;
+                color: #666;
+                margin-bottom: 20px;
+              "
+            >
+              Calculs des ajustements nécessaires pour atteindre le ratio
+              retour/cotisation souhaité
             </p>
-            
+
             <div id="scenarios-content"></div>
-            
+
             <div class="summary-box">
-              <h4 class="equity-grid-title">💡 Synthèse des Leviers d'Action</h4>
+              <h4 class="equity-grid-title">
+                💡 Synthèse des Leviers d'Action
+              </h4>
               <div class="summary-grid">
                 <div>
-                  <strong>🎯 Plus efficaces:</strong><br>
-                  • Recul âge départ (impact direct)<br>
-                  • Harmonisation entre régimes<br>
+                  <strong>🎯 Plus efficaces:</strong><br />
+                  • Recul âge départ (impact direct)<br />
+                  • Harmonisation entre régimes<br />
                   • Modulation selon espérance de vie
                 </div>
                 <div>
-                  <strong>⚠️ Plus difficiles:</strong><br>
-                  • Forte hausse cotisations<br>
-                  • Baisse significative pensions<br>
+                  <strong>⚠️ Plus difficiles:</strong><br />
+                  • Forte hausse cotisations<br />
+                  • Baisse significative pensions<br />
                   • Réformes rétroactives
                 </div>
               </div>
               <p class="summary-note">
-                Une approche mixte combinant plusieurs leviers modérés est généralement plus acceptable qu'un ajustement brutal sur un seul paramètre.
+                Une approche mixte combinant plusieurs leviers modérés est
+                généralement plus acceptable qu'un ajustement brutal sur un seul
+                paramètre.
               </p>
             </div>
           </div>
@@ -2149,48 +2168,87 @@
                   </tr>
                 </thead>
                 <tbody>
-                  ${equityAdjustments.map(adj => `
+                  ${equityAdjustments
+                    .map(
+                      (adj) => `
                     <tr>
-                      <td class="regime-name"><strong>${adj.regimeName}</strong></td>
-                      <td class="equity-current">${(adj.currentEquity * 100).toFixed(0)}%</td>
+                      <td class="regime-name"><strong>${
+                        adj.regimeName
+                      }</strong></td>
+                      <td class="equity-current">${(
+                        adj.currentEquity * 100
+                      ).toFixed(0)}%</td>
                       
                       <!-- Ajustement Âge -->
-                      <td>${results.find(r => r.regimeType === adj.regime).ageRetraiteVous}ans</td>
-                      <td class="${adj.ageAdjustment.adjustementAge > 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                      <td>${
+                        results.find((r) => r.regimeType === adj.regime)
+                          .ageRetraiteVous
+                      }ans</td>
+                      <td class="${
+                        adj.ageAdjustment.adjustementAge > 0
+                          ? "adjustment-negative"
+                          : "adjustment-value"
+                      }">
                         ${adj.ageAdjustment.nouvelAge}ans<br>
                         <small>(${adj.ageAdjustment.impact})</small>
                       </td>
-                      <td class="feasibility ${adj.ageAdjustment.feasible ? 'feasible' : 'not-feasible'}">
-                        ${adj.ageAdjustment.feasible ? '✅' : '❌'}
+                      <td class="feasibility ${
+                        adj.ageAdjustment.feasible ? "feasible" : "not-feasible"
+                      }">
+                        ${adj.ageAdjustment.feasible ? "✅" : "❌"}
                       </td>
                       
                       <!-- Ajustement Cotisations -->
                       <td>${adj.cotisationAdjustment.tauxActuel}%</td>
-                      <td class="${adj.cotisationAdjustment.adjustement > 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                      <td class="${
+                        adj.cotisationAdjustment.adjustement > 0
+                          ? "adjustment-negative"
+                          : "adjustment-value"
+                      }">
                         ${adj.cotisationAdjustment.nouveauTaux}%<br>
                         <small>(${adj.cotisationAdjustment.impact})</small>
                       </td>
-                      <td class="feasibility ${adj.cotisationAdjustment.feasible ? 'feasible' : 'not-feasible'}">
-                        ${adj.cotisationAdjustment.feasible ? '✅' : '❌'}
+                      <td class="feasibility ${
+                        adj.cotisationAdjustment.feasible
+                          ? "feasible"
+                          : "not-feasible"
+                      }">
+                        ${adj.cotisationAdjustment.feasible ? "✅" : "❌"}
                       </td>
                       
                       <!-- Ajustement Pensions -->
                       <td>${adj.pensionAdjustment.pensionActuelle}€</td>
-                      <td class="${adj.pensionAdjustment.adjustement < 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                      <td class="${
+                        adj.pensionAdjustment.adjustement < 0
+                          ? "adjustment-negative"
+                          : "adjustment-value"
+                      }">
                         ${adj.pensionAdjustment.nouvellePension}€<br>
                         <small>(${adj.pensionAdjustment.impact})</small>
                       </td>
-                      <td class="feasibility ${adj.pensionAdjustment.feasible ? 'feasible' : 'not-feasible'}">
-                        ${adj.pensionAdjustment.feasible ? '✅' : '❌'}
+                      <td class="feasibility ${
+                        adj.pensionAdjustment.feasible
+                          ? "feasible"
+                          : "not-feasible"
+                      }">
+                        ${adj.pensionAdjustment.feasible ? "✅" : "❌"}
                       </td>
                       
                       <!-- Réforme Équilibrée -->
-                      <td class="adjustment-value">+${adj.mixedAdjustment.ageAdjustement}ans</td>
-                      <td class="adjustment-value">${adj.mixedAdjustment.cotisationAdjustement > 0 ? '+' : ''}${adj.mixedAdjustment.cotisationAdjustement}%</td>
-                      <td class="adjustment-value">${adj.mixedAdjustment.pensionAdjustement > 0 ? '+' : ''}${adj.mixedAdjustment.pensionAdjustement}%</td>
+                      <td class="adjustment-value">+${
+                        adj.mixedAdjustment.ageAdjustement
+                      }ans</td>
+                      <td class="adjustment-value">${
+                        adj.mixedAdjustment.cotisationAdjustement > 0 ? "+" : ""
+                      }${adj.mixedAdjustment.cotisationAdjustement}%</td>
+                      <td class="adjustment-value">${
+                        adj.mixedAdjustment.pensionAdjustement > 0 ? "+" : ""
+                      }${adj.mixedAdjustment.pensionAdjustement}%</td>
                       <td class="feasibility feasible">✅</td>
                     </tr>
-                  `).join('')}
+                  `
+                    )
+                    .join("")}
                 </tbody>
               </table>
             </div>
@@ -2285,25 +2343,25 @@
 
       function updateEquityScenarios(results) {
         console.log("updateEquityScenarios called with results:", results);
-        
+
         if (!results || results.length === 0) {
           console.error("No results provided to updateEquityScenarios");
           return;
         }
-        
+
         const equityContainer = document.querySelector(".equity-container");
         const scenariosContent = document.getElementById("scenarios-content");
-        
+
         console.log("Equity container:", equityContainer);
         console.log("Scenarios content:", scenariosContent);
-        
+
         if (!equityContainer || !scenariosContent) {
           console.error("Missing equity container or scenarios content");
           return;
         }
-        
+
         const equityAdjustments = calculateEquityAdjustments(results);
-        
+
         const tableHTML = `
           <div class="scenarios-table-container">
             <table class="scenarios-table">
@@ -2333,55 +2391,94 @@
                 </tr>
               </thead>
               <tbody>
-                ${equityAdjustments.map(adj => `
+                ${equityAdjustments
+                  .map(
+                    (adj) => `
                   <tr>
-                    <td class="regime-name"><strong>${adj.regimeName}</strong></td>
-                    <td class="equity-current">${(adj.currentEquity * 100).toFixed(0)}%</td>
+                    <td class="regime-name"><strong>${
+                      adj.regimeName
+                    }</strong></td>
+                    <td class="equity-current">${(
+                      adj.currentEquity * 100
+                    ).toFixed(0)}%</td>
                     
                     <!-- Ajustement Âge -->
-                    <td>${results.find(r => r.regimeType === adj.regime).ageRetraiteVous}ans</td>
-                    <td class="${adj.ageAdjustment.adjustementAge > 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                    <td>${
+                      results.find((r) => r.regimeType === adj.regime)
+                        .ageRetraiteVous
+                    }ans</td>
+                    <td class="${
+                      adj.ageAdjustment.adjustementAge > 0
+                        ? "adjustment-negative"
+                        : "adjustment-value"
+                    }">
                       ${adj.ageAdjustment.nouvelAge}ans<br>
                       <small>(${adj.ageAdjustment.impact})</small>
                     </td>
-                    <td class="feasibility ${adj.ageAdjustment.feasible ? 'feasible' : 'not-feasible'}">
-                      ${adj.ageAdjustment.feasible ? '✅' : '❌'}
+                    <td class="feasibility ${
+                      adj.ageAdjustment.feasible ? "feasible" : "not-feasible"
+                    }">
+                      ${adj.ageAdjustment.feasible ? "✅" : "❌"}
                     </td>
                     
                     <!-- Ajustement Cotisations -->
                     <td>${adj.cotisationAdjustment.tauxActuel}%</td>
-                    <td class="${adj.cotisationAdjustment.adjustement > 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                    <td class="${
+                      adj.cotisationAdjustment.adjustement > 0
+                        ? "adjustment-negative"
+                        : "adjustment-value"
+                    }">
                       ${adj.cotisationAdjustment.nouveauTaux}%<br>
                       <small>(${adj.cotisationAdjustment.impact})</small>
                     </td>
-                    <td class="feasibility ${adj.cotisationAdjustment.feasible ? 'feasible' : 'not-feasible'}">
-                      ${adj.cotisationAdjustment.feasible ? '✅' : '❌'}
+                    <td class="feasibility ${
+                      adj.cotisationAdjustment.feasible
+                        ? "feasible"
+                        : "not-feasible"
+                    }">
+                      ${adj.cotisationAdjustment.feasible ? "✅" : "❌"}
                     </td>
                     
                     <!-- Ajustement Pensions -->
                     <td>${adj.pensionAdjustment.pensionActuelle}€</td>
-                    <td class="${adj.pensionAdjustment.adjustement < 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                    <td class="${
+                      adj.pensionAdjustment.adjustement < 0
+                        ? "adjustment-negative"
+                        : "adjustment-value"
+                    }">
                       ${adj.pensionAdjustment.nouvellePension}€<br>
                       <small>(${adj.pensionAdjustment.impact})</small>
                     </td>
-                    <td class="feasibility ${adj.pensionAdjustment.feasible ? 'feasible' : 'not-feasible'}">
-                      ${adj.pensionAdjustment.feasible ? '✅' : '❌'}
+                    <td class="feasibility ${
+                      adj.pensionAdjustment.feasible
+                        ? "feasible"
+                        : "not-feasible"
+                    }">
+                      ${adj.pensionAdjustment.feasible ? "✅" : "❌"}
                     </td>
                     
                     <!-- Réforme Équilibrée -->
-                    <td class="adjustment-value">+${adj.mixedAdjustment.ageAdjustement}ans</td>
-                    <td class="adjustment-value">${adj.mixedAdjustment.cotisationAdjustement > 0 ? '+' : ''}${adj.mixedAdjustment.cotisationAdjustement}%</td>
-                    <td class="adjustment-value">${adj.mixedAdjustment.pensionAdjustement > 0 ? '+' : ''}${adj.mixedAdjustment.pensionAdjustement}%</td>
+                    <td class="adjustment-value">+${
+                      adj.mixedAdjustment.ageAdjustement
+                    }ans</td>
+                    <td class="adjustment-value">${
+                      adj.mixedAdjustment.cotisationAdjustement > 0 ? "+" : ""
+                    }${adj.mixedAdjustment.cotisationAdjustement}%</td>
+                    <td class="adjustment-value">${
+                      adj.mixedAdjustment.pensionAdjustement > 0 ? "+" : ""
+                    }${adj.mixedAdjustment.pensionAdjustement}%</td>
                     <td class="feasibility feasible">✅</td>
                   </tr>
-                `).join('')}
+                `
+                  )
+                  .join("")}
               </tbody>
             </table>
           </div>
         `;
-        
+
         scenariosContent.innerHTML = tableHTML;
-        equityContainer.style.display = 'block';
+        equityContainer.style.display = "block";
       }
 
       const inputs = document.querySelectorAll(
@@ -2391,14 +2488,14 @@
         input.addEventListener("input", calculate);
         input.addEventListener("change", calculate);
       });
-      
+
       // Store current results for ratio updates
       let currentResults = null;
 
       // Add event listener for ratio target (now in static HTML)
       const ratioTarget = document.getElementById("ratioTarget");
       console.log("RatioTarget element found:", ratioTarget);
-      
+
       if (ratioTarget) {
         ratioTarget.addEventListener("change", (e) => {
           console.log("Ratio changed to:", e.target.value);
@@ -2422,7 +2519,7 @@
       } else {
         console.error("RatioTarget element not found!");
       }
-      
+
       calculate();
     </script>
   </body>
