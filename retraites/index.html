@@ -465,12 +465,14 @@
       </h1>
       <p class="warning">
         Choisissez votre régime : privé, public ou spécial.<br />
-        Règles : 2025 (28% brut + superbrut x1.42) ; 1980 (13% brut + superbrut x1.35).<br />
+        Règles : 2025 (28% brut + superbrut x1.42) ; 1980 (13% brut + superbrut
+        x1.35).<br />
         Public: pension sur dernier traitement, privé: sur salaire moyen,
         spécial: règles particulières.<br />
         Pension de base = taux x salaire de référence x (trimestres obtenus /
         requis).<br />
-        <strong>Cotisations "superbrut"</strong> = coût réel incluant charges employeur.
+        <strong>Cotisations "superbrut"</strong> = coût réel incluant charges
+        employeur.
       </p>
     </header>
     <main>
@@ -635,59 +637,62 @@
         // Coefficients superbrut (salarié + employeur)
         superbrut: {
           annees1980: 1.35, // Charges sociales années 80
-          annees2025: 1.42  // Charges sociales actuelles
+          annees2025: 1.42, // Charges sociales actuelles
         },
-        
+
         // Taux de cotisation retraite globaux (salarié + employeur)
         cotisations: {
           prive: {
             historique: 0.13, // Années 80 : taux réduit
-            actuel: 0.28      // 2025 : taux élevé
+            actuel: 0.28, // 2025 : taux élevé
           },
           public: {
             historique: 0.11, // Fonction publique années 80
-            actuel: 0.31      // Fonction publique actuelle (CNRACL + État)
+            actuel: 0.31, // Fonction publique actuelle (CNRACL + État)
           },
           special: {
             historique: 0.09, // Régimes spéciaux années 80
-            actuel: 0.28      // Régimes spéciaux actuels (harmonisation SNCF ≈ 28-30%)
-          }
+            actuel: 0.28, // Régimes spéciaux actuels (harmonisation SNCF ≈ 28-30%)
+          },
         },
-        
+
         // Paramètres de pension par régime
         regimes: {
           prive: {
-            tauxPlein: 0.50,
+            tauxPlein: 0.5,
             bonificationSalaire: 1.0, // Salaire moyen de carrière
             nom: "Privé (CNAV + Agirc-Arrco)",
-            description: "Pension sur salaire moyen de carrière, taux plein 50%"
+            description:
+              "Pension sur salaire moyen de carrière, taux plein 50%",
           },
           public: {
             tauxPlein: 0.75,
             bonificationSalaire: 1.15, // Compensation absence primes (~20%)
             nom: "Public (CNRACL, État)",
-            description: "Pension sur dernier traitement (+15% primes), taux plein 75%"
+            description:
+              "Pension sur dernier traitement (+15% primes), taux plein 75%",
           },
           special: {
-            tauxPlein: 0.80,
+            tauxPlein: 0.8,
             bonificationSalaire: 1.25, // Salaire majoré régimes spéciaux
             nom: "Spécial (SNCF, RATP...)",
-            description: "Pension sur dernier salaire majoré (+25%), taux plein 80%"
-          }
+            description:
+              "Pension sur dernier salaire majoré (+25%), taux plein 80%",
+          },
         },
-        
+
         // Âges de départ et espérance de vie
         demographics: {
           ageRetraite: {
             prive: { boomer: 62, actuel: 64 },
             public: { boomer: 62, actuel: 64 },
-            special: { boomer: 57, actuel: 60 } // Départ précoce maintenu
+            special: { boomer: 57, actuel: 60 }, // Départ précoce maintenu
           },
           esperanceVie: {
             boomer: { prive: 82, public: 82, special: 78 }, // Espérance réduite régimes spéciaux
-            actuel: { prive: 85, public: 85, special: 82 }  // Gain +3 ans en moyenne
-          }
-        }
+            actuel: { prive: 85, public: 85, special: 82 }, // Gain +3 ans en moyenne
+          },
+        },
       };
 
       function calculateRegime(
@@ -703,32 +708,39 @@
 
         if (regimeType === "special") {
           // Régimes spéciaux : moins de trimestres requis historiquement
-          requisBoomer = genBoomer <= 1957 ? 150 : genBoomer <= 1960 ? 156 : 160;
+          requisBoomer =
+            genBoomer <= 1957 ? 150 : genBoomer <= 1960 ? 156 : 160;
           requisVous = genVous >= 1973 ? 162 : 156;
         } else {
           // Régime général et public : mêmes règles de durée
-          requisBoomer = genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
+          requisBoomer =
+            genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
           requisVous = genVous >= 1973 ? 172 : 166;
         }
 
         // Récupération des paramètres du régime
         const regimeConfig = PARAMETRES_RETRAITE.regimes[regimeType];
         const cotisationConfig = PARAMETRES_RETRAITE.cotisations[regimeType];
-        const ageConfig = PARAMETRES_RETRAITE.demographics.ageRetraite[regimeType];
+        const ageConfig =
+          PARAMETRES_RETRAITE.demographics.ageRetraite[regimeType];
         const esperanceConfig = PARAMETRES_RETRAITE.demographics.esperanceVie;
 
         // Calcul des salaires de référence
         const salaireAnnuelBrut = salaireMensuel * 12;
-        const salaireReferenceBoomer = salaireAnnuelBrut * regimeConfig.bonificationSalaire;
-        const salaireReferenceVous = salaireAnnuelBrut * regimeConfig.bonificationSalaire;
+        const salaireReferenceBoomer =
+          salaireAnnuelBrut * regimeConfig.bonificationSalaire;
+        const salaireReferenceVous =
+          salaireAnnuelBrut * regimeConfig.bonificationSalaire;
 
         // Calcul des trimestres
         const trimestresBoomer = anneesBoomer * 4;
         const trimestresVous = anneesVous * 4;
 
         // Calcul des taux de pension effectifs
-        const tauxPensionBoomer = regimeConfig.tauxPlein * Math.min(1, trimestresBoomer / requisBoomer);
-        const tauxPensionVous = regimeConfig.tauxPlein * Math.min(1, trimestresVous / requisVous);
+        const tauxPensionBoomer =
+          regimeConfig.tauxPlein * Math.min(1, trimestresBoomer / requisBoomer);
+        const tauxPensionVous =
+          regimeConfig.tauxPlein * Math.min(1, trimestresVous / requisVous);
 
         // Calcul des pensions
         const pensionBoomerAnnuel = salaireReferenceBoomer * tauxPensionBoomer;
@@ -737,14 +749,16 @@
         const pensionVousMensuel = pensionVousAnnuel / 12;
 
         // Calcul des cotisations AVEC multiplicateur superbrut (coût réel système)
-        const cotisationsBoomerTotales = salaireAnnuelBrut * 
-          PARAMETRES_RETRAITE.superbrut.annees1980 * 
-          cotisationConfig.historique * 
+        const cotisationsBoomerTotales =
+          salaireAnnuelBrut *
+          PARAMETRES_RETRAITE.superbrut.annees1980 *
+          cotisationConfig.historique *
           anneesBoomer;
-          
-        const cotisationsVousTotales = salaireAnnuelBrut * 
-          PARAMETRES_RETRAITE.superbrut.annees2025 * 
-          cotisationConfig.actuel * 
+
+        const cotisationsVousTotales =
+          salaireAnnuelBrut *
+          PARAMETRES_RETRAITE.superbrut.annees2025 *
+          cotisationConfig.actuel *
           anneesVous;
 
         // Calcul durée de retraite et pensions totales
@@ -755,13 +769,15 @@
 
         const anneesRetraiteBoomer = esperanceVieBoomer - ageRetraiteBoomer;
         const anneesRetraiteVous = esperanceVieVous - ageRetraiteVous;
-        
+
         const pensionsRecuesBoomer = pensionBoomerAnnuel * anneesRetraiteBoomer;
         const pensionsRecuesVous = pensionVousAnnuel * anneesRetraiteVous;
 
         // Ratios retour sur cotisation (indicateur clé d'équité)
-        const ratioRecuperationBoomer = pensionsRecuesBoomer / cotisationsBoomerTotales;
-        const ratioRecuperationVous = pensionsRecuesVous / cotisationsVousTotales;
+        const ratioRecuperationBoomer =
+          pensionsRecuesBoomer / cotisationsBoomerTotales;
+        const ratioRecuperationVous =
+          pensionsRecuesVous / cotisationsVousTotales;
 
         return {
           regimeType,
@@ -786,7 +802,7 @@
           ageRetraiteBoomer,
           ageRetraiteVous,
           anneesRetraiteBoomer,
-          anneesRetraiteVous
+          anneesRetraiteVous,
         };
       }
 
@@ -979,7 +995,9 @@
                     .map(
                       (r) => `
                     <td>
-                      Boomers: ${(r.cotisationsBoomerTotales / 1000).toFixed(0)}k€<br>
+                      Boomers: ${(r.cotisationsBoomerTotales / 1000).toFixed(
+                        0
+                      )}k€<br>
                       Vous: ${(r.cotisationsVousTotales / 1000).toFixed(0)}k€
                     </td>
                   `
