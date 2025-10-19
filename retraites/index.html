@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Calculateur Retraites France : Cotisations et Pensions – Baby-Boomers vs
+      Actifs
+    </title>
+    <style>
+      body {
+        font-family: "Georgia", serif;
+        background: #f4e8d1;
+        color: #2c1810;
+        margin: 0;
+        padding: 10px;
+        font-size: 14px;
+      }
+      h1 {
+        text-align: center;
+        color: #8b0000;
+        border-bottom: 1px solid #8b0000;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+        font-size: 18px;
+      }
+      form {
+        max-width: 500px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 10px;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin: 5px 0 2px;
+        font-weight: bold;
+        font-size: 12px;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 4px;
+        margin-bottom: 5px;
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        font-size: 14px;
+      }
+      #results {
+        margin-top: 10px;
+        padding: 10px;
+        background: #f9f5e7;
+        border-radius: 5px;
+        font-size: 12px;
+      }
+      .result-item {
+        margin: 5px 0;
+        padding: 5px;
+        background: white;
+        border-left: 3px solid #8b0000;
+        font-size: 11px;
+      }
+      .warning {
+        color: #8b0000;
+        font-style: italic;
+        text-align: center;
+        font-size: 11px;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>
+      Calculateur Retraites France : Cotisations et Pensions – Baby-Boomers vs
+      Actifs
+    </h1>
+    <p class="warning">
+      Approx. : 2025 (28% brut, superbrut x1.42) ; 1980 (13% brut, x1.35). Trim.
+      = ann. x4. Pension = 50% SAM x (trim./req.).
+    </p>
+
+    <form id="calcForm">
+      <label for="salaireBrut">Salaire brut mensuel (€) :</label>
+      <input
+        type="number"
+        id="salaireBrut"
+        value="3000"
+        min="1000"
+        step="100"
+        required
+      />
+
+      <label for="anneesBoomer">Annuités boomer (années) :</label>
+      <input
+        type="number"
+        id="anneesBoomer"
+        value="41"
+        min="30"
+        max="45"
+        required
+      />
+
+      <label for="anneesVous">Vos annuités (années) :</label>
+      <input
+        type="number"
+        id="anneesVous"
+        value="43"
+        min="30"
+        max="45"
+        required
+      />
+
+      <label for="generationBoomer">Boomer (naissance) :</label>
+      <select id="generationBoomer">
+        <option value="1955">1955 (166 trim.)</option>
+        <option value="1960">1960 (170 trim.)</option>
+      </select>
+
+      <label for="generationVous">Vous (naissance) :</label>
+      <select id="generationVous">
+        <option value="1990">1990 (172 trim.)</option>
+        <option value="2000">2000 (172 trim.)</option>
+      </select>
+    </form>
+
+    <div id="results"></div>
+
+    <script>
+      function calculate() {
+        const salaireMensuel =
+          parseFloat(document.getElementById("salaireBrut").value) || 0;
+        const salaireAnnuel = salaireMensuel * 12;
+        const anneesBoomer =
+          parseInt(document.getElementById("anneesBoomer").value) || 0;
+        const anneesVous =
+          parseInt(document.getElementById("anneesVous").value) || 0;
+        const genBoomer =
+          parseInt(document.getElementById("generationBoomer").value) || 1955;
+        const genVous =
+          parseInt(document.getElementById("generationVous").value) || 1990;
+
+        if (salaireMensuel === 0 || anneesBoomer === 0 || anneesVous === 0) {
+          document.getElementById("results").innerHTML =
+            '<p class="warning">Saisissez des valeurs.</p>';
+          return;
+        }
+
+        const requisBoomer =
+          genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
+        const requisVous = genVous >= 1973 ? 172 : 166;
+
+        const tauxRetraite2025Brut = 0.28;
+        const multiplicateurSuperbrut2025 = 1.42;
+        const superbrut2025 = salaireAnnuel * multiplicateurSuperbrut2025;
+        const contribRetraite2025 = salaireAnnuel * tauxRetraite2025Brut;
+        const tauxReel2025 = (
+          (contribRetraite2025 / superbrut2025) *
+          100
+        ).toFixed(2);
+
+        const tauxRetraite1980Brut = 0.13;
+        const multiplicateurSuperbrut1980 = 1.35;
+        const superbrut1980 = salaireAnnuel * multiplicateurSuperbrut1980;
+        const contribRetraite1980 = salaireAnnuel * tauxRetraite1980Brut;
+        const tauxReel1980 = (
+          (contribRetraite1980 / superbrut1980) *
+          100
+        ).toFixed(2);
+
+        const trimestresBoomer = anneesBoomer * 4;
+        const tauxPensionBoomer = 0.5 * (trimestresBoomer / requisBoomer);
+        const pensionBoomerAnnuel = salaireAnnuel * tauxPensionBoomer;
+        const pensionBoomerMensuel = (pensionBoomerAnnuel / 12).toFixed(0);
+
+        const trimestresVous = anneesVous * 4;
+        const tauxPensionVous = 0.5 * (trimestresVous / requisVous);
+        const pensionVousAnnuel = salaireAnnuel * tauxPensionVous;
+        const pensionVousMensuel = (pensionVousAnnuel / 12).toFixed(0);
+
+        const results = document.getElementById("results");
+        results.innerHTML = `
+                <div class="result-item"><strong>2025 (superbrut) :</strong> ${tauxReel2025}% (${superbrut2025.toFixed(
+          0
+        )}€/an)</div>
+                <div class="result-item"><strong>1980 (superbrut) :</strong> ${tauxReel1980}% (${superbrut1980.toFixed(
+          0
+        )}€/an) – Double pour vous!</div>
+                <div class="result-item"><strong>Pension boomer :</strong> ${pensionBoomerMensuel}€/mois (${(
+          tauxPensionBoomer * 100
+        ).toFixed(1)}% ; ${anneesBoomer} ans, ${requisBoomer} trim.)</div>
+                <div class="result-item"><strong>Votre pension :</strong> ${pensionVousMensuel}€/mois (${(
+          tauxPensionVous * 100
+        ).toFixed(1)}% ; ${anneesVous} ans, ${requisVous} trim.)</div>
+                <div class="result-item"><strong>Annuités :</strong> ${trimestresBoomer} vs ${trimestresVous} trim. – Moins pour eux, plus pour vous.</div>
+                <p class="warning">Boomers : 2x cotisations récupérées. Vous : 1/3. Réagissez, Nicolas.</p>
+            `;
+      }
+
+      const inputs = document.querySelectorAll(
+        "#calcForm input, #calcForm select"
+      );
+      inputs.forEach((input) => {
+        input.addEventListener("input", calculate);
+        input.addEventListener("change", calculate);
+      });
+      calculate();
+    </script>
+  </body>
+</html>
