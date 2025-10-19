@@ -472,7 +472,240 @@
           border-top-color: #4a3535;
         }
 
-        /* Dark mode regime sections */
+        /* Equity scenarios styles */
+      #equity-scenarios {
+        max-width: 600px;
+        margin: 20px auto 0;
+        padding: 20px;
+        background: #f9f5e7;
+        border-radius: 8px;
+        font-size: 12px;
+        border: 1px solid #ddd;
+      }
+
+      .equity-container {
+        background: white;
+        border-radius: 8px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .equity-title {
+        text-align: center;
+        color: #8b0000;
+        margin-bottom: 20px;
+        font-size: 16px;
+        border-bottom: 2px solid #8b0000;
+        padding-bottom: 10px;
+      }
+
+      .scenario-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 20px;
+      }
+
+      .scenario-card {
+        background: #f8f8f8;
+        border-radius: 8px;
+        padding: 15px;
+        border: 1px solid #e0e0e0;
+      }
+
+      .scenario-card h4 {
+        color: #8b0000;
+        margin: 0 0 10px 0;
+        font-size: 13px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+      }
+
+      .adjustment-item {
+        margin: 8px 0;
+        padding: 8px;
+        background: white;
+        border-radius: 4px;
+        font-size: 11px;
+        border-left: 3px solid #8b0000;
+      }
+
+      .adjustment-value {
+        font-weight: bold;
+        color: #2e7d32;
+      }
+
+      .adjustment-negative {
+        color: #c62828;
+      }
+
+      .summary-box {
+        background: linear-gradient(135deg, #e8f5e8 0%, #f0f8f0 100%);
+        border-radius: 8px;
+        padding: 15px;
+        border: 1px solid #c8e6c9;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .summary-box h4 {
+        color: #2e7d32;
+        margin: 0 0 10px 0;
+        font-size: 14px;
+      }
+
+      .regime-section-title {
+        color: #8b0000;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+        font-size: 13px;
+      }
+
+      .equity-grid-title {
+        color: #8b0000;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 5px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        font-size: 11px;
+        text-align: left;
+      }
+
+      .summary-note {
+        margin-top: 15px;
+        font-size: 10px;
+        font-style: italic;
+        text-align: center;
+      }
+
+      .ratio-selector {
+        background: #f0f8ff;
+        border: 1px solid #b0d4f1;
+        border-radius: 8px;
+        padding: 15px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .ratio-selector label {
+        display: inline-block;
+        font-weight: bold;
+        font-size: 12px;
+        margin-right: 10px;
+        color: #2c5aa0;
+      }
+
+      .ratio-selector select {
+        display: inline-block;
+        width: auto;
+        min-width: 250px;
+        padding: 6px 12px;
+        font-size: 12px;
+        border: 1px solid #b0d4f1;
+        border-radius: 4px;
+        background: white;
+      }
+
+      .ratio-selector small {
+        display: block;
+        margin-top: 8px;
+        font-size: 10px;
+        color: #666;
+        font-style: italic;
+      }
+
+      /* Dark mode equity scenarios */
+      @media (prefers-color-scheme: dark) {
+        #equity-scenarios {
+          background: #2a2a2a;
+          border-color: #555;
+        }
+
+        .equity-container {
+          background: #2d2d2d;
+          border-color: #555;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .equity-title {
+          color: #ff6b6b;
+          border-bottom-color: #ff6b6b;
+        }
+
+        .scenario-card {
+          background: #404040;
+          border-color: #555;
+        }
+
+        .scenario-card h4 {
+          color: #ff6b6b;
+          border-bottom-color: #555;
+        }
+
+        .adjustment-item {
+          background: #3d3d3d;
+          color: #e0e0e0;
+          border-left-color: #ff6b6b;
+        }
+
+        .adjustment-value {
+          color: #a5d6a7;
+        }
+
+        .adjustment-negative {
+          color: #ef9a9a;
+        }
+
+        .summary-box {
+          background: linear-gradient(135deg, #2e5a2e 0%, #3d6b3d 100%);
+          border-color: #4caf50;
+        }
+
+        .summary-box h4 {
+          color: #a5d6a7;
+        }
+
+        .regime-section-title {
+          color: #ff6b6b;
+          border-bottom-color: #555;
+        }
+
+        .equity-grid-title {
+          color: #ff6b6b;
+          border-bottom-color: #555;
+        }
+
+        .ratio-selector {
+          background: #2a3a4a;
+          border-color: #4a5a6a;
+        }
+
+        .ratio-selector label {
+          color: #64b5f6;
+        }
+
+        .ratio-selector select {
+          background: #3d3d3d;
+          color: #e0e0e0;
+          border-color: #555;
+        }
+
+        .ratio-selector small {
+          color: #aaa;
+        }
+      }
+
+      /* Dark mode regime sections */
         .main-comparison-table {
           background: #2d2d2d;
           border-color: #555;
@@ -651,6 +884,12 @@
           role="region"
           aria-live="polite"
           aria-label="Résultats du calcul"
+        ></section>
+        
+        <section
+          id="equity-scenarios"
+          role="region"
+          aria-label="Scénarios d'équité générationnelle"
         ></section>
       </section>
     </main>
@@ -886,6 +1125,8 @@
           noteRegime: regimeConfig.description,
           pensionBoomerMensuel,
           pensionVousMensuel,
+          pensionBoomerAnnuel,
+          pensionVousAnnuel,
           tauxPensionBoomer,
           tauxPensionVous,
           trimestresBoomer,
@@ -1389,6 +1630,274 @@
         `;
       }
 
+      // Fonction pour calculer les ajustements nécessaires pour l'équité parfaite
+      function calculateEquityAdjustments(results, targetRatio = 1.0) {
+        // Si le sélecteur existe, utiliser sa valeur, sinon utiliser la valeur par défaut
+        const ratioSelector = document.getElementById("ratioTarget");
+        if (ratioSelector) {
+          targetRatio = parseFloat(ratioSelector.value) || 1.0;
+        }
+        
+        return results.map(result => {
+          const currentRatioVous = result.ratioRecuperationVous;
+          const currentRatioBoomer = result.ratioRecuperationBoomer;
+          
+          // Scénario 1: Ajustement par l'âge de départ
+          const ageAdjustment = calculateAgeAdjustment(result, targetRatio);
+          
+          // Scénario 2: Ajustement par les taux de cotisation
+          const cotisationAdjustment = calculateCotisationAdjustment(result, targetRatio);
+          
+          // Scénario 3: Ajustement par les taux de pension
+          const pensionAdjustment = calculatePensionAdjustment(result, targetRatio);
+          
+          // Scénario 4: Ajustement mixte optimisé
+          const mixedAdjustment = calculateMixedAdjustment(result, targetRatio);
+          
+          return {
+            regime: result.regimeType,
+            regimeName: result.regimeName,
+            currentEquity: result.ratioEquiteGenerationnelle,
+            currentRatioVous: currentRatioVous,
+            ageAdjustment,
+            cotisationAdjustment,
+            pensionAdjustment,
+            mixedAdjustment
+          };
+        });
+      }
+
+      function calculateAgeAdjustment(result, targetRatio) {
+        // Pour atteindre le ratio cible, on calcule l'âge de départ nécessaire
+        const currentRatio = result.ratioRecuperationVous;
+        const ratioGap = currentRatio / targetRatio;
+        
+        // Si le ratio est trop élevé, il faut retarder le départ (réduire les années de retraite)
+        const anneesRetraiteTarget = result.anneesRetraiteVous / ratioGap;
+        const ageDepart = result.demographics?.esperanceVie?.actuel?.[result.regimeType] || 85;
+        const nouvelAgeDepart = ageDepart - anneesRetraiteTarget;
+        const adjustementAge = nouvelAgeDepart - result.ageRetraiteVous;
+        
+        // Calcul du nouveau ratio avec cet ajustement
+        const nouvellesAnneesRetraite = Math.max(0, result.anneesRetraiteVous - adjustementAge);
+        const nouvellesPensionsRecues = result.pensionVousAnnuel * nouvellesAnneesRetraite;
+        const nouveauRatio = nouvellesPensionsRecues / result.cotisationsVousTotales;
+        
+        return {
+          type: "Âge de départ",
+          adjustementAge: Math.round(adjustementAge * 10) / 10,
+          nouvelAge: Math.round(nouvelAgeDepart * 10) / 10,
+          nouveauRatio: Math.round(nouveauRatio * 100) / 100,
+          impact: `${adjustementAge > 0 ? '+' : ''}${Math.round(adjustementAge * 10) / 10} ans`,
+          feasible: adjustementAge <= 3 && adjustementAge >= -2
+        };
+      }
+
+      function calculateCotisationAdjustment(result, targetRatio) {
+        // Pour atteindre le ratio cible en ajustant les cotisations
+        const currentRatio = result.ratioRecuperationVous;
+        const cotisationsNecessaires = result.pensionsRecuesVous / targetRatio;
+        const adjustementCotisation = (cotisationsNecessaires / result.cotisationsVousTotales) - 1;
+        
+        // Calcul du nouveau taux de cotisation global nécessaire
+        const regimeConfig = PARAMETRES_RETRAITE.cotisations[result.regimeType];
+        const tauxActuel = regimeConfig.actuel;
+        const nouveauTaux = tauxActuel * (1 + adjustementCotisation);
+        
+        return {
+          type: "Taux de cotisation",
+          tauxActuel: Math.round(tauxActuel * 1000) / 10,
+          nouveauTaux: Math.round(nouveauTaux * 1000) / 10,
+          adjustement: Math.round(adjustementCotisation * 1000) / 10,
+          nouveauRatio: targetRatio,
+          impact: `${adjustementCotisation > 0 ? '+' : ''}${Math.round(adjustementCotisation * 1000) / 10}% cotisation`,
+          feasible: Math.abs(adjustementCotisation) <= 0.3
+        };
+      }
+
+      function calculatePensionAdjustment(result, targetRatio) {
+        // Pour atteindre le ratio cible en ajustant les pensions
+        const pensionsOptimales = result.cotisationsVousTotales * targetRatio;
+        const adjustementPension = (pensionsOptimales / result.pensionsRecuesVous) - 1;
+        
+        // Calcul du nouveau taux de pension nécessaire
+        const nouveauTauxPension = result.tauxPensionVous * (1 + adjustementPension);
+        const nouvellePensionMensuelle = result.pensionVousMensuel * (1 + adjustementPension);
+        
+        return {
+          type: "Taux de pension",
+          tauxActuel: Math.round(result.tauxPensionVous * 1000) / 10,
+          nouveauTaux: Math.round(nouveauTauxPension * 1000) / 10,
+          pensionActuelle: Math.round(result.pensionVousMensuel),
+          nouvellePension: Math.round(nouvellePensionMensuelle),
+          adjustement: Math.round(adjustementPension * 1000) / 10,
+          nouveauRatio: targetRatio,
+          impact: `${adjustementPension > 0 ? '+' : ''}${Math.round(adjustementPension * 1000) / 10}% pension`,
+          feasible: adjustementPension >= -0.25 && adjustementPension <= 0.15
+        };
+      }
+
+      function calculateMixedAdjustment(result, targetRatio) {
+        // Approche mixte: 50% ajustement âge, 30% cotisation, 20% pension
+        const ageAdj = calculateAgeAdjustment(result, targetRatio);
+        const cotisAdj = calculateCotisationAdjustment(result, targetRatio);
+        const pensionAdj = calculatePensionAdjustment(result, targetRatio);
+        
+        return {
+          type: "Approche mixte",
+          ageAdjustement: Math.round(ageAdj.adjustementAge * 0.5 * 10) / 10,
+          cotisationAdjustement: Math.round(cotisAdj.adjustement * 0.3 * 10) / 10,
+          pensionAdjustement: Math.round(pensionAdj.adjustement * 0.2 * 10) / 10,
+          nouveauRatio: targetRatio,
+          impact: "Réforme équilibrée",
+          feasible: true
+        };
+      }
+
+      function createEquityScenariosSection(results) {
+        if (!results || results.length === 0) return '';
+        
+        const equityAdjustments = calculateEquityAdjustments(results);
+        
+        return `
+          <div class="equity-container">
+            <h3 class="equity-title">🎯 Scénarios pour l'Équité Générationnelle Ciblée</h3>
+            
+            <div class="ratio-selector">
+              <label for="ratioTarget">Ratio d'équité ciblé :</label>
+              <select id="ratioTarget" aria-describedby="ratio-help">
+                <option value="0.8">0.8 (Acceptable - compromis politique)</option>
+                <option value="0.9">0.9 (Bon - ajustement modéré)</option>
+                <option value="1.0" selected>1.0 (Équité parfaite)</option>
+                <option value="1.1">1.1 (Sécurisé - marge de sécurité)</option>
+                <option value="1.2">1.2 (Compensation inflation future)</option>
+              </select>
+              <small id="ratio-help">
+                🎯 Changez le ratio pour voir l'impact sur les ajustements nécessaires
+              </small>
+            </div>
+            
+            <p style="text-align: center; font-size: 11px; color: #666; margin-bottom: 20px;">
+              Calculs des ajustements nécessaires pour atteindre le ratio retour/cotisation souhaité
+            </p>
+            
+            ${equityAdjustments.map(adj => `
+              <div style="margin-bottom: 25px;">
+                <h4 class="regime-section-title">
+                  ${adj.regimeName} - Équité actuelle: ${(adj.currentEquity * 100).toFixed(0)}%
+                </h4>
+                
+                <div class="scenario-grid">
+                  <div class="scenario-card">
+                    <h4>📅 Ajustement par l'âge</h4>
+                    <div class="adjustment-item">
+                      <strong>Âge actuel:</strong> ${results.find(r => r.regimeType === adj.regime).ageRetraiteVous} ans
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Âge nécessaire:</strong> 
+                      <span class="${adj.ageAdjustment.adjustementAge > 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                        ${adj.ageAdjustment.nouvelAge} ans (${adj.ageAdjustment.impact})
+                      </span>
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Faisabilité:</strong> 
+                      <span class="${adj.ageAdjustment.feasible ? 'adjustment-value' : 'adjustment-negative'}">
+                        ${adj.ageAdjustment.feasible ? '✅ Réaliste' : '❌ Difficile'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="scenario-card">
+                    <h4>💰 Ajustement cotisations</h4>
+                    <div class="adjustment-item">
+                      <strong>Taux actuel:</strong> ${adj.cotisationAdjustment.tauxActuel}%
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Taux nécessaire:</strong> 
+                      <span class="${adj.cotisationAdjustment.adjustement > 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                        ${adj.cotisationAdjustment.nouveauTaux}% (${adj.cotisationAdjustment.impact})
+                      </span>
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Faisabilité:</strong> 
+                      <span class="${adj.cotisationAdjustment.feasible ? 'adjustment-value' : 'adjustment-negative'}">
+                        ${adj.cotisationAdjustment.feasible ? '✅ Acceptable' : '❌ Excessif'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="scenario-card">
+                    <h4>🏦 Ajustement pensions</h4>
+                    <div class="adjustment-item">
+                      <strong>Pension actuelle:</strong> ${adj.pensionAdjustment.pensionActuelle}€/mois
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Pension ajustée:</strong> 
+                      <span class="${adj.pensionAdjustment.adjustement < 0 ? 'adjustment-negative' : 'adjustment-value'}">
+                        ${adj.pensionAdjustment.nouvellePension}€/mois (${adj.pensionAdjustment.impact})
+                      </span>
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Faisabilité:</strong> 
+                      <span class="${adj.pensionAdjustment.feasible ? 'adjustment-value' : 'adjustment-negative'}">
+                        ${adj.pensionAdjustment.feasible ? '✅ Viable' : '❌ Trop brutal'}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div class="scenario-card">
+                    <h4>⚖️ Réforme équilibrée</h4>
+                    <div class="adjustment-item">
+                      <strong>Âge:</strong> 
+                      <span class="adjustment-value">
+                        +${adj.mixedAdjustment.ageAdjustement} ans
+                      </span>
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Cotisations:</strong> 
+                      <span class="adjustment-value">
+                        ${adj.mixedAdjustment.cotisationAdjustement > 0 ? '+' : ''}${adj.mixedAdjustment.cotisationAdjustement}%
+                      </span>
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Pensions:</strong> 
+                      <span class="adjustment-value">
+                        ${adj.mixedAdjustment.pensionAdjustement > 0 ? '+' : ''}${adj.mixedAdjustment.pensionAdjustement}%
+                      </span>
+                    </div>
+                    <div class="adjustment-item">
+                      <strong>Recommandé:</strong> 
+                      <span class="adjustment-value">✅ Équilibré</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join('')}
+            
+            <div class="summary-box">
+              <h4 class="equity-grid-title">💡 Synthèse des Leviers d'Action</h4>
+              <div class="summary-grid">
+                <div>
+                  <strong>🎯 Plus efficaces:</strong><br>
+                  • Recul âge départ (impact direct)<br>
+                  • Harmonisation entre régimes<br>
+                  • Modulation selon espérance de vie
+                </div>
+                <div>
+                  <strong>⚠️ Plus difficiles:</strong><br>
+                  • Forte hausse cotisations<br>
+                  • Baisse significative pensions<br>
+                  • Réformes rétroactives
+                </div>
+              </div>
+              <p class="summary-note">
+                Une approche mixte combinant plusieurs leviers modérés est généralement plus acceptable qu'un ajustement brutal sur un seul paramètre.
+              </p>
+            </div>
+          </div>
+        `;
+      }
+
       function calculate() {
         const selectedRegime = document.getElementById("regime").value;
         const salaireMensuel =
@@ -1410,6 +1919,8 @@
 
         const results = document.getElementById("results");
 
+        const equitySection = document.getElementById("equity-scenarios");
+
         if (selectedRegime === "all") {
           // Calculate all 3 regimes
           const regimeResults = ["prive", "public", "special"].map((regime) =>
@@ -1430,6 +1941,14 @@
           `;
 
           results.innerHTML = comparisonHtml;
+          equitySection.innerHTML = createEquityScenariosSection(regimeResults);
+          
+          // Add event listener to ratio selector after it's created
+          const ratioSelector = document.getElementById("ratioTarget");
+          if (ratioSelector) {
+            ratioSelector.addEventListener("change", calculate);
+            ratioSelector.addEventListener("input", calculate);
+          }
         } else {
           // Calculate single regime
           const result = calculateRegime(
@@ -1441,6 +1960,16 @@
             genVous
           );
           results.innerHTML = displaySingleRegime(result);
+          
+          // Show equity scenarios for single regime too
+          equitySection.innerHTML = createEquityScenariosSection([result]);
+          
+          // Add event listener to ratio selector after it's created
+          const ratioSelector = document.getElementById("ratioTarget");
+          if (ratioSelector) {
+            ratioSelector.addEventListener("change", calculate);
+            ratioSelector.addEventListener("input", calculate);
+          }
         }
       }
 
