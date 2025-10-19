@@ -637,10 +637,20 @@
         genBoomer,
         genVous
       ) {
-        // Trimestres requis
-        const requisBoomer =
-          genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
-        const requisVous = genVous >= 1973 ? 172 : 166;
+        // Trimestres requis (varie selon le régime)
+        let requisBoomer, requisVous;
+
+        if (regimeType === "special") {
+          // Régimes spéciaux : moins de trimestres requis
+          requisBoomer =
+            genBoomer <= 1957 ? 150 : genBoomer <= 1960 ? 156 : 160;
+          requisVous = genVous >= 1973 ? 162 : 156;
+        } else {
+          // Régime général et public : mêmes règles
+          requisBoomer =
+            genBoomer <= 1957 ? 160 : genBoomer <= 1960 ? 166 : 170;
+          requisVous = genVous >= 1973 ? 172 : 166;
+        }
 
         // Barèmes cotisation + superbrut par époque
         let tauxRetraite2025Brut = 0.28,
