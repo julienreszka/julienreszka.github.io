@@ -1387,6 +1387,40 @@
               </p>
             </div>
           </div>
+          <div class="explanation-box" style="margin-top: 15px">
+            <strong>📖 À propos des scénarios d'équité :</strong><br />
+            <p style="margin: 8px 0; font-size: 11px; line-height: 1.4">
+              Les scénarios avancés calculent les ajustements pour atteindre une
+              <strong>équité générationnelle relative</strong>. Par exemple,
+              avec "1.0 (Retour 1 pour 1)" :
+            </p>
+            <div
+              style="
+                padding: 8px;
+                border-radius: 4px;
+                margin: 8px 0;
+                font-size: 10px;
+              "
+            >
+              • <strong>Régime avec boomers à 3.2x</strong> → vise 3.2x pour les
+              actifs (équité parfaite)<br />
+              • <strong>Régime avec boomers à 2.1x</strong> → vise 2.1x pour les
+              actifs (équité parfaite)<br />
+              • <strong>Formule :</strong> Ratio cible = Ratio boomer ×
+              Coefficient d'équité
+            </div>
+            <p
+              style="
+                margin: 8px 0 0 0;
+                font-size: 10px;
+                color: #666;
+                font-style: italic;
+              "
+            >
+              💡 Cela respecte les spécificités de chaque régime tout en visant
+              l'équité intergénérationnelle
+            </p>
+          </div>
         </section>
       </section>
     </main>
@@ -2173,10 +2207,14 @@
         });
       }
 
-      function calculateAgeAdjustment(result, targetRatio) {
+      function calculateAgeAdjustment(result, targetEquityRatio) {
+        // Calcul du ratio cible basé sur le ratio boomer
+        const targetedVousRatio =
+          result.ratioRecuperationBoomer * targetEquityRatio;
+
         // Pour atteindre le ratio cible, on calcule l'âge de départ nécessaire
         const currentRatio = result.ratioRecuperationVous;
-        const ratioGap = currentRatio / targetRatio;
+        const ratioGap = currentRatio / targetedVousRatio;
 
         // Si le ratio est trop élevé, il faut retarder le départ (réduire les années de retraite)
         const anneesRetraiteTarget = result.anneesRetraiteVous / ratioGap;
@@ -2207,10 +2245,15 @@
         };
       }
 
-      function calculateCotisationAdjustment(result, targetRatio) {
+      function calculateCotisationAdjustment(result, targetEquityRatio) {
+        // Calcul du ratio cible basé sur le ratio boomer
+        const targetedVousRatio =
+          result.ratioRecuperationBoomer * targetEquityRatio;
+
         // Pour atteindre le ratio cible en ajustant les cotisations
         const currentRatio = result.ratioRecuperationVous;
-        const cotisationsNecessaires = result.pensionsRecuesVous / targetRatio;
+        const cotisationsNecessaires =
+          result.pensionsRecuesVous / targetedVousRatio;
         const adjustementCotisation =
           cotisationsNecessaires / result.cotisationsVousTotales - 1;
 
@@ -2224,7 +2267,7 @@
           tauxActuel: Math.round(tauxActuel * 1000) / 10,
           nouveauTaux: Math.round(nouveauTaux * 1000) / 10,
           adjustement: Math.round(adjustementCotisation * 1000) / 10,
-          nouveauRatio: targetRatio,
+          nouveauRatio: targetedVousRatio,
           impact: `${adjustementCotisation > 0 ? "+" : ""}${
             Math.round(adjustementCotisation * 1000) / 10
           }% cotisation`,
@@ -2232,9 +2275,14 @@
         };
       }
 
-      function calculatePensionAdjustment(result, targetRatio) {
+      function calculatePensionAdjustment(result, targetEquityRatio) {
+        // Calcul du ratio cible basé sur le ratio boomer
+        const targetedVousRatio =
+          result.ratioRecuperationBoomer * targetEquityRatio;
+
         // Pour atteindre le ratio cible en ajustant les pensions
-        const pensionsOptimales = result.cotisationsVousTotales * targetRatio;
+        const pensionsOptimales =
+          result.cotisationsVousTotales * targetedVousRatio;
         const adjustementPension =
           pensionsOptimales / result.pensionsRecuesVous - 1;
 
@@ -2251,7 +2299,7 @@
           pensionActuelle: Math.round(result.pensionVousMensuel),
           nouvellePension: Math.round(nouvellePensionMensuelle),
           adjustement: Math.round(adjustementPension * 1000) / 10,
-          nouveauRatio: targetRatio,
+          nouveauRatio: targetedVousRatio,
           impact: `${adjustementPension > 0 ? "+" : ""}${
             Math.round(adjustementPension * 1000) / 10
           }% pension`,
@@ -2259,11 +2307,21 @@
         };
       }
 
-      function calculateMixedAdjustment(result, targetRatio) {
+      function calculateMixedAdjustment(result, targetEquityRatio) {
+        // Calcul du ratio cible basé sur le ratio boomer
+        const targetedVousRatio =
+          result.ratioRecuperationBoomer * targetEquityRatio;
+
         // Approche mixte: 50% ajustement âge, 30% cotisation, 20% pension
-        const ageAdj = calculateAgeAdjustment(result, targetRatio);
-        const cotisAdj = calculateCotisationAdjustment(result, targetRatio);
-        const pensionAdj = calculatePensionAdjustment(result, targetRatio);
+        const ageAdj = calculateAgeAdjustment(result, targetEquityRatio);
+        const cotisAdj = calculateCotisationAdjustment(
+          result,
+          targetEquityRatio
+        );
+        const pensionAdj = calculatePensionAdjustment(
+          result,
+          targetEquityRatio
+        );
 
         return {
           type: "Approche mixte",
@@ -2272,7 +2330,7 @@
             Math.round(cotisAdj.adjustement * 0.3 * 10) / 10,
           pensionAdjustement:
             Math.round(pensionAdj.adjustement * 0.2 * 10) / 10,
-          nouveauRatio: targetRatio,
+          nouveauRatio: targetedVousRatio,
           impact: "Réforme équilibrée",
           feasible: true,
         };
@@ -2285,14 +2343,14 @@
 
         return `
           <div class="equity-container">
-            <h3 class="equity-title">🎯 Scénarios pour l'Équité Générationnelle Ciblée</h3>
-            
+            <h3 class="equity-title">🎯 Scénarios de Retour sur Cotisation</h3>
+
             <div class="ratio-selector">
               <label for="ratioTarget">Ratio d'équité ciblé :</label>
               <select id="ratioTarget" aria-describedby="ratio-help">
                 <option value="0.8">0.8 (Acceptable - compromis politique)</option>
                 <option value="0.9">0.9 (Bon - ajustement modéré)</option>
-                <option value="1.0" selected>1.0 (Équité parfaite)</option>
+                <option value="1.0" selected>1.0 (Retour 1 pour 1)</option>
                 <option value="1.1">1.1 (Sécurisé - marge de sécurité)</option>
                 <option value="1.2">1.2 (Compensation inflation future)</option>
               </select>
@@ -2300,10 +2358,6 @@
                 🎯 Changez le ratio pour voir l'impact sur les ajustements nécessaires
               </small>
             </div>
-            
-            <p style="text-align: center; font-size: 11px; color: #666; margin-bottom: 20px;">
-              Calculs des ajustements nécessaires pour atteindre le ratio retour/cotisation souhaité
-            </p>
 
             
             
