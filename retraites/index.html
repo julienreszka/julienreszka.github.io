@@ -2477,9 +2477,9 @@
                       </td>
                       
                       <!-- Réforme Équilibrée -->
-                      <td class="adjustment-value">+${
-                        adj.mixedAdjustment.ageAdjustement
-                      }ans</td>
+                      <td class="adjustment-value">${
+                        adj.mixedAdjustment.ageAdjustement > 0 ? "+" : ""
+                      }${adj.mixedAdjustment.ageAdjustement}ans</td>
                       <td class="adjustment-value">${
                         adj.mixedAdjustment.cotisationAdjustement > 0 ? "+" : ""
                       }${adj.mixedAdjustment.cotisationAdjustement}%</td>
@@ -2721,9 +2721,9 @@
                     </td>
                     
                     <!-- Réforme Équilibrée -->
-                    <td class="adjustment-value">+${
-                      adj.mixedAdjustment.ageAdjustement
-                    }ans</td>
+                    <td class="adjustment-value">${
+                      adj.mixedAdjustment.ageAdjustement > 0 ? "+" : ""
+                    }${adj.mixedAdjustment.ageAdjustement}ans</td>
                     <td class="adjustment-value">${
                       adj.mixedAdjustment.cotisationAdjustement > 0 ? "+" : ""
                     }${adj.mixedAdjustment.cotisationAdjustement}%</td>
