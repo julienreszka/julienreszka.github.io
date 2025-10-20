@@ -2225,60 +2225,78 @@
         const currentRatio = result.ratioRecuperationVous;
         const ratioGap = currentRatio / targetedVousRatio;
 
-
-
         // Calcul réaliste : l'ajustement d'âge seul ne peut pas tout corriger
         // On calcule l'ajustement théorique puis on le plafonne à des valeurs réalisables
-        
+
         const pensionAnnuelle = result.pensionVousAnnuel;
         const cotisationsTotales = result.cotisationsVousTotales;
-        
+
         // Pensions nécessaires pour atteindre le ratio cible
         const pensionsNecessaires = cotisationsTotales * targetedVousRatio;
-        
+
         // Années de retraite nécessaires (théorique)
         const anneesRetraiteTheorique = pensionsNecessaires / pensionAnnuelle;
-        
+
         // Approche réaliste : quand le système est déséquilibré, on travaille plus longtemps
         // On plafonne les ajustements d'âge à des valeurs politiquement acceptables
-        
-        const esperanceVie = PARAMETRES_RETRAITE.demographics.esperanceVie.actuel[result.regimeType] || 85;
-        
+
+        const esperanceVie =
+          PARAMETRES_RETRAITE.demographics.esperanceVie.actuel[
+            result.regimeType
+          ] || 85;
+
         // Si l'équité parfaite nécessite trop d'années de retraite, on limite l'ajustement
         if (anneesRetraiteTheorique > result.anneesRetraiteVous + 5) {
           // Le déséquilibre est trop important : on fait un ajustement modéré vers plus de travail
-          const adjustementAge = Math.min(10, Math.max(2, 
-            (targetedVousRatio - currentRatio) * 5)); // Formule empirique
+          const adjustementAge = Math.min(
+            10,
+            Math.max(2, (targetedVousRatio - currentRatio) * 5)
+          ); // Formule empirique
           const nouvelAgeDepart = result.ageRetraiteVous + adjustementAge;
           const anneesRetraiteTarget = esperanceVie - nouvelAgeDepart;
-          
+
           return {
             type: "Âge de départ",
             adjustementAge: Math.round(adjustementAge * 10) / 10,
             nouvelAge: Math.round(nouvelAgeDepart * 10) / 10,
-            nouveauRatio: Math.round((result.pensionVousAnnuel * anneesRetraiteTarget / result.cotisationsVousTotales) * 100) / 100,
-            impact: `${Math.round(nouvelAgeDepart * 10) / 10} ans (+${Math.round(adjustementAge * 10) / 10} ans)`,
+            nouveauRatio:
+              Math.round(
+                ((result.pensionVousAnnuel * anneesRetraiteTarget) /
+                  result.cotisationsVousTotales) *
+                  100
+              ) / 100,
+            impact: `${Math.round(nouvelAgeDepart * 10) / 10} ans (+${
+              Math.round(adjustementAge * 10) / 10
+            } ans)`,
             feasible: adjustementAge <= 8,
-            note: "Ajustement plafonné - déséquilibre trop important"
+            note: "Ajustement plafonné - déséquilibre trop important",
           };
         } else {
           // Calcul normal si l'ajustement est raisonnable
-          const anneesRetraiteTarget = Math.max(10, Math.min(30, anneesRetraiteTheorique));
+          const anneesRetraiteTarget = Math.max(
+            10,
+            Math.min(30, anneesRetraiteTheorique)
+          );
           const nouvelAgeDepart = esperanceVie - anneesRetraiteTarget;
           const adjustementAge = nouvelAgeDepart - result.ageRetraiteVous;
-          
+
           return {
             type: "Âge de départ",
             adjustementAge: Math.round(adjustementAge * 10) / 10,
             nouvelAge: Math.round(nouvelAgeDepart * 10) / 10,
-            nouveauRatio: Math.round((result.pensionVousAnnuel * anneesRetraiteTarget / result.cotisationsVousTotales) * 100) / 100,
-            impact: `${Math.round(nouvelAgeDepart * 10) / 10} ans (${adjustementAge > 0 ? "+" : ""}${Math.round(adjustementAge * 10) / 10} ans)`,
+            nouveauRatio:
+              Math.round(
+                ((result.pensionVousAnnuel * anneesRetraiteTarget) /
+                  result.cotisationsVousTotales) *
+                  100
+              ) / 100,
+            impact: `${Math.round(nouvelAgeDepart * 10) / 10} ans (${
+              adjustementAge > 0 ? "+" : ""
+            }${Math.round(adjustementAge * 10) / 10} ans)`,
             feasible: Math.abs(adjustementAge) <= 5,
-            note: "Calcul normal"
+            note: "Calcul normal",
           };
         }
-        
-
       }
 
       function calculateCotisationAdjustment(result, targetEquityRatio) {
@@ -2360,10 +2378,9 @@
         );
 
         // Pour l'approche mixte, on réduit l'ajustement d'âge mais on calcule correctement le nouvel âge
-        const ageAdjustementMixte = Math.round(ageAdj.adjustementAge * 0.5 * 10) / 10;
+        const ageAdjustementMixte =
+          Math.round(ageAdj.adjustementAge * 0.5 * 10) / 10;
         const nouvelAgeMixte = result.ageRetraiteVous + ageAdjustementMixte;
-        
-
 
         return {
           type: "Approche mixte",
@@ -2478,7 +2495,9 @@
                           : "adjustment-value"
                       }">
                         <strong>${adj.ageAdjustment.nouvelAge} ans</strong><br>
-                        <small>(${adj.ageAdjustment.adjustementAge > 0 ? "+" : ""}${adj.ageAdjustment.adjustementAge} ans)</small>
+                        <small>(${
+                          adj.ageAdjustment.adjustementAge > 0 ? "+" : ""
+                        }${adj.ageAdjustment.adjustementAge} ans)</small>
                       </td>
                       <td class="feasibility ${
                         adj.ageAdjustment.feasible ? "feasible" : "not-feasible"
@@ -2524,8 +2543,12 @@
                       
                       <!-- Réforme Équilibrée -->
                       <td class="adjustment-value">
-                        <strong>${adj.mixedAdjustment.nouvelAge || 'N/A'} ans</strong><br>
-                        <small>(${adj.mixedAdjustment.ageAdjustement > 0 ? "+" : ""}${adj.mixedAdjustment.ageAdjustement} ans)</small>
+                        <strong>${
+                          adj.mixedAdjustment.nouvelAge || "N/A"
+                        } ans</strong><br>
+                        <small>(${
+                          adj.mixedAdjustment.ageAdjustement > 0 ? "+" : ""
+                        }${adj.mixedAdjustment.ageAdjustement} ans)</small>
                       </td>
                       <td class="adjustment-value">${
                         adj.mixedAdjustment.cotisationAdjustement > 0 ? "+" : ""
@@ -2723,7 +2746,9 @@
                         : "adjustment-value"
                     }">
                       <strong>${adj.ageAdjustment.nouvelAge} ans</strong><br>
-                      <small>(${adj.ageAdjustment.adjustementAge > 0 ? "+" : ""}${adj.ageAdjustment.adjustementAge} ans)</small>
+                      <small>(${
+                        adj.ageAdjustment.adjustementAge > 0 ? "+" : ""
+                      }${adj.ageAdjustment.adjustementAge} ans)</small>
                     </td>
                     <td class="feasibility ${
                       adj.ageAdjustment.feasible ? "feasible" : "not-feasible"
@@ -2769,8 +2794,12 @@
                     
                     <!-- Réforme Équilibrée -->
                     <td class="adjustment-value">
-                      <strong>${adj.mixedAdjustment.nouvelAge || 'N/A'} ans</strong><br>
-                      <small>(${adj.mixedAdjustment.ageAdjustement > 0 ? "+" : ""}${adj.mixedAdjustment.ageAdjustement} ans)</small>
+                      <strong>${
+                        adj.mixedAdjustment.nouvelAge || "N/A"
+                      } ans</strong><br>
+                      <small>(${
+                        adj.mixedAdjustment.ageAdjustement > 0 ? "+" : ""
+                      }${adj.mixedAdjustment.ageAdjustement} ans)</small>
                     </td>
                     <td class="adjustment-value">${
                       adj.mixedAdjustment.cotisationAdjustement > 0 ? "+" : ""
