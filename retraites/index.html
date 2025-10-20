@@ -283,6 +283,138 @@
             </p>
           </div>
         </section>
+
+        <section
+          id="inter-regime-equity"
+          role="region"
+          aria-label="Scénarios d'équité inter-régimes"
+        >
+          <div class="inter-regime-container" style="display: none">
+            <h3 class="equity-title">⚖️ Scénarios d'Équité Inter-Régimes</h3>
+
+            <div class="convergence-selector">
+              <label for="convergenceType">Type de convergence :</label>
+              <select id="convergenceType" aria-describedby="convergence-help">
+                <option value="moyenne">Convergence vers la moyenne</option>
+                <option value="haut">
+                  Convergence vers le haut (meilleur régime)
+                </option>
+                <option value="bas">
+                  Convergence vers le bas (moins avantageux)
+                </option>
+                <option value="prive">Convergence vers le régime privé</option>
+                <option value="public">
+                  Convergence vers le régime public
+                </option>
+                <option value="special">
+                  Convergence vers le régime spécial
+                </option>
+              </select>
+              <small id="convergence-help">
+                ⚖️ Choisissez le type d'harmonisation souhaité entre les régimes
+              </small>
+            </div>
+
+            <div class="explanation-box">
+              <strong>💡 Qu'est-ce que le "ratio retour/cotisation" ?</strong
+              ><br />
+              <p style="margin: 8px 0; font-size: 11px; line-height: 1.4">
+                Le <strong>ratio retour/cotisation</strong> compare le total des
+                pensions reçues avec le total des cotisations versées (charges
+                comprises). Par exemple :
+              </p>
+              <div
+                style="
+                  padding: 8px;
+                  border-radius: 4px;
+                  margin: 8px 0;
+                  font-size: 10px;
+                "
+              >
+                • <strong>Ratio de 2.5x</strong> = vous récupérez 2,5€ pour
+                chaque 1€ cotisé<br />
+                • <strong>Ratio de 1.2x</strong> = vous récupérez 1,2€ pour
+                chaque 1€ cotisé<br />
+                • <strong>Plus le ratio est élevé</strong>, plus le régime est
+                avantageux
+              </div>
+              <p style="margin: 8px 0 0 0; font-size: 10px; font-style: italic">
+                🎯 L'équité inter-régimes vise à réduire les écarts de ratios
+                entre les différents régimes de retraite
+              </p>
+            </div>
+
+            <div class="explanation-box" style="margin-top: 10px">
+              <strong>🎯 Comment est calculé le "Score de Faisabilité" ?</strong
+              ><br />
+              <p style="margin: 8px 0; font-size: 11px; line-height: 1.4">
+                Le <strong>score de faisabilité sur 100</strong> évalue la
+                facilité politique et sociale de mise en œuvre des réformes
+                nécessaires pour l'équité inter-régimes :
+              </p>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr 1fr;
+                  gap: 8px;
+                  margin: 8px 0;
+                  font-size: 10px;
+                "
+              >
+                <div style="padding: 8px; border-radius: 4px">
+                  <strong>🏦 Ajustement Pensions (25%)</strong><br />
+                  • ≤15% : +25 pts (acceptable)<br />
+                  • ≤25% : +15 pts (difficile)<br />
+                  • ≤35% : +5 pts (très difficile)<br />
+                  • >35% : +0 pt (impossible)
+                </div>
+                <div style="padding: 8px; border-radius: 4px">
+                  <strong>💰 Ajustement Cotisations (35%)</strong><br />
+                  • ≤10% : +35 pts (acceptable)<br />
+                  • ≤20% : +25 pts (modéré)<br />
+                  • ≤30% : +15 pts (difficile)<br />
+                  • ≤40% : +5 pts (très difficile)
+                </div>
+                <div style="padding: 8px; border-radius: 4px">
+                  <strong>📅 Ajustement Âge (40%)</strong><br />
+                  • ≤2 ans : +40 pts (acceptable)<br />
+                  • ≤3 ans : +30 pts (modéré)<br />
+                  • ≤5 ans : +20 pts (difficile)<br />
+                  • ≤7 ans : +10 pts (très difficile)
+                </div>
+              </div>
+              <p
+                style="
+                  margin: 8px 0 0 0;
+                  font-size: 10px;
+                  text-align: center;
+                  font-style: italic;
+                  color: #666;
+                "
+              >
+                🚦 <strong>Score ≥70</strong> = Faisable ✅ |
+                <strong>40-69</strong> = Difficile ⚠️ | <strong><40</strong> =
+                Très difficile ❌<br />
+                💡 L'âge a le plus gros impact (40%) car c'est le levier le plus
+                sensible politiquement
+              </p>
+            </div>
+
+            <div class="equity-metrics-summary">
+              <h4>📊 Métriques d'Équité Inter-Régimes Actuelles</h4>
+              <div id="equity-metrics-content"></div>
+            </div>
+
+            <div id="convergence-scenarios-content"></div>
+
+            <div class="convergence-summary-box">
+              <h4 class="equity-grid-title">
+                💡 Impact de l'Harmonisation Inter-Régimes
+              </h4>
+              <div id="convergence-impact-summary"></div>
+            </div>
+          </div>
+        </section>
       </section>
     </main>
     <section id="sources">
@@ -1441,6 +1573,593 @@
         `;
       }
 
+      // ========================================
+      // FONCTIONS D'ÉQUITÉ INTER-RÉGIMES
+      // ========================================
+
+      function calculateInterRegimeEquityMetrics(results) {
+        if (!results || results.length < 2) return null;
+
+        const ratiosVous = results.map((r) => r.ratioRecuperationVous);
+        const ratiosBoomers = results.map((r) => r.ratioRecuperationBoomer);
+
+        // Calcul des métriques d'équité
+        const moyenneRatiosVous =
+          ratiosVous.reduce((a, b) => a + b, 0) / ratiosVous.length;
+        const moyenneRatiosBoomers =
+          ratiosBoomers.reduce((a, b) => a + b, 0) / ratiosBoomers.length;
+
+        const maxRatioVous = Math.max(...ratiosVous);
+        const minRatioVous = Math.min(...ratiosVous);
+        const maxRatioBoomer = Math.max(...ratiosBoomers);
+        const minRatioBoomer = Math.min(...ratiosBoomers);
+
+        // Écart type (mesure de dispersion)
+        const varianceVous =
+          ratiosVous.reduce(
+            (acc, ratio) => acc + Math.pow(ratio - moyenneRatiosVous, 2),
+            0
+          ) / ratiosVous.length;
+        const ecartTypeVous = Math.sqrt(varianceVous);
+
+        const varianceBoomers =
+          ratiosBoomers.reduce(
+            (acc, ratio) => acc + Math.pow(ratio - moyenneRatiosBoomers, 2),
+            0
+          ) / ratiosBoomers.length;
+        const ecartTypeBoomers = Math.sqrt(varianceBoomers);
+
+        // Index d'équité (coefficient de variation inversé)
+        const indexEquiteVous = 1 - ecartTypeVous / moyenneRatiosVous;
+        const indexEquiteBoomers = 1 - ecartTypeBoomers / moyenneRatiosBoomers;
+
+        // Ratio d'inéquité (max/min)
+        const ratioInequiteVous = maxRatioVous / minRatioVous;
+        const ratioInequiteBoomers = maxRatioBoomer / minRatioBoomer;
+
+        return {
+          ratiosVous,
+          ratiosBoomers,
+          moyenneRatiosVous,
+          moyenneRatiosBoomers,
+          maxRatioVous,
+          minRatioVous,
+          maxRatioBoomer,
+          minRatioBoomer,
+          ecartTypeVous,
+          ecartTypeBoomers,
+          indexEquiteVous,
+          indexEquiteBoomers,
+          ratioInequiteVous,
+          ratioInequiteBoomers,
+          regimes: results.map((r) => ({
+            type: r.regimeType,
+            name: r.regimeName,
+            ratioVous: r.ratioRecuperationVous,
+            ratioBoomer: r.ratioRecuperationBoomer,
+          })),
+        };
+      }
+
+      function calculateConvergenceScenarios(
+        results,
+        convergenceType = "moyenne"
+      ) {
+        if (!results || results.length < 2) return [];
+
+        const metrics = calculateInterRegimeEquityMetrics(results);
+        let targetRatioVous, targetRatioBoomer;
+
+        // Détermination du ratio cible selon le type de convergence
+        switch (convergenceType) {
+          case "moyenne":
+            targetRatioVous = metrics.moyenneRatiosVous;
+            targetRatioBoomer = metrics.moyenneRatiosBoomers;
+            break;
+          case "haut":
+            targetRatioVous = metrics.maxRatioVous;
+            targetRatioBoomer = metrics.maxRatioBoomer;
+            break;
+          case "bas":
+            targetRatioVous = metrics.minRatioVous;
+            targetRatioBoomer = metrics.minRatioBoomer;
+            break;
+          case "prive":
+          case "public":
+          case "special":
+            const refRegime = results.find(
+              (r) => r.regimeType === convergenceType
+            );
+            if (refRegime) {
+              targetRatioVous = refRegime.ratioRecuperationVous;
+              targetRatioBoomer = refRegime.ratioRecuperationBoomer;
+            } else {
+              targetRatioVous = metrics.moyenneRatiosVous;
+              targetRatioBoomer = metrics.moyenneRatiosBoomers;
+            }
+            break;
+          default:
+            targetRatioVous = metrics.moyenneRatiosVous;
+            targetRatioBoomer = metrics.moyenneRatiosBoomers;
+        }
+
+        // Calcul des ajustements nécessaires pour chaque régime
+        return results.map((result) => {
+          const adjustmentNeededVous =
+            targetRatioVous / result.ratioRecuperationVous - 1;
+          const adjustmentNeededBoomer =
+            targetRatioBoomer / result.ratioRecuperationBoomer - 1;
+
+          // Calcul des ajustements par levier
+          const pensionAdjustment = calculatePensionAdjustmentForTarget(
+            result,
+            targetRatioVous
+          );
+          const cotisationAdjustment = calculateCotisationAdjustmentForTarget(
+            result,
+            targetRatioVous
+          );
+          const ageAdjustment = calculateAgeAdjustmentForTarget(
+            result,
+            targetRatioVous
+          );
+
+          return {
+            regime: result.regimeType,
+            regimeName: result.regimeName,
+            currentRatioVous: result.ratioRecuperationVous,
+            currentRatioBoomer: result.ratioRecuperationBoomer,
+            targetRatioVous,
+            targetRatioBoomer,
+            adjustmentNeededVous,
+            adjustmentNeededBoomer,
+            pensionAdjustment,
+            cotisationAdjustment,
+            ageAdjustment,
+            feasibilityScore: calculateFeasibilityScore({
+              pensionAdj: Math.abs(pensionAdjustment.adjustement),
+              cotisationAdj: Math.abs(cotisationAdjustment.adjustement),
+              ageAdj: Math.abs(ageAdjustment.adjustementAge),
+            }),
+          };
+        });
+      }
+
+      function calculatePensionAdjustmentForTarget(result, targetRatio) {
+        const pensionsOptimales = result.cotisationsVousTotales * targetRatio;
+        const adjustementPension =
+          pensionsOptimales / result.pensionsRecuesVous - 1;
+
+        const nouveauTauxPension =
+          result.tauxPensionVous * (1 + adjustementPension);
+        const nouvellePensionMensuelle =
+          result.pensionVousMensuel * (1 + adjustementPension);
+
+        return {
+          type: "Taux de pension",
+          tauxActuel: Math.round(result.tauxPensionVous * 1000) / 10,
+          nouveauTaux: Math.round(nouveauTauxPension * 1000) / 10,
+          pensionActuelle: Math.round(result.pensionVousMensuel),
+          nouvellePension: Math.round(nouvellePensionMensuelle),
+          adjustement: Math.round(adjustementPension * 1000) / 10,
+          nouveauRatio: targetRatio,
+          impact: `${adjustementPension > 0 ? "+" : ""}${
+            Math.round(adjustementPension * 1000) / 10
+          }% pension`,
+          feasible: adjustementPension >= -0.25 && adjustementPension <= 0.15,
+        };
+      }
+
+      function calculateCotisationAdjustmentForTarget(result, targetRatio) {
+        const cotisationsNecessaires = result.pensionsRecuesVous / targetRatio;
+        const adjustementCotisation =
+          cotisationsNecessaires / result.cotisationsVousTotales - 1;
+
+        const regimeConfig = PARAMETRES_RETRAITE.cotisations[result.regimeType];
+        const tauxActuel = regimeConfig.actuel;
+        const nouveauTaux = tauxActuel * (1 + adjustementCotisation);
+
+        return {
+          type: "Taux de cotisation",
+          tauxActuel: Math.round(tauxActuel * 1000) / 10,
+          nouveauTaux: Math.round(nouveauTaux * 1000) / 10,
+          adjustement: Math.round(adjustementCotisation * 1000) / 10,
+          nouveauRatio: targetRatio,
+          impact: `${adjustementCotisation > 0 ? "+" : ""}${
+            Math.round(adjustementCotisation * 1000) / 10
+          }% cotisation`,
+          feasible: Math.abs(adjustementCotisation) <= 0.3,
+        };
+      }
+
+      function calculateAgeAdjustmentForTarget(result, targetRatio) {
+        const pensionAnnuelle = result.pensionVousAnnuel;
+        const cotisationsTotales = result.cotisationsVousTotales;
+        const pensionsNecessaires = cotisationsTotales * targetRatio;
+        const anneesRetraiteTheorique = pensionsNecessaires / pensionAnnuelle;
+
+        const esperanceVie =
+          PARAMETRES_RETRAITE.demographics.esperanceVie.actuel[
+            result.regimeType
+          ] || 85;
+        const anneesRetraiteTarget = Math.max(
+          10,
+          Math.min(30, anneesRetraiteTheorique)
+        );
+        const nouvelAgeDepart = esperanceVie - anneesRetraiteTarget;
+        const adjustementAge = nouvelAgeDepart - result.ageRetraiteVous;
+
+        return {
+          type: "Âge de départ",
+          adjustementAge: Math.round(adjustementAge * 10) / 10,
+          nouvelAge: Math.round(nouvelAgeDepart * 10) / 10,
+          nouveauRatio:
+            Math.round(
+              ((result.pensionVousAnnuel * anneesRetraiteTarget) /
+                result.cotisationsVousTotales) *
+                100
+            ) / 100,
+          impact: `${Math.round(nouvelAgeDepart * 10) / 10} ans (${
+            adjustementAge > 0 ? "+" : ""
+          }${Math.round(adjustementAge * 10) / 10} ans)`,
+          feasible: Math.abs(adjustementAge) <= 5,
+        };
+      }
+
+      function calculateFeasibilityScore(adjustments) {
+        let score = 0;
+
+        // Score pension (25% du total)
+        if (adjustments.pensionAdj <= 0.15) score += 25;
+        else if (adjustments.pensionAdj <= 0.25) score += 15;
+        else if (adjustments.pensionAdj <= 0.35) score += 5;
+
+        // Score cotisation (35% du total)
+        if (adjustments.cotisationAdj <= 0.1) score += 35;
+        else if (adjustments.cotisationAdj <= 0.2) score += 25;
+        else if (adjustments.cotisationAdj <= 0.3) score += 15;
+        else if (adjustments.cotisationAdj <= 0.4) score += 5;
+
+        // Score âge (40% du total)
+        if (adjustments.ageAdj <= 2) score += 40;
+        else if (adjustments.ageAdj <= 3) score += 30;
+        else if (adjustments.ageAdj <= 5) score += 20;
+        else if (adjustments.ageAdj <= 7) score += 10;
+
+        return score;
+      }
+
+      function createInterRegimeEquityMetrics(metrics) {
+        if (!metrics) return "";
+
+        return `
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <h5>📊 Vos Ratios (Retour/Cotisation)</h5>
+              <div class="metric-values">
+                <div class="metric-row">
+                  <span>Moyenne:</span> <strong>${metrics.moyenneRatiosVous.toFixed(
+                    2
+                  )}x</strong>
+                </div>
+                <div class="metric-row">
+                  <span>Min-Max:</span> <strong>${metrics.minRatioVous.toFixed(
+                    2
+                  )}x - ${metrics.maxRatioVous.toFixed(2)}x</strong>
+                </div>
+                <div class="metric-row">
+                  <span>Écart:</span> <strong>${(
+                    metrics.maxRatioVous - metrics.minRatioVous
+                  ).toFixed(2)}x</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="metric-card">
+              <h5>👴 Ratios Boomers (Retour/Cotisation)</h5>
+              <div class="metric-values">
+                <div class="metric-row">
+                  <span>Moyenne:</span> <strong>${metrics.moyenneRatiosBoomers.toFixed(
+                    2
+                  )}x</strong>
+                </div>
+                <div class="metric-row">
+                  <span>Min-Max:</span> <strong>${metrics.minRatioBoomer.toFixed(
+                    2
+                  )}x - ${metrics.maxRatioBoomer.toFixed(2)}x</strong>
+                </div>
+                <div class="metric-row">
+                  <span>Écart:</span> <strong>${(
+                    metrics.maxRatioBoomer - metrics.minRatioBoomer
+                  ).toFixed(2)}x</strong>
+                </div>
+              </div>
+            </div>
+            
+            <div class="metric-card">
+              <h5>⚖️ Indices d'Équité</h5>
+              <div class="metric-values">
+                <div class="metric-row">
+                  <span>Équité Vous:</span> 
+                  <strong class="${
+                    metrics.indexEquiteVous >= 0.8
+                      ? "good-equity"
+                      : metrics.indexEquiteVous >= 0.6
+                      ? "medium-equity"
+                      : "poor-equity"
+                  }">
+                    ${(metrics.indexEquiteVous * 100).toFixed(0)}%
+                  </strong>
+                </div>
+                <div class="metric-row">
+                  <span>Équité Boomers:</span> 
+                  <strong class="${
+                    metrics.indexEquiteBoomers >= 0.8
+                      ? "good-equity"
+                      : metrics.indexEquiteBoomers >= 0.6
+                      ? "medium-equity"
+                      : "poor-equity"
+                  }">
+                    ${(metrics.indexEquiteBoomers * 100).toFixed(0)}%
+                  </strong>
+                </div>
+                <div class="metric-row">
+                  <span>Inéquité Ratio:</span> <strong>${metrics.ratioInequiteVous.toFixed(
+                    2
+                  )}x</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="regime-comparison-bars">
+            <h5>📊 Comparaison Visuelle des Ratios</h5>
+            ${metrics.regimes
+              .map((regime) => {
+                // Utiliser la même échelle pour tous les ratios (max global)
+                const maxRatioGlobal = Math.max(
+                  metrics.maxRatioVous,
+                  metrics.maxRatioBoomer
+                );
+                return `
+              <div class="regime-bar-row">
+                <div class="regime-bar-label">${regime.name}</div>
+                <div class="regime-bar-container">
+                  <div class="regime-bar vous-bar ${regime.type}" 
+                       style="width: ${
+                         (regime.ratioVous / maxRatioGlobal) * 100
+                       }%">
+                    <span class="bar-value">${regime.ratioVous.toFixed(
+                      1
+                    )}x</span>
+                  </div>
+                  <div class="regime-bar boomer-bar ${regime.type}" 
+                       style="width: ${
+                         (regime.ratioBoomer / maxRatioGlobal) * 100
+                       }%; opacity: 0.6; margin-top: 2px;">
+                    <span class="bar-value">${regime.ratioBoomer.toFixed(
+                      1
+                    )}x</span>
+                  </div>
+                </div>
+              </div>
+            `;
+              })
+              .join("")}
+            <div class="bar-legend">
+              <div class="legend-section">
+                <h6>Régimes :</h6>
+                <span class="legend-item"><div class="legend-color prive-regime"></div> Privé (CNAV)</span>
+                <span class="legend-item"><div class="legend-color public-regime"></div> Public (CNRACL)</span>
+                <span class="legend-item"><div class="legend-color special-regime"></div> Spécial (SNCF/RATP)</span>
+              </div>
+              <div class="legend-section">
+                <h6>Générations :</h6>
+                <span class="legend-item"><div class="legend-color generation-vous"></div> Vos ratios (opacité 100%)</span>
+                <span class="legend-item"><div class="legend-color generation-boomer"></div> Ratios boomers (opacité 70%)</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function createConvergenceScenarios(scenarios, convergenceType, metrics) {
+        if (!scenarios || scenarios.length === 0) return "";
+
+        const convergenceLabels = {
+          moyenne: "Convergence vers la Moyenne",
+          haut: "Convergence vers le Haut",
+          bas: "Convergence vers le Bas",
+          prive: "Convergence vers le Régime Privé",
+          public: "Convergence vers le Régime Public",
+          special: "Convergence vers le Régime Spécial",
+        };
+
+        return `
+          <div class="convergence-scenarios">
+            <h4>🎯 ${
+              convergenceLabels[convergenceType] || "Scénario de Convergence"
+            }</h4>
+            
+            <div class="convergence-target-info">
+              <p><strong>Objectif :</strong> Ratio cible de <span class="target-ratio">${scenarios[0].targetRatioVous.toFixed(
+                2
+              )}x</span></p>
+            </div>
+            
+            <div class="convergence-table-container">
+              <table class="convergence-table">
+                <thead>
+                  <tr>
+                    <th rowspan="2">Régime</th>
+                    <th rowspan="2">Ratio<br>Actuel</th>
+                    <th rowspan="2">Ratio<br>Cible</th>
+                    <th rowspan="2">Ajustement<br>Nécessaire</th>
+                    <th colspan="3">Leviers d'Action</th>
+                    <th rowspan="2">Score<br>Faisabilité</th>
+                  </tr>
+                  <tr>
+                    <th>📅 Âge</th>
+                    <th>💰 Cotisation</th>
+                    <th>🏦 Pension</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${scenarios
+                    .map(
+                      (scenario) => `
+                    <tr>
+                      <td class="regime-name"><strong>${
+                        scenario.regimeName
+                      }</strong></td>
+                      <td class="current-ratio">${scenario.currentRatioVous.toFixed(
+                        2
+                      )}x</td>
+                      <td class="target-ratio">${scenario.targetRatioVous.toFixed(
+                        2
+                      )}x</td>
+                      <td class="adjustment-needed ${
+                        scenario.adjustmentNeededVous > 0
+                          ? "positive-adj"
+                          : "negative-adj"
+                      }">
+                        ${scenario.adjustmentNeededVous > 0 ? "+" : ""}${(
+                        scenario.adjustmentNeededVous * 100
+                      ).toFixed(1)}%
+                      </td>
+                      <td class="lever-cell">
+                        ${scenario.ageAdjustment.nouvelAge} ans<br>
+                        <small>(${
+                          scenario.ageAdjustment.adjustementAge > 0 ? "+" : ""
+                        }${scenario.ageAdjustment.adjustementAge} ans)</small>
+                      </td>
+                      <td class="lever-cell">
+                        ${scenario.cotisationAdjustment.nouveauTaux}%<br>
+                        <small>(${
+                          scenario.cotisationAdjustment.adjustement > 0
+                            ? "+"
+                            : ""
+                        }${scenario.cotisationAdjustment.adjustement}%)</small>
+                      </td>
+                      <td class="lever-cell">
+                        ${scenario.pensionAdjustment.nouvellePension}€<br>
+                        <small>(${
+                          scenario.pensionAdjustment.adjustement > 0 ? "+" : ""
+                        }${scenario.pensionAdjustment.adjustement}%)</small>
+                      </td>
+                      <td class="feasibility-score">
+                        <div class="score-circle ${
+                          scenario.feasibilityScore >= 70
+                            ? "high-score"
+                            : scenario.feasibilityScore >= 40
+                            ? "medium-score"
+                            : "low-score"
+                        }">
+                          ${scenario.feasibilityScore}/100
+                        </div>
+                      </td>
+                    </tr>
+                  `
+                    )
+                    .join("")}
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="convergence-impact">
+              <h5>📈 Impact de la Convergence</h5>
+              <div class="impact-grid">
+                <div class="impact-metric">
+                  <span class="impact-label">Écart réduit à :</span>
+                  <span class="impact-value">0.00x</span>
+                </div>
+                <div class="impact-metric">
+                  <span class="impact-label">Index d'équité après :</span>
+                  <span class="impact-value good-equity">100%</span>
+                </div>
+                <div class="impact-metric">
+                  <span class="impact-label">Faisabilité moyenne :</span>
+                  <span class="impact-value">${Math.round(
+                    scenarios.reduce((sum, s) => sum + s.feasibilityScore, 0) /
+                      scenarios.length
+                  )}/100</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function updateInterRegimeEquity(results) {
+        const interRegimeContainer = document.querySelector(
+          ".inter-regime-container"
+        );
+        const metricsContent = document.getElementById(
+          "equity-metrics-content"
+        );
+        const scenariosContent = document.getElementById(
+          "convergence-scenarios-content"
+        );
+        const impactSummary = document.getElementById(
+          "convergence-impact-summary"
+        );
+
+        if (!interRegimeContainer || !metricsContent || !scenariosContent)
+          return;
+
+        if (!results || results.length < 2) {
+          interRegimeContainer.style.display = "none";
+          return;
+        }
+
+        const metrics = calculateInterRegimeEquityMetrics(results);
+        if (!metrics) return;
+
+        // Afficher les métriques d'équité
+        metricsContent.innerHTML = createInterRegimeEquityMetrics(metrics);
+
+        // Calculer et afficher les scénarios de convergence
+        const convergenceType =
+          document.getElementById("convergenceType")?.value || "moyenne";
+        const scenarios = calculateConvergenceScenarios(
+          results,
+          convergenceType
+        );
+        scenariosContent.innerHTML = createConvergenceScenarios(
+          scenarios,
+          convergenceType,
+          metrics
+        );
+
+        // Résumé de l'impact
+        const avgFeasibility = Math.round(
+          scenarios.reduce((sum, s) => sum + s.feasibilityScore, 0) /
+            scenarios.length
+        );
+        impactSummary.innerHTML = `
+          <div class="summary-grid">
+            <div>
+              <strong>🎯 Efficacité de l'harmonisation:</strong><br>
+              • Élimination complète des écarts entre régimes<br>
+              • Index d'équité porté à 100%<br>
+              • Justice horizontale respectée
+            </div>
+            <div>
+              <strong>⚠️ Défis de mise en œuvre:</strong><br>
+              • Faisabilité moyenne: ${avgFeasibility}/100<br>
+              • Résistances politiques probables<br>
+              • Transitions à étaler dans le temps
+            </div>
+          </div>
+          <p class="summary-note">
+            L'harmonisation inter-régimes nécessite un compromis entre équité parfaite et faisabilité politique.
+            Une approche progressive sur 10-15 ans est recommandée.
+          </p>
+        `;
+
+        interRegimeContainer.style.display = "block";
+      }
+
       function calculate() {
         const selectedRegime = document.getElementById("regime").value;
         const salaireMensuel =
@@ -1487,6 +2206,7 @@
           // Store results for ratio updates
           currentResults = regimeResults;
           updateEquityScenarios(regimeResults);
+          updateInterRegimeEquity(regimeResults);
         } else {
           // Calculate single regime
           const result = calculateRegime(
@@ -1502,6 +2222,7 @@
           // Store results for ratio updates and show equity scenarios
           currentResults = [result];
           updateEquityScenarios([result]);
+          updateInterRegimeEquity([result]);
         }
       }
 
@@ -1710,6 +2431,27 @@
         console.log("Event listeners attached successfully");
       } else {
         console.error("RatioTarget element not found!");
+      }
+
+      // Add event listener for convergence type selector
+      const convergenceType = document.getElementById("convergenceType");
+      console.log("ConvergenceType element found:", convergenceType);
+
+      if (convergenceType) {
+        convergenceType.addEventListener("change", (e) => {
+          console.log("Convergence type changed to:", e.target.value);
+          if (currentResults && currentResults.length >= 2) {
+            console.log("Updating inter-regime equity with stored results...");
+            updateInterRegimeEquity(currentResults);
+          } else {
+            console.log(
+              "No stored results or insufficient regimes, skipping update"
+            );
+          }
+        });
+        console.log("Convergence event listener attached successfully");
+      } else {
+        console.error("ConvergenceType element not found!");
       }
 
       calculate();

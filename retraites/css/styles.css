@@ -377,6 +377,508 @@ select:focus {
 }
 
 /* ========================================
+   INTER-REGIME EQUITY SECTION
+   ======================================== */
+
+#inter-regime-equity {
+  max-width: 1200px;
+  margin: 20px auto 0;
+  padding: 20px;
+  background: #f9f5e7;
+  border-radius: 8px;
+  font-size: 12px;
+  border: 1px solid #ddd;
+}
+
+.inter-regime-container {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.convergence-selector {
+  background: #e8f4fd;
+  border: 1px solid #b3d9f2;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.convergence-selector label {
+  display: inline-block;
+  font-weight: bold;
+  font-size: 12px;
+  margin-right: 10px;
+  color: #1976d2;
+}
+
+.convergence-selector select {
+  display: inline-block;
+  width: auto;
+  min-width: 300px;
+  padding: 6px 12px;
+  font-size: 12px;
+  border: 1px solid #b3d9f2;
+  border-radius: 4px;
+  background: white;
+}
+
+.convergence-selector small {
+  display: block;
+  margin-top: 8px;
+  font-size: 10px;
+  color: #666;
+  font-style: italic;
+}
+
+.equity-metrics-summary {
+  margin-bottom: 25px;
+}
+
+.equity-metrics-summary h4 {
+  color: #8b0000;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  font-size: 14px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 12px;
+}
+
+.metric-card h5 {
+  color: #333;
+  margin: 0 0 10px 0;
+  font-size: 11px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+.metric-values {
+  font-size: 10px;
+}
+
+.metric-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 5px 0;
+  padding: 3px 0;
+}
+
+.metric-row span {
+  color: #666;
+}
+
+.metric-row strong {
+  color: #333;
+}
+
+.good-equity {
+  color: #2e7d32 !important;
+  font-weight: bold;
+}
+
+.medium-equity {
+  color: #f57c00 !important;
+  font-weight: bold;
+}
+
+.poor-equity {
+  color: #c62828 !important;
+  font-weight: bold;
+}
+
+.regime-comparison-bars {
+  margin-top: 20px;
+}
+
+.regime-comparison-bars h5 {
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 12px;
+  text-align: center;
+}
+
+.regime-bar-row {
+  margin-bottom: 12px;
+}
+
+.regime-bar-label {
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  color: #333;
+}
+
+.regime-bar-container {
+  background: #f0f0f0;
+  border-radius: 4px;
+  padding: 2px;
+  min-height: 44px;
+}
+
+.regime-bar {
+  height: 18px;
+  border-radius: 3px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  margin-bottom: 2px;
+}
+
+.regime-bar.vous-bar.prive {
+  background: linear-gradient(90deg, #2196f3, #64b5f6);
+}
+
+.regime-bar.vous-bar.public {
+  background: linear-gradient(90deg, #9c27b0, #ba68c8);
+}
+
+.regime-bar.vous-bar.special {
+  background: linear-gradient(90deg, #ff9800, #ffb74d);
+}
+
+.regime-bar.boomer-bar.prive {
+  background: linear-gradient(90deg, #1976d2, #42a5f5);
+}
+
+.regime-bar.boomer-bar.public {
+  background: linear-gradient(90deg, #7b1fa2, #ab47bc);
+}
+
+.regime-bar.boomer-bar.special {
+  background: linear-gradient(90deg, #f57c00, #ffa726);
+}
+
+.bar-value {
+  color: white;
+  font-size: 9px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.bar-legend {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 15px;
+  font-size: 10px;
+  flex-wrap: wrap;
+}
+
+.legend-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.legend-section h6 {
+  margin: 0 0 5px 0;
+  font-size: 10px;
+  font-weight: bold;
+  color: #333;
+  text-decoration: underline;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 2px 0;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid #ddd;
+}
+
+.legend-color.prive-regime {
+  background: linear-gradient(90deg, #2196f3, #64b5f6);
+}
+
+.legend-color.public-regime {
+  background: linear-gradient(90deg, #9c27b0, #ba68c8);
+}
+
+.legend-color.special-regime {
+  background: linear-gradient(90deg, #ff9800, #ffb74d);
+}
+
+.legend-color.generation-vous {
+  background: #888;
+  opacity: 1;
+}
+
+.legend-color.generation-boomer {
+  background: #888;
+  opacity: 0.7;
+}
+
+.convergence-scenarios {
+  margin: 25px 0;
+}
+
+.convergence-scenarios h4 {
+  color: #8b0000;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #8b0000;
+  padding-bottom: 5px;
+  font-size: 14px;
+}
+
+.convergence-target-info {
+  background: #e8f5e8;
+  border: 1px solid #c8e6c9;
+  border-radius: 6px;
+  padding: 10px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-size: 11px;
+}
+
+.target-ratio {
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.convergence-table-container {
+  overflow-x: auto;
+  margin: 20px 0;
+  border-radius: 8px;
+}
+
+.convergence-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 10px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.convergence-table th {
+  background: #f5f5f5;
+  color: #333;
+  padding: 8px 6px;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 600;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+}
+
+.convergence-table thead tr:first-child th {
+  background: #e9e9e9;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 10px 8px;
+  color: #222;
+}
+
+.convergence-table td {
+  padding: 8px 6px;
+  text-align: center;
+  border: 1px solid #ddd;
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.convergence-table .regime-name {
+  background: #f8f8f8;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 10px;
+  min-width: 120px;
+}
+
+.convergence-table .current-ratio {
+  background: #fff3cd;
+  font-weight: bold;
+}
+
+.convergence-table .target-ratio {
+  background: #e8f5e8;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.convergence-table .positive-adj {
+  background: #ffebee;
+  color: #c62828;
+  font-weight: bold;
+}
+
+.convergence-table .negative-adj {
+  background: #e8f5e8;
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.convergence-table .lever-cell {
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+.convergence-table .lever-cell small {
+  font-size: 8px;
+  color: #666;
+  font-style: italic;
+  display: block;
+}
+
+.feasibility-score {
+  padding: 5px !important;
+}
+
+.score-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 8px;
+  font-weight: bold;
+  color: white;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.score-circle.high-score {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+}
+
+.score-circle.medium-score {
+  background: linear-gradient(135deg, #ff9800, #ffb74d);
+}
+
+.score-circle.low-score {
+  background: linear-gradient(135deg, #f44336, #ef5350);
+}
+
+.convergence-impact {
+  background: #f0f8ff;
+  border: 1px solid #b3d9f2;
+  border-radius: 6px;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.convergence-impact h5 {
+  color: #1976d2;
+  margin: 0 0 10px 0;
+  font-size: 12px;
+  border-bottom: 1px solid #b3d9f2;
+  padding-bottom: 5px;
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
+  font-size: 10px;
+}
+
+.impact-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.impact-label {
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.impact-value {
+  font-weight: bold;
+  font-size: 11px;
+  color: #333;
+}
+
+.convergence-summary-box {
+  background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 100%);
+  border-radius: 8px;
+  padding: 15px;
+  border: 1px solid #b3d9f2;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.convergence-summary-box h4 {
+  color: #1976d2;
+  margin: 0 0 10px 0;
+  font-size: 14px;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN FOR INTER-REGIME
+   ======================================== */
+
+@media (max-width: 768px) {
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .impact-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .convergence-selector select {
+    min-width: 250px;
+  }
+}
+
+@media (min-width: 1400px) {
+  #inter-regime-equity {
+    max-width: 1400px;
+  }
+
+  .metrics-grid {
+    gap: 20px;
+  }
+
+  .convergence-table {
+    font-size: 11px;
+  }
+
+  .convergence-table th {
+    font-size: 10px;
+    padding: 10px 8px;
+  }
+
+  .convergence-table td {
+    font-size: 10px;
+    padding: 10px 8px;
+  }
+}
+
+/* ========================================
    EQUITY SCENARIOS SECTION
    ======================================== */
 
@@ -1101,6 +1603,180 @@ select:focus {
 
   .scenarios-table-container {
     background: #2a2a2a;
+  }
+
+  /* Inter-regime equity dark mode */
+  #inter-regime-equity {
+    background: #2a2a2a;
+    border-color: #555;
+  }
+
+  .inter-regime-container {
+    background: #2d2d2d;
+    border-color: #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+  }
+
+  .convergence-selector {
+    background: #2a3a4a;
+    border-color: #4a5a6a;
+  }
+
+  .convergence-selector label {
+    color: #64b5f6;
+  }
+
+  .convergence-selector select {
+    background: #3d3d3d;
+    color: #e0e0e0;
+    border-color: #555;
+  }
+
+  .convergence-selector small {
+    color: #aaa;
+  }
+
+  .equity-metrics-summary h4 {
+    color: #ff6b6b;
+    border-bottom-color: #555;
+  }
+
+  .metric-card {
+    background: #404040;
+    border-color: #555;
+  }
+
+  .metric-card h5 {
+    color: #e0e0e0;
+    border-bottom-color: #555;
+  }
+
+  .metric-row span {
+    color: #aaa;
+  }
+
+  .metric-row strong {
+    color: #e0e0e0;
+  }
+
+  .regime-comparison-bars h5 {
+    color: #e0e0e0;
+  }
+
+  .regime-bar-label {
+    color: #e0e0e0;
+  }
+
+  .regime-bar-container {
+    background: #555;
+  }
+
+  .legend-section h6 {
+    color: #e0e0e0;
+  }
+
+  .legend-color {
+    border-color: #555;
+  }
+
+  .legend-color.generation-vous {
+    background: #aaa;
+  }
+
+  .legend-color.generation-boomer {
+    background: #aaa;
+  }
+
+  .convergence-scenarios h4 {
+    color: #ff6b6b;
+    border-bottom-color: #ff6b6b;
+  }
+
+  .convergence-target-info {
+    background: #2e5a2e;
+    border-color: #4caf50;
+    color: #e0e0e0;
+  }
+
+  .target-ratio {
+    color: #a5d6a7;
+  }
+
+  .convergence-table {
+    background: #2d2d2d;
+  }
+
+  .convergence-table th {
+    background: #404040;
+    color: #e0e0e0;
+    border-color: #555;
+  }
+
+  .convergence-table thead tr:first-child th {
+    background: #353535;
+    color: #f0f0f0;
+  }
+
+  .convergence-table td {
+    border-color: #555;
+    color: #e0e0e0;
+  }
+
+  .convergence-table .regime-name {
+    background: #404040;
+  }
+
+  .convergence-table .current-ratio {
+    background: #4a3d00;
+    color: #fff3cd;
+  }
+
+  .convergence-table .target-ratio {
+    background: #2e5a2e;
+    color: #a5d6a7;
+  }
+
+  .convergence-table .positive-adj {
+    background: #5a2e2e;
+    color: #ef9a9a;
+  }
+
+  .convergence-table .negative-adj {
+    background: #2e5a2e;
+    color: #a5d6a7;
+  }
+
+  .convergence-table .lever-cell small {
+    color: #aaa;
+  }
+
+  .convergence-impact {
+    background: #2a3a4a;
+    border-color: #4a5a6a;
+    color: #e0e0e0;
+  }
+
+  .convergence-impact h5 {
+    color: #64b5f6;
+    border-bottom-color: #4a5a6a;
+  }
+
+  .impact-label {
+    color: #aaa;
+  }
+
+  .impact-value {
+    color: #e0e0e0;
+  }
+
+  .convergence-summary-box {
+    background: linear-gradient(135deg, #2a3a4a 0%, #3a4a5a 100%);
+    border-color: #4a5a6a;
+    color: #e0e0e0;
+  }
+
+  .convergence-summary-box h4 {
+    color: #64b5f6;
   }
 
   /* Dark mode responsive adjustments */
