@@ -468,79 +468,79 @@
         font-style: italic;
       }
 
-      /* Institutional Rights Section Styles */
-      .institutional-rights-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 20px;
-        margin-top: 30px;
-      }
-
-      .institutional-card {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        border-left: 5px solid #007bff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
-      }
-
-      .institutional-card:hover {
-        transform: translateY(-2px);
-      }
-
-      .institutional-card h3 {
-        margin-top: 0;
-        font-size: 18px;
-        margin-bottom: 15px;
-      }
-
-      .negative-right-content {
+      /* Enhanced Natural Rights Section with Institutional Components */
+      .right-principle {
         margin-bottom: 15px;
         padding-bottom: 15px;
-        border-bottom: 2px solid #dee2e6;
+        border-bottom: 2px solid #e9ecef;
       }
 
-      .negative-right-content p {
+      .right-negative {
+        margin-bottom: 15px;
+        padding: 12px;
+        background: linear-gradient(135deg, #fff5f5, #ffeaea);
+        border-radius: 4px;
+      }
+
+      .right-negative p {
         margin-bottom: 0;
         line-height: 1.5;
         font-weight: 500;
+        color: #495057;
       }
 
-      .positive-complements h4 {
+      .right-positive {
+        padding: 12px;
+        background: linear-gradient(135deg, #f0f8f0, #e8f5e8);
+        border-radius: 4px;
+      }
+
+      .right-positive h4 {
         margin-top: 0;
         margin-bottom: 12px;
         color: #495057;
         font-size: 16px;
       }
 
-      .positive-complements ul {
+      .right-positive ul {
         margin: 0;
         padding-left: 20px;
       }
 
-      .positive-complements li {
+      .right-positive li {
         margin-bottom: 10px;
         line-height: 1.5;
         color: #495057;
       }
 
-      .positive-complements li:last-child {
+      .right-positive li:last-child {
         margin-bottom: 0;
       }
 
-      .positive-complements strong {
+      .right-positive strong {
         color: #212529;
       }
 
-      @media (max-width: 768px) {
-        .institutional-rights-grid {
-          grid-template-columns: 1fr;
-          gap: 15px;
+      /* Dark mode adjustments for new structure */
+      @media (prefers-color-scheme: dark) {
+        .right-negative {
+          background: linear-gradient(135deg, #2d1b1b, #3d2626);
+          border-left-color: #ff6b6b;
         }
 
-        .institutional-card {
-          padding: 15px;
+        .right-positive {
+          background: linear-gradient(135deg, #1b2d1b, #263d26);
+          border-left-color: #51cf66;
+        }
+
+        .right-negative p,
+        .right-positive h4,
+        .right-positive li {
+          color: #e0e0e0;
+        }
+
+        .right-positive strong {
+          color: #ffffff;
         }
       }
     </style>
@@ -2859,104 +2859,33 @@
           id="rights-heading"
           style="text-align: center; margin-top: 50px; margin-bottom: 30px"
         >
-          The 6 Objective Natural Rights
+          The 6 Objective Natural Rights & Their Institutional Foundations
         </h2>
-        <p style="text-align: center; max-width: 800px; margin: 0 auto 30px">
-          These six economic curves demonstrate fundamental truths about human
-          prosperity, revealing six objective natural rights that form the
-          foundation of a free society:
+        <p style="text-align: center; max-width: 900px; margin: 0 auto 30px">
+          These six economic curves reveal fundamental natural rights. Each
+          negative right (freedom from interference) requires positive
+          institutional frameworks to become real rather than aspirational:
         </p>
 
         <div class="natural-rights-grid">
           <div class="right-card" style="border-left-color: #007bff">
             <h3 style="color: #007bff">1. Right to Economic Growth</h3>
-            <p><strong>Through Low Public Spending</strong></p>
-            <p class="source">
-              Derived from the <strong>Armey Curve</strong>: Excessive
-              government spending crowds out private investment. Prosperity
-              requires limited government.
-            </p>
-          </div>
-
-          <div class="right-card" style="border-left-color: #28a745">
-            <h3 style="color: #28a745">2. Right to Economic Attractiveness</h3>
-            <p><strong>Through Low Taxes</strong></p>
-            <p class="source">
-              Derived from the <strong>Laffer Curve</strong>: High taxes destroy
-              incentives and drive away capital. Low taxes attract investment
-              and maximize revenue.
-            </p>
-          </div>
-
-          <div class="right-card" style="border-left-color: #dc3545">
-            <h3 style="color: #dc3545">3. Right to Economic Recovery</h3>
-            <p><strong>Through Structural Adjustment</strong></p>
-            <p class="source">
-              Derived from the <strong>J-Curve</strong>: Necessary reforms may
-              cause short-term pain but lead to long-term health. Delaying them
-              only worsens the crisis.
-            </p>
-          </div>
-
-          <div class="right-card" style="border-left-color: #6f42c1">
-            <h3 style="color: #6f42c1">4. Right to Fair Prices</h3>
-            <p><strong>Through Free Markets</strong></p>
-            <p class="source">
-              Derived from <strong>Supply & Demand</strong>: Prices are
-              information signals. Price controls create shortages; free markets
-              ensure abundance.
-            </p>
-          </div>
-
-          <div class="right-card" style="border-left-color: #17a2b8">
-            <h3 style="color: #17a2b8">5. Right to Productivity</h3>
-            <p><strong>Through Specialization</strong></p>
-            <p class="source">
-              Derived from the <strong>Division of Labor</strong>: We get richer
-              by doing fewer things better and trading for the rest. Barriers to
-              trade impoverish us all.
-            </p>
-          </div>
-
-          <div class="right-card" style="border-left-color: #e83e8c">
-            <h3 style="color: #e83e8c">6. Right to Prosperity</h3>
-            <p><strong>Through Capitalism</strong></p>
-            <p class="source">
-              Derived from <strong>The Hockey Stick</strong>: For millennia
-              humanity was poor. Only with property rights and free markets did
-              we escape poverty.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section
-        id="institutional-rights"
-        aria-labelledby="institutional-heading"
-      >
-        <h2
-          id="institutional-heading"
-          style="text-align: center; margin-top: 50px; margin-bottom: 30px"
-        >
-          The Institutional Complements
-        </h2>
-        <p style="text-align: center; max-width: 900px; margin: 0 auto 30px">
-          The six negative rights above require positive institutional
-          frameworks to become real rather than aspirational. Each liberty right
-          needs corresponding institutional safeguards:
-        </p>
-
-        <div class="institutional-rights-grid">
-          <div class="institutional-card" style="border-left-color: #007bff">
-            <h3 style="color: #007bff">1. Economic Growth / Low Spending</h3>
-            <div class="negative-right-content">
+            <div class="right-principle">
+              <p><strong>Through Low Public Spending</strong></p>
+              <p class="source">
+                Derived from the <strong>Armey Curve</strong>: Excessive
+                government spending crowds out private investment. Prosperity
+                requires limited government.
+              </p>
+            </div>
+            <div class="right-negative">
               <p>
                 <strong>Negative Right:</strong> Not to have private investment
                 and enterprise crowded out by an overgrown state.
               </p>
             </div>
-            <div class="positive-complements">
-              <h4>Institutional Complements:</h4>
+            <div class="right-positive">
+              <h4>Institutional Foundations:</h4>
               <ul>
                 <li>
                   <strong>Right to a lean, competent core state</strong> that
@@ -2975,18 +2904,24 @@
             </div>
           </div>
 
-          <div class="institutional-card" style="border-left-color: #28a745">
-            <h3 style="color: #28a745">
-              2. Economic Attractiveness / Low Taxes
-            </h3>
-            <div class="negative-right-content">
+          <div class="right-card" style="border-left-color: #28a745">
+            <h3 style="color: #28a745">2. Right to Economic Attractiveness</h3>
+            <div class="right-principle">
+              <p><strong>Through Low Taxes</strong></p>
+              <p class="source">
+                Derived from the <strong>Laffer Curve</strong>: High taxes
+                destroy incentives and drive away capital. Low taxes attract
+                investment and maximize revenue.
+              </p>
+            </div>
+            <div class="right-negative">
               <p>
                 <strong>Negative Right:</strong> Not to have one's productive
                 effort confiscated at punitive rates that destroy incentives.
               </p>
             </div>
-            <div class="positive-complements">
-              <h4>Institutional Complements:</h4>
+            <div class="right-positive">
+              <h4>Institutional Foundations:</h4>
               <ul>
                 <li>
                   <strong>Right to a simple, predictable tax code</strong> (few
@@ -3001,18 +2936,24 @@
             </div>
           </div>
 
-          <div class="institutional-card" style="border-left-color: #dc3545">
-            <h3 style="color: #dc3545">
-              3. Economic Recovery / Structural Adjustment
-            </h3>
-            <div class="negative-right-content">
+          <div class="right-card" style="border-left-color: #dc3545">
+            <h3 style="color: #dc3545">3. Right to Economic Recovery</h3>
+            <div class="right-principle">
+              <p><strong>Through Structural Adjustment</strong></p>
+              <p class="source">
+                Derived from the <strong>J-Curve</strong>: Necessary reforms may
+                cause short-term pain but lead to long-term health. Delaying
+                them only worsens the crisis.
+              </p>
+            </div>
+            <div class="right-negative">
               <p>
                 <strong>Negative Right:</strong> Not to be trapped indefinitely
                 in unsustainable policies because leaders fear short-term pain.
               </p>
             </div>
-            <div class="positive-complements">
-              <h4>Institutional Complements:</h4>
+            <div class="right-positive">
+              <h4>Institutional Foundations:</h4>
               <ul>
                 <li>
                   <strong>Right to credible adjustment programs</strong> that
@@ -3028,17 +2969,25 @@
             </div>
           </div>
 
-          <div class="institutional-card" style="border-left-color: #6f42c1">
-            <h3 style="color: #6f42c1">4. Fair Prices / Free Markets</h3>
-            <div class="negative-right-content">
+          <div class="right-card" style="border-left-color: #6f42c1">
+            <h3 style="color: #6f42c1">4. Right to Fair Prices</h3>
+            <div class="right-principle">
+              <p><strong>Through Free Markets</strong></p>
+              <p class="source">
+                Derived from <strong>Supply & Demand</strong>: Prices are
+                information signals. Price controls create shortages; free
+                markets ensure abundance.
+              </p>
+            </div>
+            <div class="right-negative">
               <p>
                 <strong>Negative Right:</strong> Not to have prices distorted by
                 controls that create shortages, black markets, and arbitrage
                 rents.
               </p>
             </div>
-            <div class="positive-complements">
-              <h4>Institutional Complements:</h4>
+            <div class="right-positive">
+              <h4>Institutional Foundations:</h4>
               <ul>
                 <li>
                   <strong>Right to accurate, timely market information</strong>
@@ -3054,17 +3003,25 @@
             </div>
           </div>
 
-          <div class="institutional-card" style="border-left-color: #17a2b8">
-            <h3 style="color: #17a2b8">5. Productivity / Specialization</h3>
-            <div class="negative-right-content">
+          <div class="right-card" style="border-left-color: #17a2b8">
+            <h3 style="color: #17a2b8">5. Right to Productivity</h3>
+            <div class="right-principle">
+              <p><strong>Through Specialization</strong></p>
+              <p class="source">
+                Derived from the <strong>Division of Labor</strong>: We get
+                richer by doing fewer things better and trading for the rest.
+                Barriers to trade impoverish us all.
+              </p>
+            </div>
+            <div class="right-negative">
               <p>
                 <strong>Negative Right:</strong> Not to be blocked from
                 specializing and trading by artificial barriers (protectionism,
                 occupational licensing cartels, internal trade barriers).
               </p>
             </div>
-            <div class="positive-complements">
-              <h4>Institutional Complements:</h4>
+            <div class="right-positive">
+              <h4>Institutional Foundations:</h4>
               <ul>
                 <li>
                   <strong>Right to internal economic mobility:</strong> freedom
@@ -3082,17 +3039,25 @@
             </div>
           </div>
 
-          <div class="institutional-card" style="border-left-color: #e83e8c">
-            <h3 style="color: #e83e8c">6. Prosperity / Capitalism</h3>
-            <div class="negative-right-content">
+          <div class="right-card" style="border-left-color: #e83e8c">
+            <h3 style="color: #e83e8c">6. Right to Prosperity</h3>
+            <div class="right-principle">
+              <p><strong>Through Capitalism</strong></p>
+              <p class="source">
+                Derived from <strong>The Hockey Stick</strong>: For millennia
+                humanity was poor. Only with property rights and free markets
+                did we escape poverty.
+              </p>
+            </div>
+            <div class="right-negative">
               <p>
                 <strong>Negative Right:</strong> Not to have private property
                 and voluntary exchange abolished in favor of coercive collective
                 ownership.
               </p>
             </div>
-            <div class="positive-complements">
-              <h4>Institutional Complements:</h4>
+            <div class="right-positive">
+              <h4>Institutional Foundations:</h4>
               <ul>
                 <li>
                   <strong
