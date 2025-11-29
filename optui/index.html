@@ -387,6 +387,31 @@
       transform: translateX(-5px);
     }
 
+    /* FAB menu overlay */
+    .fab-overlay {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(
+        circle at bottom right,
+        rgba(0, 0, 0, 0.3) 0%,
+        rgba(0, 0, 0, 0.1) 60%,
+        transparent 80%
+      );
+      backdrop-filter: blur(8px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+      z-index: 1;
+      border-top-left-radius: 100%;
+    }
+
+    .fab-overlay.show {
+      opacity: 1;
+    }
+
     /* Demonstration overlay */
     .demo-overlay {
       position: absolute;
@@ -460,6 +485,8 @@
 
     <!-- Floating action button with expandable menu -->
     <div class="fab-container">
+      <!-- Overlay that appears below the buttons -->
+      <div class="fab-overlay" id="fabOverlay"></div>
       <button class="fab" onclick="toggleFAB()" id="mainFAB">+</button>
       <div class="fab-actions" id="fabActions">
         <!-- First layer - closer to FAB -->
@@ -687,14 +714,17 @@
       function toggleFAB() {
         const fab = document.getElementById("mainFAB");
         const actions = document.getElementById("fabActions");
+        const overlay = document.getElementById("fabOverlay");
 
         if (!fabOpen) {
           fab.classList.add("active");
           actions.classList.add("show");
+          overlay.classList.add("show");
           fabOpen = true;
         } else {
           fab.classList.remove("active");
           actions.classList.remove("show");
+          overlay.classList.remove("show");
           fabOpen = false;
         }
       }
