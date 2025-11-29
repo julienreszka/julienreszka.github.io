@@ -1052,8 +1052,8 @@
         // Update SVG paths with generated ones
         const arcPath = generateArcPath(sliderConfig);
 
-        // Make touch area proportional to radius for better scaling
-        const touchWidth = Math.max(40, sliderConfig.radius * 0.15); // 15% of radius, minimum 40px
+        // Make touch area very narrow to avoid interfering with FAB buttons
+        const touchWidth = 12; // Fixed narrow width
         document.getElementById("arcTouchArea").setAttribute("d", arcPath);
         document
           .getElementById("arcTouchArea")
@@ -1154,8 +1154,10 @@
           return value;
         }
 
-        // Get touch area element
+        // Get touch area element - only the touch area path should be interactive
         const touchArea = document.getElementById("arcTouchArea");
+        const thumbElement = document.getElementById("arcThumb");
+
         // Drag and click functionality
         function updateFromEvent(e) {
           const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -1179,13 +1181,15 @@
           isDragging = false;
         }
 
-        // Mouse events
-        svg.addEventListener("mousedown", handleStart);
+        // Only attach events to the touch area path and thumb, not the entire SVG
+        touchArea.addEventListener("mousedown", handleStart);
+        thumbElement.addEventListener("mousedown", handleStart);
         document.addEventListener("mousemove", handleMove);
         document.addEventListener("mouseup", handleEnd);
 
         // Touch events (without preventDefault on touchstart to avoid browser warning)
-        svg.addEventListener("touchstart", handleStart);
+        touchArea.addEventListener("touchstart", handleStart);
+        thumbElement.addEventListener("touchstart", handleStart);
         document.addEventListener("touchmove", handleMove, { passive: false });
         document.addEventListener("touchend", handleEnd);
 
