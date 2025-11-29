@@ -1049,11 +1049,28 @@
         document.getElementById("arcTrack").setAttribute("d", arcPath);
         document.getElementById("arcProgress").setAttribute("d", arcPath);
 
-        // Calculate arc length: quarter circle = 2πr/4
-        const arcLength = (2 * Math.PI * sliderConfig.radius) / 4;
+        // Calculate arc length based on actual angle range
+        const angleRange = Math.abs(
+          sliderConfig.endAngle - sliderConfig.startAngle
+        ); // 70 degrees
+        const arcLength =
+          (2 * Math.PI * sliderConfig.radius * angleRange) / 360;
         document
           .getElementById("arcProgress")
           .setAttribute("stroke-dasharray", arcLength.toFixed(1));
+
+        // Position counter text outside the arc
+        const counterDistance = sliderConfig.radius + 60; // 60px outside the arc
+        const counterAngle = -135; // Middle of the arc range (-100 to -170)
+        const counterX =
+          sliderConfig.centerX +
+          counterDistance * Math.cos((counterAngle * Math.PI) / 180);
+        const counterY =
+          sliderConfig.centerY +
+          counterDistance * Math.sin((counterAngle * Math.PI) / 180);
+
+        countText.setAttribute("x", counterX);
+        countText.setAttribute("y", counterY);
 
         function updateSliderFromValue(value) {
           const percentage = value / 15;
@@ -1073,8 +1090,11 @@
           thumb.setAttribute("cx", x);
           thumb.setAttribute("cy", y);
 
-          // Update progress arc (invert the offset since our logic is flipped)
-          const dashOffset = arcLength * percentage;
+          // Update progress arc to match the handle position exactly
+          // The progress should show how much of the padded arc range is filled
+          // Higher button count (higher value) should show more progress
+          const progressPercentage = percentage; // value/15: 0 at min, 1 at max
+          const dashOffset = arcLength * progressPercentage; // More buttons = more offset from end = less visible
           progress.style.strokeDashoffset = dashOffset;
 
           // Update count text
