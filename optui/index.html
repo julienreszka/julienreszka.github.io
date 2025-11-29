@@ -257,6 +257,14 @@
       background: #34495e;
     }
 
+    .fab-action.notification {
+      background: #e67e22;
+    }
+
+    .fab-action.profile {
+      background: #2c3e50;
+    }
+
     /* Layer 2 buttons are slightly smaller and have delayed animation */
     .fab-action.layer-2 {
       width: 44px;
@@ -422,6 +430,20 @@
         >
           ⋯
         </button>
+        <button
+          class="fab-action notification layer-2"
+          onclick="notificationAction()"
+          title="Notifications"
+        >
+          🔔
+        </button>
+        <button
+          class="fab-action profile layer-2"
+          onclick="profileAction()"
+          title="Profile"
+        >
+          👤
+        </button>
       </div>
     </div>
 
@@ -437,54 +459,71 @@
       let zoneVisible = true;
       let fabOpen = false;
 
-      // Position FAB actions using proper arc calculations
+      // Position FAB actions using dynamic arc calculations
       function positionFABActions() {
-        const fabCenter = { x: 28, y: 28 }; // FAB center from corner (bottom-right)
         const actions = document.querySelectorAll(".fab-action");
+        const fabButton = document.querySelector(".fab");
+
+        // Configuration based on human thumb reach ergonomics
+        const config = {
+          baseRadius: 110, // ~110px from corner = comfortable thumb reach with clearance
+          radiusMultiplier: 1.9, // Second layer at ~209px = maximum separation
+          maxArcAngle: 75, // 75° arc = natural thumb sweep range
+          buttonSizeRatio: 0.9, // Layer 2 slightly smaller for easier targeting
+          minButtonGap: 20, // 20px minimum gap for better touch accuracy
+        };
 
         setTimeout(() => {
-          actions.forEach((action, index) => {
-            let radius, startAngle, angleStep;
+          // Separate actions by layer
+          const layer1Actions = Array.from(actions).filter((_, i) => i < 3);
+          const layer2Actions = Array.from(actions).filter((_, i) => i >= 3);
 
-            if (index < 3) {
-              // First layer - inner arc
-              radius = 80;
-              startAngle = 15; // Start at 15 degrees
-              angleStep = 30; // 30 degrees between each button
-            } else {
-              // Second layer - outer arc
-              radius = 120;
-              startAngle = 5; // Start at 5 degrees
-              angleStep = 25; // 25 degrees between each button
-            }
+          // Calculate optimal spacing for each layer
+          function positionLayer(layerActions, layerIndex) {
+            const radius =
+              config.baseRadius *
+              (1 + layerIndex * (config.radiusMultiplier - 1));
+            const buttonCount = layerActions.length;
 
-            // Calculate angle for this button
-            const buttonIndex = index < 3 ? index : index - 3;
-            const angle = startAngle + buttonIndex * angleStep;
+            // Calculate angle step based on button count and arc constraints
+            const maxAngleStep =
+              config.maxArcAngle / Math.max(1, buttonCount - 1);
+            const buttonSize =
+              layerIndex === 0 ? 48 : 48 * config.buttonSizeRatio;
 
-            // Convert to radians
-            const radians = (angle * Math.PI) / 180;
+            // Ensure minimum gap between buttons
+            const minAngleForGap =
+              Math.asin(config.minButtonGap / radius) * (180 / Math.PI) * 2;
+            const angleStep = Math.max(maxAngleStep, minAngleForGap);
 
-            // Calculate position using trigonometry
-            // Note: CSS coordinates - right increases left to right, bottom increases bottom to top
-            const x = fabCenter.x + radius * Math.cos(radians);
-            const y = fabCenter.y + radius * Math.sin(radians);
+            // Center the arc around 45 degrees (optimal thumb reach)
+            const totalArc = angleStep * Math.max(0, buttonCount - 1);
+            const startAngle = 45 - totalArc / 2;
 
-            // Center the button on the calculated point
-            const buttonSize = index < 3 ? 48 : 44; // Different sizes for layers
-            const centerOffset = buttonSize / 2;
+            layerActions.forEach((action, buttonIndex) => {
+              const angle = startAngle + buttonIndex * angleStep;
+              const radians = (angle * Math.PI) / 180;
 
-            action.style.right = x - centerOffset + "px";
-            action.style.bottom = y - centerOffset + "px";
+              // Calculate position
+              const x = radius * Math.cos(radians);
+              const y = radius * Math.sin(radians);
 
-            console.log(
-              `${
-                action.title
-              }: angle=${angle}°, radius=${radius}, x=${x.toFixed(
-                1
-              )}, y=${y.toFixed(1)}`
-            );
-          });
+              // Center button on calculated point
+              const centerOffset = buttonSize / 2;
+              action.style.right = x - centerOffset + "px";
+              action.style.bottom = y - centerOffset + "px";
+
+              console.log(
+                `Layer ${layerIndex + 1} - ${action.title}: ${angle.toFixed(
+                  1
+                )}°, r=${radius.toFixed(1)}px`
+              );
+            });
+          }
+
+          // Position both layers
+          positionLayer(layer1Actions, 0);
+          positionLayer(layer2Actions, 1);
         }, 50);
       }
 
@@ -542,6 +581,16 @@
         toggleFAB(); // Close FAB menu
       }
 
+      function notificationAction() {
+        showDemoMessage("🔔 Notifications - Check your alerts and updates");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function profileAction() {
+        showDemoMessage("👤 Profile - Manage your account and preferences");
+        toggleFAB(); // Close FAB menu
+      }
+
       function showDemoMessage(message) {
         const overlay = document.getElementById("demoOverlay");
         const text = document.getElementById("demoText");
@@ -587,10 +636,9 @@
         );
       }
 
-      // Initialize positioning and auto-demo on load
+      // Initialize positioning on load
       setTimeout(() => {
         positionFABActions();
-        toggleDemo();
       }, 100);
     </script>
   </body>
