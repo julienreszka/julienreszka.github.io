@@ -919,6 +919,23 @@
         );
       }
 
+      // Close FAB menu when clicking outside
+      function closeFABOnOutsideClick(event) {
+        if (!fabOpen) return;
+
+        const fabContainer = document.querySelector(".fab-container");
+        const clickedElement = event.target;
+
+        // Check if click was outside the FAB container
+        if (!fabContainer.contains(clickedElement)) {
+          toggleFAB();
+        }
+      }
+
+      // Add event listener for outside clicks
+      document.addEventListener("click", closeFABOnOutsideClick);
+      document.addEventListener("touchstart", closeFABOnOutsideClick);
+
       // Initialize positioning on load
       setTimeout(() => {
         positionFABActions();
