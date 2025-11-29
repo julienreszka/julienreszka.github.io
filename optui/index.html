@@ -978,10 +978,16 @@
         if (!fabOpen) return;
 
         const fabContainer = document.querySelector(".fab-container");
+        const arcSliderContainer = document.querySelector(
+          ".arc-slider-container"
+        );
         const clickedElement = event.target;
 
-        // Check if click was outside the FAB container
-        if (!fabContainer.contains(clickedElement)) {
+        // Check if click was outside the FAB container and arc slider
+        if (
+          !fabContainer.contains(clickedElement) &&
+          !arcSliderContainer.contains(clickedElement)
+        ) {
           toggleFAB();
         }
       }
@@ -999,7 +1005,7 @@
 
         // Arc slider configuration for optimal thumb reach
         const sliderConfig = {
-          radius: 350, // Large radius to encompass FAB button layers
+          radius: 340, // Large radius to encompass FAB button layers
           startAngle: -100, // Top of arc with padding (15 buttons)
           endAngle: -170, // Left of arc with padding (0 buttons)
         };
