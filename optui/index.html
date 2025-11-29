@@ -476,6 +476,27 @@
     <div class="header">
       <h1>OptUI Demo</h1>
       <p>One-handed mobile interface optimization</p>
+      <div style="margin-top: 15px">
+        <label
+          for="buttonCount"
+          style="
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            display: block;
+            margin-bottom: 5px;
+          "
+          >Button Count: <span id="buttonCountValue">15</span></label
+        >
+        <input
+          type="range"
+          id="buttonCount"
+          min="0"
+          max="15"
+          value="15"
+          style="width: 200px; accent-color: #4ecdc4"
+          oninput="updateButtonCount(this.value)"
+        />
+      </div>
     </div>
 
     <!-- Main content -->
@@ -620,6 +641,37 @@
       let demoActive = false;
       let zoneVisible = true;
       let fabOpen = false;
+      let currentButtonCount = 15;
+
+      function updateButtonCount(count) {
+        currentButtonCount = parseInt(count);
+        document.getElementById("buttonCountValue").textContent = count;
+
+        // Hide/show buttons based on count
+        const allActions = document.querySelectorAll(".fab-action");
+        const allLabels = document.querySelectorAll(".fab-label");
+
+        allActions.forEach((action, index) => {
+          if (index < currentButtonCount) {
+            action.style.display = "flex";
+          } else {
+            action.style.display = "none";
+          }
+        });
+
+        allLabels.forEach((label, index) => {
+          if (index < currentButtonCount) {
+            label.style.display = "block";
+          } else {
+            label.style.display = "none";
+          }
+        });
+
+        // Reposition remaining buttons
+        setTimeout(() => {
+          positionFABActions();
+        }, 10);
+      }
 
       // Position FAB actions using dynamic arc calculations
       function positionFABActions() {
@@ -638,20 +690,30 @@
         };
 
         setTimeout(() => {
-          // Separate actions and labels by layer
-          const layer1Actions = Array.from(actions).filter((_, i) => i < 4);
-          const layer15Actions = Array.from(actions).filter((action) =>
+          // Filter visible actions based on current button count
+          const visibleActions = Array.from(actions).filter(
+            (action, index) =>
+              index < currentButtonCount && action.style.display !== "none"
+          );
+          const visibleLabels = Array.from(labels).filter(
+            (label, index) =>
+              index < currentButtonCount && label.style.display !== "none"
+          );
+
+          // Separate visible actions and labels by layer
+          const layer1Actions = visibleActions.filter((_, i) => i < 4);
+          const layer15Actions = visibleActions.filter((action) =>
             action.classList.contains("layer-1-5")
           );
-          const layer2Actions = Array.from(actions).filter((action) =>
+          const layer2Actions = visibleActions.filter((action) =>
             action.classList.contains("layer-2")
           );
 
-          const layer1Labels = Array.from(labels).filter((_, i) => i < 4);
-          const layer15Labels = Array.from(labels).filter((label) =>
+          const layer1Labels = visibleLabels.filter((_, i) => i < 4);
+          const layer15Labels = visibleLabels.filter((label) =>
             label.classList.contains("layer-1-5")
           );
-          const layer2Labels = Array.from(labels).filter((label) =>
+          const layer2Labels = visibleLabels.filter((label) =>
             label.classList.contains("layer-2")
           );
 
