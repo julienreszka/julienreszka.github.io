@@ -622,7 +622,7 @@
 
           // Calculate optimal spacing for each layer
           function positionLayer(layerActions, layerLabels, layerIndex) {
-            const radiusMultipliers = [1, 1.45, 1.9]; // Layer 1, 1.5, 2 spacing
+            const radiusMultipliers = [1.2, 1.7, 2.2]; // Layer 1, 1.5, 2 spacing - increased separation
             const radius = config.baseRadius * radiusMultipliers[layerIndex];
             const buttonCount = layerActions.length;
 
