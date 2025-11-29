@@ -997,15 +997,15 @@
         const countText = document.getElementById("arcCountText");
         const svg = document.querySelector(".arc-slider");
 
-        // Computed slider configuration
+        // Arc slider configuration for optimal thumb reach
         const sliderConfig = {
-          radius: 350, // Much larger radius (twice the original 170)
+          radius: 350, // Large radius to encompass FAB button layers
           startAngle: -100, // Top of arc with padding (15 buttons)
           endAngle: -170, // Left of arc with padding (0 buttons)
         };
 
-        // Calculate canvas size and center based on radius
-        const canvasSize = Math.ceil(sliderConfig.radius * 2.2); // Add padding
+        // Calculate canvas size to contain the full arc with padding
+        const canvasSize = Math.ceil(sliderConfig.radius * 2.2); // 2.2x radius for adequate padding
         const centerOffset = canvasSize / 2;
         sliderConfig.centerX = centerOffset;
         sliderConfig.centerY = centerOffset;
@@ -1020,8 +1020,8 @@
         container.style.width = `${canvasSize}px`;
         container.style.height = `${canvasSize}px`;
 
-        // Position container so the center aligns with bottom-right corner
-        const offset = centerOffset - 0; // Add back the 10px offset
+        // Position container so the arc center aligns with bottom-right corner of viewport
+        const offset = centerOffset; // Center the arc at the corner
         container.style.bottom = `-${offset}px`;
         container.style.right = `-${offset}px`;
 
@@ -1049,10 +1049,10 @@
         document.getElementById("arcTrack").setAttribute("d", arcPath);
         document.getElementById("arcProgress").setAttribute("d", arcPath);
 
-        // Calculate arc length based on actual angle range
+        // Calculate arc length for progress visualization
         const angleRange = Math.abs(
           sliderConfig.endAngle - sliderConfig.startAngle
-        ); // 70 degrees
+        ); // Total angle span of the arc (70 degrees)
         const arcLength =
           (2 * Math.PI * sliderConfig.radius * angleRange) / 360;
         document
@@ -1073,8 +1073,8 @@
         countText.setAttribute("y", counterY);
 
         function updateSliderFromValue(value) {
-          const percentage = value / 15;
-          // Map using the padded arc range
+          const percentage = value / 15; // Convert count (0-15) to percentage (0-1)
+          // Map percentage to angle within our arc range
           const angle =
             sliderConfig.startAngle +
             (1 - percentage) *
@@ -1114,11 +1114,11 @@
           const dy = svgY - sliderConfig.centerY;
 
           let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-          // SVG path: M 300 130 A 170 170 0 0 0 130 300
-          // Start point (300,130) relative to center (300,300): dx=0, dy=-170 → atan2(-170,0) = -90°
-          // End point (130,300) relative to center (300,300): dx=-170, dy=0 → atan2(0,-170) = 180° or -180°
+          // Convert mouse position to angle relative to arc center
+          // Arc goes from startAngle (-100°) at high count to endAngle (-170°) at low count
+          // We need to map this angle to our configured arc range
 
-          if (angle > 0) angle -= 360; // Normalize to negative range
+          if (angle > 0) angle -= 360; // Normalize to negative range to match our arc angles
 
           // Clamp to the configured arc range
           angle = Math.max(
@@ -1126,7 +1126,8 @@
             Math.min(sliderConfig.startAngle, angle)
           );
 
-          // Convert to 0-1 percentage using computed values
+          // Convert clamped angle back to 0-1 percentage
+          // Higher angle (toward startAngle) = higher percentage = more buttons
           const percentage =
             (sliderConfig.endAngle - angle) /
             (sliderConfig.endAngle - sliderConfig.startAngle);
