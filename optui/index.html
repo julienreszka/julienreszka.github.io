@@ -1011,7 +1011,7 @@
         };
 
         // Calculate canvas size to contain the full arc with padding
-        const canvasSize = Math.ceil(sliderConfig.radius * 2.2); // 2.2x radius for adequate padding
+        const canvasSize = Math.ceil(sliderConfig.radius * 2.5); // 2.5x radius for better scaling
         const centerOffset = canvasSize / 2;
         sliderConfig.centerX = centerOffset;
         sliderConfig.centerY = centerOffset;
@@ -1051,7 +1051,13 @@
 
         // Update SVG paths with generated ones
         const arcPath = generateArcPath(sliderConfig);
+
+        // Make touch area proportional to radius for better scaling
+        const touchWidth = Math.max(40, sliderConfig.radius * 0.15); // 15% of radius, minimum 40px
         document.getElementById("arcTouchArea").setAttribute("d", arcPath);
+        document
+          .getElementById("arcTouchArea")
+          .setAttribute("stroke-width", touchWidth);
         document.getElementById("arcTrack").setAttribute("d", arcPath);
         document.getElementById("arcProgress").setAttribute("d", arcPath);
 
@@ -1070,7 +1076,7 @@
           );
 
         // Position counter text outside the arc
-        const counterDistance = sliderConfig.radius + 60; // 60px outside the arc
+        const counterDistance = sliderConfig.radius * 1.2; // 20% beyond radius for scalability
         const counterAngle = -135; // Middle of the arc range (-100 to -170)
         const counterX =
           sliderConfig.centerX +
