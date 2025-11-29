@@ -1061,9 +1061,10 @@
         ); // Total angle span of the arc (70 degrees)
         const arcLength =
           (2 * Math.PI * sliderConfig.radius * angleRange) / 360;
+        // Set dasharray to the full arc length so we can control visibility with dashoffset
         document
           .getElementById("arcProgress")
-          .setAttribute("stroke-dasharray", arcLength.toFixed(1));
+          .setAttribute("stroke-dasharray", `${arcLength.toFixed(1)} ${arcLength.toFixed(1)}`);
 
         // Position counter text outside the arc
         const counterDistance = sliderConfig.radius + 60; // 60px outside the arc
@@ -1097,7 +1098,7 @@
           thumb.setAttribute("cy", y);
 
           // Update progress arc to fill from handle position as count increases
-          // Arc path goes from startAngle (-100°, 15 buttons) to endAngle (-170°, 0 buttons)
+          // Arc path goes from startAngle (-100°, 15 buttons) to endAngle (-170°, 0 buttons)  
           // Progress should fill from handle's current position toward the startAngle (higher counts)
           const progressPercentage = percentage; // value/15: 0 at min count, 1 at max count
           const progressLength = arcLength * progressPercentage; // Length of arc to fill
@@ -1110,34 +1111,30 @@
 
         function getValueFromPosition(clientX, clientY) {
           const rect = svg.getBoundingClientRect();
-          const svgX =
-            (clientX - rect.left) * (sliderConfig.canvasSize / rect.width);
-          const svgY =
-            (clientY - rect.top) * (sliderConfig.canvasSize / rect.height);
+          
+          // Account for potential viewport scaling on mobile devices
+          const scale = window.devicePixelRatio || 1;
+          const svgX = (clientX - rect.left) * (sliderConfig.canvasSize / rect.width);
+          const svgY = (clientY - rect.top) * (sliderConfig.canvasSize / rect.height);
 
           // Use computed configuration for consistent positioning
           const dx = svgX - sliderConfig.centerX;
           const dy = svgY - sliderConfig.centerY;
 
           let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-          // Convert mouse position to angle relative to arc center
-          // Arc goes from startAngle (-100°) at high count to endAngle (-170°) at low count
-          // We need to map this angle to our configured arc range
+          
+          // Keep angle in -180 to +180 range consistently
+          while (angle > 180) angle -= 360;
+          while (angle < -180) angle += 360;
 
-          if (angle > 0) angle -= 360; // Normalize to negative range to match our arc angles
-
-          // Clamp to the configured arc range
-          angle = Math.max(
-            sliderConfig.endAngle,
-            Math.min(sliderConfig.startAngle, angle)
-          );
+          // Clamp to the configured arc range (-170° to -100°)
+          angle = Math.max(sliderConfig.endAngle, Math.min(sliderConfig.startAngle, angle));
 
           // Convert clamped angle back to 0-1 percentage
-          // Higher angle (toward startAngle) = higher percentage = more buttons
-          const percentage =
-            (sliderConfig.endAngle - angle) /
-            (sliderConfig.endAngle - sliderConfig.startAngle);
+          // startAngle (-100°) = max buttons (15), endAngle (-170°) = min buttons (0)
+          const percentage = (sliderConfig.endAngle - angle) / (sliderConfig.endAngle - sliderConfig.startAngle);
           const value = Math.round(percentage * 15);
+          
           return value;
         }
 
