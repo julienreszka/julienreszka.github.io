@@ -464,8 +464,6 @@
       position: fixed;
       bottom: -10px;
       right: -10px;
-      width: 320px;
-      height: 320px;
       pointer-events: none;
       z-index: 1;
     }
@@ -530,11 +528,11 @@
 
     <!-- Arc slider positioned around FAB buttons -->
     <div class="arc-slider-container">
-      <svg class="arc-slider" width="320" height="320" viewBox="0 0 320 320">
+      <svg class="arc-slider">
         <!-- Invisible touchable area -->
         <path
           id="arcTouchArea"
-          d="M 300 130 A 170 170 0 0 0 130 300"
+          d=""
           stroke="transparent"
           stroke-width="60"
           fill="none"
@@ -543,7 +541,7 @@
         <!-- Background arc -->
         <path
           id="arcTrack"
-          d="M 300 130 A 170 170 0 0 0 130 300"
+          d=""
           stroke="rgba(255,255,255,0.2)"
           stroke-width="3"
           fill="none"
@@ -551,11 +549,11 @@
         <!-- Progress arc -->
         <path
           id="arcProgress"
-          d="M 300 130 A 170 170 0 0 0 130 300"
+          d=""
           stroke="#4ecdc4"
           stroke-width="3"
           fill="none"
-          stroke-dasharray="267.0"
+          stroke-dasharray="0"
           stroke-dashoffset="0"
         />
         <!-- Thumb -->
@@ -998,22 +996,79 @@
         const progress = document.getElementById("arcProgress");
         const countText = document.getElementById("arcCountText");
         const svg = document.querySelector(".arc-slider");
-        const arcLength = 267.0; // Quarter circle arc length (2πr/4 where r=170)
+
+        // Computed slider configuration
+        const sliderConfig = {
+          radius: 350, // Much larger radius (twice the original 170)
+          startAngle: -100, // Top of arc with padding (15 buttons)
+          endAngle: -170, // Left of arc with padding (0 buttons)
+        };
+
+        // Calculate canvas size and center based on radius
+        const canvasSize = Math.ceil(sliderConfig.radius * 2.2); // Add padding
+        const centerOffset = canvasSize / 2;
+        sliderConfig.centerX = centerOffset;
+        sliderConfig.centerY = centerOffset;
+        sliderConfig.canvasSize = canvasSize;
+
+        // Update SVG and container size dynamically
+        svg.setAttribute("width", canvasSize);
+        svg.setAttribute("height", canvasSize);
+        svg.setAttribute("viewBox", `0 0 ${canvasSize} ${canvasSize}`);
+
+        const container = document.querySelector(".arc-slider-container");
+        container.style.width = `${canvasSize}px`;
+        container.style.height = `${canvasSize}px`;
+
+        // Position container so the center aligns with bottom-right corner
+        const offset = centerOffset - 0; // Add back the 10px offset
+        container.style.bottom = `-${offset}px`;
+        container.style.right = `-${offset}px`;
+
+        // Generate SVG arc path dynamically
+        function generateArcPath(config) {
+          const startX =
+            config.centerX +
+            config.radius * Math.cos((config.startAngle * Math.PI) / 180);
+          const startY =
+            config.centerY +
+            config.radius * Math.sin((config.startAngle * Math.PI) / 180);
+          const endX =
+            config.centerX +
+            config.radius * Math.cos((config.endAngle * Math.PI) / 180);
+          const endY =
+            config.centerY +
+            config.radius * Math.sin((config.endAngle * Math.PI) / 180);
+
+          return `M ${startX} ${startY} A ${config.radius} ${config.radius} 0 0 0 ${endX} ${endY}`;
+        }
+
+        // Update SVG paths with generated ones
+        const arcPath = generateArcPath(sliderConfig);
+        document.getElementById("arcTouchArea").setAttribute("d", arcPath);
+        document.getElementById("arcTrack").setAttribute("d", arcPath);
+        document.getElementById("arcProgress").setAttribute("d", arcPath);
+
+        // Calculate arc length: quarter circle = 2πr/4
+        const arcLength = (2 * Math.PI * sliderConfig.radius) / 4;
+        document
+          .getElementById("arcProgress")
+          .setAttribute("stroke-dasharray", arcLength.toFixed(1));
 
         function updateSliderFromValue(value) {
           const percentage = value / 15;
-          // Map to the actual arc range (inverted: more buttons = closer to top)
-          const startAngle = -90; // 15 buttons at top (comfortable)
-          const endAngle = -180; // 0 buttons at left (extended reach)
-          const angle = startAngle + (1 - percentage) * (endAngle - startAngle);
+          // Map using the padded arc range
+          const angle =
+            sliderConfig.startAngle +
+            (1 - percentage) *
+              (sliderConfig.endAngle - sliderConfig.startAngle);
           const radians = (angle * Math.PI) / 180;
 
-          // Calculate thumb position on arc
-          const centerX = 300;
-          const centerY = 300;
-          const radius = 170;
-          const x = centerX + radius * Math.cos(radians);
-          const y = centerY + radius * Math.sin(radians);
+          // Calculate thumb position using computed values
+          const x =
+            sliderConfig.centerX + sliderConfig.radius * Math.cos(radians);
+          const y =
+            sliderConfig.centerY + sliderConfig.radius * Math.sin(radians);
 
           thumb.setAttribute("cx", x);
           thumb.setAttribute("cy", y);
@@ -1028,15 +1083,14 @@
 
         function getValueFromPosition(clientX, clientY) {
           const rect = svg.getBoundingClientRect();
-          const svgX = (clientX - rect.left) * (320 / rect.width);
-          const svgY = (clientY - rect.top) * (320 / rect.height);
+          const svgX =
+            (clientX - rect.left) * (sliderConfig.canvasSize / rect.width);
+          const svgY =
+            (clientY - rect.top) * (sliderConfig.canvasSize / rect.height);
 
-          // The actual SVG center based on the arc geometry
-          // Arc goes from (300,130) to (130,300) with center at (300,300)
-          const centerX = 300;
-          const centerY = 300;
-          const dx = svgX - centerX;
-          const dy = svgY - centerY;
+          // Use computed configuration for consistent positioning
+          const dx = svgX - sliderConfig.centerX;
+          const dy = svgY - sliderConfig.centerY;
 
           let angle = Math.atan2(dy, dx) * (180 / Math.PI);
           // SVG path: M 300 130 A 170 170 0 0 0 130 300
@@ -1045,16 +1099,16 @@
 
           if (angle > 0) angle -= 360; // Normalize to negative range
 
-          // The actual arc goes from -90° (top) to -180° (left)
-          // We want: more buttons at comfortable reach (top), fewer at extended reach (left)
-          const startAngle = -90; // Top of arc: 15 buttons (max)
-          const endAngle = -180; // Left of arc: 0 buttons (min)
+          // Clamp to the configured arc range
+          angle = Math.max(
+            sliderConfig.endAngle,
+            Math.min(sliderConfig.startAngle, angle)
+          );
 
-          // Clamp to the visible arc range
-          angle = Math.max(endAngle, Math.min(startAngle, angle));
-
-          // Convert to 0-1 percentage (inverted logic)
-          const percentage = (endAngle - angle) / (endAngle - startAngle);
+          // Convert to 0-1 percentage using computed values
+          const percentage =
+            (sliderConfig.endAngle - angle) /
+            (sliderConfig.endAngle - sliderConfig.startAngle);
           const value = Math.round(percentage * 15);
           return value;
         }
