@@ -1,0 +1,137 @@
+<!-- 
+ The goal of this experiment is to see if we can have an ui with just breadcrumbs and up to 6 cards that will serve as navigation, content display and actions
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OptUI Experiment</title>
+</html>
+
+<style>
+  /* Reset some default styles */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: auto auto;
+    width: 320px;
+    height: 568px;
+    outline: 1px solid #ccc;
+  }
+
+  .breadcrumbs {
+    background-color: #f8f8f8;
+    padding: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+  }
+  .breadcrumbs ul {
+    list-style: none;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+  .breadcrumbs ul li::after {
+    content: ">";
+    margin-left: 5px;
+  }
+  .breadcrumbs ul li:last-child::after {
+    content: "";
+  }
+  .breadcrumbs ul li a {
+    text-decoration: none;
+    color: #007bff;
+  }
+  header {
+    padding: 10px;
+    background-color: #e9ecef;
+  }
+  .focused-item .card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: #fff;
+  }
+  .card-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .card-icon {
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .card-body {
+    font-size: 14px;
+    color: #333;
+  }
+  header  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .arrow {
+    font-size: 24px;
+    cursor: pointer;
+    user-select: none;
+    padding: 0 10px;
+  }
+  main {
+    padding: 10px;
+  }
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+</style>
+<body>
+  <nav class="breadcrumbs">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Item</a></li>
+      <li><a href="#">Content</a></li>
+      <li>Actions</li>
+    </ul>
+  </nav>
+  <header>
+    <div class="arrow previous">←</div>
+    <div class="focused-item">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">⭐</div>
+          <div class="card-title">Focused Item</div>
+        </div>
+        <div class="card-body">
+          This is the focused item. It can display important information or
+          actions related to the current context.
+        </div>
+      </div>
+    </div>
+    <div class="arrow next">→</div>
+  </header>
+  <main>
+    <section class="cards">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">ℹ️</div>
+          <div class="card-title">Card title</div>
+        </div>
+        <div class="card-body">
+          This is some example content inside the card body. It can hold text,
+          images, or other elements.
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
