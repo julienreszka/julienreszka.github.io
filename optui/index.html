@@ -1091,11 +1091,11 @@
           thumb.setAttribute("cy", y);
 
           // Update progress arc to match the handle position exactly
-          // Arc is drawn from startAngle (fewer buttons) to endAngle (more buttons)
-          // stroke-dashoffset hides the "unfilled" portion by offsetting the dash
-          // Higher offset = more of arc hidden = more "progress fill" visible
+          // The arc path goes from startAngle to endAngle, but we want progress to fill from handle position
+          // We need to rotate the dash pattern so it starts from the current handle position
           const progressPercentage = percentage; // value/15: 0 at min, 1 at max
-          const dashOffset = arcLength * progressPercentage; // Hide unfilled portion
+          const progressLength = arcLength * progressPercentage; // Length of filled portion
+          const dashOffset = -arcLength + progressLength; // Start from end and fill toward start
           progress.style.strokeDashoffset = dashOffset;
 
           // Update count text
