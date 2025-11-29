@@ -224,6 +224,41 @@
       /* Position will be set by JavaScript */
     }
 
+    /* FAB action labels */
+    .fab-label {
+      position: absolute;
+      color: white;
+      font-size: 7px;
+      font-weight: 600;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2px 6px;
+      border-radius: 8px;
+      width: 50px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: all 0.2s ease;
+      pointer-events: none;
+      /* Position will be set by JavaScript */
+    }
+
+    .fab-actions.show .fab-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Layer-specific label delays */
+    .fab-label.layer-1-5 {
+      transition: all 0.25s ease 0.05s;
+    }
+
+    .fab-label.layer-2 {
+      transition: all 0.3s ease 0.1s;
+    }
+
     .fab-action:hover {
       transform: translateY(-2px) scale(1.1);
     }
@@ -427,6 +462,7 @@
         <button class="fab-action share" onclick="shareAction()" title="Share">
           📤
         </button>
+        <div class="fab-label share-label">Share</div>
         <button
           class="fab-action settings"
           onclick="settingsAction()"
@@ -434,12 +470,15 @@
         >
           ⚙️
         </button>
+        <div class="fab-label settings-label">Settings</div>
         <button class="fab-action help" onclick="helpAction()" title="Help">
           ❓
         </button>
+        <div class="fab-label help-label">Help</div>
         <button class="fab-action close" onclick="closeAction()" title="Close">
           ✕
         </button>
+        <div class="fab-label close-label">Close</div>
 
         <!-- Second layer - further out -->
         <button
@@ -449,6 +488,7 @@
         >
           🔍
         </button>
+        <div class="fab-label search-label layer-2">Search</div>
         <button
           class="fab-action bookmark layer-2"
           onclick="bookmarkAction()"
@@ -456,6 +496,7 @@
         >
           🔖
         </button>
+        <div class="fab-label bookmark-label layer-2">Bookmark</div>
         <button
           class="fab-action edit layer-2"
           onclick="editAction()"
@@ -463,6 +504,7 @@
         >
           ✏️
         </button>
+        <div class="fab-label edit-label layer-2">Edit</div>
         <button
           class="fab-action more layer-2"
           onclick="moreAction()"
@@ -470,6 +512,7 @@
         >
           ⋯
         </button>
+        <div class="fab-label more-label layer-2">More</div>
         <button
           class="fab-action notification layer-2"
           onclick="notificationAction()"
@@ -477,6 +520,7 @@
         >
           🔔
         </button>
+        <div class="fab-label notification-label layer-2">Notify</div>
         <button
           class="fab-action profile layer-2"
           onclick="profileAction()"
@@ -484,6 +528,7 @@
         >
           👤
         </button>
+        <div class="fab-label profile-label layer-2">Profile</div>
 
         <!-- Middle layer - between layer 1 and 2 -->
         <button
@@ -493,6 +538,7 @@
         >
           📷
         </button>
+        <div class="fab-label camera-label layer-1-5">Camera</div>
         <button
           class="fab-action message layer-1-5"
           onclick="messageAction()"
@@ -500,6 +546,7 @@
         >
           💬
         </button>
+        <div class="fab-label message-label layer-1-5">Messages</div>
         <button
           class="fab-action favorite layer-1-5"
           onclick="favoriteAction()"
@@ -507,6 +554,7 @@
         >
           ⭐
         </button>
+        <div class="fab-label favorite-label layer-1-5">Favorites</div>
         <button
           class="fab-action calendar layer-1-5"
           onclick="calendarAction()"
@@ -514,6 +562,7 @@
         >
           📅
         </button>
+        <div class="fab-label calendar-label layer-1-5">Calendar</div>
         <button
           class="fab-action location layer-1-5"
           onclick="locationAction()"
@@ -521,6 +570,7 @@
         >
           📍
         </button>
+        <div class="fab-label location-label layer-1-5">Location</div>
       </div>
     </div>
 
@@ -539,6 +589,7 @@
       // Position FAB actions using dynamic arc calculations
       function positionFABActions() {
         const actions = document.querySelectorAll(".fab-action");
+        const labels = document.querySelectorAll(".fab-label");
         const fabButton = document.querySelector(".fab");
 
         // Configuration based on human thumb reach ergonomics
@@ -548,10 +599,11 @@
           maxArcAngle: 85, // 85° arc = wider spread for layer 1 buttons
           buttonSizeRatio: 0.9, // Layer 2 slightly smaller for easier targeting
           minButtonGap: 24, // 24px minimum gap for better touch accuracy
+          labelOffset: 28, // Distance below button for label
         };
 
         setTimeout(() => {
-          // Separate actions by layer
+          // Separate actions and labels by layer
           const layer1Actions = Array.from(actions).filter((_, i) => i < 4);
           const layer15Actions = Array.from(actions).filter((action) =>
             action.classList.contains("layer-1-5")
@@ -560,8 +612,16 @@
             action.classList.contains("layer-2")
           );
 
+          const layer1Labels = Array.from(labels).filter((_, i) => i < 4);
+          const layer15Labels = Array.from(labels).filter((label) =>
+            label.classList.contains("layer-1-5")
+          );
+          const layer2Labels = Array.from(labels).filter((label) =>
+            label.classList.contains("layer-2")
+          );
+
           // Calculate optimal spacing for each layer
-          function positionLayer(layerActions, layerIndex) {
+          function positionLayer(layerActions, layerLabels, layerIndex) {
             const radiusMultipliers = [1, 1.45, 1.9]; // Layer 1, 1.5, 2 spacing
             const radius = config.baseRadius * radiusMultipliers[layerIndex];
             const buttonCount = layerActions.length;
@@ -596,6 +656,15 @@
               action.style.right = x - centerOffset + "px";
               action.style.bottom = y - centerOffset + "px";
 
+              // Position corresponding label below button
+              if (layerLabels[buttonIndex]) {
+                const label = layerLabels[buttonIndex];
+                const labelY = y - config.labelOffset;
+                const labelWidth = 50; // Fixed width from CSS
+                label.style.right = x - labelWidth / 2 + "px"; // Center label precisely
+                label.style.bottom = labelY + "px";
+              }
+
               console.log(
                 `Layer ${layerIndex + 1} - ${action.title}: ${angle.toFixed(
                   1
@@ -605,9 +674,9 @@
           }
 
           // Position all three layers
-          positionLayer(layer1Actions, 0);
-          positionLayer(layer15Actions, 1);
-          positionLayer(layer2Actions, 2);
+          positionLayer(layer1Actions, layer1Labels, 0);
+          positionLayer(layer15Actions, layer15Labels, 1);
+          positionLayer(layer2Actions, layer2Labels, 2);
         }, 50);
       }
 
