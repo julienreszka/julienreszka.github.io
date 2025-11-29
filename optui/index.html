@@ -1090,12 +1090,12 @@
           thumb.setAttribute("cx", x);
           thumb.setAttribute("cy", y);
 
-          // Update progress arc to match the handle position exactly
-          // The arc path goes from startAngle to endAngle, but we want progress to fill from handle position
-          // We need to rotate the dash pattern so it starts from the current handle position
-          const progressPercentage = percentage; // value/15: 0 at min, 1 at max
-          const progressLength = arcLength * progressPercentage; // Length of filled portion
-          const dashOffset = -arcLength + progressLength; // Start from end and fill toward start
+          // Update progress arc to fill from handle position as count increases
+          // Arc path goes from startAngle (-100°, 15 buttons) to endAngle (-170°, 0 buttons)
+          // Progress should fill from handle's current position toward the startAngle (higher counts)
+          const progressPercentage = percentage; // value/15: 0 at min count, 1 at max count
+          const progressLength = arcLength * progressPercentage; // Length of arc to fill
+          const dashOffset = -arcLength + progressLength; // Offset pattern to show progress from handle position
           progress.style.strokeDashoffset = dashOffset;
 
           // Update count text
