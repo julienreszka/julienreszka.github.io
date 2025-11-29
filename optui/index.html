@@ -723,10 +723,6 @@
             const radius = config.baseRadius * radiusMultipliers[layerIndex];
             const buttonCount = layerActions.length;
 
-            // Calculate angle step based on button count and arc constraints
-            const maxAngleStep =
-              config.maxArcAngle / Math.max(1, buttonCount - 1);
-
             // Button sizes for each layer
             const buttonSizes = [48, 46, 44]; // Layer 1, 1.5, 2 sizes
             const buttonSize = buttonSizes[layerIndex];
@@ -734,11 +730,27 @@
             // Ensure minimum gap between buttons
             const minAngleForGap =
               Math.asin(config.minButtonGap / radius) * (180 / Math.PI) * 2;
-            const angleStep = Math.max(maxAngleStep, minAngleForGap);
 
-            // Center the arc around 45 degrees (optimal thumb reach)
-            const totalArc = angleStep * Math.max(0, buttonCount - 1);
-            const startAngle = 45 - totalArc / 2;
+            let angleStep, startAngle;
+
+            if (buttonCount === 1) {
+              // Single button goes to center (45 degrees)
+              angleStep = 0;
+              startAngle = 45;
+            } else {
+              // For multiple buttons, distribute evenly within the arc
+              // Use a portion of the full arc based on button count
+              const arcUtilization = Math.min(1, buttonCount / 4); // Use more arc as button count increases
+              const usedArc = config.maxArcAngle * arcUtilization;
+
+              // Calculate step ensuring minimum gap
+              const maxAngleStep = usedArc / Math.max(1, buttonCount - 1);
+              angleStep = Math.max(maxAngleStep, minAngleForGap);
+
+              // Center the arc around 45 degrees (optimal thumb reach)
+              const totalArc = angleStep * Math.max(0, buttonCount - 1);
+              startAngle = 45 - totalArc / 2;
+            }
 
             layerActions.forEach((action, buttonIndex) => {
               const angle = startAngle + buttonIndex * angleStep;
