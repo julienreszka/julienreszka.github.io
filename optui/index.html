@@ -1,137 +1,597 @@
 <!-- 
- The goal of this experiment is to see if we can have an ui with just breadcrumbs and up to 6 cards that will serve as navigation, content display and actions
+ The goal of this experiment is to make the most accessible mobile UI for optimal reachability with one hand
+ I already set constrains for a mobile viewport of 320x568px (iPhone SE 1st gen)
 -->
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OptUI Experiment</title>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>OptUI - Optimal Mobile Interface</title>
+  </head>
 
-<style>
-  /* Reset some default styles */
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  <style>
+    /* Reset some default styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  body {
-    margin: auto auto;
-    width: 320px;
-    height: 568px;
-    outline: 1px solid #ccc;
-  }
+    body {
+      margin: 0;
+      width: 100svw;
+      height: 100svh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        sans-serif;
+      position: relative;
+      overflow: hidden;
+      touch-action: manipulation;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
 
-  .breadcrumbs {
-    background-color: #f8f8f8;
-    padding: 10px;
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-  }
-  .breadcrumbs ul {
-    list-style: none;
-    display: flex;
-    gap: 5px;
-    align-items: center;
-  }
-  .breadcrumbs ul li::after {
-    content: ">";
-    margin-left: 5px;
-  }
-  .breadcrumbs ul li:last-child::after {
-    content: "";
-  }
-  .breadcrumbs ul li a {
-    text-decoration: none;
-    color: #007bff;
-  }
-  header {
-    padding: 10px;
-    background-color: #e9ecef;
-  }
-  .focused-item .card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #fff;
-  }
-  .card-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .card-icon {
-    font-size: 24px;
-    margin-right: 10px;
-  }
-  .card-title {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .card-body {
-    font-size: 14px;
-    color: #333;
-  }
-  header  {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .arrow {
-    font-size: 24px;
-    cursor: pointer;
-    user-select: none;
-    padding: 0 10px;
-  }
-  main {
-    padding: 10px;
-  }
-  .cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-  }
-</style>
-<body>
-  <nav class="breadcrumbs">
-    <ul>
-      <li><a href="#">Home</a></li>
-      <li><a href="#">Item</a></li>
-      <li><a href="#">Content</a></li>
-      <li>Actions</li>
-    </ul>
-  </nav>
-  <header>
-    <div class="arrow previous">←</div>
-    <div class="focused-item">
+    /* Thumb-friendly zone visualization */
+    .thumb-zone {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 100% 0 0 0;
+      pointer-events: none;
+      border: 2px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    /* Header area - less accessible */
+    .header {
+      padding: 30px 20px 20px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .header h1 {
+      color: white;
+      font-size: 24px;
+      font-weight: 300;
+      margin-bottom: 8px;
+    }
+
+    .header p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 14px;
+    }
+
+    /* Content area */
+    .content {
+      padding: 20px;
+      padding-bottom: 220px; /* Reserve space for thumb zone actions */
+      height: calc(100% - 140px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow-y: auto;
+    }
+
+    /* Cards in easy-reach area */
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card h3 {
+      color: #333;
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #666;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    /* Primary action buttons in thumb zone */
+    .action-area {
+      position: absolute;
+      bottom: 110px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end;
+    }
+
+    .btn {
+      padding: 10px 16px;
+      border: none;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 100px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #ff6b6b;
+      color: white;
+      box-shadow: 0 4px 20px rgba(255, 107, 107, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: #ff5252;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 25px rgba(255, 107, 107, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      background: white;
+      transform: translateY(-1px);
+    }
+
+    /* Floating action button */
+    .fab-container {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+    }
+
+    .fab {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: #4ecdc4;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(78, 205, 196, 0.3);
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    .fab:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(78, 205, 196, 0.4);
+    }
+
+    .fab.active {
+      transform: rotate(45deg);
+      background: #ff6b6b;
+    }
+
+    /* FAB action menu */
+    .fab-actions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: all 0.2s ease;
+      pointer-events: none;
+    }
+
+    .fab-actions.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: all;
+    }
+
+    /* FAB actions positioned by JavaScript */
+    .fab-action {
+      position: absolute;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.2);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Position will be set by JavaScript */
+    }
+
+    .fab-action:hover {
+      transform: translateY(-2px) scale(1.1);
+    }
+
+    .fab-action.share {
+      background: #ff9500;
+    }
+
+    .fab-action.settings {
+      background: #9b59b6;
+    }
+
+    .fab-action.help {
+      background: #3498db;
+    }
+
+    /* Second layer button styles */
+    .fab-action.search {
+      background: #e74c3c;
+    }
+
+    .fab-action.bookmark {
+      background: #f39c12;
+    }
+
+    .fab-action.edit {
+      background: #27ae60;
+    }
+
+    .fab-action.more {
+      background: #34495e;
+    }
+
+    /* Layer 2 buttons are slightly smaller and have delayed animation */
+    .fab-action.layer-2 {
+      width: 44px;
+      height: 44px;
+      font-size: 16px;
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all 0.3s ease 0.1s;
+    }
+
+    .fab-actions.show .fab-action.layer-2 {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Quick access buttons in thumb zone */
+    .quick-actions {
+      position: absolute;
+      bottom: 220px;
+      right: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .quick-btn {
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      border-radius: 15px;
+      color: white;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .quick-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateX(-5px);
+    }
+
+    /* Demonstration overlay */
+    .demo-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease;
+      cursor: pointer;
+    }
+
+    .demo-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .demo-text {
+      color: white;
+      text-align: center;
+      font-size: 18px;
+      max-width: 250px;
+    }
+
+    /* Accessibility indicators */
+    .zone-indicator {
+      position: absolute;
+      right: 100px;
+      bottom: 40px;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: bold;
+      text-align: center;
+      z-index: 5;
+    }
+
+    /* Desktop styles - limit content width */
+    @media (min-width: 1200px) {
+      body {
+        max-width: 1200px;
+        margin: 0 auto;
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
+  </style>
+
+  <body>
+    <!-- Thumb-friendly zone visualization -->
+    <div class="thumb-zone"></div>
+
+    <!-- Zone indicator -->
+    <div class="zone-indicator">THUMB<br />ZONE</div>
+
+    <!-- Header - harder to reach -->
+    <div class="header">
+      <h1>OptUI Demo</h1>
+      <p>One-handed mobile interface optimization</p>
+    </div>
+
+    <!-- Main content -->
+    <div class="content">
+      <!-- Less important content higher up -->
       <div class="card">
-        <div class="card-header">
-          <div class="card-icon">⭐</div>
-          <div class="card-title">Focused Item</div>
-        </div>
-        <div class="card-body">
-          This is the focused item. It can display important information or
-          actions related to the current context.
-        </div>
+        <h3>📊 Analytics</h3>
+        <p>View detailed insights and performance metrics</p>
       </div>
     </div>
-    <div class="arrow next">→</div>
-  </header>
-  <main>
-    <section class="cards">
-      <div class="card">
-        <div class="card-header">
-          <div class="card-icon">ℹ️</div>
-          <div class="card-title">Card title</div>
-        </div>
-        <div class="card-body">
-          This is some example content inside the card body. It can hold text,
-          images, or other elements.
-        </div>
+
+    <!-- Floating action button with expandable menu -->
+    <div class="fab-container">
+      <button class="fab" onclick="toggleFAB()" id="mainFAB">+</button>
+      <div class="fab-actions" id="fabActions">
+        <!-- First layer - closer to FAB -->
+        <button class="fab-action share" onclick="shareAction()" title="Share">
+          📤
+        </button>
+        <button
+          class="fab-action settings"
+          onclick="settingsAction()"
+          title="Settings"
+        >
+          ⚙️
+        </button>
+        <button class="fab-action help" onclick="helpAction()" title="Help">
+          ❓
+        </button>
+
+        <!-- Second layer - further out -->
+        <button
+          class="fab-action search layer-2"
+          onclick="searchAction()"
+          title="Search"
+        >
+          🔍
+        </button>
+        <button
+          class="fab-action bookmark layer-2"
+          onclick="bookmarkAction()"
+          title="Bookmark"
+        >
+          🔖
+        </button>
+        <button
+          class="fab-action edit layer-2"
+          onclick="editAction()"
+          title="Edit"
+        >
+          ✏️
+        </button>
+        <button
+          class="fab-action more layer-2"
+          onclick="moreAction()"
+          title="More"
+        >
+          ⋯
+        </button>
       </div>
-    </section>
-  </main>
-</body>
+    </div>
+
+    <!-- Demo overlay -->
+    <div class="demo-overlay" id="demoOverlay" onclick="hideOverlay()">
+      <div class="demo-text" id="demoText">
+        Thumb-friendly zone optimizes for natural hand position
+      </div>
+    </div>
+
+    <script>
+      let demoActive = false;
+      let zoneVisible = true;
+      let fabOpen = false;
+
+      // Position FAB actions using proper arc calculations
+      function positionFABActions() {
+        const fabCenter = { x: 28, y: 28 }; // FAB center from corner (bottom-right)
+        const actions = document.querySelectorAll(".fab-action");
+
+        setTimeout(() => {
+          actions.forEach((action, index) => {
+            let radius, startAngle, angleStep;
+
+            if (index < 3) {
+              // First layer - inner arc
+              radius = 80;
+              startAngle = 15; // Start at 15 degrees
+              angleStep = 30; // 30 degrees between each button
+            } else {
+              // Second layer - outer arc
+              radius = 120;
+              startAngle = 5; // Start at 5 degrees
+              angleStep = 25; // 25 degrees between each button
+            }
+
+            // Calculate angle for this button
+            const buttonIndex = index < 3 ? index : index - 3;
+            const angle = startAngle + buttonIndex * angleStep;
+
+            // Convert to radians
+            const radians = (angle * Math.PI) / 180;
+
+            // Calculate position using trigonometry
+            // Note: CSS coordinates - right increases left to right, bottom increases bottom to top
+            const x = fabCenter.x + radius * Math.cos(radians);
+            const y = fabCenter.y + radius * Math.sin(radians);
+
+            // Center the button on the calculated point
+            const buttonSize = index < 3 ? 48 : 44; // Different sizes for layers
+            const centerOffset = buttonSize / 2;
+
+            action.style.right = x - centerOffset + "px";
+            action.style.bottom = y - centerOffset + "px";
+
+            console.log(
+              `${
+                action.title
+              }: angle=${angle}°, radius=${radius}, x=${x.toFixed(
+                1
+              )}, y=${y.toFixed(1)}`
+            );
+          });
+        }, 50);
+      }
+
+      function toggleFAB() {
+        const fab = document.getElementById("mainFAB");
+        const actions = document.getElementById("fabActions");
+
+        if (!fabOpen) {
+          fab.classList.add("active");
+          actions.classList.add("show");
+          fabOpen = true;
+        } else {
+          fab.classList.remove("active");
+          actions.classList.remove("show");
+          fabOpen = false;
+        }
+      }
+
+      function shareAction() {
+        showDemoMessage(
+          "📤 Share functionality - Export your optimal UI design"
+        );
+        toggleFAB(); // Close FAB menu
+      }
+
+      function settingsAction() {
+        showDemoMessage("⚙️ Settings - Customize thumb reach preferences");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function helpAction() {
+        showDemoMessage("❓ Help - Learn about one-handed UI optimization");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function searchAction() {
+        showDemoMessage(
+          "🔍 Search - Find content optimized for thumb navigation"
+        );
+        toggleFAB(); // Close FAB menu
+      }
+
+      function bookmarkAction() {
+        showDemoMessage("🔖 Bookmark - Save this optimal UI pattern");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function editAction() {
+        showDemoMessage("✏️ Edit - Modify thumb zone preferences");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function moreAction() {
+        showDemoMessage("⋯ More - Additional thumb-friendly options");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function showDemoMessage(message) {
+        const overlay = document.getElementById("demoOverlay");
+        const text = document.getElementById("demoText");
+
+        overlay.classList.add("active");
+        text.innerHTML = message;
+
+        // Auto-hide after 3 seconds if not clicked
+        setTimeout(() => {
+          overlay.classList.remove("active");
+        }, 3000);
+      }
+
+      function hideOverlay() {
+        const overlay = document.getElementById("demoOverlay");
+        overlay.classList.remove("active");
+      }
+
+      function toggleDemo() {
+        showDemoMessage(
+          "✋ Primary actions are positioned in the natural thumb reach area"
+        );
+      }
+
+      function showZone() {
+        const thumbZone = document.querySelector(".thumb-zone");
+        const indicator = document.querySelector(".zone-indicator");
+
+        if (zoneVisible) {
+          thumbZone.style.opacity = "0";
+          indicator.style.opacity = "0";
+          zoneVisible = false;
+        } else {
+          thumbZone.style.opacity = "1";
+          indicator.style.opacity = "1";
+          zoneVisible = true;
+        }
+      }
+
+      function simulate() {
+        showDemoMessage(
+          "🚀 Interface optimized for 85% of users' natural thumb reach"
+        );
+      }
+
+      // Initialize positioning and auto-demo on load
+      setTimeout(() => {
+        positionFABActions();
+        toggleDemo();
+      }, 100);
+    </script>
+  </body>
+</html>
