@@ -459,6 +459,36 @@
       z-index: 5;
     }
 
+    /* Arc slider styles */
+    .arc-slider-container {
+      position: fixed;
+      bottom: -10px;
+      right: -10px;
+      width: 320px;
+      height: 320px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .arc-slider {
+      touch-action: none;
+      user-select: none;
+      pointer-events: all;
+    }
+
+    #arcThumb {
+      transition: all 0.1s ease;
+    }
+
+    #arcThumb:hover {
+      r: 15;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4));
+    }
+
+    #arcProgress {
+      transition: stroke-dashoffset 0.1s ease;
+    }
+
     /* Desktop styles - limit content width */
     @media (min-width: 1200px) {
       body {
@@ -477,25 +507,15 @@
       <h1>OptUI Demo</h1>
       <p>One-handed mobile interface optimization</p>
       <div style="margin-top: 15px">
-        <label
-          for="buttonCount"
+        <p
           style="
             color: rgba(255, 255, 255, 0.8);
             font-size: 12px;
-            display: block;
             margin-bottom: 5px;
           "
-          >Button Count: <span id="buttonCountValue">15</span></label
         >
-        <input
-          type="range"
-          id="buttonCount"
-          min="0"
-          max="15"
-          value="15"
-          style="width: 200px; accent-color: #4ecdc4"
-          oninput="updateButtonCount(this.value)"
-        />
+          Drag the arc to adjust button count
+        </p>
       </div>
     </div>
 
@@ -506,6 +526,65 @@
         <h3>📊 Analytics</h3>
         <p>View detailed insights and performance metrics</p>
       </div>
+    </div>
+
+    <!-- Arc slider positioned around FAB buttons -->
+    <div class="arc-slider-container">
+      <svg class="arc-slider" width="320" height="320" viewBox="0 0 320 320">
+        <!-- Invisible touchable area -->
+        <path
+          id="arcTouchArea"
+          d="M 300 130 A 170 170 0 0 0 130 300"
+          stroke="transparent"
+          stroke-width="60"
+          fill="none"
+          style="cursor: pointer"
+        />
+        <!-- Background arc -->
+        <path
+          id="arcTrack"
+          d="M 300 130 A 170 170 0 0 0 130 300"
+          stroke="rgba(255,255,255,0.2)"
+          stroke-width="3"
+          fill="none"
+        />
+        <!-- Progress arc -->
+        <path
+          id="arcProgress"
+          d="M 300 130 A 170 170 0 0 0 130 300"
+          stroke="#4ecdc4"
+          stroke-width="3"
+          fill="none"
+          stroke-dasharray="267.0"
+          stroke-dashoffset="0"
+        />
+        <!-- Thumb -->
+        <circle
+          id="arcThumb"
+          cx="130"
+          cy="300"
+          r="12"
+          fill="#4ecdc4"
+          stroke="white"
+          stroke-width="3"
+          style="
+            cursor: pointer;
+            filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+          "
+        />
+        <!-- Count display -->
+        <text
+          id="arcCountText"
+          x="210"
+          y="210"
+          fill="rgba(255,255,255,0.8)"
+          font-size="12"
+          font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+          text-anchor="middle"
+        >
+          15
+        </text>
+      </svg>
     </div>
 
     <!-- Floating action button with expandable menu -->
@@ -642,36 +721,7 @@
       let zoneVisible = true;
       let fabOpen = false;
       let currentButtonCount = 15;
-
-      function updateButtonCount(count) {
-        currentButtonCount = parseInt(count);
-        document.getElementById("buttonCountValue").textContent = count;
-
-        // Hide/show buttons based on count
-        const allActions = document.querySelectorAll(".fab-action");
-        const allLabels = document.querySelectorAll(".fab-label");
-
-        allActions.forEach((action, index) => {
-          if (index < currentButtonCount) {
-            action.style.display = "flex";
-          } else {
-            action.style.display = "none";
-          }
-        });
-
-        allLabels.forEach((label, index) => {
-          if (index < currentButtonCount) {
-            label.style.display = "block";
-          } else {
-            label.style.display = "none";
-          }
-        });
-
-        // Reposition remaining buttons
-        setTimeout(() => {
-          positionFABActions();
-        }, 10);
-      }
+      let isDragging = false;
 
       // Position FAB actions using dynamic arc calculations
       function positionFABActions() {
@@ -773,12 +823,6 @@
                 label.style.right = x - labelWidth / 2 + "px"; // Center label precisely
                 label.style.bottom = labelY + "px";
               }
-
-              console.log(
-                `Layer ${layerIndex + 1} - ${action.title}: ${angle.toFixed(
-                  1
-                )}°, r=${radius.toFixed(1)}px`
-              );
             });
           }
 
@@ -948,8 +992,153 @@
       document.addEventListener("click", closeFABOnOutsideClick);
       document.addEventListener("touchstart", closeFABOnOutsideClick);
 
+      // Arc slider functionality
+      function initArcSlider() {
+        const thumb = document.getElementById("arcThumb");
+        const progress = document.getElementById("arcProgress");
+        const countText = document.getElementById("arcCountText");
+        const svg = document.querySelector(".arc-slider");
+        const arcLength = 267.0; // Quarter circle arc length (2πr/4 where r=170)
+
+        function updateSliderFromValue(value) {
+          const percentage = value / 15;
+          // Map to the actual arc range (inverted: more buttons = closer to top)
+          const startAngle = -90; // 15 buttons at top (comfortable)
+          const endAngle = -180; // 0 buttons at left (extended reach)
+          const angle = startAngle + (1 - percentage) * (endAngle - startAngle);
+          const radians = (angle * Math.PI) / 180;
+
+          // Calculate thumb position on arc
+          const centerX = 300;
+          const centerY = 300;
+          const radius = 170;
+          const x = centerX + radius * Math.cos(radians);
+          const y = centerY + radius * Math.sin(radians);
+
+          thumb.setAttribute("cx", x);
+          thumb.setAttribute("cy", y);
+
+          // Update progress arc (invert the offset since our logic is flipped)
+          const dashOffset = arcLength * percentage;
+          progress.style.strokeDashoffset = dashOffset;
+
+          // Update count text
+          countText.textContent = value;
+        }
+
+        function getValueFromPosition(clientX, clientY) {
+          const rect = svg.getBoundingClientRect();
+          const svgX = (clientX - rect.left) * (320 / rect.width);
+          const svgY = (clientY - rect.top) * (320 / rect.height);
+
+          // The actual SVG center based on the arc geometry
+          // Arc goes from (300,130) to (130,300) with center at (300,300)
+          const centerX = 300;
+          const centerY = 300;
+          const dx = svgX - centerX;
+          const dy = svgY - centerY;
+
+          let angle = Math.atan2(dy, dx) * (180 / Math.PI);
+          // SVG path: M 300 130 A 170 170 0 0 0 130 300
+          // Start point (300,130) relative to center (300,300): dx=0, dy=-170 → atan2(-170,0) = -90°
+          // End point (130,300) relative to center (300,300): dx=-170, dy=0 → atan2(0,-170) = 180° or -180°
+
+          if (angle > 0) angle -= 360; // Normalize to negative range
+
+          // The actual arc goes from -90° (top) to -180° (left)
+          // We want: more buttons at comfortable reach (top), fewer at extended reach (left)
+          const startAngle = -90; // Top of arc: 15 buttons (max)
+          const endAngle = -180; // Left of arc: 0 buttons (min)
+
+          // Clamp to the visible arc range
+          angle = Math.max(endAngle, Math.min(startAngle, angle));
+
+          // Convert to 0-1 percentage (inverted logic)
+          const percentage = (endAngle - angle) / (endAngle - startAngle);
+          const value = Math.round(percentage * 15);
+          return value;
+        }
+
+        // Get touch area element
+        const touchArea = document.getElementById("arcTouchArea");
+        // Drag and click functionality
+        function updateFromEvent(e) {
+          const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+          const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+          const value = getValueFromPosition(clientX, clientY);
+          updateButtonCount(value);
+        }
+
+        function handleStart(e) {
+          isDragging = true;
+          updateFromEvent(e);
+        }
+
+        function handleMove(e) {
+          if (!isDragging) return;
+          e.preventDefault();
+          updateFromEvent(e);
+        }
+
+        function handleEnd() {
+          isDragging = false;
+        }
+
+        // Mouse events
+        svg.addEventListener("mousedown", handleStart);
+        document.addEventListener("mousemove", handleMove);
+        document.addEventListener("mouseup", handleEnd);
+
+        // Touch events (without preventDefault on touchstart to avoid browser warning)
+        svg.addEventListener("touchstart", handleStart);
+        document.addEventListener("touchmove", handleMove, { passive: false });
+        document.addEventListener("touchend", handleEnd);
+
+        // Initialize position to match the actual arc endpoints
+        updateSliderFromValue(15);
+
+        // Update slider when button count changes
+        window.updateSliderFromValue = updateSliderFromValue;
+      }
+
+      // Override the existing updateButtonCount function to work with arc slider
+      function updateButtonCount(count) {
+        currentButtonCount = parseInt(count);
+
+        // Update slider visual
+        if (window.updateSliderFromValue) {
+          window.updateSliderFromValue(count);
+        }
+
+        // Hide/show buttons based on count
+        const allActions = document.querySelectorAll(".fab-action");
+        const allLabels = document.querySelectorAll(".fab-label");
+
+        allActions.forEach((action, index) => {
+          if (index < currentButtonCount) {
+            action.style.display = "flex";
+          } else {
+            action.style.display = "none";
+          }
+        });
+
+        allLabels.forEach((label, index) => {
+          if (index < currentButtonCount) {
+            label.style.display = "block";
+          } else {
+            label.style.display = "none";
+          }
+        });
+
+        // Reposition remaining buttons
+        setTimeout(() => {
+          positionFABActions();
+        }, 10);
+      }
+
       // Initialize positioning on load
       setTimeout(() => {
+        initArcSlider();
         positionFABActions();
         // Open FAB menu on page load
         toggleFAB();
