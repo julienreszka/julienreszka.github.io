@@ -42,7 +42,7 @@
 
     /* Thumb-friendly zone visualization */
     .thumb-zone {
-      position: absolute;
+      position: fixed;
       bottom: 0;
       right: 0;
       width: 200px;
@@ -58,6 +58,11 @@
       padding: 30px 20px 20px;
       text-align: center;
       background: rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+      border-radius: 1rem;
     }
 
     .header h1 {
@@ -159,7 +164,8 @@
 
     /* Floating action button */
     .fab-container {
-      position: absolute;
+      z-index: 3;
+      position: fixed;
       bottom: 30px;
       right: 30px;
     }
@@ -176,7 +182,7 @@
       box-shadow: 0 4px 20px rgba(78, 205, 196, 0.3);
       transition: all 0.2s ease;
       position: relative;
-      z-index: 10;
+      z-index: 12;
       /* Remove iOS tap highlight and focus outline */
       -webkit-tap-highlight-color: transparent;
       outline: none;
@@ -392,8 +398,8 @@
       position: fixed;
       bottom: 0;
       right: 0;
-      width: 280px;
-      height: 280px;
+      width: 320px;
+      height: 320px;
       background: radial-gradient(
         circle at bottom right,
         rgba(0, 0, 0, 0.3) 0%,
@@ -404,7 +410,7 @@
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.2s ease;
-      z-index: 1;
+      z-index: 0;
       border-top-left-radius: 100%;
     }
 
@@ -458,8 +464,6 @@
       body {
         max-width: 1200px;
         margin: 0 auto;
-        border-left: 1px solid rgba(255, 255, 255, 0.2);
-        border-right: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
   </style>
