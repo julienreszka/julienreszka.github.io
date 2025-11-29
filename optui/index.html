@@ -240,6 +240,10 @@
       background: #3498db;
     }
 
+    .fab-action.close {
+      background: #e74c3c;
+    }
+
     /* Second layer button styles */
     .fab-action.search {
       background: #e74c3c;
@@ -263,6 +267,42 @@
 
     .fab-action.profile {
       background: #2c3e50;
+    }
+
+    /* Middle layer button styles */
+    .fab-action.camera {
+      background: #8e44ad;
+    }
+
+    .fab-action.message {
+      background: #16a085;
+    }
+
+    .fab-action.favorite {
+      background: #f1c40f;
+    }
+
+    .fab-action.calendar {
+      background: #e74c3c;
+    }
+
+    .fab-action.location {
+      background: #34495e;
+    }
+
+    /* Middle layer buttons - between layer 1 and 2 */
+    .fab-action.layer-1-5 {
+      width: 46px;
+      height: 46px;
+      font-size: 17px;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: all 0.25s ease 0.05s;
+    }
+
+    .fab-actions.show .fab-action.layer-1-5 {
+      opacity: 1;
+      transform: scale(1);
     }
 
     /* Layer 2 buttons are slightly smaller and have delayed animation */
@@ -400,6 +440,9 @@
         <button class="fab-action help" onclick="helpAction()" title="Help">
           ❓
         </button>
+        <button class="fab-action close" onclick="closeAction()" title="Close">
+          ✕
+        </button>
 
         <!-- Second layer - further out -->
         <button
@@ -444,6 +487,43 @@
         >
           👤
         </button>
+
+        <!-- Middle layer - between layer 1 and 2 -->
+        <button
+          class="fab-action camera layer-1-5"
+          onclick="cameraAction()"
+          title="Camera"
+        >
+          📷
+        </button>
+        <button
+          class="fab-action message layer-1-5"
+          onclick="messageAction()"
+          title="Messages"
+        >
+          💬
+        </button>
+        <button
+          class="fab-action favorite layer-1-5"
+          onclick="favoriteAction()"
+          title="Favorites"
+        >
+          ⭐
+        </button>
+        <button
+          class="fab-action calendar layer-1-5"
+          onclick="calendarAction()"
+          title="Calendar"
+        >
+          📅
+        </button>
+        <button
+          class="fab-action location layer-1-5"
+          onclick="locationAction()"
+          title="Location"
+        >
+          📍
+        </button>
       </div>
     </div>
 
@@ -468,28 +548,34 @@
         const config = {
           baseRadius: 110, // ~110px from corner = comfortable thumb reach with clearance
           radiusMultiplier: 1.9, // Second layer at ~209px = maximum separation
-          maxArcAngle: 75, // 75° arc = natural thumb sweep range
+          maxArcAngle: 85, // 85° arc = wider spread for layer 1 buttons
           buttonSizeRatio: 0.9, // Layer 2 slightly smaller for easier targeting
-          minButtonGap: 20, // 20px minimum gap for better touch accuracy
+          minButtonGap: 24, // 24px minimum gap for better touch accuracy
         };
 
         setTimeout(() => {
           // Separate actions by layer
-          const layer1Actions = Array.from(actions).filter((_, i) => i < 3);
-          const layer2Actions = Array.from(actions).filter((_, i) => i >= 3);
+          const layer1Actions = Array.from(actions).filter((_, i) => i < 4);
+          const layer15Actions = Array.from(actions).filter((action) =>
+            action.classList.contains("layer-1-5")
+          );
+          const layer2Actions = Array.from(actions).filter((action) =>
+            action.classList.contains("layer-2")
+          );
 
           // Calculate optimal spacing for each layer
           function positionLayer(layerActions, layerIndex) {
-            const radius =
-              config.baseRadius *
-              (1 + layerIndex * (config.radiusMultiplier - 1));
+            const radiusMultipliers = [1, 1.45, 1.9]; // Layer 1, 1.5, 2 spacing
+            const radius = config.baseRadius * radiusMultipliers[layerIndex];
             const buttonCount = layerActions.length;
 
             // Calculate angle step based on button count and arc constraints
             const maxAngleStep =
               config.maxArcAngle / Math.max(1, buttonCount - 1);
-            const buttonSize =
-              layerIndex === 0 ? 48 : 48 * config.buttonSizeRatio;
+
+            // Button sizes for each layer
+            const buttonSizes = [48, 46, 44]; // Layer 1, 1.5, 2 sizes
+            const buttonSize = buttonSizes[layerIndex];
 
             // Ensure minimum gap between buttons
             const minAngleForGap =
@@ -521,9 +607,10 @@
             });
           }
 
-          // Position both layers
+          // Position all three layers
           positionLayer(layer1Actions, 0);
-          positionLayer(layer2Actions, 1);
+          positionLayer(layer15Actions, 1);
+          positionLayer(layer2Actions, 2);
         }, 50);
       }
 
@@ -559,6 +646,11 @@
         toggleFAB(); // Close FAB menu
       }
 
+      function closeAction() {
+        showDemoMessage("✕ Close - Exit or dismiss current view");
+        toggleFAB(); // Close FAB menu
+      }
+
       function searchAction() {
         showDemoMessage(
           "🔍 Search - Find content optimized for thumb navigation"
@@ -588,6 +680,31 @@
 
       function profileAction() {
         showDemoMessage("👤 Profile - Manage your account and preferences");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function cameraAction() {
+        showDemoMessage("📷 Camera - Capture moments with optimal reach");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function messageAction() {
+        showDemoMessage("💬 Messages - Quick access to conversations");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function favoriteAction() {
+        showDemoMessage("⭐ Favorites - Access your starred content");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function calendarAction() {
+        showDemoMessage("📅 Calendar - View your schedule and events");
+        toggleFAB(); // Close FAB menu
+      }
+
+      function locationAction() {
+        showDemoMessage("📍 Location - Find places and get directions");
         toggleFAB(); // Close FAB menu
       }
 
