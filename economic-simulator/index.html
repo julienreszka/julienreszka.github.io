@@ -420,12 +420,25 @@
 
         /* Natural Rights Dark Mode */
         .right-card {
-          background: #2d2d2d;
+          background: #2d2d2d !important;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          border-left: 5px solid #007bff;
+        }
+
+        .right-card h3 {
+          color: #ffffff;
+        }
+
+        .right-card p {
+          color: #e0e0e0;
         }
 
         .right-card .source {
           color: #aaa;
+        }
+
+        .right-principle {
+          border-bottom-color: #444;
         }
       }
 
@@ -590,13 +603,11 @@
       /* Dark mode adjustments for new structure */
       @media (prefers-color-scheme: dark) {
         .right-negative {
-          background: linear-gradient(135deg, #2d1b1b, #3d2626);
-          border-left-color: #ff6b6b;
+          background: linear-gradient(135deg, #2d1b1b, #3d2626) !important;
         }
 
         .right-positive {
-          background: linear-gradient(135deg, #1b2d1b, #263d26);
-          border-left-color: #51cf66;
+          background: linear-gradient(135deg, #1b2d1b, #263d26) !important;
         }
 
         .right-negative p,
@@ -610,8 +621,7 @@
         }
 
         .right-enemies {
-          background: linear-gradient(135deg, #2d241b, #3d3426);
-          border-left-color: #fbbf24;
+          background: linear-gradient(135deg, #2d241b, #3d3426) !important;
         }
 
         .right-enemies h4,
@@ -624,8 +634,7 @@
         }
 
         .right-solutions {
-          background: linear-gradient(135deg, #1b2d3d, #264d66);
-          border-left-color: #339af0;
+          background: linear-gradient(135deg, #1b2d3d, #264d66) !important;
         }
 
         .right-solutions h4,
@@ -2972,67 +2981,74 @@
                 requires limited government.
               </p>
             </div>
-            <div class="right-negative">
-              <p>
-                <strong>Negative Right:</strong> Not to have private investment
-                and enterprise crowded out by an overgrown state.
-              </p>
-            </div>
-            <div class="right-positive">
-              <h4>Institutional Foundations:</h4>
-              <ul>
-                <li>
-                  <strong>Right to a lean, competent core state</strong> that
-                  provides high-quality rule of law, property registries, and
-                  infrastructure, instead of diffuse clientelist spending.
-                </li>
-                <li>
-                  <strong
-                    >Right to transparent public accounts and fiscal
-                    rules</strong
-                  >
-                  (e.g., debt brake rules) that bind politicians against turning
-                  the budget into a patronage machine.
-                </li>
-              </ul>
-            </div>
-            <div class="right-enemies">
-              <h4>Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Senior public-sector unions and bureaucracies</strong>
-                  whose budgets, headcount, and privileges expand with bigger
-                  government.
-                </li>
-                <li>
-                  <strong>Clientelist political machines and parties</strong>
-                  whose power depends on distributing public jobs, subsidies,
-                  and contracts.
-                </li>
-              </ul>
-            </div>
-            <div class="right-solutions">
-              <h4>How to Deal with Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Against public-sector unions & bureaucracies:</strong>
-                  Impose hard fiscal rules (debt brakes, spending caps) that
-                  automatically constrain payroll and transfers, forcing
-                  reprioritization toward core functions. Increase transparency
-                  (open budgets, headcount dashboards) so voters see who
-                  benefits from bloat and can punish it electorally.
-                </li>
-                <li>
-                  <strong
-                    >Against clientelist machines & patronage parties:</strong
-                  >
-                  Ban or severely limit discretionary hiring and earmarked
-                  subsidies; move to merit-based recruitment and formula-based
-                  transfers. Empower independent audit offices and
-                  anti-corruption agencies with real prosecutorial backing.
-                </li>
-              </ul>
-            </div>
+            <details>
+              <summary>Implementation Details</summary>
+              <div class="right-negative">
+                <p>
+                  <strong>Negative Right:</strong> Not to have private
+                  investment and enterprise crowded out by an overgrown state.
+                </p>
+              </div>
+              <div class="right-positive">
+                <h4>Institutional Foundations:</h4>
+                <ul>
+                  <li>
+                    <strong>Right to a lean, competent core state</strong> that
+                    provides high-quality rule of law, property registries, and
+                    infrastructure, instead of diffuse clientelist spending.
+                  </li>
+                  <li>
+                    <strong
+                      >Right to transparent public accounts and fiscal
+                      rules</strong
+                    >
+                    (e.g., debt brake rules) that bind politicians against
+                    turning the budget into a patronage machine.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-enemies">
+                <h4>Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong
+                      >Senior public-sector unions and bureaucracies</strong
+                    >
+                    whose budgets, headcount, and privileges expand with bigger
+                    government.
+                  </li>
+                  <li>
+                    <strong>Clientelist political machines and parties</strong>
+                    whose power depends on distributing public jobs, subsidies,
+                    and contracts.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-solutions">
+                <h4>How to Deal with Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong
+                      >Against public-sector unions & bureaucracies:</strong
+                    >
+                    Impose hard fiscal rules (debt brakes, spending caps) that
+                    automatically constrain payroll and transfers, forcing
+                    reprioritization toward core functions. Increase
+                    transparency (open budgets, headcount dashboards) so voters
+                    see who benefits from bloat and can punish it electorally.
+                  </li>
+                  <li>
+                    <strong
+                      >Against clientelist machines & patronage parties:</strong
+                    >
+                    Ban or severely limit discretionary hiring and earmarked
+                    subsidies; move to merit-based recruitment and formula-based
+                    transfers. Empower independent audit offices and
+                    anti-corruption agencies with real prosecutorial backing.
+                  </li>
+                </ul>
+              </div>
+            </details>
             <details style="margin-top: 10px">
               <summary style="font-size: 14px; color: #666">📜 History</summary>
               <div
@@ -3077,60 +3093,65 @@
                 investment and maximize revenue.
               </p>
             </div>
-            <div class="right-negative">
-              <p>
-                <strong>Negative Right:</strong> Not to have one's productive
-                effort confiscated at punitive rates that destroy incentives.
-              </p>
-            </div>
-            <div class="right-positive">
-              <h4>Institutional Foundations:</h4>
-              <ul>
-                <li>
-                  <strong>Right to a simple, predictable tax code</strong> (few
-                  brackets, clear rules) so investors and workers can plan.
-                </li>
-                <li>
-                  <strong>Right to equal treatment under tax law</strong> - no
-                  arbitrary exemptions or privileges for politically connected
-                  sectors.
-                </li>
-              </ul>
-            </div>
-            <div class="right-enemies">
-              <h4>Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>High-spend coalitions</strong> (politicians,
-                  contractors, some unions) that constantly promise new programs
-                  without matching cuts, pushing for ever-higher taxes.
-                </li>
-                <li>
-                  <strong>Lobbyists and large incumbents</strong> that demand
-                  targeted tax breaks and complex exemptions, making the code
-                  opaque and hostile to small/new players.
-                </li>
-              </ul>
-            </div>
-            <div class="right-solutions">
-              <h4>How to Deal with Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Against high-spend coalitions:</strong> Enact
-                  tax-expenditure "pay-as-you-go" rules: any new permanent
-                  spending must be offset by cuts elsewhere, not new taxes.
-                  Build independent fiscal councils that publicly rate proposals
-                  for long-term sustainability and growth impact.
-                </li>
-                <li>
-                  <strong>Against lobbyists & large incumbents:</strong> Sunset
-                  all targeted exemptions automatically and require
-                  supermajorities to renew them. Mandate full public registries
-                  of lobbying contacts and beneficiary lists for any special
-                  regime.
-                </li>
-              </ul>
-            </div>
+            <details>
+              <summary>Implementation Details</summary>
+              <div class="right-negative">
+                <p>
+                  <strong>Negative Right:</strong> Not to have one's productive
+                  effort confiscated at punitive rates that destroy incentives.
+                </p>
+              </div>
+              <div class="right-positive">
+                <h4>Institutional Foundations:</h4>
+                <ul>
+                  <li>
+                    <strong>Right to a simple, predictable tax code</strong>
+                    (few brackets, clear rules) so investors and workers can
+                    plan.
+                  </li>
+                  <li>
+                    <strong>Right to equal treatment under tax law</strong> - no
+                    arbitrary exemptions or privileges for politically connected
+                    sectors.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-enemies">
+                <h4>Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong>High-spend coalitions</strong> (politicians,
+                    contractors, some unions) that constantly promise new
+                    programs without matching cuts, pushing for ever-higher
+                    taxes.
+                  </li>
+                  <li>
+                    <strong>Lobbyists and large incumbents</strong> that demand
+                    targeted tax breaks and complex exemptions, making the code
+                    opaque and hostile to small/new players.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-solutions">
+                <h4>How to Deal with Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong>Against high-spend coalitions:</strong> Enact
+                    tax-expenditure "pay-as-you-go" rules: any new permanent
+                    spending must be offset by cuts elsewhere, not new taxes.
+                    Build independent fiscal councils that publicly rate
+                    proposals for long-term sustainability and growth impact.
+                  </li>
+                  <li>
+                    <strong>Against lobbyists & large incumbents:</strong>
+                    Sunset all targeted exemptions automatically and require
+                    supermajorities to renew them. Mandate full public
+                    registries of lobbying contacts and beneficiary lists for
+                    any special regime.
+                  </li>
+                </ul>
+              </div>
+            </details>
             <details style="margin-top: 10px">
               <summary style="font-size: 14px; color: #666">📜 History</summary>
               <div
@@ -3164,61 +3185,65 @@
                 them only worsens the crisis.
               </p>
             </div>
-            <div class="right-negative">
-              <p>
-                <strong>Negative Right:</strong> Not to be trapped indefinitely
-                in unsustainable policies because leaders fear short-term pain.
-              </p>
-            </div>
-            <div class="right-positive">
-              <h4>Institutional Foundations:</h4>
-              <ul>
-                <li>
-                  <strong>Right to credible adjustment programs</strong> that
-                  are time-bound, rule-based, and not ad hoc shocks inflicted on
-                  the weakest.
-                </li>
-                <li>
-                  <strong>Right to temporary, targeted safety nets</strong>
-                  (unemployment insurance, cash transfers) during the "dip," so
-                  people are not sacrificed for macro indicators.
-                </li>
-              </ul>
-            </div>
-            <div class="right-enemies">
-              <h4>Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Status-quo political elites</strong> who benefit from
-                  existing subsidies, overstaffed SOEs, and protection, and
-                  therefore resist any reform that threatens their rents.
-                </li>
-                <li>
-                  <strong>Insider business groups</strong> tied to state banks
-                  or public contracts that would lose privileges under
-                  liberalization.
-                </li>
-              </ul>
-            </div>
-            <div class="right-solutions">
-              <h4>How to Deal with Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Against status-quo political elites:</strong> Lock key
-                  reforms into law or constitution (trade openness, central bank
-                  independence, privatization rules) so they are harder to
-                  reverse. Use independent commissions to design and sequence
-                  reforms, reducing room for ad hoc sabotage.
-                </li>
-                <li>
-                  <strong>Against insider business groups:</strong> Gradually
-                  privatize SOEs with transparent tenders and caps on ownership
-                  concentration. Open capital markets and banking licenses so
-                  credit allocation is contestable, not monopolized by
-                  state-connected banks.
-                </li>
-              </ul>
-            </div>
+            <details>
+              <summary>Implementation Details</summary>
+              <div class="right-negative">
+                <p>
+                  <strong>Negative Right:</strong> Not to be trapped
+                  indefinitely in unsustainable policies because leaders fear
+                  short-term pain.
+                </p>
+              </div>
+              <div class="right-positive">
+                <h4>Institutional Foundations:</h4>
+                <ul>
+                  <li>
+                    <strong>Right to credible adjustment programs</strong> that
+                    are time-bound, rule-based, and not ad hoc shocks inflicted
+                    on the weakest.
+                  </li>
+                  <li>
+                    <strong>Right to temporary, targeted safety nets</strong>
+                    (unemployment insurance, cash transfers) during the "dip,"
+                    so people are not sacrificed for macro indicators.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-enemies">
+                <h4>Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong>Status-quo political elites</strong> who benefit
+                    from existing subsidies, overstaffed SOEs, and protection,
+                    and therefore resist any reform that threatens their rents.
+                  </li>
+                  <li>
+                    <strong>Insider business groups</strong> tied to state banks
+                    or public contracts that would lose privileges under
+                    liberalization.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-solutions">
+                <h4>How to Deal with Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong>Against status-quo political elites:</strong> Lock
+                    key reforms into law or constitution (trade openness,
+                    central bank independence, privatization rules) so they are
+                    harder to reverse. Use independent commissions to design and
+                    sequence reforms, reducing room for ad hoc sabotage.
+                  </li>
+                  <li>
+                    <strong>Against insider business groups:</strong> Gradually
+                    privatize SOEs with transparent tenders and caps on
+                    ownership concentration. Open capital markets and banking
+                    licenses so credit allocation is contestable, not
+                    monopolized by state-connected banks.
+                  </li>
+                </ul>
+              </div>
+            </details>
             <details style="margin-top: 10px">
               <summary style="font-size: 14px; color: #666">📜 History</summary>
               <div
@@ -3261,62 +3286,67 @@
                 markets ensure abundance.
               </p>
             </div>
-            <div class="right-negative">
-              <p>
-                <strong>Negative Right:</strong> Not to have prices distorted by
-                controls that create shortages, black markets, and arbitrage
-                rents.
-              </p>
-            </div>
-            <div class="right-positive">
-              <h4>Institutional Foundations:</h4>
-              <ul>
-                <li>
-                  <strong>Right to accurate, timely market information</strong>
-                  (publication of price data, competition policy that prevents
-                  cartels from faking "market" prices).
-                </li>
-                <li>
-                  <strong>Right to basic consumer protection</strong> against
-                  fraud and coercion, so "free prices" actually reflect
-                  voluntary exchange, not deception.
-                </li>
-              </ul>
-            </div>
-            <div class="right-enemies">
-              <h4>Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Cartels and business associations</strong> that lobby
-                  for price controls, quotas, or export bans to keep margins
-                  high and competition out.
-                </li>
-                <li>
-                  <strong>Populist politicians</strong> who use "anti-inflation"
-                  price freezes and controls as a tool for short-term popularity
-                  despite predictable shortages.
-                </li>
-              </ul>
-            </div>
-            <div class="right-solutions">
-              <h4>How to Deal with Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Against cartels and business associations:</strong>
-                  Strengthen competition authorities with dawn-raid powers,
-                  leniency programs, and real fines on collusion. Remove trade
-                  and entry barriers that make cartelization easy (import
-                  quotas, exclusive licenses).
-                </li>
-                <li>
-                  <strong>Against populist price-freezers:</strong> Require
-                  impact assessments showing expected shortages before any price
-                  control can be enacted. Replace price freezes with targeted
-                  transfers (vouchers, cash) so voters see there are better
-                  tools than blunt controls.
-                </li>
-              </ul>
-            </div>
+            <details>
+              <summary>Implementation Details</summary>
+              <div class="right-negative">
+                <p>
+                  <strong>Negative Right:</strong> Not to have prices distorted
+                  by controls that create shortages, black markets, and
+                  arbitrage rents.
+                </p>
+              </div>
+              <div class="right-positive">
+                <h4>Institutional Foundations:</h4>
+                <ul>
+                  <li>
+                    <strong
+                      >Right to accurate, timely market information</strong
+                    >
+                    (publication of price data, competition policy that prevents
+                    cartels from faking "market" prices).
+                  </li>
+                  <li>
+                    <strong>Right to basic consumer protection</strong> against
+                    fraud and coercion, so "free prices" actually reflect
+                    voluntary exchange, not deception.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-enemies">
+                <h4>Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong>Cartels and business associations</strong> that
+                    lobby for price controls, quotas, or export bans to keep
+                    margins high and competition out.
+                  </li>
+                  <li>
+                    <strong>Populist politicians</strong> who use
+                    "anti-inflation" price freezes and controls as a tool for
+                    short-term popularity despite predictable shortages.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-solutions">
+                <h4>How to Deal with Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong>Against cartels and business associations:</strong>
+                    Strengthen competition authorities with dawn-raid powers,
+                    leniency programs, and real fines on collusion. Remove trade
+                    and entry barriers that make cartelization easy (import
+                    quotas, exclusive licenses).
+                  </li>
+                  <li>
+                    <strong>Against populist price-freezers:</strong> Require
+                    impact assessments showing expected shortages before any
+                    price control can be enacted. Replace price freezes with
+                    targeted transfers (vouchers, cash) so voters see there are
+                    better tools than blunt controls.
+                  </li>
+                </ul>
+              </div>
+            </details>
             <details style="margin-top: 10px">
               <summary style="font-size: 14px; color: #666">📜 History</summary>
               <div
@@ -3361,71 +3391,75 @@
                 Barriers to trade impoverish us all.
               </p>
             </div>
-            <div class="right-negative">
-              <p>
-                <strong>Negative Right:</strong> Not to be blocked from
-                specializing and trading by artificial barriers (protectionism,
-                occupational licensing cartels, internal trade barriers).
-              </p>
-            </div>
-            <div class="right-positive">
-              <h4>Institutional Foundations:</h4>
-              <ul>
-                <li>
-                  <strong>Right to internal economic mobility:</strong> freedom
-                  to move, register a business, and contract across regions
-                  without arbitrary permits.
-                </li>
-                <li>
-                  <strong
-                    >Right to open trade frameworks and infrastructure</strong
-                  >
-                  (ports, digital networks, standards) that let individuals plug
-                  into larger markets.
-                </li>
-              </ul>
-            </div>
-            <div class="right-enemies">
-              <h4>Enemies:</h4>
-              <ul>
-                <li>
-                  <strong
-                    >Protected domestic industries and trade unions</strong
-                  >
-                  in sunset sectors that fight trade openness, competition, and
-                  new entrants.
-                </li>
-                <li>
-                  <strong>Professional guilds and licensing bodies</strong> that
-                  artificially restrict entry (law, medicine, taxis, notaries,
-                  some tech and trades).
-                </li>
-              </ul>
-            </div>
-            <div class="right-solutions">
-              <h4>How to Deal with Enemies:</h4>
-              <ul>
-                <li>
-                  <strong
-                    >Against protected industries & sunset-sector
-                    unions:</strong
-                  >
-                  Pre-announce phased tariff and protection reductions with
-                  adjustment support (retraining, relocation aid) tied to reform
-                  milestones. Tie any temporary protection to strict, expiring
-                  performance conditions (productivity, exports).
-                </li>
-                <li>
-                  <strong
-                    >Against professional guilds & licensing bodies:</strong
-                  >
-                  Replace many licenses with certification and liability rules;
-                  allow multiple competing certifiers. Introduce automatic
-                  recognition of equivalent qualifications across
-                  regions/countries to undercut guild monopolies.
-                </li>
-              </ul>
-            </div>
+            <details>
+              <summary>Implementation Details</summary>
+              <div class="right-negative">
+                <p>
+                  <strong>Negative Right:</strong> Not to be blocked from
+                  specializing and trading by artificial barriers
+                  (protectionism, occupational licensing cartels, internal trade
+                  barriers).
+                </p>
+              </div>
+              <div class="right-positive">
+                <h4>Institutional Foundations:</h4>
+                <ul>
+                  <li>
+                    <strong>Right to internal economic mobility:</strong>
+                    freedom to move, register a business, and contract across
+                    regions without arbitrary permits.
+                  </li>
+                  <li>
+                    <strong
+                      >Right to open trade frameworks and infrastructure</strong
+                    >
+                    (ports, digital networks, standards) that let individuals
+                    plug into larger markets.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-enemies">
+                <h4>Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong
+                      >Protected domestic industries and trade unions</strong
+                    >
+                    in sunset sectors that fight trade openness, competition,
+                    and new entrants.
+                  </li>
+                  <li>
+                    <strong>Professional guilds and licensing bodies</strong>
+                    that artificially restrict entry (law, medicine, taxis,
+                    notaries, some tech and trades).
+                  </li>
+                </ul>
+              </div>
+              <div class="right-solutions">
+                <h4>How to Deal with Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong
+                      >Against protected industries & sunset-sector
+                      unions:</strong
+                    >
+                    Pre-announce phased tariff and protection reductions with
+                    adjustment support (retraining, relocation aid) tied to
+                    reform milestones. Tie any temporary protection to strict,
+                    expiring performance conditions (productivity, exports).
+                  </li>
+                  <li>
+                    <strong
+                      >Against professional guilds & licensing bodies:</strong
+                    >
+                    Replace many licenses with certification and liability
+                    rules; allow multiple competing certifiers. Introduce
+                    automatic recognition of equivalent qualifications across
+                    regions/countries to undercut guild monopolies.
+                  </li>
+                </ul>
+              </div>
+            </details>
             <details style="margin-top: 10px">
               <summary style="font-size: 14px; color: #666">📜 History</summary>
               <div
@@ -3463,73 +3497,76 @@
                 did we escape poverty.
               </p>
             </div>
-            <div class="right-negative">
-              <p>
-                <strong>Negative Right:</strong> Not to have private property
-                and voluntary exchange abolished in favor of coercive collective
-                ownership.
-              </p>
-            </div>
-            <div class="right-positive">
-              <h4>Institutional Foundations:</h4>
-              <ul>
-                <li>
-                  <strong
-                    >Right to secure, low-cost property titling and contract
-                    enforcement,</strong
-                  >
-                  including for the poor and informally housed.
-                </li>
-                <li>
-                  <strong
-                    >Right to open entry into entrepreneurship and
-                    finance</strong
-                  >
-                  (no guild-style gatekeeping, access to basic financial
-                  services) so "capitalism" is not just for incumbents but a
-                  live option for new entrants.
-                </li>
-              </ul>
-            </div>
-            <div class="right-enemies">
-              <h4>Enemies:</h4>
-              <ul>
-                <li>
-                  <strong>Authoritarian or revolutionary movements</strong> that
-                  explicitly aim to abolish private property and centralize
-                  economic control.
-                </li>
-                <li>
-                  <strong>Crony-capitalist networks:</strong> oligarchs,
-                  politically connected conglomerates, and their allied
-                  officials who profit from subsidies, bailouts, and rigged
-                  regulation rather than open competition.
-                </li>
-              </ul>
-            </div>
-            <div class="right-solutions">
-              <h4>How to Deal with Enemies:</h4>
-              <ul>
-                <li>
-                  <strong
-                    >Against anti-property authoritarian/revolutionary
-                    movements:</strong
-                  >
-                  Entrench property rights and basic economic liberties
-                  constitutionally, with supermajority requirements for
-                  expropriation. Decentralize some powers and revenues so no
-                  single central authority can easily seize all assets.
-                </li>
-                <li>
-                  <strong>Against crony-capitalist networks:</strong> Mandate
-                  competitive, transparent procurement and publish all
-                  contracts, subsidies, and beneficiaries in machine-readable
-                  form. Enforce strict conflict-of-interest and
-                  asset-declaration rules for officials, with independent
-                  enforcement and public access.
-                </li>
-              </ul>
-            </div>
+            <details>
+              <summary>Implementation Details</summary>
+              <div class="right-negative">
+                <p>
+                  <strong>Negative Right:</strong> Not to have private property
+                  and voluntary exchange abolished in favor of coercive
+                  collective ownership.
+                </p>
+              </div>
+              <div class="right-positive">
+                <h4>Institutional Foundations:</h4>
+                <ul>
+                  <li>
+                    <strong
+                      >Right to secure, low-cost property titling and contract
+                      enforcement,</strong
+                    >
+                    including for the poor and informally housed.
+                  </li>
+                  <li>
+                    <strong
+                      >Right to open entry into entrepreneurship and
+                      finance</strong
+                    >
+                    (no guild-style gatekeeping, access to basic financial
+                    services) so "capitalism" is not just for incumbents but a
+                    live option for new entrants.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-enemies">
+                <h4>Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong>Authoritarian or revolutionary movements</strong>
+                    that explicitly aim to abolish private property and
+                    centralize economic control.
+                  </li>
+                  <li>
+                    <strong>Crony-capitalist networks:</strong> oligarchs,
+                    politically connected conglomerates, and their allied
+                    officials who profit from subsidies, bailouts, and rigged
+                    regulation rather than open competition.
+                  </li>
+                </ul>
+              </div>
+              <div class="right-solutions">
+                <h4>How to Deal with Enemies:</h4>
+                <ul>
+                  <li>
+                    <strong
+                      >Against anti-property authoritarian/revolutionary
+                      movements:</strong
+                    >
+                    Entrench property rights and basic economic liberties
+                    constitutionally, with supermajority requirements for
+                    expropriation. Decentralize some powers and revenues so no
+                    single central authority can easily seize all assets.
+                  </li>
+                  <li>
+                    <strong>Against crony-capitalist networks:</strong> Mandate
+                    competitive, transparent procurement and publish all
+                    contracts, subsidies, and beneficiaries in machine-readable
+                    form. Enforce strict conflict-of-interest and
+                    asset-declaration rules for officials, with independent
+                    enforcement and public access.
+                  </li>
+                </ul>
+              </div>
+            </details>
             <details style="margin-top: 10px">
               <summary style="font-size: 14px; color: #666">📜 History</summary>
               <div
