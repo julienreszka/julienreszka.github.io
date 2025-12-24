@@ -12,7 +12,22 @@ function insertNavigation() {
         Navigate between different economic models and their associated natural rights:
       </p>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px;">
+      <!-- Home Card (separate from grid) -->
+      <div style="max-width: 400px; margin: 0 auto 30px auto;">
+        <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.18); padding: 20px; border-radius: 1.75rem; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); transition: all 0.3s ease;">
+          <a href="index.html" style="text-decoration: none; color: inherit; display: block; text-align: center;">
+            <div style="height: 80px; margin-bottom: 12px; position: relative; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
+              <span style="font-size: 24px;">🏠</span>
+            </div>
+            <h3 style="margin: 0 0 8px 0; color: #333; font-size: 18px;">🏠 Return to Home</h3>
+            <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.4;">Overview of all economic curves</p>
+            <p style="margin: 0; font-size: 13px; color: #666; font-weight: 500;">→ Main Dashboard</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- Economic Curves Grid (3x2 on desktop, responsive on mobile) -->
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; max-width: 1000px; margin: 0 auto;" class="curves-grid">
         <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.18); padding: 20px; border-radius: 1.75rem; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); transition: all 0.3s ease;">
           <a href="armey-curve.html" style="text-decoration: none; color: inherit; display: block;">
             <div style="height: 80px; margin-bottom: 12px; position: relative;">
@@ -78,17 +93,6 @@ function insertNavigation() {
             <p style="margin: 0; font-size: 13px; color: #666; font-weight: 500;">→ Right to Prosperity</p>
           </a>
         </div>
-
-        <div style="background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.18); padding: 20px; border-radius: 1.75rem; box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); transition: all 0.3s ease;">
-          <a href="index.html" style="text-decoration: none; color: inherit; display: block;">
-            <div style="height: 80px; margin-bottom: 12px; position: relative; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px;">
-              <span style="font-size: 24px;">🏠</span>
-            </div>
-            <h3 style="margin: 0 0 8px 0; color: #333; font-size: 16px;">🏠 Home</h3>
-            <p style="margin: 0 0 8px 0; font-size: 14px; line-height: 1.4;">Overview of all economic curves</p>
-            <p style="margin: 0; font-size: 13px; color: #666; font-weight: 500;">→ Main Dashboard</p>
-          </a>
-        </div>
       </div>
 
       <p style="text-align: center; margin-top: 25px; margin-bottom: 0; font-size: 14px; color: #666;">
@@ -101,6 +105,39 @@ function insertNavigation() {
       div[style*="transition: all"]:hover {
         box-shadow: 0 15px 50px 0 rgba(31, 38, 135, 0.5) !important;
         background: rgba(255, 255, 255, 0.35) !important;
+      }
+
+      /* Responsive grid layout */
+      .curves-grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 15px !important;
+        max-width: 1000px !important;
+        margin: 0 auto !important;
+      }
+
+      /* Tablet layout (2 columns) */
+      @media (max-width: 768px) {
+        .curves-grid {
+          grid-template-columns: repeat(2, 1fr) !important;
+          max-width: 600px !important;
+        }
+      }
+
+      /* Mobile layout (1 column) */
+      @media (max-width: 480px) {
+        .curves-grid {
+          grid-template-columns: 1fr !important;
+          gap: 12px !important;
+          max-width: 100% !important;
+          padding: 0 10px !important;
+        }
+        
+        /* Adjust home card for mobile */
+        div[style*="max-width: 400px"] {
+          max-width: 100% !important;
+          padding: 0 10px !important;
+        }
       }
 
       /* Dark mode support */
