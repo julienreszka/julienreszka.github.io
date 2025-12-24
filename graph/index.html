@@ -1825,8 +1825,6 @@
             .on("end", dragended)
         );
 
-      console.log("Drag behavior attached to", node.size(), "nodes");
-
       label = svg
         .append("g")
         .attr("class", "labels")
@@ -1854,8 +1852,6 @@
         .attr("stroke", function (d) {
           return labelColors(d.label);
         });
-
-      console.log("Drag behavior attached to", label.size(), "labels");
 
       // Variables pour gérer click vs drag
       var isDragging = false;
@@ -1930,8 +1926,6 @@
     simulation.alphaMin(0.001);
 
     function ticked() {
-      // console.log(simulation.alpha());
-
       svg.attr("width", window.innerWidth);
       link
         .attr("x1", function (d) {
@@ -1981,7 +1975,6 @@
     }
 
     function dragstarted(d) {
-      console.log("Drag started on:", d.id);
       // Marquer qu'on commence un drag
       isDragging = true;
       // Arrêter complètement la simulation
@@ -1991,7 +1984,6 @@
     }
 
     function dragged(d) {
-      console.log("Dragging:", d.id, "to", d3.event.x, d3.event.y);
       d.fx = d3.event.x;
       d.fy = d3.event.y;
       d.x = d3.event.x; // Forcer la position x
@@ -2052,7 +2044,6 @@
     }
 
     function dragended(d) {
-      console.log("Drag ended on:", d.id);
       // Petit délai avant de permettre le click à nouveau
       setTimeout(() => {
         isDragging = false;
