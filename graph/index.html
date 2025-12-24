@@ -5,8 +5,59 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type="text/css">
+      /* Variables CSS pour les thèmes */
+      :root {
+        --bg-color: #ffffff;
+        --text-color: #000000;
+        --sidebar-bg: #ffffff;
+        --sidebar-border: #cccccc;
+        --sidebar-shadow: rgba(0, 0, 0, 0.1);
+        --search-bg: #ffffff;
+        --search-border: #dddddd;
+        --search-shadow: rgba(0, 0, 0, 0.1);
+        --input-border: #cccccc;
+        --input-bg: #ffffff;
+        --result-hover: #f0f0f0;
+        --result-border: #eeeeee;
+        --connection-bg: #f5f5f5;
+        --section-border: #eeeeee;
+        --text-secondary: #666666;
+        --text-tertiary: #333333;
+        --link-stroke: #000000;
+        --text-stroke: rgba(0, 0, 0, 0.5);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-color: #1a1a1a;
+          --text-color: #ffffff;
+          --sidebar-bg: #2d2d2d;
+          --sidebar-border: #444444;
+          --sidebar-shadow: rgba(0, 0, 0, 0.3);
+          --search-bg: #2d2d2d;
+          --search-border: #444444;
+          --search-shadow: rgba(0, 0, 0, 0.3);
+          --input-border: #555555;
+          --input-bg: #3a3a3a;
+          --result-hover: #3a3a3a;
+          --result-border: #444444;
+          --connection-bg: #3a3a3a;
+          --section-border: #444444;
+          --text-secondary: #aaaaaa;
+          --text-tertiary: #cccccc;
+          --link-stroke: #ffffff;
+          --text-stroke: rgba(255, 255, 255, 0.5);
+        }
+      }
+
+      body {
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
       .link {
-        stroke: black;
+        stroke: var(--link-stroke);
         stroke-width: 1px;
       }
       circle {
@@ -15,16 +66,13 @@
       text {
         paint-order: stroke;
         stroke-opacity: 0.5;
+        fill: var(--text-color);
+        stroke: var(--text-stroke);
       }
       .node,
       .labels:hover {
         cursor: pointer;
       }
-      /*.edgelabel {
-			stroke: black;
-			paint-order: stroke;
-			stroke-opacity: 0.2;
-		}*/
       svg:active {
         cursor: move;
       }
@@ -34,13 +82,15 @@
         right: -400px;
         width: 400px;
         height: 100vh;
-        background: white;
-        border-left: 1px solid #ccc;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
-        transition: right 0.3s ease;
+        background: var(--sidebar-bg);
+        border-left: 1px solid var(--sidebar-border);
+        box-shadow: -2px 0 5px var(--sidebar-shadow);
+        transition: right 0.3s ease, background-color 0.3s ease,
+          border-color 0.3s ease;
         padding: 20px;
         overflow-y: auto;
         z-index: 1000;
+        color: var(--text-color);
       }
       #sidebar.open {
         right: 0;
@@ -49,51 +99,64 @@
         font-size: 18px;
         font-weight: bold;
         margin-bottom: 15px;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--section-border);
         padding-bottom: 10px;
+        color: var(--text-color);
       }
       #sidebar-close {
         float: right;
         cursor: pointer;
         font-size: 20px;
-        color: #666;
+        color: var(--text-secondary);
+      }
+      #sidebar-close:hover {
+        color: var(--text-color);
       }
       .connection-section {
         margin-bottom: 20px;
       }
       .connection-section h3 {
         margin: 0 0 10px 0;
-        color: #333;
+        color: var(--text-tertiary);
       }
       .connection-item {
         margin-bottom: 8px;
         padding: 8px;
-        background: #f5f5f5;
+        background: var(--connection-bg);
         border-radius: 4px;
+        color: var(--text-color);
       }
       .connection-type {
         font-weight: bold;
-        color: #666;
+        color: var(--text-secondary);
       }
       #search-container {
         position: fixed;
         top: 20px;
         left: 20px;
         z-index: 1001;
-        background: white;
+        background: var(--search-bg);
         padding: 15px;
         border-radius: 8px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        border: 1px solid #ddd;
+        box-shadow: 0 2px 10px var(--search-shadow);
+        border: 1px solid var(--search-border);
         min-width: 300px;
+        transition: background-color 0.3s ease, border-color 0.3s ease;
       }
       #search-input {
         width: 100%;
         padding: 8px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--input-border);
         border-radius: 4px;
         font-size: 14px;
         margin-bottom: 10px;
+        background: var(--input-bg);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, border-color 0.3s ease,
+          color 0.3s ease;
+      }
+      #search-input::placeholder {
+        color: var(--text-secondary);
       }
       #search-results {
         max-height: 200px;
@@ -102,19 +165,21 @@
       .search-result {
         padding: 8px;
         cursor: pointer;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--result-border);
         display: flex;
         justify-content: space-between;
+        color: var(--text-color);
+        transition: background-color 0.3s ease;
       }
       .search-result:hover {
-        background: #f0f0f0;
+        background: var(--result-hover);
       }
       .search-result:last-child {
         border-bottom: none;
       }
       .search-node-label {
         font-size: 12px;
-        color: #666;
+        color: var(--text-secondary);
       }
       .highlighted {
         stroke: red !important;
@@ -131,18 +196,32 @@
         display: flex;
         align-items: center;
         gap: 10px;
+        color: var(--text-color);
       }
       #depth-select {
         padding: 4px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--input-border);
         border-radius: 4px;
         font-size: 12px;
+        background: var(--input-bg);
+        color: var(--text-color);
+        transition: background-color 0.3s ease, border-color 0.3s ease,
+          color 0.3s ease;
       }
       .depth-highlighted {
         opacity: 0.8 !important;
       }
       .depth-faded {
         opacity: 0.1 !important;
+      }
+
+      /* Style pour les liens et textes dans le footer */
+      a {
+        color: var(--text-color);
+        transition: color 0.3s ease;
+      }
+      a:hover {
+        opacity: 0.8;
       }
     </style>
   </head>
@@ -230,7 +309,7 @@
       })
       .append("svg:path")
       .attr("d", "M 0,-5 L 10 ,0 L 0,5")
-      .attr("fill", "#999")
+      .attr("fill", "var(--text-secondary)")
       .style("stroke", "none");
 
     var simulation = d3
@@ -576,7 +655,6 @@
           },
           "font-size": 10,
           "font-family": "Roboto",
-          fill: "black",
         })
         .style("fill", function (d) {
           return color(d.source);
@@ -601,7 +679,7 @@
         .enter()
         .append("circle")
         .attr("r", 5)
-        .attr("stroke", "black")
+        .attr("stroke", "var(--text-color)")
         .attr("stroke-width", 1)
         .style("fill", function (d, i) {
           return color(d.id);
@@ -623,7 +701,6 @@
         .attr("text-anchor", "middle")
         .style("font-family", "Roboto")
         .style("font-size", 10)
-        .style("fill", "black")
         .attr("stroke-width", "1px")
         .text(function (d) {
           return d.id;

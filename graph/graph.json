@@ -12109,6 +12109,171 @@
       "source": "Tadeusz ZWIEFKA",
       "target": "Députés européens",
       "type": "FAIT PARTIE DES"
+    },
+    {
+      "source": "Président de la République française",
+      "target": "Conseil d'État français",
+      "type": "NOMME LE PRÉSIDENT DU"
+    },
+    {
+      "source": "Conseil d'État français",
+      "target": "République française",
+      "type": "CONTRÔLE LA LÉGALITÉ DES ACTES ADMINISTRATIFS DE LA"
+    },
+    {
+      "source": "Garde des Sceaux, ministre de la Justice",
+      "target": "Cour de cassation française",
+      "type": "PROPOSE LES NOMINATIONS À LA"
+    },
+    {
+      "source": "Cour de cassation française",
+      "target": "République française",
+      "type": "ASSURE L'UNIFICATION DU DROIT DANS LA"
+    },
+    {
+      "source": "Président de la République française",
+      "target": "Cour des comptes française",
+      "type": "NOMME LE PREMIER PRÉSIDENT DE LA"
+    },
+    {
+      "source": "Cour des comptes française",
+      "target": "Assemblée nationale française",
+      "type": "PRÉSENTE SON RAPPORT ANNUEL À L'"
+    },
+    {
+      "source": "Cour des comptes française",
+      "target": "Sénat français",
+      "type": "PRÉSENTE SON RAPPORT ANNUEL AU"
+    },
+    {
+      "source": "Président de la République française",
+      "target": "Banque de France",
+      "type": "NOMME LE GOUVERNEUR DE LA"
+    },
+    {
+      "source": "Banque de France",
+      "target": "Banque centrale européenne (BCE)",
+      "type": "FAIT PARTIE DU SYSTÈME EUROPÉEN DE BANQUES CENTRALES AVEC LA"
+    },
+    {
+      "source": "Président de la République française",
+      "target": "Défenseur des droits français",
+      "type": "NOMME LE"
+    },
+    {
+      "source": "Défenseur des droits français",
+      "target": "Assemblée nationale française",
+      "type": "PRÉSENTE SON RAPPORT ANNUEL À L'"
+    },
+    {
+      "source": "Défenseur des droits français",
+      "target": "Sénat français",
+      "type": "PRÉSENTE SON RAPPORT ANNUEL AU"
+    },
+    {
+      "source": "Premier ministre français",
+      "target": "Autorité de la concurrence française",
+      "type": "NOMME LE PRÉSIDENT DE L'"
+    },
+    {
+      "source": "Autorité de la concurrence française",
+      "target": "République française",
+      "type": "VEILLE AU RESPECT DE LA CONCURRENCE DANS LA"
+    },
+    {
+      "source": "Premier ministre français",
+      "target": "Conseil économique, social et environnemental français (CESE)",
+      "type": "CONSULTE LE"
+    },
+    {
+      "source": "Conseil économique, social et environnemental français (CESE)",
+      "target": "République française",
+      "type": "CONSEILLE LE GOUVERNEMENT DE LA"
+    },
+    {
+      "source": "Ministres du Gouvernement français",
+      "target": "Haute Autorité de santé publique française",
+      "type": "CONSULTENT LA"
+    },
+    {
+      "source": "Président de la République française",
+      "target": "Commission nationale de l'informatique et des libertés (CNIL)",
+      "type": "NOMME LE PRÉSIDENT DE LA"
+    },
+    {
+      "source": "Commission nationale de l'informatique et des libertés (CNIL)",
+      "target": "République française",
+      "type": "PROTÈGE LES DONNÉES PERSONNELLES DANS LA"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Comité économique et social européen (CESE)",
+      "type": "CONSULTE LE"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Comité économique et social européen (CESE)",
+      "type": "CONSULTE LE"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Comité économique et social européen (CESE)",
+      "type": "CONSULTE LE"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Comité des régions européen",
+      "type": "CONSULTE LE"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Comité des régions européen",
+      "type": "CONSULTE LE"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Comité des régions européen",
+      "type": "CONSULTE LE"
+    },
+    {
+      "source": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
+      "target": "Eurogroupe",
+      "type": "COMPOSENT L'"
+    },
+    {
+      "source": "Eurogroupe",
+      "target": "Banque centrale européenne (BCE)",
+      "type": "COORDONNE SES POLITIQUES AVEC LA"
+    },
+    {
+      "source": "Conseil de l'Union européenne",
+      "target": "Mécanisme européen de stabilité (MES)",
+      "type": "A CRÉÉ LE"
+    },
+    {
+      "source": "Mécanisme européen de stabilité (MES)",
+      "target": "Eurogroupe",
+      "type": "REND COMPTE À L'"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Médiateur européen",
+      "type": "ÉLIT LE"
+    },
+    {
+      "source": "Médiateur européen",
+      "target": "Institutions de l'Union européenne",
+      "type": "ENQUÊTE SUR LES DYSFONCTIONNEMENTS DES"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Agence européenne des médicaments (EMA)",
+      "type": "SUPERVISE L'"
+    },
+    {
+      "source": "Agence européenne des médicaments (EMA)",
+      "target": "Institutions de l'Union européenne",
+      "type": "AUTORISE LA MISE SUR LE MARCHÉ DES MÉDICAMENTS POUR LES"
     }
   ],
   "nodes": [
@@ -19059,6 +19224,81 @@
     {
       "id": "Ministre de l'Agriculture et de l'Alimentation",
       "label": "Institution"
+    },
+    {
+      "id": "Conseil d'État français",
+      "label": "Institution",
+      "Date de création": "1799-12-24"
+    },
+    {
+      "id": "Cour de cassation française",
+      "label": "Institution",
+      "Date de création": "1790-11-27"
+    },
+    {
+      "id": "Cour des comptes française",
+      "label": "Institution",
+      "Date de création": "1807-09-16"
+    },
+    {
+      "id": "Banque de France",
+      "label": "Institution",
+      "Date de création": "1800-01-18"
+    },
+    {
+      "id": "Défenseur des droits français",
+      "label": "Institution",
+      "Date de création": "2011-03-29"
+    },
+    {
+      "id": "Autorité de la concurrence française",
+      "label": "Institution",
+      "Date de création": "2009-03-03"
+    },
+    {
+      "id": "Conseil économique, social et environnemental français (CESE)",
+      "label": "Institution",
+      "Date de création": "1925-01-19"
+    },
+    {
+      "id": "Haute Autorité de santé publique française",
+      "label": "Institution",
+      "Date de création": "2004-08-13"
+    },
+    {
+      "id": "Commission nationale de l'informatique et des libertés (CNIL)",
+      "label": "Institution",
+      "Date de création": "1978-01-06"
+    },
+    {
+      "id": "Comité économique et social européen (CESE)",
+      "label": "Institution",
+      "Date de création": "1957-03-25"
+    },
+    {
+      "id": "Comité des régions européen",
+      "label": "Institution",
+      "Date de création": "1994-02-07"
+    },
+    {
+      "id": "Eurogroupe",
+      "label": "Institution",
+      "Date de création": "1997-12-01"
+    },
+    {
+      "id": "Mécanisme européen de stabilité (MES)",
+      "label": "Institution",
+      "Date de création": "2012-10-08"
+    },
+    {
+      "id": "Médiateur européen",
+      "label": "Institution",
+      "Date de création": "1995-09-12"
+    },
+    {
+      "id": "Agence européenne des médicaments (EMA)",
+      "label": "Institution",
+      "Date de création": "1995-01-26"
     }
   ]
 }
