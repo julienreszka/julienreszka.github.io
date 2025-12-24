@@ -104,21 +104,21 @@ async function generateOGImages() {
 
     // Generate main social media images from homepage
     console.log('📸 Capturing homepage cards for main social media images...');
-    
+
     // Set viewport to show full page content first
     await page.setViewport({ width: 1200, height: 1000, deviceScaleFactor: 2 });
-    
+
     // Find the navigation cards section and get its position
     const cardsSection = await page.evaluate(() => {
       const grid = document.querySelector('.nav-grid');
       const title = document.querySelector('.nav-title');
       const description = document.querySelector('.nav-description');
-      
+
       if (!grid || !title) return null;
-      
+
       const titleRect = title.getBoundingClientRect();
       const gridRect = grid.getBoundingClientRect();
-      
+
       return {
         x: 0,
         y: Math.max(0, titleRect.top - 20), // Reduce top padding above the title
@@ -126,7 +126,7 @@ async function generateOGImages() {
         height: Math.min(630, gridRect.bottom - titleRect.top + 120) // Capture title + cards + more padding
       };
     });
-    
+
     if (cardsSection) {
       // Capture the cards section for Open Graph
       await page.screenshot({
@@ -156,7 +156,7 @@ async function generateOGImages() {
       });
       await page.screenshot({
         path: path.join(__dirname, 'twitter-card.png'),
-        type: 'png', 
+        type: 'png',
         clip: { x: 0, y: 0, width: 1200, height: 630 },
         optimizeForSpeed: false
       });
