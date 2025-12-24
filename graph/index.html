@@ -546,9 +546,9 @@
       <input type="text" id="search-input" placeholder="Search for nodes..." />
       <div id="search-results"></div>
       <div id="depth-selector">
-        <label for="depth-select">Connection depth:</label>
+        <label for="depth-select">Dim connections after:</label>
         <select id="depth-select">
-          <option value="0">Show all</option>
+          <option value="0">Show all clearly</option>
           <option value="1">1 level</option>
           <option value="2">2 levels</option>
           <option value="3">3 levels</option>
@@ -905,6 +905,24 @@
         </div>
       </div>`;
 
+      // Ajouter le sélecteur de profondeur
+      content += `<div class="connection-section">
+        <h3>Connection Visibility</h3>
+        <div class="connection-item">
+          <div style="display: flex; align-items: center; gap: 10px; width: 100%;">
+            <label for="sidebar-depth-select" style="color: var(--text-color);">Dim connections after:</label>
+            <select id="sidebar-depth-select" style="flex: 1; padding: 6px; border: 1px solid var(--input-border); border-radius: 4px; background: var(--input-bg); color: var(--text-color);">
+              <option value="0">Show all clearly</option>
+              <option value="1">1 level</option>
+              <option value="2">2 levels</option>
+              <option value="3">3 levels</option>
+              <option value="4">4 levels</option>
+              <option value="5">5 levels</option>
+            </select>
+          </div>
+        </div>
+      </div>`;
+
       if (outgoingLinks.length > 0) {
         content +=
           '<div class="connection-section"><h3>Outgoing Connections</h3>';
@@ -940,6 +958,21 @@
       }
 
       sidebarContent.innerHTML = content;
+
+      // Set up the sidebar depth selector
+      const sidebarDepthSelect = document.getElementById("sidebar-depth-select");
+      if (sidebarDepthSelect) {
+        // Sync with main depth selector
+        sidebarDepthSelect.value = currentDepth;
+        
+        // Add event listener
+        sidebarDepthSelect.addEventListener("change", function(e) {
+          currentDepth = parseInt(e.target.value);
+          // Sync with main depth selector
+          document.getElementById("depth-select").value = currentDepth;
+          applyDepthFilter();
+        });
+      }
 
       // Cacher la recherche et l'itinéraire, montrer la sidebar
       searchContainer.classList.add("hidden-by-sidebar");
@@ -1368,6 +1401,11 @@
       .getElementById("depth-select")
       .addEventListener("change", function (e) {
         currentDepth = parseInt(e.target.value);
+        // Sync with sidebar depth selector if it exists
+        const sidebarDepthSelect = document.getElementById("sidebar-depth-select");
+        if (sidebarDepthSelect) {
+          sidebarDepthSelect.value = currentDepth;
+        }
         applyDepthFilter();
       });
 
