@@ -1,640 +1,640 @@
 {
   "links": [
     {
-    "source":"Services de la Direction générale des Finances publiques",
-    "type":"Composent",
-    "target":"Direction générale des Finances publiques (DGFiP)"
-  },
-  {
-    "source":"Direction départementale ou régionale des finances publiques",
-    "type":"Compose",
-    "target":"Services de la Direction générale des Finances publiques"
-  },
-  {
-    "source":"Direction départementale ou régionale des finances publiques",
-    "type":"Participe à l'établissement des",
-    "target":"Impôts locaux"
-  },
-  {
-    "source":"Directeur général de la DGFiP",
-    "type":"Dirige",
-    "target":"Direction générale des Finances publiques (DGFiP)"
-  },
-  {
-    "source":"Grands électeurs français",
-    "type":"Elisent",
-    "target":"Sénateurs français"
-  },
-  {
-    "source":"Conseillers régionaux français",
-    "type":"Composent",
-    "target":"Grands électeurs français"
-  },
-  {
-    "source":"Conseillers départementaux français",
-    "type":"Composent",
-    "target":"Grands électeurs français"
-  },
-  {
-    "source":"Délégués des conseils municipaux français",
-    "type":"Composent",
-    "target":"Grands électeurs français"
-  },
-  {
-    "source":"Députés français",
-    "type":"Composent",
-    "target":"Grands électeurs français"
-  },
-  {
-    "source":"Élus non municipaux ultramarins français",
-    "type":"Composent",
-    "target":"Grands électeurs français"
-  },
-  {
-    "source":"Conseillers municipaux français",
-    "type":"Composent",
-    "target":"Délégués des conseils municipaux français"
-  },
-  {
-    "source":"Délégués supplémentaires français",
-    "type":"Composent",
-    "target":"Délégués des conseils municipaux français"
-  },
-  {
-    "source":"Citoyens français de plus de 18 ans",
-    "type":"Elisent",
-    "target":"Conseillers départementaux français"
-  },
-  {
-    "source":"Citoyens français de plus de 18 ans",
-    "type":"Elisent",
-    "target":"Conseillers régionaux français"
-  },
-  {
-    "source":"Citoyens français de plus de 18 ans",
-    "type":"Elisent",
-    "target":"Conseillers municipaux français"
-  },
-  {
-    "source":"Bruno Parent",
-    "type":"Représente",
-    "target":"Directeur général de la DGFiP"
-  },
-  {
-    "source":"République française",
-    "type":"Compose",
-    "target":"Administration publique centrale française (APUC)"
-  },
-  {
-    "source":"Citoyens français de plus de 18 ans",
-    "type":"Elisent",
-    "target":"Président de la République française"
-  },
-  {
-    "source":"Citoyens français de plus de 18 ans",
-    "type":"Composent",
-    "target":"Citoyens de l'Union européenne de plus de 18 ans"
-  },
-  {
-    "source":"Citoyens français de plus de 18 ans",
-    "type":"Font partie",
-    "target":"Citoyens français"
-  },
-  {
-    "source":"Citoyens français",
-    "type":"Font partie",
-    "target":"Habitants de la France"
-  },
-  {
-    "source":"Citoyens français",
-    "type":"Font partie",
-    "target":"Citoyens de l'Union européenne"
-  },
-  {
-    "source":"Habitants de la France",
-    "type":"Font partie",
-    "target":"Habitants de l'Union européenne"
-  },
-  {
-    "source":"Députés français",
-    "type":"Composent",
-    "target":"Assemblée nationale française"
-  },
-  {
-    "source":"Citoyens français de plus de 18 ans",
-    "type":"Elisent",
-    "target":"Députés français"
-  },
-  {
-    "source":"Sénateurs français",
-    "type":"Composent",
-    "target":"Sénat français"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"Compose",
-    "target":"République française"
-  },
-  {
-    "source":"Parlement français",
-    "type":"Compose",
-    "target":"République française"
-  },
-  {
-    "source":"Magistrature française",
-    "type":"Compose",
-    "target":"République française"
-  },
-  {
-    "source":"Ministres du Gouvernement français",
-    "type":"Composent",
-    "target":"Ministres de l'Union européenne"
-  },
-  {
-    "source":"Organismes divers d'administration centrale (ODAC)",
-    "type":"Composent",
-    "target":"Administration publique centrale française (APUC)"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"Nomme",
-    "target":"Premier ministre français"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"A le droit de dissoudre l'",
-    "target":"Assemblée nationale française"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"A le droit de saisine du",
-    "target":"Conseil constitutionnel français"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"Préside",
-    "target":"Conseil des ministres français"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"Préside",
-    "target":"Conseil de Défense et de Sécurité nationale français (CDSN)"
-  },
-  {
-    "source":"Sénat français",
-    "type":"Compose",
-    "target":"Parlement français"
-  },
-  {
-    "source":"Assemblée nationale française",
-    "type":"Compose",
-    "target":"Parlement français"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"Dirige l'action du",
-    "target":"Gouvernement français"
-  },
-  {
-    "source":"Ministres du Gouvernement français",
-    "type":"Composent",
-    "target":"Gouvernement français"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"Nomme",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"Propose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Gouvernement français",
-    "type":"détermine et conduit la",
-    "target":"Politique de la Nation française"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur la",
-    "target":"Direction générale des Finances publiques (DGFiP)"
-  },
-  {
-    "source":"Président du Sénat français",
-    "type":"Préside le",
-    "target":"Sénat français"
-  },
-  {
-    "source":"Président du Sénat français",
-    "type":"Désigne 3 des 9",
-    "target":"Membres du Conseil constitutionnel français"
-  },
-  {
-    "source":"Membres du Conseil constitutionnel français",
-    "type":"Composent",
-    "target":"Conseil constitutionnel français"
-  },
-  {
-    "source":"Gérard Larcher",
-    "type":"Représente",
-    "target":"Président du Sénat français"
-  },
-  {
-    "source":"Président du Conseil constitutionnel français",
-    "type":"Préside et compose",
-    "target":"Conseil constitutionnel français"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"Nomme",
-    "target":"Président du Conseil constitutionnel français"
-  },
-  {
-    "source":"Président de la République française",
-    "type":"Désigne 3 des 9",
-    "target":"Membres du Conseil constitutionnel français"
-  },
-  {
-    "source":"Président de l'Assemblée nationale française",
-    "type":"Désigne 3 des 9",
-    "target":"Membres du Conseil constitutionnel français"
-  },
-  {
-    "source":"Président de l'Assemblée nationale française",
-    "type":"Préside",
-    "target":"Assemblée nationale française"
-  },
-  {
-    "source":"Anciens Présidents de la République française",
-    "type":"Composent s'ils le souhaitent",
-    "target":"Conseil constitutionnel français"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du gouvernement"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"A autorité sur",
-    "target":"Secrétariat général des affaires européennes"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"A autorité sur",
-    "target":"Secrétariat général de la défense et de la sécurité nationale"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"A autorité sur",
-    "target":"Secrétariat général de la mer"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"A autorité sur",
-    "target":"Secrétariat général pour la modernisation de l'action publique"
-  },
-  {
-    "source":"Ministre d'État, ministre de l'Intérieur",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du ministère de l'Intérieur"
-  },
-  {
-    "source":"Ministre de la Cohésion des territoires",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du ministère de l'Intérieur"
-  },
-  {
-    "source":"Ministre des Outre-mer",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du ministère de l'Intérieur"
-  },
-  {
-    "source":"Ministre d'État, ministre de l'Intérieur",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de la Cohésion des territoires",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre des Outre-mer",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre d'État, ministre de la Transition écologique et solidaire",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Garde des Sceaux, ministre de la Justice",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre des Armées",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de l'Europe et des Affaires étrangères",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre des Solidarités et de la Santé",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre du Travail",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre des Sports",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de la Culture",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de l'Éducation nationale",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre de l'Agriculture et de l'Alimentation",
-    "type":"Compose",
-    "target":"Ministres du Gouvernement français"
-  },
-  {
-    "source":"Ministre d'État, ministre de la Transition écologique et solidaire",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du ministère de l'Écologie et du Développement durable"
-  },
-  {
-    "source":"Garde des Sceaux, ministre de la Justice",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du ministère de la Justice"
-  },
-  {
-    "source":"Ministre des Armées",
-    "type":"A autorité sur",
-    "target":"Secrétariat général pour l'administration"
-  },
-  {
-    "source":"Ministre de l'Europe et des Affaires étrangères",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du ministère des affaires étrangères"
-  },
-  {
-    "source":"Ministre des Solidarités et de la Santé",
-    "type":"A autorité sur",
-    "target":"Secrétariat général des ministères chargés des affaires sociales"
-  },
-  {
-    "source":"Ministre du Travail",
-    "type":"A autorité sur",
-    "target":"Secrétariat général des ministères chargés des affaires sociales"
-  },
-  {
-    "source":"Ministre de la Culture",
-    "type":"A autorité sur",
-    "target":"Secrétariat général du ministère de la Culture"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Secrétariat général des ministères économiques et financiers"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Secrétariat général des ministères économiques et financiers"
-  },
-  {
-    "source":"Ministre de l'Éducation nationale",
-    "type":"A autorité sur",
-    "target":"Secrétariat général des ministères de l'Éducation nationale et de l'enseignement supérieur et de la recherche"
-  },
-  {
-    "source":"Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
-    "type":"A autorité sur",
-    "target":"Secrétariat général des ministères de l'Éducation nationale et de l'enseignement supérieur et de la recherche"
-  },
-  {
-    "source":"Ministre de l'Agriculture et de l'Alimentation",
-    "type":"A autorité sur",
-    "target":"Secrétariat général de ministère de l'Agriculture, de l'Agroalimentaire et de la Forêt"
-  },
-  {
-    "source":"Ministre de l'Agriculture et de l'Alimentation",
-    "type":"A autorité sur",
-    "target":"Direction générale des politiques agricole, agroalimentaire et des territoires"
-  },
-  {
-    "source":"Ministre de l'Agriculture et de l'Alimentation",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'alimentation"
-  },
-  {
-    "source":"Ministre de l'Agriculture et de l'Alimentation",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'enseignement et de la recherche"
-  },
-  {
-    "source":"Ministre de l'Éducation nationale",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'enseignement scolaire (Éducation nationale)"
-  },
-  {
-    "source":"Ministre de l'Éducation nationale",
-    "type":"A autorité sur",
-    "target":"Direction générale pour l'enseignement supérieur et l'insertion professionnelle (Enseignement supérieur, Recherche et Innovation)"
-  },
-  {
-    "source":"Ministre de l'Éducation nationale",
-    "type":"A autorité sur",
-    "target":"Direction générale pour la recherche et l'innovation (Enseignement supérieur, Recherche et Innovation)"
-  },
-  {
-    "source":"Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'enseignement scolaire (Éducation nationale)"
-  },
-  {
-    "source":"Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
-    "type":"A autorité sur",
-    "target":"Direction générale pour l'enseignement supérieur et l'insertion professionnelle (Enseignement supérieur, Recherche et Innovation)"
-  },
-  {
-    "source":"Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
-    "type":"A autorité sur",
-    "target":"Direction générale pour la recherche et l'innovation (Enseignement supérieur, Recherche et Innovation)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction générale du Trésor (Économie)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'Institut national de la statistique et des études économiques (Économie)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction générale de la concurrence, de la consommation et de la répression des fraudes (Économie)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction du Budget (Action et Comptes publics)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction générale des Finances publiques (Économie + Action et Comptes publics)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction générale des douanes et droits indirects (Action et Comptes publics)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction générale des entreprises (Économie + Cohésion des territoires)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'administration et de la fonction publique (Premier ministre + Action et Comptes publics)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction générale du Trésor (Économie)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'Institut national de la statistique et des études économiques (Économie)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction générale de la concurrence, de la consommation et de la répression des fraudes (Économie)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction du Budget (Action et Comptes publics)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction générale des Finances publiques (Économie + Action et Comptes publics)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction générale des douanes et droits indirects (Action et Comptes publics)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction générale des entreprises (Économie + Cohésion des territoires)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"A autorité sur",
-    "target":"Direction générale de l'administration et de la fonction publique (Premier ministre + Action et Comptes publics)"
-  },
-  {
-    "source":"Muriel Pénicaud",
-    "type":"Représente",
-    "target":"Ministre du Travail"
-  },
-  {
-    "source":"Ministre des Armées",
-    "type":"Compose",
-    "target":"Conseil de Défense et de Sécurité nationale français (CDSN)"
-  },
-  {
-    "source":"Premier ministre français",
-    "type":"Compose",
-    "target":"Conseil de Défense et de Sécurité nationale français (CDSN)"
-  },
-  {
-    "source":"Ministre de l'Économie et des Finances français",
-    "type":"Compose",
-    "target":"Conseil de Défense et de Sécurité nationale français (CDSN)"
-  },
-  {
-    "source":"Ministre de l'Action et des Comptes publics",
-    "type":"Compose",
-    "target":"Conseil de Défense et de Sécurité nationale français (CDSN)"
-  },
-  {
-    "source":"Ministre de l'Europe et des Affaires étrangères",
-    "type":"Compose",
-    "target":"Conseil de Défense et de Sécurité nationale français (CDSN)"
-  },
-  {
-    "source":"Secrétariat général de la défense et de la sécurité nationale",
-    "type":"Assiste aux délibérations du",
-    "target":"Conseil de Défense et de Sécurité nationale français (CDSN)"
-  },
-  {
-    "source":"Gérald Darmanin",
-    "type":"Représente",
-    "target":"Ministre de l'Action et des Comptes publics"
-  },
-  {
-    "source":"Bruno Le Maire",
-    "type":"Représente",
-    "target":"Ministre de l'Économie et des Finances français"
-  },
-  {
-    "source":"Ministre de la Culture",
-    "type":"A autorité sur",
-    "target":"Direction générale des Patrimoines"
-  },
-  {
-    "source":"Ministre de la Culture",
-    "type":"A autorité sur",
-    "target":"Direction générale de la Création artistique"
-  },
-  {
-    "source":"Ministre de la Culture",
-    "type":"A autorité sur",
-    "target":"Direction générale des Médias et des Industries culturelles"
-  },
+      "source": "Services de la Direction générale des Finances publiques",
+      "type": "Composent",
+      "target": "Direction générale des Finances publiques (DGFiP)"
+    },
+    {
+      "source": "Direction départementale ou régionale des finances publiques",
+      "type": "Compose",
+      "target": "Services de la Direction générale des Finances publiques"
+    },
+    {
+      "source": "Direction départementale ou régionale des finances publiques",
+      "type": "Participe à l'établissement des",
+      "target": "Impôts locaux"
+    },
+    {
+      "source": "Directeur général de la DGFiP",
+      "type": "Dirige",
+      "target": "Direction générale des Finances publiques (DGFiP)"
+    },
+    {
+      "source": "Grands électeurs français",
+      "type": "Elisent",
+      "target": "Sénateurs français"
+    },
+    {
+      "source": "Conseillers régionaux français",
+      "type": "Composent",
+      "target": "Grands électeurs français"
+    },
+    {
+      "source": "Conseillers départementaux français",
+      "type": "Composent",
+      "target": "Grands électeurs français"
+    },
+    {
+      "source": "Délégués des conseils municipaux français",
+      "type": "Composent",
+      "target": "Grands électeurs français"
+    },
+    {
+      "source": "Députés français",
+      "type": "Composent",
+      "target": "Grands électeurs français"
+    },
+    {
+      "source": "Élus non municipaux ultramarins français",
+      "type": "Composent",
+      "target": "Grands électeurs français"
+    },
+    {
+      "source": "Conseillers municipaux français",
+      "type": "Composent",
+      "target": "Délégués des conseils municipaux français"
+    },
+    {
+      "source": "Délégués supplémentaires français",
+      "type": "Composent",
+      "target": "Délégués des conseils municipaux français"
+    },
+    {
+      "source": "Citoyens français de plus de 18 ans",
+      "type": "Elisent",
+      "target": "Conseillers départementaux français"
+    },
+    {
+      "source": "Citoyens français de plus de 18 ans",
+      "type": "Elisent",
+      "target": "Conseillers régionaux français"
+    },
+    {
+      "source": "Citoyens français de plus de 18 ans",
+      "type": "Elisent",
+      "target": "Conseillers municipaux français"
+    },
+    {
+      "source": "Bruno Parent",
+      "type": "Représente",
+      "target": "Directeur général de la DGFiP"
+    },
+    {
+      "source": "République française",
+      "type": "Compose",
+      "target": "Administration publique centrale française (APUC)"
+    },
+    {
+      "source": "Citoyens français de plus de 18 ans",
+      "type": "Elisent",
+      "target": "Président de la République française"
+    },
+    {
+      "source": "Citoyens français de plus de 18 ans",
+      "type": "Composent",
+      "target": "Citoyens de l'Union européenne de plus de 18 ans"
+    },
+    {
+      "source": "Citoyens français de plus de 18 ans",
+      "type": "Font partie",
+      "target": "Citoyens français"
+    },
+    {
+      "source": "Citoyens français",
+      "type": "Font partie",
+      "target": "Habitants de la France"
+    },
+    {
+      "source": "Citoyens français",
+      "type": "Font partie",
+      "target": "Citoyens de l'Union européenne"
+    },
+    {
+      "source": "Habitants de la France",
+      "type": "Font partie",
+      "target": "Habitants de l'Union européenne"
+    },
+    {
+      "source": "Députés français",
+      "type": "Composent",
+      "target": "Assemblée nationale française"
+    },
+    {
+      "source": "Citoyens français de plus de 18 ans",
+      "type": "Elisent",
+      "target": "Députés français"
+    },
+    {
+      "source": "Sénateurs français",
+      "type": "Composent",
+      "target": "Sénat français"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "Compose",
+      "target": "République française"
+    },
+    {
+      "source": "Parlement français",
+      "type": "Compose",
+      "target": "République française"
+    },
+    {
+      "source": "Magistrature française",
+      "type": "Compose",
+      "target": "République française"
+    },
+    {
+      "source": "Ministres du Gouvernement français",
+      "type": "Composent",
+      "target": "Ministres de l'Union européenne"
+    },
+    {
+      "source": "Organismes divers d'administration centrale (ODAC)",
+      "type": "Composent",
+      "target": "Administration publique centrale française (APUC)"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "Nomme",
+      "target": "Premier ministre français"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "A le droit de dissoudre l'",
+      "target": "Assemblée nationale française"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "A le droit de saisine du",
+      "target": "Conseil constitutionnel français"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "Préside",
+      "target": "Conseil des ministres français"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "Préside",
+      "target": "Conseil de Défense et de Sécurité nationale français (CDSN)"
+    },
+    {
+      "source": "Sénat français",
+      "type": "Compose",
+      "target": "Parlement français"
+    },
+    {
+      "source": "Assemblée nationale française",
+      "type": "Compose",
+      "target": "Parlement français"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "Dirige l'action du",
+      "target": "Gouvernement français"
+    },
+    {
+      "source": "Ministres du Gouvernement français",
+      "type": "Composent",
+      "target": "Gouvernement français"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "Nomme",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "Propose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Gouvernement français",
+      "type": "détermine et conduit la",
+      "target": "Politique de la Nation française"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur la",
+      "target": "Direction générale des Finances publiques (DGFiP)"
+    },
+    {
+      "source": "Président du Sénat français",
+      "type": "Préside le",
+      "target": "Sénat français"
+    },
+    {
+      "source": "Président du Sénat français",
+      "type": "Désigne 3 des 9",
+      "target": "Membres du Conseil constitutionnel français"
+    },
+    {
+      "source": "Membres du Conseil constitutionnel français",
+      "type": "Composent",
+      "target": "Conseil constitutionnel français"
+    },
+    {
+      "source": "Gérard Larcher",
+      "type": "Représente",
+      "target": "Président du Sénat français"
+    },
+    {
+      "source": "Président du Conseil constitutionnel français",
+      "type": "Préside et compose",
+      "target": "Conseil constitutionnel français"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "Nomme",
+      "target": "Président du Conseil constitutionnel français"
+    },
+    {
+      "source": "Président de la République française",
+      "type": "Désigne 3 des 9",
+      "target": "Membres du Conseil constitutionnel français"
+    },
+    {
+      "source": "Président de l'Assemblée nationale française",
+      "type": "Désigne 3 des 9",
+      "target": "Membres du Conseil constitutionnel français"
+    },
+    {
+      "source": "Président de l'Assemblée nationale française",
+      "type": "Préside",
+      "target": "Assemblée nationale française"
+    },
+    {
+      "source": "Anciens Présidents de la République française",
+      "type": "Composent s'ils le souhaitent",
+      "target": "Conseil constitutionnel français"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du gouvernement"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "A autorité sur",
+      "target": "Secrétariat général des affaires européennes"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "A autorité sur",
+      "target": "Secrétariat général de la défense et de la sécurité nationale"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "A autorité sur",
+      "target": "Secrétariat général de la mer"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "A autorité sur",
+      "target": "Secrétariat général pour la modernisation de l'action publique"
+    },
+    {
+      "source": "Ministre d'État, ministre de l'Intérieur",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du ministère de l'Intérieur"
+    },
+    {
+      "source": "Ministre de la Cohésion des territoires",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du ministère de l'Intérieur"
+    },
+    {
+      "source": "Ministre des Outre-mer",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du ministère de l'Intérieur"
+    },
+    {
+      "source": "Ministre d'État, ministre de l'Intérieur",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de la Cohésion des territoires",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre des Outre-mer",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre d'État, ministre de la Transition écologique et solidaire",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Garde des Sceaux, ministre de la Justice",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre des Armées",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de l'Europe et des Affaires étrangères",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre des Solidarités et de la Santé",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre du Travail",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre des Sports",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de la Culture",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de l'Éducation nationale",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre de l'Agriculture et de l'Alimentation",
+      "type": "Compose",
+      "target": "Ministres du Gouvernement français"
+    },
+    {
+      "source": "Ministre d'État, ministre de la Transition écologique et solidaire",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du ministère de l'Écologie et du Développement durable"
+    },
+    {
+      "source": "Garde des Sceaux, ministre de la Justice",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du ministère de la Justice"
+    },
+    {
+      "source": "Ministre des Armées",
+      "type": "A autorité sur",
+      "target": "Secrétariat général pour l'administration"
+    },
+    {
+      "source": "Ministre de l'Europe et des Affaires étrangères",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du ministère des affaires étrangères"
+    },
+    {
+      "source": "Ministre des Solidarités et de la Santé",
+      "type": "A autorité sur",
+      "target": "Secrétariat général des ministères chargés des affaires sociales"
+    },
+    {
+      "source": "Ministre du Travail",
+      "type": "A autorité sur",
+      "target": "Secrétariat général des ministères chargés des affaires sociales"
+    },
+    {
+      "source": "Ministre de la Culture",
+      "type": "A autorité sur",
+      "target": "Secrétariat général du ministère de la Culture"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Secrétariat général des ministères économiques et financiers"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Secrétariat général des ministères économiques et financiers"
+    },
+    {
+      "source": "Ministre de l'Éducation nationale",
+      "type": "A autorité sur",
+      "target": "Secrétariat général des ministères de l'Éducation nationale et de l'enseignement supérieur et de la recherche"
+    },
+    {
+      "source": "Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
+      "type": "A autorité sur",
+      "target": "Secrétariat général des ministères de l'Éducation nationale et de l'enseignement supérieur et de la recherche"
+    },
+    {
+      "source": "Ministre de l'Agriculture et de l'Alimentation",
+      "type": "A autorité sur",
+      "target": "Secrétariat général de ministère de l'Agriculture, de l'Agroalimentaire et de la Forêt"
+    },
+    {
+      "source": "Ministre de l'Agriculture et de l'Alimentation",
+      "type": "A autorité sur",
+      "target": "Direction générale des politiques agricole, agroalimentaire et des territoires"
+    },
+    {
+      "source": "Ministre de l'Agriculture et de l'Alimentation",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'alimentation"
+    },
+    {
+      "source": "Ministre de l'Agriculture et de l'Alimentation",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'enseignement et de la recherche"
+    },
+    {
+      "source": "Ministre de l'Éducation nationale",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'enseignement scolaire (Éducation nationale)"
+    },
+    {
+      "source": "Ministre de l'Éducation nationale",
+      "type": "A autorité sur",
+      "target": "Direction générale pour l'enseignement supérieur et l'insertion professionnelle (Enseignement supérieur, Recherche et Innovation)"
+    },
+    {
+      "source": "Ministre de l'Éducation nationale",
+      "type": "A autorité sur",
+      "target": "Direction générale pour la recherche et l'innovation (Enseignement supérieur, Recherche et Innovation)"
+    },
+    {
+      "source": "Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'enseignement scolaire (Éducation nationale)"
+    },
+    {
+      "source": "Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
+      "type": "A autorité sur",
+      "target": "Direction générale pour l'enseignement supérieur et l'insertion professionnelle (Enseignement supérieur, Recherche et Innovation)"
+    },
+    {
+      "source": "Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
+      "type": "A autorité sur",
+      "target": "Direction générale pour la recherche et l'innovation (Enseignement supérieur, Recherche et Innovation)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction générale du Trésor (Économie)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'Institut national de la statistique et des études économiques (Économie)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction générale de la concurrence, de la consommation et de la répression des fraudes (Économie)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction du Budget (Action et Comptes publics)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction générale des Finances publiques (Économie + Action et Comptes publics)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction générale des douanes et droits indirects (Action et Comptes publics)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction générale des entreprises (Économie + Cohésion des territoires)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'administration et de la fonction publique (Premier ministre + Action et Comptes publics)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction générale du Trésor (Économie)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'Institut national de la statistique et des études économiques (Économie)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction générale de la concurrence, de la consommation et de la répression des fraudes (Économie)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction du Budget (Action et Comptes publics)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction générale des Finances publiques (Économie + Action et Comptes publics)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction générale des douanes et droits indirects (Action et Comptes publics)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction générale des entreprises (Économie + Cohésion des territoires)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "A autorité sur",
+      "target": "Direction générale de l'administration et de la fonction publique (Premier ministre + Action et Comptes publics)"
+    },
+    {
+      "source": "Muriel Pénicaud",
+      "type": "Représente",
+      "target": "Ministre du Travail"
+    },
+    {
+      "source": "Ministre des Armées",
+      "type": "Compose",
+      "target": "Conseil de Défense et de Sécurité nationale français (CDSN)"
+    },
+    {
+      "source": "Premier ministre français",
+      "type": "Compose",
+      "target": "Conseil de Défense et de Sécurité nationale français (CDSN)"
+    },
+    {
+      "source": "Ministre de l'Économie et des Finances français",
+      "type": "Compose",
+      "target": "Conseil de Défense et de Sécurité nationale français (CDSN)"
+    },
+    {
+      "source": "Ministre de l'Action et des Comptes publics",
+      "type": "Compose",
+      "target": "Conseil de Défense et de Sécurité nationale français (CDSN)"
+    },
+    {
+      "source": "Ministre de l'Europe et des Affaires étrangères",
+      "type": "Compose",
+      "target": "Conseil de Défense et de Sécurité nationale français (CDSN)"
+    },
+    {
+      "source": "Secrétariat général de la défense et de la sécurité nationale",
+      "type": "Assiste aux délibérations du",
+      "target": "Conseil de Défense et de Sécurité nationale français (CDSN)"
+    },
+    {
+      "source": "Gérald Darmanin",
+      "type": "Représente",
+      "target": "Ministre de l'Action et des Comptes publics"
+    },
+    {
+      "source": "Bruno Le Maire",
+      "type": "Représente",
+      "target": "Ministre de l'Économie et des Finances français"
+    },
+    {
+      "source": "Ministre de la Culture",
+      "type": "A autorité sur",
+      "target": "Direction générale des Patrimoines"
+    },
+    {
+      "source": "Ministre de la Culture",
+      "type": "A autorité sur",
+      "target": "Direction générale de la Création artistique"
+    },
+    {
+      "source": "Ministre de la Culture",
+      "type": "A autorité sur",
+      "target": "Direction générale des Médias et des Industries culturelles"
+    },
     {
       "source": "Citoyens de l'Union européenne de plus de 18 ans",
       "target": "Chefs d’État et de gouvernement des pays de l’UE",
@@ -18621,444 +18621,444 @@
       "label": "Personne"
     },
     {
-    "id":"Bruno Parent",
-    "label":"Personne"
-  },
-  {
-    "id":"Bruno Le Maire",
-    "label":"Personne"
-  },
-  {
-    "id":"Muriel Pénicaud",
-    "label":"Personne"
-  },
-  {
-    "id":"Gérald Darmanin",
-    "label":"Personne"
-  },
-  {
-    "id":"Gérard Larcher",
-    "label":"Personne"
-  },
-  {
-    "id":"Citoyens français de plus de 18 ans",
-    "label":"Institution"
-  },
-  {
-    "id":"Citoyens polonais de plus de 18 ans",
-    "label":"Institution"
-  },
-  {
-    "id":"Administration publique centrale française (APUC)",
-    "label":"Institution"
-  },
-  {
-    "id":"Organismes divers d'administration centrale (ODAC)",
-    "label":"Institution"
-  },
-  {
-    "id":"Conseil constitutionnel français",
-    "label":"Institution"
-  },
-  {
-    "id":"Membres du Conseil constitutionnel français",
-    "label":"Institution"
-  },
-  {
-    "id":"Conseil des ministres français",
-    "label":"Institution"
-  },
-  {
-    "id":"Conseil de Défense et de Sécurité nationale français (CDSN)",
-    "label":"Institution"
-  },
-  {
-    "id":"Président du Conseil constitutionnel français",
-    "label":"Institution"
-  },
-  {
-    "id":"République française",
-    "label":"Institution"
-  },
-  {
-    "id":"Ministère de l'Économie et des Finances français",
-    "label":"Institution"
-  },
-  {
-    "id":"Anciens Présidents de la République française",
-    "label":"Institution"
-  },
-  {
-    "id":"Ministre de l'Économie et des Finances français",
-    "label":"Institution"
-  },
-  {
-    "id":"Politique de la Nation française",
-    "label":"Politique"
-  },
-  {
-    "id":"Président de la République française",
-    "label":"Institution"
-  },
-  {
-    "id":"Président de la République de Pologne",
-    "label":"Institution"
-  },
-  {
-    "id":"Président de l'Assemblée nationale française",
-    "label":"Institution"
-  },
-  {
-    "id":"Président du Sénat français",
-    "label":"Institution"
-  },
-  {
-    "id":"Premier ministre français",
-    "label":"Institution"
-  },
-  {
-    "id":"Gouvernement français",
-    "label":"Institution"
-  },
-  {
-    "id":"Ministres du Gouvernement français",
-    "label":"Institution"
-  },
-  {
-    "id":"Parlement français",
-    "label":"Institution"
-  },
-  {
-    "id":"Congrès français",
-    "label":"Institution"
-  },
-  {
-    "id":"Assemblée nationale française",
-    "label":"Institution"
-  },
-  {
-    "id":"Sénat français",
-    "label":"Institution"
-  },
-  {
-    "id":"Magistrature française",
-    "label":"Institution"
-  },
-  {
-    "id":"Direction générale des Finances publiques (DGFiP)",
-    "label":"Institution"
-  },
-  {
-    "id":"Services de la Direction générale des Finances publiques",
-    "label":"Institution"
-  },
-  {
-    "id":"Direction départementale ou régionale des finances publiques",
-    "label":"Institution"
-  },
-  {
-    "id":"Impôts locaux",
-    "label":"Politique"
-  },
-  {
-    "id":"Directeur général de la DGFiP",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général du gouvernement",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général des affaires européennes",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général de la défense et de la sécurité nationale",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général de la mer",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général pour la modernisation de l'action publique",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général du ministère de l'Intérieur",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général du ministère de l'Écologie et du Développement durable",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général du ministère de la Justice",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général pour l'administration",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général du ministère des affaires étrangères",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général des ministères chargés des affaires sociales",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général du ministère de la Culture",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général des ministères économiques et financiers",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général des ministères de l'Éducation nationale et de l'enseignement supérieur et de la recherche",
-    "label":"Institution"
-  },
-  {
-    "id":"Secrétariat général de ministère de l'Agriculture, de l'Agroalimentaire et de la Forêt",
-    "label":"Institution"
-  },
-  {
-    "id":"État-major des armées français",
-    "label":"Institution"
-  },
-  {
-    "id":"Direction générale de l'Armement",
-    "label":"Institution"
-  },
+      "id": "Bruno Parent",
+      "label": "Personne"
+    },
     {
-    "id": "Direction générale des Collectivités locales (Intérieur + Cohésion des territoires)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la Police nationale (Intérieur)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la Sécurité intérieure (Intérieur)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la Gendarmerie nationale (Intérieur)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des Étrangers en France (Intérieur)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la Sécurité civile et de la Gestion des crises (Intérieur)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des Outre-mer (Outre-mer)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'aménagement, du logement et de la nature (Transition écologique et solidaire + Cohésion des territoires)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'énergie et du climat (Transition écologique et solidaire)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des infrastructures, des transports et de la mer (Transition écologique et solidaire)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'Aviation civile (Transition écologique et solidaire)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la prévention des risques (Transition écologique et solidaire)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction des services judiciaires",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction des affaires civiles et du Sceau",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction des affaires criminelles et des grâces",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction de l'administration pénitentiaire",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction de la protection judiciaire de la jeunesse",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des affaires politiques et de sécurité",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction de l'Union européenne",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la mondialisation, du développement et des partenariats",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'administration et de la modernisation",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la santé (Solidarités et Santé)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'Offre de soins (Solidarités et Santé)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la cohésion sociale (Premier ministre + Solidarités et Santé + Transition écologique et solidaire)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale du travail (Travail)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des Patrimoines",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la Création artistique",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des Médias et des Industries culturelles",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale du Trésor (Économie)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'Institut national de la statistique et des études économiques (Économie)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de la concurrence, de la consommation et de la répression des fraudes (Économie)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction du Budget (Action et Comptes publics)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des Finances publiques (Économie + Action et Comptes publics)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des douanes et droits indirects (Action et Comptes publics)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des entreprises (Économie + Cohésion des territoires)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'administration et de la fonction publique (Premier ministre + Action et Comptes publics)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'enseignement scolaire (Éducation nationale)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale pour l'enseignement supérieur et l'insertion professionnelle (Enseignement supérieur, Recherche et Innovation)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale pour la recherche et l'innovation (Enseignement supérieur, Recherche et Innovation)",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale des politiques agricole, agroalimentaire et des territoires",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'alimentation",
-    "label": "Institution"
-  },
-  {
-    "id": "Direction générale de l'enseignement et de la recherche",
-    "label": "Institution"
-  },
+      "id": "Bruno Le Maire",
+      "label": "Personne"
+    },
     {
-    "id": "Ministre d'État, ministre de l'Intérieur",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre de la Cohésion des territoires",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre des Outre-mer",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre d'État, ministre de la Transition écologique et solidaire",
-    "label": "Institution"
-  },
-  {
-    "id": "Garde des Sceaux, ministre de la Justice",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre des Armées",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre de l'Europe et des Affaires étrangères",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre des Solidarités et de la Santé",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre du Travail",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre des Sports",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre de la Culture",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre de l'Action et des Comptes publics",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre de l'Éducation nationale",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
-    "label": "Institution"
-  },
-  {
-    "id": "Ministre de l'Agriculture et de l'Alimentation",
-    "label": "Institution"
-  }
+      "id": "Muriel Pénicaud",
+      "label": "Personne"
+    },
+    {
+      "id": "Gérald Darmanin",
+      "label": "Personne"
+    },
+    {
+      "id": "Gérard Larcher",
+      "label": "Personne"
+    },
+    {
+      "id": "Citoyens français de plus de 18 ans",
+      "label": "Institution"
+    },
+    {
+      "id": "Citoyens polonais de plus de 18 ans",
+      "label": "Institution"
+    },
+    {
+      "id": "Administration publique centrale française (APUC)",
+      "label": "Institution"
+    },
+    {
+      "id": "Organismes divers d'administration centrale (ODAC)",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseil constitutionnel français",
+      "label": "Institution"
+    },
+    {
+      "id": "Membres du Conseil constitutionnel français",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseil des ministres français",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseil de Défense et de Sécurité nationale français (CDSN)",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du Conseil constitutionnel français",
+      "label": "Institution"
+    },
+    {
+      "id": "République française",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministère de l'Économie et des Finances français",
+      "label": "Institution"
+    },
+    {
+      "id": "Anciens Présidents de la République française",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de l'Économie et des Finances français",
+      "label": "Institution"
+    },
+    {
+      "id": "Politique de la Nation française",
+      "label": "Politique"
+    },
+    {
+      "id": "Président de la République française",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de la République de Pologne",
+      "label": "Institution"
+    },
+    {
+      "id": "Président de l'Assemblée nationale française",
+      "label": "Institution"
+    },
+    {
+      "id": "Président du Sénat français",
+      "label": "Institution"
+    },
+    {
+      "id": "Premier ministre français",
+      "label": "Institution"
+    },
+    {
+      "id": "Gouvernement français",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministres du Gouvernement français",
+      "label": "Institution"
+    },
+    {
+      "id": "Parlement français",
+      "label": "Institution"
+    },
+    {
+      "id": "Congrès français",
+      "label": "Institution"
+    },
+    {
+      "id": "Assemblée nationale française",
+      "label": "Institution"
+    },
+    {
+      "id": "Sénat français",
+      "label": "Institution"
+    },
+    {
+      "id": "Magistrature française",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des Finances publiques (DGFiP)",
+      "label": "Institution"
+    },
+    {
+      "id": "Services de la Direction générale des Finances publiques",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction départementale ou régionale des finances publiques",
+      "label": "Institution"
+    },
+    {
+      "id": "Impôts locaux",
+      "label": "Politique"
+    },
+    {
+      "id": "Directeur général de la DGFiP",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général du gouvernement",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général des affaires européennes",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général de la défense et de la sécurité nationale",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général de la mer",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général pour la modernisation de l'action publique",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général du ministère de l'Intérieur",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général du ministère de l'Écologie et du Développement durable",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général du ministère de la Justice",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général pour l'administration",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général du ministère des affaires étrangères",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général des ministères chargés des affaires sociales",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général du ministère de la Culture",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général des ministères économiques et financiers",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général des ministères de l'Éducation nationale et de l'enseignement supérieur et de la recherche",
+      "label": "Institution"
+    },
+    {
+      "id": "Secrétariat général de ministère de l'Agriculture, de l'Agroalimentaire et de la Forêt",
+      "label": "Institution"
+    },
+    {
+      "id": "État-major des armées français",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'Armement",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des Collectivités locales (Intérieur + Cohésion des territoires)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la Police nationale (Intérieur)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la Sécurité intérieure (Intérieur)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la Gendarmerie nationale (Intérieur)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des Étrangers en France (Intérieur)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la Sécurité civile et de la Gestion des crises (Intérieur)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des Outre-mer (Outre-mer)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'aménagement, du logement et de la nature (Transition écologique et solidaire + Cohésion des territoires)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'énergie et du climat (Transition écologique et solidaire)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des infrastructures, des transports et de la mer (Transition écologique et solidaire)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'Aviation civile (Transition écologique et solidaire)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la prévention des risques (Transition écologique et solidaire)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction des services judiciaires",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction des affaires civiles et du Sceau",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction des affaires criminelles et des grâces",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction de l'administration pénitentiaire",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction de la protection judiciaire de la jeunesse",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des affaires politiques et de sécurité",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction de l'Union européenne",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la mondialisation, du développement et des partenariats",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'administration et de la modernisation",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la santé (Solidarités et Santé)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'Offre de soins (Solidarités et Santé)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la cohésion sociale (Premier ministre + Solidarités et Santé + Transition écologique et solidaire)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale du travail (Travail)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des Patrimoines",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la Création artistique",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des Médias et des Industries culturelles",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale du Trésor (Économie)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'Institut national de la statistique et des études économiques (Économie)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de la concurrence, de la consommation et de la répression des fraudes (Économie)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction du Budget (Action et Comptes publics)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des Finances publiques (Économie + Action et Comptes publics)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des douanes et droits indirects (Action et Comptes publics)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des entreprises (Économie + Cohésion des territoires)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'administration et de la fonction publique (Premier ministre + Action et Comptes publics)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'enseignement scolaire (Éducation nationale)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale pour l'enseignement supérieur et l'insertion professionnelle (Enseignement supérieur, Recherche et Innovation)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale pour la recherche et l'innovation (Enseignement supérieur, Recherche et Innovation)",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale des politiques agricole, agroalimentaire et des territoires",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'alimentation",
+      "label": "Institution"
+    },
+    {
+      "id": "Direction générale de l'enseignement et de la recherche",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre d'État, ministre de l'Intérieur",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de la Cohésion des territoires",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre des Outre-mer",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre d'État, ministre de la Transition écologique et solidaire",
+      "label": "Institution"
+    },
+    {
+      "id": "Garde des Sceaux, ministre de la Justice",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre des Armées",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de l'Europe et des Affaires étrangères",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre des Solidarités et de la Santé",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre du Travail",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre des Sports",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de la Culture",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de l'Action et des Comptes publics",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de l'Éducation nationale",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de l'Enseignement supérieur, de la Recherche et de l'Innovation",
+      "label": "Institution"
+    },
+    {
+      "id": "Ministre de l'Agriculture et de l'Alimentation",
+      "label": "Institution"
+    }
   ]
 }

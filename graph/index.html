@@ -1,314 +1,754 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style type="text/css">
-		.link { stroke: black;
-			stroke-width: 1px; }
-		circle {
-			opacity: 0.5;
-		}
-		text {
-			paint-order: stroke;
-			stroke-opacity: 0.5;
-		}
-		.node, .labels:hover{
-			cursor: pointer;
-		}
-		/*.edgelabel {
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+      .link {
+        stroke: black;
+        stroke-width: 1px;
+      }
+      circle {
+        opacity: 0.5;
+      }
+      text {
+        paint-order: stroke;
+        stroke-opacity: 0.5;
+      }
+      .node,
+      .labels:hover {
+        cursor: pointer;
+      }
+      /*.edgelabel {
 			stroke: black;
 			paint-order: stroke;
 			stroke-opacity: 0.2;
 		}*/
-		svg:active{
-			cursor: move;
-		}
-	</style>
-</head>
-<body>
-<div>
-	Fonctionnement de l'Union Européenne 
-	<a href="https://europa.eu/european-union/about-eu/institutions-bodies_fr">
-		Sources
-	</a> 
-	<a href="/graph/3d/">En 3D</a>
-</div>
-</body>
-<script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
-<script src="https://d3js.org/d3-selection-multi.v1.js"></script>
-<script type="text/javascript">
-var color = d3.scaleOrdinal(d3.schemeCategory20);
-var labelColors = d3.scaleOrdinal(['#404040', 'white', '#ffd617', '#004494' ]);
-var idColors = d3.scaleOrdinal(
-	[
-	'DarkOrange ',
-	'DarkRed',
-	"DarkGreen",
-	"DarkMagenta",
-	"DarkCyan",
-	"DarkBlue",
-	"DarkSalmon"
-	]);
-var width = window.innerWidth - 40, height = window.innerHeight - 40, radius = 0;
-var svg = d3.select("body")
-.append("svg")
-.attr("width", width)
-.attr("height", height)
-.call(d3
-	.zoom()
-	.on("zoom", function () {
-		svg
-		.attr("transform", d3
-			.event
-			.transform
-		)
-	})
-)
-.append("g");
-var node;
-var link;
-var label;
+      svg:active {
+        cursor: move;
+      }
+      #sidebar {
+        position: fixed;
+        top: 0;
+        right: -400px;
+        width: 400px;
+        height: 100vh;
+        background: white;
+        border-left: 1px solid #ccc;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        transition: right 0.3s ease;
+        padding: 20px;
+        overflow-y: auto;
+        z-index: 1000;
+      }
+      #sidebar.open {
+        right: 0;
+      }
+      #sidebar-header {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 10px;
+      }
+      #sidebar-close {
+        float: right;
+        cursor: pointer;
+        font-size: 20px;
+        color: #666;
+      }
+      .connection-section {
+        margin-bottom: 20px;
+      }
+      .connection-section h3 {
+        margin: 0 0 10px 0;
+        color: #333;
+      }
+      .connection-item {
+        margin-bottom: 8px;
+        padding: 8px;
+        background: #f5f5f5;
+        border-radius: 4px;
+      }
+      .connection-type {
+        font-weight: bold;
+        color: #666;
+      }
+      #search-container {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1001;
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        border: 1px solid #ddd;
+        min-width: 300px;
+      }
+      #search-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        margin-bottom: 10px;
+      }
+      #search-results {
+        max-height: 200px;
+        overflow-y: auto;
+      }
+      .search-result {
+        padding: 8px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+      }
+      .search-result:hover {
+        background: #f0f0f0;
+      }
+      .search-result:last-child {
+        border-bottom: none;
+      }
+      .search-node-label {
+        font-size: 12px;
+        color: #666;
+      }
+      .highlighted {
+        stroke: red !important;
+        stroke-width: 3px !important;
+        opacity: 1 !important;
+      }
+      .highlighted-text {
+        fill: red !important;
+        font-weight: bold !important;
+        opacity: 1 !important;
+      }
+      #depth-selector {
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      #depth-select {
+        padding: 4px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 12px;
+      }
+      .depth-highlighted {
+        opacity: 0.8 !important;
+      }
+      .depth-faded {
+        opacity: 0.1 !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="search-container">
+      <input type="text" id="search-input" placeholder="Search for nodes..." />
+      <div id="search-results"></div>
+      <div id="depth-selector">
+        <label for="depth-select">Connection depth:</label>
+        <select id="depth-select">
+          <option value="0">Show all</option>
+          <option value="1">1 level</option>
+          <option value="2">2 levels</option>
+          <option value="3">3 levels</option>
+          <option value="4">4 levels</option>
+          <option value="5">5 levels</option>
+        </select>
+      </div>
+    </div>
+    <div id="sidebar">
+      <div id="sidebar-header">
+        <span id="sidebar-close">&times;</span>
+        <span id="node-title">Node Details</span>
+      </div>
+      <div id="sidebar-content"></div>
+    </div>
+    <div>
+      Fonctionnement de l'Union Européenne
+      <a
+        href="https://europa.eu/european-union/about-eu/institutions-bodies_fr"
+      >
+        Sources
+      </a>
+      <a href="/graph/3d/">En 3D</a>
+    </div>
+  </body>
+  <script src="https://d3js.org/d3.v4.min.js" type="text/javascript"></script>
+  <script src="https://d3js.org/d3-selection-multi.v1.js"></script>
+  <script type="text/javascript">
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+    var labelColors = d3.scaleOrdinal([
+      "#404040",
+      "white",
+      "#ffd617",
+      "#004494",
+    ]);
+    var idColors = d3.scaleOrdinal([
+      "DarkOrange ",
+      "DarkRed",
+      "DarkGreen",
+      "DarkMagenta",
+      "DarkCyan",
+      "DarkBlue",
+      "DarkSalmon",
+    ]);
+    var width = window.innerWidth - 40,
+      height = window.innerHeight - 40,
+      radius = 0;
+    var zoom = d3.zoom().on("zoom", function () {
+      svg.attr("transform", d3.event.transform);
+    });
+    var svg = d3
+      .select("body")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .call(zoom)
+      .append("g");
+    var node;
+    var link;
+    var label;
 
-svg
-	.append('defs')
-	.append('marker')
-	.attrs({
-		'id':'arrowhead',
-		'viewBox':'-0 -5 10 10',
-		'refX':13,
-		'refY':0,
-		'orient':'auto',
-		'markerWidth':13,
-		'markerHeight':13,
-		'xoverflow':'visible'
-	})
-	.append('svg:path')
-	.attr('d', 'M 0,-5 L 10 ,0 L 0,5')
-	.attr('fill', '#999')
-	.style('stroke','none')
-	;
+    svg
+      .append("defs")
+      .append("marker")
+      .attrs({
+        id: "arrowhead",
+        viewBox: "-0 -5 10 10",
+        refX: 13,
+        refY: 0,
+        orient: "auto",
+        markerWidth: 13,
+        markerHeight: 13,
+        xoverflow: "visible",
+      })
+      .append("svg:path")
+      .attr("d", "M 0,-5 L 10 ,0 L 0,5")
+      .attr("fill", "#999")
+      .style("stroke", "none");
 
-var simulation = d3
-	.forceSimulation()
-	.force("link", d3
-		.forceLink()
-		.id(function (d) {return d.id;})
-		// .distance(function(d){ 
-		// 	return (d.type.length * 2 + 100)
-		// })
-	)
-	.force("collide",d3.forceCollide(function(d){return d.id}).strength(1).radius(5).iterations(1))
-	.force("charge", d3.forceManyBody().strength(-1500))
-	.force("center", d3.forceCenter(width / 2, height / 2))
-;
-d3.json("graph.json", function (error, graph) {
-if (error) throw error;
+    var simulation = d3
+      .forceSimulation()
+      .force(
+        "link",
+        d3.forceLink().id(function (d) {
+          return d.id;
+        })
+        // .distance(function(d){
+        // 	return (d.type.length * 2 + 100)
+        // })
+      )
+      .force(
+        "collide",
+        d3
+          .forceCollide(function (d) {
+            return d.id;
+          })
+          .strength(1)
+          .radius(5)
+          .iterations(1)
+      )
+      .force("charge", d3.forceManyBody().strength(-1500))
+      .force("center", d3.forceCenter(width / 2, height / 2));
 
-graph.links = graph.links.filter(l => l.type != ("REPRESENTE"));
-graph.links = graph.links.filter(l => l.type != ("EST AFFILIE AU PARTI"));
-graph.links = graph.links.filter(l => l.type != ("FAIT PARTIE DES"));
+    var allLinks = []; // Store all links for sidebar functionality
+    var allNodes = []; // Store all nodes for search functionality
+    var highlightedNode = null; // Track currently highlighted node
+    var currentDepth = 0; // Current depth setting
 
-// graph.nodes = graph.nodes.filter(n => n.label != ("Personne"));
-update(graph.links, graph.nodes);
-})
-function update(links, nodes) {
+    function getConnectedNodes(startNodeId, depth) {
+      if (depth === 0) {
+        return new Set(allNodes.map((n) => n.id));
+      }
 
-link = svg
-	.selectAll(".link")
-	.data(links)
-	.enter()
-	.append("line")
-	.attr("class", "link")
-	.style("stroke", function(d) {return (color(d.source));})
-	.attr('marker-end','url(#arrowhead)');
+      const visited = new Set();
+      const queue = [{ id: startNodeId, level: 0 }];
 
-link
-	.append("title")
-	.text(function (d) {return d.type;});
+      while (queue.length > 0) {
+        const { id, level } = queue.shift();
 
-edgepaths = svg
-	.selectAll(".edgepath")
-	.data(links)
-	.enter()
-	.append('path')
-	.attrs({
-		'class': 'edgepath',
-		'fill-opacity': 0,
-		'stroke-opacity': 0,
-		'id': function (d, i) {return 'edgepath' + i}
-	})
-	.style("pointer-events", "none");
+        if (visited.has(id) || level > depth) continue;
+        visited.add(id);
 
-edgelabels = svg
-	.selectAll(".edgelabel")
-	.data(links)
-	.enter()
-	.append('text')
-	.style("pointer-events", "none")
-	.attrs({
-		'class': 'edgelabel',
-		'id': function (d, i) {return 'edgelabel' + i},
-		'font-size': 10,
-		'font-family': "Roboto",
-		'fill': 'black'
-	})
-	.style("fill", function(d) {return color(d.source)})
-	;
-edgelabels
-	.append('textPath')
-	.attr('xlink:href', function (d, i) {return '#edgepath' + i})
-	.style("text-anchor", "middle")
-	.style("pointer-events", "none")
-	.attr("startOffset", "50%")
-	.text(function (d) {return d.type})
-	;
+        if (level < depth) {
+          // Add connected nodes to queue
+          allLinks.forEach((link) => {
+            if (link.source.id === id && !visited.has(link.target.id)) {
+              queue.push({ id: link.target.id, level: level + 1 });
+            }
+            if (link.target.id === id && !visited.has(link.source.id)) {
+              queue.push({ id: link.source.id, level: level + 1 });
+            }
+          });
+        }
+      }
 
-node = svg
-	.append("g")
-	.attr("class", "node")
-	.selectAll("circle")
-	.data(nodes)
-	.enter()
-	.append("circle")
-	.attr("r", 5)
-	.attr("stroke", "black")
-	.attr("stroke-width", 1)
-	.style("fill", function (d, i) {return color(d.id);})
-	// .call(d3
-		// .drag()
-		// .on("start", dragstarted)
-		// .on("drag", dragged)
-			// .on("end", dragended)
-	// );
+      return visited;
+    }
 
-label = svg
-	.append("g")
-	.attr("class", "labels")
-	.selectAll("text")
-	.data(nodes)
-	.enter()
-	.append("text")
-	.attr('text-anchor', 'middle')
-	.style("font-family", "Roboto")
-	.style("font-size", 10)
-	.style("fill", "black")
-	.attr("stroke-width", "1px")
-	.text(function (d) {return d.id})
-	// .call(d3
-		// .drag()
-		// .on("start", dragstarted)
-		// .on("drag", dragged)
-	// )
-	.attr("stroke", function (d) {return labelColors(d.label)})
-	;
+    function applyDepthFilter() {
+      if (!highlightedNode || currentDepth === 0) {
+        // Show all nodes and links
+        node.classed("depth-faded", false).classed("depth-highlighted", false);
+        label.classed("depth-faded", false).classed("depth-highlighted", false);
+        link.classed("depth-faded", false).classed("depth-highlighted", false);
+        return;
+      }
 
-node
-	.on("mouseover", function (d) {
-		node
-			.style('opacity', function(n) {
-				if (d === n)
-					return 0.9;
-				else
-					return 0.5;
-			
-		});
-		// node
-		// 	.style('r', function(l) {
-		// 		if (d === l )
-		// 			return 30;
-		// 		else
-		// 			return 20;
-			
-		// });
-		link
-			.style('opacity', function(l) {
-				if (d === l.source || d === l.target)
-					return 1;
-				else
-					return 0.5;
-			
-		});
-		// link
-		// 	.style('stroke-width', function(l) {
-		// 		if (d === l.source)
-		// 			return 3;
-		// 		if (d === l.target)
-		// 			return 2
-		// 		else
-		// 			return 1;
-		// });
-		link
-			.style('stroke-dasharray', function(l) {
-				if (d === l.target)
-					return "5, 5";
-				else
-					return null;
-		});
-})
+      const connectedNodeIds = getConnectedNodes(
+        highlightedNode.id,
+        currentDepth
+      );
 
-simulation
-	.nodes(nodes)
-	.on("tick", ticked);
-simulation
-	.force("link")
-	.links(links);
-}
+      // Fade nodes not in the connected set
+      node
+        .classed("depth-faded", (d) => !connectedNodeIds.has(d.id))
+        .classed(
+          "depth-highlighted",
+          (d) => connectedNodeIds.has(d.id) && d.id !== highlightedNode.id
+        );
 
-simulation.alphaMin(0.2)
+      label
+        .classed("depth-faded", (d) => !connectedNodeIds.has(d.id))
+        .classed(
+          "depth-highlighted",
+          (d) => connectedNodeIds.has(d.id) && d.id !== highlightedNode.id
+        );
 
-function ticked() {
+      // Fade links not connecting nodes in the set
+      link
+        .classed(
+          "depth-faded",
+          (d) =>
+            !connectedNodeIds.has(d.source.id) ||
+            !connectedNodeIds.has(d.target.id)
+        )
+        .classed(
+          "depth-highlighted",
+          (d) =>
+            connectedNodeIds.has(d.source.id) &&
+            connectedNodeIds.has(d.target.id)
+        );
+    }
 
-	// console.log(simulation.alpha());
+    function searchNodes(query) {
+      if (!query.trim()) {
+        document.getElementById("search-results").innerHTML = "";
+        return;
+      }
 
-	svg
-		.attr("width", window.innerWidth);
-	link
-		.attr("x1", function (d) {return d.source.x;})
-		.attr("y1", function (d) {return d.source.y;})
-		.attr("x2", function (d) {return d.target.x;})
-		.attr("y2", function (d) {return d.target.y;});
-	node
-		.attr("transform", function (d) {return "translate(" + d.x + ", " + d.y + ")";});
-	edgepaths
-		.attr('d', function (d) {
-			return 'M ' + d.source.x + ' ' + d.source.y + ' L ' + d.target.x + ' ' + d.target.y;
-		})
-		;
-	edgelabels.attr('transform', function (d) {
-		if (d.target.x < d.source.x) {
-			var bbox = this
-				.getBBox();
-			rx = bbox.x + bbox.width / 2;
-			ry = bbox.y + bbox.height / 2 ;
-			return 'rotate(180 ' + rx + ' ' + ry + ')';
-		}
-		else {
-			return 'rotate(0)';
-		}
-	});
-	label
-		.attr("x", function(d) { return d.x; })
-		.attr("y", function (d) { return d.y; })
-}
+      const results = allNodes.filter((node) =>
+        node.id.toLowerCase().includes(query.toLowerCase())
+      );
 
-function dragstarted(d) {
-	if (!d3.event.active) simulation.alphaTarget(0.3).restart()
-	d.fx = d.x;
-	d.fy = d.y;
-}
+      let resultsHTML = "";
+      results.slice(0, 10).forEach((node) => {
+        // Limit to 10 results
+        const label = node.label ? ` (${node.label})` : "";
+        resultsHTML += `
+          <div class="search-result" onclick="focusNode('${node.id.replace(
+            /'/g,
+            "\\'"
+          )}')"> 
+            <span>${node.id}</span>
+            <span class="search-node-label">${label}</span>
+          </div>`;
+      });
 
-function dragged(d) {
-	d.fx = d3.event.x;
-	d.fy = d3.event.y;
-}
+      if (results.length === 0) {
+        resultsHTML = '<div class="search-result">No nodes found</div>';
+      }
 
-function dragended(d) {
-	if (!d3.event.active) simulation.alphaTarget(0);
-	d.fx = undefined;
-	d.fy = undefined;
-}
+      document.getElementById("search-results").innerHTML = resultsHTML;
+    }
 
-</script>
+    function focusNode(nodeId) {
+      // Clear previous highlighting
+      if (highlightedNode) {
+        node.classed("highlighted", false);
+        label.classed("highlighted-text", false);
+      }
+
+      // Find the node
+      const targetNode = allNodes.find((n) => n.id === nodeId);
+      if (!targetNode) return;
+
+      // Highlight the node
+      node.classed("highlighted", (d) => d.id === nodeId);
+      label.classed("highlighted-text", (d) => d.id === nodeId);
+
+      // Pan and zoom to center the node
+      const scale = 2; // Zoom level
+      const translate = [
+        width / 2 - targetNode.x * scale,
+        height / 2 - targetNode.y * scale,
+      ];
+
+      // Apply the transform to the main SVG element
+      d3.select("body")
+        .select("svg")
+        .transition()
+        .duration(750)
+        .call(
+          zoom.transform,
+          d3.zoomIdentity.translate(translate[0], translate[1]).scale(scale)
+        );
+
+      highlightedNode = targetNode;
+
+      // Apply depth filter
+      applyDepthFilter();
+
+      // Clear search results
+      document.getElementById("search-results").innerHTML = "";
+      document.getElementById("search-input").value = "";
+
+      // Show sidebar for this node
+      showSidebar(targetNode);
+    }
+
+    function showSidebar(nodeData) {
+      const sidebar = document.getElementById("sidebar");
+      const nodeTitle = document.getElementById("node-title");
+      const sidebarContent = document.getElementById("sidebar-content");
+
+      nodeTitle.textContent = nodeData.id;
+
+      // Find connections where this node is source or target
+      const outgoingLinks = allLinks.filter(
+        (link) => link.source.id === nodeData.id
+      );
+      const incomingLinks = allLinks.filter(
+        (link) => link.target.id === nodeData.id
+      );
+
+      let content = "";
+
+      // Add node label information
+      if (nodeData.label) {
+        content += `<div class="connection-section">
+          <h3>Node Information</h3>
+          <div class="connection-item">
+            <div class="connection-type">Type:</div>
+            <div>${nodeData.label}</div>
+          </div>
+        </div>`;
+      }
+
+      if (outgoingLinks.length > 0) {
+        content +=
+          '<div class="connection-section"><h3>Outgoing Connections</h3>';
+        outgoingLinks.forEach((link) => {
+          const targetLabel = link.target.label
+            ? ` (${link.target.label})`
+            : "";
+          content += `<div class="connection-item">
+            <div class="connection-type">${link.type}</div>
+            <div>→ ${link.target.id}${targetLabel}</div>
+          </div>`;
+        });
+        content += "</div>";
+      }
+
+      if (incomingLinks.length > 0) {
+        content +=
+          '<div class="connection-section"><h3>Incoming Connections</h3>';
+        incomingLinks.forEach((link) => {
+          const sourceLabel = link.source.label
+            ? ` (${link.source.label})`
+            : "";
+          content += `<div class="connection-item">
+            <div class="connection-type">${link.type}</div>
+            <div>← ${link.source.id}${sourceLabel}</div>
+          </div>`;
+        });
+        content += "</div>";
+      }
+
+      if (outgoingLinks.length === 0 && incomingLinks.length === 0) {
+        content += "<div>No connections found for this node.</div>";
+      }
+
+      sidebarContent.innerHTML = content;
+      sidebar.classList.add("open");
+    }
+
+    function closeSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.classList.remove("open");
+    }
+
+    // Close sidebar when clicking the X
+    document
+      .getElementById("sidebar-close")
+      .addEventListener("click", closeSidebar);
+
+    // Add search functionality
+    document
+      .getElementById("search-input")
+      .addEventListener("input", function (e) {
+        searchNodes(e.target.value);
+      });
+
+    // Add depth selector functionality
+    document
+      .getElementById("depth-select")
+      .addEventListener("change", function (e) {
+        currentDepth = parseInt(e.target.value);
+        applyDepthFilter();
+      });
+
+    d3.json("graph.json", function (error, graph) {
+      if (error) throw error;
+
+      graph.links = graph.links.filter((l) => l.type != "REPRESENTE");
+      graph.links = graph.links.filter((l) => l.label != "Personne");
+      graph.links = graph.links.filter((l) => l.type != "EST AFFILIE AU PARTI");
+      graph.links = graph.links.filter((l) => l.type != "FAIT PARTIE DES");
+      graph.links = graph.links.filter((l) => l.type != "COMPOSE");
+      graph.links = graph.links.filter((l) => l.type != "Représente");
+      graph.links = graph.links.filter((l) => l.type != "Compose");
+
+      // Filter out nodes that don't have any remaining links
+      const linkedNodeIds = new Set();
+      graph.links.forEach((link) => {
+        linkedNodeIds.add(link.source);
+        linkedNodeIds.add(link.target);
+      });
+      graph.nodes = graph.nodes.filter((node) => linkedNodeIds.has(node.id));
+
+      // Store all links for sidebar functionality
+      allLinks = graph.links;
+
+      // Store all nodes for search functionality
+      allNodes = graph.nodes;
+
+      // graph.nodes = graph.nodes.filter(n => n.label != ("Personne"));
+      update(graph.links, graph.nodes);
+    });
+    function update(links, nodes) {
+      link = svg
+        .selectAll(".link")
+        .data(links)
+        .enter()
+        .append("line")
+        .attr("class", "link")
+        .style("stroke", function (d) {
+          return color(d.source);
+        })
+        .attr("marker-end", "url(#arrowhead)");
+
+      link.append("title").text(function (d) {
+        return d.type;
+      });
+
+      edgepaths = svg
+        .selectAll(".edgepath")
+        .data(links)
+        .enter()
+        .append("path")
+        .attrs({
+          class: "edgepath",
+          "fill-opacity": 0,
+          "stroke-opacity": 0,
+          id: function (d, i) {
+            return "edgepath" + i;
+          },
+        })
+        .style("pointer-events", "none");
+
+      edgelabels = svg
+        .selectAll(".edgelabel")
+        .data(links)
+        .enter()
+        .append("text")
+        .style("pointer-events", "none")
+        .attrs({
+          class: "edgelabel",
+          id: function (d, i) {
+            return "edgelabel" + i;
+          },
+          "font-size": 10,
+          "font-family": "Roboto",
+          fill: "black",
+        })
+        .style("fill", function (d) {
+          return color(d.source);
+        });
+      edgelabels
+        .append("textPath")
+        .attr("xlink:href", function (d, i) {
+          return "#edgepath" + i;
+        })
+        .style("text-anchor", "middle")
+        .style("pointer-events", "none")
+        .attr("startOffset", "50%")
+        .text(function (d) {
+          return d.type;
+        });
+
+      node = svg
+        .append("g")
+        .attr("class", "node")
+        .selectAll("circle")
+        .data(nodes)
+        .enter()
+        .append("circle")
+        .attr("r", 5)
+        .attr("stroke", "black")
+        .attr("stroke-width", 1)
+        .style("fill", function (d, i) {
+          return color(d.id);
+        });
+      // .call(d3
+      // .drag()
+      // .on("start", dragstarted)
+      // .on("drag", dragged)
+      // .on("end", dragended)
+      // );
+
+      label = svg
+        .append("g")
+        .attr("class", "labels")
+        .selectAll("text")
+        .data(nodes)
+        .enter()
+        .append("text")
+        .attr("text-anchor", "middle")
+        .style("font-family", "Roboto")
+        .style("font-size", 10)
+        .style("fill", "black")
+        .attr("stroke-width", "1px")
+        .text(function (d) {
+          return d.id;
+        })
+        // .call(d3
+        // .drag()
+        // .on("start", dragstarted)
+        // .on("drag", dragged)
+        // )
+        .attr("stroke", function (d) {
+          return labelColors(d.label);
+        });
+
+      node.on("click", function (d) {
+        showSidebar(d);
+      });
+
+      label.on("click", function (d) {
+        showSidebar(d);
+      });
+
+      node.on("mouseover", function (d) {
+        node.style("opacity", function (n) {
+          if (d === n) return 0.9;
+          else return 0.5;
+        });
+        // node
+        // 	.style('r', function(l) {
+        // 		if (d === l )
+        // 			return 30;
+        // 		else
+        // 			return 20;
+
+        // });
+        link.style("opacity", function (l) {
+          if (d === l.source || d === l.target) return 1;
+          else return 0.5;
+        });
+        // link
+        // 	.style('stroke-width', function(l) {
+        // 		if (d === l.source)
+        // 			return 3;
+        // 		if (d === l.target)
+        // 			return 2
+        // 		else
+        // 			return 1;
+        // });
+        link.style("stroke-dasharray", function (l) {
+          if (d === l.target) return "5, 5";
+          else return null;
+        });
+      });
+
+      simulation.nodes(nodes).on("tick", ticked);
+      simulation.force("link").links(links);
+    }
+
+    simulation.alphaMin(0.2);
+
+    function ticked() {
+      // console.log(simulation.alpha());
+
+      svg.attr("width", window.innerWidth);
+      link
+        .attr("x1", function (d) {
+          return d.source.x;
+        })
+        .attr("y1", function (d) {
+          return d.source.y;
+        })
+        .attr("x2", function (d) {
+          return d.target.x;
+        })
+        .attr("y2", function (d) {
+          return d.target.y;
+        });
+      node.attr("transform", function (d) {
+        return "translate(" + d.x + ", " + d.y + ")";
+      });
+      edgepaths.attr("d", function (d) {
+        return (
+          "M " +
+          d.source.x +
+          " " +
+          d.source.y +
+          " L " +
+          d.target.x +
+          " " +
+          d.target.y
+        );
+      });
+      edgelabels.attr("transform", function (d) {
+        if (d.target.x < d.source.x) {
+          var bbox = this.getBBox();
+          rx = bbox.x + bbox.width / 2;
+          ry = bbox.y + bbox.height / 2;
+          return "rotate(180 " + rx + " " + ry + ")";
+        } else {
+          return "rotate(0)";
+        }
+      });
+      label
+        .attr("x", function (d) {
+          return d.x;
+        })
+        .attr("y", function (d) {
+          return d.y;
+        });
+    }
+
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
+
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+      if (!d3.event.active) simulation.alphaTarget(0);
+      d.fx = undefined;
+      d.fy = undefined;
+    }
+  </script>
 </html>
