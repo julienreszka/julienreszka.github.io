@@ -1,0 +1,979 @@
+{
+  "links": [
+    {
+      "source": "Fédération de Russie",
+      "target": "Union européenne",
+      "type": "EST EN CONFLIT DIPLOMATIQUE AVEC"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Fédération de Russie",
+      "type": "MAINTIENT DES SANCTIONS CONTRE"
+    },
+    {
+      "source": "Conseil européen",
+      "target": "Politique russe en Ukraine",
+      "type": "CONDAMNE LA"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "EST EN OPPOSITION STRATÉGIQUE AVEC"
+    },
+    {
+      "source": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "target": "Fédération de Russie",
+      "type": "CONSIDÈRE COMME MENACE PRINCIPALE"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Sanctions contre la Russie",
+      "type": "IMPOSE DES"
+    },
+    {
+      "source": "Conseil de sécurité de l'ONU",
+      "target": "Fédération de Russie",
+      "type": "INCLUT COMME MEMBRE PERMANENT"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Conseil de sécurité de l'ONU",
+      "type": "EXERCE DROIT DE VETO AU"
+    },
+    {
+      "source": "Président de la Fédération de Russie",
+      "target": "Conseil de sécurité de l'ONU",
+      "type": "REPRÉSENTE LA RUSSIE AU"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Organisation de coopération de Shanghai (OCS)",
+      "type": "EST MEMBRE FONDATEUR DE"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Organisation de coopération de Shanghai (OCS)",
+      "type": "EST MEMBRE FONDATEUR DE"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "BRICS",
+      "type": "EST MEMBRE FONDATEUR DES"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "BRICS",
+      "type": "EST MEMBRE FONDATEUR DES"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "République populaire de Chine",
+      "type": "DÉVELOPPE UN PARTENARIAT STRATÉGIQUE AVEC"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Fédération de Russie",
+      "type": "RENFORCE SES LIENS ÉCONOMIQUES AVEC"
+    },
+    {
+      "source": "Président de la Fédération de Russie",
+      "target": "Président de la République populaire de Chine",
+      "type": "COORDONNE SA POLITIQUE AVEC LE"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Union économique eurasiatique (UEE)",
+      "type": "DIRIGE L'"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Organisation du traité de sécurité collective (OTSC)",
+      "type": "EST LE LEADER DE"
+    },
+    {
+      "source": "Gazprom",
+      "target": "Union européenne",
+      "type": "FOURNIT DU GAZ NATUREL À"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Dépendance énergétique russe",
+      "type": "CHERCHE À RÉDUIRE SA"
+    },
+    {
+      "source": "Président de la Fédération de Russie",
+      "target": "Gazprom",
+      "type": "CONTRÔLE"
+    },
+    {
+      "source": "Conseil de Sécurité de la Fédération de Russie",
+      "target": "Expansion de l'OTAN",
+      "type": "S'OPPOSE À L'"
+    },
+    {
+      "source": "Politique russe en Ukraine",
+      "target": "Sanctions occidentales contre la Russie",
+      "type": "A DÉCLENCHÉ LES"
+    },
+    {
+      "source": "G7",
+      "target": "Fédération de Russie",
+      "type": "A EXCLU LA"
+    },
+    {
+      "source": "Président de la Fédération de Russie",
+      "target": "Politique russe en Ukraine",
+      "type": "DIRIGE LA"
+    },
+    {
+      "source": "Président de la République populaire de Chine",
+      "target": "Parti communiste chinois (PCC)",
+      "type": "EST SECRÉTAIRE GÉNÉRAL DU"
+    },
+    {
+      "source": "Parti communiste chinois (PCC)",
+      "target": "République populaire de Chine",
+      "type": "DIRIGE LA"
+    },
+    {
+      "source": "Comité permanent du bureau politique du PCC",
+      "target": "Parti communiste chinois (PCC)",
+      "type": "EST L'ORGANE SUPRÊME DU"
+    },
+    {
+      "source": "Président de la République populaire de Chine",
+      "target": "Comité permanent du bureau politique du PCC",
+      "type": "PRÉSIDE LE"
+    },
+    {
+      "source": "Assemblée populaire nationale de Chine",
+      "target": "République populaire de Chine",
+      "type": "EST LE PARLEMENT DE LA"
+    },
+    {
+      "source": "Parti communiste chinois (PCC)",
+      "target": "Assemblée populaire nationale de Chine",
+      "type": "CONTRÔLE L'"
+    },
+    {
+      "source": "Conseil des affaires d'État de Chine",
+      "target": "République populaire de Chine",
+      "type": "EST LE GOUVERNEMENT DE LA"
+    },
+    {
+      "source": "Premier ministre de Chine",
+      "target": "Conseil des affaires d'État de Chine",
+      "type": "DIRIGE LE"
+    },
+    {
+      "source": "Président de la République populaire de Chine",
+      "target": "Premier ministre de Chine",
+      "type": "NOMME LE"
+    },
+    {
+      "source": "Commission militaire centrale de Chine",
+      "target": "Armée populaire de libération",
+      "type": "COMMANDE L'"
+    },
+    {
+      "source": "Président de la République populaire de Chine",
+      "target": "Commission militaire centrale de Chine",
+      "type": "PRÉSIDE LA"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Politique du zéro-COVID",
+      "type": "A MIS EN ŒUVRE LA"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Initiative Belt and Road",
+      "type": "LANCE L'"
+    },
+    {
+      "source": "Président de la République populaire de Chine",
+      "target": "Initiative Belt and Road",
+      "type": "PROMEUT L'"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Conseil de sécurité de l'ONU",
+      "type": "EST MEMBRE PERMANENT DU"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Politique de la Chine sur Taïwan",
+      "type": "REVENDIQUE TAÏWAN VIA SA"
+    },
+    {
+      "source": "États-Unis",
+      "target": "République populaire de Chine",
+      "type": "EST EN COMPÉTITION STRATÉGIQUE AVEC"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "États-Unis",
+      "type": "RIVALISE AVEC LES"
+    },
+    {
+      "source": "Union européenne",
+      "target": "République populaire de Chine",
+      "type": "DÉVELOPPE DES RELATIONS COMMERCIALES AVEC"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Union européenne",
+      "type": "EST PARTENAIRE COMMERCIAL DE L'"
+    },
+    {
+      "source": "Turquie",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "EST MEMBRE DE"
+    },
+    {
+      "source": "Turquie",
+      "target": "Union européenne",
+      "type": "EST CANDIDAT À L'"
+    },
+    {
+      "source": "Président de la Turquie",
+      "target": "Turquie",
+      "type": "DIRIGE LA"
+    },
+    {
+      "source": "Grande Assemblée nationale de Turquie",
+      "target": "Turquie",
+      "type": "EST LE PARLEMENT DE LA"
+    },
+    {
+      "source": "Président de la Turquie",
+      "target": "Grande Assemblée nationale de Turquie",
+      "type": "CONTRÔLE LA"
+    },
+    {
+      "source": "Conseil de sécurité nationale turc",
+      "target": "Politique de sécurité turque",
+      "type": "DÉTERMINE LA"
+    },
+    {
+      "source": "Président de la Turquie",
+      "target": "Conseil de sécurité nationale turc",
+      "type": "PRÉSIDE LE"
+    },
+    {
+      "source": "Turquie",
+      "target": "Fédération de Russie",
+      "type": "MAINTIENT DES RELATIONS AMBIGUËS AVEC"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Turquie",
+      "type": "COOPÈRE ÉCONOMIQUEMENT AVEC"
+    },
+    {
+      "source": "Turquie",
+      "target": "Système de défense S-400 russe",
+      "type": "A ACHETÉ LE"
+    },
+    {
+      "source": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "target": "Système de défense S-400 russe",
+      "type": "S'OPPOSE À L'ACHAT DU"
+    },
+    {
+      "source": "Turquie",
+      "target": "Organisation de coopération de Shanghai (OCS)",
+      "type": "DEMANDE L'ADHÉSION À"
+    },
+    {
+      "source": "Turquie",
+      "target": "Politique turque en Syrie",
+      "type": "MÈNE UNE"
+    },
+    {
+      "source": "Turquie",
+      "target": "Politique turque en Libye",
+      "type": "INTERVIENT VIA SA"
+    },
+    {
+      "source": "Turquie",
+      "target": "Conflit en Méditerranée orientale",
+      "type": "PARTICIPE AU"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Politique migratoire turque",
+      "type": "DÉPEND DE LA"
+    },
+    {
+      "source": "Turquie",
+      "target": "Contrôle des flux migratoires",
+      "type": "EXERCE UN"
+    },
+    {
+      "source": "Président de la Turquie",
+      "target": "Politique néo-ottomane",
+      "type": "PROMEUT UNE"
+    },
+    {
+      "source": "Turquie",
+      "target": "Détroit des Dardanelles",
+      "type": "CONTRÔLE LE"
+    },
+    {
+      "source": "Turquie",
+      "target": "Détroit du Bosphore",
+      "type": "CONTRÔLE LE"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Détroits turcs",
+      "type": "DÉPEND DES"
+    },
+    {
+      "source": "Organisation mondiale du commerce (OMC)",
+      "target": "Commerce international",
+      "type": "RÉGULE LE"
+    },
+    {
+      "source": "États-Unis",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "EST MEMBRE FONDATEUR DE L'"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "PARTICIPE À L'"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "A REJOINT L'"
+    },
+    {
+      "source": "Fédération de Russie",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "EST MEMBRE DE L'"
+    },
+    {
+      "source": "Turquie",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "EST MEMBRE DE L'"
+    },
+    {
+      "source": "États-Unis",
+      "target": "Guerre commerciale sino-américaine",
+      "type": "MÈNE UNE"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Guerre commerciale sino-américaine",
+      "type": "RÉPOND À LA"
+    },
+    {
+      "source": "Organisation mondiale du commerce (OMC)",
+      "target": "Guerre commerciale sino-américaine",
+      "type": "EST CONTOURNÉE PAR LA"
+    },
+    {
+      "source": "Directeur général de l'OMC",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "DIRIGE L'"
+    },
+    {
+      "source": "Organe de règlement des différends de l'OMC",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "EST L'ARBITRE DE L'"
+    },
+    {
+      "source": "États-Unis",
+      "target": "Organe de règlement des différends de l'OMC",
+      "type": "A BLOQUÉ L'"
+    },
+    {
+      "source": "Sanctions occidentales contre la Russie",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "CONTOURNENT L'"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Mécanisme d'ajustement carbone aux frontières",
+      "type": "MET EN PLACE UN"
+    },
+    {
+      "source": "Mécanisme d'ajustement carbone aux frontières",
+      "target": "Organisation mondiale du commerce (OMC)",
+      "type": "DÉFIE LES RÈGLES DE L'"
+    },
+    {
+      "source": "État d'Israël",
+      "target": "États-Unis",
+      "type": "MAINTIENT UNE ALLIANCE STRATÉGIQUE AVEC LES"
+    },
+    {
+      "source": "États-Unis",
+      "target": "État d'Israël",
+      "type": "FOURNIT UNE AIDE MILITAIRE À L'"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Alliance stratégique États-Unis-Israël",
+      "type": "GARANTIT L'"
+    },
+    {
+      "source": "Premier ministre d'Israël",
+      "target": "Politique de sécurité israélienne",
+      "type": "DÉFINIT LA"
+    },
+    {
+      "source": "Knesset (Parlement israélien)",
+      "target": "État d'Israël",
+      "type": "EST LE PARLEMENT DE L'"
+    },
+    {
+      "source": "Premier ministre d'Israël",
+      "target": "Knesset (Parlement israélien)",
+      "type": "EST ISSU DE LA MAJORITÉ À LA"
+    },
+    {
+      "source": "Forces de défense israéliennes (Tsahal)",
+      "target": "État d'Israël",
+      "type": "ASSURENT LA DÉFENSE DE L'"
+    },
+    {
+      "source": "Premier ministre d'Israël",
+      "target": "Forces de défense israéliennes (Tsahal)",
+      "type": "COMMANDE LES"
+    },
+    {
+      "source": "État d'Israël",
+      "target": "Union européenne",
+      "type": "ENTRETIENT DES RELATIONS COMMERCIALES AVEC L'"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Politique israélienne en Palestine",
+      "type": "CRITIQUE LA"
+    },
+    {
+      "source": "État d'Israël",
+      "target": "Iran",
+      "type": "CONSIDÈRE COMME UNE MENACE L'"
+    },
+    {
+      "source": "Iran",
+      "target": "État d'Israël",
+      "type": "EST EN OPPOSITION AVEC L'"
+    },
+    {
+      "source": "État d'Israël",
+      "target": "Conseil de sécurité de l'ONU",
+      "type": "FAIT L'OBJET DE RÉSOLUTIONS DU"
+    },
+    {
+      "source": "États-Unis",
+      "target": "Résolutions ONU sur Israël",
+      "type": "OPPOSE SOUVENT UN VETO AUX"
+    },
+    {
+      "source": "État d'Israël",
+      "target": "Technologie de défense",
+      "type": "DÉVELOPPE DES"
+    },
+    {
+      "source": "Iron Dome",
+      "target": "Forces de défense israéliennes (Tsahal)",
+      "type": "PROTÈGE LES"
+    },
+    {
+      "source": "État d'Israël",
+      "target": "Accords d'Abraham",
+      "type": "A SIGNÉ LES"
+    },
+    {
+      "source": "Accords d'Abraham",
+      "target": "Normalisation diplomatique au Moyen-Orient",
+      "type": "ONT PERMIS UNE"
+    },
+    {
+      "source": "Turquie",
+      "target": "État d'Israël",
+      "type": "ENTRETIENT DES RELATIONS COMPLEXES AVEC L'"
+    },
+    {
+      "source": "Initiative Belt and Road",
+      "target": "Union européenne",
+      "type": "PROPOSE DES INVESTISSEMENTS À L'"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Initiative Belt and Road",
+      "type": "EXPRIME DES RÉSERVES SUR L'"
+    },
+    {
+      "source": "Nouvelle route de la soie",
+      "target": "Ports européens",
+      "type": "INVESTIT DANS LES"
+    },
+    {
+      "source": "République populaire de Chine",
+      "target": "Ports européens",
+      "type": "ACQUIERT DES PARTICIPATIONS DANS LES"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Stratégie Global Gateway",
+      "type": "LANCE UNE"
+    },
+    {
+      "source": "Stratégie Global Gateway",
+      "target": "Initiative Belt and Road",
+      "type": "RIVALISE AVEC L'"
+    },
+    {
+      "source": "Parlement européen",
+      "target": "Initiative Belt and Road",
+      "type": "CRITIQUE L'"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Dépendance technologique chinoise",
+      "type": "CHERCHE À RÉDUIRE LA"
+    },
+    {
+      "source": "Initiative Belt and Road",
+      "target": "Dépendance technologique chinoise",
+      "type": "RISQUE DE CRÉER UNE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Fédération de Russie",
+      "label": "Pays",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["all"],
+      "Date de création": "1991-12-25"
+    },
+    {
+      "id": "Président de la Fédération de Russie",
+      "label": "Chef d'État",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Conseil de Sécurité de la Fédération de Russie",
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["defense", "security"]
+    },
+    {
+      "id": "Conseil de sécurité de l'ONU",
+      "label": "Organisation internationale",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["all"]
+    },
+    {
+      "id": "République populaire de Chine",
+      "label": "Pays",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Président de la République populaire de Chine",
+      "label": "Chef d'État",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Organisation de coopération de Shanghai (OCS)",
+      "label": "Organisation internationale",
+      "powerLevel": 4,
+      "decisionType": "collective",
+      "sectors": ["security", "economy"]
+    },
+    {
+      "id": "BRICS",
+      "label": "Organisation internationale",
+      "powerLevel": 4,
+      "decisionType": "collective",
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Union économique eurasiatique (UEE)",
+      "label": "Organisation internationale",
+      "powerLevel": 3,
+      "decisionType": "collective",
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Organisation du traité de sécurité collective (OTSC)",
+      "label": "Organisation internationale",
+      "powerLevel": 3,
+      "decisionType": "collective",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Gazprom",
+      "label": "Entreprise d'État",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["energy"]
+    },
+    {
+      "id": "G7",
+      "label": "Organisation internationale",
+      "powerLevel": 4,
+      "decisionType": "collective",
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Politique russe en Ukraine",
+      "label": "Politique",
+      "powerLevel": 5,
+      "sectors": ["defense", "geopolitics"]
+    },
+    {
+      "id": "Sanctions contre la Russie",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Sanctions occidentales contre la Russie",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Expansion de l'OTAN",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Dépendance énergétique russe",
+      "label": "Processus",
+      "powerLevel": 3,
+      "sectors": ["energy"]
+    },
+    {
+      "id": "Parti communiste chinois (PCC)",
+      "label": "Parti politique",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["all"],
+      "Date de création": "1921-07-01"
+    },
+    {
+      "id": "Comité permanent du bureau politique du PCC",
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Assemblée populaire nationale de Chine",
+      "label": "Institution",
+      "powerLevel": 2,
+      "decisionType": "legislative",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Conseil des affaires d'État de Chine",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Premier ministre de Chine",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Commission militaire centrale de Chine",
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Armée populaire de libération",
+      "label": "Forces militaires",
+      "powerLevel": 4,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Politique du zéro-COVID",
+      "label": "Politique",
+      "powerLevel": 5,
+      "sectors": ["health"]
+    },
+    {
+      "id": "Initiative Belt and Road",
+      "label": "Politique",
+      "powerLevel": 5,
+      "sectors": ["economy", "diplomacy"]
+    },
+    {
+      "id": "Politique de la Chine sur Taïwan",
+      "label": "Politique",
+      "powerLevel": 5,
+      "sectors": ["defense", "diplomacy"]
+    },
+    {
+      "id": "Turquie",
+      "label": "Pays",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["all"],
+      "Date de création": "1923-10-29"
+    },
+    {
+      "id": "Président de la Turquie",
+      "label": "Chef d'État",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Grande Assemblée nationale de Turquie",
+      "label": "Institution",
+      "powerLevel": 2,
+      "decisionType": "legislative",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Conseil de sécurité nationale turc",
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["defense", "security"]
+    },
+    {
+      "id": "Système de défense S-400 russe",
+      "label": "Équipement militaire",
+      "powerLevel": 3,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Politique turque en Syrie",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["defense", "diplomacy"]
+    },
+    {
+      "id": "Politique turque en Libye",
+      "label": "Politique",
+      "powerLevel": 3,
+      "sectors": ["defense", "diplomacy"]
+    },
+    {
+      "id": "Conflit en Méditerranée orientale",
+      "label": "Conflit",
+      "powerLevel": 4,
+      "sectors": ["defense", "energy"]
+    },
+    {
+      "id": "Politique migratoire turque",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["diplomacy"]
+    },
+    {
+      "id": "Contrôle des flux migratoires",
+      "label": "Processus",
+      "powerLevel": 4,
+      "sectors": ["diplomacy"]
+    },
+    {
+      "id": "Politique de sécurité turque",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Politique néo-ottomane",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["diplomacy"]
+    },
+    {
+      "id": "Détroit des Dardanelles",
+      "label": "Position géostratégique",
+      "powerLevel": 5,
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Détroit du Bosphore",
+      "label": "Position géostratégique",
+      "powerLevel": 5,
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Détroits turcs",
+      "label": "Position géostratégique",
+      "powerLevel": 5,
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Organisation mondiale du commerce (OMC)",
+      "label": "Organisation internationale",
+      "powerLevel": 4,
+      "decisionType": "collective",
+      "sectors": ["economy"],
+      "Date de création": "1995-01-01"
+    },
+    {
+      "id": "Directeur général de l'OMC",
+      "label": "Institution",
+      "powerLevel": 3,
+      "decisionType": "executive",
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Organe de règlement des différends de l'OMC",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "judicial",
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Commerce international",
+      "label": "Processus",
+      "powerLevel": 5,
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Guerre commerciale sino-américaine",
+      "label": "Conflit économique",
+      "powerLevel": 5,
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Mécanisme d'ajustement carbone aux frontières",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["economy", "environment"]
+    },
+    {
+      "id": "État d'Israël",
+      "label": "État",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["defense", "economy"],
+      "Date de création": "1948-05-14"
+    },
+    {
+      "id": "Premier ministre d'Israël",
+      "label": "Chef de gouvernement",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Knesset (Parlement israélien)",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "legislative",
+      "sectors": ["economy"]
+    },
+    {
+      "id": "Forces de défense israéliennes (Tsahal)",
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Alliance stratégique États-Unis-Israël",
+      "label": "Alliance",
+      "powerLevel": 5,
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Politique de sécurité israélienne",
+      "label": "Politique",
+      "powerLevel": 5,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Iran",
+      "label": "État",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Politique israélienne en Palestine",
+      "label": "Politique",
+      "powerLevel": 4,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Résolutions ONU sur Israël",
+      "label": "Résolutions",
+      "powerLevel": 3,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Technologie de défense",
+      "label": "Secteur",
+      "powerLevel": 4,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Iron Dome",
+      "label": "Système de défense",
+      "powerLevel": 4,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Accords d'Abraham",
+      "label": "Accords internationaux",
+      "powerLevel": 4,
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Normalisation diplomatique au Moyen-Orient",
+      "label": "Processus",
+      "powerLevel": 4,
+      "sectors": ["defense", "economy"]
+    },
+    {
+      "id": "Nouvelle route de la soie",
+      "label": "Infrastructure",
+      "powerLevel": 4,
+      "sectors": ["economy", "transport"]
+    },
+    {
+      "id": "Ports européens",
+      "label": "Infrastructure",
+      "powerLevel": 3,
+      "sectors": ["economy", "transport"]
+    },
+    {
+      "id": "Stratégie Global Gateway",
+      "label": "Politique",
+      "powerLevel": 4,
+      "decisionType": "collective",
+      "sectors": ["economy", "diplomacy"]
+    },
+    {
+      "id": "Dépendance technologique chinoise",
+      "label": "Risque",
+      "powerLevel": 4,
+      "sectors": ["economy", "technology"]
+    }
+  ]
+}
