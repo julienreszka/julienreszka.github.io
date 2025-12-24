@@ -1,0 +1,307 @@
+{
+  "links": [
+    {
+      "source": "Union européenne",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "COOPÈRE AVEC"
+    },
+    {
+      "source": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "target": "Union européenne",
+      "type": "COOPÈRE AVEC"
+    },
+    {
+      "source": "Conseil européen",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "COORDONNE SA POLITIQUE DE DÉFENSE AVEC"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "DÉVELOPPE DES CAPACITÉS DE DÉFENSE COMPLÉMENTAIRES À"
+    },
+    {
+      "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "target": "Secrétaire général de l'OTAN",
+      "type": "DIALOGUE AVEC LE"
+    },
+    {
+      "source": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "target": "SHAPE (Commandement stratégique OTAN)",
+      "type": "COMMANDE À TRAVERS"
+    },
+    {
+      "source": "SHAPE (Commandement stratégique OTAN)",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "EXÉCUTE LES ORDRES DE L'"
+    },
+    {
+      "source": "Comité militaire de l'OTAN",
+      "target": "SHAPE (Commandement stratégique OTAN)",
+      "type": "SUPERVISE LE"
+    },
+    {
+      "source": "SHAPE (Commandement stratégique OTAN)",
+      "target": "Forces armées européennes",
+      "type": "COORDONNE LES"
+    },
+    {
+      "source": "SHAPE (Commandement stratégique OTAN)",
+      "target": "Belgique",
+      "type": "A SON SIÈGE EN"
+    },
+    {
+      "source": "Commandant suprême des forces alliées en Europe (SACEUR)",
+      "target": "SHAPE (Commandement stratégique OTAN)",
+      "type": "DIRIGE LE"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "EXERCE UNE INFLUENCE DÉCISIVE SUR"
+    },
+    {
+      "source": "Conseil de l'Atlantique Nord",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "EST L'ORGANE SUPRÊME DE DÉCISION DE"
+    },
+    {
+      "source": "Secrétaire général de l'OTAN",
+      "target": "Conseil de l'Atlantique Nord",
+      "type": "PRÉSIDE LE"
+    },
+    {
+      "source": "Représentants permanents des pays membres de l'OTAN",
+      "target": "Conseil de l'Atlantique Nord",
+      "type": "COMPOSENT LE"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Représentant permanent des États-Unis à l'OTAN",
+      "type": "NOMME LE"
+    },
+    {
+      "source": "Représentant permanent des États-Unis à l'OTAN",
+      "target": "Représentants permanents des pays membres de l'OTAN",
+      "type": "FAIT PARTIE DES"
+    },
+    {
+      "source": "Comité militaire de l'OTAN",
+      "target": "Conseil de l'Atlantique Nord",
+      "type": "CONSEILLE LE"
+    },
+    {
+      "source": "Président du Comité militaire de l'OTAN",
+      "target": "Comité militaire de l'OTAN",
+      "type": "PRÉSIDE LE"
+    },
+    {
+      "source": "Chefs d'état-major des pays membres de l'OTAN",
+      "target": "Comité militaire de l'OTAN",
+      "type": "COMPOSENT LE"
+    },
+    {
+      "source": "Chairman of the Joint Chiefs of Staff (États-Unis)",
+      "target": "Chefs d'état-major des pays membres de l'OTAN",
+      "type": "FAIT PARTIE DES"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Chairman of the Joint Chiefs of Staff (États-Unis)",
+      "type": "NOMME LE"
+    },
+    {
+      "source": "Commandant suprême des forces alliées en Europe (SACEUR)",
+      "target": "Président des États-Unis",
+      "type": "EST NOMMÉ PAR LE"
+    },
+    {
+      "source": "Conseil de l'Atlantique Nord",
+      "target": "Commandant suprême des forces alliées en Europe (SACEUR)",
+      "type": "APPROUVE LA NOMINATION DU"
+    },
+    {
+      "source": "Secrétaire général de l'OTAN",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "DIRIGE ADMINISTRATIVEMENT"
+    },
+    {
+      "source": "Conseil de l'Atlantique Nord",
+      "target": "Secrétaire général de l'OTAN",
+      "type": "NOMME LE"
+    },
+    {
+      "source": "États-Unis",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "EST LE MEMBRE DOMINANT DE"
+    },
+    {
+      "source": "Congrès des États-Unis",
+      "target": "Engagement américain dans l'OTAN",
+      "type": "AUTORISE"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Politique militaire américaine dans l'OTAN",
+      "type": "DÉTERMINE LA"
+    },
+    {
+      "source": "Secrétaire à la Défense des États-Unis",
+      "target": "Politique militaire américaine dans l'OTAN",
+      "type": "EXÉCUTE LA"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Secrétaire à la Défense des États-Unis",
+      "type": "NOMME LE"
+    },
+    {
+      "source": "Conseil de l'Atlantique Nord",
+      "target": "Décisions stratégiques de l'OTAN",
+      "type": "PREND LES"
+    },
+    {
+      "source": "Décisions stratégiques de l'OTAN",
+      "target": "Consensus des 31 pays membres",
+      "type": "NÉCESSITENT UN"
+    },
+    {
+      "source": "Président des États-Unis",
+      "target": "Consensus des 31 pays membres",
+      "type": "A UN POIDS DÉTERMINANT DANS LE"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "label": "Organisation internationale",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["defense"],
+      "Date de création": "1949-04-04"
+    },
+    {
+      "id": "Secrétaire général de l'OTAN",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["defense", "diplomacy"]
+    },
+    {
+      "id": "Conseil de l'Atlantique Nord",
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Comité militaire de l'OTAN",
+      "label": "Institution",
+      "powerLevel": 3,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "SHAPE (Commandement stratégique OTAN)",
+      "label": "Commandement militaire",
+      "powerLevel": 3,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Commandant suprême des forces alliées en Europe (SACEUR)",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Président des États-Unis",
+      "label": "Chef d'État",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["defense", "foreign-policy"]
+    },
+    {
+      "id": "Représentants permanents des pays membres de l'OTAN",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "collective",
+      "sectors": ["defense", "diplomacy"]
+    },
+    {
+      "id": "Représentant permanent des États-Unis à l'OTAN",
+      "label": "Diplomate",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["defense", "diplomacy"]
+    },
+    {
+      "id": "Président du Comité militaire de l'OTAN",
+      "label": "Institution",
+      "powerLevel": 3,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Chefs d'état-major des pays membres de l'OTAN",
+      "label": "Institution",
+      "powerLevel": 3,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Chairman of the Joint Chiefs of Staff (États-Unis)",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "military",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "États-Unis",
+      "label": "Pays",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["all"]
+    },
+    {
+      "id": "Congrès des États-Unis",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "legislative",
+      "sectors": ["defense", "foreign-policy"]
+    },
+    {
+      "id": "Engagement américain dans l'OTAN",
+      "label": "Politique",
+      "powerLevel": 5,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Politique militaire américaine dans l'OTAN",
+      "label": "Politique",
+      "powerLevel": 5,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Secrétaire à la Défense des États-Unis",
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Décisions stratégiques de l'OTAN",
+      "label": "Processus",
+      "powerLevel": 5,
+      "sectors": ["defense"]
+    },
+    {
+      "id": "Consensus des 31 pays membres",
+      "label": "Processus",
+      "powerLevel": 5,
+      "decisionType": "collective",
+      "sectors": ["defense"]
+    }
+  ]
+}

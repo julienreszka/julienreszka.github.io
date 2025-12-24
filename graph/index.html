@@ -1687,56 +1687,92 @@
       }
     });
 
-    d3.json("graph.json", function (error, graph) {
-      if (error) throw error;
+    // Function to merge two graph objects
+    function mergeGraphs(graph1, graph2) {
+      return {
+        links: [...graph1.links, ...graph2.links],
+        nodes: [...graph1.nodes, ...graph2.nodes],
+      };
+    }
 
-      graph.links = graph.links.filter((l) => l.type != "REPRESENTE");
-      graph.links = graph.links.filter((l) => l.label != "Personne");
-      graph.links = graph.links.filter((l) => l.type != "EST AFFILIE AU PARTI");
-      graph.links = graph.links.filter((l) => l.type != "FAIT PARTIE DES");
-      graph.links = graph.links.filter((l) => l.type != "COMPOSE");
-      graph.links = graph.links.filter((l) => l.type != "Représente");
-      graph.links = graph.links.filter((l) => l.type != "Compose");
+    // Load both JSON files and merge them
+    Promise.all([
+      fetch("graph.json").then((response) => response.json()),
+      fetch("nato.json").then((response) => response.json()),
+    ])
+      .then(function ([graph, natoGraph]) {
+        // Merge the two graphs
+        const mergedGraph = mergeGraphs(graph, natoGraph);
 
-      // Auto-generate missing nodes that are referenced in links
-      const existingNodeIds = new Set(graph.nodes.map((node) => node.id));
-      const missingNodes = new Set();
+        mergedGraph.links = mergedGraph.links.filter(
+          (l) => l.type != "REPRESENTE"
+        );
+        mergedGraph.links = mergedGraph.links.filter(
+          (l) => l.label != "Personne"
+        );
+        mergedGraph.links = mergedGraph.links.filter(
+          (l) => l.type != "EST AFFILIE AU PARTI"
+        );
+        mergedGraph.links = mergedGraph.links.filter(
+          (l) => l.type != "FAIT PARTIE DES"
+        );
+        mergedGraph.links = mergedGraph.links.filter(
+          (l) => l.type != "COMPOSE"
+        );
+        mergedGraph.links = mergedGraph.links.filter(
+          (l) => l.type != "Représente"
+        );
+        mergedGraph.links = mergedGraph.links.filter(
+          (l) => l.type != "Compose"
+        );
 
-      graph.links.forEach((link) => {
-        if (!existingNodeIds.has(link.source)) {
-          missingNodes.add(link.source);
-        }
-        if (!existingNodeIds.has(link.target)) {
-          missingNodes.add(link.target);
-        }
-      });
+        // Auto-generate missing nodes that are referenced in links
+        const existingNodeIds = new Set(
+          mergedGraph.nodes.map((node) => node.id)
+        );
+        const missingNodes = new Set();
 
-      // Add missing nodes to the graph with default label
-      missingNodes.forEach((nodeId) => {
-        graph.nodes.push({
-          id: nodeId,
-          label: "Auto-générée", // Default label for auto-generated nodes
+        mergedGraph.links.forEach((link) => {
+          if (!existingNodeIds.has(link.source)) {
+            missingNodes.add(link.source);
+          }
+          if (!existingNodeIds.has(link.target)) {
+            missingNodes.add(link.target);
+          }
         });
-        console.log(`Auto-generated missing node: ${nodeId}`);
+
+        // Add missing nodes to the graph with default label
+        missingNodes.forEach((nodeId) => {
+          mergedGraph.nodes.push({
+            id: nodeId,
+            label: "Auto-générée", // Default label for auto-generated nodes
+          });
+          console.log(`Auto-generated missing node: ${nodeId}`);
+        });
+
+        // Filter out nodes that don't have any remaining links
+        const linkedNodeIds = new Set();
+        mergedGraph.links.forEach((link) => {
+          linkedNodeIds.add(link.source);
+          linkedNodeIds.add(link.target);
+        });
+        mergedGraph.nodes = mergedGraph.nodes.filter((node) =>
+          linkedNodeIds.has(node.id)
+        );
+
+        // Store all links for sidebar functionality
+        allLinks = mergedGraph.links;
+
+        // Store all nodes for search functionality
+        allNodes = mergedGraph.nodes;
+
+        // graph.nodes = graph.nodes.filter(n => n.label != ("Personne"));
+        update(mergedGraph.links, mergedGraph.nodes);
+      })
+      .catch(function (error) {
+        console.error("Error loading graph data:", error);
+        throw error;
       });
-
-      // Filter out nodes that don't have any remaining links
-      const linkedNodeIds = new Set();
-      graph.links.forEach((link) => {
-        linkedNodeIds.add(link.source);
-        linkedNodeIds.add(link.target);
-      });
-      graph.nodes = graph.nodes.filter((node) => linkedNodeIds.has(node.id));
-
-      // Store all links for sidebar functionality
-      allLinks = graph.links;
-
-      // Store all nodes for search functionality
-      allNodes = graph.nodes;
-
-      // graph.nodes = graph.nodes.filter(n => n.label != ("Personne"));
-      update(graph.links, graph.nodes);
-    });
     function update(links, nodes) {
       link = svg
         .selectAll(".link")
