@@ -751,6 +751,10 @@
         node.classed("depth-faded", false).classed("depth-highlighted", false);
         label.classed("depth-faded", false).classed("depth-highlighted", false);
         link.classed("depth-faded", false).classed("depth-highlighted", false);
+        if (edgelabels)
+          edgelabels
+            .classed("depth-faded", false)
+            .classed("depth-highlighted", false);
         return;
       }
 
@@ -788,6 +792,23 @@
             connectedNodeIds.has(d.source.id) &&
             connectedNodeIds.has(d.target.id)
         );
+
+      // Fade edge labels (link type text) when both nodes are not connected
+      if (edgelabels) {
+        edgelabels
+          .classed(
+            "depth-faded",
+            (d) =>
+              !connectedNodeIds.has(d.source.id) ||
+              !connectedNodeIds.has(d.target.id)
+          )
+          .classed(
+            "depth-highlighted",
+            (d) =>
+              connectedNodeIds.has(d.source.id) &&
+              connectedNodeIds.has(d.target.id)
+          );
+      }
     }
 
     function searchNodes(query) {
@@ -960,13 +981,15 @@
       sidebarContent.innerHTML = content;
 
       // Set up the sidebar depth selector
-      const sidebarDepthSelect = document.getElementById("sidebar-depth-select");
+      const sidebarDepthSelect = document.getElementById(
+        "sidebar-depth-select"
+      );
       if (sidebarDepthSelect) {
         // Sync with main depth selector
         sidebarDepthSelect.value = currentDepth;
-        
+
         // Add event listener
-        sidebarDepthSelect.addEventListener("change", function(e) {
+        sidebarDepthSelect.addEventListener("change", function (e) {
           currentDepth = parseInt(e.target.value);
           // Sync with main depth selector
           document.getElementById("depth-select").value = currentDepth;
@@ -1402,7 +1425,9 @@
       .addEventListener("change", function (e) {
         currentDepth = parseInt(e.target.value);
         // Sync with sidebar depth selector if it exists
-        const sidebarDepthSelect = document.getElementById("sidebar-depth-select");
+        const sidebarDepthSelect = document.getElementById(
+          "sidebar-depth-select"
+        );
         if (sidebarDepthSelect) {
           sidebarDepthSelect.value = currentDepth;
         }
