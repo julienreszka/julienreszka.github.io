@@ -995,6 +995,51 @@
       return []; // Aucun chemin trouvé
     }
 
+    function zoomToFitPath(path) {
+      if (!path || path.length === 0) return;
+
+      // Find all nodes in the path
+      const pathNodes = path.map(nodeId => 
+        allNodes.find(node => node.id === nodeId)
+      ).filter(node => node !== undefined);
+
+      if (pathNodes.length === 0) return;
+
+      // Calculate bounding box of the path
+      const minX = Math.min(...pathNodes.map(node => node.x));
+      const maxX = Math.max(...pathNodes.map(node => node.x));
+      const minY = Math.min(...pathNodes.map(node => node.y));
+      const maxY = Math.max(...pathNodes.map(node => node.y));
+
+      // Add padding around the path
+      const padding = 100;
+      const pathWidth = maxX - minX + 2 * padding;
+      const pathHeight = maxY - minY + 2 * padding;
+
+      // Calculate scale to fit the path in the viewport
+      const scaleX = width / pathWidth;
+      const scaleY = height / pathHeight;
+      const scale = Math.min(scaleX, scaleY, 2); // Max zoom of 2x
+
+      // Calculate center position of the path
+      const centerX = (minX + maxX) / 2;
+      const centerY = (minY + maxY) / 2;
+
+      // Calculate translation to center the path
+      const translateX = width / 2 - centerX * scale;
+      const translateY = height / 2 - centerY * scale;
+
+      // Apply the transform with smooth transition
+      d3.select("body")
+        .select("svg")
+        .transition()
+        .duration(1000)
+        .call(
+          zoom.transform,
+          d3.zoomIdentity.translate(translateX, translateY).scale(scale)
+        );
+    }
+
     function showRoute() {
       const routePanel = document.getElementById("route-panel");
       const searchContainer = document.getElementById("search-container");
@@ -1299,6 +1344,10 @@
       `;
 
       clearButton.style.display = "block";
+      
+      // Zoom out to show the full path
+      zoomToFitPath(path);
+      
       routeMode = true;
     }
 
