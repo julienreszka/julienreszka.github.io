@@ -999,17 +999,17 @@
       if (!path || path.length === 0) return;
 
       // Find all nodes in the path
-      const pathNodes = path.map(nodeId => 
-        allNodes.find(node => node.id === nodeId)
-      ).filter(node => node !== undefined);
+      const pathNodes = path
+        .map((nodeId) => allNodes.find((node) => node.id === nodeId))
+        .filter((node) => node !== undefined);
 
       if (pathNodes.length === 0) return;
 
       // Calculate bounding box of the path
-      const minX = Math.min(...pathNodes.map(node => node.x));
-      const maxX = Math.max(...pathNodes.map(node => node.x));
-      const minY = Math.min(...pathNodes.map(node => node.y));
-      const maxY = Math.max(...pathNodes.map(node => node.y));
+      const minX = Math.min(...pathNodes.map((node) => node.x));
+      const maxX = Math.max(...pathNodes.map((node) => node.x));
+      const minY = Math.min(...pathNodes.map((node) => node.y));
+      const maxY = Math.max(...pathNodes.map((node) => node.y));
 
       // Add padding around the path
       const padding = 100;
@@ -1344,10 +1344,10 @@
       `;
 
       clearButton.style.display = "block";
-      
+
       // Zoom out to show the full path
       zoomToFitPath(path);
-      
+
       routeMode = true;
     }
 
