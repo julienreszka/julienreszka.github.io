@@ -12370,7 +12370,10 @@
     },
     {
       "id": "Parlement européen",
-      "label": "Institution"
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "legislative",
+      "sectors": ["all"]
     },
     {
       "id": "Chefs d'Etats ou Chefs de gouvernements de la zone euro",
@@ -12390,7 +12393,10 @@
     },
     {
       "id": "Conseil européen",
-      "label": "Institution"
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["all"]
     },
     {
       "id": "Chefs d’État et de gouvernement des pays de l’UE",
@@ -12398,7 +12404,10 @@
     },
     {
       "id": "Président de la Commission européenne",
-      "label": "Institution"
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["all"]
     },
     {
       "id": "Commission européenne",
@@ -12902,7 +12911,10 @@
     },
     {
       "id": "Commissaire européen à l'environnement, aux affaires maritimes et à la pêche",
-      "label": "Institution"
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["environment", "climate", "maritime", "fisheries"]
     },
     {
       "id": "Commissaire européen à la santé et à la sécurité alimentaire",
@@ -12938,11 +12950,17 @@
     },
     {
       "id": "Commissaire européen au marché intérieur, à l'industrie, à l'entrepreneuriat et aux PME",
-      "label": "Institution"
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["digital", "commerce", "industry", "sme"]
     },
     {
       "id": "Commissaire européen à la justice, aux consommateurs et à l'égalité des genres",
-      "label": "Institution"
+      "label": "Institution",
+      "powerLevel": 4,
+      "decisionType": "executive",
+      "sectors": ["justice", "consumer", "gender"]
     },
     {
       "id": "Commissaire européen à l'éducation, à la culture, à la jeunesse et aux sports",
@@ -12954,7 +12972,10 @@
     },
     {
       "id": "Commissaire européen à la concurrence",
-      "label": "Institution"
+      "label": "Institution",
+      "powerLevel": 5,
+      "decisionType": "executive",
+      "sectors": ["competition", "antitrust", "mergers", "digital"]
     },
     {
       "id": "Commissaire européen à la recherche, à la science et à l'innovation",

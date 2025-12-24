@@ -539,9 +539,82 @@
       .clear-route:hover {
         background: var(--result-hover);
       }
+
+      /* Légende pour le pouvoir décisionnel */
+      #power-legend {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--sidebar-bg);
+        border: 1px solid var(--sidebar-border);
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 2px 10px var(--sidebar-shadow);
+        font-size: 12px;
+        z-index: 1000;
+      }
+
+      .legend-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: var(--text-color);
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 4px;
+        color: var(--text-color);
+      }
+
+      .legend-circle {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+        border: 1px solid var(--text-color);
+      }
     </style>
   </head>
   <body>
+    <div id="power-legend">
+      <div class="legend-title">🎯 Pouvoir décisionnel</div>
+      <div class="legend-item">
+        <div
+          class="legend-circle"
+          style="background: #dc143c; width: 18px; height: 18px"
+        ></div>
+        <span>Décision finale (5)</span>
+      </div>
+      <div class="legend-item">
+        <div
+          class="legend-circle"
+          style="background: #ff4500; width: 16px; height: 16px"
+        ></div>
+        <span>Influence forte (4)</span>
+      </div>
+      <div class="legend-item">
+        <div
+          class="legend-circle"
+          style="background: #ffd700; width: 14px; height: 14px"
+        ></div>
+        <span>Influence modérée (3)</span>
+      </div>
+      <div class="legend-item">
+        <div
+          class="legend-circle"
+          style="background: #87ceeb; width: 12px; height: 12px"
+        ></div>
+        <span>Influence faible (2)</span>
+      </div>
+      <div class="legend-item">
+        <div
+          class="legend-circle"
+          style="background: #90ee90; width: 10px; height: 10px"
+        ></div>
+        <span>Consultatif (1)</span>
+      </div>
+    </div>
     <div id="search-container">
       <input type="text" id="search-input" placeholder="Search for nodes..." />
       <div id="search-results"></div>
@@ -644,6 +717,16 @@
       "DarkBlue",
       "DarkSalmon",
     ]);
+
+    // Couleurs pour les niveaux de pouvoir décisionnel
+    var powerColors = d3.scaleOrdinal().domain([1, 2, 3, 4, 5]).range([
+      "#90EE90", // Vert clair - Consultatif (niveau 1)
+      "#87CEEB", // Bleu ciel - Influence faible (niveau 2)
+      "#FFD700", // Or - Influence modérée (niveau 3)
+      "#FF4500", // Orange rouge - Influence forte (niveau 4)
+      "#DC143C", // Rouge foncé - Décision finale (niveau 5)
+    ]);
+
     var width = window.innerWidth - 40,
       height = window.innerHeight - 40,
       radius = 0;
@@ -908,12 +991,90 @@
       // Add node label information
       if (nodeData.label) {
         content += `<div class="connection-section">
-          <h3>Node Information</h3>
+          <h3>Information du Nœud</h3>
           <div class="connection-item">
             <div class="connection-type">Type:</div>
             <div>${nodeData.label}</div>
-          </div>
-        </div>`;
+          </div>`;
+
+        // Ajouter le niveau de pouvoir si disponible
+        if (nodeData.powerLevel) {
+          const powerLabels = {
+            1: "Consultatif",
+            2: "Influence faible",
+            3: "Influence modérée",
+            4: "Influence forte",
+            5: "Décision finale",
+          };
+          const powerColors = {
+            1: "#90EE90",
+            2: "#87CEEB",
+            3: "#FFD700",
+            4: "#FF4500",
+            5: "#DC143C",
+          };
+          content += `
+          <div class="connection-item">
+            <div class="connection-type">Niveau de pouvoir:</div>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <div style="width: 12px; height: 12px; border-radius: 50%; background: ${
+                powerColors[nodeData.powerLevel]
+              }; border: 1px solid #666;"></div>
+              <span>${powerLabels[nodeData.powerLevel]} (${
+            nodeData.powerLevel
+          }/5)</span>
+            </div>
+          </div>`;
+        }
+
+        // Ajouter le type de décision si disponible
+        if (nodeData.decisionType) {
+          const typeLabels = {
+            executive: "Exécutif",
+            legislative: "Législatif",
+            judicial: "Judiciaire",
+          };
+          content += `
+          <div class="connection-item">
+            <div class="connection-type">Type de pouvoir:</div>
+            <div>${
+              typeLabels[nodeData.decisionType] || nodeData.decisionType
+            }</div>
+          </div>`;
+        }
+
+        // Ajouter les secteurs de compétence si disponibles
+        if (nodeData.sectors && nodeData.sectors.length > 0) {
+          const sectorLabels = {
+            all: "Tous secteurs",
+            digital: "Numérique",
+            commerce: "Commerce",
+            industry: "Industrie",
+            sme: "PME",
+            justice: "Justice",
+            consumer: "Consommateurs",
+            gender: "Égalité des genres",
+            competition: "Concurrence",
+            antitrust: "Antitrust",
+            mergers: "Fusions-acquisitions",
+            environment: "Environnement",
+            climate: "Climat",
+            maritime: "Affaires maritimes",
+            fisheries: "Pêche",
+          };
+
+          const sectorsDisplay = nodeData.sectors
+            .map((s) => sectorLabels[s] || s)
+            .join(", ");
+
+          content += `
+          <div class="connection-item">
+            <div class="connection-type">Secteurs:</div>
+            <div>${sectorsDisplay}</div>
+          </div>`;
+        }
+
+        content += `</div>`;
       }
 
       // Ajouter le bouton d'itinéraire
@@ -1643,14 +1804,18 @@
         .data(nodes)
         .enter()
         .append("circle")
-        .attr("r", 5)
+        .attr("r", function (d) {
+          // Taille basée sur le niveau de pouvoir (5-15px)
+          return d.powerLevel ? d.powerLevel * 2 + 3 : 5;
+        })
         .attr("stroke", "var(--text-color)")
         .attr("stroke-width", 1)
         .attr("data-id", function (d) {
           return d.id;
         }) // Ajouter un attribut data-id
         .style("fill", function (d, i) {
-          return color(d.id);
+          // Couleur basée sur le niveau de pouvoir si disponible
+          return d.powerLevel ? powerColors(d.powerLevel) : color(d.id);
         })
         .call(
           d3
