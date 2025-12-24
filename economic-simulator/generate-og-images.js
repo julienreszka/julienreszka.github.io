@@ -59,7 +59,7 @@ async function generateOGImages() {
 
   const browser = await puppeteer.launch({
     headless: true,
-    defaultViewport: { width: 1200, height: 630 } // OG image standard size
+    defaultViewport: { width: 1200, height: 630, deviceScaleFactor: 2 } // Higher device scale for better quality
   });
 
   try {
@@ -215,7 +215,7 @@ async function generateOGImages() {
 
               path.setAttribute('d', pathData);
               path.setAttribute('stroke', cardData.color);
-              path.setAttribute('stroke-width', '4');
+              path.setAttribute('stroke-width', '8');
               path.setAttribute('fill', 'none');
               svg.appendChild(path);
               chartArea.appendChild(svg);
@@ -241,7 +241,7 @@ async function generateOGImages() {
 
             path.setAttribute('d', pathData);
             path.setAttribute('stroke', cardData.color);
-            path.setAttribute('stroke-width', '4');
+            path.setAttribute('stroke-width', '8');
             path.setAttribute('fill', 'none');
             svg.appendChild(path);
             chartArea.appendChild(svg);
@@ -267,16 +267,15 @@ async function generateOGImages() {
         }, card);
 
         // Take screenshot of the OG container
-        const ogElement = await page.$('#og-container');
-        if (ogElement) {
-          await ogElement.screenshot({
-            path: path.join(__dirname, card.filename),
-            type: 'png'
-          });
-          console.log(`✅ Generated ${card.filename}`);
-        } else {
-          console.log(`❌ Could not find OG container for ${card.title}`);
-        }
+        // Take high-resolution screenshot using device scale factor for crisp quality
+        await page.screenshot({
+          path: path.join(__dirname, card.filename),
+          type: 'png',
+          optimizeForSpeed: false,
+          omitBackground: false,
+          fullPage: false
+        });
+        console.log(`✅ Generated ${card.filename}`);
 
         // Remove the OG container
         await page.evaluate(() => {
