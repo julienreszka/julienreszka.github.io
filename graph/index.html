@@ -1488,6 +1488,28 @@
       graph.links = graph.links.filter((l) => l.type != "Représente");
       graph.links = graph.links.filter((l) => l.type != "Compose");
 
+      // Auto-generate missing nodes that are referenced in links
+      const existingNodeIds = new Set(graph.nodes.map((node) => node.id));
+      const missingNodes = new Set();
+
+      graph.links.forEach((link) => {
+        if (!existingNodeIds.has(link.source)) {
+          missingNodes.add(link.source);
+        }
+        if (!existingNodeIds.has(link.target)) {
+          missingNodes.add(link.target);
+        }
+      });
+
+      // Add missing nodes to the graph with default label
+      missingNodes.forEach((nodeId) => {
+        graph.nodes.push({
+          id: nodeId,
+          label: "Auto-générée", // Default label for auto-generated nodes
+        });
+        console.log(`Auto-generated missing node: ${nodeId}`);
+      });
+
       // Filter out nodes that don't have any remaining links
       const linkedNodeIds = new Set();
       graph.links.forEach((link) => {

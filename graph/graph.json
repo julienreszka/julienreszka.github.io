@@ -12274,6 +12274,61 @@
       "source": "Agence européenne des médicaments (EMA)",
       "target": "Institutions de l'Union européenne",
       "type": "AUTORISE LA MISE SUR LE MARCHÉ DES MÉDICAMENTS POUR LES"
+    },
+    {
+      "source": "Union européenne",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "COOPÈRE AVEC"
+    },
+    {
+      "source": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "target": "Union européenne",
+      "type": "COOPÈRE AVEC"
+    },
+    {
+      "source": "Conseil européen",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "COORDONNE SA POLITIQUE DE DÉFENSE AVEC"
+    },
+    {
+      "source": "Commission européenne",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "DÉVELOPPE DES CAPACITÉS DE DÉFENSE COMPLÉMENTAIRES À"
+    },
+    {
+      "source": "Haut représentant de l'Union pour les affaires étrangères et la politique de sécurité",
+      "target": "Secrétaire général de l'OTAN",
+      "type": "DIALOGUE AVEC LE"
+    },
+    {
+      "source": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "target": "SHAPE (Commandement stratégique OTAN)",
+      "type": "COMMANDE À TRAVERS"
+    },
+    {
+      "source": "SHAPE (Commandement stratégique OTAN)",
+      "target": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "type": "EXÉCUTE LES ORDRES DE L'"
+    },
+    {
+      "source": "Comité militaire de l'OTAN",
+      "target": "SHAPE (Commandement stratégique OTAN)",
+      "type": "SUPERVISE LE"
+    },
+    {
+      "source": "SHAPE (Commandement stratégique OTAN)",
+      "target": "Forces armées européennes",
+      "type": "COORDONNE LES"
+    },
+    {
+      "source": "SHAPE (Commandement stratégique OTAN)",
+      "target": "Belgique",
+      "type": "A SON SIÈGE EN"
+    },
+    {
+      "source": "Commandant suprême des forces alliées en Europe (SACEUR)",
+      "target": "SHAPE (Commandement stratégique OTAN)",
+      "type": "DIRIGE LE"
     }
   ],
   "nodes": [
@@ -18866,6 +18921,34 @@
       "label": "Institution"
     },
     {
+      "id": "Organisation du traité de l'Atlantique nord (OTAN)",
+      "label": "Organisation internationale"
+    },
+    {
+      "id": "Secrétaire général de l'OTAN",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseil de l'Atlantique Nord",
+      "label": "Institution"
+    },
+    {
+      "id": "Comité militaire de l'OTAN",
+      "label": "Institution"
+    },
+    {
+      "id": "SHAPE (Commandement stratégique OTAN)",
+      "label": "Commandement militaire"
+    },
+    {
+      "id": "Commandant suprême des forces alliées en Europe (SACEUR)",
+      "label": "Institution"
+    },
+    {
+      "id": "Forces armées européennes",
+      "label": "Forces militaires"
+    },
+    {
       "id": "Président de l'Assemblée nationale française",
       "label": "Institution"
     },
@@ -19295,6 +19378,34 @@
       "id": "Agence européenne des médicaments (EMA)",
       "label": "Institution",
       "Date de création": "1995-01-26"
+    },
+    {
+      "id": "Secrétaire général de l'OTAN",
+      "label": "Institution"
+    },
+    {
+      "id": "Conseil de l'Atlantique Nord",
+      "label": "Institution"
+    },
+    {
+      "id": "Comité militaire de l'OTAN",
+      "label": "Institution"
+    },
+    {
+      "id": "SHAPE (Commandement stratégique OTAN)",
+      "label": "Commandement militaire"
+    },
+    {
+      "id": "Commandant suprême des forces alliées en Europe (SACEUR)",
+      "label": "Institution"
+    },
+    {
+      "id": "Forces armées européennes",
+      "label": "Forces militaires"
+    },
+    {
+      "id": "Union européenne",
+      "label": "Organisation internationale"
     }
   ]
 }
