@@ -11,6 +11,11 @@
     "puppeteer": "^24.15.0"
   },
   "devDependencies": {},
-  "keywords": ["og-images", "social-media", "preview", "automation"],
+  "keywords": [
+    "og-images",
+    "social-media",
+    "preview",
+    "automation"
+  ],
   "author": "Julien Reszka"
 }
