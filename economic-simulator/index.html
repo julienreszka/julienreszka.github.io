@@ -251,23 +251,23 @@
       @media (min-width: 1024px) {
         form {
           display: grid;
-          grid-template-columns: 1fr 1fr 1fr 90px;
+          grid-template-columns: 1fr 1fr 1fr;
           gap: 15px;
           align-items: end;
         }
 
         #paramsFormJCurve,
         #paramsFormSupplyDemand {
-          grid-template-columns: 1fr 1fr 1fr 1fr 90px;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
         }
 
         #paramsFormDivision {
-          grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr 1fr;
           gap: 15px;
         }
 
         #paramsFormHockey {
-          grid-template-columns: 1fr 1fr 1fr 120px;
+          grid-template-columns: 1fr 1fr 1fr;
           gap: 15px;
         }
 
@@ -285,21 +285,6 @@
           width: 100%;
         }
 
-        form button {
-          margin: 0;
-        }
-      }
-
-      button {
-        padding: 10px 20px;
-        background: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-      }
-
-      button:hover {
-        background: #0056b3;
       }
 
       #optimal-armey,
@@ -395,13 +380,7 @@
           background-color: #2d2d2d;
         }
 
-        button {
-          background: #0d6efd;
-        }
-
-        button:hover {
-          background: #0b5ed7;
-        }
+        /* Remove button styles for this page since we don't use buttons */
 
         input {
           background-color: #2d2d2d;
@@ -881,7 +860,6 @@
               >
             </div>
 
-            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -1113,7 +1091,6 @@
               >
             </div>
 
-            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -1561,7 +1538,6 @@
               >
             </div>
 
-            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -2367,7 +2343,6 @@
               >
             </div>
 
-            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -2631,7 +2606,6 @@
               />
             </div>
 
-            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -2936,7 +2910,6 @@
               />
             </div>
 
-            <button type="submit">Simulate</button>
           </form>
 
           <div
@@ -3643,25 +3616,21 @@
         ).toFixed(2)}%)`;
       }
 
-      document
-        .getElementById("paramsFormArmey")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const beta0 = parseFloat(
-            document.getElementById("beta0-armey").value
-          );
-          const beta1 = parseFloat(
-            document.getElementById("beta1-armey").value
-          );
-          const beta2 = parseFloat(
-            document.getElementById("beta2-armey").value
-          );
-          if (beta2 >= 0) {
-            alert("β₂ should be negative for an inverted U-shape.");
-            return;
-          }
+      function updateArmeySimulation() {
+        const beta0 = parseFloat(document.getElementById("beta0-armey").value);
+        const beta1 = parseFloat(document.getElementById("beta1-armey").value);
+        const beta2 = parseFloat(document.getElementById("beta2-armey").value);
+        
+        // Only simulate if all values are valid
+        if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
           simulateCurveArmey(beta0, beta1, beta2);
-        });
+        }
+      }
+
+      // Add event listeners to all Armey inputs
+      document.getElementById("beta0-armey").addEventListener("input", updateArmeySimulation);
+      document.getElementById("beta1-armey").addEventListener("input", updateArmeySimulation);
+      document.getElementById("beta2-armey").addEventListener("input", updateArmeySimulation);
 
       // Initial simulation for Armey
       simulateCurveArmey(4.5, 0.5, -0.01);
@@ -3715,25 +3684,21 @@
         ).toFixed(2)})`;
       }
 
-      document
-        .getElementById("paramsFormLaffer")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const beta0 = parseFloat(
-            document.getElementById("beta0-laffer").value
-          );
-          const beta1 = parseFloat(
-            document.getElementById("beta1-laffer").value
-          );
-          const beta2 = parseFloat(
-            document.getElementById("beta2-laffer").value
-          );
-          if (beta2 >= 0) {
-            alert("β₂ should be negative for an inverted U-shape.");
-            return;
-          }
+      function updateLafferSimulation() {
+        const beta0 = parseFloat(document.getElementById("beta0-laffer").value);
+        const beta1 = parseFloat(document.getElementById("beta1-laffer").value);
+        const beta2 = parseFloat(document.getElementById("beta2-laffer").value);
+        
+        // Only simulate if all values are valid
+        if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
           simulateCurveLaffer(beta0, beta1, beta2);
-        });
+        }
+      }
+
+      // Add event listeners to all Laffer inputs
+      document.getElementById("beta0-laffer").addEventListener("input", updateLafferSimulation);
+      document.getElementById("beta1-laffer").addEventListener("input", updateLafferSimulation);
+      document.getElementById("beta2-laffer").addEventListener("input", updateLafferSimulation);
 
       // Initial simulation for Laffer
       simulateCurveLaffer(0, 1, -0.02);
@@ -3792,24 +3757,23 @@
         )} (max dip: ~-${depth.toFixed(1)})`;
       }
 
-      document
-        .getElementById("paramsFormJCurve")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const base = parseFloat(document.getElementById("base-jcurve").value);
-          const depth = parseFloat(
-            document.getElementById("depth-jcurve").value
-          );
-          const tau = parseFloat(document.getElementById("tau-jcurve").value);
-          const slope = parseFloat(
-            document.getElementById("slope-jcurve").value
-          );
-          if (depth <= 0 || tau <= 0 || slope <= 0) {
-            alert("Depth, τ, and Slope should be positive for a J-shape.");
-            return;
-          }
+      function updateJCurveSimulation() {
+        const base = parseFloat(document.getElementById("base-jcurve").value);
+        const depth = parseFloat(document.getElementById("depth-jcurve").value);
+        const tau = parseFloat(document.getElementById("tau-jcurve").value);
+        const slope = parseFloat(document.getElementById("slope-jcurve").value);
+        
+        // Only simulate if all values are valid
+        if (!isNaN(base) && !isNaN(depth) && !isNaN(tau) && !isNaN(slope) && depth > 0 && tau > 0 && slope > 0) {
           simulateCurveJCurve(base, depth, tau, slope);
-        });
+        }
+      }
+
+      // Add event listeners to all J-Curve inputs
+      document.getElementById("base-jcurve").addEventListener("input", updateJCurveSimulation);
+      document.getElementById("depth-jcurve").addEventListener("input", updateJCurveSimulation);
+      document.getElementById("tau-jcurve").addEventListener("input", updateJCurveSimulation);
+      document.getElementById("slope-jcurve").addEventListener("input", updateJCurveSimulation);
 
       // Initial simulation for J-Curve
       simulateCurveJCurve(0, 10, 2, 1);
@@ -4029,20 +3993,23 @@
         <em style="font-size: 14px; font-weight: normal;">At this point, buyers want to purchase exactly the amount sellers want to sell. The market is balanced with no shortage or surplus.</em>`;
       }
 
-      document
-        .getElementById("paramsFormSupplyDemand")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const a = parseFloat(document.getElementById("a-supplydemand").value);
-          const b = parseFloat(document.getElementById("b-supplydemand").value);
-          const c = parseFloat(document.getElementById("c-supplydemand").value);
-          const d = parseFloat(document.getElementById("d-supplydemand").value);
-          if (b <= 0 || d <= 0) {
-            alert("Slopes b and d should be positive.");
-            return;
-          }
+      function updateSupplyDemandSimulation() {
+        const a = parseFloat(document.getElementById("a-supplydemand").value);
+        const b = parseFloat(document.getElementById("b-supplydemand").value);
+        const c = parseFloat(document.getElementById("c-supplydemand").value);
+        const d = parseFloat(document.getElementById("d-supplydemand").value);
+        
+        // Only simulate if all values are valid
+        if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && a > 0 && b > 0 && c >= 0 && d > 0) {
           simulateSupplyDemand(a, b, c, d);
-        });
+        }
+      }
+
+      // Add event listeners to all Supply-Demand inputs
+      document.getElementById("a-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
+      document.getElementById("b-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
+      document.getElementById("c-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
+      document.getElementById("d-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
 
       // Initial simulation for Supply-Demand
       // Curved model: Demand P = a/(1+bQ)^0.5, Supply P = c + d*Q^1.3
@@ -4209,40 +4176,24 @@
         `;
       }
 
-      document
-        .getElementById("paramsFormDivision")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const baseProductivity = parseFloat(
-            document.getElementById("baseproductivity-division").value
-          );
-          const maxWorkers = parseInt(
-            document.getElementById("maxworkers-division").value
-          );
-          const specializationFactor = parseFloat(
-            document.getElementById("specialization-division").value
-          );
-          const returnsParameter = parseFloat(
-            document.getElementById("returns-division").value
-          );
+      function updateDivisionSimulation() {
+        const baseProductivity = parseFloat(document.getElementById("baseproductivity-division").value);
+        const maxWorkers = parseInt(document.getElementById("maxworkers-division").value);
+        const specializationFactor = parseFloat(document.getElementById("specialization-division").value);
+        const returnsParameter = parseFloat(document.getElementById("returns-division").value);
+        
+        // Only simulate if all values are valid
+        if (!isNaN(baseProductivity) && !isNaN(maxWorkers) && !isNaN(specializationFactor) && !isNaN(returnsParameter) && 
+            baseProductivity > 0 && maxWorkers > 0 && specializationFactor > 0 && returnsParameter > 0) {
+          simulateDivisionOfLabor(baseProductivity, maxWorkers, specializationFactor, returnsParameter);
+        }
+      }
 
-          if (
-            baseProductivity <= 0 ||
-            maxWorkers <= 0 ||
-            specializationFactor <= 0 ||
-            returnsParameter <= 0
-          ) {
-            alert("All parameters must be positive.");
-            return;
-          }
-
-          simulateDivisionOfLabor(
-            baseProductivity,
-            maxWorkers,
-            specializationFactor,
-            returnsParameter
-          );
-        });
+      // Add event listeners to all Division of Labor inputs
+      document.getElementById("baseproductivity-division").addEventListener("input", updateDivisionSimulation);
+      document.getElementById("maxworkers-division").addEventListener("input", updateDivisionSimulation);
+      document.getElementById("specialization-division").addEventListener("input", updateDivisionSimulation);
+      document.getElementById("returns-division").addEventListener("input", updateDivisionSimulation);
 
       // Initial simulation for Division of Labor
       // Adam Smith's exact Pin Factory values:
@@ -4495,29 +4446,22 @@
         `;
       }
 
-      document
-        .getElementById("paramsFormHockey")
-        .addEventListener("submit", (e) => {
-          e.preventDefault();
-          const baseGDP = parseFloat(
-            document.getElementById("base-hockey").value
-          );
-          const capitalismYear = parseInt(
-            document.getElementById("capitalism-year-hockey").value
-          );
-          const accelerationFactor = parseFloat(
-            document.getElementById("acceleration-hockey").value
-          );
-
-          if (baseGDP <= 0 || capitalismYear < 0 || capitalismYear > 2000) {
-            alert(
-              "Invalid parameters. Base GDP must be positive, and capitalism year must be between 0 and 2000."
-            );
-            return;
-          }
-
+      function updateHockeyStickSimulation() {
+        const baseGDP = parseFloat(document.getElementById("base-hockey").value);
+        const capitalismYear = parseInt(document.getElementById("capitalism-year-hockey").value);
+        const accelerationFactor = parseFloat(document.getElementById("acceleration-hockey").value);
+        
+        // Only simulate if all values are valid
+        if (!isNaN(baseGDP) && !isNaN(capitalismYear) && !isNaN(accelerationFactor) && 
+            baseGDP > 0 && capitalismYear >= 0 && capitalismYear <= 2000 && accelerationFactor > 0) {
           simulateHockeyStick(baseGDP, capitalismYear, accelerationFactor);
-        });
+        }
+      }
+
+      // Add event listeners to all Hockey Stick inputs
+      document.getElementById("base-hockey").addEventListener("input", updateHockeyStickSimulation);
+      document.getElementById("capitalism-year-hockey").addEventListener("input", updateHockeyStickSimulation);
+      document.getElementById("acceleration-hockey").addEventListener("input", updateHockeyStickSimulation);
 
       // Initial simulation for Hockey Stick
       // Using historical data: base ~$600, capitalism at 1800, acceleration 1.0 (historical rates)
