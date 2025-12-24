@@ -121,7 +121,7 @@ async function generateOGImages() {
             left: 0;
             width: 1200px;
             height: 630px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -138,8 +138,8 @@ async function generateOGImages() {
             font-size: 56px;
             margin: 0 0 20px 0;
             font-weight: 300;
-            color: white;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            color: #1d1d1f;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.1);
             text-align: center;
             line-height: 1.1;
           `;
@@ -150,8 +150,8 @@ async function generateOGImages() {
           description.style.cssText = `
             font-size: 28px;
             margin: 0 0 40px 0;
-            color: rgba(255,255,255,0.9);
-            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            color: #515154;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.1);
             text-align: center;
             line-height: 1.3;
             max-width: 800px;
@@ -250,9 +250,9 @@ async function generateOGImages() {
           // Add branding
           const branding = document.createElement('div');
           branding.style.cssText = `
-            color: rgba(255,255,255,0.8);
+            color: #86868b;
             font-size: 20px;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
             text-align: center;
             font-weight: 500;
           `;
