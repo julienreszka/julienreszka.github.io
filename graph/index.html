@@ -1477,6 +1477,55 @@
       }
     });
 
+    // Raccourcis clavier
+    document.addEventListener("keydown", function (e) {
+      // Échap pour fermer les sidebars et panneaux
+      if (e.key === "Escape") {
+        // Fermer la sidebar si ouverte
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar.classList.contains("open")) {
+          closeSidebar();
+          return;
+        }
+
+        // Fermer le panneau d'itinéraire si ouvert
+        const routePanel = document.getElementById("route-panel");
+        if (routePanel.classList.contains("visible")) {
+          closeRoute();
+          return;
+        }
+
+        // Effacer les résultats de recherche
+        document.getElementById("search-results").innerHTML = "";
+        document.getElementById("search-input").value = "";
+
+        // Enlever la surbrillance du nœud sélectionné
+        if (highlightedNode) {
+          node.classed("highlighted", false);
+          label.classed("highlighted-text", false);
+          highlightedNode = null;
+          applyDepthFilter();
+        }
+      }
+
+      // Enter pour focus sur le premier résultat de recherche
+      if (e.key === "Enter") {
+        const searchResults = document.querySelector(".search-result");
+        if (
+          searchResults &&
+          document.getElementById("search-input").value.trim()
+        ) {
+          searchResults.click();
+        }
+      }
+
+      // Focus sur la recherche avec Ctrl+F ou Cmd+F (mais laisser le navigateur gérer)
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        document.getElementById("search-input").focus();
+      }
+    });
+
     d3.json("graph.json", function (error, graph) {
       if (error) throw error;
 
