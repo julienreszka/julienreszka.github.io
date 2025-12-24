@@ -78,39 +78,60 @@
       }
       #sidebar {
         position: fixed;
-        top: 0;
-        right: -400px;
-        width: 400px;
-        height: 100vh;
+        top: 20px;
+        left: 20px;
+        width: 360px;
+        max-height: calc(100vh - 40px);
         background: var(--sidebar-bg);
-        border-left: 1px solid var(--sidebar-border);
-        box-shadow: -2px 0 5px var(--sidebar-shadow);
-        transition: right 0.3s ease, background-color 0.3s ease,
-          border-color 0.3s ease;
-        padding: 20px;
-        overflow-y: auto;
-        z-index: 1000;
+        border: 1px solid var(--sidebar-border);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px var(--sidebar-shadow);
+        transition: all 0.3s ease;
+        padding: 0;
+        overflow: hidden;
+        z-index: 1001;
+        display: none;
+        flex-direction: column;
         color: var(--text-color);
       }
       #sidebar.open {
-        right: 0;
+        display: flex;
+      }
+      
+      /* Cacher la recherche quand la sidebar est ouverte */
+      #search-container.hidden-by-sidebar {
+        display: none;
       }
       #sidebar-header {
         font-size: 18px;
         font-weight: bold;
-        margin-bottom: 15px;
+        margin-bottom: 0;
         border-bottom: 1px solid var(--section-border);
-        padding-bottom: 10px;
+        padding: 20px;
         color: var(--text-color);
+        background: var(--connection-bg);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
       }
       #sidebar-close {
-        float: right;
+        background: none;
+        border: none;
+        color: var(--text-secondary);
         cursor: pointer;
         font-size: 20px;
-        color: var(--text-secondary);
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
       }
       #sidebar-close:hover {
+        background: var(--result-hover);
         color: var(--text-color);
+      }
+      #sidebar-content {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
       }
       .connection-section {
         margin-bottom: 20px;
@@ -223,6 +244,296 @@
       a:hover {
         opacity: 0.8;
       }
+
+      /* Styles pour l'itinéraire */
+      .path-link {
+        stroke: #ff6b00 !important;
+        stroke-width: 4px !important;
+        opacity: 1 !important;
+        animation: pathPulse 2s infinite;
+      }
+      
+      @keyframes pathPulse {
+        0%, 100% { stroke-width: 4px; }
+        50% { stroke-width: 6px; }
+      }
+      
+      .path-node {
+        stroke: #ff6b00 !important;
+        stroke-width: 4px !important;
+        opacity: 1 !important;
+      }
+
+      #route-panel {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        width: 360px;
+        max-height: calc(100vh - 40px);
+        background: var(--sidebar-bg);
+        border: 1px solid var(--sidebar-border);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px var(--sidebar-shadow);
+        transition: all 0.3s ease;
+        z-index: 1002;
+        display: none;
+        flex-direction: column;
+      }
+
+      #route-panel.visible {
+        display: flex;
+      }
+
+      /* Cacher la zone de recherche quand l'itinéraire est ouvert */
+      #search-container.hidden {
+        display: none;
+      }
+
+      .route-header {
+        background: var(--connection-bg);
+        padding: 20px;
+        border-bottom: 1px solid var(--section-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .route-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--text-color);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .route-close {
+        background: none;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-size: 20px;
+        padding: 4px;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .route-close:hover {
+        background: var(--result-hover);
+        color: var(--text-color);
+      }
+
+      .route-inputs {
+        padding: 20px;
+        border-bottom: 1px solid var(--section-border);
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 12px;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 16px;
+        color: var(--text-secondary);
+        z-index: 1;
+      }
+
+      .route-input {
+        width: 100%;
+        padding: 12px 12px 12px 40px;
+        border: 2px solid var(--input-border);
+        border-radius: 8px;
+        font-size: 14px;
+        background: var(--input-bg);
+        color: var(--text-color);
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .route-input:focus {
+        outline: none;
+        border-color: #4285f4;
+        box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+      }
+
+      .route-input::placeholder {
+        color: var(--text-secondary);
+      }
+
+      .swap-button {
+        position: absolute;
+        right: 8px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        z-index: 2;
+      }
+
+      .swap-button:hover {
+        background: var(--result-hover);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .autocomplete-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 10;
+        box-shadow: 0 4px 6px var(--search-shadow);
+      }
+
+      .autocomplete-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid var(--section-border);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.3s ease;
+      }
+
+      .autocomplete-item:hover {
+        background: var(--result-hover);
+      }
+
+      .autocomplete-item:last-child {
+        border-bottom: none;
+      }
+
+      .route-button {
+        background: #4285f4;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin: 0 20px 20px;
+      }
+
+      .route-button:hover {
+        background: #3367d6;
+        transform: translateY(-1px);
+      }
+
+      .route-button:disabled {
+        background: var(--text-secondary);
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .route-results {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        max-height: 400px;
+      }
+
+      .route-summary {
+        background: var(--connection-bg);
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        border-left: 4px solid #4285f4;
+      }
+
+      .route-time {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--text-color);
+        margin-bottom: 4px;
+      }
+
+      .route-distance {
+        font-size: 14px;
+        color: var(--text-secondary);
+      }
+
+      .route-steps {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .route-step {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 8px 0;
+        border-bottom: 1px solid var(--section-border);
+      }
+
+      .route-step:last-child {
+        border-bottom: none;
+      }
+
+      .step-number {
+        background: #4285f4;
+        color: white;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        font-weight: bold;
+        flex-shrink: 0;
+      }
+
+      .step-content {
+        flex: 1;
+      }
+
+      .step-title {
+        font-weight: 500;
+        color: var(--text-color);
+        margin-bottom: 2px;
+      }
+
+      .step-relation {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      .clear-route {
+        background: none;
+        border: 1px solid var(--input-border);
+        color: var(--text-color);
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        margin: 0 20px;
+        transition: all 0.3s ease;
+      }
+
+      .clear-route:hover {
+        background: var(--result-hover);
+      }
     </style>
   </head>
   <body>
@@ -248,6 +559,39 @@
       </div>
       <div id="sidebar-content"></div>
     </div>
+    
+    <div id="route-panel">
+      <div class="route-header">
+        <div class="route-title">
+          🗺️ Itinéraires
+        </div>
+        <button class="route-close" id="close-route">&times;</button>
+      </div>
+      
+      <div class="route-inputs">
+        <div class="input-group">
+          <div class="input-icon">📍</div>
+          <input type="text" class="route-input" id="from-input" placeholder="Point de départ" />
+          <div class="autocomplete-results" id="from-results"></div>
+        </div>
+        
+        <div class="input-group">
+          <div class="input-icon">🎯</div>
+          <input type="text" class="route-input" id="to-input" placeholder="Destination" />
+          <button class="swap-button" id="swap-route" title="Échanger les points">↕️</button>
+          <div class="autocomplete-results" id="to-results"></div>
+        </div>
+      </div>
+      
+      <button class="route-button" id="find-route" style="display: none;">Calculer l'itinéraire</button>
+      
+      <div class="route-results" id="route-results">
+        <!-- Les résultats d'itinéraire apparaîtront ici -->
+      </div>
+      
+      <button class="clear-route" id="clear-route" style="display: none;">Effacer l'itinéraire</button>
+    </div>
+    
     <div>
       Fonctionnement de l'Union Européenne
       <a
@@ -340,6 +684,13 @@
     var allNodes = []; // Store all nodes for search functionality
     var highlightedNode = null; // Track currently highlighted node
     var currentDepth = 0; // Current depth setting
+    
+    // Variables pour l'itinéraire
+    var routeMode = false; // Mode itinéraire activé
+    var routeStartNode = null; // Nœud de départ
+    var routeEndNode = null; // Nœud de destination
+    var currentPath = []; // Chemin actuel
+    var pathLinks = []; // Liens du chemin
 
     function getConnectedNodes(startNodeId, depth) {
       if (depth === 0) {
@@ -494,6 +845,7 @@
 
     function showSidebar(nodeData) {
       const sidebar = document.getElementById("sidebar");
+      const searchContainer = document.getElementById("search-container");
       const nodeTitle = document.getElementById("node-title");
       const sidebarContent = document.getElementById("sidebar-content");
 
@@ -519,6 +871,16 @@
           </div>
         </div>`;
       }
+
+      // Ajouter le bouton d'itinéraire
+      content += `<div class="connection-section">
+        <h3>Actions</h3>
+        <div class="connection-item">
+          <button class="route-btn" onclick="showRoute()" style="width: 100%; background: #4285f4; color: white; border: none; padding: 12px; border-radius: 6px; cursor: pointer;">
+            🗺️ Créer un itinéraire vers ce nœud
+          </button>
+        </div>
+      </div>`;
 
       if (outgoingLinks.length > 0) {
         content +=
@@ -555,12 +917,347 @@
       }
 
       sidebarContent.innerHTML = content;
+      
+      // Cacher la recherche et l'itinéraire, montrer la sidebar
+      searchContainer.classList.add("hidden-by-sidebar");
+      document.getElementById("route-panel").classList.remove("visible");
       sidebar.classList.add("open");
     }
 
     function closeSidebar() {
       const sidebar = document.getElementById("sidebar");
+      const searchContainer = document.getElementById("search-container");
+      
       sidebar.classList.remove("open");
+      searchContainer.classList.remove("hidden-by-sidebar");
+    }
+
+    // Fonctions pour l'itinéraire
+    function findShortestPath(startId, endId) {
+      if (startId === endId) return [startId];
+      
+      const visited = new Set();
+      const queue = [{ node: startId, path: [startId] }];
+      
+      while (queue.length > 0) {
+        const { node: currentNode, path } = queue.shift();
+        
+        if (visited.has(currentNode)) continue;
+        visited.add(currentNode);
+        
+        // Trouver tous les nœuds connectés
+        const connectedNodes = [];
+        allLinks.forEach(link => {
+          if (link.source.id === currentNode && !visited.has(link.target.id)) {
+            connectedNodes.push(link.target.id);
+          }
+          if (link.target.id === currentNode && !visited.has(link.source.id)) {
+            connectedNodes.push(link.source.id);
+          }
+        });
+        
+        for (const nextNode of connectedNodes) {
+          const newPath = [...path, nextNode];
+          
+          if (nextNode === endId) {
+            return newPath;
+          }
+          
+          if (!visited.has(nextNode)) {
+            queue.push({ node: nextNode, path: newPath });
+          }
+        }
+      }
+      
+      return []; // Aucun chemin trouvé
+    }
+
+    function showRoute() {
+      const routePanel = document.getElementById("route-panel");
+      const searchContainer = document.getElementById("search-container");
+      const sidebar = document.getElementById("sidebar");
+      const toInput = document.getElementById("to-input");
+      
+      if (highlightedNode) {
+        routeEndNode = highlightedNode;
+        toInput.value = highlightedNode.id;
+        
+        // Cacher la recherche et la sidebar, montrer l'itinéraire
+        searchContainer.classList.add("hidden");
+        sidebar.classList.remove("open");
+        routePanel.classList.add("visible");
+        routeMode = true;
+        
+        // Focus sur le champ origine
+        setTimeout(() => {
+          document.getElementById("from-input").focus();
+        }, 100);
+      }
+    }
+
+    function clearRoute() {
+      // Supprimer la surbrillance du chemin
+      if (link) link.classed("path-link", false);
+      if (node) node.classed("path-node", false);
+      
+      // Reset des variables
+      routeEndNode = null;
+      currentPath = [];
+      pathLinks = [];
+      
+      // Nettoyer l'interface
+      document.getElementById("to-input").value = "";
+      document.getElementById("to-results").innerHTML = "";
+      document.getElementById("route-results").innerHTML = "";
+      document.getElementById("find-route").disabled = true;
+      document.getElementById("clear-route").style.display = "none";
+      
+      routeMode = false;
+    }
+
+    function closeRoute() {
+      // Supprimer la surbrillance du chemin
+      if (link) link.classed("path-link", false);
+      if (node) node.classed("path-node", false);
+      
+      // Reset complet des variables
+      routeStartNode = null;
+      routeEndNode = null;
+      currentPath = [];
+      pathLinks = [];
+      
+      // Cacher l'interface d'itinéraire et réafficher la recherche
+      const routePanel = document.getElementById("route-panel");
+      const searchContainer = document.getElementById("search-container");
+      const sidebar = document.getElementById("sidebar");
+      
+      routePanel.classList.remove("visible");
+      sidebar.classList.remove("open");
+      searchContainer.classList.remove("hidden");
+      searchContainer.classList.remove("hidden-by-sidebar");
+      
+      // Nettoyer les champs
+      document.getElementById("from-input").value = "";
+      document.getElementById("to-input").value = "";
+      document.getElementById("to-results").innerHTML = "";
+      document.getElementById("route-results").innerHTML = "";
+      document.getElementById("find-route").disabled = true;
+      document.getElementById("clear-route").style.display = "none";
+      
+      routeMode = false;
+    }
+
+    function searchDestination(query) {
+      const resultsContainer = document.getElementById("to-results");
+      
+      if (!query.trim()) {
+        resultsContainer.innerHTML = "";
+        return;
+      }
+
+      const results = allNodes.filter((node) =>
+        node.id.toLowerCase().includes(query.toLowerCase()) && 
+        (!routeStartNode || node.id !== routeStartNode.id)
+      );
+
+      let resultsHTML = "";
+      results.slice(0, 8).forEach((node) => {
+        const label = node.label ? ` (${node.label})` : "";
+        resultsHTML += `
+          <div class="autocomplete-item" onclick="selectDestination('${node.id.replace(/'/g, "\\'")}')"> 
+            <span>🎯</span>
+            <div>
+              <div>${node.id}</div>
+              <small style="color: var(--text-secondary);">${label}</small>
+            </div>
+          </div>`;
+      });
+
+      if (results.length === 0) {
+        resultsHTML = '<div class="autocomplete-item">Aucune destination trouvée</div>';
+      }
+
+      resultsContainer.innerHTML = resultsHTML;
+    }
+
+    function searchOrigin(query) {
+      const resultsContainer = document.getElementById("from-results");
+      if (!query.trim()) {
+        resultsContainer.innerHTML = "";
+        return;
+      }
+
+      const results = allNodes.filter((node) =>
+        node.id.toLowerCase().includes(query.toLowerCase()) &&
+        (!routeEndNode || node.id !== routeEndNode.id)
+      );
+
+      let resultsHTML = "";
+      results.slice(0, 8).forEach((node) => {
+        const label = node.label ? ` (${node.label})` : "";
+        resultsHTML += `
+          <div class="autocomplete-item" onclick="selectOrigin('${node.id.replace(/'/g, "\\'")}')"> 
+            <span>📍</span>
+            <div>
+              <div>${node.id}</div>
+              <small style="color: var(--text-secondary);">${label}</small>
+            </div>
+          </div>`;
+      });
+
+      if (results.length === 0) {
+        resultsHTML = '<div class="autocomplete-item">Aucune origine trouvée</div>';
+      }
+
+      resultsContainer.innerHTML = resultsHTML;
+    }
+
+    function selectDestination(nodeId) {
+      const targetNode = allNodes.find((n) => n.id === nodeId);
+      if (!targetNode) return;
+      
+      routeEndNode = targetNode;
+      document.getElementById("to-input").value = nodeId;
+      document.getElementById("to-results").innerHTML = "";
+      
+      // Calculer automatiquement l'itinéraire si on a les deux nœuds
+      if (routeStartNode) {
+        calculateRoute();
+      }
+    }
+
+    function selectOrigin(nodeId) {
+      const targetNode = allNodes.find((n) => n.id === nodeId);
+      if (!targetNode) return;
+      
+      routeStartNode = targetNode;
+      document.getElementById("from-input").value = nodeId;
+      document.getElementById("from-results").innerHTML = "";
+      
+      // Calculer automatiquement l'itinéraire si on a les deux nœuds
+      if (routeEndNode) {
+        calculateRoute();
+      }
+    }
+
+    function swapRoutePoints() {
+      if (!routeStartNode || !routeEndNode) return;
+      
+      // Échanger les variables
+      const temp = routeStartNode;
+      routeStartNode = routeEndNode;
+      routeEndNode = temp;
+      
+      // Échanger les valeurs dans l'interface
+      document.getElementById("from-input").value = routeStartNode.id;
+      document.getElementById("to-input").value = routeEndNode.id;
+      
+      // Recalculer automatiquement l'itinéraire
+      if (routeStartNode && routeEndNode) {
+        calculateRoute();
+      }
+    }
+
+    function calculateRoute() {
+      if (!routeStartNode || !routeEndNode) {
+        console.log("Manque nœud de départ ou destination");
+        return;
+      }
+      
+      console.log("Calcul itinéraire de", routeStartNode.id, "vers", routeEndNode.id);
+      
+      // Réinitialiser le chemin précédent
+      if (link) link.classed("path-link", false);
+      if (node) node.classed("path-node", false);
+      pathLinks = [];
+      
+      const path = findShortestPath(routeStartNode.id, routeEndNode.id);
+      console.log("Chemin trouvé:", path);
+      
+      const resultsContainer = document.getElementById("route-results");
+      const clearButton = document.getElementById("clear-route");
+      
+      if (path.length === 0) {
+        resultsContainer.innerHTML = `
+          <div class="route-summary" style="border-left-color: #ff4444;">
+            <div class="route-time" style="color: #ff4444;">❌ Aucun itinéraire trouvé</div>
+            <div class="route-distance">Impossible de relier ces deux institutions</div>
+          </div>`;
+        clearButton.style.display = "none";
+        return;
+      }
+      
+      currentPath = path;
+      
+      // Mettre en surbrillance le chemin
+      for (let i = 0; i < path.length - 1; i++) {
+        const sourceId = path[i];
+        const targetId = path[i + 1];
+        
+        // Trouver le lien correspondant
+        const linkData = allLinks.find(l => 
+          (l.source.id === sourceId && l.target.id === targetId) ||
+          (l.target.id === sourceId && l.source.id === targetId)
+        );
+        
+        if (linkData) {
+          pathLinks.push(linkData);
+        }
+      }
+      
+      console.log("Liens du chemin:", pathLinks);
+      
+      // Appliquer les styles
+      if (link) link.classed("path-link", d => pathLinks.includes(d));
+      if (node) node.classed("path-node", d => path.includes(d.id));
+      
+      // Générer l'affichage des résultats style Google Maps
+      const steps = path.length - 1;
+      const estimatedTime = Math.max(1, steps * 2); // 2 min par étape
+      
+      let stepsHTML = "";
+      for (let i = 0; i < path.length - 1; i++) {
+        const fromNode = path[i];
+        const toNode = path[i + 1];
+        
+        // Trouver la relation entre les nœuds
+        const relation = allLinks.find(l => 
+          (l.source.id === fromNode && l.target.id === toNode) ||
+          (l.target.id === fromNode && l.source.id === toNode)
+        );
+        
+        const relationText = relation ? relation.type : "Connexion";
+        
+        stepsHTML += `
+          <li class="route-step">
+            <div class="step-number">${i + 1}</div>
+            <div class="step-content">
+              <div class="step-title">${fromNode}</div>
+              <div class="step-relation">${relationText} → ${toNode}</div>
+            </div>
+          </li>`;
+      }
+      
+      resultsContainer.innerHTML = `
+        <div class="route-summary">
+          <div class="route-time">⚡ ${estimatedTime} min</div>
+          <div class="route-distance">${steps} étape${steps > 1 ? 's' : ''} • Itinéraire institutionnel</div>
+        </div>
+        
+        <ol class="route-steps">
+          ${stepsHTML}
+          <li class="route-step">
+            <div class="step-number">🎯</div>
+            <div class="step-content">
+              <div class="step-title">${path[path.length - 1]}</div>
+              <div class="step-relation">Destination atteinte</div>
+            </div>
+          </li>
+        </ol>
+      `;
+      
+      clearButton.style.display = "block";
+      routeMode = true;
     }
 
     // Close sidebar when clicking the X
@@ -582,6 +1279,51 @@
         currentDepth = parseInt(e.target.value);
         applyDepthFilter();
       });
+
+    // Event listeners pour l'itinéraire
+    document
+      .getElementById("close-route")
+      .addEventListener("click", closeRoute);
+
+    document
+      .getElementById("clear-route")
+      .addEventListener("click", clearRoute);
+
+    document
+      .getElementById("find-route")
+      .addEventListener("click", calculateRoute);
+
+    document
+      .getElementById("to-input")
+      .addEventListener("input", function (e) {
+        searchDestination(e.target.value);
+      });
+
+    document
+      .getElementById("from-input")
+      .addEventListener("input", function (e) {
+        searchOrigin(e.target.value);
+      });
+
+    document
+      .getElementById("swap-route")
+      .addEventListener("click", swapRoutePoints);
+
+    // Fermer les résultats d'autocomplétion en cliquant ailleurs
+    document.addEventListener("click", function (e) {
+      const toResults = document.getElementById("to-results");
+      const toInput = document.getElementById("to-input");
+      const fromResults = document.getElementById("from-results");
+      const fromInput = document.getElementById("from-input");
+      
+      if (!toInput.contains(e.target) && !toResults.contains(e.target)) {
+        toResults.innerHTML = "";
+      }
+      
+      if (!fromInput.contains(e.target) && !fromResults.contains(e.target)) {
+        fromResults.innerHTML = "";
+      }
+    });
 
     d3.json("graph.json", function (error, graph) {
       if (error) throw error;
@@ -715,11 +1457,11 @@
         });
 
       node.on("click", function (d) {
-        showSidebar(d);
+        focusNode(d.id);
       });
 
       label.on("click", function (d) {
-        showSidebar(d);
+        focusNode(d.id);
       });
 
       node.on("mouseover", function (d) {
