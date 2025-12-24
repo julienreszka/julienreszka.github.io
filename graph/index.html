@@ -1597,15 +1597,21 @@
         .attr("r", 5)
         .attr("stroke", "var(--text-color)")
         .attr("stroke-width", 1)
+        .attr("data-id", function (d) {
+          return d.id;
+        }) // Ajouter un attribut data-id
         .style("fill", function (d, i) {
           return color(d.id);
-        });
-      // .call(d3
-      // .drag()
-      // .on("start", dragstarted)
-      // .on("drag", dragged)
-      // .on("end", dragended)
-      // );
+        })
+        .call(
+          d3
+            .drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended)
+        );
+
+      console.log("Drag behavior attached to", node.size(), "nodes");
 
       label = svg
         .append("g")
@@ -1618,24 +1624,40 @@
         .style("font-family", "Roboto")
         .style("font-size", 10)
         .attr("stroke-width", "1px")
+        .attr("data-id", function (d) {
+          return d.id;
+        }) // Ajouter un attribut data-id
         .text(function (d) {
           return d.id;
         })
-        // .call(d3
-        // .drag()
-        // .on("start", dragstarted)
-        // .on("drag", dragged)
-        // )
+        .call(
+          d3
+            .drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended)
+        )
         .attr("stroke", function (d) {
           return labelColors(d.label);
         });
 
+      console.log("Drag behavior attached to", label.size(), "labels");
+
+      // Variables pour gérer click vs drag
+      var isDragging = false;
+
       node.on("click", function (d) {
-        focusNode(d.id);
+        // Ne déclencher le focus que si on n'est pas en train de drag
+        if (!isDragging) {
+          focusNode(d.id);
+        }
       });
 
       label.on("click", function (d) {
-        focusNode(d.id);
+        // Ne déclencher le focus que si on n'est pas en train de drag
+        if (!isDragging) {
+          focusNode(d.id);
+        }
       });
 
       node.on("mouseover", function (d) {
@@ -1670,11 +1692,28 @@
         });
       });
 
+      // Double-clic pour relâcher un nœud fixé
+      node.on("dblclick", function (d) {
+        d.fx = null;
+        d.fy = null;
+        // Redémarrer légèrement la simulation pour repositionner le nœud
+        simulation.alphaTarget(0.1).restart();
+        setTimeout(() => simulation.alphaTarget(0), 500);
+      });
+
+      label.on("dblclick", function (d) {
+        d.fx = null;
+        d.fy = null;
+        simulation.alphaTarget(0.1).restart();
+        setTimeout(() => simulation.alphaTarget(0), 500);
+      });
+
       simulation.nodes(nodes).on("tick", ticked);
       simulation.force("link").links(links);
     }
 
-    simulation.alphaMin(0.2);
+    // Réduire alphaMin pour une simulation plus stable
+    simulation.alphaMin(0.001);
 
     function ticked() {
       // console.log(simulation.alpha());
@@ -1728,20 +1767,85 @@
     }
 
     function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      console.log("Drag started on:", d.id);
+      // Marquer qu'on commence un drag
+      isDragging = true;
+      // Arrêter complètement la simulation
+      simulation.stop();
       d.fx = d.x;
       d.fy = d.y;
     }
 
     function dragged(d) {
+      console.log("Dragging:", d.id, "to", d3.event.x, d3.event.y);
       d.fx = d3.event.x;
       d.fy = d3.event.y;
+      d.x = d3.event.x; // Forcer la position x
+      d.y = d3.event.y; // Forcer la position y
+
+      // Mettre à jour visuellement tous les nœuds et labels
+      node.attr("transform", function (n) {
+        return "translate(" + n.x + ", " + n.y + ")";
+      });
+      label
+        .attr("x", function (n) {
+          return n.x;
+        })
+        .attr("y", function (n) {
+          return n.y;
+        });
+
+      // Mettre à jour les liens connectés
+      link
+        .attr("x1", function (l) {
+          return l.source.x;
+        })
+        .attr("y1", function (l) {
+          return l.source.y;
+        })
+        .attr("x2", function (l) {
+          return l.target.x;
+        })
+        .attr("y2", function (l) {
+          return l.target.y;
+        });
+
+      // Mettre à jour les chemins des edge labels
+      edgepaths.attr("d", function (l) {
+        return (
+          "M " +
+          l.source.x +
+          " " +
+          l.source.y +
+          " L " +
+          l.target.x +
+          " " +
+          l.target.y
+        );
+      });
+
+      // Mettre à jour la rotation des edge labels comme dans ticked()
+      edgelabels.attr("transform", function (l) {
+        if (l.target.x < l.source.x) {
+          var bbox = this.getBBox();
+          var rx = bbox.x + bbox.width / 2;
+          var ry = bbox.y + bbox.height / 2;
+          return "rotate(180 " + rx + " " + ry + ")";
+        } else {
+          return "rotate(0)";
+        }
+      });
     }
 
     function dragended(d) {
-      if (!d3.event.active) simulation.alphaTarget(0);
-      d.fx = undefined;
-      d.fy = undefined;
+      console.log("Drag ended on:", d.id);
+      // Petit délai avant de permettre le click à nouveau
+      setTimeout(() => {
+        isDragging = false;
+      }, 100);
+      // Redémarrer la simulation avec un alpha faible pour stabiliser les autres nœuds
+      simulation.alphaTarget(0.1).restart();
+      setTimeout(() => simulation.alphaTarget(0), 300);
     }
   </script>
 </html>
