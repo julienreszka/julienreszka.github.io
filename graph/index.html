@@ -1687,22 +1687,26 @@
       }
     });
 
-    // Function to merge two graph objects
-    function mergeGraphs(graph1, graph2) {
-      return {
-        links: [...graph1.links, ...graph2.links],
-        nodes: [...graph1.nodes, ...graph2.nodes],
-      };
+    // Function to merge multiple graph objects
+    function mergeGraphs(...graphs) {
+      return graphs.reduce(
+        (merged, graph) => ({
+          links: [...merged.links, ...graph.links],
+          nodes: [...merged.nodes, ...graph.nodes],
+        }),
+        { links: [], nodes: [] }
+      );
     }
 
-    // Load both JSON files and merge them
+    // Load all JSON files and merge them
     Promise.all([
       fetch("graph.json").then((response) => response.json()),
       fetch("nato.json").then((response) => response.json()),
+      fetch("international-relations.json").then((response) => response.json()),
     ])
-      .then(function ([graph, natoGraph]) {
-        // Merge the two graphs
-        const mergedGraph = mergeGraphs(graph, natoGraph);
+      .then(function ([graph, natoGraph, internationalGraph]) {
+        // Merge all three graphs
+        const mergedGraph = mergeGraphs(graph, natoGraph, internationalGraph);
 
         mergedGraph.links = mergedGraph.links.filter(
           (l) => l.type != "REPRESENTE"
