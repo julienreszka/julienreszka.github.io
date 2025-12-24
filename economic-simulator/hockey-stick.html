@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Hockey Stick Curve: The Right to Prosperity | Economic Simulator
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Interactive Hockey Stick Curve simulator with glassmorphism design. Explore capitalism's prosperity explosion and the Right to Prosperity."
+    />
+    <meta
+      name="keywords"
+      content="hockey stick curve, capitalism, prosperity, per capita GDP, industrial revolution, economic growth, free markets, glassmorphism UI, interactive simulator, responsive design"
+    />
+    <meta name="author" content="Julien Reszka" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#e83e8c" />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Hockey Stick Curve: The Right to Prosperity | Interactive Simulator"
+    />
+    <meta
+      property="og:description"
+      content="Interactive glassmorphism simulator exploring capitalism's prosperity explosion and the natural right to prosperity through economic freedom."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/hockey-stick.html"
+    />
+    <meta
+      property="og:image"
+      content="https://julienreszka.github.io/economic-simulator/hockey-stick-preview.png"
+    />
+    <meta property="og:site_name" content="Economic Curves Simulator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Hockey Stick Curve: The Right to Prosperity"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive simulator exploring capitalism's prosperity explosion. Modern glassmorphism interface."
+    />
+    <meta name="twitter:creator" content="@julienreszka" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://julienreszka.github.io/economic-simulator/hockey-stick.html"
+    />
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared-styles.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .hockey-specific {
+      }
+
+      .hockey-specific h3 {
+        color: #e83e8c !important;
+      }
+
+      .result-item {
+        margin-bottom: 8px;
+        padding: 5px 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .result-item:last-child {
+        border-bottom: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <!-- Navigation Breadcrumb -->
+      <nav class="nav-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">← Back to All Curves</a>
+      </nav>
+
+      <h1>The Hockey Stick: Capitalism's Prosperity Explosion</h1>
+
+      <p>
+        <strong>The Right to Prosperity:</strong> This curve demonstrates that
+        people have a natural right to prosperity that emerges when economic
+        freedom and market capitalism are adopted. The hockey stick shape shows
+        how human prosperity remained flat for millennia, then exploded
+        exponentially after the adoption of capitalism around 1800, creating
+        unprecedented wealth for ordinary people.
+      </p>
+
+      <!-- Interactive Simulation -->
+      <section id="hockey-section">
+        <h2>Interactive Hockey Stick Simulator</h2>
+
+        <form id="paramsFormHockey">
+          <div class="param-group">
+            <label for="base-hockey"
+              >Base GDP per capita (Year 0, e.g., 600):</label
+            >
+            <input
+              type="number"
+              id="base-hockey"
+              value="600"
+              step="50"
+              min="100"
+              max="2000"
+              aria-describedby="base-hockey-help"
+            />
+            <small id="base-hockey-help" class="sr-only"
+              >Starting prosperity level before capitalism</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="capitalism-year-hockey"
+              >Capitalism Adoption Year (e.g., 1800):</label
+            >
+            <input
+              type="number"
+              id="capitalism-year-hockey"
+              value="1800"
+              step="50"
+              min="1000"
+              max="2000"
+              aria-describedby="capitalism-year-hockey-help"
+            />
+            <small id="capitalism-year-hockey-help" class="sr-only"
+              >When market capitalism was widely adopted</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="acceleration-hockey"
+              >Growth Acceleration Factor (e.g., 1.0):</label
+            >
+            <input
+              type="number"
+              id="acceleration-hockey"
+              value="1.0"
+              step="0.1"
+              min="0.5"
+              max="3.0"
+              aria-describedby="acceleration-hockey-help"
+            />
+            <small id="acceleration-hockey-help" class="sr-only"
+              >How much capitalism accelerated growth rates</small
+            >
+          </div>
+        </form>
+
+        <div
+          class="chart-container"
+          role="img"
+          aria-labelledby="hockey-chart-label"
+        >
+          <canvas
+            id="growthChartHockey"
+            aria-label="Interactive Hockey Stick curve showing per capita GDP explosion under capitalism"
+          ></canvas>
+          <div id="hockey-chart-label" class="sr-only">
+            Chart displaying the Hockey Stick with year on x-axis and per capita
+            GDP on y-axis
+          </div>
+        </div>
+
+        <div
+          id="results-hockey"
+          class="results-display"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <!-- Detailed Explanation -->
+      <section>
+        <h2>Understanding the Hockey Stick of Human Prosperity</h2>
+
+        <div style="margin-top: 15px; line-height: 1.6">
+          <p>
+            The Hockey Stick Curve represents one of the most dramatic
+            transformations in human history: the explosion of prosperity that
+            began with the adoption of capitalism around 1800. This curve shows
+            how human living standards remained essentially flat for thousands
+            of years, then suddenly accelerated into exponential growth,
+            creating unprecedented wealth and opportunity for ordinary people.
+          </p>
+
+          <h3>The Shape of Human Progress</h3>
+          <p>The hockey stick gets its name from its distinctive shape:</p>
+
+          <h4>The Handle (0-1800): Millennia of Stagnation</h4>
+          <ul>
+            <li>
+              <strong>Flat growth:</strong> Per capita income barely rose above
+              subsistence levels
+            </li>
+            <li>
+              <strong>Malthusian trap:</strong> Population growth consumed any
+              economic gains
+            </li>
+            <li>
+              <strong>Zero-sum mentality:</strong> Wealth was seen as fixed,
+              leading to conflict over resources
+            </li>
+            <li>
+              <strong>Feudal systems:</strong> Economic activity controlled by
+              political elites
+            </li>
+            <li>
+              <strong>Limited trade:</strong> Local economies with little
+              specialization
+            </li>
+            <li>
+              <strong>Technological stagnation:</strong> Innovation was rare and
+              slow to spread
+            </li>
+          </ul>
+
+          <h4>The Blade (1800-Present): Exponential Explosion</h4>
+          <ul>
+            <li>
+              <strong>Exponential growth:</strong> Per capita income increased
+              10-50× in developed countries
+            </li>
+            <li>
+              <strong>Escaping Malthus:</strong> Productivity grew faster than
+              population
+            </li>
+            <li>
+              <strong>Positive-sum thinking:</strong> Wealth creation through
+              innovation and trade
+            </li>
+            <li>
+              <strong>Market systems:</strong> Economic freedom and property
+              rights
+            </li>
+            <li>
+              <strong>Global trade:</strong> International specialization and
+              division of labor
+            </li>
+            <li>
+              <strong>Innovation acceleration:</strong> Continuous technological
+              improvement
+            </li>
+          </ul>
+
+          <h3>What Changed Around 1800?</h3>
+          <p>
+            The transformation wasn't coincidental - it resulted from specific
+            institutional and cultural changes that enabled capitalism:
+          </p>
+
+          <h4>Institutional Revolutions</h4>
+          <ul>
+            <li>
+              <strong>Property Rights:</strong> Legal protection of private
+              ownership encouraged investment
+            </li>
+            <li>
+              <strong>Rule of Law:</strong> Predictable legal systems reduced
+              transaction costs
+            </li>
+            <li>
+              <strong>Limited Government:</strong> Constitutional constraints on
+              arbitrary power
+            </li>
+            <li>
+              <strong>Free Trade:</strong> Elimination of guild restrictions and
+              trade barriers
+            </li>
+            <li>
+              <strong>Patent Systems:</strong> Legal protection for innovation
+              encouraged invention
+            </li>
+            <li>
+              <strong>Corporate Law:</strong> Limited liability enabled
+              large-scale investment
+            </li>
+          </ul>
+
+          <h4>Cultural Transformations</h4>
+          <ul>
+            <li>
+              <strong>Bourgeois Values:</strong> Respect for commerce, thrift,
+              and innovation
+            </li>
+            <li>
+              <strong>Scientific Method:</strong> Systematic approach to
+              understanding and improving the world
+            </li>
+            <li>
+              <strong>Individual Rights:</strong> Recognition of personal
+              autonomy and freedom
+            </li>
+            <li>
+              <strong>Future Orientation:</strong> Long-term thinking and
+              planning
+            </li>
+            <li>
+              <strong>Risk Taking:</strong> Acceptance of entrepreneurship and
+              experimentation
+            </li>
+          </ul>
+
+          <h4>Technological Enablers</h4>
+          <ul>
+            <li>
+              <strong>Steam Power:</strong> Energy liberation from biological
+              constraints
+            </li>
+            <li>
+              <strong>Transportation:</strong> Canals, railways, and eventually
+              automobiles
+            </li>
+            <li>
+              <strong>Communication:</strong> Telegraph, telephone, and printing
+              press
+            </li>
+            <li>
+              <strong>Manufacturing:</strong> Factory systems and mass
+              production
+            </li>
+            <li>
+              <strong>Finance:</strong> Banking systems and capital markets
+            </li>
+          </ul>
+
+          <h3>The Historical Data</h3>
+          <p>
+            Economic historians have reconstructed living standards over
+            millennia:
+          </p>
+
+          <h4>Pre-Capitalist Era (Ancient Times - 1800)</h4>
+          <ul>
+            <li><strong>Year 1 AD:</strong> ~$600 per capita (2023 dollars)</li>
+            <li>
+              <strong>Year 1000:</strong> ~$600 per capita (no meaningful
+              growth)
+            </li>
+            <li>
+              <strong>Year 1500:</strong> ~$700 per capita (tiny improvement)
+            </li>
+            <li>
+              <strong>Year 1800:</strong> ~$1,000 per capita (modest
+              pre-industrial gains)
+            </li>
+            <li>
+              <strong>Growth Rate:</strong> ~0.02% annually (barely detectable)
+            </li>
+          </ul>
+
+          <h4>Capitalist Era (1800-Present)</h4>
+          <ul>
+            <li>
+              <strong>1850:</strong> ~$2,000 per capita (doubling in 50 years)
+            </li>
+            <li><strong>1900:</strong> ~$5,000 per capita (2.5× increase)</li>
+            <li>
+              <strong>1950:</strong> ~$8,000 per capita (continuing
+              acceleration)
+            </li>
+            <li>
+              <strong>2000:</strong> ~$25,000 per capita (exponential growth)
+            </li>
+            <li>
+              <strong>2023:</strong> ~$35,000 per capita globally (still rising)
+            </li>
+            <li>
+              <strong>Growth Rate:</strong> 2-3% annually (100× faster than
+              pre-capitalism)
+            </li>
+          </ul>
+
+          <h3>Regional Variations: When Countries Adopted Capitalism</h3>
+
+          <h4>Early Adopters (1750-1850)</h4>
+          <ul>
+            <li>
+              <strong>Britain:</strong> First to industrialize, saw earliest
+              prosperity explosion
+            </li>
+            <li>
+              <strong>Netherlands:</strong> Commercial capitalism and global
+              trade
+            </li>
+            <li>
+              <strong>United States:</strong> Economic freedom and westward
+              expansion
+            </li>
+            <li>
+              <strong>Result:</strong> These countries achieved highest living
+              standards first
+            </li>
+          </ul>
+
+          <h4>Second Wave (1850-1950)</h4>
+          <ul>
+            <li>
+              <strong>Germany:</strong> Industrial development and technical
+              education
+            </li>
+            <li>
+              <strong>France:</strong> Gradual liberalization and infrastructure
+              development
+            </li>
+            <li>
+              <strong>Japan:</strong> Meiji Restoration and rapid modernization
+            </li>
+            <li>
+              <strong>Result:</strong> Rapid catch-up growth and prosperity
+              increases
+            </li>
+          </ul>
+
+          <h4>Late Adopters (1950-Present)</h4>
+          <ul>
+            <li><strong>South Korea:</strong> Market reforms after 1960s</li>
+            <li><strong>Taiwan:</strong> Export-oriented industrialization</li>
+            <li><strong>China:</strong> Market reforms after 1978</li>
+            <li><strong>India:</strong> Liberalization after 1991</li>
+            <li>
+              <strong>Result:</strong> Fastest growth rates in history, lifting
+              billions from poverty
+            </li>
+          </ul>
+
+          <h4>Non-Adopters</h4>
+          <ul>
+            <li>
+              <strong>Soviet Union:</strong> Central planning, economic
+              stagnation
+            </li>
+            <li>
+              <strong>Cuba:</strong> Socialist system, limited prosperity gains
+            </li>
+            <li>
+              <strong>North Korea:</strong> Command economy, persistent poverty
+            </li>
+            <li>
+              <strong>Venezuela:</strong> Resource socialism, economic collapse
+            </li>
+            <li>
+              <strong>Result:</strong> Remained trapped in relative poverty
+            </li>
+          </ul>
+
+          <h3>The Mechanisms Behind the Hockey Stick</h3>
+
+          <h4>Compound Growth Effects</h4>
+          <p>
+            Capitalism enabled sustained growth rates that compound over time:
+          </p>
+          <ul>
+            <li>
+              <strong>2% annual growth:</strong> Doubles living standards every
+              35 years
+            </li>
+            <li>
+              <strong>3% annual growth:</strong> Doubles living standards every
+              23 years
+            </li>
+            <li>
+              <strong>Over 200 years:</strong> Even 2% growth creates 50×
+              improvement
+            </li>
+            <li>
+              <strong>Acceleration over time:</strong> Growth rates themselves
+              have increased
+            </li>
+          </ul>
+
+          <h4>Positive Feedback Loops</h4>
+          <ul>
+            <li>
+              <strong
+                >Investment → Innovation → Higher productivity → More
+                investment</strong
+              >
+            </li>
+            <li>
+              <strong>Trade → Specialization → Efficiency → More trade</strong>
+            </li>
+            <li>
+              <strong
+                >Education → Skills → Higher incomes → More education</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Urbanization → Ideas exchange → Innovation → More
+                urbanization</strong
+              >
+            </li>
+          </ul>
+
+          <h4>Knowledge Accumulation</h4>
+          <ul>
+            <li>
+              <strong>Scientific method:</strong> Systematic knowledge creation
+            </li>
+            <li><strong>Patent systems:</strong> Incentives for innovation</li>
+            <li>
+              <strong>Education expansion:</strong> Broader distribution of
+              knowledge
+            </li>
+            <li>
+              <strong>Communication improvements:</strong> Faster knowledge
+              spreading
+            </li>
+            <li>
+              <strong>Standing on shoulders:</strong> Each generation builds on
+              previous discoveries
+            </li>
+          </ul>
+
+          <h3>Contemporary Evidence</h3>
+
+          <h4>Global Poverty Reduction</h4>
+          <ul>
+            <li>
+              <strong>1820:</strong> 94% of world lived in extreme poverty
+            </li>
+            <li>
+              <strong>1950:</strong> 75% of world lived in extreme poverty
+            </li>
+            <li>
+              <strong>1990:</strong> 37% of world lived in extreme poverty
+            </li>
+            <li>
+              <strong>2023:</strong> <10% of world lives in extreme poverty
+            </li>
+            <li>
+              <strong>Cause:</strong> Countries adopting market-oriented
+              economic systems
+            </li>
+          </ul>
+
+          <h4>Life Expectancy Gains</h4>
+          <ul>
+            <li><strong>1800:</strong> Global life expectancy ~28 years</li>
+            <li><strong>1900:</strong> Global life expectancy ~32 years</li>
+            <li><strong>1950:</strong> Global life expectancy ~48 years</li>
+            <li><strong>2023:</strong> Global life expectancy ~73 years</li>
+            <li>
+              <strong>Driver:</strong> Prosperity enabling better nutrition,
+              healthcare, and sanitation
+            </li>
+          </ul>
+
+          <h4>Innovation Acceleration</h4>
+          <ul>
+            <li>
+              <strong>Patent applications:</strong> Exponential increase since
+              1800
+            </li>
+            <li>
+              <strong>Scientific publications:</strong> Doubling every 10-15
+              years
+            </li>
+            <li>
+              <strong>Technology adoption:</strong> Each new technology spreads
+              faster than the last
+            </li>
+            <li>
+              <strong>R&D investment:</strong> Continuous increase as share of
+              GDP
+            </li>
+          </ul>
+
+          <h3>Why Capitalism Creates the Hockey Stick</h3>
+
+          <h4>Incentive Alignment</h4>
+          <ul>
+            <li><strong>Profit motive:</strong> Rewards for creating value</li>
+            <li>
+              <strong>Competition:</strong> Pressure to improve and innovate
+            </li>
+            <li>
+              <strong>Property rights:</strong> Security of investment returns
+            </li>
+            <li><strong>Voluntary exchange:</strong> Win-win transactions</li>
+          </ul>
+
+          <h4>Resource Allocation</h4>
+          <ul>
+            <li>
+              <strong>Price signals:</strong> Information about scarcity and
+              value
+            </li>
+            <li>
+              <strong>Market discipline:</strong> Inefficient firms eliminated
+            </li>
+            <li>
+              <strong>Capital mobility:</strong> Resources flow to best uses
+            </li>
+            <li>
+              <strong>Entrepreneurship:</strong> Discovery of new opportunities
+            </li>
+          </ul>
+
+          <h4>Innovation Systems</h4>
+          <ul>
+            <li>
+              <strong>Creative destruction:</strong> Old technologies replaced
+              by better ones
+            </li>
+            <li>
+              <strong>Risk capital:</strong> Investment in uncertain but
+              promising ventures
+            </li>
+            <li>
+              <strong>Knowledge spillovers:</strong> Ideas spread through
+              competitive markets
+            </li>
+            <li>
+              <strong>Scale effects:</strong> Large markets support specialized
+              innovation
+            </li>
+          </ul>
+
+          <h3>Policy Implications</h3>
+
+          <h4>For Developing Countries</h4>
+          <ul>
+            <li>
+              <strong>Property rights:</strong> Establish secure ownership and
+              contract enforcement
+            </li>
+            <li>
+              <strong>Free trade:</strong> Integrate with global markets and
+              supply chains
+            </li>
+            <li>
+              <strong>Education:</strong> Build human capital for modern economy
+            </li>
+            <li>
+              <strong>Infrastructure:</strong> Create physical foundation for
+              commerce
+            </li>
+            <li>
+              <strong>Rule of law:</strong> Reduce corruption and arbitrary
+              government action
+            </li>
+          </ul>
+
+          <h4>For Developed Countries</h4>
+          <ul>
+            <li>
+              <strong>Maintain institutions:</strong> Protect the foundations
+              that created prosperity
+            </li>
+            <li>
+              <strong>Innovation policy:</strong> Support R&D and
+              entrepreneurship
+            </li>
+            <li>
+              <strong>Trade openness:</strong> Resist protectionist pressures
+            </li>
+            <li>
+              <strong>Regulatory reform:</strong> Remove barriers to
+              productivity growth
+            </li>
+            <li>
+              <strong>Fiscal sustainability:</strong> Avoid debt that undermines
+              future growth
+            </li>
+          </ul>
+
+          <h3>The Moral Dimension</h3>
+          <p>
+            The hockey stick represents more than economic statistics - it
+            shows:
+          </p>
+          <ul>
+            <li>
+              <strong>Human dignity:</strong> Ordinary people deserve
+              prosperity, not just elites
+            </li>
+            <li>
+              <strong>Liberation from scarcity:</strong> Economic freedom frees
+              humans from subsistence living
+            </li>
+            <li>
+              <strong>Opportunity expansion:</strong> More choices and
+              possibilities for human flourishing
+            </li>
+            <li>
+              <strong>Global cooperation:</strong> Trade creates peaceful
+              interdependence
+            </li>
+            <li>
+              <strong>Future optimism:</strong> Progress is possible when
+              institutions are right
+            </li>
+          </ul>
+
+          <h3>Threats to Continued Prosperity</h3>
+          <ul>
+            <li>
+              <strong>Institutional decay:</strong> Erosion of property rights
+              and rule of law
+            </li>
+            <li>
+              <strong>Government expansion:</strong> Crowding out of private
+              sector efficiency
+            </li>
+            <li>
+              <strong>Trade restrictions:</strong> Return to economic
+              nationalism
+            </li>
+            <li>
+              <strong>Innovation barriers:</strong> Excessive regulation
+              stifling new technologies
+            </li>
+            <li>
+              <strong>Knowledge loss:</strong> Forgetting what created
+              prosperity in the first place
+            </li>
+          </ul>
+
+          <h3>Key Insights</h3>
+          <ul>
+            <li>
+              <strong>Prosperity is not natural:</strong> It requires specific
+              institutions and cultural values
+            </li>
+            <li>
+              <strong>Capitalism is revolutionary:</strong> It transformed human
+              existence more than any other system
+            </li>
+            <li>
+              <strong>Freedom creates wealth:</strong> Economic liberty enables
+              unprecedented prosperity
+            </li>
+            <li>
+              <strong>Progress compounds:</strong> Small annual improvements
+              create transformative long-term change
+            </li>
+            <li>
+              <strong>Everyone benefits:</strong> Capitalism raises living
+              standards for all social classes
+            </li>
+            <li>
+              <strong>Rights enable prosperity:</strong> Protection of economic
+              rights unleashes human potential
+            </li>
+          </ul>
+
+          <p>
+            The Hockey Stick of Human Prosperity demonstrates that when people
+            are free to create, innovate, trade, and keep the fruits of their
+            labor, the result is explosive improvements in human welfare that
+            benefit everyone. This curve represents humanity's greatest
+            achievement: the discovery of how to create unlimited prosperity
+            through voluntary cooperation and economic freedom.
+          </p>
+        </div>
+      </section>
+
+      <!-- Natural Right Section -->
+      <section class="natural-rights-section">
+        <h2>The Right to Prosperity</h2>
+
+        <div class="right-card hockey-specific">
+          <div class="right-principle">
+            <p>
+              <strong>Negative Right:</strong> Freedom from institutional
+              systems that prevent the accumulation of wealth through voluntary
+              exchange, innovation, and productive effort, ensuring access to
+              the prosperity-generating mechanisms of capitalism.
+            </p>
+          </div>
+
+          <h4>Positive Institutional Foundations Required</h4>
+          <div class="right-positive">
+            <h4>Essential Institutions for Prosperity Protection:</h4>
+            <ul>
+              <li>
+                <strong>Property Rights Systems:</strong> Constitutional
+                protection of private ownership, inheritance, and wealth
+                accumulation through productive activity
+              </li>
+              <li>
+                <strong>Free Market Frameworks:</strong> Legal structures
+                enabling voluntary exchange, price discovery, and competitive
+                enterprise
+              </li>
+              <li>
+                <strong>Innovation Protection:</strong> Patent and intellectual
+                property systems that reward creativity and technological
+                advancement
+              </li>
+              <li>
+                <strong>Capital Formation Systems:</strong> Financial
+                institutions enabling savings, investment, and entrepreneurial
+                financing
+              </li>
+              <li>
+                <strong>Trade Freedom Guarantees:</strong> Constitutional
+                protection of domestic and international commerce
+              </li>
+              <li>
+                <strong>Sound Money Institutions:</strong> Monetary systems that
+                preserve value and enable long-term planning
+              </li>
+              <li>
+                <strong>Limited Government Constraints:</strong> Constitutional
+                limits preventing government from consuming the wealth-creating
+                capacity of society
+              </li>
+            </ul>
+          </div>
+
+          <h4>Current Threats to This Right</h4>
+          <div class="right-enemies">
+            <h4>Institutional Enemies of Prosperity:</h4>
+            <ul>
+              <li>
+                <strong>Confiscatory Taxation:</strong> Tax systems that
+                appropriate wealth beyond what's needed for essential public
+                goods
+              </li>
+              <li>
+                <strong>Redistributionist Ideology:</strong> Policies that treat
+                wealth creation as inherently illegitimate or requiring
+                extensive redistribution
+              </li>
+              <li>
+                <strong>Central Economic Planning:</strong> Government attempts
+                to direct economic activity rather than allowing market
+                coordination
+              </li>
+              <li>
+                <strong>Inflation and Monetary Debasement:</strong> Currency
+                policies that erode savings and make long-term planning
+                impossible
+              </li>
+              <li>
+                <strong>Regulatory Capture:</strong> Rules that protect
+                incumbent businesses rather than enabling competitive entry and
+                innovation
+              </li>
+              <li>
+                <strong>Anti-Growth Environmental Policies:</strong> Regulations
+                that prevent economic development in the name of environmental
+                protection
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Hockey Stick Implementation
+      const ctxHockey = document
+        .getElementById("growthChartHockey")
+        .getContext("2d");
+      let chartHockey;
+
+      function simulateHockeyStick(
+        baseGDP,
+        capitalismYear,
+        accelerationFactor
+      ) {
+        // Create year range and GDP data
+        const years = [];
+        const gdpPerCapita = [];
+
+        // Pre-capitalism growth rate (0.02% annual from historical data)
+        const preCapitalismRate = 0.0002;
+
+        // Post-capitalism growth rates (from historical data, accelerating over time)
+        const growthPhases = [
+          {
+            startYear: capitalismYear,
+            endYear: capitalismYear + 100,
+            rate: 0.0066 * accelerationFactor,
+          },
+          {
+            startYear: capitalismYear + 100,
+            endYear: capitalismYear + 150,
+            rate: 0.0166 * accelerationFactor,
+          },
+          {
+            startYear: capitalismYear + 150,
+            endYear: capitalismYear + 200,
+            rate: 0.021 * accelerationFactor,
+          },
+          {
+            startYear: capitalismYear + 200,
+            endYear: 2025,
+            rate: 0.03 * accelerationFactor,
+          },
+        ];
+
+        // Generate key years for visualization
+        const keyYears = [0, 500, 1000, 1500];
+
+        // Add years around capitalism transition
+        if (capitalismYear > 50) {
+          keyYears.push(capitalismYear - 50);
+        }
+        keyYears.push(capitalismYear);
+
+        // Add post-capitalism years
+        for (let i = capitalismYear + 25; i <= 2025; i += 25) {
+          keyYears.push(i);
+        }
+        if (!keyYears.includes(2025)) {
+          keyYears.push(2025);
+        }
+
+        // Calculate GDP for each key year
+        for (let year of [...new Set(keyYears)].sort((a, b) => a - b)) {
+          if (year < 0) continue;
+          if (year > 2025) break;
+
+          let currentGDP;
+
+          if (year <= capitalismYear) {
+            // Pre-capitalism: slow compounding growth
+            const yearsElapsed = year;
+            currentGDP =
+              baseGDP * Math.pow(1 + preCapitalismRate, yearsElapsed);
+          } else {
+            // Start from GDP at capitalism year
+            currentGDP =
+              baseGDP * Math.pow(1 + preCapitalismRate, capitalismYear);
+
+            // Apply each phase's growth sequentially
+            let yearCursor = capitalismYear;
+
+            for (let phase of growthPhases) {
+              const phaseStart = Math.max(phase.startYear, yearCursor);
+              const phaseEnd = Math.min(phase.endYear, year);
+
+              if (phaseStart < phaseEnd) {
+                const phaseYears = phaseEnd - phaseStart;
+                currentGDP = currentGDP * Math.pow(1 + phase.rate, phaseYears);
+                yearCursor = phaseEnd;
+              }
+
+              if (yearCursor >= year) break;
+            }
+          }
+
+          years.push(year);
+          gdpPerCapita.push(Math.round(currentGDP));
+        }
+
+        // Destroy previous chart
+        if (chartHockey) chartHockey.destroy();
+
+        chartHockey = new Chart(ctxHockey, {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: [
+              {
+                label: "Per Capita GDP (2023 dollars)",
+                data: gdpPerCapita,
+                borderColor: "#e83e8c",
+                backgroundColor: "rgba(232, 62, 140, 0.1)",
+                borderWidth: 4,
+                fill: true,
+                tension: 0.1,
+                pointRadius: years.map((year) =>
+                  year === capitalismYear ? 8 : 6
+                ),
+                pointHoverRadius: 8,
+                pointBackgroundColor: years.map((year) =>
+                  year === capitalismYear ? "#00ff00" : "#e83e8c"
+                ),
+                pointBorderColor: years.map((year) =>
+                  year === capitalismYear ? "#ffffff" : "#ffffff"
+                ),
+                pointBorderWidth: 2,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  title: function (tooltipItems) {
+                    return "Year: " + tooltipItems[0].label;
+                  },
+                  label: function (context) {
+                    return (
+                      "GDP per capita: $" + context.parsed.y.toLocaleString()
+                    );
+                  },
+                  afterLabel: function (context) {
+                    const year = parseInt(context.label);
+                    if (year < capitalismYear) {
+                      return "Pre-capitalism era";
+                    } else if (year === capitalismYear) {
+                      return "Capitalism adoption begins";
+                    } else {
+                      return "Capitalist era - prosperity explosion";
+                    }
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Year" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+              y: {
+                title: { display: true, text: "GDP per Capita (2023 USD)" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+                beginAtZero: false,
+                ticks: {
+                  callback: function (value) {
+                    return "$" + value.toLocaleString();
+                  },
+                },
+              },
+            },
+          },
+        });
+
+        // Calculate and display results
+        const gdpAtCapitalism =
+          gdpPerCapita[years.findIndex((y) => y === capitalismYear)];
+        const gdpNow = gdpPerCapita[gdpPerCapita.length - 1];
+        const multiplier = (gdpNow / baseGDP).toFixed(1);
+        const postCapitalismMultiplier = (gdpNow / gdpAtCapitalism).toFixed(1);
+
+        document.getElementById("results-hockey").innerHTML = `
+                <h3>🏒 The Hockey Stick Results</h3>
+                <div class="result-item">
+                    <strong>Starting Point (Year 0):</strong> $${baseGDP.toLocaleString()} per capita
+                </div>
+                <div class="result-item">
+                    <strong>At Capitalism Adoption (${capitalismYear}):</strong> $${gdpAtCapitalism.toLocaleString()} per capita
+                </div>
+                <div class="result-item">
+                    <strong>Today (2025):</strong> $${gdpNow.toLocaleString()} per capita
+                </div>
+                <div class="result-item">
+                    <strong>Total Multiplication:</strong> ${multiplier}× increase from year 0 to today
+                </div>
+                <div class="result-item">
+                    <strong>Post-Capitalism Explosion:</strong> ${postCapitalismMultiplier}× increase since ${capitalismYear}
+                </div>
+                <div class="result-item">
+                    <strong>Pre-Capitalism (0-${capitalismYear}):</strong> ${(
+          (gdpAtCapitalism / baseGDP - 1) *
+          100
+        ).toFixed(1)}% growth over ${capitalismYear} years (the handle)
+                </div>
+                <div class="result-item">
+                    <strong>Post-Capitalism (${capitalismYear}-2025):</strong> ${(
+          (gdpNow / gdpAtCapitalism - 1) *
+          100
+        ).toFixed(0)}% growth in just ${2025 - capitalismYear} years (the blade)
+                </div>
+                <br>
+                <em>This demonstrates humanity's greatest discovery: capitalism unlocks exponential prosperity growth that benefits everyone, transforming human existence from subsistence to abundance.</em>
+            `;
+      }
+
+      function updateHockeyStickSimulation() {
+        const baseGDP = parseFloat(
+          document.getElementById("base-hockey").value
+        );
+        const capitalismYear = parseInt(
+          document.getElementById("capitalism-year-hockey").value
+        );
+        const accelerationFactor = parseFloat(
+          document.getElementById("acceleration-hockey").value
+        );
+
+        if (
+          !isNaN(baseGDP) &&
+          !isNaN(capitalismYear) &&
+          !isNaN(accelerationFactor) &&
+          baseGDP > 0 &&
+          capitalismYear >= 0 &&
+          capitalismYear <= 2000 &&
+          accelerationFactor > 0
+        ) {
+          simulateHockeyStick(baseGDP, capitalismYear, accelerationFactor);
+        }
+      }
+
+      // Event listeners
+      document
+        .getElementById("base-hockey")
+        .addEventListener("input", updateHockeyStickSimulation);
+      document
+        .getElementById("capitalism-year-hockey")
+        .addEventListener("input", updateHockeyStickSimulation);
+      document
+        .getElementById("acceleration-hockey")
+        .addEventListener("input", updateHockeyStickSimulation);
+
+      // Initial simulation
+      simulateHockeyStick(600, 1800, 1.0);
+
+      // Handle resize
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (chartHockey) chartHockey.resize();
+        }, 100);
+      });
+    </script>
+
+    <!-- Shared Navigation -->
+    <script src="shared-navigation.js"></script>
+    <script>
+      insertNavigation();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Laffer Curve: The Right to Economic Attractiveness | Economic Simulator
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Interactive Laffer Curve simulator with glassmorphism design. Explore tax rates vs consent to taxation and the Right to Economic Attractiveness."
+    />
+    <meta
+      name="keywords"
+      content="Laffer curve, tax rates, tax revenue, optimal taxation, fiscal policy, supply-side economics, glassmorphism UI, interactive simulator, responsive design"
+    />
+    <meta name="author" content="Julien Reszka" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#28a745" />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Laffer Curve: The Right to Economic Attractiveness | Interactive Simulator"
+    />
+    <meta
+      property="og:description"
+      content="Interactive glassmorphism simulator exploring tax rates vs consent to taxation and the natural right to economic attractiveness with modern design."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/laffer-curve.html"
+    />
+    <meta
+      property="og:image"
+      content="https://julienreszka.github.io/economic-simulator/laffer-curve-preview.png"
+    />
+    <meta property="og:site_name" content="Economic Curves Simulator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Laffer Curve: The Right to Economic Attractiveness"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive simulator exploring tax rates vs consent to taxation. Modern glassmorphism interface."
+    />
+    <meta name="twitter:creator" content="@julienreszka" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://julienreszka.github.io/economic-simulator/laffer-curve.html"
+    />
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared-styles.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .laffer-specific {
+      }
+
+      .laffer-specific h3 {
+        color: #28a745 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <!-- Navigation Breadcrumb -->
+      <nav class="nav-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">← Back to All Curves</a>
+      </nav>
+
+      <h1>The Laffer Curve: Tax Rates vs Consent to Taxation</h1>
+
+      <p>
+        <strong>The Right to Economic Attractiveness:</strong> This curve
+        demonstrates that people have a natural right to live in an economically
+        attractive environment where tax rates optimize both revenue collection
+        and voluntary compliance. The curve shows that excessive taxation
+        destroys the economic attractiveness that makes people want to
+        participate in and remain within a tax jurisdiction.
+      </p>
+
+      <!-- Interactive Simulation -->
+      <section id="laffer-section">
+        <h2>Interactive Laffer Curve Simulator</h2>
+
+        <form id="paramsFormLaffer">
+          <div class="param-group">
+            <label for="beta0-laffer"
+              >Intercept (β₀, base consent, e.g., 0):</label
+            >
+            <input
+              type="number"
+              id="beta0-laffer"
+              value="0"
+              step="0.1"
+              min="0"
+              max="5"
+              aria-describedby="beta0-laffer-help"
+            />
+            <small id="beta0-laffer-help" class="sr-only"
+              >Base taxation consent level</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="beta1-laffer"
+              >Linear coefficient (β₁, positive, e.g., 1):</label
+            >
+            <input
+              type="number"
+              id="beta1-laffer"
+              value="1"
+              step="0.1"
+              min="0"
+              max="3"
+              aria-describedby="beta1-laffer-help"
+            />
+            <small id="beta1-laffer-help" class="sr-only"
+              >Initial positive effect of taxation</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="beta2-laffer"
+              >Quadratic coefficient (β₂, negative, e.g., -0.02):</label
+            >
+            <input
+              type="number"
+              id="beta2-laffer"
+              value="-0.02"
+              step="0.001"
+              max="0"
+              min="-0.1"
+              aria-describedby="beta2-laffer-help"
+            />
+            <small id="beta2-laffer-help" class="sr-only"
+              >Diminishing returns effect (must be negative)</small
+            >
+          </div>
+        </form>
+
+        <div
+          class="chart-container"
+          role="img"
+          aria-labelledby="laffer-chart-label"
+        >
+          <canvas
+            id="growthChartLaffer"
+            aria-label="Interactive Laffer Curve showing relationship between tax rates and consent to taxation"
+          ></canvas>
+          <div id="laffer-chart-label" class="sr-only">
+            Chart displaying the Laffer Curve with tax rate on x-axis and
+            consent to taxation on y-axis
+          </div>
+        </div>
+
+        <div
+          id="optimal-laffer"
+          class="results-display"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <!-- Detailed Explanation -->
+      <section>
+        <h2>Understanding the Laffer Curve</h2>
+
+        <div style="margin-top: 15px; line-height: 1.6">
+          <p>
+            The Laffer Curve illustrates the relationship between tax rates and
+            consent to taxation (often measured as tax revenue, but more
+            fundamentally representing voluntary participation in the tax
+            system). Named after economist Arthur Laffer, this curve suggests
+            that beyond a certain point, higher tax rates actually decrease
+            rather than increase effective tax collection and economic
+            attractiveness.
+          </p>
+
+          <h3>Curve Structure</h3>
+          <p>The curve demonstrates the counterintuitive relationship where:</p>
+          <ul>
+            <li>
+              <strong>Rising Phase (0-30% typically):</strong> Moderate tax
+              rates increase both revenue and perceived value of public services
+            </li>
+            <li>
+              <strong>Peak (30-50% typically):</strong> Optimal tax rate that
+              maximizes both revenue and voluntary compliance
+            </li>
+            <li>
+              <strong>Declining Phase (50%+):</strong> High tax rates reduce
+              work incentives, encourage avoidance/evasion, and drive capital
+              flight
+            </li>
+          </ul>
+
+          <h3>Why Consent to Taxation Increases Initially</h3>
+          <p>
+            The upward slope of the early curve reflects several factors that
+            make moderate taxation attractive to citizens:
+          </p>
+          <ul>
+            <li>
+              <strong>Public Goods Provision:</strong> Essential services like
+              security, courts, and infrastructure that enable prosperity
+            </li>
+            <li>
+              <strong>Social Insurance:</strong> Risk pooling and safety nets
+              that provide security and stability
+            </li>
+            <li>
+              <strong>Network Effects:</strong> More taxpayers mean better
+              public services and stronger institutions per dollar contributed
+            </li>
+            <li>
+              <strong>Rule of Law:</strong> Tax-funded legal systems that
+              protect property rights and enforce contracts
+            </li>
+            <li>
+              <strong>Market Infrastructure:</strong> Standards, regulations,
+              and frameworks that reduce transaction costs
+            </li>
+            <li>
+              <strong>Legitimacy Premium:</strong> Citizens value being part of
+              a well-functioning, prosperous society
+            </li>
+            <li>
+              <strong>Economic Attraction:</strong> Lower taxes than competitors
+              while maintaining quality institutions attracts productive
+              residents and businesses
+            </li>
+          </ul>
+          <p>
+            This creates a virtuous cycle where moderate, well-used taxation
+            enhances the economic attractiveness of a jurisdiction, encouraging
+            voluntary participation and compliance.
+          </p>
+
+          <h3>Mathematical Formulation</h3>
+          <p>The curve can be modeled with a quadratic equation:</p>
+          <p style="text-align: center; font-style: italic; margin: 20px 0">
+            Consent to Taxation = β₀ + β₁ × Tax Rate + β₂ × (Tax Rate)²
+          </p>
+          <p>
+            Where β₀ represents baseline consent, β₁ captures initial positive
+            effects, and β₂ (negative) represents diminishing returns and
+            eventual resistance.
+          </p>
+
+          <h3>Policy Implications</h3>
+          <ul>
+            <li>
+              <strong>Revenue Maximization:</strong> There exists an optimal tax
+              rate beyond which additional increases reduce total revenue
+            </li>
+            <li>
+              <strong>Economic Behavior:</strong> High tax rates change
+              incentives for work, saving, investment, and legal compliance
+            </li>
+            <li>
+              <strong>Jurisdictional Competition:</strong> Tax rates affect
+              attractiveness relative to other regions or countries
+            </li>
+            <li>
+              <strong>Dynamic Effects:</strong> Tax changes influence long-term
+              economic growth and tax base expansion
+            </li>
+            <li>
+              <strong>Voluntary Compliance:</strong> Legitimacy and consent are
+              as important as legal enforcement for effective taxation
+            </li>
+          </ul>
+
+          <h3>Historical Context</h3>
+          <p>
+            The concept gained prominence in the 1970s when Arthur Laffer
+            demonstrated to policymakers that the U.S. might be on the
+            downward-sloping portion of the curve. The theory influenced the tax
+            reforms of the 1980s in multiple countries. Historical examples
+            include the Kennedy tax cuts of the 1960s, Reagan's reforms in the
+            1980s, and various flat tax implementations in Eastern Europe.
+          </p>
+
+          <h3>Understanding Negative Revenue Values</h3>
+          <p>
+            When the curve shows negative values, this represents scenarios
+            where taxation becomes counterproductive to economic attractiveness:
+          </p>
+          <ul>
+            <li>
+              <strong>Capital Flight:</strong> High tax rates drive productive
+              individuals and businesses to relocate
+            </li>
+            <li>
+              <strong>Underground Economy:</strong> Excessive taxation pushes
+              economic activity into informal, untaxed sectors
+            </li>
+            <li>
+              <strong>Work Disincentives:</strong> High marginal rates reduce
+              incentives for productive activity
+            </li>
+            <li>
+              <strong>Compliance Costs:</strong> Complex tax systems consume
+              resources that could be used productively
+            </li>
+            <li>
+              <strong>Economic Distortions:</strong> Tax-driven behavior changes
+              that reduce overall economic efficiency
+            </li>
+            <li>
+              <strong>Brain Drain:</strong> Loss of highly skilled individuals
+              to lower-tax jurisdictions
+            </li>
+          </ul>
+          <p>
+            Examples include France's experience with its 75% tax on high
+            earners (many wealthy citizens relocated), and Greece during its
+            fiscal crisis where high tax rates coincided with massive tax
+            evasion and economic contraction.
+          </p>
+
+          <h3>Comparative Findings</h3>
+          <ul>
+            <li>
+              <strong>Developed Countries:</strong> Optimal total tax rates
+              (including all taxes) typically range from 30-45% of income
+            </li>
+            <li>
+              <strong>Small Open Economies:</strong> Must maintain competitive
+              tax rates due to capital mobility
+            </li>
+            <li>
+              <strong>Emerging Markets:</strong> Often benefit from lower rates
+              to attract investment and build tax compliance culture
+            </li>
+          </ul>
+
+          <p>
+            The Laffer Curve demonstrates that economic attractiveness requires
+            finding the optimal balance between providing valuable public
+            services and maintaining competitive tax rates that encourage
+            voluntary participation in the tax system.
+          </p>
+        </div>
+      </section>
+
+      <!-- Natural Right Section -->
+      <section class="natural-rights-section">
+        <h2>The Right to Economic Attractiveness</h2>
+
+        <div class="right-card laffer-specific">
+          <div class="right-principle">
+            <p>
+              <strong>Negative Right:</strong> Freedom from confiscatory
+              taxation that destroys economic attractiveness and drives
+              productive individuals and capital away from a jurisdiction.
+            </p>
+          </div>
+
+          <h4>Positive Institutional Foundations Required</h4>
+          <div class="right-positive">
+            <h4>Essential Institutions for Tax Attractiveness:</h4>
+            <ul>
+              <li>
+                <strong>Constitutional Tax Limitations:</strong> Legal caps on
+                maximum tax rates to prevent confiscatory taxation
+              </li>
+              <li>
+                <strong>Tax Competition Frameworks:</strong> Legal structures
+                enabling jurisdictional competition to discipline excessive
+                taxation
+              </li>
+              <li>
+                <strong>Transparent Budget Processes:</strong> Clear accounting
+                of tax revenue use to maintain consent and legitimacy
+              </li>
+              <li>
+                <strong>Simplicity Requirements:</strong> Legal mandates for
+                clear, understandable tax codes to reduce compliance costs
+              </li>
+              <li>
+                <strong>Sunset Provisions:</strong> Automatic expiration of
+                temporary taxes and spending programs
+              </li>
+              <li>
+                <strong>Tax Impact Assessment:</strong> Mandatory analysis of
+                economic effects before implementing tax changes
+              </li>
+              <li>
+                <strong>Taxpayer Rights Protection:</strong> Due process
+                safeguards and appeals mechanisms for tax disputes
+              </li>
+            </ul>
+          </div>
+
+          <h4>Current Threats to This Right</h4>
+          <div class="right-enemies">
+            <h4>Institutional Enemies of Tax Attractiveness:</h4>
+            <ul>
+              <li>
+                <strong>Progressive Rate Escalation:</strong> Incrementally
+                higher rates that eventually reach confiscatory levels
+              </li>
+              <li>
+                <strong>Hidden Tax Multiplication:</strong> Multiple overlapping
+                tax jurisdictions creating effective rates higher than apparent
+              </li>
+              <li>
+                <strong>Regulatory Taxation:</strong> Using regulations and fees
+                to extract revenue beyond formal tax limits
+              </li>
+              <li>
+                <strong>Retroactive Tax Changes:</strong> Changing rules after
+                economic decisions have been made
+              </li>
+              <li>
+                <strong>Tax Code Complexity:</strong> Deliberately complex
+                systems that favor insiders and increase compliance costs
+              </li>
+              <li>
+                <strong>Exit Restrictions:</strong> Barriers to leaving high-tax
+                jurisdictions including exit taxes and residency rules
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Laffer Curve Implementation
+      const ctxLaffer = document
+        .getElementById("growthChartLaffer")
+        .getContext("2d");
+      let chartLaffer;
+
+      function simulateCurveLaffer(beta0, beta1, beta2) {
+        const taxRate = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
+        const consent = taxRate.map((t) => beta0 + beta1 * t + beta2 * t * t);
+
+        if (chartLaffer) chartLaffer.destroy();
+        chartLaffer = new Chart(ctxLaffer, {
+          type: "line",
+          data: {
+            labels: taxRate,
+            datasets: [
+              {
+                label: "Consent to Taxation",
+                data: consent,
+                borderColor: "#28a745",
+                backgroundColor: "rgba(40, 167, 69, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  title: function (tooltipItems) {
+                    return "Tax Rate: " + tooltipItems[0].label + "%";
+                  },
+                  label: function (context) {
+                    return "Consent Level: " + context.parsed.y.toFixed(2);
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Tax Rate (%)" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+              y: {
+                title: { display: true, text: "Consent to Taxation" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+            },
+          },
+        });
+
+        // Calculate optimal
+        const optimal = -beta1 / (2 * beta2);
+        const maxConsent = beta0 + beta1 * optimal + beta2 * optimal * optimal;
+
+        document.getElementById("optimal-laffer").innerHTML = `
+                <strong>Optimal Tax Rate:</strong> ${optimal.toFixed(2)}%<br>
+                <strong>Maximum Consent Level:</strong> ${maxConsent.toFixed(
+                  2
+                )}<br>
+                <em>This is where tax rates maximize both revenue collection and voluntary compliance, creating the most economically attractive jurisdiction.</em>
+            `;
+      }
+
+      function updateLafferSimulation() {
+        const beta0 = parseFloat(document.getElementById("beta0-laffer").value);
+        const beta1 = parseFloat(document.getElementById("beta1-laffer").value);
+        const beta2 = parseFloat(document.getElementById("beta2-laffer").value);
+
+        if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
+          simulateCurveLaffer(beta0, beta1, beta2);
+        }
+      }
+
+      // Event listeners
+      document
+        .getElementById("beta0-laffer")
+        .addEventListener("input", updateLafferSimulation);
+      document
+        .getElementById("beta1-laffer")
+        .addEventListener("input", updateLafferSimulation);
+      document
+        .getElementById("beta2-laffer")
+        .addEventListener("input", updateLafferSimulation);
+
+      // Initial simulation
+      simulateCurveLaffer(0, 1, -0.02);
+
+      // Handle resize
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (chartLaffer) chartLaffer.resize();
+        }, 100);
+      });
+    </script>
+
+    <!-- Shared Navigation -->
+    <script src="shared-navigation.js"></script>
+    <script>
+      insertNavigation();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Division of Labor: The Right to Productivity | Economic Simulator
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Interactive Division of Labor simulator with glassmorphism design. Explore Adam Smith's Pin Factory, specialization, and the Right to Productivity."
+    />
+    <meta
+      name="keywords"
+      content="division of labor, Adam Smith, pin factory, specialization, productivity, increasing returns, market size, glassmorphism UI, interactive simulator, responsive design"
+    />
+    <meta name="author" content="Julien Reszka" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#17a2b8" />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Division of Labor: The Right to Productivity | Interactive Simulator"
+    />
+    <meta
+      property="og:description"
+      content="Interactive glassmorphism simulator exploring Adam Smith's Pin Factory and the natural right to productivity through specialization and market size."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/division-of-labor.html"
+    />
+    <meta
+      property="og:image"
+      content="https://julienreszka.github.io/economic-simulator/division-of-labor-preview.png"
+    />
+    <meta property="og:site_name" content="Economic Curves Simulator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Division of Labor: The Right to Productivity"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive simulator exploring Adam Smith's Pin Factory and specialization. Modern glassmorphism design."
+    />
+    <meta name="twitter:creator" content="@julienreszka" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://julienreszka.github.io/economic-simulator/division-of-labor.html"
+    />
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared-styles.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .division-specific {
+      }
+
+      .division-specific h3 {
+        color: #17a2b8 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <!-- Navigation Breadcrumb -->
+      <nav class="nav-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">← Back to All Curves</a>
+      </nav>
+
+      <h1>Division of Labor: Productivity Through Specialization</h1>
+
+      <p>
+        <strong>The Right to Productivity:</strong> This curve demonstrates that
+        people have a natural right to productivity gains from specialization
+        and division of labor. As Adam Smith showed with his pin factory
+        example, larger markets enable greater specialization, which creates
+        exponential productivity improvements that benefit everyone through
+        lower costs and higher wages.
+      </p>
+
+      <!-- Interactive Simulation -->
+      <section id="division-section">
+        <h2>Interactive Division of Labor Simulator</h2>
+
+        <form id="paramsFormDivision">
+          <div class="param-group">
+            <label for="baseproductivity-division"
+              >Base Productivity (per worker alone, e.g., 20):</label
+            >
+            <input
+              type="number"
+              id="baseproductivity-division"
+              value="20"
+              step="1"
+              min="1"
+              max="100"
+              aria-describedby="baseproductivity-division-help"
+            />
+            <small id="baseproductivity-division-help" class="sr-only"
+              >Output per worker when working alone</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="maxworkers-division"
+              >Maximum Workers (market size, e.g., 10):</label
+            >
+            <input
+              type="number"
+              id="maxworkers-division"
+              value="10"
+              step="1"
+              min="2"
+              max="50"
+              aria-describedby="maxworkers-division-help"
+            />
+            <small id="maxworkers-division-help" class="sr-only"
+              >Maximum number of specialized workers</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="specialization-division"
+              >Specialization Factor (e.g., 4.23):</label
+            >
+            <input
+              type="number"
+              id="specialization-division"
+              value="4.23"
+              step="0.1"
+              min="0.1"
+              max="10"
+              aria-describedby="specialization-division-help"
+            />
+            <small id="specialization-division-help" class="sr-only"
+              >Productivity boost from each additional specialized worker</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="returns-division">Returns Parameter (e.g., 1.5):</label>
+            <input
+              type="number"
+              id="returns-division"
+              value="1.5"
+              step="0.1"
+              min="0.1"
+              max="3"
+              aria-describedby="returns-division-help"
+            />
+            <small id="returns-division-help" class="sr-only"
+              >Controls how returns to specialization compound</small
+            >
+          </div>
+        </form>
+
+        <div
+          class="chart-container"
+          role="img"
+          aria-labelledby="division-chart-label"
+        >
+          <canvas
+            id="growthChartDivision"
+            aria-label="Interactive Division of Labor curve showing productivity gains from specialization"
+          ></canvas>
+          <div id="division-chart-label" class="sr-only">
+            Chart displaying Division of Labor with number of workers on x-axis
+            and productivity on y-axis
+          </div>
+        </div>
+
+        <div
+          id="results-division"
+          class="results-display"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <!-- Detailed Explanation -->
+      <section>
+        <h2>Understanding the Division of Labor</h2>
+
+        <div style="margin-top: 15px; line-height: 1.6">
+          <p>
+            The division of labor represents one of the most fundamental drivers
+            of economic prosperity. Adam Smith's famous pin factory example from
+            "The Wealth of Nations" (1776) demonstrates how specialization and
+            larger markets create exponential productivity gains that transform
+            human prosperity.
+          </p>
+
+          <h3>Adam Smith's Revolutionary Observation</h3>
+          <p>
+            In Chapter 1 of "The Wealth of Nations," Smith observed a small pin
+            factory and discovered something profound:
+          </p>
+          <blockquote
+            style="
+              margin: 20px 0;
+              padding: 15px;
+              background: rgba(255, 255, 255, 0.25);
+              backdrop-filter: blur(10px);
+              border: 1px solid rgba(255, 255, 255, 0.18);
+              border-radius: 1.75rem;
+              box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+              font-style: italic;
+            "
+          >
+            "A workman not educated to this business... could scarce, perhaps,
+            with his utmost industry, make one pin in a day, and certainly could
+            not make twenty. But in the way in which this business is now
+            carried on... they could, when they exerted themselves, make among
+            them about twelve pounds of pins in a day. There are in a pound
+            upwards of four thousand pins of a middling size. Those ten persons,
+            therefore, could make among them upwards of forty-eight thousand
+            pins in a day. Each person, therefore, making a tenth part of
+            forty-eight thousand pins, might be considered as making four
+            thousand eight hundred pins in a day."
+          </blockquote>
+          <p>
+            <strong>The Result:</strong> From 20 pins per day per worker alone
+            to 4,800 pins per day per worker with division of labor - a
+            <strong>240× productivity increase!</strong>
+          </p>
+
+          <h3>How Division of Labor Works</h3>
+          <p>
+            Smith identified the mechanisms that create these extraordinary
+            productivity gains:
+          </p>
+
+          <h4>1. Increased Dexterity</h4>
+          <p>
+            "The improvement of the dexterity of the workman necessarily
+            increases the quantity of the work he can perform; and the division
+            of labour, by reducing every man's business to some one simple
+            operation, and by making this operation the sole employment of his
+            life, necessarily increases very much the dexterity of the workman."
+          </p>
+
+          <h4>2. Time Savings</h4>
+          <p>
+            "The advantage which is gained by saving the time commonly lost in
+            passing from one sort of work to another is much greater than we
+            should at first view be apt to imagine it."
+          </p>
+
+          <h4>3. Innovation Through Specialization</h4>
+          <p>
+            "The invention of a great number of machines which facilitate and
+            abridge labour, and enable one man to do the work of many... Men are
+            much more likely to discover easier and readier methods of attaining
+            any object when the whole attention of their minds is directed
+            towards that single object than when it is dissipated among a great
+            variety of things."
+          </p>
+
+          <h3>The Pin Factory Process Breakdown</h3>
+          <p>
+            Smith observed that pin-making was divided into about 18 distinct
+            operations:
+          </p>
+          <ol>
+            <li>
+              <strong>Drawing the wire:</strong> Pulling wire to proper
+              thickness
+            </li>
+            <li><strong>Straightening:</strong> Removing coils and bends</li>
+            <li>
+              <strong>Cutting:</strong> Chopping wire into pin-length pieces
+            </li>
+            <li><strong>Pointing:</strong> Sharpening one end</li>
+            <li><strong>Grinding the top:</strong> Preparing head end</li>
+            <li>
+              <strong>Head making:</strong> Creating the pin head separately
+            </li>
+            <li><strong>Whitening the pins:</strong> Cleaning and polishing</li>
+            <li><strong>Head attachment:</strong> Joining head to pin</li>
+            <li><strong>Quality control:</strong> Inspection and sorting</li>
+            <li><strong>Packaging:</strong> Bundling for sale</li>
+          </ol>
+          <p>
+            Each worker became extraordinarily skilled at their specific task,
+            leading to the massive productivity gains Smith observed.
+          </p>
+
+          <h3>Market Size Enables Specialization</h3>
+          <p>
+            Smith's crucial insight was that
+            <strong
+              >the division of labor is limited by the extent of the
+              market</strong
+            >:
+          </p>
+
+          <h4>Small Markets = Limited Specialization</h4>
+          <ul>
+            <li>
+              <strong>Insufficient demand:</strong> Not enough customers to
+              support specialized producers
+            </li>
+            <li>
+              <strong>High transport costs:</strong> Limited reach to potential
+              customers
+            </li>
+            <li>
+              <strong>Generalist production:</strong> Workers must perform
+              multiple tasks, reducing efficiency
+            </li>
+            <li>
+              <strong>Lower productivity:</strong> Less specialization means
+              less output per worker
+            </li>
+          </ul>
+
+          <h4>Large Markets = Deep Specialization</h4>
+          <ul>
+            <li>
+              <strong>Sufficient demand:</strong> Enough customers to support
+              highly specialized producers
+            </li>
+            <li>
+              <strong>Lower transport costs:</strong> Better infrastructure
+              connects producers to wider markets
+            </li>
+            <li>
+              <strong>Specialist production:</strong> Workers can focus on
+              single tasks, maximizing efficiency
+            </li>
+            <li>
+              <strong>Higher productivity:</strong> Deep specialization creates
+              exponential gains
+            </li>
+          </ul>
+
+          <h3>Modern Applications and Evidence</h3>
+
+          <h4>Technology Sector</h4>
+          <p>The global technology market enables extreme specialization:</p>
+          <ul>
+            <li>
+              <strong>Chip design companies</strong> focus solely on designing
+              semiconductors
+            </li>
+            <li>
+              <strong>Fabrication plants</strong> specialize only in
+              manufacturing chips
+            </li>
+            <li>
+              <strong>Assembly companies</strong> focus on putting devices
+              together
+            </li>
+            <li>
+              <strong>Software companies</strong> create specialized
+              applications
+            </li>
+          </ul>
+          <p>
+            This division of labor has driven the exponential improvement in
+            computing power and dramatic cost reductions.
+          </p>
+
+          <h4>Global Trade</h4>
+          <p>
+            International trade extends the market globally, enabling countries
+            to specialize:
+          </p>
+          <ul>
+            <li>
+              <strong>Taiwan:</strong> Specializes in semiconductor
+              manufacturing
+            </li>
+            <li>
+              <strong>Germany:</strong> Focuses on precision machinery and
+              engineering
+            </li>
+            <li>
+              <strong>Bangladesh:</strong> Concentrates on textile production
+            </li>
+            <li>
+              <strong>Switzerland:</strong> Specializes in pharmaceuticals and
+              financial services
+            </li>
+          </ul>
+
+          <h4>Urban Economics</h4>
+          <p>
+            Cities enable division of labor by concentrating large populations:
+          </p>
+          <ul>
+            <li>
+              <strong>Restaurants</strong> can specialize in specific cuisines
+            </li>
+            <li>
+              <strong>Professionals</strong> can focus on narrow specialties
+            </li>
+            <li><strong>Services</strong> can become highly specialized</li>
+            <li>
+              <strong>Innovation clusters</strong> emerge in specific industries
+            </li>
+          </ul>
+
+          <h3>Why This Creates Increasing Returns</h3>
+          <p>
+            Unlike diminishing returns (where each additional input produces
+            less output), division of labor creates
+            <strong>increasing returns to scale</strong>:
+          </p>
+
+          <h4>Network Effects</h4>
+          <p>
+            Each additional specialized worker enhances the productivity of all
+            existing workers by:
+          </p>
+          <ul>
+            <li>
+              <strong>Reducing bottlenecks:</strong> More specialists handling
+              each step
+            </li>
+            <li>
+              <strong>Knowledge spillovers:</strong> Specialists sharing
+              innovations with each other
+            </li>
+            <li>
+              <strong>Quality improvements:</strong> Better coordination between
+              specialized tasks
+            </li>
+            <li>
+              <strong>Innovation acceleration:</strong> More minds focused on
+              specific problems
+            </li>
+          </ul>
+
+          <h4>Learning Curve Effects</h4>
+          <ul>
+            <li>
+              <strong>Faster skill development:</strong> Workers become expert
+              at specific tasks
+            </li>
+            <li>
+              <strong>Process innovation:</strong> Specialists discover better
+              methods
+            </li>
+            <li>
+              <strong>Tool specialization:</strong> Equipment designed for
+              specific tasks
+            </li>
+            <li><strong>Error reduction:</strong> Practice makes perfect</li>
+          </ul>
+
+          <h3>Mathematical Model</h3>
+          <p>Our simulation captures this with the formula:</p>
+          <p style="text-align: center; font-style: italic; margin: 20px 0">
+            Productivity per Worker = Base × (1 + (Workers-1) × Specialization
+            Factor)^Returns Parameter
+          </p>
+          <p>Where:</p>
+          <ul>
+            <li>
+              <strong>Base:</strong> Productivity of a worker alone (Smith's 20
+              pins/day)
+            </li>
+            <li>
+              <strong>Workers:</strong> Number of people in the production
+              process
+            </li>
+            <li>
+              <strong>Specialization Factor:</strong> How much each additional
+              worker enhances everyone's productivity
+            </li>
+            <li>
+              <strong>Returns Parameter:</strong> How powerfully benefits
+              compound (>1 for increasing returns)
+            </li>
+          </ul>
+
+          <h3>Historical Impact</h3>
+          <p>Smith's insight about division of labor helped explain:</p>
+
+          <h4>The Industrial Revolution</h4>
+          <ul>
+            <li>
+              <strong>Factory systems:</strong> Organized production around
+              specialized tasks
+            </li>
+            <li>
+              <strong>Productivity explosion:</strong> Manufacturing output
+              increased exponentially
+            </li>
+            <li>
+              <strong>Lower costs:</strong> Mass production made goods
+              affordable
+            </li>
+            <li>
+              <strong>Higher wages:</strong> Increased productivity supported
+              higher compensation
+            </li>
+          </ul>
+
+          <h4>Modern Economic Growth</h4>
+          <ul>
+            <li>
+              <strong>Service specialization:</strong> Professional services
+              became increasingly specialized
+            </li>
+            <li>
+              <strong>Global supply chains:</strong> International division of
+              labor
+            </li>
+            <li>
+              <strong>Knowledge economy:</strong> Specialization in information
+              and ideas
+            </li>
+            <li>
+              <strong>Innovation acceleration:</strong> Focused research and
+              development
+            </li>
+          </ul>
+
+          <h3>Policy Implications</h3>
+
+          <h4>Expand Market Size</h4>
+          <ul>
+            <li>
+              <strong>Free trade:</strong> Eliminate barriers to international
+              specialization
+            </li>
+            <li>
+              <strong>Transportation infrastructure:</strong> Connect producers
+              to larger markets
+            </li>
+            <li>
+              <strong>Communication technology:</strong> Enable coordination
+              across distances
+            </li>
+            <li>
+              <strong>Standardization:</strong> Create compatible systems across
+              regions
+            </li>
+          </ul>
+
+          <h4>Remove Specialization Barriers</h4>
+          <ul>
+            <li>
+              <strong>Occupational licensing reform:</strong> Eliminate
+              unnecessary restrictions
+            </li>
+            <li>
+              <strong>Immigration liberalization:</strong> Access to specialized
+              human capital
+            </li>
+            <li>
+              <strong>Education flexibility:</strong> Enable specialized skill
+              development
+            </li>
+            <li>
+              <strong>Labor market freedom:</strong> Allow workers to find their
+              best specialization
+            </li>
+          </ul>
+
+          <h3>Contemporary Evidence</h3>
+          <p>Modern research confirms Smith's insights:</p>
+          <ul>
+            <li>
+              <strong
+                >Cities with larger populations support more specialized
+                services and higher productivity</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Countries that trade more extensively have higher productivity
+                and income levels</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Industries with deeper division of labor show faster
+                productivity growth</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Regions with better transportation connections develop more
+                specialization</strong
+              >
+            </li>
+          </ul>
+
+          <h3>The Moral Dimension</h3>
+          <p>Smith saw division of labor as morally beneficial because it:</p>
+          <ul>
+            <li>
+              <strong>Creates mutual dependence:</strong> People need each
+              other, fostering cooperation
+            </li>
+            <li>
+              <strong>Reduces inequality:</strong> Higher productivity benefits
+              all workers, not just owners
+            </li>
+            <li>
+              <strong>Enables human flourishing:</strong> Specialization lets
+              people develop their talents
+            </li>
+            <li>
+              <strong>Promotes peace:</strong> Trade relationships reduce
+              incentives for conflict
+            </li>
+          </ul>
+
+          <h3>Key Insights</h3>
+          <ul>
+            <li>
+              <strong>Specialization is the source of wealth:</strong> Division
+              of labor creates exponential productivity gains
+            </li>
+            <li>
+              <strong>Market size matters:</strong> Larger markets enable deeper
+              specialization and higher productivity
+            </li>
+            <li>
+              <strong>Everyone benefits:</strong> Productivity gains from
+              specialization benefit both producers and consumers
+            </li>
+            <li>
+              <strong>Trade creates wealth:</strong> Exchange enables
+              specialization, which creates prosperity
+            </li>
+            <li>
+              <strong>Freedom enables productivity:</strong> Removing barriers
+              to specialization increases everyone's wellbeing
+            </li>
+          </ul>
+
+          <p>
+            The division of labor demonstrates that human prosperity comes from
+            voluntary cooperation and specialization. When people are free to
+            focus on what they do best and trade with others, the result is
+            exponential productivity growth that benefits everyone in society.
+          </p>
+        </div>
+      </section>
+
+      <!-- Natural Right Section -->
+      <section class="natural-rights-section">
+        <h2>The Right to Productivity</h2>
+
+        <div class="right-card division-specific">
+          <div class="right-principle">
+            <p>
+              <strong>Negative Right:</strong> Freedom from artificial
+              restrictions on specialization, trade, and market access that
+              prevent people from achieving maximum productivity through
+              division of labor.
+            </p>
+          </div>
+
+          <h4>Positive Institutional Foundations Required</h4>
+          <div class="right-positive">
+            <h4>Essential Institutions for Productivity Protection:</h4>
+            <ul>
+              <li>
+                <strong>Free Trade Frameworks:</strong> Legal elimination of
+                barriers to specialization across geographical boundaries
+              </li>
+              <li>
+                <strong>Occupational Freedom:</strong> Constitutional protection
+                of right to choose one's profession and specialize according to
+                comparative advantage
+              </li>
+              <li>
+                <strong>Contract Enforcement Systems:</strong> Reliable legal
+                mechanisms for complex specialized exchange relationships
+              </li>
+              <li>
+                <strong>Transportation Infrastructure:</strong> Public
+                investment in systems that expand effective market size
+              </li>
+              <li>
+                <strong>Communication Networks:</strong> Legal frameworks
+                supporting information flow necessary for specialized
+                coordination
+              </li>
+              <li>
+                <strong>Standardization Bodies:</strong> Institutions creating
+                compatible systems that enable specialization across
+                organizations
+              </li>
+              <li>
+                <strong>Education Freedom:</strong> Legal protection of
+                specialized skill development and training options
+              </li>
+            </ul>
+          </div>
+
+          <h4>Current Threats to This Right</h4>
+          <div class="right-enemies">
+            <h4>Institutional Enemies of Productivity:</h4>
+            <ul>
+              <li>
+                <strong>Occupational Licensing Cartels:</strong> Professional
+                restrictions that prevent efficient specialization and market
+                entry
+              </li>
+              <li>
+                <strong>Trade Protectionism:</strong> Tariffs, quotas, and
+                regulations that prevent international division of labor
+              </li>
+              <li>
+                <strong>Non-Compete Agreements:</strong> Employment restrictions
+                that prevent workers from using their specialized skills
+                optimally
+              </li>
+              <li>
+                <strong>Guild Systems:</strong> Industry regulations that limit
+                who can perform specialized tasks
+              </li>
+              <li>
+                <strong>Immigration Restrictions:</strong> Barriers that prevent
+                access to specialized human capital
+              </li>
+              <li>
+                <strong>Transportation Regulations:</strong> Rules that increase
+                costs of connecting specialized producers to markets
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Division of Labor Implementation
+      const ctxDivision = document
+        .getElementById("growthChartDivision")
+        .getContext("2d");
+      let chartDivision;
+
+      function simulateDivisionOfLabor(
+        baseProductivity,
+        maxWorkers,
+        specializationFactor,
+        returnsParameter
+      ) {
+        const workers = Array.from({ length: maxWorkers }, (_, i) => i + 1);
+
+        // Calculate productivity per worker based on division of labor
+        const productivity = workers.map((w) => {
+          const specializationBoost = 1 + (w - 1) * specializationFactor;
+          return (
+            baseProductivity * Math.pow(specializationBoost, returnsParameter)
+          );
+        });
+
+        // Calculate total output (productivity × workers)
+        const totalOutput = workers.map((w, i) => productivity[i] * w);
+
+        if (chartDivision) chartDivision.destroy();
+
+        chartDivision = new Chart(ctxDivision, {
+          type: "line",
+          data: {
+            labels: workers,
+            datasets: [
+              {
+                label: "Productivity per Worker",
+                data: productivity,
+                borderColor: "#17a2b8",
+                backgroundColor: "rgba(23, 162, 184, 0.1)",
+                borderWidth: 3,
+                fill: false,
+                tension: 0.4,
+                yAxisID: "y",
+              },
+              {
+                label: "Total Output",
+                data: totalOutput,
+                borderColor: "#fd7e14",
+                backgroundColor: "rgba(253, 126, 20, 0.1)",
+                borderWidth: 3,
+                fill: false,
+                tension: 0.4,
+                yAxisID: "y1",
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              mode: "index",
+              intersect: false,
+            },
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  title: function (tooltipItems) {
+                    return "Workers: " + tooltipItems[0].label;
+                  },
+                  label: function (context) {
+                    if (context.datasetIndex === 0) {
+                      return (
+                        "Productivity: " +
+                        context.parsed.y.toFixed(1) +
+                        " units/worker"
+                      );
+                    } else {
+                      return (
+                        "Total Output: " +
+                        context.parsed.y.toFixed(0) +
+                        " units"
+                      );
+                    }
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Number of Workers (Market Size)",
+                },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+              y: {
+                type: "linear",
+                display: true,
+                position: "left",
+                title: {
+                  display: true,
+                  text: "Productivity per Worker (units)",
+                },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+              y1: {
+                type: "linear",
+                display: true,
+                position: "right",
+                title: { display: true, text: "Total Output (units)" },
+                grid: { drawOnChartArea: false },
+              },
+            },
+          },
+        });
+
+        // Calculate and display results
+        const productivityGain =
+          (productivity[maxWorkers - 1] / baseProductivity - 1) * 100;
+        const productivityMultiplier =
+          productivity[maxWorkers - 1] / baseProductivity;
+        const smithActualGain = 4800 / 20; // Smith's actual example
+
+        document.getElementById("results-division").innerHTML = `
+                <strong>Division of Labor Results:</strong><br>
+                <strong>Productivity with 1 worker (alone):</strong> ${baseProductivity.toFixed(
+                  1
+                )} units/worker<br>
+                <strong>Productivity with ${maxWorkers} specialized workers:</strong> ${productivity[
+          maxWorkers - 1
+        ].toFixed(1)} units/worker<br>
+                <strong>Productivity gain:</strong> ${productivityMultiplier.toFixed(
+                  1
+                )}× (${productivityGain.toFixed(0)}% increase)<br>
+                <strong>Total output with specialization:</strong> ${totalOutput[
+                  maxWorkers - 1
+                ].toFixed(0)} units<br>
+                <br>
+                <em>Adam Smith's actual pin factory example: 20 pins/day alone → 4,800 pins/day per worker with division of labor 
+                (${smithActualGain}× increase). This demonstrates <strong>increasing returns to scale</strong>—the foundation 
+                of economic growth. Notice: as market size grows (more workers), productivity per worker 
+                <em>increases</em> rather than decreases. This is the opposite of diminishing returns and explains why larger, 
+                freer markets create exponentially more prosperity.</em>
+            `;
+      }
+
+      function updateDivisionSimulation() {
+        const baseProductivity = parseFloat(
+          document.getElementById("baseproductivity-division").value
+        );
+        const maxWorkers = parseInt(
+          document.getElementById("maxworkers-division").value
+        );
+        const specializationFactor = parseFloat(
+          document.getElementById("specialization-division").value
+        );
+        const returnsParameter = parseFloat(
+          document.getElementById("returns-division").value
+        );
+
+        if (
+          !isNaN(baseProductivity) &&
+          !isNaN(maxWorkers) &&
+          !isNaN(specializationFactor) &&
+          !isNaN(returnsParameter) &&
+          baseProductivity > 0 &&
+          maxWorkers > 0 &&
+          specializationFactor > 0 &&
+          returnsParameter > 0
+        ) {
+          simulateDivisionOfLabor(
+            baseProductivity,
+            maxWorkers,
+            specializationFactor,
+            returnsParameter
+          );
+        }
+      }
+
+      // Event listeners
+      document
+        .getElementById("baseproductivity-division")
+        .addEventListener("input", updateDivisionSimulation);
+      document
+        .getElementById("maxworkers-division")
+        .addEventListener("input", updateDivisionSimulation);
+      document
+        .getElementById("specialization-division")
+        .addEventListener("input", updateDivisionSimulation);
+      document
+        .getElementById("returns-division")
+        .addEventListener("input", updateDivisionSimulation);
+
+      // Initial simulation - Adam Smith's Pin Factory values calibrated to match 240× gain
+      simulateDivisionOfLabor(20, 10, 4.23, 1.5);
+
+      // Handle resize
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (chartDivision) chartDivision.resize();
+        }, 100);
+      });
+    </script>
+
+    <!-- Shared Navigation -->
+    <script src="shared-navigation.js"></script>
+    <script>
+      insertNavigation();
+    </script>
+  </body>
+</html>

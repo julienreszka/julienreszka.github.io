@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J-Curve: The Right to Economic Recovery | Economic Simulator</title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Interactive J-Curve simulator with glassmorphism design. Explore economic recovery patterns after policy shocks and the Right to Economic Recovery."
+    />
+    <meta
+      name="keywords"
+      content="J-curve, economic recovery, policy shock, devaluation, economic transition, shock therapy, glassmorphism UI, interactive simulator, responsive design"
+    />
+    <meta name="author" content="Julien Reszka" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#dc3545" />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="J-Curve: The Right to Economic Recovery | Interactive Simulator"
+    />
+    <meta
+      property="og:description"
+      content="Interactive glassmorphism simulator exploring economic recovery patterns and the natural right to economic recovery after policy shocks."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/j-curve.html"
+    />
+    <meta
+      property="og:image"
+      content="https://julienreszka.github.io/economic-simulator/j-curve-preview.png"
+    />
+    <meta property="og:site_name" content="Economic Curves Simulator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="J-Curve: The Right to Economic Recovery"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive simulator exploring economic recovery patterns. Modern glassmorphism design."
+    />
+    <meta name="twitter:creator" content="@julienreszka" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://julienreszka.github.io/economic-simulator/j-curve.html"
+    />
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared-styles.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .jcurve-specific {
+      }
+
+      .jcurve-specific h3 {
+        color: #dc3545 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <!-- Navigation Breadcrumb -->
+      <nav class="nav-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">← Back to All Curves</a>
+      </nav>
+
+      <h1>The J-Curve: Economic Recovery After Policy Shocks</h1>
+
+      <p>
+        <strong>The Right to Economic Recovery:</strong> This curve demonstrates
+        that people have a natural right to economic recovery after necessary
+        policy shocks. While reforms may initially worsen conditions, properly
+        implemented policies should lead to recovery and improved long-term
+        prosperity. The J-shape shows initial deterioration followed by
+        sustained improvement.
+      </p>
+
+      <!-- Interactive Simulation -->
+      <section id="jcurve-section">
+        <h2>Interactive J-Curve Simulator</h2>
+
+        <form id="paramsFormJCurve">
+          <div class="param-group">
+            <label for="base-jcurve">Base Level (e.g., 0):</label>
+            <input
+              type="number"
+              id="base-jcurve"
+              value="0"
+              step="0.5"
+              min="-10"
+              max="10"
+              aria-describedby="base-jcurve-help"
+            />
+            <small id="base-jcurve-help" class="sr-only"
+              >Pre-shock economic indicator</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="depth-jcurve">Dip Depth (positive, e.g., 10):</label>
+            <input
+              type="number"
+              id="depth-jcurve"
+              value="10"
+              step="1"
+              min="1"
+              max="50"
+              aria-describedby="depth-jcurve-help"
+            />
+            <small id="depth-jcurve-help" class="sr-only"
+              >Initial shock severity</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="tau-jcurve">Adjustment Time (τ, e.g., 2):</label>
+            <input
+              type="number"
+              id="tau-jcurve"
+              value="2"
+              step="0.5"
+              min="0.5"
+              max="10"
+              aria-describedby="tau-jcurve-help"
+            />
+            <small id="tau-jcurve-help" class="sr-only"
+              >Time constant for recovery (higher = slower)</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="slope-jcurve">Recovery Slope (e.g., 1):</label>
+            <input
+              type="number"
+              id="slope-jcurve"
+              value="1"
+              step="0.1"
+              min="0"
+              max="5"
+              aria-describedby="slope-jcurve-help"
+            />
+            <small id="slope-jcurve-help" class="sr-only"
+              >Long-term improvement rate</small
+            >
+          </div>
+        </form>
+
+        <div
+          class="chart-container"
+          role="img"
+          aria-labelledby="jcurve-chart-label"
+        >
+          <canvas
+            id="growthChartJCurve"
+            aria-label="Interactive J-Curve showing economic recovery after policy shock"
+          ></canvas>
+          <div id="jcurve-chart-label" class="sr-only">
+            Chart displaying the J-Curve with time on x-axis and economic
+            indicator on y-axis
+          </div>
+        </div>
+
+        <div
+          id="jcurve-insights"
+          class="results-display"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <!-- Detailed Explanation -->
+      <section>
+        <h2>Understanding the J-Curve</h2>
+
+        <div style="margin-top: 15px; line-height: 1.6">
+          <p>
+            The J-Curve describes the pattern of economic indicators following
+            significant policy reforms or external shocks. Named for its
+            distinctive shape resembling the letter "J", this curve shows how
+            economic conditions typically worsen before improving, creating a
+            temporary dip followed by sustained recovery.
+          </p>
+
+          <h3>How It Works</h3>
+          <p>The J-Curve pattern emerges because:</p>
+          <ul>
+            <li>
+              <strong>Initial Disruption:</strong> Policy shocks disrupt
+              existing economic relationships and patterns
+            </li>
+            <li>
+              <strong>Adjustment Period:</strong> Time is needed for markets,
+              institutions, and behavior to adapt to new conditions
+            </li>
+            <li>
+              <strong>Learning Curve:</strong> Actors must learn to operate
+              effectively under new rules
+            </li>
+            <li>
+              <strong>Structural Change:</strong> Resources must be reallocated
+              from less to more efficient uses
+            </li>
+            <li>
+              <strong>Confidence Building:</strong> Trust in new institutions
+              and policies develops gradually
+            </li>
+            <li>
+              <strong>Network Effects:</strong> Benefits compound as more actors
+              adapt to the new system
+            </li>
+          </ul>
+
+          <h3>The Mathematical Model</h3>
+          <p>The curve follows this pattern:</p>
+          <p style="text-align: center; font-style: italic; margin: 20px 0">
+            Indicator = Base + Slope × t - Depth × (1 - e^(-t/τ))
+          </p>
+          <p>Where:</p>
+          <ul>
+            <li><strong>Base:</strong> Pre-shock indicator level</li>
+            <li>
+              <strong>Slope:</strong> Long-term improvement rate from reforms
+            </li>
+            <li><strong>t:</strong> Time since shock</li>
+            <li><strong>Depth:</strong> Maximum initial deterioration</li>
+            <li>
+              <strong>τ (tau):</strong> Time constant determining recovery speed
+            </li>
+          </ul>
+
+          <h3>Why Does It Get Worse First?</h3>
+          <p>The initial dip occurs due to several factors:</p>
+          <ul>
+            <li>
+              <strong>Adjustment Costs:</strong> Resources spent adapting to new
+              conditions rather than production
+            </li>
+            <li>
+              <strong>Uncertainty:</strong> Economic actors postpone decisions
+              until new rules become clear
+            </li>
+            <li>
+              <strong>Institutional Lag:</strong> Time required to build new
+              institutions and dismantle old ones
+            </li>
+            <li>
+              <strong>Skill Mismatch:</strong> Workers' skills may not match
+              demands of the reformed economy
+            </li>
+            <li>
+              <strong>Credit Disruption:</strong> Financial relationships may be
+              disrupted during transition
+            </li>
+            <li>
+              <strong>Political Resistance:</strong> Opposition to reforms can
+              create temporary instability
+            </li>
+          </ul>
+
+          <h3>What This Means for Policy</h3>
+          <ul>
+            <li>
+              <strong>Patience Required:</strong> Reforms need time to show
+              benefits; premature reversal prevents recovery
+            </li>
+            <li>
+              <strong>Communication Critical:</strong> Public understanding of
+              temporary costs is essential for political sustainability
+            </li>
+            <li>
+              <strong>Safety Nets Important:</strong> Cushioning adjustment
+              costs can maintain public support
+            </li>
+            <li>
+              <strong>Credible Commitment:</strong> Markets need confidence that
+              reforms will be sustained
+            </li>
+            <li>
+              <strong>Institutional Quality:</strong> Strong institutions enable
+              faster recovery
+            </li>
+            <li>
+              <strong>Sequencing Matters:</strong> Order of reforms affects
+              depth and duration of the dip
+            </li>
+          </ul>
+
+          <h3>Real-World Examples</h3>
+
+          <h4>Poland's "Shock Therapy" (1990-1992) - A Success Story</h4>
+          <p>
+            Poland implemented comprehensive market reforms in 1990,
+            experiencing a classic J-Curve pattern with initial economic
+            contraction followed by sustained growth that made it one of
+            Europe's most successful transition economies.
+          </p>
+
+          <h5>The Reforms (What They Did)</h5>
+          <ul>
+            <li>
+              <strong>Price Liberalization:</strong> Removed communist-era price
+              controls, allowing markets to determine prices
+            </li>
+            <li>
+              <strong>Currency Stabilization:</strong> Fixed exchange rate to
+              control hyperinflation
+            </li>
+            <li>
+              <strong>Fiscal Reform:</strong> Eliminated subsidies to state
+              enterprises, balanced government budget
+            </li>
+            <li>
+              <strong>Trade Liberalization:</strong> Opened borders to
+              international competition and investment
+            </li>
+            <li>
+              <strong>Privatization:</strong> Transferred state enterprises to
+              private ownership
+            </li>
+            <li>
+              <strong>Legal Framework:</strong> Established property rights and
+              commercial law
+            </li>
+          </ul>
+
+          <h5>The Dip (Things Got Worse)</h5>
+          <ul>
+            <li>
+              <strong>GDP contracted 11.6% in 1990 and 7% in 1991</strong>
+            </li>
+            <li>
+              <strong>Unemployment rose from near zero to 16% by 1993</strong>
+            </li>
+            <li>
+              <strong>Industrial production fell 30% in first two years</strong>
+            </li>
+            <li>
+              <strong
+                >Real wages declined significantly during transition</strong
+              >
+            </li>
+          </ul>
+
+          <h5>The Recovery (Things Got Better)</h5>
+          <ul>
+            <li>
+              <strong
+                >GDP growth returned by 1992 and accelerated through the
+                decade</strong
+              >
+            </li>
+            <li>
+              <strong>Inflation fell from 585% (1990) to 7% (1999)</strong>
+            </li>
+            <li>
+              <strong
+                >Foreign investment surged as confidence in reforms grew</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Productivity increased dramatically with competitive
+                pressures</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Living standards rose above pre-reform levels by
+                mid-1990s</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Poland became first post-communist country to regain pre-1989
+                output levels</strong
+              >
+            </li>
+            <li>
+              <strong
+                >EU membership achieved in 2004, cementing institutional
+                transformation</strong
+              >
+            </li>
+          </ul>
+
+          <h5>Why Poland Succeeded</h5>
+          <p>
+            Poland's success stemmed from comprehensive, credible reforms
+            implemented with strong public support and international assistance.
+            The government maintained political commitment through the difficult
+            adjustment period, allowing the economy to complete its
+            transformation and reap the long-term benefits of market-oriented
+            policies.
+          </p>
+
+          <h4>Argentina's Economic Shock (2023-2025) - Ongoing</h4>
+          <p>
+            Argentina under President Javier Milei began implementing radical
+            economic reforms in late 2023, following a classic J-Curve pattern
+            with initial economic disruption but early signs of improvement.
+          </p>
+
+          <h5>The Reforms (What Was Done)</h5>
+          <ol>
+            <li>
+              <strong>Fiscal Shock:</strong> Eliminated government deficit
+              through massive spending cuts and subsidy removal
+            </li>
+            <li>
+              <strong>Monetary Reform:</strong> Stopped money printing and began
+              dollarization process
+            </li>
+            <li>
+              <strong>Deregulation:</strong> Removed thousands of regulations
+              constraining business activity
+            </li>
+            <li>
+              <strong>Trade Liberalization:</strong> Reduced import restrictions
+              and export controls
+            </li>
+            <li>
+              <strong>Labor Market Reform:</strong> Increased flexibility in
+              employment contracts
+            </li>
+          </ol>
+
+          <h5>The Dip (Things Got Worse)</h5>
+          <ul>
+            <li>
+              <strong
+                >Economic activity contracted 5.1% year-over-year by Q2
+                2024</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Unemployment increased as inefficient sectors downsized</strong
+              >
+            </li>
+            <li>
+              <strong>Initial inflation spike as subsidies were removed</strong>
+            </li>
+            <li>
+              <strong
+                >Social unrest and protests against austerity measures</strong
+              >
+            </li>
+          </ul>
+
+          <h5>The Recovery (Things Got Better)</h5>
+          <ul>
+            <li>
+              <strong
+                >Monthly inflation fell from 25% to 2.4% by October 2024</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Government achieved fiscal surplus for first time in over a
+                decade</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Currency strengthened significantly against the dollar</strong
+              >
+            </li>
+            <li>
+              <strong>Foreign investment and confidence began returning</strong>
+            </li>
+            <li>
+              <strong
+                >Economic activity showed signs of bottoming out by late
+                2024</strong
+              >
+            </li>
+            <li>
+              <strong
+                >Debt spreads narrowed, indicating improved international
+                credibility</strong
+              >
+            </li>
+          </ul>
+
+          <h5>The Ongoing Challenge</h5>
+          <p>
+            Argentina's J-Curve is still unfolding. Success will depend on
+            maintaining political support for reforms through the difficult
+            adjustment period and building institutions that can sustain
+            market-oriented policies over time. Early indicators are positive,
+            but the recovery phase requires continued commitment to structural
+            transformation.
+          </p>
+
+          <h3>Critical Success Factors for J-Curve Recovery</h3>
+          <p>
+            Analysis of successful and failed transitions reveals several
+            institutional and policy factors that determine whether the "J"
+            becomes a lasting recovery or reverts to decline:
+          </p>
+
+          <h4>1. Pre-existing Market Infrastructure</h4>
+          <p>
+            <strong>Essential Foundation:</strong> Countries with some market
+            experience, even if limited, tend to recover faster from economic
+            shocks than those starting from pure command economies.
+          </p>
+          <p>
+            <strong>Poland's Advantage:</strong> Had some private sector
+            activity and market familiarity from 1980s reforms, making
+            transition less disruptive than in countries starting from zero
+            market experience.
+          </p>
+
+          <h4>2. Stable Democratic Institutions</h4>
+          <p>
+            <strong>Political Sustainability:</strong> Democratic institutions
+            provide channels for public frustration while maintaining reform
+            commitment.
+          </p>
+          <p>
+            <strong>Contrast:</strong> Countries with weak democratic
+            institutions often see reforms reversed by authoritarian backlash
+            during the difficult adjustment period, preventing completion of the
+            J-Curve recovery.
+          </p>
+
+          <h4>3. Gradual, Equitable Privatization</h4>
+          <p>
+            <strong>Avoiding Oligarchy:</strong> Privatization processes that
+            create broad-based ownership rather than concentrating assets among
+            insiders tend to build stronger public support for reforms.
+          </p>
+          <p>
+            <strong>Poland's Success:</strong> Used voucher schemes and employee
+            ownership to distribute assets widely, contrasting with countries
+            where privatization enriched only political elites.
+          </p>
+
+          <h4>4. Social Safety Nets</h4>
+          <p>
+            <strong>Political Buffer:</strong> Unemployment insurance,
+            retraining programs, and targeted assistance help maintain public
+            support during the adjustment period.
+          </p>
+          <p>
+            <strong>Critical Balance:</strong> Safety nets must be large enough
+            to cushion adjustment costs but not so large as to prevent necessary
+            economic restructuring.
+          </p>
+
+          <h4>5. External Financial Support</h4>
+          <p>
+            <strong>Transition Financing:</strong> International assistance can
+            provide resources needed to implement reforms while maintaining
+            basic services and social stability.
+          </p>
+          <p>
+            <strong>Poland's Advantage:</strong> Received substantial Western
+            aid and early EU membership prospects that provided both financial
+            resources and institutional anchors for reform.
+          </p>
+
+          <h4>6. Proper Sequencing</h4>
+          <p>
+            <strong>Institutional First:</strong> Building legal framework and
+            property rights before privatization tends to produce better
+            outcomes than privatizing first and building institutions later.
+          </p>
+          <p>
+            <strong>Macroeconomic Stability:</strong> Controlling inflation and
+            achieving fiscal balance early in the process provides stable
+            foundation for other reforms.
+          </p>
+
+          <h4>7. Political Will and Public Patience</h4>
+          <p>
+            <strong>Leadership Commitment:</strong> Political leaders must
+            maintain reform momentum even when facing public criticism during
+            the adjustment period.
+          </p>
+          <p>
+            <strong>Public Education:</strong> Citizens need to understand why
+            temporary costs are necessary for long-term benefits, requiring
+            effective communication strategies.
+          </p>
+
+          <h4>8. Favorable Starting Conditions</h4>
+          <p>
+            <strong>Economic Fundamentals:</strong> Countries with educated
+            populations, developed infrastructure, and industrial capacity tend
+            to recover faster from transition shocks.
+          </p>
+          <p>
+            <strong>Geographic Advantages:</strong> Proximity to developed
+            markets provides opportunities for trade and investment that can
+            accelerate recovery.
+          </p>
+
+          <h4>The Bottom Line on Success Factors</h4>
+          <p>
+            J-Curve recovery is not automatic. It requires sustained political
+            commitment, appropriate institutional frameworks, and often
+            international support to navigate the difficult adjustment period.
+            Countries that maintain reform momentum and build market-supporting
+            institutions typically see strong recovery and improved long-term
+            growth. Those that abandon reforms during the dip often remain
+            trapped in economic stagnation.
+          </p>
+
+          <h3>Key Takeaways</h3>
+          <ul>
+            <li>
+              <strong>Temporary Pain, Permanent Gain:</strong> Well-designed
+              reforms create short-term costs but long-term benefits
+            </li>
+            <li>
+              <strong>Patience is Essential:</strong> Premature policy reversals
+              prevent recovery and waste adjustment costs
+            </li>
+            <li>
+              <strong>Credibility Matters:</strong> Markets need confidence that
+              reforms will be sustained through difficult periods
+            </li>
+            <li>
+              <strong>Institutions Are Key:</strong> Strong institutional
+              frameworks enable faster recovery and better long-term outcomes
+            </li>
+            <li>
+              <strong>Communication Critical:</strong> Public understanding and
+              support are essential for political sustainability
+            </li>
+            <li>
+              <strong>Context Dependent:</strong> Success factors vary by
+              country circumstances and starting conditions
+            </li>
+          </ul>
+
+          <h3>Understanding Negative Values on the Chart</h3>
+          <p>
+            When the J-Curve shows negative values, this represents economic
+            contraction or deterioration below the pre-shock baseline. This is
+            normal and expected during the adjustment period - the key is that
+            the curve eventually recovers and rises above the original level,
+            indicating that the long-term benefits justify the temporary costs.
+          </p>
+
+          <p>
+            The J-Curve demonstrates that the right to economic recovery
+            requires both proper policy design and institutional frameworks that
+            can sustain necessary reforms through difficult adjustment periods.
+          </p>
+        </div>
+      </section>
+
+      <!-- Natural Right Section -->
+      <section class="natural-rights-section">
+        <h2>The Right to Economic Recovery</h2>
+
+        <div class="right-card jcurve-specific">
+          <div class="right-principle">
+            <p>
+              <strong>Negative Right:</strong> Freedom from policy instability
+              and premature reform reversals that prevent economic recovery and
+              trap societies in permanent crisis or stagnation.
+            </p>
+          </div>
+
+          <div class="right-positive">
+            <h4>Essential Institutions for Recovery Protection:</h4>
+            <ul>
+              <li>
+                <strong>Policy Commitment Mechanisms:</strong> Constitutional or
+                legal frameworks that prevent arbitrary reversal of necessary
+                reforms
+              </li>
+              <li>
+                <strong>Independent Technocratic Bodies:</strong> Institutions
+                insulated from political pressure to maintain reform momentum
+                during difficult periods
+              </li>
+              <li>
+                <strong>Transition Support Systems:</strong> Social safety nets
+                and adjustment assistance to maintain public support during
+                recovery
+              </li>
+              <li>
+                <strong>International Anchoring:</strong> Treaties, agreements,
+                or institutional memberships that provide external commitment to
+                reforms
+              </li>
+              <li>
+                <strong>Transparent Progress Monitoring:</strong> Regular public
+                reporting on recovery metrics to maintain accountability and
+                public understanding
+              </li>
+              <li>
+                <strong>Crisis Resolution Procedures:</strong> Clear protocols
+                for handling economic shocks without abandoning long-term reform
+                objectives
+              </li>
+            </ul>
+          </div>
+
+          <div class="right-enemies" style="margin-top: 20px">
+            <h4 style="margin-bottom: 15px; color: var(--text-color)">
+              Current Threats to This Right - Institutional Enemies of Recovery:
+            </h4>
+            <ul>
+              <li>
+                <strong>Electoral Short-termism:</strong> Political cycles that
+                incentivize policy reversals before reforms can show benefits
+              </li>
+              <li>
+                <strong>Populist Reaction:</strong> Movements that exploit
+                temporary adjustment costs to gain power and reverse reforms
+              </li>
+              <li>
+                <strong>Interest Group Resistance:</strong> Organizations
+                benefiting from inefficient status quo that mobilize against
+                necessary changes
+              </li>
+              <li>
+                <strong>International Conditionality Failure:</strong> External
+                requirements that focus on process rather than sustainable
+                outcomes
+              </li>
+              <li>
+                <strong>Institutional Weakness:</strong> Fragile state capacity
+                unable to implement and sustain reform programs
+              </li>
+              <li>
+                <strong>Information Manipulation:</strong> Deliberate distortion
+                of economic data to hide adjustment costs or exaggerate benefits
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // J-Curve Implementation
+      const ctxJCurve = document
+        .getElementById("growthChartJCurve")
+        .getContext("2d");
+      let chartJCurve;
+
+      function simulateCurveJCurve(base, depth, tau, slope) {
+        const time = Array.from({ length: 21 }, (_, i) => i); // 0 to 20 periods
+        const indicator = time.map(
+          (t) => base + slope * t - depth * (1 - Math.exp(-t / tau))
+        );
+
+        if (chartJCurve) chartJCurve.destroy();
+        chartJCurve = new Chart(ctxJCurve, {
+          type: "line",
+          data: {
+            labels: time,
+            datasets: [
+              {
+                label: "Economic Indicator",
+                data: indicator,
+                borderColor: "#dc3545",
+                backgroundColor: "rgba(220, 53, 69, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  title: function (tooltipItems) {
+                    return "Time Period: " + tooltipItems[0].label;
+                  },
+                  label: function (context) {
+                    return "Indicator Value: " + context.parsed.y.toFixed(2);
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Time (periods since shock)" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+              y: {
+                title: { display: true, text: "Economic Indicator Value" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+            },
+          },
+        });
+
+        // Calculate insights
+        let troughTime = 0;
+        let troughValue = base - depth;
+
+        if (slope > 0 && (slope * tau) / depth < 1) {
+          troughTime = -tau * Math.log((slope * tau) / depth);
+          troughValue =
+            base +
+            slope * troughTime -
+            depth * (1 - Math.exp(-troughTime / tau));
+        }
+
+        const recoveryValue =
+          base + slope * 10 - depth * (1 - Math.exp(-10 / tau));
+        const breakEvenTime =
+          time.find((t) => {
+            const value = base + slope * t - depth * (1 - Math.exp(-t / tau));
+            return value >= base;
+          }) || "Not within 20 periods";
+
+        document.getElementById("jcurve-insights").innerHTML = `
+                <strong>J-Curve Recovery Analysis:</strong><br>
+                <strong>Trough Time:</strong> ~${troughTime.toFixed(
+                  1
+                )} periods<br>
+                <strong>Maximum Decline:</strong> ${Math.abs(
+                  troughValue - base
+                ).toFixed(1)} units below baseline<br>
+                <strong>Break-even Time:</strong> ${
+                  breakEvenTime !== "Not within 20 periods"
+                    ? `~${breakEvenTime} periods`
+                    : "Beyond 20 periods"
+                }<br>
+                <strong>10-Period Value:</strong> ${recoveryValue.toFixed(
+                  2
+                )} (${(recoveryValue - base).toFixed(1)} above baseline)<br>
+                <em>Recovery success depends on maintaining reform momentum through the adjustment period.</em>
+            `;
+      }
+
+      function updateJCurveSimulation() {
+        const base = parseFloat(document.getElementById("base-jcurve").value);
+        const depth = parseFloat(document.getElementById("depth-jcurve").value);
+        const tau = parseFloat(document.getElementById("tau-jcurve").value);
+        const slope = parseFloat(document.getElementById("slope-jcurve").value);
+
+        if (
+          !isNaN(base) &&
+          !isNaN(depth) &&
+          !isNaN(tau) &&
+          !isNaN(slope) &&
+          depth > 0 &&
+          tau > 0 &&
+          slope >= 0
+        ) {
+          simulateCurveJCurve(base, depth, tau, slope);
+        }
+      }
+
+      // Event listeners
+      document
+        .getElementById("base-jcurve")
+        .addEventListener("input", updateJCurveSimulation);
+      document
+        .getElementById("depth-jcurve")
+        .addEventListener("input", updateJCurveSimulation);
+      document
+        .getElementById("tau-jcurve")
+        .addEventListener("input", updateJCurveSimulation);
+      document
+        .getElementById("slope-jcurve")
+        .addEventListener("input", updateJCurveSimulation);
+
+      // Initial simulation
+      simulateCurveJCurve(0, 10, 2, 1);
+
+      // Handle resize
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (chartJCurve) chartJCurve.resize();
+        }, 100);
+      });
+    </script>
+
+    <!-- Shared Navigation -->
+    <script src="shared-navigation.js"></script>
+    <script>
+      insertNavigation();
+    </script>
+  </body>
+</html>

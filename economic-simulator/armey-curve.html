@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Armey Curve: The Right to Economic Growth | Economic Simulator
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Interactive Armey Curve simulator with glassmorphism design. Explore government spending vs economic growth and the Right to Economic Growth."
+    />
+    <meta
+      name="keywords"
+      content="Armey curve, government spending, economic growth, fiscal policy, public economics, optimal government size, glassmorphism UI, interactive simulator, responsive design"
+    />
+    <meta name="author" content="Julien Reszka" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#007bff" />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Armey Curve: The Right to Economic Growth | Interactive Simulator"
+    />
+    <meta
+      property="og:description"
+      content="Interactive glassmorphism simulator exploring government spending vs economic growth and the natural right to economic growth with modern, clean interface."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/armey-curve.html"
+    />
+    <meta
+      property="og:image"
+      content="https://julienreszka.github.io/economic-simulator/armey-curve-preview.png"
+    />
+    <meta property="og:site_name" content="Economic Curves Simulator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Armey Curve: The Right to Economic Growth"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive simulator exploring government spending vs economic growth. Modern glassmorphism design."
+    />
+    <meta name="twitter:creator" content="@julienreszka" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://julienreszka.github.io/economic-simulator/armey-curve.html"
+    />
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared-styles.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .armey-specific {
+      }
+
+      .armey-specific h3 {
+        color: #007bff !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <!-- Navigation Breadcrumb -->
+      <nav class="nav-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">← Back to All Curves</a>
+      </nav>
+
+      <h1>The Armey Curve: Government Spending vs Economic Growth</h1>
+
+      <p>
+        <strong>The Right to Economic Growth:</strong> This curve demonstrates
+        that people have a natural right to economic growth that is optimized
+        when government spending is neither too little nor too much. The curve
+        shows the relationship between government spending as a percentage of
+        GDP and the resulting economic growth rate.
+      </p>
+
+      <!-- Interactive Simulation -->
+      <section id="armey-section">
+        <h2>Interactive Armey Curve Simulator</h2>
+
+        <form id="paramsFormArmey">
+          <div class="param-group">
+            <label for="beta0-armey"
+              >Intercept (β₀, base growth, e.g., 4.5):</label
+            >
+            <input
+              type="number"
+              id="beta0-armey"
+              value="4.5"
+              step="0.1"
+              min="0"
+              max="10"
+              aria-describedby="beta0-armey-help"
+            />
+            <small id="beta0-armey-help" class="sr-only"
+              >Natural growth rate without government intervention</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="beta1-armey"
+              >Linear coefficient (β₁, positive, e.g., 0.5):</label
+            >
+            <input
+              type="number"
+              id="beta1-armey"
+              value="0.5"
+              step="0.1"
+              min="0"
+              max="2"
+              aria-describedby="beta1-armey-help"
+            />
+            <small id="beta1-armey-help" class="sr-only"
+              >Initial positive effect of government spending</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="beta2-armey"
+              >Quadratic coefficient (β₂, negative, e.g., -0.01):</label
+            >
+            <input
+              type="number"
+              id="beta2-armey"
+              value="-0.01"
+              step="0.001"
+              max="0"
+              min="-0.1"
+              aria-describedby="beta2-armey-help"
+            />
+            <small id="beta2-armey-help" class="sr-only"
+              >Diminishing returns effect (must be negative)</small
+            >
+          </div>
+        </form>
+
+        <div
+          class="chart-container"
+          role="img"
+          aria-labelledby="armey-chart-label"
+        >
+          <canvas
+            id="growthChartArmey"
+            aria-label="Interactive Armey Curve showing relationship between government spending and economic growth"
+          ></canvas>
+          <div id="armey-chart-label" class="sr-only">
+            Chart displaying the Armey Curve with government spending on x-axis
+            and GDP growth rate on y-axis
+          </div>
+        </div>
+
+        <div
+          id="optimal-armey"
+          class="results-display"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <!-- Detailed Explanation -->
+      <section>
+        <h2>Understanding the Armey Curve</h2>
+
+        <div style="margin-top: 15px; line-height: 1.6">
+          <p>
+            The Armey Curve illustrates an inverted U-shaped relationship
+            between government spending and economic growth. Named after
+            economist Richard Armey, this curve suggests there exists an optimal
+            level of government spending that maximizes economic growth.
+          </p>
+
+          <h3>Curve Structure</h3>
+          <p>The curve demonstrates three distinct phases:</p>
+          <ul>
+            <li>
+              <strong>Rising Phase (0-25% typically):</strong> Initial
+              government spending provides essential infrastructure, legal
+              framework, and public goods that enhance productivity and growth
+            </li>
+            <li>
+              <strong>Peak (25-35% typically):</strong> Optimal government size
+              where growth is maximized
+            </li>
+            <li>
+              <strong>Declining Phase (35%+):</strong> Excessive spending
+              creates inefficiencies, crowds out private investment, and reduces
+              growth through higher taxes and regulatory burden
+            </li>
+          </ul>
+
+          <h3>Mathematical Formulation</h3>
+          <p>The curve is expressed with a quadratic equation:</p>
+          <p style="text-align: center; font-style: italic; margin: 20px 0">
+            Growth Rate = β₀ + β₁ × Government Spending + β₂ × (Government
+            Spending)²
+          </p>
+          <p>
+            Where β₀ represents baseline growth, β₁ captures initial positive
+            effects, and β₂ (negative) represents diminishing returns.
+          </p>
+
+          <h4>Understanding the Intercept (β₀)</h4>
+          <p>
+            The intercept represents the natural economic growth rate in the
+            absence of government intervention. This baseline reflects:
+          </p>
+          <ul>
+            <li>
+              <strong>Entrepreneurial Innovation:</strong> Natural human
+              creativity and problem-solving driving new products and services
+            </li>
+            <li>
+              <strong>Voluntary Exchange:</strong> Wealth creation through
+              mutually beneficial trade
+            </li>
+            <li>
+              <strong>Capital Accumulation:</strong> Private savings and
+              investment in productive assets
+            </li>
+            <li>
+              <strong>Knowledge Spillovers:</strong> Information sharing and
+              learning between economic actors
+            </li>
+            <li>
+              <strong>Competition:</strong> Market pressure driving efficiency
+              improvements
+            </li>
+            <li>
+              <strong>Specialization:</strong> Gains from division of labor and
+              comparative advantage
+            </li>
+          </ul>
+          <p>
+            Historical evidence suggests this baseline ranges from 2-4% annually
+            in developed economies, representing the economy's natural tendency
+            toward improvement when people are free to innovate, trade, and
+            invest.
+          </p>
+
+          <h3>Policy Implications</h3>
+          <ul>
+            <li>
+              <strong>Optimal Size:</strong> There exists a "sweet spot" for
+              government involvement in the economy
+            </li>
+            <li>
+              <strong>Diminishing Returns:</strong> Beyond the optimal point,
+              additional spending reduces rather than enhances growth
+            </li>
+            <li>
+              <strong>Efficiency Focus:</strong> The quality and targeting of
+              spending matters as much as the quantity
+            </li>
+            <li>
+              <strong>Crowding Out:</strong> Excessive government activity can
+              displace more efficient private sector activity
+            </li>
+          </ul>
+
+          <h3>Historical Context</h3>
+          <p>
+            The concept emerged from observations that countries with very small
+            governments (lacking basic institutions) and very large governments
+            (socialist economies) both experienced slower growth than countries
+            with moderate government sizes. The curve gained prominence in
+            supply-side economics discussions of the 1980s and remains relevant
+            in contemporary fiscal policy debates.
+          </p>
+
+          <h3>Understanding Negative Growth Rate Values</h3>
+          <p>
+            When the curve shows negative growth rates, this represents economic
+            contraction or recession. This can occur when:
+          </p>
+          <ul>
+            <li>
+              <strong>Government Overreach:</strong> Spending levels so high
+              that they severely crowd out private investment and consumption
+            </li>
+            <li>
+              <strong>Fiscal Crisis:</strong> Unsustainable debt levels leading
+              to economic instability
+            </li>
+            <li>
+              <strong>Regulatory Burden:</strong> Excessive rules and compliance
+              costs that stifle business activity
+            </li>
+            <li>
+              <strong>Tax Effects:</strong> High tax rates necessary to fund
+              large government reducing work and investment incentives
+            </li>
+            <li>
+              <strong>Misallocation:</strong> Government spending on
+              unproductive activities diverts resources from growth-enhancing
+              uses
+            </li>
+            <li>
+              <strong>Debt Service:</strong> Large interest payments on
+              government debt consuming resources that could drive growth
+            </li>
+          </ul>
+          <p>
+            Real-world examples include Greece during its debt crisis
+            (2010-2015) where government spending exceeded 50% of GDP and the
+            economy contracted by over 25%, and Venezuela where massive
+            government intervention led to economic collapse.
+          </p>
+
+          <h3>Comparative Findings</h3>
+          <ul>
+            <li>
+              <strong>Developed Countries:</strong> Optimal government size
+              typically ranges from 25-35% of GDP
+            </li>
+            <li>
+              <strong>Developing Countries:</strong> May benefit from slightly
+              larger government role initially due to infrastructure needs
+            </li>
+            <li>
+              <strong>Quality Matters:</strong> Countries with efficient
+              institutions can sustain larger government sectors without growth
+              penalties
+            </li>
+          </ul>
+
+          <p>
+            The Armey Curve provides a framework for understanding that while
+            government has important roles in providing public goods and
+            maintaining institutions, there are clear limits beyond which
+            government growth becomes counterproductive to overall economic
+            prosperity.
+          </p>
+        </div>
+      </section>
+
+      <!-- Natural Right Section -->
+      <section class="natural-rights-section">
+        <h2>The Right to Economic Growth</h2>
+
+        <div class="right-card armey-specific">
+          <div class="right-principle">
+            <p>
+              <strong>Negative Right:</strong> Freedom from excessive government
+              interference in economic activity that stifles growth through
+              overtaxation, overregulation, and misallocation of resources.
+            </p>
+          </div>
+
+          <h4>Positive Institutional Foundations Required</h4>
+          <div class="right-positive">
+            <h4>Essential Institutions for Growth Protection:</h4>
+            <ul>
+              <li>
+                <strong>Constitutional Spending Limits:</strong> Legal caps on
+                government expenditure to prevent growth-killing fiscal
+                expansion
+              </li>
+              <li>
+                <strong>Independent Central Banking:</strong> Monetary policy
+                insulated from political pressure to prevent inflation that
+                erodes growth
+              </li>
+              <li>
+                <strong>Regulatory Impact Assessment:</strong> Mandatory
+                cost-benefit analysis before implementing growth-affecting
+                regulations
+              </li>
+              <li>
+                <strong>Fiscal Rules and Transparency:</strong> Budget processes
+                that prioritize growth-enhancing over growth-reducing
+                expenditures
+              </li>
+              <li>
+                <strong>Tax Competition Frameworks:</strong> Legal structures
+                allowing jurisdictional competition to discipline excessive
+                taxation
+              </li>
+              <li>
+                <strong>Sunset Clauses:</strong> Automatic expiration of
+                government programs unless actively renewed with justification
+              </li>
+            </ul>
+          </div>
+
+          <h4>Current Threats to This Right</h4>
+          <div class="right-enemies">
+            <h4>Institutional Enemies of Growth:</h4>
+            <ul>
+              <li>
+                <strong>Debt Monetization:</strong> Central bank financing of
+                government deficits creating inflationary pressure
+              </li>
+              <li>
+                <strong>Regulatory Capture:</strong> Agencies serving incumbent
+                interests rather than economic efficiency
+              </li>
+              <li>
+                <strong>Unfunded Mandates:</strong> Government requirements
+                imposing costs without providing resources
+              </li>
+              <li>
+                <strong>Procyclical Fiscal Policy:</strong> Government spending
+                that amplifies rather than smooths business cycles
+              </li>
+              <li>
+                <strong>Tax Code Complexity:</strong> Compliance costs and
+                economic distortions from convoluted tax systems
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Armey Curve Implementation
+      const ctxArmey = document
+        .getElementById("growthChartArmey")
+        .getContext("2d");
+      let chartArmey;
+
+      function simulateCurveArmey(beta0, beta1, beta2) {
+        const spending = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
+        const growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
+
+        if (chartArmey) chartArmey.destroy();
+        chartArmey = new Chart(ctxArmey, {
+          type: "line",
+          data: {
+            labels: spending,
+            datasets: [
+              {
+                label: "GDP Growth Rate (%)",
+                data: growth,
+                borderColor: "#007bff",
+                backgroundColor: "rgba(0, 123, 255, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  title: function (tooltipItems) {
+                    return (
+                      "Government Spending: " +
+                      tooltipItems[0].label +
+                      "% of GDP"
+                    );
+                  },
+                  label: function (context) {
+                    return "Growth Rate: " + context.parsed.y.toFixed(2) + "%";
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "Government Spending (% of GDP)",
+                },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+              y: {
+                title: { display: true, text: "GDP Growth Rate (%)" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+              },
+            },
+          },
+        });
+
+        // Calculate optimal
+        const optimal = -beta1 / (2 * beta2);
+        const maxGrowth = beta0 + beta1 * optimal + beta2 * optimal * optimal;
+
+        document.getElementById("optimal-armey").innerHTML = `
+                <strong>Optimal Government Spending:</strong> ${optimal.toFixed(
+                  2
+                )}% of GDP<br>
+                <strong>Maximum Growth Rate:</strong> ${maxGrowth.toFixed(
+                  2
+                )}%<br>
+                <em>This is where government spending maximizes economic growth while minimizing inefficiency.</em>
+            `;
+      }
+
+      function updateArmeySimulation() {
+        const beta0 = parseFloat(document.getElementById("beta0-armey").value);
+        const beta1 = parseFloat(document.getElementById("beta1-armey").value);
+        const beta2 = parseFloat(document.getElementById("beta2-armey").value);
+
+        if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
+          simulateCurveArmey(beta0, beta1, beta2);
+        }
+      }
+
+      // Event listeners
+      document
+        .getElementById("beta0-armey")
+        .addEventListener("input", updateArmeySimulation);
+      document
+        .getElementById("beta1-armey")
+        .addEventListener("input", updateArmeySimulation);
+      document
+        .getElementById("beta2-armey")
+        .addEventListener("input", updateArmeySimulation);
+
+      // Initial simulation
+      simulateCurveArmey(4.5, 0.5, -0.01);
+
+      // Handle resize
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (chartArmey) chartArmey.resize();
+        }, 100);
+      });
+    </script>
+
+    <!-- Shared Navigation -->
+    <script src="shared-navigation.js"></script>
+    <script>
+      insertNavigation();
+    </script>
+  </body>
+</html>

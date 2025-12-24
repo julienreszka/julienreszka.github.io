@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Supply & Demand: The Right to Fair Prices | Economic Simulator
+    </title>
+
+    <!-- SEO Meta Tags -->
+    <meta
+      name="description"
+      content="Interactive Supply and Demand simulator with glassmorphism design. Explore market equilibrium, price discovery, and the Right to Fair Prices."
+    />
+    <meta
+      name="keywords"
+      content="supply and demand, market equilibrium, price discovery, free markets, spontaneous order, fair prices, glassmorphism UI, interactive simulator, responsive design"
+    />
+    <meta name="author" content="Julien Reszka" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#6f42c1" />
+
+    <!-- Open Graph -->
+    <meta
+      property="og:title"
+      content="Supply & Demand: The Right to Fair Prices | Interactive Simulator"
+    />
+    <meta
+      property="og:description"
+      content="Interactive glassmorphism simulator exploring market equilibrium and the natural right to fair prices through voluntary exchange."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/supply-demand.html"
+    />
+    <meta
+      property="og:image"
+      content="https://julienreszka.github.io/economic-simulator/supply-demand-preview.png"
+    />
+    <meta property="og:site_name" content="Economic Curves Simulator" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Supply & Demand: The Right to Fair Prices"
+    />
+    <meta
+      name="twitter:description"
+      content="Interactive simulator exploring market equilibrium and price discovery. Modern glassmorphism interface."
+    />
+    <meta name="twitter:creator" content="@julienreszka" />
+
+    <!-- Canonical URL -->
+    <link
+      rel="canonical"
+      href="https://julienreszka.github.io/economic-simulator/supply-demand.html"
+    />
+
+    <!-- Shared Styles -->
+    <link rel="stylesheet" href="shared-styles.css" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+      .supplydemand-specific {
+      }
+
+      .supplydemand-specific h3 {
+        color: #6f42c1 !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <!-- Navigation Breadcrumb -->
+      <nav class="nav-breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">← Back to All Curves</a>
+      </nav>
+
+      <h1>Supply & Demand: Market Equilibrium and Fair Prices</h1>
+
+      <p>
+        <strong>The Right to Fair Prices:</strong> This fundamental economic
+        model demonstrates that people have a natural right to fair prices
+        determined by voluntary exchange between buyers and sellers. When
+        markets are free from interference, supply and demand naturally discover
+        the equilibrium price that balances the needs of both consumers and
+        producers.
+      </p>
+
+      <!-- Interactive Simulation -->
+      <section id="supplydemand-section">
+        <h2>Interactive Supply & Demand Simulator</h2>
+
+        <form id="paramsFormSupplyDemand">
+          <div class="param-group">
+            <label for="a-supplydemand">Demand Factor (a, e.g., 150):</label>
+            <input
+              type="number"
+              id="a-supplydemand"
+              value="150"
+              step="10"
+              min="50"
+              max="500"
+              aria-describedby="a-supplydemand-help"
+            />
+            <small id="a-supplydemand-help" class="sr-only"
+              >Controls maximum willingness to pay</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="b-supplydemand"
+              >Demand Sensitivity (b, e.g., 0.02):</label
+            >
+            <input
+              type="number"
+              id="b-supplydemand"
+              value="0.02"
+              step="0.01"
+              min="0.001"
+              max="0.1"
+              aria-describedby="b-supplydemand-help"
+            />
+            <small id="b-supplydemand-help" class="sr-only"
+              >How steeply demand falls with quantity</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="c-supplydemand">Supply Base Cost (c, e.g., 10):</label>
+            <input
+              type="number"
+              id="c-supplydemand"
+              value="10"
+              step="5"
+              min="0"
+              max="50"
+              aria-describedby="c-supplydemand-help"
+            />
+            <small id="c-supplydemand-help" class="sr-only"
+              >Minimum cost to produce anything</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="d-supplydemand"
+              >Supply Cost Growth (d, e.g., 0.5):</label
+            >
+            <input
+              type="number"
+              id="d-supplydemand"
+              value="0.5"
+              step="0.1"
+              min="0.1"
+              max="2"
+              aria-describedby="d-supplydemand-help"
+            />
+            <small id="d-supplydemand-help" class="sr-only"
+              >How steeply costs rise with quantity</small
+            >
+          </div>
+        </form>
+
+        <div
+          class="chart-container"
+          role="img"
+          aria-labelledby="supplydemand-chart-label"
+        >
+          <canvas
+            id="growthChartSupplyDemand"
+            aria-label="Interactive Supply and Demand curves showing market equilibrium"
+          ></canvas>
+          <div id="supplydemand-chart-label" class="sr-only">
+            Chart displaying Supply and Demand curves with quantity on x-axis
+            and price on y-axis
+          </div>
+        </div>
+
+        <div
+          id="equilibrium-supplydemand"
+          class="results-display"
+          aria-live="polite"
+        ></div>
+      </section>
+
+      <!-- Detailed Explanation -->
+      <section>
+        <h2>Understanding Supply and Demand</h2>
+
+        <div style="margin-top: 15px; line-height: 1.6">
+          <p>
+            Supply and demand curves represent the fundamental mechanism by
+            which free markets determine fair prices. This model shows how
+            voluntary exchanges between buyers (demand) and sellers (supply)
+            naturally discover the equilibrium price and quantity that satisfies
+            both parties without coercion.
+          </p>
+
+          <h3>Historical Development of the Supply and Demand Diagram</h3>
+          <p>
+            The graphical representation of supply and demand evolved through
+            several key contributions:
+          </p>
+          <ul>
+            <li>
+              <strong>Adam Smith (1776):</strong> "The Wealth of Nations"
+              described how market prices are determined by the "higgling and
+              bargaining" between buyers and sellers
+            </li>
+            <li>
+              <strong>Antoine Augustin Cournot (1838):</strong> First
+              mathematical treatment of supply and demand relationships
+            </li>
+            <li>
+              <strong>Fleeming Jenkin (1870):</strong> Created the first
+              graphical representation with price and quantity axes
+            </li>
+            <li>
+              <strong>Alfred Marshall (1890):</strong> "Principles of Economics"
+              popularized the X-shaped diagram we use today
+            </li>
+            <li>
+              <strong>Léon Walras (1874):</strong> Developed the mathematics of
+              market equilibrium and general equilibrium theory
+            </li>
+          </ul>
+          <p>
+            These economists recognized that markets are not chaotic but follow
+            discoverable patterns that reflect human preferences and
+            constraints. The diagram captures this spontaneous order visually,
+            showing how millions of individual decisions create predictable
+            market outcomes.
+          </p>
+
+          <h3>Why Curved Lines? (Not Straight Lines)</h3>
+          <p>
+            Real supply and demand relationships are curved rather than straight
+            because they reflect fundamental economic realities:
+          </p>
+          <ul>
+            <li>
+              <strong>Diminishing Marginal Utility (Demand Curve):</strong> Each
+              additional unit of a good provides less satisfaction than the
+              previous one, so consumers are willing to pay progressively lower
+              prices for additional quantities
+            </li>
+            <li>
+              <strong>Increasing Marginal Costs (Supply Curve):</strong> As
+              producers expand output, they must use less efficient resources
+              and methods, causing per-unit costs to rise
+            </li>
+            <li>
+              <strong>Resource Constraints:</strong> Both consumers (limited
+              income) and producers (limited capacity) face constraints that
+              create non-linear responses
+            </li>
+            <li>
+              <strong>Substitution Effects:</strong> As prices change, people
+              substitute toward alternatives, creating curved demand
+              relationships
+            </li>
+            <li>
+              <strong>Capacity Utilization:</strong> Producers face different
+              cost structures at different output levels, creating curved supply
+              relationships
+            </li>
+          </ul>
+          <p>
+            These curved relationships more accurately reflect how real markets
+            behave, where small price changes near equilibrium have different
+            effects than large price changes far from equilibrium.
+          </p>
+
+          <h3>Spontaneous Order and the Market Discovery Process</h3>
+          <p>
+            The intersection of supply and demand curves represents more than
+            just a mathematical solution—it demonstrates the spontaneous order
+            that emerges from voluntary human interaction. This process, first
+            described by Adam Smith's "invisible hand" and later developed by
+            Friedrich Hayek, shows how individual pursuit of self-interest
+            creates beneficial social outcomes without central coordination.
+          </p>
+
+          <h4>The Continuous Discovery Process</h4>
+          <p>
+            Markets are not static but engage in continuous price discovery
+            through:
+          </p>
+          <ul>
+            <li>
+              <strong>Information Aggregation:</strong> Prices incorporate
+              millions of individual assessments of value, cost, and scarcity
+            </li>
+            <li>
+              <strong>Preference Revelation:</strong> People's actual choices
+              (not stated preferences) reveal their true valuations
+            </li>
+            <li>
+              <strong>Cost Discovery:</strong> Competition reveals the most
+              efficient production methods and resource allocations
+            </li>
+            <li>
+              <strong>Innovation Incentives:</strong> Profit opportunities
+              signal where resources can be used more efficiently
+            </li>
+            <li>
+              <strong>Coordination Mechanism:</strong> Prices coordinate the
+              actions of millions without requiring central planning
+            </li>
+            <li>
+              <strong>Error Correction:</strong> Losses signal mistakes and
+              redirect resources toward better uses
+            </li>
+            <li>
+              <strong>Dynamic Adjustment:</strong> Markets continuously adapt to
+              changing conditions, preferences, and technologies
+            </li>
+          </ul>
+
+          <h4>The Crucial Role of Non-Interference</h4>
+          <p>
+            This spontaneous order requires freedom from interference to
+            function properly:
+          </p>
+
+          <h5>Price Controls Disrupt Discovery</h5>
+          <ul>
+            <li>
+              <strong>Price Ceilings (Maximum Prices):</strong> Create shortages
+              by preventing prices from rising to clear markets
+            </li>
+            <li>
+              <strong>Price Floors (Minimum Prices):</strong> Create surpluses
+              by preventing prices from falling to equilibrium
+            </li>
+            <li>
+              <strong>Information Loss:</strong> Controlled prices can't signal
+              true scarcity or abundance
+            </li>
+            <li>
+              <strong>Resource Misallocation:</strong> Resources flow toward
+              politically favored rather than economically efficient uses
+            </li>
+          </ul>
+
+          <h5>Quantity Controls Prevent Optimization</h5>
+          <ul>
+            <li>
+              <strong>Production Quotas:</strong> Limit supply artificially,
+              raising prices above competitive levels
+            </li>
+            <li>
+              <strong>Import/Export Restrictions:</strong> Prevent international
+              trade from optimizing resource allocation
+            </li>
+            <li>
+              <strong>Licensing Requirements:</strong> Restrict entry and reduce
+              competition
+            </li>
+            <li>
+              <strong>Zoning and Permits:</strong> Limit supply of housing,
+              commercial space, and services
+            </li>
+          </ul>
+
+          <h5>Market Intervention Creates Cascading Effects</h5>
+          <ul>
+            <li>
+              <strong>Unintended Consequences:</strong> Fixing one "problem"
+              often creates larger problems elsewhere
+            </li>
+            <li>
+              <strong>Black Markets:</strong> Prohibited voluntary exchanges
+              move underground where they're less safe and efficient
+            </li>
+            <li>
+              <strong>Rent-Seeking:</strong> Resources shift from production to
+              lobbying for special privileges
+            </li>
+            <li>
+              <strong>Innovation Suppression:</strong> Protecting existing
+              interests reduces pressure for improvement
+            </li>
+          </ul>
+
+          <h5>Why "Fair Price" Requires Freedom</h5>
+          <p>
+            The equilibrium price discovered by free markets is fair because it:
+          </p>
+          <ul>
+            <li>
+              <strong>Reflects Voluntary Choice:</strong> Both buyers and
+              sellers agree to the transaction
+            </li>
+            <li>
+              <strong>Incorporates All Information:</strong> Prices reflect all
+              available information about costs, preferences, and alternatives
+            </li>
+            <li>
+              <strong>Treats All Equally:</strong> Everyone faces the same
+              market price regardless of political connections
+            </li>
+            <li>
+              <strong>Maximizes Benefit:</strong> Creates the largest possible
+              total benefit for all participants
+            </li>
+            <li>
+              <strong>Enables Planning:</strong> Provides reliable information
+              for individual decision-making
+            </li>
+            <li>
+              <strong>Adapts to Change:</strong> Automatically adjusts to new
+              conditions without bureaucratic delays
+            </li>
+          </ul>
+
+          <h5>Historical Evidence</h5>
+          <p>
+            Throughout history, societies that allow free price discovery have
+            consistently achieved:
+          </p>
+          <ul>
+            <li>
+              <strong>Higher Living Standards:</strong> Better allocation of
+              resources leads to more prosperity
+            </li>
+            <li>
+              <strong>Greater Innovation:</strong> Freedom to profit from
+              improvements drives technological progress
+            </li>
+            <li>
+              <strong>More Choices:</strong> Competitive markets provide diverse
+              options to meet varied preferences
+            </li>
+            <li>
+              <strong>Lower Inequality:</strong> Competition drives down prices
+              and raises wages over time
+            </li>
+            <li>
+              <strong>Peaceful Cooperation:</strong> Voluntary exchange creates
+              mutual benefit and reduces conflict
+            </li>
+          </ul>
+
+          <h5>The Socialist Calculation Problem</h5>
+          <p>
+            Ludwig von Mises and Friedrich Hayek demonstrated that central
+            planners cannot determine fair prices because:
+          </p>
+          <ul>
+            <li>
+              <strong>Information Problem:</strong> No central authority can
+              gather all the dispersed information that markets aggregate
+            </li>
+            <li>
+              <strong>Calculation Problem:</strong> Without market prices,
+              planners cannot calculate costs and benefits
+            </li>
+            <li>
+              <strong>Incentive Problem:</strong> Bureaucrats lack the
+              profit/loss signals that guide market participants
+            </li>
+            <li>
+              <strong>Knowledge Problem:</strong> Much important knowledge is
+              tacit and local, not available to distant planners
+            </li>
+          </ul>
+
+          <h3>Contemporary Applications</h3>
+          <p>Understanding supply and demand helps explain modern phenomena:</p>
+
+          <h4>Housing Crisis</h4>
+          <p>
+            Cities with strict zoning and rent control experience housing
+            shortages because these policies prevent natural supply and demand
+            adjustments. Cities with freer housing markets maintain more
+            affordable and abundant housing over time.
+          </p>
+
+          <h4>Healthcare Costs</h4>
+          <p>
+            Healthcare sectors with more direct price transparency and
+            competition (like cosmetic surgery and veterinary care) show
+            declining real prices over time, while highly regulated sectors show
+            rising prices despite technological improvements.
+          </p>
+
+          <h4>Minimum Wage Effects</h4>
+          <p>
+            When governments set wages above equilibrium levels, quantity
+            demanded for labor falls below quantity supplied, creating
+            unemployment particularly among entry-level workers.
+          </p>
+
+          <h4>International Trade</h4>
+          <p>
+            Countries that allow free trade access to global supply and demand,
+            leading to lower consumer prices and higher producer efficiency
+            through competitive pressure.
+          </p>
+
+          <h3>The Mathematical Foundation</h3>
+          <p>Our simulation uses curved demand and supply functions:</p>
+          <ul>
+            <li>
+              <strong>Demand:</strong> P = a / (1 + b×Q)^0.5 - Diminishing
+              marginal utility
+            </li>
+            <li>
+              <strong>Supply:</strong> P = c + d × Q^1.3 - Increasing marginal
+              costs
+            </li>
+          </ul>
+          <p>
+            These functions capture the essential non-linear nature of real
+            market relationships while remaining mathematically tractable.
+          </p>
+
+          <h3>Key Insights</h3>
+          <ul>
+            <li>
+              <strong>Market Equilibrium is Discovered, Not Imposed:</strong>
+              The intersection emerges from voluntary choices, not government
+              decree
+            </li>
+            <li>
+              <strong>Prices Carry Information:</strong> Market prices
+              communicate more information than any planner could gather
+            </li>
+            <li>
+              <strong>Voluntary Exchange Benefits Both Parties:</strong> Trades
+              only occur when both buyer and seller expect to benefit
+            </li>
+            <li>
+              <strong>Competition Protects Consumers:</strong> Competitive
+              pressure keeps prices fair and quality high
+            </li>
+            <li>
+              <strong>Freedom Enables Prosperity:</strong> Removing barriers to
+              voluntary exchange improves outcomes for everyone
+            </li>
+          </ul>
+
+          <p>
+            The supply and demand model demonstrates that fair prices emerge
+            naturally from voluntary human interaction when people are free to
+            make their own economic choices. This spontaneous order creates
+            prosperity without requiring any central authority to determine what
+            prices "should" be.
+          </p>
+        </div>
+      </section>
+
+      <!-- Natural Right Section -->
+      <section class="natural-rights-section">
+        <h2>The Right to Fair Prices</h2>
+
+        <div class="right-card supplydemand-specific">
+          <div class="right-principle">
+            <p>
+              <strong>Negative Right:</strong> Freedom from price controls,
+              market manipulation, and artificial restrictions that prevent
+              voluntary exchange from discovering fair market prices.
+            </p>
+          </div>
+
+          <div class="right-positive">
+            <h4>Essential Institutions for Fair Price Discovery:</h4>
+            <ul>
+              <li>
+                <strong>Property Rights Protection:</strong> Legal frameworks
+                ensuring secure ownership and ability to transfer goods
+                voluntarily
+              </li>
+              <li>
+                <strong>Contract Enforcement:</strong> Court systems that
+                reliably enforce voluntary agreements between buyers and sellers
+              </li>
+              <li>
+                <strong>Anti-Monopoly Framework:</strong> Legal structures
+                preventing artificial market concentration while preserving
+                competitive dynamics
+              </li>
+              <li>
+                <strong>Information Transparency Rules:</strong> Requirements
+                for honest disclosure of product quality and pricing terms
+              </li>
+              <li>
+                <strong>Free Entry/Exit Provisions:</strong> Legal elimination
+                of unnecessary barriers to market participation
+              </li>
+              <li>
+                <strong>Currency Stability Systems:</strong> Monetary
+                institutions that maintain stable units of account for price
+                discovery
+              </li>
+              <li>
+                <strong>Trade Freedom Protections:</strong> Constitutional
+                limitations on government restrictions of voluntary commerce
+              </li>
+            </ul>
+          </div>
+
+          <div class="right-enemies" style="margin-top: 20px">
+            <h4 style="margin-bottom: 15px; color: var(--text-color)">
+              Current Threats to This Right - Institutional Enemies of Fair
+              Pricing:
+            </h4>
+            <ul>
+              <li>
+                <strong>Price Control Regimes:</strong> Government-imposed price
+                ceilings and floors that prevent market clearing
+              </li>
+              <li>
+                <strong>Regulatory Capture:</strong> Industry incumbents using
+                regulation to exclude competitors and maintain artificial
+                pricing power
+              </li>
+              <li>
+                <strong>Licensing Cartels:</strong> Professional licensing that
+                restricts supply to inflate prices beyond competitive levels
+              </li>
+              <li>
+                <strong>Zoning Restrictions:</strong> Land use controls that
+                artificially constrain supply and inflate property values
+              </li>
+              <li>
+                <strong>Import Protection:</strong> Tariffs and quotas that
+                prevent international competition from disciplining domestic
+                prices
+              </li>
+              <li>
+                <strong>Monetary Manipulation:</strong> Central bank policies
+                that distort price signals through artificial interest rates and
+                money creation
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      // Supply and Demand Implementation
+      const ctxSupplyDemand = document
+        .getElementById("growthChartSupplyDemand")
+        .getContext("2d");
+      let chartSupplyDemand;
+
+      function simulateSupplyDemand(a, b, c, d) {
+        // Find equilibrium using bisection method
+        let qLow = 0.01;
+        let qHigh = 500;
+        let eqQ = 50;
+
+        const calcDemandPrice = (q) => a / Math.pow(1 + b * q, 0.5);
+        const calcSupplyPrice = (q) => c + d * Math.pow(q, 1.3);
+        const excessDemand = (q) => calcDemandPrice(q) - calcSupplyPrice(q);
+
+        const edLow = excessDemand(qLow);
+        const edHigh = excessDemand(qHigh);
+
+        if (edLow * edHigh > 0) {
+          alert(
+            "No equilibrium exists with these parameters. Please adjust values."
+          );
+          return;
+        }
+
+        // Bisection method to find equilibrium
+        for (let i = 0; i < 100; i++) {
+          eqQ = (qLow + qHigh) / 2;
+          const ed = excessDemand(eqQ);
+
+          if (Math.abs(ed) < 0.001) break;
+
+          if (ed > 0) {
+            qLow = eqQ;
+          } else {
+            qHigh = eqQ;
+          }
+        }
+
+        const eqP = calcDemandPrice(eqQ);
+
+        if (eqQ < 0 || eqP < 0 || isNaN(eqQ) || isNaN(eqP)) {
+          alert(
+            "No positive equilibrium exists with these parameters. Please adjust values."
+          );
+          return;
+        }
+
+        // Generate curve data
+        const maxQ = Math.ceil(Math.max(100, eqQ * 1.5));
+        const numPoints = 15;
+        const quantity = Array.from(
+          { length: numPoints },
+          (_, i) => (i * maxQ) / (numPoints - 1)
+        );
+
+        const demandPrice = quantity.map((q) => calcDemandPrice(q));
+        const supplyPrice = quantity.map((q) => calcSupplyPrice(q));
+
+        if (chartSupplyDemand) chartSupplyDemand.destroy();
+        chartSupplyDemand = new Chart(ctxSupplyDemand, {
+          type: "scatter",
+          data: {
+            datasets: [
+              {
+                label: "Demand",
+                data: quantity.map((q, i) => ({ x: q, y: demandPrice[i] })),
+                borderColor: "#6f42c1",
+                backgroundColor: "rgba(111, 66, 193, 0.1)",
+                borderWidth: 3,
+                showLine: true,
+                fill: false,
+                tension: 0.4,
+                pointRadius: 0,
+              },
+              {
+                label: "Supply",
+                data: quantity.map((q, i) => ({ x: q, y: supplyPrice[i] })),
+                borderColor: "#fd7e14",
+                backgroundColor: "rgba(253, 126, 20, 0.1)",
+                borderWidth: 3,
+                showLine: true,
+                fill: false,
+                tension: 0.4,
+                pointRadius: 0,
+              },
+              {
+                label: "Equilibrium",
+                data: [{ x: eqQ, y: eqP }],
+                backgroundColor: "#dc3545",
+                borderColor: "#dc3545",
+                pointRadius: 8,
+                pointHoverRadius: 10,
+                showLine: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+              tooltip: {
+                callbacks: {
+                  title: function (tooltipItems) {
+                    const item = tooltipItems[0];
+                    if (item.datasetIndex === 2) {
+                      return "Market Equilibrium";
+                    }
+                    return item.dataset.label + " Curve";
+                  },
+                  label: function (context) {
+                    if (context.datasetIndex === 2) {
+                      return [
+                        `Quantity: ${context.parsed.x.toFixed(1)} units`,
+                        `Price: $${context.parsed.y.toFixed(2)}`,
+                      ];
+                    }
+                    return [
+                      `Quantity: ${context.parsed.x.toFixed(1)} units`,
+                      `Price: $${context.parsed.y.toFixed(2)}`,
+                    ];
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "Quantity (units)" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+                min: 0,
+              },
+              y: {
+                title: { display: true, text: "Price ($)" },
+                grid: { color: "rgba(0,0,0,0.1)" },
+                min: 0,
+              },
+            },
+          },
+        });
+
+        // Display equilibrium
+        document.getElementById("equilibrium-supplydemand").innerHTML = `
+                <strong>Market Equilibrium (where supply meets demand):</strong><br>
+                <strong>Equilibrium Quantity:</strong> ${eqQ.toFixed(
+                  2
+                )} units<br>
+                <strong>Equilibrium Price:</strong> $${eqP.toFixed(2)}<br>
+                <strong>Consumer Surplus:</strong> Area below demand curve, above price<br>
+                <strong>Producer Surplus:</strong> Area above supply curve, below price<br>
+                <em>At this point, voluntary exchange maximizes total benefit to both buyers and sellers. No coercion is needed - both parties willingly agree to trade at this fair price.</em>
+            `;
+      }
+
+      function updateSupplyDemandSimulation() {
+        const a = parseFloat(document.getElementById("a-supplydemand").value);
+        const b = parseFloat(document.getElementById("b-supplydemand").value);
+        const c = parseFloat(document.getElementById("c-supplydemand").value);
+        const d = parseFloat(document.getElementById("d-supplydemand").value);
+
+        if (
+          !isNaN(a) &&
+          !isNaN(b) &&
+          !isNaN(c) &&
+          !isNaN(d) &&
+          a > 0 &&
+          b > 0 &&
+          c >= 0 &&
+          d > 0
+        ) {
+          simulateSupplyDemand(a, b, c, d);
+        }
+      }
+
+      // Event listeners
+      document
+        .getElementById("a-supplydemand")
+        .addEventListener("input", updateSupplyDemandSimulation);
+      document
+        .getElementById("b-supplydemand")
+        .addEventListener("input", updateSupplyDemandSimulation);
+      document
+        .getElementById("c-supplydemand")
+        .addEventListener("input", updateSupplyDemandSimulation);
+      document
+        .getElementById("d-supplydemand")
+        .addEventListener("input", updateSupplyDemandSimulation);
+
+      // Initial simulation
+      simulateSupplyDemand(150, 0.02, 10, 0.5);
+
+      // Handle resize
+      let resizeTimeout;
+      window.addEventListener("resize", () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (chartSupplyDemand) chartSupplyDemand.resize();
+        }, 100);
+      });
+    </script>
+
+    <!-- Shared Navigation -->
+    <script src="shared-navigation.js"></script>
+    <script>
+      insertNavigation();
+    </script>
+  </body>
+</html>

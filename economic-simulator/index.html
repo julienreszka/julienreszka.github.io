@@ -10,11 +10,11 @@
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Interactive economic simulator featuring 6 key curves: Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and The Hockey Stick showing capitalism's prosperity explosion. Explore fundamental economic theories."
+      content="Interactive economic simulator with glassmorphism design: Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and Hockey Stick curves. Modern interface."
     />
     <meta
       name="keywords"
-      content="economic simulator, Armey curve, Laffer curve, J-Curve, supply demand, division of labor, hockey stick curve, capitalism, Adam Smith, pin factory, government spending, tax rates, economic growth, per capita GDP, prosperity, Austrian economics, free markets, industrial revolution, fiscal policy, specialization, increasing returns, market size, productivity, free trade, public economics, interactive economics, economic visualization"
+      content="economic simulator, Armey curve, Laffer curve, J-Curve, supply demand, division of labor, hockey stick curve, capitalism, Adam Smith, pin factory, government spending, tax rates, economic growth, per capita GDP, prosperity, Austrian economics, free markets, industrial revolution, fiscal policy, specialization, increasing returns, market size, productivity, free trade, public economics, interactive economics, economic visualization, glassmorphism UI, modern web design, responsive interface, clean design"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -28,7 +28,7 @@
     />
     <meta
       property="og:description"
-      content="Explore 6 economic curves: Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and The Hockey Stick showing capitalism's prosperity explosion. Explore fundamental economic theories."
+      content="Explore 6 economic curves with modern glassmorphism interface: Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and The Hockey Stick showing capitalism's prosperity explosion. Interactive educational tools with clean, responsive design."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -52,7 +52,7 @@
     />
     <meta
       name="twitter:description"
-      content="Explore Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and The Hockey Stick curves. Interactive tools."
+      content="Explore Armey, Laffer, J-Curve, Supply-Demand, Division of Labor, and Hockey Stick curves. Modern glassmorphism interface with interactive tools."
     />
     <meta
       name="twitter:image"
@@ -91,7 +91,7 @@
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Economic Curves Simulator",
-        "description": "Interactive economic simulator featuring 6 fundamental curves: Armey Curve (government spending vs growth), Laffer Curve (taxation), J-Curve (economic shocks), Supply-Demand (market equilibrium), Division of Labor (Adam Smith's Pin Factory), and The Hockey Stick (capitalism's prosperity explosion). Explore fundamental economic theories and their applications.",
+        "description": "Interactive economic simulator with modern glassmorphism interface featuring 6 fundamental curves: Armey Curve (government spending vs growth), Laffer Curve (taxation), J-Curve (economic shocks), Supply-Demand (market equilibrium), Division of Labor (Adam Smith's Pin Factory), and The Hockey Stick (capitalism's prosperity explosion). Explore fundamental economic theories with clean, responsive design and intuitive navigation.",
         "url": "https://julienreszka.github.io/economic-simulator/",
         "applicationCategory": "EducationalApplication",
         "operatingSystem": "Any",
@@ -106,7 +106,7 @@
           "name": "Julien Reszka"
         },
         "datePublished": "2024-01-01",
-        "dateModified": "2025-10-01",
+        "dateModified": "2025-12-24",
         "inLanguage": "en-US",
         "isAccessibleForFree": true,
         "educationalUse": [
@@ -128,7 +128,11 @@
           "Devaluation",
           "Shock Therapy",
           "Public Economics",
-          "Market Equilibrium"
+          "Market Equilibrium",
+          "Glassmorphism UI",
+          "Modern Web Design",
+          "Interactive Economics",
+          "Responsive Interface"
         ],
         "about": [
           {
@@ -164,465 +168,153 @@
       body {
         font-family: Arial, sans-serif;
         margin: 20px;
+        line-height: 1.6;
       }
 
       #container {
-        max-width: 2400px;
+        max-width: 1200px;
         margin: auto;
       }
 
-      #curves-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 20px;
-      }
-
-      p {
-        margin: 0px;
-        margin-bottom: 10px;
-      }
-
       h1 {
-        font-size: 20px;
+        font-size: 28px;
+        color: #333;
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: 300;
       }
 
       h2 {
-        font-size: 18px;
+        font-size: 24px;
         margin-bottom: 15px;
         color: #333;
+        font-weight: 200;
       }
 
-      /* Screen reader only content */
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
+      p {
+        margin: 0 0 10px 0;
       }
 
-      @media (min-width: 768px) {
-        #curves-grid {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
-      @media (min-width: 1400px) {
-        #curves-grid {
-          grid-template-columns: 1fr 1fr 1fr;
-        }
-      }
-
-      @media (min-width: 1800px) {
-        #curves-grid {
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-      }
-
-      .chart-container {
-        position: relative;
-        height: 350px;
-        width: 100%;
-        margin-bottom: 10px;
-      }
-
-      canvas {
-        display: block;
-      }
-
-      form {
-        margin-bottom: 0px;
-      }
-
-      label {
-        display: block;
-        margin: 10px 0 5px;
-      }
-
-      input {
-        width: 100%;
-        padding: 8px;
-      }
-
-      @media (min-width: 1024px) {
-        form {
-          display: grid;
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 15px;
-          align-items: end;
-        }
-
-        #paramsFormJCurve,
-        #paramsFormSupplyDemand {
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
-
-        #paramsFormDivision {
-          grid-template-columns: 1fr 1fr 1fr 1fr;
-          gap: 15px;
-        }
-
-        #paramsFormHockey {
-          grid-template-columns: 1fr 1fr 1fr;
-          gap: 15px;
-        }
-
-        .param-group {
-          display: flex;
-          flex-direction: column;
-        }
-
-        .param-group label {
-          margin: 0 0 5px 0;
-          font-size: 10px;
-        }
-
-        .param-group input {
-          width: 100%;
-        }
-
-      }
-
-      #optimal-armey,
-      #optimal-laffer,
-      #jcurve-insights,
-      #equilibrium-supplydemand {
-        font-size: 18px;
-        font-weight: bold;
-        margin-top: 0px;
-      }
-
-      section {
-        margin-bottom: 50px;
-      }
-
-      @media (min-width: 1024px) {
-        section {
-          margin-bottom: 20px;
-        }
-      }
-
-      summary {
-        font-weight: bold;
+      /* Navigation cards hover effect */
+      .nav-card {
         cursor: pointer;
       }
 
-      details {
-        border: 1px solid #ccc;
-        padding: 10px;
-        border-radius: 5px;
+      .nav-card:hover {
+        box-shadow: 0 15px 50px 0 rgba(31, 38, 135, 0.5);
+        background: rgba(255, 255, 255, 0.35);
       }
 
-      details > div {
-        max-height: 20svh;
-        overflow-y: auto;
-      }
-
-      /* Footer styling */
-      footer {
-        margin-top: 60px;
-        padding: 40px 20px 20px;
-        border-top: 1px solid #e0e0e0;
-        background-color: #f8f9fa;
-      }
-
-      footer nav ul {
-        list-style: none;
-        padding: 0;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-      }
-
-      footer nav ul li a {
-        color: #007bff;
-        text-decoration: none;
-      }
-
-      footer nav ul li a:hover {
-        text-decoration: underline;
-      }
-
-      footer h3 {
-        margin-bottom: 15px;
-        font-size: 16px;
-      }
-
-      @media (max-width: 768px) {
-        footer nav ul {
-          flex-direction: column;
-          gap: 10px;
-        }
-      }
-
-      /* Dark mode styles */
+      /* Dark mode support for navigation section */
       @media (prefers-color-scheme: dark) {
         body {
-          background-color: #1e1e1e;
+          background-color: #1a1a1a;
           color: #e0e0e0;
+        }
+
+        .nav-card {
+          background: rgba(45, 55, 72, 0.25) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          color: #e0e0e0 !important;
         }
 
         h1,
         h2,
-        h3,
-        h4,
-        h5,
-        h6 {
-          color: #ffffff;
+        h3 {
+          color: #f7fafc !important;
         }
 
-        details {
-          border-color: #444;
-          background-color: #2d2d2d;
-        }
-
-        /* Remove button styles for this page since we don't use buttons */
-
-        input {
-          background-color: #2d2d2d;
-          color: #e0e0e0;
-          border: 1px solid #444;
-        }
-
-        footer {
-          background-color: #2d2d2d;
-          border-top-color: #444;
-        }
-
-        footer nav ul li a {
-          color: #6ea8fe;
-        }
-
-        /* Natural Rights Dark Mode */
-        .right-card {
-          background: #2d2d2d !important;
-          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-          border-left: 5px solid #007bff;
-        }
-
-        .right-card h3 {
-          color: #ffffff;
-        }
-
-        .right-card p {
-          color: #e0e0e0;
-        }
-
-        .right-card .source {
-          color: #aaa;
-        }
-
-        .right-principle {
-          border-bottom-color: #444;
+        p {
+          color: #e2e8f0 !important;
         }
       }
 
-      /* Natural Rights Section Styles */
-      .natural-rights-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-        gap: 20px;
-        margin-top: 30px;
-      }
-
-      .right-card {
-        background: #f8f9fa;
-        padding: 20px;
-        border-radius: 8px;
-        border-left: 5px solid #007bff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
-      }
-
-      .right-card:hover {
-        transform: translateY(-2px);
-      }
-
-      .right-card h3 {
+      /* Navigation styles */
+      .nav-title {
         margin-top: 0;
-        font-size: 18px;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
       }
 
-      .right-card p {
-        margin-bottom: 8px;
-        line-height: 1.5;
-      }
-
-      .right-card .source {
-        font-size: 0.9em;
+      .nav-description {
+        text-align: center;
+        margin-bottom: 25px;
         color: #666;
-        margin-top: 10px;
         font-style: italic;
       }
 
-      /* Enhanced Natural Rights Section with Institutional Components */
-      .right-principle {
-        margin-bottom: 15px;
-        padding-bottom: 15px;
-        border-bottom: 2px solid #e9ecef;
+      .nav-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 15px;
       }
 
-      .right-negative {
-        margin-bottom: 15px;
-        padding: 12px;
-        background: linear-gradient(135deg, #fff5f5, #ffeaea);
-        border-radius: 4px;
+      .nav-card {
+        background: rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 20px;
+        border-radius: 1.75rem;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        transition: all 0.3s ease;
       }
 
-      .right-negative p {
-        margin-bottom: 0;
-        line-height: 1.5;
+      .nav-card-link {
+        text-decoration: none;
+        color: inherit;
+        display: block;
+      }
+
+      .nav-chart {
+        height: 80px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+
+      .nav-chart canvas {
+        width: 100%;
+        height: 100%;
+      }
+
+      .nav-card h3 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+      }
+
+      .nav-card p {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .nav-card .nav-right {
+        margin: 0;
+        font-size: 13px;
+        color: #666;
         font-weight: 500;
-        color: #495057;
       }
 
-      .right-positive {
-        padding: 12px;
-        background: linear-gradient(135deg, #f0f8f0, #e8f5e8);
-        border-radius: 4px;
-      }
-
-      .right-positive h4 {
-        margin-top: 0;
-        margin-bottom: 12px;
-        color: #495057;
-        font-size: 16px;
-      }
-
-      .right-positive ul {
-        margin: 0;
-        padding-left: 20px;
-      }
-
-      .right-positive li {
-        margin-bottom: 10px;
-        line-height: 1.5;
-        color: #495057;
-      }
-
-      .right-positive li:last-child {
+      .nav-footer {
+        text-align: center;
+        margin-top: 25px;
         margin-bottom: 0;
+        font-size: 14px;
+        color: #666;
       }
 
-      .right-positive strong {
-        color: #212529;
-      }
-
-      .right-enemies {
-        padding: 12px;
-        background: linear-gradient(135deg, #fff8f0, #ffedd5);
-        border-radius: 4px;
-        margin-top: 15px;
-      }
-
-      .right-enemies h4 {
-        margin-top: 0;
-        margin-bottom: 12px;
-        color: #495057;
-        font-size: 16px;
-      }
-
-      .right-enemies ul {
-        margin: 0;
-        padding-left: 20px;
-      }
-
-      .right-enemies li {
-        margin-bottom: 10px;
-        line-height: 1.5;
-        color: #495057;
-      }
-
-      .right-enemies li:last-child {
-        margin-bottom: 0;
-      }
-
-      .right-enemies strong {
-        color: #212529;
-      }
-
-      .right-solutions {
-        padding: 12px;
-        background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
-        border-radius: 4px;
-        margin-top: 15px;
-      }
-
-      .right-solutions h4 {
-        margin-top: 0;
-        margin-bottom: 12px;
-        color: #495057;
-        font-size: 16px;
-      }
-
-      .right-solutions ul {
-        margin: 0;
-        padding-left: 20px;
-      }
-
-      .right-solutions li {
-        margin-bottom: 10px;
-        line-height: 1.5;
-        color: #495057;
-      }
-
-      .right-solutions li:last-child {
-        margin-bottom: 0;
-      }
-
-      .right-solutions strong {
-        color: #212529;
-      }
-
-      /* Dark mode adjustments for new structure */
-      @media (prefers-color-scheme: dark) {
-        .right-negative {
-          background: linear-gradient(135deg, #2d1b1b, #3d2626) !important;
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .nav-grid {
+          grid-template-columns: 1fr;
         }
 
-        .right-positive {
-          background: linear-gradient(135deg, #1b2d1b, #263d26) !important;
+        body {
+          margin: 10px;
         }
 
-        .right-negative p,
-        .right-positive h4,
-        .right-positive li {
-          color: #e0e0e0;
-        }
-
-        .right-positive strong {
-          color: #ffffff;
-        }
-
-        .right-enemies {
-          background: linear-gradient(135deg, #2d241b, #3d3426) !important;
-        }
-
-        .right-enemies h4,
-        .right-enemies li {
-          color: #e0e0e0;
-        }
-
-        .right-enemies strong {
-          color: #ffffff;
-        }
-
-        .right-solutions {
-          background: linear-gradient(135deg, #1b2d3d, #264d66) !important;
-        }
-
-        .right-solutions h4,
-        .right-solutions li {
-          color: #e0e0e0;
-        }
-
-        .right-solutions strong {
-          color: #ffffff;
+        h1 {
+          font-size: 24px;
         }
       }
     </style>
@@ -646,3855 +338,328 @@
         economic freedom affect prosperity.
       </p>
 
-      <div id="curves-grid">
-        <section id="armey-section" aria-labelledby="armey-heading">
-          <details open>
-            <summary>About the Armey Curve</summary>
-            <div style="margin-top: 15px; line-height: 1.6">
-              <p>
-                The Armey curve is an economic model that describes the
-                relationship between the size of government spending and
-                economic growth. It posits that as government spending increases
-                from zero, economic growth initially rises because essential
-                public goods—like infrastructure, the legal system, and
-                education—boost prosperity and stability. However, after
-                reaching an optimal point, further increases in government size
-                lead to diminishing returns, inefficiency, and crowding out of
-                private investment, so economic growth then declines.
-              </p>
+      <!-- Navigation to Individual Curves -->
+      <h2 class="nav-title">📊 Explore Individual Curves in Detail</h2>
+      <p class="nav-description">
+        Click any curve below to access its dedicated page with comprehensive
+        analysis, detailed explanations, and its associated natural right:
+      </p>
 
-              <h3>Curve Structure</h3>
-              <p>
-                The Armey curve is typically illustrated as an inverted U-shaped
-                (parabolic) graph. On the horizontal axis is government spending
-                (often as a percentage of GDP), and on the vertical axis is
-                economic growth or societal welfare. The "peak" of the curve
-                represents the optimal government size for maximum growth.
-                Empirical research commonly situates this optimum between 20%
-                and 30% of GDP, though the exact figure varies by country and
-                time period.
-              </p>
-
-              <h3>Mathematical Formulation</h3>
-              <p>The curve is often expressed with a quadratic equation:</p>
-              <p style="text-align: center; font-style: italic">
-                Y = β₀ + β₁ · G + β₂ · G²
-              </p>
-              <p>
-                where Y is economic growth, G is government spending, and
-                coefficients β₁ > 0, β₂ < 0 capture the concave shape—positive
-                effects at first, negative effects after the turning point.
-              </p>
-
-              <h4>Understanding the Intercept (β₀)</h4>
-              <p>
-                The positive intercept value β₀ represents the
-                <strong
-                  >natural growth rate without government intervention</strong
-                >. This is the baseline economic growth rate that would occur
-                when G = 0 (zero government spending), driven purely by private
-                sector activity including:
-              </p>
-              <ul>
-                <li>
-                  <strong>Private sector dynamics:</strong> Businesses,
-                  entrepreneurs, and markets operating without government
-                  involvement
-                </li>
-                <li>
-                  <strong>Natural productivity gains:</strong> Technological
-                  innovation, efficiency improvements, and capital accumulation
-                  driven by private actors
-                </li>
-                <li>
-                  <strong>Spontaneous market coordination:</strong> Voluntary
-                  exchanges and market mechanisms that create value
-                </li>
-                <li>
-                  <strong>Population growth effects:</strong> Demographic
-                  changes that contribute to economic expansion
-                </li>
-              </ul>
-              <p>
-                In essence, β₀ represents the growth rate of a purely
-                laissez-faire economy where all economic activity comes from
-                private initiative, without any government provision of public
-                goods, infrastructure, regulation, or spending. The rest of the
-                curve then shows how government spending can initially enhance
-                this natural growth (through beneficial public goods) before
-                eventually hindering it (through inefficiencies and crowding
-                out).
-              </p>
-
-              <h3>Policy Implications</h3>
-              <ul>
-                <li>
-                  An undersized government fails to provide basic public goods,
-                  resulting in low growth due to lack of order, security, and
-                  infrastructure.
-                </li>
-                <li>
-                  An oversized government leads to inefficiencies, less
-                  incentive for private enterprise, and lower economic growth
-                  due to excessive regulation, high taxation, and crowding out.
-                </li>
-              </ul>
-
-              <h3>Historical Context</h3>
-              <p>
-                The Armey curve is named after U.S. Representative Dick Armey,
-                who popularized it in the 1990s. Its logic parallels the Laffer
-                curve, but focuses on the broader scope of government spending
-                rather than just tax rates.
-              </p>
-
-              <h3>Understanding Negative Growth Rate Values</h3>
-              <p>
-                In the mathematical model, government spending levels beyond the
-                optimal point can produce negative growth rate values. While
-                sustained negative growth (economic contraction) is possible in
-                reality, these extreme negative values represent theoretical
-                scenarios of economic dysfunction:
-              </p>
-              <ul>
-                <li>
-                  <strong>Economic stagnation:</strong> Excessive government
-                  spending (beyond the optimal point) creates such massive
-                  inefficiencies and crowding out of private investment that the
-                  economy contracts rather than grows.
-                </li>
-                <li>
-                  <strong>Regulatory capture:</strong> Oversized government
-                  becomes dominated by special interests and rent-seeking
-                  behavior, leading to resource misallocation and economic
-                  decline.
-                </li>
-                <li>
-                  <strong>Investment flight:</strong> Private businesses and
-                  entrepreneurs abandon the economy due to excessive
-                  bureaucracy, high taxes needed to fund large government, and
-                  lack of economic freedom.
-                </li>
-                <li>
-                  <strong>Productivity collapse:</strong> Innovation,
-                  entrepreneurship, and productive economic activity become so
-                  constrained by government interference that overall economic
-                  output shrinks.
-                </li>
-              </ul>
-              <p>
-                In practice, extremely negative growth rates would signal
-                economic crisis and would likely trigger policy corrections
-                before reaching the theoretical extremes suggested by the
-                mathematical model.
-              </p>
-
-              <h3>Comparative Findings</h3>
-              <ul>
-                <li>
-                  Optimal government size can vary with factors like openness of
-                  the economy, population size, and national context.
-                </li>
-                <li>
-                  Empirical studies find different threshold values for optimal
-                  government size in countries such as the U.S., France, Kenya,
-                  Turkey, and Georgia—ranging from less than 20% up to 30% of
-                  GDP.
-                </li>
-              </ul>
-
-              <p>
-                In summary, the Armey curve highlights that both too little and
-                too much government spending can harm economic growth, and seeks
-                to identify the optimal share that maximizes prosperity.
-              </p>
+      <div class="nav-grid">
+        <div class="nav-card">
+          <a href="armey-curve.html" class="nav-card-link">
+            <div class="nav-chart">
+              <canvas id="navArmeyChart"></canvas>
             </div>
-          </details>
+            <h3 style="color: #007bff">1. Armey Curve</h3>
+            <p>Government spending vs economic growth</p>
+            <p class="nav-right">→ Right to Economic Growth</p>
+          </a>
+        </div>
 
-          <form id="paramsFormArmey" aria-labelledby="armey-heading">
-            <div class="param-group">
-              <label for="beta0-armey"
-                >Intercept (β₀, base growth, e.g., 4.5):</label
-              >
-              <input
-                type="number"
-                id="beta0-armey"
-                value="4.5"
-                step="0.1"
-                aria-describedby="beta0-armey-help"
-              />
-              <small id="beta0-armey-help" class="sr-only"
-                >Natural growth rate without government intervention</small
-              >
+        <div class="nav-card">
+          <a href="laffer-curve.html" class="nav-card-link">
+            <div class="nav-chart">
+              <canvas id="navLafferChart"></canvas>
             </div>
+            <h3 style="color: #28a745">2. Laffer Curve</h3>
+            <p>Tax rates vs consent to taxation</p>
+            <p class="nav-right">→ Right to Economic Attractiveness</p>
+          </a>
+        </div>
 
-            <div class="param-group">
-              <label for="beta1-armey"
-                >Linear coefficient (β₁, positive, e.g., 0.5):</label
-              >
-              <input
-                type="number"
-                id="beta1-armey"
-                value="0.5"
-                step="0.01"
-                aria-describedby="beta1-armey-help"
-              />
-              <small id="beta1-armey-help" class="sr-only"
-                >Initial positive effect of government spending</small
-              >
+        <div class="nav-card">
+          <a href="j-curve.html" class="nav-card-link">
+            <div class="nav-chart">
+              <canvas id="navJChart"></canvas>
             </div>
+            <h3 style="color: #dc3545">3. J-Curve</h3>
+            <p>Economic recovery after policy shocks</p>
+            <p class="nav-right">→ Right to Economic Recovery</p>
+          </a>
+        </div>
 
-            <div class="param-group">
-              <label for="beta2-armey"
-                >Quadratic coefficient (β₂, negative, e.g., -0.01):</label
-              >
-              <input
-                type="number"
-                id="beta2-armey"
-                value="-0.01"
-                step="0.001"
-                aria-describedby="beta2-armey-help"
-              />
-              <small id="beta2-armey-help" class="sr-only"
-                >Diminishing returns effect (must be negative)</small
-              >
+        <div class="nav-card">
+          <a href="supply-demand.html" class="nav-card-link">
+            <div class="nav-chart">
+              <canvas id="navSupplyDemandChart"></canvas>
             </div>
+            <h3 style="color: #6f42c1">4. Supply & Demand</h3>
+            <p>Market equilibrium and price discovery</p>
+            <p class="nav-right">→ Right to Fair Prices</p>
+          </a>
+        </div>
 
-          </form>
-
-          <div
-            class="chart-container"
-            role="img"
-            aria-labelledby="armey-chart-label"
-          >
-            <canvas
-              id="growthChartArmey"
-              aria-label="Interactive Armey Curve showing relationship between government spending and economic growth"
-            ></canvas>
-            <div id="armey-chart-label" class="sr-only">
-              Chart displaying the Armey Curve with government spending on
-              x-axis and GDP growth rate on y-axis
+        <div class="nav-card">
+          <a href="division-of-labor.html" class="nav-card-link">
+            <div class="nav-chart">
+              <canvas id="navDivisionChart"></canvas>
             </div>
-          </div>
-          <div id="optimal-armey" aria-live="polite"></div>
-        </section>
+            <h3 style="color: #17a2b8">5. Division of Labor</h3>
+            <p>Adam Smith's Pin Factory & specialization</p>
+            <p class="nav-right">→ Right to Productivity</p>
+          </a>
+        </div>
 
-        <section id="laffer-section" aria-labelledby="laffer-heading">
-          <details open>
-            <summary>About the Laffer Curve</summary>
-            <div style="margin-top: 15px; line-height: 1.6">
-              <p>
-                The Laffer curve illustrates the theoretical relationship
-                between rates of taxation and the resulting levels of consent to
-                taxation. It suggests that at a tax rate of 0%, consent is zero
-                (no taxes means no need for consent), and at 100%, consent
-                becomes -100% because there is no incentive to work or produce
-                under complete confiscation. Between these extremes, consent
-                rises to a maximum and then falls.
-              </p>
-
-              <h3>Curve Structure</h3>
-              <p>
-                The Laffer curve is depicted as an inverted U-shaped graph. The
-                horizontal axis represents the tax rate (from 0% to 100%), and
-                the vertical axis shows consent to taxation. The peak indicates
-                the optimal tax rate that maximizes societal acceptance, beyond
-                which higher rates reduce consent due to disincentives and
-                resistance.
-              </p>
-              <p>
-                <strong>Important note on the y-axis:</strong> The y-axis
-                doesn't measure literal revenue but rather the theoretical
-                economic health and viability of the tax system. Thus, negative
-                values serve as a warning of extreme disincentives and economic
-                dysfunction rather than actual negative tax revenue.
-              </p>
-
-              <h3>Why Consent to Taxation Increases Initially</h3>
-              <p>
-                Consent to taxation rises from 0% to the optimal point for
-                several interconnected reasons:
-              </p>
-              <ul>
-                <li>
-                  <strong>Social contract fulfillment:</strong> As tax rates
-                  increase from zero, governments can provide essential public
-                  goods (defense, law enforcement, infrastructure) that citizens
-                  value, creating legitimate reasons for taxation.
-                </li>
-                <li>
-                  <strong>Economic productivity gains:</strong> Moderate
-                  taxation enables public investments that boost overall
-                  economic productivity, making the tax burden worthwhile as
-                  citizens see their living standards improve.
-                </li>
-                <li>
-                  <strong>Perceived fairness:</strong> When tax rates are
-                  reasonable and well-spent, citizens view taxation as a fair
-                  contribution to collective welfare rather than confiscation.
-                </li>
-                <li>
-                  <strong>Institutional trust:</strong> Effective government
-                  services funded by moderate taxes build public trust in
-                  institutions, increasing voluntary compliance and acceptance.
-                </li>
-                <li>
-                  <strong>Collective benefit recognition:</strong> Citizens
-                  understand that moderate taxation enables shared benefits
-                  (education, healthcare, infrastructure) that would be
-                  impossible to achieve individually.
-                </li>
-              </ul>
-              <p>
-                Beyond the optimal point, consent declines as the marginal costs
-                of higher taxes (reduced incentives, economic inefficiency)
-                outweigh the marginal benefits of additional government
-                services.
-              </p>
-
-              <h3>Mathematical Formulation</h3>
-              <p>The curve can be modeled with a quadratic equation:</p>
-              <p style="text-align: center; font-style: italic">
-                R = β₀ + β₁ · t + β₂ · t²
-              </p>
-              <p>
-                where R is tax revenue, t is the tax rate, β₀ is often 0, β₁ >
-                0, and β₂ < 0 to create the parabolic shape. More advanced
-                models may use different functional forms.
-              </p>
-
-              <h3>Policy Implications</h3>
-              <ul>
-                <li>
-                  If tax rates are below the peak, increasing them can boost
-                  revenue.
-                </li>
-                <li>
-                  If rates are above the peak, cutting taxes can stimulate
-                  economic activity, leading to higher revenue over time.
-                </li>
-                <li>
-                  It highlights the trade-off between tax rates and economic
-                  incentives, influencing debates on supply-side economics.
-                </li>
-              </ul>
-
-              <h3>Historical Context</h3>
-              <p>
-                Popularized by economist Arthur Laffer in 1974 during a meeting
-                with U.S. policymakers, the concept has roots in earlier
-                thinkers like Ibn Khaldun (14th century) and John Maynard
-                Keynes. It gained prominence in the 1980s under Reagan's tax
-                cuts.
-              </p>
-
-              <h3>Understanding Negative Revenue Values</h3>
-              <p>
-                In the mathematical model, tax rates above 50% produce negative
-                revenue values. While negative tax revenue is impossible in
-                reality, these values represent theoretical economic collapse
-                scenarios:
-              </p>
-              <ul>
-                <li>
-                  <strong>Economic collapse:</strong> Extremely high tax rates
-                  (above 50% in this model) create such massive disincentives
-                  that economic activity collapses to the point where the
-                  government would theoretically need to pay people to engage in
-                  economic activity.
-                </li>
-                <li>
-                  <strong>Underground economy:</strong> People completely exit
-                  the formal, taxable economy and move to barter, black markets,
-                  or simply stop productive activity altogether.
-                </li>
-                <li>
-                  <strong>Capital flight:</strong> Businesses and wealthy
-                  individuals leave the country entirely, taking their economic
-                  activity with them.
-                </li>
-                <li>
-                  <strong>Disincentive effects:</strong> Work, investment, and
-                  entrepreneurship become so unprofitable that they essentially
-                  cease, creating a death spiral where the tax base evaporates.
-                </li>
-              </ul>
-              <p>
-                In practice, governments would see revenue approach zero rather
-                than go negative, as the economy would collapse or transform
-                into an untaxable shadow economy.
-              </p>
-
-              <h3>Comparative Findings</h3>
-              <ul>
-                <li>
-                  The consent-maximizing rate is often estimated around 25% for
-                  a balanced budget maximizing long term growth.
-                </li>
-              </ul>
-
-              <p>
-                In summary, the Laffer curve demonstrates that tax rates and
-                revenue are not linearly related, emphasizing the need to find
-                the optimal rate that maximizes government income without
-                stifling economic growth.
-              </p>
+        <div class="nav-card">
+          <a href="hockey-stick.html" class="nav-card-link">
+            <div class="nav-chart">
+              <canvas id="navHockeyChart"></canvas>
             </div>
-          </details>
-
-          <form id="paramsFormLaffer" aria-labelledby="laffer-heading">
-            <div class="param-group">
-              <label for="beta0-laffer">
-                Intercept (β₀, base consent, e.g., 0):
-              </label>
-              <input
-                type="number"
-                id="beta0-laffer"
-                value="0"
-                step="0.1"
-                aria-describedby="beta0-laffer-help"
-              />
-              <small id="beta0-laffer-help" class="sr-only"
-                >Base taxation consent level</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="beta1-laffer"
-                >Linear coefficient (β₁, positive, e.g., 1):</label
-              >
-              <input
-                type="number"
-                id="beta1-laffer"
-                value="1"
-                step="0.01"
-                aria-describedby="beta1-laffer-help"
-              />
-              <small id="beta1-laffer-help" class="sr-only"
-                >Initial positive effect of taxation</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="beta2-laffer"
-                >Quadratic coefficient (β₂, negative, e.g., -0.02):</label
-              >
-              <input
-                type="number"
-                id="beta2-laffer"
-                value="-0.02"
-                step="0.001"
-                aria-describedby="beta2-laffer-help"
-              />
-              <small id="beta2-laffer-help" class="sr-only"
-                >Diminishing returns effect (must be negative)</small
-              >
-            </div>
-
-          </form>
-
-          <div
-            class="chart-container"
-            role="img"
-            aria-labelledby="laffer-chart-label"
-          >
-            <canvas
-              id="growthChartLaffer"
-              aria-label="Interactive Laffer Curve showing relationship between tax rates and consent to taxation"
-            ></canvas>
-            <div id="laffer-chart-label" class="sr-only">
-              Chart displaying the Laffer Curve with tax rate on x-axis and
-              consent to taxation on y-axis
-            </div>
-          </div>
-          <div id="optimal-laffer" aria-live="polite"></div>
-        </section>
-
-        <section id="jcurve-section" aria-labelledby="jcurve-heading">
-          <details open>
-            <summary>About the J-Curve</summary>
-            <div style="margin-top: 15px; line-height: 1.6">
-              <p>
-                The J-Curve shows what happens to an economy after a major
-                policy change, like when a country suddenly devalues its
-                currency or implements drastic budget cuts. The name comes from
-                the "J" shape of the curve: things get worse before they get
-                better. First, the economy dips down (the bottom of the J), then
-                gradually recovers and eventually improves beyond where it
-                started (the upward hook of the J).
-              </p>
-
-              <h3>How It Works</h3>
-              <p>
-                Imagine the graph: time moves along the bottom (months or
-                years), and economic health goes up and down on the side. When a
-                big policy change happens, the economy starts at a normal level,
-                immediately drops to a low point, then slowly climbs back up and
-                eventually rises higher than before. This creates a shape that
-                looks like the letter "J".
-              </p>
-
-              <h3>The Math Behind It</h3>
-              <p>The curve follows this pattern:</p>
-              <p style="text-align: center; font-style: italic">
-                Y(t) = Base + Slope · t - Depth · (1 - e^{-t / τ})
-              </p>
-              <p>
-                <strong>What this means in plain English:</strong>
-              </p>
-              <ul>
-                <li>
-                  <strong>Base:</strong> Where the economy started before the
-                  shock
-                </li>
-                <li>
-                  <strong>Depth:</strong> How bad things get initially (the
-                  deeper the dip, the harder it hits)
-                </li>
-                <li>
-                  <strong>τ (tau):</strong> How long the pain lasts (higher
-                  number = longer recovery time)
-                </li>
-                <li>
-                  <strong>Slope:</strong> How fast the economy improves in the
-                  long run
-                </li>
-              </ul>
-
-              <h3>Why Does It Get Worse First?</h3>
-              <p>
-                When a government makes a big change, the negative effects hit
-                immediately while the positive effects take time to materialize:
-              </p>
-              <ul>
-                <li>
-                  <strong>Immediate price shocks:</strong> If a currency loses
-                  value, imports become more expensive right away, but it takes
-                  time for exports to increase (people still buy the same things
-                  out of habit).
-                </li>
-                <li>
-                  <strong>Loss of confidence:</strong> People and businesses
-                  panic and cut back spending, making things worse temporarily.
-                </li>
-                <li>
-                  <strong>Budget cuts hurt first:</strong> When government
-                  spending gets slashed, jobs are lost and services disappear
-                  before new private sector growth can replace them.
-                </li>
-              </ul>
-
-              <h3>What This Means for Policy</h3>
-              <ul>
-                <li>
-                  <strong>Patience required:</strong> Governments must endure
-                  the difficult period to reach the recovery phase.
-                </li>
-                <li>
-                  <strong>Support helps:</strong> Providing temporary assistance
-                  (like unemployment benefits or food aid) can make the dip less
-                  severe.
-                </li>
-                <li>
-                  <strong>Warning sign:</strong> If the economy doesn't start
-                  recovering after the expected time, the policy might not be
-                  working (the J turns into an L - permanent decline).
-                </li>
-              </ul>
-
-              <h3>Real-World Examples</h3>
-
-              <h4>Poland's "Shock Therapy" (1990-1992) - A Success Story</h4>
-              <p>
-                After communism fell in 1989, Poland implemented one of the
-                first and most successful shock therapy programs under economist
-                Leszek Balcerowicz. The country faced hyperinflation (600%),
-                food shortages, and obsolete state-owned industries.
-              </p>
-
-              <h5>The Reforms (What They Did)</h5>
-              <ul>
-                <li>
-                  <strong>Price liberalization:</strong> Removed government
-                  price controls on nearly all goods
-                </li>
-                <li>
-                  <strong>Currency reform:</strong> Made the zloty internally
-                  convertible and allowed market exchange rates
-                </li>
-                <li>
-                  <strong>Budget discipline:</strong> Ended deficit financing by
-                  the central bank and controlled wage growth
-                </li>
-                <li>
-                  <strong>Trade opening:</strong> Eliminated import restrictions
-                  and created uniform tariffs
-                </li>
-              </ul>
-
-              <h5>The Dip (Things Got Worse)</h5>
-              <ul>
-                <li>GDP fell 9.78% in 1990 and 7.02% in 1991</li>
-                <li>Unemployment jumped from 0.3% to 6.5% in one year</li>
-                <li>Many inefficient state companies closed immediately</li>
-                <li>Widespread anxiety about economic future</li>
-              </ul>
-
-              <h5>The Recovery (Things Got Better)</h5>
-              <ul>
-                <li>
-                  <strong>Sustained growth:</strong> GDP grew steadily at 6-7%
-                  annually through the late 1990s and 2000s
-                </li>
-                <li>
-                  <strong>Best in Europe:</strong> Poland's GDP increased
-                  826.96% from 1989-2018, the highest growth in Europe
-                </li>
-                <li>
-                  <strong>Only EU economy to avoid 2008 recession:</strong>
-                  Continued growing during the global financial crisis
-                </li>
-                <li>
-                  Consumption of goods (cars, appliances, food) boomed as living
-                  standards rose
-                </li>
-                <li>
-                  Upgraded to "developed market" status by FTSE Russell in 2018
-                </li>
-              </ul>
-
-              <h5>Why Poland Succeeded</h5>
-              <p>
-                Unlike Russia's chaotic transition, Poland had several
-                advantages: private agriculture still existed, democratic
-                institutions were stable, privatization was more gradual and
-                equitable, and the country maintained some social safety nets.
-                This shows that shock therapy can work—but the details of
-                implementation matter enormously.
-              </p>
-
-              <h4>Argentina's Economic Shock (2023-2025) - Ongoing</h4>
-              <p>
-                In late 2023, Argentina implemented radical economic changes,
-                creating a textbook J-Curve scenario:
-              </p>
-
-              <h5>The Reforms (What Was Done)</h5>
-              <ol>
-                <li>
-                  <strong>Currency devaluation:</strong> Let the peso drop in
-                  value from 400 to 800 per US dollar
-                </li>
-                <li>
-                  <strong>Budget cuts:</strong> Slashed government spending from
-                  over 5% deficit to achieve a surplus
-                </li>
-                <li>
-                  <strong>Deregulation:</strong> Removed many government
-                  controls on business and markets
-                </li>
-              </ol>
-
-              <h5>The Dip (Things Got Worse)</h5>
-              <ul>
-                <li>Economy shrank: -1.6% in 2023, -3.5% in 2024</li>
-                <li>Inflation soared to 237% per year</li>
-                <li>Poverty jumped from 38% to 53% initially</li>
-                <li>Many people lost jobs and businesses struggled</li>
-              </ul>
-
-              <h5>The Recovery (Things Got Better)</h5>
-              <ul>
-                <li>Inflation dropped dramatically to under 3% per month</li>
-                <li>Poverty fell back to 38% by end of 2024</li>
-                <li>Economy projected to grow +5% in 2025</li>
-                <li>
-                  First budget surplus in 14 years (government income exceeds
-                  spending)
-                </li>
-                <li>Argentina's credit rating improved</li>
-                <li>Currency stabilized with only 1% monthly devaluation</li>
-              </ul>
-
-              <h5>The Ongoing Challenge</h5>
-              <p>
-                By mid-2025, the recovery showed some fragility. The economy
-                contracted again in Q2 2025, showing that J-Curves aren't always
-                smooth. Global economic conditions and other factors can slow
-                the recovery, reminding us that these reforms are risky and
-                don't always work as planned.
-              </p>
-
-              <h3>
-                Conditions for Success: Why Some Reforms Work and Others Fail
-              </h3>
-              <p>
-                Comparing successful cases (like Poland) with failures (like
-                Russia in the 1990s) reveals critical factors that determine
-                whether a J-Curve leads to recovery or becomes an L-shaped
-                permanent decline:
-              </p>
-
-              <h4>1. Pre-existing Market Infrastructure</h4>
-              <p>
-                <strong>What it means:</strong> Some functioning private sector,
-                even if small (private farms, small businesses, market
-                experience).
-              </p>
-              <p>
-                <strong>Why it matters:</strong> People need to know how markets
-                work. Poland had private agriculture; Russia had complete state
-                ownership. This gave Poles a head start in adapting to
-                capitalism.
-              </p>
-
-              <h4>2. Stable Democratic Institutions</h4>
-              <p>
-                <strong>What it means:</strong> Legitimate government, rule of
-                law, functioning courts, peaceful power transitions.
-              </p>
-              <p>
-                <strong>Why it matters:</strong> Without stability, reforms
-                can't be properly implemented. Corruption flourishes, contracts
-                aren't enforced, and public trust evaporates. Poland had stable
-                democracy; Russia faced political chaos.
-              </p>
-
-              <h4>3. Gradual, Equitable Privatization</h4>
-              <p>
-                <strong>What it means:</strong> Careful transfer of state assets
-                to private hands, avoiding concentration of wealth.
-              </p>
-              <p>
-                <strong>Why it matters:</strong> Rushed privatization (like
-                Russia's voucher system) created oligarchs and extreme
-                inequality. Poland's slower approach maintained public support
-                and prevented wealth capture by a few insiders.
-              </p>
-
-              <h4>4. Social Safety Nets</h4>
-              <p>
-                <strong>What it means:</strong> Unemployment benefits, food
-                assistance, healthcare, pension protection during transition.
-              </p>
-              <p>
-                <strong>Why it matters:</strong> Cushions the blow for those who
-                lose jobs. Reduces human suffering, prevents social unrest, and
-                maintains political support for continuing reforms. Poland kept
-                safety nets; Russia largely didn't.
-              </p>
-
-              <h4>5. External Financial Support</h4>
-              <p>
-                <strong>What it means:</strong> Aid, loans, or investment from
-                international institutions (IMF, World Bank, EU) or foreign
-                investors.
-              </p>
-              <p>
-                <strong>Why it matters:</strong> Provides capital during the
-                crisis, builds confidence, and helps stabilize currency. Poland
-                had EU accession prospects; Argentina received $20B from the
-                IMF.
-              </p>
-
-              <h4>6. Proper Sequencing</h4>
-              <p>
-                <strong>What it means:</strong> Doing reforms in the right
-                order: price liberalization first, then privatization; monetary
-                stability before structural reforms.
-              </p>
-              <p>
-                <strong>Why it matters:</strong> Wrong sequence amplifies chaos.
-                If you privatize before establishing market prices, assets get
-                sold at arbitrary values, enabling corruption and wealth theft.
-              </p>
-
-              <h4>7. Political Will and Public Patience</h4>
-              <p>
-                <strong>What it means:</strong> Government stays the course
-                through 6-18 months of pain; population believes recovery will
-                come.
-              </p>
-              <p>
-                <strong>Why it matters:</strong> If government caves to protests
-                too early or reverses reforms, the pain was for nothing. Both
-                Poland and Argentina maintained commitment despite protests.
-              </p>
-
-              <h4>8. Favorable Starting Conditions</h4>
-              <p>
-                <strong>What it means:</strong> Lower initial debt, younger
-                population, intact trade relationships, moderate (not extreme)
-                crisis.
-              </p>
-              <p>
-                <strong>Why it matters:</strong> Easier to recover from a
-                shallow hole than a deep one. Countries with multiple
-                compounding crises (debt + demographics + trade collapse) face
-                much harder paths.
-              </p>
-
-              <h4>The Bottom Line on Success Factors</h4>
-              <p>
-                No single factor guarantees success, but countries with more of
-                these advantages tend to achieve genuine J-Curves. Those lacking
-                them (like Russia in the 1990s) often experience L-curves—a dip
-                without recovery.
-                <strong
-                  >Implementation details matter as much as the policies
-                  themselves.</strong
-                >
-              </p>
-
-              <h3>Key Takeaways</h3>
-              <ul>
-                <li>
-                  <strong>Timing matters:</strong> The worst part usually lasts
-                  6-18 months, but recovery can take years
-                </li>
-                <li>
-                  <strong>Context matters:</strong> Countries that trade a lot
-                  with other nations (like Argentina) tend to see sharper
-                  J-Curves - deeper dips but faster recoveries
-                </li>
-                <li>
-                  <strong>Not guaranteed:</strong> Just because you make painful
-                  reforms doesn't mean recovery is certain - the economy could
-                  stay depressed (an L-shape instead of a J-shape)
-                </li>
-              </ul>
-
-              <h3>Understanding Negative Values on the Chart</h3>
-              <p>
-                When the curve dips below zero, it represents a genuine economic
-                crisis: businesses closing, people losing jobs, money fleeing
-                the country, and widespread hardship. These negative values show
-                the real human cost of economic shocks before recovery begins.
-              </p>
-
-              <p>
-                <strong>Bottom line:</strong> The J-Curve teaches us that major
-                economic reforms often cause significant pain before delivering
-                benefits. It's like economic surgery - the recovery period is
-                tough, but the goal is to emerge healthier than before.
-              </p>
-            </div>
-          </details>
-
-          <form id="paramsFormJCurve" aria-labelledby="jcurve-heading">
-            <div class="param-group">
-              <label for="base-jcurve">Base Level (e.g., 0):</label>
-              <input
-                type="number"
-                id="base-jcurve"
-                value="0"
-                step="0.1"
-                aria-describedby="base-jcurve-help"
-              />
-              <small id="base-jcurve-help" class="sr-only"
-                >Pre-shock economic indicator</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="depth-jcurve">Dip Depth (positive, e.g., 10):</label>
-              <input
-                type="number"
-                id="depth-jcurve"
-                value="10"
-                step="0.1"
-                aria-describedby="depth-jcurve-help"
-              />
-              <small id="depth-jcurve-help" class="sr-only"
-                >Initial shock severity</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="tau-jcurve">Adjustment Time (τ, e.g., 2):</label>
-              <input
-                type="number"
-                id="tau-jcurve"
-                value="2"
-                step="0.1"
-                aria-describedby="tau-jcurve-help"
-              />
-              <small id="tau-jcurve-help" class="sr-only"
-                >Time constant for recovery (higher = slower)</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="slope-jcurve">Recovery Slope (e.g., 1):</label>
-              <input
-                type="number"
-                id="slope-jcurve"
-                value="1"
-                step="0.1"
-                aria-describedby="slope-jcurve-help"
-              />
-              <small id="slope-jcurve-help" class="sr-only"
-                >Long-term improvement rate</small
-              >
-            </div>
-
-          </form>
-
-          <div
-            class="chart-container"
-            role="img"
-            aria-labelledby="jcurve-chart-label"
-          >
-            <canvas
-              id="growthChartJCurve"
-              aria-label="Interactive J-Curve showing economic recovery after policy shock"
-            ></canvas>
-            <div id="jcurve-chart-label" class="sr-only">
-              Chart displaying the J-Curve with time on x-axis and economic
-              indicator on y-axis
-            </div>
-          </div>
-          <div id="jcurve-insights" aria-live="polite"></div>
-        </section>
-
-        <section
-          id="supplydemand-section"
-          aria-labelledby="supplydemand-heading"
-        >
-          <details open>
-            <summary>About Supply and Demand</summary>
-            <div style="margin-top: 15px; line-height: 1.6">
-              <p>
-                The supply and demand model is the cornerstone of economics,
-                illustrating how buyers (demand) and sellers (supply) interact
-                to determine price and quantity in a market. Demand slopes
-                downward: as price falls, more is bought. Supply slopes upward:
-                as price rises, more is sold. Their intersection yields
-                equilibrium—the price where quantity demanded equals quantity
-                supplied, and markets clear without surplus or shortage.
-              </p>
-
-              <h3>Historical Development of the Supply and Demand Diagram</h3>
-              <p>
-                The visual representation of supply and demand evolved over more
-                than 50 years through the contributions of several pioneering
-                economists:
-              </p>
-              <ul>
-                <li>
-                  <strong>1838 - Augustin Cournot:</strong> The French
-                  mathematician and economist drew the
-                  <strong>first demand curve</strong> in his groundbreaking work
-                  <em
-                    >"Recherches sur les Principes Mathématiques de la Théorie
-                    des Richesses"</em
-                  >
-                  (Mathematical Principles of the Theory of Wealth). Cournot was
-                  the first to graphically represent the inverse relationship
-                  between price and quantity demanded.
-                </li>
-                <li>
-                  <strong>1870 - Fleeming Jenkin:</strong> The Scottish engineer
-                  and economist introduced the <strong>supply curve</strong> and
-                  created the first combined graphical representation in his
-                  paper
-                  <em
-                    >"The Graphic Representation of the Laws of Supply and
-                    Demand."</em
-                  >
-                  Jenkin showed how both curves could be plotted together to
-                  find equilibrium.
-                </li>
-                <li>
-                  <strong>1890 - Alfred Marshall:</strong> The British economist
-                  popularized the joint supply-and-demand diagram in his
-                  influential textbook
-                  <em>"Principles of Economics."</em> Marshall's clear
-                  exposition and pedagogical approach—now commonly called the
-                  <strong>"Marshallian cross"</strong>—cemented the
-                  supply-and-demand framework as central to economic analysis.
-                  His work made the diagram the standard tool it remains today.
-                </li>
-              </ul>
-              <p>
-                <strong>Historical Timeline:</strong>
-                1838 (Cournot - demand curve) → 1870 (Jenkin - supply curve &
-                combination) → 1890 (Marshall - popularization). This gradual
-                development shows how economic tools evolve through the
-                collaborative efforts of thinkers building on each other's
-                insights.
-              </p>
-
-              <h3>Why Curved Lines? (Not Straight Lines)</h3>
-              <p>
-                <strong
-                  >This simulator uses curved supply and demand lines, which is
-                  more realistic than the straight lines often shown in
-                  textbooks.</strong
-                >
-                Here's why:
-              </p>
-              <ul>
-                <li>
-                  <strong>Demand curves down (convex to origin):</strong> The
-                  first unit of anything provides the most satisfaction. Your
-                  first cup of coffee in the morning is amazing, the second is
-                  good, the tenth makes you jittery. This "diminishing marginal
-                  utility" means price must drop more dramatically to get people
-                  to buy additional units. The curve starts steep (high value
-                  for first units) then flattens (low value for last units).
-                </li>
-                <li>
-                  <strong>Supply curves up (convex from origin):</strong> The
-                  first units are cheap to produce using your best resources and
-                  most efficient methods. But as you scale up, you face
-                  "increasing marginal costs"—overtime pay, less productive
-                  equipment, higher input prices. The curve starts flat (easy to
-                  produce more initially) then steepens (expensive to keep
-                  expanding).
-                </li>
-              </ul>
-              <p>
-                <strong>Straight lines are simpler for teaching basics,</strong>
-                but curved lines better represent how real markets actually
-                work. You'll see these curved shapes in actual economic data and
-                professional analysis.
-              </p>
-
-              <h3>Spontaneous Order and the Market Discovery Process</h3>
-              <p>
-                The supply and demand model reveals one of economics' most
-                profound insights:
-                <strong
-                  >market prices and resource allocation emerge spontaneously
-                  through voluntary exchange, without central planning or
-                  coordination.</strong
-                >
-                This phenomenon, called "spontaneous order," demonstrates that
-                complex economic coordination doesn't require a guiding
-                authority—it arises naturally from individuals pursuing their
-                own interests.
-              </p>
-
-              <h4>The Continuous Discovery Process</h4>
-              <p>
-                Markets are not static equilibrium points but rather
-                <strong>dynamic discovery processes</strong> where entrepreneurs
-                and consumers constantly adapt to changing conditions:
-              </p>
-              <ul>
-                <li>
-                  <strong>Entrepreneurs as discoverers:</strong> Business owners
-                  don't have perfect information—they make educated guesses
-                  about what consumers want, at what price, and how to produce
-                  it efficiently. Success means they discovered valuable
-                  knowledge about consumer preferences and production methods.
-                  Failure means the market signals them to try something else or
-                  exit. This trial-and-error process continually improves
-                  resource allocation without anyone consciously directing it.
-                </li>
-                <li>
-                  <strong>Prices as information signals:</strong> Rising prices
-                  tell producers "make more of this, people want it!" while
-                  telling consumers "use less, it's scarce!" Falling prices
-                  signal the opposite. No central planner needs to coordinate
-                  millions of decisions—prices do it automatically by encoding
-                  vast amounts of dispersed knowledge into a single number
-                  everyone can see and act upon.
-                </li>
-                <li>
-                  <strong>Consumer sovereignty:</strong> Consumers vote with
-                  their dollars, constantly expressing preferences through
-                  purchases. Entrepreneurs must serve these preferences to
-                  survive. Unlike political voting (which happens occasionally),
-                  market voting happens with every transaction, creating
-                  immediate, continuous feedback that guides production toward
-                  genuine human wants.
-                </li>
-                <li>
-                  <strong>Adaptive competition:</strong> Multiple suppliers
-                  compete to serve consumers better, faster, or cheaper. This
-                  competition isn't wasteful—it's an evolutionary process that
-                  discovers better ways of doing things. When one entrepreneur
-                  innovates successfully, others imitate or improve, spreading
-                  knowledge throughout the economy without government mandates.
-                </li>
-              </ul>
-
-              <h4>The Crucial Role of Non-Interference</h4>
-              <p>
-                <strong
-                  >This spontaneous order only functions when governments
-                  refrain from interfering with voluntary exchange.</strong
-                >
-                Price controls, production quotas, licensing restrictions, and
-                other interventions short-circuit the discovery process:
-              </p>
-              <ul>
-                <li>
-                  <strong>Price ceilings block information:</strong> When
-                  government caps prices below market equilibrium, shortages
-                  emerge—but the real damage is deeper. The price signal that
-                  would have told producers "make more!" gets muted.
-                  Entrepreneurs can't discover if high prices reflect temporary
-                  scarcity (requiring more production) or changing preferences
-                  (requiring innovation) because the price is artificially
-                  frozen.
-                </li>
-                <li>
-                  <strong>Price floors create waste:</strong> Minimum prices
-                  above equilibrium create surpluses—resources deployed to
-                  produce things nobody wants at that price. The market's
-                  feedback mechanism (falling prices signaling "produce less")
-                  is disabled, preventing the reallocation of resources to more
-                  valued uses.
-                </li>
-                <li>
-                  <strong>Regulations freeze discovery:</strong> Licensing
-                  requirements, building codes, and occupational restrictions
-                  prevent entrepreneurs from experimenting with new business
-                  models, production methods, or service offerings. What looks
-                  like "protecting consumers" actually protects incumbent
-                  businesses from innovative competition, slowing the discovery
-                  of better ways to serve people.
-                </li>
-                <li>
-                  <strong>Subsidies distort signals:</strong> When governments
-                  subsidize production (corn ethanol, solar panels, electric
-                  cars), prices no longer reflect true costs and consumer
-                  preferences. Resources flow to politically favored industries
-                  rather than where consumers actually want them, undermining
-                  the market's allocative efficiency.
-                </li>
-              </ul>
-
-              <h4>The Humility Principle</h4>
-              <p>
-                The supply and demand model teaches
-                <strong>epistemic humility</strong>: no individual, committee,
-                or government possesses the knowledge scattered across millions
-                of people to centrally plan an economy. Consumer preferences,
-                production technologies, resource availabilities, and individual
-                circumstances change constantly—far too fast and complex for any
-                planning agency to track. The market doesn't require anyone to
-                know everything; it only requires freedom for individuals to act
-                on their local knowledge through voluntary exchange.
-              </p>
-
-              <p>
-                <strong>When left free to operate,</strong> supply and demand
-                coordinates the actions of strangers who never meet, allocates
-                resources to their highest-valued uses as judged by consumers,
-                incentivizes innovation and efficiency, and creates
-                prosperity—not because anyone designed it to do so, but because
-                voluntary exchange naturally aligns individual incentives with
-                social benefit. Government interference, however
-                well-intentioned, disrupts this delicate coordination mechanism,
-                creating shortages, surpluses, misallocations, and stifled
-                innovation.
-              </p>
-
-              <h3>Curve Structure</h3>
-              <p>
-                The graph plots price (vertical axis) against quantity
-                (horizontal axis). The demand curve descends from left to right;
-                the supply curve ascends. Shifts in either curve (due to taxes,
-                subsidies, preferences, or costs) alter equilibrium, revealing
-                surpluses (excess supply) or shortages (excess demand).
-              </p>
-
-              <h3>Understanding Curve Shifts (Movement vs. Shift)</h3>
-              <p>
-                It's crucial to understand the difference between
-                <strong>moving along a curve</strong> and
-                <strong>shifting the entire curve</strong>:
-              </p>
-
-              <h4>Movement Along a Curve</h4>
-              <p>
-                This happens when the price changes but the curve itself stays
-                in place. You're just moving to a different point on the same
-                line. For example:
-              </p>
-              <ul>
-                <li>
-                  <strong>On the demand curve:</strong> If the price drops from
-                  $70 to $50, consumers buy more (move down and right along the
-                  curve)
-                </li>
-                <li>
-                  <strong>On the supply curve:</strong> If the price rises from
-                  $70 to $90, producers supply more (move up and right along the
-                  curve)
-                </li>
-              </ul>
-
-              <h4>Shifting the Entire Demand Curve</h4>
-              <p>
-                The
-                <strong>entire demand curve shifts right or left</strong> when
-                something OTHER than price changes consumer behavior:
-              </p>
-              <ul>
-                <li>
-                  <strong>Shift Right (Increase in Demand):</strong> At every
-                  price, consumers want MORE
-                  <ul>
-                    <li>Higher incomes (people have more money to spend)</li>
-                    <li>
-                      Product becomes trendy/popular (fashion, viral marketing)
-                    </li>
-                    <li>
-                      Price of substitutes rises (if beef gets expensive, demand
-                      for chicken shifts right)
-                    </li>
-                    <li>
-                      Price of complements falls (if TVs get cheaper, demand for
-                      streaming subscriptions shifts right)
-                    </li>
-                    <li>
-                      Expected future price increase (people buy now before
-                      prices rise)
-                    </li>
-                    <li>Population increase (more buyers in the market)</li>
-                  </ul>
-                  <em
-                    >Mathematically: Increases the 'a' parameter (demand
-                    intercept)</em
-                  >
-                </li>
-                <li>
-                  <strong>Shift Left (Decrease in Demand):</strong> At every
-                  price, consumers want LESS
-                  <ul>
-                    <li>Lower incomes (recession, job losses)</li>
-                    <li>Product goes out of fashion</li>
-                    <li>
-                      Health concerns (demand for cigarettes shifted left after
-                      health warnings)
-                    </li>
-                    <li>
-                      Price of substitutes falls (cheap alternatives emerge)
-                    </li>
-                  </ul>
-                  <em
-                    >Mathematically: Decreases the 'a' parameter (demand
-                    intercept)</em
-                  >
-                </li>
-              </ul>
-
-              <h4>Shifting the Entire Supply Curve</h4>
-              <p>
-                The
-                <strong>entire supply curve shifts right or left</strong> when
-                something OTHER than price changes producer behavior:
-              </p>
-              <ul>
-                <li>
-                  <strong>Shift Right (Increase in Supply):</strong> At every
-                  price, producers supply MORE
-                  <ul>
-                    <li>
-                      Technology improves (automation, better machines make
-                      production cheaper)
-                    </li>
-                    <li>
-                      Input costs fall (raw materials, labor, energy get
-                      cheaper)
-                    </li>
-                    <li>
-                      Government subsidies (producers get paid to produce)
-                    </li>
-                    <li>Good weather (for agriculture)</li>
-                    <li>More producers enter the market</li>
-                    <li>
-                      Expected future price decrease (sell now before prices
-                      drop)
-                    </li>
-                  </ul>
-                  <em
-                    >Mathematically: Decreases the 'c' parameter (supply
-                    intercept - lower minimum price needed)</em
-                  >
-                </li>
-                <li>
-                  <strong>Shift Left (Decrease in Supply):</strong> At every
-                  price, producers supply LESS
-                  <ul>
-                    <li>Input costs rise (oil shock raises energy costs)</li>
-                    <li>Government regulations increase costs</li>
-                    <li>Natural disasters (hurricanes, droughts)</li>
-                    <li>Producers exit the market</li>
-                    <li>Taxes on production</li>
-                  </ul>
-                  <em
-                    >Mathematically: Increases the 'c' parameter (supply
-                    intercept - higher minimum price needed)</em
-                  >
-                </li>
-              </ul>
-
-              <h4>Impact on Equilibrium</h4>
-              <ul>
-                <li>
-                  <strong>Demand shifts right:</strong> Equilibrium price ↑,
-                  equilibrium quantity ↑
-                </li>
-                <li>
-                  <strong>Demand shifts left:</strong> Equilibrium price ↓,
-                  equilibrium quantity ↓
-                </li>
-                <li>
-                  <strong>Supply shifts right:</strong> Equilibrium price ↓,
-                  equilibrium quantity ↑
-                </li>
-                <li>
-                  <strong>Supply shifts left:</strong> Equilibrium price ↑,
-                  equilibrium quantity ↓
-                </li>
-              </ul>
-
-              <h4>How to Simulate Shifts with This Tool</h4>
-              <p>You can simulate these shifts by adjusting the parameters:</p>
-              <ul>
-                <li>
-                  <strong>To shift demand right (increase):</strong> Increase
-                  the 'a' parameter (e.g., from 120 to 140)
-                </li>
-                <li>
-                  <strong>To shift demand left (decrease):</strong> Decrease the
-                  'a' parameter (e.g., from 120 to 100)
-                </li>
-                <li>
-                  <strong>To shift supply right (increase):</strong> Decrease
-                  the 'c' parameter (e.g., from 20 to 10)
-                </li>
-                <li>
-                  <strong>To shift supply left (decrease):</strong> Increase the
-                  'c' parameter (e.g., from 20 to 30)
-                </li>
-              </ul>
-              <p>
-                <strong>Try it:</strong> Change 'a' from 120 to 140 and click
-                Simulate. You'll see the demand curve shift right, creating a
-                higher equilibrium price and quantity!
-              </p>
-
-              <h3>Mathematical Formulation</h3>
-              <p>
-                <strong>Curved Demand (Realistic Model):</strong>
-                <em>P = a / (1 + bQ)^0.5</em> <br />This creates a convex curve
-                showing diminishing marginal utility—each additional unit
-                provides less value to consumers.
-              </p>
-              <p>
-                <strong>Curved Supply (Realistic Model):</strong>
-                <em>P = c + d·Q^1.3</em> <br />This creates a convex curve
-                showing increasing marginal costs—each additional unit becomes
-                more expensive to produce.
-              </p>
-              <p>
-                <strong>Equilibrium:</strong> Found where demand price equals
-                supply price (solved numerically)
-              </p>
-
-              <h3>Why Decimal Quantities? (Understanding Continuous Models)</h3>
-              <p>
-                You might notice the equilibrium shows decimal quantities like
-                "55.75 units" instead of whole numbers. This isn't a
-                mistake—it's how economic models work in practice:
-              </p>
-              <ul>
-                <li>
-                  <strong>Aggregate Market Scale:</strong> The curves represent
-                  entire markets, not individual purchases. "55.75 units" might
-                  mean 55.75 million smartphones per quarter, 55.75 thousand
-                  cars per month, or 55.75 tons of steel. The decimal represents
-                  a large-scale aggregate across all buyers and sellers in the
-                  market.
-                </li>
-                <li>
-                  <strong>Continuous Production:</strong> Many goods are
-                  naturally measured in decimals— 55.75 barrels of oil, 55.75
-                  gallons of milk, 55.75 kilowatt-hours of electricity, 55.75
-                  cubic meters of lumber, or 55.75 hours of labor services.
-                  These aren't discrete individual items but continuous
-                  quantities.
-                </li>
-                <li>
-                  <strong>Time-Based Rates:</strong> Quantities often represent
-                  rates over time periods. For example, "55.75 units" could mean
-                  an average production/consumption rate: a factory might
-                  produce 55 units one day and 56 the next, averaging 55.75 over
-                  the period.
-                </li>
-                <li>
-                  <strong>Mathematical Smoothness:</strong> Real markets involve
-                  millions of transactions by countless buyers and sellers.
-                  Treating quantity as a continuous variable (using calculus and
-                  smooth curves) provides a much simpler and more elegant model
-                  than trying to track each discrete transaction. The curves are
-                  smooth approximations that capture aggregate behavior.
-                </li>
-                <li>
-                  <strong>Professional Standard:</strong> In academic economics,
-                  government analysis, and business forecasting, decimal
-                  quantities are the norm. Economists routinely work with values
-                  like "GDP grew by 2.3%" or "unemployment is 4.7%"—precision
-                  matters for policy and investment decisions.
-                </li>
-              </ul>
-              <p>
-                <strong>Bottom line:</strong> While buying 0.75 of an individual
-                apple doesn't make sense, an economy producing or consuming
-                55.75 million apples per year, or a market clearing at 55.75
-                tons of apples, is perfectly reasonable. The model represents
-                aggregate market behavior, not individual purchases.
-              </p>
-
-              <h3>Understanding the Parameters (For Beginners)</h3>
-
-              <h4>Demand Parameters</h4>
-              <p><strong>a - Demand Scale Factor:</strong></p>
-              <p>
-                This controls the overall level of the demand curve—how high it
-                sits on the price axis. A higher 'a' means consumers are willing
-                to pay more at any given quantity. Think of it as the "value
-                intensity"—how much consumers value this product. For luxury
-                goods or essentials, this would be high. For low-value items, it
-                would be low. For example, if a = 120, consumers place high
-                value on the product and are willing to pay premium prices.
-              </p>
-
-              <p>
-                <strong
-                  >b - Demand Curvature (Diminishing Utility Rate):</strong
-                >
-              </p>
-              <p>
-                This controls how quickly consumer willingness to pay decreases
-                as they buy more. A higher 'b' means the curve drops faster—each
-                additional unit loses value more rapidly (strong diminishing
-                marginal utility). A lower 'b' means consumers maintain their
-                willingness to pay longer as quantity increases. For example, if
-                b = 2, consumer valuations drop moderately with each additional
-                purchase. Think: the first ice cream is worth $5, the second $3,
-                the third $1.
-              </p>
-
-              <h4>Supply Parameters</h4>
-              <p><strong>c - Minimum Production Cost (Supply Base):</strong></p>
-              <p>
-                This is the base cost of production—the minimum price producers
-                need even for small quantities. It represents fixed costs and
-                baseline variable costs. If the market price falls below this,
-                producers won't supply anything because they'd lose money on
-                every unit. For example, if c = 20, producers need at least $20
-                per unit to cover their basic costs of materials, labor, and
-                overhead.
-              </p>
-
-              <p>
-                <strong>d - Marginal Cost Growth Rate:</strong>
-              </p>
-              <p>
-                This controls how rapidly production costs accelerate as output
-                increases. A higher 'd' means costs rise very quickly with more
-                production (steep curve)—you quickly hit capacity constraints,
-                need expensive overtime, less efficient equipment, etc. A lower
-                'd' means costs rise more gradually. For example, if d = 2,
-                costs accelerate moderately. The curve shape (Q^1.3) means
-                producing the 100th unit costs much more than the 10th
-                unit—capturing the reality of diminishing returns and capacity
-                constraints.
-              </p>
-
-              <h4>How These Work Together (Curved Model)</h4>
-              <p>
-                The realistic curved model captures key economic realities that
-                linear models miss:
-              </p>
-              <ul>
-                <li>
-                  <strong>Demand curves down more steeply at first</strong> then
-                  flatten—the first few units have high value, but eventually
-                  everyone who really wants the product has bought it, leaving
-                  only marginal buyers.
-                </li>
-                <li>
-                  <strong>Supply curves up more gradually at first</strong> then
-                  steepen—initial production uses the best resources and most
-                  efficient methods, but expanding requires increasingly costly
-                  approaches (overtime, new facilities, less productive
-                  workers).
-                </li>
-                <li>
-                  <strong>Equilibrium emerges naturally</strong> where these
-                  curved forces balance—where the marginal consumer's
-                  willingness to pay exactly matches the marginal producer's
-                  cost.
-                </li>
-              </ul>
-              <p>
-                This curved model is more realistic than straight lines because
-                it reflects how people actually behave: diminishing marginal
-                utility for consumers and increasing marginal costs for
-                producers.
-              </p>
-
-              <h3>Understanding Negative Prices</h3>
-              <p>
-                In the mathematical model, you may see negative prices on the
-                chart at very high quantities. While negative prices are unusual
-                in real markets, they can occur in special circumstances and
-                help illustrate important economic concepts:
-              </p>
-
-              <h4>On the Demand Curve (Negative Willingness to Pay)</h4>
-              <p>
-                When the demand curve drops below zero, it means consumers would
-                need to be paid to take the product. Real-world examples
-                include:
-              </p>
-              <ul>
-                <li>
-                  <strong>Waste disposal:</strong> If you produce too many
-                  widgets that nobody wants, you might have to pay people to
-                  haul them away
-                </li>
-                <li>
-                  <strong>Negative oil prices (2020):</strong> During COVID-19,
-                  oil storage filled up and producers literally paid buyers to
-                  take oil off their hands rather than shut down wells
-                </li>
-                <li>
-                  <strong>Perishable goods:</strong> A restaurant with too much
-                  food at closing time might give it away free or even pay to
-                  have it removed
-                </li>
-                <li>
-                  <strong>Excess inventory:</strong> Companies sometimes pay
-                  liquidators to clear out unsold merchandise
-                </li>
-              </ul>
-
-              <h4>On the Supply Curve (Negative Production Costs)</h4>
-              <p>
-                When the supply curve goes below zero at low quantities, it
-                represents a theoretical scenario where producers would pay to
-                produce. While rare, this can happen when:
-              </p>
-              <ul>
-                <li>
-                  <strong>Byproduct value:</strong> Manufacturing a product
-                  generates valuable byproducts that offset costs (though this
-                  usually adjusts the cost structure)
-                </li>
-                <li>
-                  <strong>Government subsidies:</strong> Producers receive
-                  payments that exceed their production costs
-                </li>
-                <li>
-                  <strong>Learning by doing:</strong> Early production builds
-                  skills and knowledge worth more than the cost
-                </li>
-              </ul>
-
-              <h4>Practical Note</h4>
-              <p>
-                In most real markets, producers simply stop supplying when
-                prices fall too low, and consumers stop demanding at very high
-                prices. Negative prices represent extreme theoretical scenarios
-                that help us understand the mathematical model. For educational
-                purposes, they demonstrate that these are linear projections—in
-                reality, markets don't operate at these extreme quantities.
-              </p>
-
-              <h3>Policy Implications</h3>
-              <ul>
-                <li>Price ceilings create shortages; floors, surpluses.</li>
-                <li>
-                  Taxes shift supply up, reducing quantity; subsidies shift
-                  down, increasing it.
-                </li>
-                <li>
-                  <strong>Elasticity (b, d) shows responsiveness:</strong> This
-                  measures how much quantity changes when price changes.
-                  <ul>
-                    <li>
-                      <strong
-                        >Steep curves (high b or d values) = Inelastic/Rigid
-                        markets:</strong
-                      >
-                      Quantity doesn't change much even with big price changes.
-                      Examples: insulin (people need it regardless of price),
-                      gasoline in the short term (you still need to drive to
-                      work), salt (you use about the same amount no matter the
-                      price). The curve is steep/vertical because quantity is
-                      relatively fixed.
-                    </li>
-                    <li>
-                      <strong
-                        >Flat curves (low b or d values) = Elastic/Flexible
-                        markets:</strong
-                      >
-                      Quantity changes a lot with small price changes. Examples:
-                      restaurant meals (if one place raises prices, people
-                      easily switch to competitors), luxury goods (if designer
-                      bags get too expensive, people skip them), seasonal fruits
-                      (if strawberries are expensive, buy blueberries instead).
-                      The curve is flat/horizontal because consumers or
-                      producers react strongly to price.
-                    </li>
-                    <li>
-                      <strong>Why this matters for policy:</strong> Taxing
-                      inelastic goods (like cigarettes or gasoline) raises lots
-                      of revenue because people keep buying. Taxing elastic
-                      goods raises less revenue because people quickly switch to
-                      alternatives. Similarly, subsidizing inelastic goods
-                      doesn't boost consumption much, but subsidizing elastic
-                      goods can dramatically increase purchases.
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-
-              <h3>Historical Context</h3>
-              <p>
-                Rooted in Adam Smith's "invisible hand" (1776), formalized by
-                Alfred Marshall in 1890. It underpins modern microeconomics,
-                guiding antitrust, trade, and regulation.
-              </p>
-
-              <p>
-                In summary, supply and demand reveals the invisible forces that
-                balance markets—or disrupt them under princely decree.
-              </p>
-            </div>
-          </details>
-
-          <form
-            id="paramsFormSupplyDemand"
-            aria-labelledby="supplydemand-heading"
-          >
-            <div class="param-group">
-              <label for="a-supplydemand"
-                >Demand Scale (a, value intensity, e.g., 150):</label
-              >
-              <input
-                type="number"
-                id="a-supplydemand"
-                value="150"
-                step="1"
-                aria-describedby="a-supplydemand-help"
-              />
-              <small id="a-supplydemand-help" class="sr-only"
-                >Overall demand level - how much consumers value the
-                product</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="b-supplydemand"
-                >Demand Curvature (b, utility decline rate, e.g., 0.02):</label
-              >
-              <input
-                type="number"
-                id="b-supplydemand"
-                value="0.02"
-                step="0.01"
-                aria-describedby="b-supplydemand-help"
-              />
-              <small id="b-supplydemand-help" class="sr-only"
-                >How fast marginal utility diminishes</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="c-supplydemand"
-                >Supply Base Cost (c, minimum price, e.g., 10):</label
-              >
-              <input
-                type="number"
-                id="c-supplydemand"
-                value="10"
-                step="1"
-                aria-describedby="c-supplydemand-help"
-              />
-              <small id="c-supplydemand-help" class="sr-only"
-                >Baseline production cost</small
-              >
-            </div>
-
-            <div class="param-group">
-              <label for="d-supplydemand"
-                >Supply Cost Growth (d, marginal cost rate, e.g., 0.5):</label
-              >
-              <input
-                type="number"
-                id="d-supplydemand"
-                value="0.5"
-                step="0.1"
-                aria-describedby="d-supplydemand-help"
-              />
-              <small id="d-supplydemand-help" class="sr-only"
-                >How fast costs accelerate with production</small
-              >
-            </div>
-
-          </form>
-
-          <div
-            class="chart-container"
-            role="img"
-            aria-labelledby="supplydemand-chart-label"
-          >
-            <canvas
-              id="growthChartSupplyDemand"
-              aria-label="Interactive Supply and Demand curves showing market equilibrium"
-            ></canvas>
-            <div id="supplydemand-chart-label" class="sr-only">
-              Chart displaying Supply and Demand with quantity on x-axis and
-              price on y-axis
-            </div>
-          </div>
-          <div id="equilibrium-supplydemand" aria-live="polite"></div>
-        </section>
-
-        <section id="division-section" aria-labelledby="division-heading">
-          <details open>
-            <summary>About the Division of Labor & Market Size Curve</summary>
-            <div style="margin-top: 15px; line-height: 1.6">
-              <p>
-                The Division of Labor & Market Size curve, based on
-                <strong>Adam Smith's famous "Pin Factory" example</strong>,
-                demonstrates one of the most powerful insights in economics:
-                <strong
-                  >the division of labor—limited by the extent of the market—is
-                  the primary engine of productivity growth and
-                  prosperity.</strong
-                >
-              </p>
-
-              <h3>The Pin Factory: Adam Smith's Revolutionary Insight</h3>
-              <p>
-                In <em>The Wealth of Nations</em> (1776), Adam Smith observed
-                that a single worker making pins alone could produce perhaps
-                <strong>20 pins per day</strong>. But when the process was
-                divided into 18 specialized tasks shared among 10 workers, each
-                worker could produce an astonishing
-                <strong>4,800 pins per day</strong>—a 240-fold increase in
-                productivity! This wasn't just efficiency; it was a complete
-                transformation of economic output.
-              </p>
-
-              <h3>Key Economic Principles</h3>
-              <p>
-                This model demonstrates the fundamental importance of
-                <strong>increasing returns to scale</strong>—the true driver of
-                the 100-fold increase in per capita GDP over the last 250 years.
-                Key insights include:
-              </p>
-              <ul>
-                <li>
-                  <strong>Increasing returns, not diminishing returns:</strong>
-                  As markets grow and specialization deepens, productivity
-                  increases exponentially—not marginally. This is the "pin
-                  factory" vs. the neoclassical trap.
-                </li>
-                <li>
-                  <strong>Market size enables specialization:</strong> Smith
-                  wrote: "the division of labor is limited by the extent of the
-                  market." Larger markets allow more specialized workers,
-                  leading to dramatic productivity gains.
-                </li>
-                <li>
-                  <strong>Free trade expands prosperity:</strong> By expanding
-                  market size beyond national borders, free trade enables even
-                  greater specialization and wealth creation.
-                </li>
-                <li>
-                  <strong
-                    >Social cooperation through voluntary exchange:</strong
-                  >
-                  The division of labor requires peaceful cooperation. As
-                  Frédéric Bastiat said: "Where commerce enters, bullets do
-                  not."
-                </li>
-                <li>
-                  <strong>Entrepreneurship and spontaneous order:</strong> No
-                  central planner designs the division of labor—it emerges
-                  spontaneously through the market process and the "invisible
-                  hand."
-                </li>
-              </ul>
-
-              <h3>The Mathematics of Increasing Returns</h3>
-              <p>
-                The model shows productivity as a function of specialization
-                enabled by market size:
-              </p>
-              <p style="text-align: center; font-style: italic">
-                Productivity = Base × (1 + Workers × Specialization Factor)<sup
-                  >Returns Parameter</sup
-                >
-              </p>
-              <p>Where:</p>
-              <ul>
-                <li>
-                  <strong>Base productivity:</strong> Output per worker in
-                  isolation (e.g., 20 pins/day)
-                </li>
-                <li>
-                  <strong>Workers:</strong> Number of workers (representing
-                  market size/population)
-                </li>
-                <li>
-                  <strong>Specialization factor:</strong> How much
-                  specialization each additional worker enables
-                </li>
-                <li>
-                  <strong>Returns parameter:</strong> Degree of increasing
-                  returns (>1 means increasing returns to scale)
-                </li>
-              </ul>
-
-              <h3>Why This Matters for Policy</h3>
-
-              <h4>Free Markets Enable Specialization</h4>
-              <p>
-                Government intervention—through regulation, trade barriers,
-                taxes, and restrictions—limits market size and prevents
-                specialization. This destroys the very mechanism that creates
-                prosperity. Excessive regulations can be a primary cause of
-                economic decline.
-              </p>
-
-              <h4>Private Property is Essential</h4>
-              <p>
-                The division of labor requires secure private property rights
-                and voluntary exchange. Without property rights, there's no
-                basis for specialized production and trade. This is why
-                socialism—which attacks private property—inevitably leads to
-                poverty.
-              </p>
-
-              <h4>Population Growth is Good</h4>
-              <p>
-                Contrary to Malthusian pessimism, more people mean larger
-                markets, more specialization, and higher productivity for
-                everyone. The world population multiplied 7x from 1810 to 2000,
-                yet per capita output grew 9.2x—productivity grew
-                <em>faster</em> than population!
-              </p>
-
-              <h4>Trade Barriers Destroy Wealth</h4>
-              <p>
-                Protectionism artificially limits market size, forcing people
-                back toward self-sufficiency (like the solitary pin-maker
-                producing only 20 pins). Free trade expands markets and enables
-                the specialization that creates wealth.
-              </p>
-
-              <h3>Historical Evidence</h3>
-              <p>
-                From year 0 to 1800, per capita GDP grew only 48% (0.02%
-                annually) under conditions of limited trade and small markets.
-                From 1800 to 2000, with expanding free trade and market
-                integration, per capita GDP grew 820% (multiplied by 9.2x). The
-                difference?
-                <strong
-                  >Increasing returns from expanding division of labor in larger
-                  markets.</strong
-                >
-              </p>
-
-              <h3>Interactive Controls</h3>
-              <p>
-                Adjust the parameters below to see how market size,
-                specialization depth, and the degree of increasing returns
-                affect productivity. Notice how small increases in market size
-                (enabling more workers/specialization) create exponential
-                productivity gains—not linear ones. This is Adam Smith's insight
-                and the foundation of modern prosperity.
-              </p>
-
-              <h4>Parameter Explanations</h4>
-              <ul>
-                <li>
-                  <strong>Base Productivity:</strong> Output when a worker
-                  produces alone (Smith's example: 20 pins/day)
-                </li>
-                <li>
-                  <strong>Maximum Workers (Market Size):</strong> Number of
-                  workers that can specialize (represents market size)
-                </li>
-                <li>
-                  <strong>Specialization Factor:</strong> How much each
-                  additional specialized worker boosts productivity (calibrated
-                  to Smith's 240× gain)
-                </li>
-                <li>
-                  <strong>Returns to Scale Parameter:</strong> Degree of
-                  increasing returns (1.5 = strong increasing returns matching
-                  Smith's observations)
-                </li>
-              </ul>
-            </div>
-          </details>
-
-          <form
-            id="paramsFormDivision"
-            aria-label="Division of Labor Parameters"
-          >
-            <div class="param-group">
-              <label for="baseproductivity-division"
-                >Base Productivity (output per worker alone):</label
-              >
-              <input
-                type="number"
-                id="baseproductivity-division"
-                step="1"
-                value="20"
-                min="1"
-                max="100"
-                required
-              />
-            </div>
-
-            <div class="param-group">
-              <label for="maxworkers-division"
-                >Maximum Workers (Market Size):</label
-              >
-              <input
-                type="number"
-                id="maxworkers-division"
-                step="1"
-                value="10"
-                min="1"
-                max="100"
-                required
-              />
-            </div>
-
-            <div class="param-group">
-              <label for="specialization-division"
-                >Specialization Factor (per worker):</label
-              >
-              <input
-                type="number"
-                id="specialization-division"
-                step="0.01"
-                value="4.23"
-                min="0.01"
-                max="10"
-                required
-              />
-            </div>
-
-            <div class="param-group">
-              <label for="returns-division">Returns to Scale Parameter:</label>
-              <input
-                type="number"
-                id="returns-division"
-                step="0.1"
-                value="1.5"
-                min="0.5"
-                max="3"
-                required
-              />
-            </div>
-
-          </form>
-
-          <div
-            class="chart-container"
-            role="img"
-            aria-labelledby="division-chart-label"
-          >
-            <canvas
-              id="growthChartDivision"
-              aria-label="Interactive Division of Labor curve showing productivity gains from specialization"
-            ></canvas>
-            <div id="division-chart-label" class="sr-only">
-              Chart displaying productivity per worker as a function of number
-              of specialized workers (market size)
-            </div>
-          </div>
-          <div id="results-division" aria-live="polite"></div>
-        </section>
-
-        <section id="hockey-section" aria-labelledby="hockey-heading">
-          <details open>
-            <summary>
-              About Hockey Stick: Capitalism's Prosperity Explosion
-            </summary>
-            <div style="margin-top: 15px; line-height: 1.6">
-              <p>
-                <strong>"The Hockey Stick"</strong> demonstrates the most
-                dramatic economic transformation in human history, showing a
-                stunning visual pattern:
-                <strong
-                  >for 1,800 years, per capita GDP barely moved—then suddenly
-                  exploded after 1800 when capitalism emerged.</strong
-                >
-              </p>
-
-              <h3>The Most Important Graph in Economics</h3>
-              <p>
-                When you plot per capita GDP from year 0 to present, the curve
-                looks exactly like a hockey stick: flat for millennia (the
-                handle), then shooting upward exponentially (the blade). This
-                isn't a gradual improvement—it's a complete rupture with all
-                prior human history.
-              </p>
-
-              <h3>Historical Economic Data</h3>
-              <p>
-                Here are the precise numbers that demonstrate capitalism's
-                transformative impact:
-              </p>
-              <ul>
-                <li>
-                  <strong>Year 0 - 1800 (1,800 years):</strong> Per capita GDP
-                  rose only 48% over eighteen centuries—a compound annual growth
-                  rate of just 0.02%. At that pace, it would take 3,500 years to
-                  double living standards!
-                </li>
-                <li>
-                  <strong>1800-1900 (Industrial Revolution):</strong> Growth
-                  rate jumped to 0.66% annually. Doubling time: 107 years.
-                </li>
-                <li>
-                  <strong>1900-1950:</strong> Growth accelerated to 1.66%
-                  annually. Doubling time: 66 years.
-                </li>
-                <li>
-                  <strong>1950-2000:</strong> Growth rate reached 2.1% annually.
-                  Doubling time: 33 years.
-                </li>
-                <li>
-                  <strong>2000-2025:</strong> Growth hit 3.0% annually. Doubling
-                  time: only 23 years!
-                </li>
-              </ul>
-              <p>
-                <strong>Bottom line:</strong> From 1800 to present, per capita
-                GDP multiplied by <strong>more than 15 times</strong> globally.
-                This happened in just 200 years after 1,800 years of near-total
-                stagnation. The growth rate is still accelerating!
-              </p>
-
-              <h3>The Poverty Miracle</h3>
-              <p>
-                The Hockey Stick isn't just about wealth—it's about lifting
-                humanity from misery:
-              </p>
-              <ul>
-                <li>
-                  <strong>1810:</strong> 95% of humanity lived in extreme
-                  poverty (less than $1/day equivalent)
-                </li>
-                <li><strong>1900:</strong> Still around 90%</li>
-                <li><strong>2000:</strong> Down to 15%</li>
-                <li>
-                  <strong>2020 (pre-pandemic):</strong> Only 5% in extreme
-                  poverty
-                </li>
-              </ul>
-              <p>
-                <strong
-                  >"Capitalism lifted 90% of the world's population out of
-                  extreme poverty—and continues to do so at an accelerating
-                  pace."</strong
-                >
-              </p>
-
-              <h3>Why The Hockey Stick Matters</h3>
-              <p>
-                This curve illustrates that the explosion occurred precisely
-                when humanity adopted:
-              </p>
-              <ol>
-                <li>
-                  <strong>Private property rights</strong> (secure ownership
-                  enabling long-term investment)
-                </li>
-                <li>
-                  <strong>Free markets</strong> (voluntary exchange without
-                  state coercion)
-                </li>
-                <li>
-                  <strong>Limited government</strong> (rule of law, not rule of
-                  bureaucrats)
-                </li>
-                <li>
-                  <strong>Division of labor</strong> (enabled by market
-                  expansion and free trade)
-                </li>
-                <li>
-                  <strong>Economic freedom</strong> (entrepreneurs free to
-                  innovate and compete)
-                </li>
-              </ol>
-              <p>
-                The timing is too perfect to be coincidence. For 1,800 years
-                under feudalism, monarchy, and central planning, humanity was
-                trapped in poverty. Then came Adam Smith's
-                <em>Wealth of Nations</em> (1776), the American Revolution
-                (1776), and the unleashing of market forces—and suddenly the
-                hockey stick begins.
-              </p>
-
-              <h3>The Interactive Model</h3>
-              <p>
-                This simulator lets you explore different scenarios by adjusting
-                the "capitalism adoption year." See what happens if capitalism
-                had emerged earlier—or later. The model uses actual historical
-                data to show:
-              </p>
-              <ul>
-                <li>
-                  <strong>Before capitalism:</strong> Flat growth (0.02% annual)
-                  - the handle
-                </li>
-                <li>
-                  <strong>After capitalism:</strong> Exponential acceleration -
-                  the blade
-                </li>
-              </ul>
-
-              <h3>A Challenge to Critics</h3>
-              <p>
-                <em
-                  >"How can anyone demonize an economic system that not only
-                  lifted 90% of the world's population out of extreme poverty,
-                  but continues to drive unprecedented prosperity? There has
-                  never been, in all of human history, a time of greater
-                  prosperity than the one we live in today."</em
-                >
-              </p>
-              <p>
-                The Hockey Stick is visual proof that capitalism isn't just
-                efficient—it's one of the greatest humanitarian achievements in
-                human history.
-              </p>
-
-              <p>
-                The simulator uses a piecewise function matching historical
-                phases. In the two centuries since capitalism's adoption
-                (typically 1800), per capita GDP has multiplied by approximately
-                <strong>15-40×</strong> depending on the region, lifting
-                billions out of poverty. Today's world average is around
-                <strong>$25,000 PPP per capita</strong> (2023 IMF data), up from
-                ~$600-700 in year 0 / ~$650 in 1800.
-              </p>
-              <p style="text-align: center; font-style: italic">
-                GDP(year) = { Pre-Capitalism: Base × (1.0002)<sup
-                  >(year - 0)</sup
-                >
-                } <br />
-                { Post-Capitalism: Accelerating Exponential Growth }
-              </p>
-              <p>
-                Where growth rates shift through five distinct historical
-                phases.
-              </p>
-
-              <h3>Key Insights</h3>
-              <ul>
-                <li>
-                  The flat handle represents
-                  <strong>all of pre-capitalist human history</strong>—empires,
-                  kingdoms, feudalism, mercantilism
-                </li>
-                <li>
-                  The explosive blade begins
-                  <strong>exactly when free markets and property rights</strong>
-                  emerged
-                </li>
-                <li>
-                  Growth is <strong>accelerating</strong>, not slowing—contrary
-                  to neo-Malthusian doomsayers
-                </li>
-                <li>
-                  Population grew 7× from 1810-2000, yet per capita GDP grew
-                  9.2× (total GDP: 63×!)
-                </li>
-                <li>
-                  This demolishes the neoclassical assumption of
-                  <strong>diminishing returns</strong>—we see increasing returns
-                </li>
-              </ul>
-
-              <h3>The Austrian Perspective</h3>
-              <p>
-                Unlike neoclassical models that struggle to explain the Hockey
-                Stick (Solow-Swan only accounts for 15% of growth via capital
-                accumulation), the Austrian approach emphasizes:
-              </p>
-              <ul>
-                <li>
-                  <strong>Entrepreneurial discovery</strong> as the driver of
-                  innovation
-                </li>
-                <li>
-                  <strong>Knowledge accumulation</strong> and human action, not
-                  just capital and labor
-                </li>
-                <li>
-                  <strong>Institutional quality</strong>—secure property rights
-                  create incentives for wealth creation
-                </li>
-                <li>
-                  <strong>Spontaneous order</strong>—no central planner designed
-                  this prosperity
-                </li>
-              </ul>
-
-              <h3>Why It's Called "The Hockey Stick"</h3>
-              <p>
-                The name comes from the unmistakable shape: lay a hockey stick
-                on its side, and that's what history looks like. This term is
-                widely used because it's the most intuitive way to grasp the
-                magnitude of capitalism's transformative achievement.
-              </p>
-            </div>
-          </details>
-
-          <form id="paramsFormHockey">
-            <div class="param-group">
-              <label for="base-hockey"
-                >Base GDP (Year 0) - in constant dollars
-              </label>
-              <input
-                type="number"
-                id="base-hockey"
-                step="100"
-                value="600"
-                min="100"
-                max="2000"
-                required
-              />
-            </div>
-
-            <div class="param-group">
-              <label for="capitalism-year-hockey"
-                >Capitalism Adoption Year - when free markets & property rights
-                emerged
-              </label>
-              <input
-                type="number"
-                id="capitalism-year-hockey"
-                step="50"
-                value="1800"
-                min="0"
-                max="2000"
-                required
-              />
-            </div>
-
-            <div class="param-group">
-              <label for="acceleration-hockey"
-                >Growth Acceleration Factor
-              </label>
-              <input
-                type="number"
-                id="acceleration-hockey"
-                step="0.1"
-                value="1.0"
-                min="0.5"
-                max="3.0"
-                required
-              />
-            </div>
-
-          </form>
-
-          <div
-            class="chart-container"
-            role="img"
-            aria-labelledby="hockey-chart-label"
-          >
-            <canvas
-              id="growthChartHockey"
-              aria-label="Interactive Hockey Stick curve showing per capita GDP explosion under capitalism"
-            ></canvas>
-            <div id="hockey-chart-label" class="sr-only">
-              Chart displaying per capita GDP from year 0 to 2025, showing flat
-              growth pre-capitalism and exponential explosion post-capitalism
-            </div>
-          </div>
-          <div id="results-hockey" aria-live="polite"></div>
-        </section>
+            <h3 style="color: #e83e8c">6. Hockey Stick</h3>
+            <p>Capitalism's prosperity explosion</p>
+            <p class="nav-right">→ Right to Prosperity</p>
+          </a>
+        </div>
       </div>
 
-      <section id="natural-rights" aria-labelledby="rights-heading">
-        <h2
-          id="rights-heading"
-          style="text-align: center; margin-top: 50px; margin-bottom: 30px"
-        >
-          The 6 Objective Natural Rights & Their Institutional Foundations
-        </h2>
-        <p style="text-align: center; max-width: 900px; margin: 0 auto 30px">
-          These six economic curves reveal fundamental natural rights. Each
-          negative right (freedom from interference) requires positive
-          institutional frameworks to become real rather than aspirational:
-        </p>
-
-        <div class="natural-rights-grid">
-          <div class="right-card" style="border-left-color: #007bff">
-            <h3 style="color: #007bff">1. Right to Economic Growth</h3>
-            <div class="right-principle">
-              <p><strong>Through Low Public Spending</strong></p>
-              <p class="source">
-                Derived from the <strong>Armey Curve</strong>: Excessive
-                government spending crowds out private investment. Prosperity
-                requires limited government.
-              </p>
-            </div>
-            <details>
-              <summary>Implementation Details</summary>
-              <div class="right-negative">
-                <p>
-                  <strong>Negative Right:</strong> Not to have private
-                  investment and enterprise crowded out by an overgrown state.
-                </p>
-              </div>
-              <div class="right-positive">
-                <h4>Institutional Foundations:</h4>
-                <ul>
-                  <li>
-                    <strong>Right to a lean, competent core state</strong> that
-                    provides high-quality rule of law, property registries, and
-                    infrastructure, instead of diffuse clientelist spending.
-                  </li>
-                  <li>
-                    <strong
-                      >Right to transparent public accounts and fiscal
-                      rules</strong
-                    >
-                    (e.g., debt brake rules) that bind politicians against
-                    turning the budget into a patronage machine.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-enemies">
-                <h4>Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong
-                      >Senior public-sector unions and bureaucracies</strong
-                    >
-                    whose budgets, headcount, and privileges expand with bigger
-                    government.
-                  </li>
-                  <li>
-                    <strong>Clientelist political machines and parties</strong>
-                    whose power depends on distributing public jobs, subsidies,
-                    and contracts.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-solutions">
-                <h4>How to Deal with Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong
-                      >Against public-sector unions & bureaucracies:</strong
-                    >
-                    Impose hard fiscal rules (debt brakes, spending caps) that
-                    automatically constrain payroll and transfers, forcing
-                    reprioritization toward core functions. Increase
-                    transparency (open budgets, headcount dashboards) so voters
-                    see who benefits from bloat and can punish it electorally.
-                  </li>
-                  <li>
-                    <strong
-                      >Against clientelist machines & patronage parties:</strong
-                    >
-                    Ban or severely limit discretionary hiring and earmarked
-                    subsidies; move to merit-based recruitment and formula-based
-                    transfers. Empower independent audit offices and
-                    anti-corruption agencies with real prosecutorial backing.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details style="margin-top: 10px">
-              <summary style="font-size: 14px; color: #666">📜 History</summary>
-              <div
-                style="
-                  padding: 10px 0;
-                  font-size: 13px;
-                  line-height: 1.4;
-                  color: #555;
-                "
-              >
-                <p>
-                  <strong>U.S. Spoils System → Pendleton Act:</strong> In
-                  19th-century America, federal jobs were handed out as
-                  political rewards, creating a bloated, corrupt patronage
-                  machine ("spoils system"). After high-profile scandals and the
-                  assassination of President Garfield, Congress passed the
-                  Pendleton Civil Service Reform Act (1883), which gradually
-                  replaced patronage with merit exams and independent civil
-                  service commissions, sharply reducing politicians' ability to
-                  buy loyalty with public jobs.
-                </p>
-                <p>
-                  <strong>Switzerland's Debt Brake:</strong> Switzerland
-                  introduced a constitutional "debt brake" in 2003 that caps
-                  structural federal spending at long-run revenue, forcing
-                  automatic corrections when deficits appear. Studies find this
-                  rule helped stabilize Swiss federal debt and shifted politics
-                  from promising new programs toward prioritizing within a hard
-                  budget constraint.
-                </p>
-              </div>
-            </details>
-          </div>
-
-          <div class="right-card" style="border-left-color: #28a745">
-            <h3 style="color: #28a745">2. Right to Economic Attractiveness</h3>
-            <div class="right-principle">
-              <p><strong>Through Low Taxes</strong></p>
-              <p class="source">
-                Derived from the <strong>Laffer Curve</strong>: High taxes
-                destroy incentives and drive away capital. Low taxes attract
-                investment and maximize revenue.
-              </p>
-            </div>
-            <details>
-              <summary>Implementation Details</summary>
-              <div class="right-negative">
-                <p>
-                  <strong>Negative Right:</strong> Not to have one's productive
-                  effort confiscated at punitive rates that destroy incentives.
-                </p>
-              </div>
-              <div class="right-positive">
-                <h4>Institutional Foundations:</h4>
-                <ul>
-                  <li>
-                    <strong>Right to a simple, predictable tax code</strong>
-                    (few brackets, clear rules) so investors and workers can
-                    plan.
-                  </li>
-                  <li>
-                    <strong>Right to equal treatment under tax law</strong> - no
-                    arbitrary exemptions or privileges for politically connected
-                    sectors.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-enemies">
-                <h4>Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong>High-spend coalitions</strong> (politicians,
-                    contractors, some unions) that constantly promise new
-                    programs without matching cuts, pushing for ever-higher
-                    taxes.
-                  </li>
-                  <li>
-                    <strong>Lobbyists and large incumbents</strong> that demand
-                    targeted tax breaks and complex exemptions, making the code
-                    opaque and hostile to small/new players.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-solutions">
-                <h4>How to Deal with Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong>Against high-spend coalitions:</strong> Enact
-                    tax-expenditure "pay-as-you-go" rules: any new permanent
-                    spending must be offset by cuts elsewhere, not new taxes.
-                    Build independent fiscal councils that publicly rate
-                    proposals for long-term sustainability and growth impact.
-                  </li>
-                  <li>
-                    <strong>Against lobbyists & large incumbents:</strong>
-                    Sunset all targeted exemptions automatically and require
-                    supermajorities to renew them. Mandate full public
-                    registries of lobbying contacts and beneficiary lists for
-                    any special regime.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details style="margin-top: 10px">
-              <summary style="font-size: 14px; color: #666">📜 History</summary>
-              <div
-                style="
-                  padding: 10px 0;
-                  font-size: 13px;
-                  line-height: 1.4;
-                  color: #555;
-                "
-              >
-                <p>
-                  <strong>OECD Tax Reform (1980s onward):</strong> Several OECD
-                  countries moved from high-rate, loophole-ridden taxes to lower
-                  rates with broader bases, cutting many targeted exemptions
-                  that lobbyists had won over decades. This "rate-cut,
-                  base-broadening" strategy reduced the payoff to lobbying for
-                  special breaks and made the system more predictable for new
-                  firms and workers.
-                </p>
-              </div>
-            </details>
-          </div>
-
-          <div class="right-card" style="border-left-color: #dc3545">
-            <h3 style="color: #dc3545">3. Right to Economic Recovery</h3>
-            <div class="right-principle">
-              <p><strong>Through Structural Adjustment</strong></p>
-              <p class="source">
-                Derived from the <strong>J-Curve</strong>: Necessary reforms may
-                cause short-term pain but lead to long-term health. Delaying
-                them only worsens the crisis.
-              </p>
-            </div>
-            <details>
-              <summary>Implementation Details</summary>
-              <div class="right-negative">
-                <p>
-                  <strong>Negative Right:</strong> Not to be trapped
-                  indefinitely in unsustainable policies because leaders fear
-                  short-term pain.
-                </p>
-              </div>
-              <div class="right-positive">
-                <h4>Institutional Foundations:</h4>
-                <ul>
-                  <li>
-                    <strong>Right to credible adjustment programs</strong> that
-                    are time-bound, rule-based, and not ad hoc shocks inflicted
-                    on the weakest.
-                  </li>
-                  <li>
-                    <strong>Right to temporary, targeted safety nets</strong>
-                    (unemployment insurance, cash transfers) during the "dip,"
-                    so people are not sacrificed for macro indicators.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-enemies">
-                <h4>Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong>Status-quo political elites</strong> who benefit
-                    from existing subsidies, overstaffed SOEs, and protection,
-                    and therefore resist any reform that threatens their rents.
-                  </li>
-                  <li>
-                    <strong>Insider business groups</strong> tied to state banks
-                    or public contracts that would lose privileges under
-                    liberalization.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-solutions">
-                <h4>How to Deal with Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong>Against status-quo political elites:</strong> Lock
-                    key reforms into law or constitution (trade openness,
-                    central bank independence, privatization rules) so they are
-                    harder to reverse. Use independent commissions to design and
-                    sequence reforms, reducing room for ad hoc sabotage.
-                  </li>
-                  <li>
-                    <strong>Against insider business groups:</strong> Gradually
-                    privatize SOEs with transparent tenders and caps on
-                    ownership concentration. Open capital markets and banking
-                    licenses so credit allocation is contestable, not
-                    monopolized by state-connected banks.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details style="margin-top: 10px">
-              <summary style="font-size: 14px; color: #666">📜 History</summary>
-              <div
-                style="
-                  padding: 10px 0;
-                  font-size: 13px;
-                  line-height: 1.4;
-                  color: #555;
-                "
-              >
-                <p>
-                  <strong>Poland's Balcerowicz Plan (1990):</strong> At the end
-                  of communist rule, Poland faced hyperinflation, shortages, and
-                  a state-dominated, loss-making industrial sector defended by
-                  entrenched party and union interests. The 1990 Balcerowicz
-                  Plan rapidly freed most prices, cut subsidies, tightened
-                  monetary policy, opened trade, and began privatization,
-                  causing a sharp but brief output drop followed by sustained
-                  growth and a successful transition to a market economy.
-                </p>
-                <p>
-                  <strong>New Zealand's Market Reforms (1980s):</strong> In the
-                  1980s, New Zealand broke the grip of subsidy-dependent farmers
-                  and protected state firms by floating its currency, ending
-                  most sector-specific subsidies, and imposing hard budget
-                  constraints on SOEs, forcing adjustment through markets
-                  instead of endless political bargaining.
-                </p>
-              </div>
-            </details>
-          </div>
-
-          <div class="right-card" style="border-left-color: #6f42c1">
-            <h3 style="color: #6f42c1">4. Right to Fair Prices</h3>
-            <div class="right-principle">
-              <p><strong>Through Free Markets</strong></p>
-              <p class="source">
-                Derived from <strong>Supply & Demand</strong>: Prices are
-                information signals. Price controls create shortages; free
-                markets ensure abundance.
-              </p>
-            </div>
-            <details>
-              <summary>Implementation Details</summary>
-              <div class="right-negative">
-                <p>
-                  <strong>Negative Right:</strong> Not to have prices distorted
-                  by controls that create shortages, black markets, and
-                  arbitrage rents.
-                </p>
-              </div>
-              <div class="right-positive">
-                <h4>Institutional Foundations:</h4>
-                <ul>
-                  <li>
-                    <strong
-                      >Right to accurate, timely market information</strong
-                    >
-                    (publication of price data, competition policy that prevents
-                    cartels from faking "market" prices).
-                  </li>
-                  <li>
-                    <strong>Right to basic consumer protection</strong> against
-                    fraud and coercion, so "free prices" actually reflect
-                    voluntary exchange, not deception.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-enemies">
-                <h4>Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong>Cartels and business associations</strong> that
-                    lobby for price controls, quotas, or export bans to keep
-                    margins high and competition out.
-                  </li>
-                  <li>
-                    <strong>Populist politicians</strong> who use
-                    "anti-inflation" price freezes and controls as a tool for
-                    short-term popularity despite predictable shortages.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-solutions">
-                <h4>How to Deal with Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong>Against cartels and business associations:</strong>
-                    Strengthen competition authorities with dawn-raid powers,
-                    leniency programs, and real fines on collusion. Remove trade
-                    and entry barriers that make cartelization easy (import
-                    quotas, exclusive licenses).
-                  </li>
-                  <li>
-                    <strong>Against populist price-freezers:</strong> Require
-                    impact assessments showing expected shortages before any
-                    price control can be enacted. Replace price freezes with
-                    targeted transfers (vouchers, cash) so voters see there are
-                    better tools than blunt controls.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details style="margin-top: 10px">
-              <summary style="font-size: 14px; color: #666">📜 History</summary>
-              <div
-                style="
-                  padding: 10px 0;
-                  font-size: 13px;
-                  line-height: 1.4;
-                  color: #555;
-                "
-              >
-                <p>
-                  <strong>European Construction Cartels:</strong> Competition
-                  authorities in countries like the UK and Ireland uncovered
-                  construction cartels fixing bids for public works, raising
-                  prices and shutting out honest competitors. By using dawn
-                  raids, leniency for whistleblowers, and heavy fines,
-                  regulators broke these cartels and signaled that collusion
-                  would be costly, helping restore more competitive pricing in
-                  public tenders.
-                </p>
-                <p>
-                  <strong>Venezuela's Price Controls:</strong> Over the 2000s
-                  and 2010s, Venezuela imposed strict price caps and
-                  foreign-exchange controls on food, medicine, and other basics,
-                  while also expropriating firms. These measures produced
-                  chronic shortages, empty shelves, and thriving black markets,
-                  demonstrating how attempts to force "fair" prices by decree
-                  destroyed supply and pushed real prices into informal
-                  channels.
-                </p>
-              </div>
-            </details>
-          </div>
-
-          <div class="right-card" style="border-left-color: #17a2b8">
-            <h3 style="color: #17a2b8">5. Right to Productivity</h3>
-            <div class="right-principle">
-              <p><strong>Through Specialization</strong></p>
-              <p class="source">
-                Derived from the <strong>Division of Labor</strong>: We get
-                richer by doing fewer things better and trading for the rest.
-                Barriers to trade impoverish us all.
-              </p>
-            </div>
-            <details>
-              <summary>Implementation Details</summary>
-              <div class="right-negative">
-                <p>
-                  <strong>Negative Right:</strong> Not to be blocked from
-                  specializing and trading by artificial barriers
-                  (protectionism, occupational licensing cartels, internal trade
-                  barriers).
-                </p>
-              </div>
-              <div class="right-positive">
-                <h4>Institutional Foundations:</h4>
-                <ul>
-                  <li>
-                    <strong>Right to internal economic mobility:</strong>
-                    freedom to move, register a business, and contract across
-                    regions without arbitrary permits.
-                  </li>
-                  <li>
-                    <strong
-                      >Right to open trade frameworks and infrastructure</strong
-                    >
-                    (ports, digital networks, standards) that let individuals
-                    plug into larger markets.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-enemies">
-                <h4>Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong
-                      >Protected domestic industries and trade unions</strong
-                    >
-                    in sunset sectors that fight trade openness, competition,
-                    and new entrants.
-                  </li>
-                  <li>
-                    <strong>Professional guilds and licensing bodies</strong>
-                    that artificially restrict entry (law, medicine, taxis,
-                    notaries, some tech and trades).
-                  </li>
-                </ul>
-              </div>
-              <div class="right-solutions">
-                <h4>How to Deal with Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong
-                      >Against protected industries & sunset-sector
-                      unions:</strong
-                    >
-                    Pre-announce phased tariff and protection reductions with
-                    adjustment support (retraining, relocation aid) tied to
-                    reform milestones. Tie any temporary protection to strict,
-                    expiring performance conditions (productivity, exports).
-                  </li>
-                  <li>
-                    <strong
-                      >Against professional guilds & licensing bodies:</strong
-                    >
-                    Replace many licenses with certification and liability
-                    rules; allow multiple competing certifiers. Introduce
-                    automatic recognition of equivalent qualifications across
-                    regions/countries to undercut guild monopolies.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details style="margin-top: 10px">
-              <summary style="font-size: 14px; color: #666">📜 History</summary>
-              <div
-                style="
-                  padding: 10px 0;
-                  font-size: 13px;
-                  line-height: 1.4;
-                  color: #555;
-                "
-              >
-                <p>
-                  <strong
-                    >Trade Liberalization under GATT/WTO and EU
-                    Accession:</strong
-                  >
-                  Countries liberalizing trade under GATT/WTO rounds or
-                  preparing to join the EU often phased down tariffs and quotas
-                  while pairing reforms with worker retraining and regional aid.
-                  This combination reduced the political resistance of protected
-                  industries and unions, helped labor move into more productive
-                  sectors, and raised overall productivity and export
-                  performance.
-                </p>
-              </div>
-            </details>
-          </div>
-
-          <div class="right-card" style="border-left-color: #e83e8c">
-            <h3 style="color: #e83e8c">6. Right to Prosperity</h3>
-            <div class="right-principle">
-              <p><strong>Through Capitalism</strong></p>
-              <p class="source">
-                Derived from <strong>The Hockey Stick</strong>: For millennia
-                humanity was poor. Only with property rights and free markets
-                did we escape poverty.
-              </p>
-            </div>
-            <details>
-              <summary>Implementation Details</summary>
-              <div class="right-negative">
-                <p>
-                  <strong>Negative Right:</strong> Not to have private property
-                  and voluntary exchange abolished in favor of coercive
-                  collective ownership.
-                </p>
-              </div>
-              <div class="right-positive">
-                <h4>Institutional Foundations:</h4>
-                <ul>
-                  <li>
-                    <strong
-                      >Right to secure, low-cost property titling and contract
-                      enforcement,</strong
-                    >
-                    including for the poor and informally housed.
-                  </li>
-                  <li>
-                    <strong
-                      >Right to open entry into entrepreneurship and
-                      finance</strong
-                    >
-                    (no guild-style gatekeeping, access to basic financial
-                    services) so "capitalism" is not just for incumbents but a
-                    live option for new entrants.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-enemies">
-                <h4>Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong>Authoritarian or revolutionary movements</strong>
-                    that explicitly aim to abolish private property and
-                    centralize economic control.
-                  </li>
-                  <li>
-                    <strong>Crony-capitalist networks:</strong> oligarchs,
-                    politically connected conglomerates, and their allied
-                    officials who profit from subsidies, bailouts, and rigged
-                    regulation rather than open competition.
-                  </li>
-                </ul>
-              </div>
-              <div class="right-solutions">
-                <h4>How to Deal with Enemies:</h4>
-                <ul>
-                  <li>
-                    <strong
-                      >Against anti-property authoritarian/revolutionary
-                      movements:</strong
-                    >
-                    Entrench property rights and basic economic liberties
-                    constitutionally, with supermajority requirements for
-                    expropriation. Decentralize some powers and revenues so no
-                    single central authority can easily seize all assets.
-                  </li>
-                  <li>
-                    <strong>Against crony-capitalist networks:</strong> Mandate
-                    competitive, transparent procurement and publish all
-                    contracts, subsidies, and beneficiaries in machine-readable
-                    form. Enforce strict conflict-of-interest and
-                    asset-declaration rules for officials, with independent
-                    enforcement and public access.
-                  </li>
-                </ul>
-              </div>
-            </details>
-            <details style="margin-top: 10px">
-              <summary style="font-size: 14px; color: #666">📜 History</summary>
-              <div
-                style="
-                  padding: 10px 0;
-                  font-size: 13px;
-                  line-height: 1.4;
-                  color: #555;
-                "
-              >
-                <p>
-                  <strong>Post-Authoritarian Procurement Reform:</strong> In
-                  several post-authoritarian or post-communist settings, new
-                  governments introduced competitive procurement laws and public
-                  contract registers to curb oligarchic capture. By requiring
-                  open tenders and publishing winners and contract terms, these
-                  reforms reduced outright theft and made it harder for
-                  politically connected firms to monopolize state business.
-                </p>
-              </div>
-            </details>
-          </div>
-        </div>
-      </section>
+      <p class="nav-footer">
+        💡 Each dedicated page includes interactive simulations, historical
+        examples, policy implications, and institutional frameworks for
+        protecting the associated natural right.
+      </p>
     </div>
 
     <script>
-      // Armey Curve
-      const ctxArmey = document
-        .getElementById("growthChartArmey")
-        .getContext("2d");
-      let chartArmey;
+      // Navigation chart previews
+      function createNavigationPreviews() {
+        // Armey Curve preview
+        const navArmeyCtx = document
+          .getElementById("navArmeyChart")
+          .getContext("2d");
+        const armeyData = Array.from({ length: 21 }, (_, i) => i * 5);
+        const armeyGrowth = armeyData.map((g) => 4.5 + 0.5 * g - 0.01 * g * g);
 
-      function simulateCurveArmey(beta0, beta1, beta2) {
-        const spending = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
-        const growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
-
-        if (chartArmey) chartArmey.destroy();
-        chartArmey = new Chart(ctxArmey, {
+        new Chart(navArmeyCtx, {
           type: "line",
           data: {
-            labels: spending,
+            labels: armeyData,
             datasets: [
               {
-                label: "Growth Rate (%)",
-                data: growth,
-                borderColor: "blue",
-                fill: false,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                title: { display: true, text: "Public Spending (% of GDP)" },
-              },
-              y: { title: { display: true, text: "GDP Growth Rate (%)" } },
-            },
-          },
-        });
-
-        // Calculate optimal
-        const optimal = -beta1 / (2 * beta2);
-        document.getElementById(
-          "optimal-armey"
-        ).innerText = `Optimal Spending: ${optimal.toFixed(
-          2
-        )}% of GDP (where growth is maximized at ${(
-          beta0 +
-          beta1 * optimal +
-          beta2 * optimal * optimal
-        ).toFixed(2)}%)`;
-      }
-
-      function updateArmeySimulation() {
-        const beta0 = parseFloat(document.getElementById("beta0-armey").value);
-        const beta1 = parseFloat(document.getElementById("beta1-armey").value);
-        const beta2 = parseFloat(document.getElementById("beta2-armey").value);
-        
-        // Only simulate if all values are valid
-        if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
-          simulateCurveArmey(beta0, beta1, beta2);
-        }
-      }
-
-      // Add event listeners to all Armey inputs
-      document.getElementById("beta0-armey").addEventListener("input", updateArmeySimulation);
-      document.getElementById("beta1-armey").addEventListener("input", updateArmeySimulation);
-      document.getElementById("beta2-armey").addEventListener("input", updateArmeySimulation);
-
-      // Initial simulation for Armey
-      simulateCurveArmey(4.5, 0.5, -0.01);
-
-      // Laffer Curve
-      const ctxLaffer = document
-        .getElementById("growthChartLaffer")
-        .getContext("2d");
-      let chartLaffer;
-
-      function simulateCurveLaffer(beta0, beta1, beta2) {
-        const taxRate = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
-        const revenue = taxRate.map((t) => beta0 + beta1 * t + beta2 * t * t);
-
-        if (chartLaffer) chartLaffer.destroy();
-        chartLaffer = new Chart(ctxLaffer, {
-          type: "line",
-          data: {
-            labels: taxRate,
-            datasets: [
-              {
-                label: "Consent to Taxation",
-                data: revenue,
-                borderColor: "green",
-                fill: false,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                title: { display: true, text: "Tax Rate (%)" },
-              },
-              y: { title: { display: true, text: "Consent to Taxation" } },
-            },
-          },
-        });
-
-        // Calculate optimal
-        const optimal = -beta1 / (2 * beta2);
-        document.getElementById(
-          "optimal-laffer"
-        ).innerText = `Optimal Tax Rate: ${optimal.toFixed(
-          2
-        )}% (where taxation consent is maximized at ${(
-          beta0 +
-          beta1 * optimal +
-          beta2 * optimal * optimal
-        ).toFixed(2)})`;
-      }
-
-      function updateLafferSimulation() {
-        const beta0 = parseFloat(document.getElementById("beta0-laffer").value);
-        const beta1 = parseFloat(document.getElementById("beta1-laffer").value);
-        const beta2 = parseFloat(document.getElementById("beta2-laffer").value);
-        
-        // Only simulate if all values are valid
-        if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
-          simulateCurveLaffer(beta0, beta1, beta2);
-        }
-      }
-
-      // Add event listeners to all Laffer inputs
-      document.getElementById("beta0-laffer").addEventListener("input", updateLafferSimulation);
-      document.getElementById("beta1-laffer").addEventListener("input", updateLafferSimulation);
-      document.getElementById("beta2-laffer").addEventListener("input", updateLafferSimulation);
-
-      // Initial simulation for Laffer
-      simulateCurveLaffer(0, 1, -0.02);
-
-      // J-Curve
-      const ctxJCurve = document
-        .getElementById("growthChartJCurve")
-        .getContext("2d");
-      let chartJCurve;
-
-      function simulateCurveJCurve(base, depth, tau, slope) {
-        const time = Array.from({ length: 21 }, (_, i) => i); // 0 to 20 periods
-        const indicator = time.map(
-          (t) => base + slope * t - depth * (1 - Math.exp(-t / tau))
-        );
-
-        if (chartJCurve) chartJCurve.destroy();
-        chartJCurve = new Chart(ctxJCurve, {
-          type: "line",
-          data: {
-            labels: time,
-            datasets: [
-              {
-                label: "Economic Indicator (e.g., Trade Balance % GDP)",
-                data: indicator,
-                borderColor: "red",
-                fill: false,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-              x: {
-                title: { display: true, text: "Time (Years/Quarters)" },
-              },
-              y: { title: { display: true, text: "Indicator Value" } },
-            },
-          },
-        });
-
-        // Insights: e.g., time to breakeven (trough where dY/dt = 0)
-        let troughTime = 0;
-        if ((slope * tau) / depth < 1) {
-          troughTime = -tau * Math.log((slope * tau) / depth);
-        }
-        const recoveryValue =
-          base + slope * 10 - depth * (1 - Math.exp(-10 / tau));
-        document.getElementById(
-          "jcurve-insights"
-        ).innerText = `Trough ~${troughTime.toFixed(
-          1
-        )} periods; 10-period value: ${recoveryValue.toFixed(
-          2
-        )} (max dip: ~-${depth.toFixed(1)})`;
-      }
-
-      function updateJCurveSimulation() {
-        const base = parseFloat(document.getElementById("base-jcurve").value);
-        const depth = parseFloat(document.getElementById("depth-jcurve").value);
-        const tau = parseFloat(document.getElementById("tau-jcurve").value);
-        const slope = parseFloat(document.getElementById("slope-jcurve").value);
-        
-        // Only simulate if all values are valid
-        if (!isNaN(base) && !isNaN(depth) && !isNaN(tau) && !isNaN(slope) && depth > 0 && tau > 0 && slope > 0) {
-          simulateCurveJCurve(base, depth, tau, slope);
-        }
-      }
-
-      // Add event listeners to all J-Curve inputs
-      document.getElementById("base-jcurve").addEventListener("input", updateJCurveSimulation);
-      document.getElementById("depth-jcurve").addEventListener("input", updateJCurveSimulation);
-      document.getElementById("tau-jcurve").addEventListener("input", updateJCurveSimulation);
-      document.getElementById("slope-jcurve").addEventListener("input", updateJCurveSimulation);
-
-      // Initial simulation for J-Curve
-      simulateCurveJCurve(0, 10, 2, 1);
-
-      // Supply and Demand
-      const ctxSupplyDemand = document
-        .getElementById("growthChartSupplyDemand")
-        .getContext("2d");
-      let chartSupplyDemand;
-
-      function simulateSupplyDemand(a, b, c, d) {
-        // For curved supply and demand:
-        // Demand: P = a / (1 + b*Q)^0.5 - more realistic diminishing marginal utility
-        // Supply: P = c + d * Q^1.3 - increasing marginal costs
-
-        // Find equilibrium where demand price = supply price
-        // Use bisection method for robust convergence
-        let qLow = 0.01;
-        let qHigh = 500;
-        let eqQ = 50;
-
-        // Helper functions
-        const calcDemandPrice = (q) => a / Math.pow(1 + b * q, 0.5);
-        const calcSupplyPrice = (q) => c + d * Math.pow(q, 1.3);
-        const excessDemand = (q) => calcDemandPrice(q) - calcSupplyPrice(q);
-
-        // Check if equilibrium exists in range
-        const edLow = excessDemand(qLow);
-        const edHigh = excessDemand(qHigh);
-
-        console.log(
-          "=== Supply-Demand Simulator v2.0 (Curved Model with Fixed Equilibrium) ==="
-        );
-        console.log("Initial check:", {
-          qLow,
-          qHigh,
-          demandAtLow: calcDemandPrice(qLow),
-          supplyAtLow: calcSupplyPrice(qLow),
-          demandAtHigh: calcDemandPrice(qHigh),
-          supplyAtHigh: calcSupplyPrice(qHigh),
-          edLow,
-          edHigh,
-        });
-
-        if (edLow * edHigh > 0) {
-          if (edLow < 0) {
-            alert(
-              "No equilibrium found: Supply is always above demand. Try increasing 'a' or decreasing 'c' or 'd'."
-            );
-            return;
-          } else {
-            alert(
-              "No equilibrium found: Demand is always above supply. Try decreasing 'a' or increasing 'c' or 'd'."
-            );
-            return;
-          }
-        }
-
-        // Bisection method
-        console.log("Starting bisection method...");
-        for (let i = 0; i < 100; i++) {
-          eqQ = (qLow + qHigh) / 2;
-          const ed = excessDemand(eqQ);
-
-          if (i < 5 || i % 10 === 0) {
-            console.log(
-              `Iteration ${i}: Q=${eqQ.toFixed(2)}, ED=${ed.toFixed(
-                2
-              )}, range=[${qLow.toFixed(2)}, ${qHigh.toFixed(2)}]`
-            );
-          }
-
-          if (Math.abs(ed) < 0.001) {
-            console.log(`Converged in ${i} iterations at Q=${eqQ.toFixed(2)}`);
-            break;
-          }
-
-          if (ed > 0) {
-            // Demand > Supply, need higher quantity
-            qLow = eqQ;
-          } else {
-            // Supply > Demand, need lower quantity
-            qHigh = eqQ;
-          }
-
-          if (i === 99) {
-            console.log("Max iterations reached");
-          }
-        }
-
-        const eqP = calcDemandPrice(eqQ);
-
-        console.log("Equilibrium found:", {
-          quantity: eqQ,
-          price: eqP,
-          demandAtEq: calcDemandPrice(eqQ),
-          supplyAtEq: calcSupplyPrice(eqQ),
-          difference: Math.abs(calcDemandPrice(eqQ) - calcSupplyPrice(eqQ)),
-        });
-
-        // Check for invalid equilibrium (negative values)
-        if (eqQ < 0 || eqP < 0 || isNaN(eqQ) || isNaN(eqP)) {
-          alert(
-            "No positive equilibrium exists with these parameters. Please adjust values."
-          );
-          return;
-        }
-
-        // Dynamic range: show up to 150% of equilibrium or minimum of 100
-        const maxQ = Math.ceil(Math.max(100, eqQ * 1.5));
-        // Use fewer data points for cleaner visualization (avoids tooltip overlap)
-        const numPoints = 15;
-        const quantity = Array.from(
-          { length: numPoints },
-          (_, i) => (i * maxQ) / (numPoints - 1)
-        );
-
-        // Curved demand: diminishing marginal utility (convex to origin)
-        const demandPrice = quantity.map((q) => a / Math.pow(1 + b * q, 0.5));
-
-        // Curved supply: increasing marginal costs (convex from origin)
-        const supplyPrice = quantity.map((q) => c + d * Math.pow(q, 1.3));
-
-        if (chartSupplyDemand) chartSupplyDemand.destroy();
-        chartSupplyDemand = new Chart(ctxSupplyDemand, {
-          type: "scatter",
-          data: {
-            datasets: [
-              {
-                label: "Demand",
-                data: quantity.map((q, i) => ({ x: q, y: demandPrice[i] })),
-                borderColor: "purple",
-                backgroundColor: "purple",
-                showLine: true,
-                fill: false,
-                pointRadius: 3,
-                pointHoverRadius: 5,
-              },
-              {
-                label: "Supply",
-                data: quantity.map((q, i) => ({ x: q, y: supplyPrice[i] })),
-                borderColor: "orange",
-                backgroundColor: "orange",
-                showLine: true,
-                fill: false,
-                pointRadius: 3,
-                pointHoverRadius: 5,
-              },
-              {
-                label: "Equilibrium",
-                data: [{ x: eqQ, y: eqP }],
-                pointRadius: 20,
-                pointHoverRadius: 22,
-                pointBackgroundColor: "red",
-                pointBorderColor: "darkred",
-                pointBorderWidth: 2,
-                pointHoverBorderWidth: 3,
-                showLine: false,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              tooltip: {
-                callbacks: {
-                  label: function (context) {
-                    if (context.dataset.label === "Equilibrium") {
-                      return `Equilibrium: Quantity ${context.parsed.x.toFixed(
-                        2
-                      )}, Price $${context.parsed.y.toFixed(2)}`;
-                    }
-                    if (context.dataset.label === "Demand") {
-                      return `Demand curve: At quantity ${context.parsed.x.toFixed(
-                        1
-                      )}, consumers will pay $${context.parsed.y.toFixed(2)}`;
-                    }
-                    if (context.dataset.label === "Supply") {
-                      return `Supply curve: At quantity ${context.parsed.x.toFixed(
-                        1
-                      )}, producers need $${context.parsed.y.toFixed(2)}`;
-                    }
-                    return `${
-                      context.dataset.label
-                    }: $${context.parsed.y.toFixed(2)}`;
-                  },
-                },
-              },
-            },
-            scales: {
-              x: {
-                title: { display: true, text: "Quantity" },
-                ticks: {
-                  maxTicksLimit: 10,
-                  callback: function (value, index, ticks) {
-                    return Number.isInteger(value) ? value : value.toFixed(0);
-                  },
-                },
-              },
-              y: {
-                title: { display: true, text: "Price" },
-                ticks: {
-                  maxTicksLimit: 10,
-                },
-              },
-            },
-          },
-        });
-
-        // Display equilibrium values (already calculated at the top)
-        document.getElementById(
-          "equilibrium-supplydemand"
-        ).innerHTML = `<strong>Market Equilibrium (where supply meets demand):</strong><br>
-        • Equilibrium Quantity: ${eqQ.toFixed(2)} units<br>
-        • Equilibrium Price: $${eqP.toFixed(2)}<br>
-        <em style="font-size: 14px; font-weight: normal;">At this point, buyers want to purchase exactly the amount sellers want to sell. The market is balanced with no shortage or surplus.</em>`;
-      }
-
-      function updateSupplyDemandSimulation() {
-        const a = parseFloat(document.getElementById("a-supplydemand").value);
-        const b = parseFloat(document.getElementById("b-supplydemand").value);
-        const c = parseFloat(document.getElementById("c-supplydemand").value);
-        const d = parseFloat(document.getElementById("d-supplydemand").value);
-        
-        // Only simulate if all values are valid
-        if (!isNaN(a) && !isNaN(b) && !isNaN(c) && !isNaN(d) && a > 0 && b > 0 && c >= 0 && d > 0) {
-          simulateSupplyDemand(a, b, c, d);
-        }
-      }
-
-      // Add event listeners to all Supply-Demand inputs
-      document.getElementById("a-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
-      document.getElementById("b-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
-      document.getElementById("c-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
-      document.getElementById("d-supplydemand").addEventListener("input", updateSupplyDemandSimulation);
-
-      // Initial simulation for Supply-Demand
-      // Curved model: Demand P = a/(1+bQ)^0.5, Supply P = c + d*Q^1.3
-      // Adjusted parameters for good visualization with curved model
-      simulateSupplyDemand(150, 0.02, 10, 0.5);
-
-      // Division of Labor & Market Size Curve (Adam Smith's Pin Factory)
-      const ctxDivision = document
-        .getElementById("growthChartDivision")
-        .getContext("2d");
-      let chartDivision;
-
-      function simulateDivisionOfLabor(
-        baseProductivity,
-        maxWorkers,
-        specializationFactor,
-        returnsParameter
-      ) {
-        // Generate array of worker counts (market sizes) from 1 to maxWorkers
-        const workers = Array.from({ length: maxWorkers }, (_, i) => i + 1);
-
-        // Calculate productivity per worker based on division of labor
-        // Formula: Productivity = base × (1 + workers × specializationFactor)^returnsParameter
-        // This captures increasing returns to scale from specialization
-        const productivity = workers.map((w) => {
-          const specializationBoost = 1 + (w - 1) * specializationFactor;
-          return (
-            baseProductivity * Math.pow(specializationBoost, returnsParameter)
-          );
-        });
-
-        // Calculate total output (productivity × workers)
-        const totalOutput = workers.map((w, i) => productivity[i] * w);
-
-        if (chartDivision) chartDivision.destroy();
-
-        chartDivision = new Chart(ctxDivision, {
-          type: "line",
-          data: {
-            labels: workers,
-            datasets: [
-              {
-                label: "Productivity per Worker (output/worker)",
-                data: productivity,
-                borderColor: "rgb(75, 192, 192)",
-                backgroundColor: "rgba(75, 192, 192, 0.1)",
-                fill: false,
-                yAxisID: "y",
+                data: armeyGrowth,
+                borderColor: "#007bff",
+                backgroundColor: "rgba(0, 123, 255, 0.1)",
+                borderWidth: 2,
+                fill: true,
                 tension: 0.3,
-              },
-              {
-                label: "Total Output (all workers combined)",
-                data: totalOutput,
-                borderColor: "rgb(255, 99, 132)",
-                backgroundColor: "rgba(255, 99, 132, 0.1)",
-                fill: false,
-                yAxisID: "y1",
-                tension: 0.3,
+                pointRadius: 0,
               },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
-            interaction: {
-              mode: "index",
-              intersect: false,
-            },
-            plugins: {
-              title: {
-                display: true,
-                text: "Adam Smith's Pin Factory: Productivity Gains from Division of Labor",
-              },
-              tooltip: {
-                callbacks: {
-                  afterLabel: function (context) {
-                    const workerCount = context.parsed.x;
-                    if (context.datasetIndex === 0) {
-                      return `Each worker produces ${context.parsed.y.toFixed(
-                        1
-                      )} units`;
-                    } else {
-                      return `${workerCount} workers × productivity = total output`;
-                    }
-                  },
-                },
-              },
-            },
+            plugins: { legend: { display: false } },
             scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: "Number of Specialized Workers (Market Size)",
-                  font: { size: 13, weight: "bold" },
-                },
-                ticks: {
-                  stepSize: 1,
-                },
-              },
-              y: {
-                type: "linear",
-                display: true,
-                position: "left",
-                title: {
-                  display: true,
-                  text: "Productivity per Worker",
-                  color: "rgb(75, 192, 192)",
-                  font: { size: 13, weight: "bold" },
-                },
-                ticks: {
-                  color: "rgb(75, 192, 192)",
-                },
-              },
-              y1: {
-                type: "linear",
-                display: true,
-                position: "right",
-                title: {
-                  display: true,
-                  text: "Total Output",
-                  color: "rgb(255, 99, 132)",
-                  font: { size: 13, weight: "bold" },
-                },
-                ticks: {
-                  color: "rgb(255, 99, 132)",
-                },
-                grid: {
-                  drawOnChartArea: false,
-                },
-              },
+              x: { display: false },
+              y: { display: false },
             },
           },
         });
 
-        // Calculate and display results
-        const productivityGain =
-          (productivity[maxWorkers - 1] / baseProductivity - 1) * 100;
-        const productivityMultiplier =
-          productivity[maxWorkers - 1] / baseProductivity;
-        const smithActualGain = 4800 / 20; // Smith's actual example: 4800 vs 20 pins
+        // Laffer Curve preview
+        const navLafferCtx = document
+          .getElementById("navLafferChart")
+          .getContext("2d");
+        const lafferData = Array.from({ length: 21 }, (_, i) => i * 5);
+        const lafferRevenue = lafferData.map((t) => 0 + 1 * t - 0.02 * t * t);
 
-        document.getElementById("results-division").innerHTML = `
-          <strong>Division of Labor Results:</strong><br>
-          • Productivity with 1 worker (alone): ${baseProductivity.toFixed(
-            1
-          )} units/worker<br>
-          • Productivity with ${maxWorkers} specialized workers: ${productivity[
-          maxWorkers - 1
-        ].toFixed(1)} units/worker<br>
-          • <strong>Productivity gain: ${productivityMultiplier.toFixed(
-            1
-          )}× (${productivityGain.toFixed(0)}% increase)</strong><br>
-          • Total output with specialization: ${totalOutput[
-            maxWorkers - 1
-          ].toFixed(0)} units<br>
-          <br>
-          <em style="font-size: 14px; font-weight: normal;">
-            Adam Smith's actual pin factory example: 20 pins/day alone → 4,800 pins/day per worker with division of labor 
-            (${smithActualGain}× increase). This demonstrates <strong>increasing returns to scale</strong>—the foundation 
-            of economic growth. Notice: as market size grows (more workers), productivity per worker 
-            <em>increases</em> rather than decreases. This is the opposite of diminishing returns and explains why larger, 
-            freer markets create exponentially more prosperity.
-          </em>
-        `;
-      }
+        new Chart(navLafferCtx, {
+          type: "line",
+          data: {
+            labels: lafferData,
+            datasets: [
+              {
+                data: lafferRevenue,
+                borderColor: "#28a745",
+                backgroundColor: "rgba(40, 167, 69, 0.1)",
+                borderWidth: 2,
+                fill: true,
+                tension: 0.3,
+                pointRadius: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { display: false },
+              y: { display: false },
+            },
+          },
+        });
 
-      function updateDivisionSimulation() {
-        const baseProductivity = parseFloat(document.getElementById("baseproductivity-division").value);
-        const maxWorkers = parseInt(document.getElementById("maxworkers-division").value);
-        const specializationFactor = parseFloat(document.getElementById("specialization-division").value);
-        const returnsParameter = parseFloat(document.getElementById("returns-division").value);
-        
-        // Only simulate if all values are valid
-        if (!isNaN(baseProductivity) && !isNaN(maxWorkers) && !isNaN(specializationFactor) && !isNaN(returnsParameter) && 
-            baseProductivity > 0 && maxWorkers > 0 && specializationFactor > 0 && returnsParameter > 0) {
-          simulateDivisionOfLabor(baseProductivity, maxWorkers, specializationFactor, returnsParameter);
-        }
-      }
+        // J-Curve preview
+        const navJCtx = document.getElementById("navJChart").getContext("2d");
+        const jData = Array.from({ length: 21 }, (_, i) => i);
+        const jValues = jData.map(
+          (t) => 0 + 1 * t - 10 * (1 - Math.exp(-t / 2))
+        );
 
-      // Add event listeners to all Division of Labor inputs
-      document.getElementById("baseproductivity-division").addEventListener("input", updateDivisionSimulation);
-      document.getElementById("maxworkers-division").addEventListener("input", updateDivisionSimulation);
-      document.getElementById("specialization-division").addEventListener("input", updateDivisionSimulation);
-      document.getElementById("returns-division").addEventListener("input", updateDivisionSimulation);
+        new Chart(navJCtx, {
+          type: "line",
+          data: {
+            labels: jData,
+            datasets: [
+              {
+                data: jValues,
+                borderColor: "#dc3545",
+                backgroundColor: "rgba(220, 53, 69, 0.1)",
+                borderWidth: 2,
+                fill: true,
+                tension: 0.3,
+                pointRadius: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { display: false },
+              y: { display: false },
+            },
+          },
+        });
 
-      // Initial simulation for Division of Labor
-      // Adam Smith's exact Pin Factory values:
-      // - 1 worker alone: 20 pins/day
-      // - 10 workers with specialization: 4,800 pins/day per worker (48,000 total)
-      // - 240× productivity multiplier
-      // Parameters calibrated to match Smith's observed 240× gain
-      simulateDivisionOfLabor(20, 10, 4.23, 1.5);
+        // Supply & Demand preview
+        const navSupplyDemandCtx = document
+          .getElementById("navSupplyDemandChart")
+          .getContext("2d");
+        const sdData = Array.from({ length: 21 }, (_, i) => i * 5);
+        const demandData = sdData.map((q) => 150 / Math.pow(1 + 0.02 * q, 0.5));
+        const supplyData = sdData.map((q) => 10 + 0.5 * Math.pow(q, 1.3));
 
-      // Hockey Stick Curve
-      const ctxHockey = document
-        .getElementById("growthChartHockey")
-        .getContext("2d");
-      let chartHockey;
+        new Chart(navSupplyDemandCtx, {
+          type: "line",
+          data: {
+            labels: sdData,
+            datasets: [
+              {
+                data: demandData,
+                borderColor: "#6f42c1",
+                backgroundColor: "rgba(111, 66, 193, 0.1)",
+                borderWidth: 2,
+                fill: false,
+                tension: 0.3,
+                pointRadius: 0,
+              },
+              {
+                data: supplyData,
+                borderColor: "#6f42c1",
+                backgroundColor: "rgba(111, 66, 193, 0.1)",
+                borderWidth: 2,
+                fill: false,
+                tension: 0.3,
+                pointRadius: 0,
+                borderDash: [5, 5],
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { display: false },
+              y: { display: false },
+            },
+          },
+        });
 
-      function simulateHockeyStick(
-        baseGDP,
-        capitalismYear,
-        accelerationFactor
-      ) {
-        // Create year range from 0 to 2023
-        const years = [];
-        const gdpPerCapita = [];
+        // Division of Labor preview
+        const navDivisionCtx = document
+          .getElementById("navDivisionChart")
+          .getContext("2d");
+        const divisionData = Array.from({ length: 11 }, (_, i) => i + 1);
+        const productivityData = divisionData.map((w) => {
+          const specializationBoost = 1 + (w - 1) * 4.23;
+          return 20 * Math.pow(specializationBoost, 1.5);
+        });
+        const totalOutputData = divisionData.map(
+          (w, i) => productivityData[i] * w
+        );
 
-        // Pre-capitalism growth rate (0.02% annual from historical data)
-        const preCapitalismRate = 0.0002;
+        new Chart(navDivisionCtx, {
+          type: "line",
+          data: {
+            labels: divisionData,
+            datasets: [
+              {
+                data: productivityData,
+                borderColor: "#17a2b8",
+                backgroundColor: "rgba(23, 162, 184, 0.1)",
+                borderWidth: 2,
+                fill: false,
+                tension: 0.4,
+                pointRadius: 0,
+              },
+              {
+                data: totalOutputData,
+                borderColor: "#fd7e14",
+                backgroundColor: "rgba(253, 126, 20, 0.1)",
+                borderWidth: 2,
+                fill: false,
+                tension: 0.4,
+                pointRadius: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: { display: false },
+              y: { display: false, beginAtZero: true },
+            },
+          },
+        });
 
-        // Post-capitalism growth rates (from historical data, accelerating over time)
-        const growthPhases = [
-          {
-            startYear: capitalismYear,
-            endYear: capitalismYear + 100,
-            rate: 0.0066,
-          }, // 1800-1900: 0.66%
-          {
-            startYear: capitalismYear + 100,
-            endYear: capitalismYear + 150,
-            rate: 0.0166,
-          }, // 1900-1950: 1.66%
-          {
-            startYear: capitalismYear + 150,
-            endYear: capitalismYear + 200,
-            rate: 0.021,
-          }, // 1950-2000: 2.1%
-          {
-            startYear: capitalismYear + 200,
-            endYear: 2025,
-            rate: 0.03,
-          }, // 2000-2025: 3.0%
+        // Hockey Stick preview
+        const navHockeyCtx = document
+          .getElementById("navHockeyChart")
+          .getContext("2d");
+        const hockeyYears = [
+          0, 1000, 1700, 1800, 1850, 1900, 1950, 1980, 2000, 2025,
+        ];
+        const hockeyGDP = [
+          600, 605, 620, 680, 1200, 3500, 12000, 28000, 45000, 85000,
         ];
 
-        // Generate data points (key years for visualization)
-        const keyYears = [0, 500, 1000, 1500];
-
-        // Add years around capitalism transition
-        if (capitalismYear > 50) {
-          keyYears.push(capitalismYear - 50);
-        }
-        keyYears.push(capitalismYear);
-
-        // Add post-capitalism years
-        for (let i = capitalismYear + 25; i <= 2025; i += 25) {
-          keyYears.push(i);
-        }
-        if (!keyYears.includes(2025)) {
-          keyYears.push(2025);
-        }
-
-        // Calculate GDP for each key year
-        for (let year of [...new Set(keyYears)].sort((a, b) => a - b)) {
-          if (year < 0) continue;
-          if (year > 2025) break;
-
-          let currentGDP;
-
-          if (year <= capitalismYear) {
-            // Pre-capitalism: slow compounding growth
-            const yearsElapsed = year;
-            currentGDP =
-              baseGDP * Math.pow(1 + preCapitalismRate, yearsElapsed);
-          } else {
-            // Start from GDP at capitalism year
-            currentGDP =
-              baseGDP * Math.pow(1 + preCapitalismRate, capitalismYear);
-
-            // Apply each phase's growth sequentially
-            let yearCursor = capitalismYear;
-
-            for (let phase of growthPhases) {
-              if (year > phase.startYear) {
-                const phaseStart = Math.max(yearCursor, phase.startYear);
-                const phaseEnd = Math.min(year, phase.endYear);
-                const yearsInPhase = phaseEnd - phaseStart;
-
-                if (yearsInPhase > 0) {
-                  // Apply acceleration factor
-                  const adjustedRate = phase.rate * accelerationFactor;
-                  currentGDP *= Math.pow(1 + adjustedRate, yearsInPhase);
-                  yearCursor = phaseEnd;
-                }
-              }
-            }
-          }
-
-          years.push(year);
-          gdpPerCapita.push(Math.round(currentGDP));
-        }
-
-        // Destroy previous chart if it exists
-        if (chartHockey) chartHockey.destroy();
-
-        chartHockey = new Chart(ctxHockey, {
+        new Chart(navHockeyCtx, {
           type: "line",
           data: {
-            labels: years,
+            labels: hockeyYears,
             datasets: [
               {
-                label: "Per Capita GDP (constant $)",
-                data: gdpPerCapita,
-                borderColor: "rgb(231, 76, 60)",
-                backgroundColor: "rgba(231, 76, 60, 0.1)",
+                data: hockeyGDP,
+                borderColor: "#e83e8c",
+                backgroundColor: "rgba(232, 62, 140, 0.1)",
                 borderWidth: 3,
                 fill: true,
-                tension: 0.4,
-                pointRadius: years.map((y) =>
-                  y === capitalismYear ? 8 : y >= capitalismYear ? 4 : 2
-                ),
-                pointBackgroundColor: years.map((y) =>
-                  y === capitalismYear
-                    ? "rgb(46, 204, 113)"
-                    : "rgb(231, 76, 60)"
-                ),
-                pointBorderColor: years.map((y) =>
-                  y === capitalismYear ? "rgb(39, 174, 96)" : "rgb(192, 57, 43)"
-                ),
-                pointBorderWidth: 2,
+                tension: 0.05,
+                pointRadius: 0,
               },
             ],
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
             scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: "Year (CE)",
-                  font: { size: 14, weight: "bold" },
-                },
-                ticks: {
-                  callback: function (value, index, values) {
-                    const year = this.getLabelForValue(value);
-                    return year;
-                  },
-                },
-              },
-              y: {
-                title: {
-                  display: true,
-                  text: "Per Capita GDP (constant $)",
-                  font: { size: 14, weight: "bold" },
-                },
-                beginAtZero: false,
-                ticks: {
-                  callback: function (value) {
-                    return "$" + value.toLocaleString();
-                  },
-                },
-              },
-            },
-            plugins: {
-              legend: {
-                display: true,
-                position: "top",
-              },
-              tooltip: {
-                callbacks: {
-                  label: function (context) {
-                    let label = context.dataset.label || "";
-                    if (label) {
-                      label += ": ";
-                    }
-                    label += "$" + context.parsed.y.toLocaleString();
-                    if (context.parsed.x === capitalismYear) {
-                      label += " 🚀 CAPITALISM BEGINS!";
-                    }
-                    return label;
-                  },
-                },
-              },
-              annotation: {
-                annotations: {
-                  capitalismLine: {
-                    type: "line",
-                    xMin: capitalismYear,
-                    xMax: capitalismYear,
-                    borderColor: "rgb(46, 204, 113)",
-                    borderWidth: 2,
-                    borderDash: [5, 5],
-                    label: {
-                      display: true,
-                      content: `Capitalism (${capitalismYear})`,
-                      position: "start",
-                    },
-                  },
-                },
-              },
+              x: { display: false },
+              y: { display: false, beginAtZero: false, min: 0 },
             },
           },
         });
-
-        // Calculate and display results
-        const gdpAtCapitalism =
-          gdpPerCapita[years.findIndex((y) => y === capitalismYear)];
-        const gdpNow = gdpPerCapita[gdpPerCapita.length - 1];
-        const multiplier = (gdpNow / baseGDP).toFixed(1);
-        const postCapitalismMultiplier = (gdpNow / gdpAtCapitalism).toFixed(1);
-
-        const resultsDiv = document.getElementById("results-hockey");
-        resultsDiv.innerHTML = `
-          <h3>🏒 The Hockey Stick Results</h3>
-          <div class="result-item">
-            <strong>Starting Point (Year 0):</strong> $${baseGDP.toLocaleString()} per capita
-          </div>
-          <div class="result-item">
-            <strong>At Capitalism Adoption (${capitalismYear}):</strong> $${gdpAtCapitalism.toLocaleString()} per capita
-          </div>
-          <div class="result-item">
-            <strong>Today (2025):</strong> $${gdpNow.toLocaleString()} per capita
-          </div>
-          <div class="result-item">
-            <strong>Total Multiplication:</strong> ${multiplier}× increase from year 0 to today
-          </div>
-          <div class="result-item">
-            <strong>Post-Capitalism Explosion:</strong> ${postCapitalismMultiplier}× increase since ${capitalismYear}
-          </div>
-          <div class="result-item">
-            <strong>Pre-Capitalism (0-${capitalismYear}):</strong> ${(
-          (gdpAtCapitalism / baseGDP - 1) *
-          100
-        ).toFixed(1)}% growth over ${capitalismYear} years (handle)
-          </div>
-          <div class="result-item">
-            <strong>Post-Capitalism (${capitalismYear}-2025):</strong> ${(
-          (gdpNow / gdpAtCapitalism - 1) *
-          100
-        ).toFixed(0)}% growth in just ${2025 - capitalismYear} years (blade)
-          </div>
-      
-        `;
       }
 
-      function updateHockeyStickSimulation() {
-        const baseGDP = parseFloat(document.getElementById("base-hockey").value);
-        const capitalismYear = parseInt(document.getElementById("capitalism-year-hockey").value);
-        const accelerationFactor = parseFloat(document.getElementById("acceleration-hockey").value);
-        
-        // Only simulate if all values are valid
-        if (!isNaN(baseGDP) && !isNaN(capitalismYear) && !isNaN(accelerationFactor) && 
-            baseGDP > 0 && capitalismYear >= 0 && capitalismYear <= 2000 && accelerationFactor > 0) {
-          simulateHockeyStick(baseGDP, capitalismYear, accelerationFactor);
-        }
-      }
-
-      // Add event listeners to all Hockey Stick inputs
-      document.getElementById("base-hockey").addEventListener("input", updateHockeyStickSimulation);
-      document.getElementById("capitalism-year-hockey").addEventListener("input", updateHockeyStickSimulation);
-      document.getElementById("acceleration-hockey").addEventListener("input", updateHockeyStickSimulation);
-
-      // Initial simulation for Hockey Stick
-      // Using historical data: base ~$600, capitalism at 1800, acceleration 1.0 (historical rates)
-      simulateHockeyStick(600, 1800, 1.0);
-
-      // Handle window resize
-      function handleResize() {
-        if (chartArmey) {
-          chartArmey.resize();
-        }
-        if (chartLaffer) {
-          chartLaffer.resize();
-        }
-        if (chartJCurve) {
-          chartJCurve.resize();
-        }
-        if (chartSupplyDemand) {
-          chartSupplyDemand.resize();
-        }
-        if (chartDivision) {
-          chartDivision.resize();
-        }
-        if (chartHockey) {
-          chartHockey.resize();
-        }
-      }
-
-      // Add resize event listener with debouncing for better performance
-      let resizeTimeout;
-      window.addEventListener("resize", () => {
-        clearTimeout(resizeTimeout);
-        resizeTimeout = setTimeout(handleResize, 100);
-      });
+      // Create navigation previews when page loads
+      window.addEventListener("load", createNavigationPreviews);
     </script>
   </body>
 </html>

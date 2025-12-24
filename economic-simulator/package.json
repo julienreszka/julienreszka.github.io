@@ -1,0 +1,16 @@
+{
+  "name": "og-image-generator",
+  "version": "1.0.0",
+  "description": "Generate Open Graph preview images for Economic Curves Simulator",
+  "main": "generate-og-images.js",
+  "scripts": {
+    "generate-images": "node generate-og-images.js",
+    "install-deps": "npm install puppeteer"
+  },
+  "dependencies": {
+    "puppeteer": "^24.15.0"
+  },
+  "devDependencies": {},
+  "keywords": ["og-images", "social-media", "preview", "automation"],
+  "author": "Julien Reszka"
+}
