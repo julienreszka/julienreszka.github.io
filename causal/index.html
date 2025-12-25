@@ -1056,6 +1056,12 @@
             }
           });
 
+          // Add click handler for edges to explain relationships
+          cy.on("tap", "edge", function (evt) {
+            const edge = evt.target;
+            explainRelationship(edge);
+          });
+
           // Keep double-click for desktop compatibility
           cy.on("dblclick", "node", function (evt) {
             const node = evt.target;
@@ -1503,6 +1509,78 @@
         }
       }
 
+      // Explain the relationship between two connected nodes
+      async function explainRelationship(edge) {
+        if (!(await ensureApiKey())) return;
+
+        const sourceNode = edge.source();
+        const targetNode = edge.target();
+        const sourceLabel = sourceNode.data("label");
+        const targetLabel = targetNode.data("label");
+        const polarity = edge.data("polarity");
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        // Show loading state
+        const loadingMessage = `Explaining ${sourceLabel} → ${targetLabel}...`;
+        showInfo(loadingMessage);
+
+        const relationshipType = polarity === "+" ? "positive" : "negative";
+
+        const prompt = `Explain the ${relationshipType} relationship between "${sourceLabel}" and "${targetLabel}" in the context of "${currentTheme}".
+
+        Keep your explanation:
+        - Under 100 words
+        - Clear and simple
+        - Focused on how ${sourceLabel} ${
+          polarity === "+" ? "increases" : "decreases"
+        } ${targetLabel}
+        - Suitable for a mobile alert popup
+
+        Return only the explanation, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.5,
+              max_tokens: 150,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const explanation = data.choices[0].message.content.trim();
+
+          hideInfo();
+
+          // Show explanation in alert
+          const relationshipSymbol = polarity === "+" ? "➕" : "➖";
+          alert(
+            `${relationshipSymbol} ${sourceLabel} → ${targetLabel}\n\n${explanation}`
+          );
+        } catch (error) {
+          hideInfo();
+          showError(`Failed to explain relationship: ${error.message}`);
+          setTimeout(hideError, 3000);
+        }
+      }
+
       // Get API configuration based on selected provider
       function getApiConfig() {
         if (currentProvider === "groq") {
@@ -1541,6 +1619,23 @@
 
       function hideError() {
         document.getElementById("errorDisplay").style.display = "none";
+      }
+
+      function showInfo(message) {
+        const errorDiv = document.getElementById("errorDisplay");
+        errorDiv.textContent = message;
+        errorDiv.style.background = "var(--info-bg)";
+        errorDiv.style.color = "var(--border-focus)";
+        errorDiv.style.borderLeft = "4px solid var(--border-focus)";
+        errorDiv.style.display = "block";
+      }
+
+      function hideInfo() {
+        const errorDiv = document.getElementById("errorDisplay");
+        errorDiv.style.background = "var(--error-bg)";
+        errorDiv.style.color = "var(--error-text)";
+        errorDiv.style.borderLeft = "none";
+        errorDiv.style.display = "none";
       }
 
       function showTheme(theme) {
