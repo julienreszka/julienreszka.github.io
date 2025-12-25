@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Causal Loop Diagram Visualizer</title>
+    <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+    <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <style>
+      :root {
+        /* Light theme variables */
+        --bg-gradient-start: #667eea;
+        --bg-gradient-end: #764ba2;
+        --text-color: #333;
+        --text-secondary: #7f8c8d;
+        --text-primary: #2c3e50;
+        --surface-color: rgba(255, 255, 255, 0.95);
+        --surface-secondary: rgba(255, 255, 255, 0.9);
+        --surface-tertiary: #f8f9fa;
+        --border-color: #e0e0e0;
+        --border-focus: #667eea;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --shadow-strong: rgba(0, 0, 0, 0.1);
+        --error-bg: #fee;
+        --error-text: #c33;
+        --info-bg: #e8f4fd;
+        --info-border: #667eea;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          /* Dark theme variables */
+          --bg-gradient-start: #2c3e50;
+          --bg-gradient-end: #34495e;
+          --text-color: #ecf0f1;
+          --text-secondary: #95a5a6;
+          --text-primary: #ecf0f1;
+          --surface-color: rgba(52, 73, 94, 0.95);
+          --surface-secondary: rgba(44, 62, 80, 0.9);
+          --surface-tertiary: #34495e;
+          --border-color: #4a5c6a;
+          --border-focus: #3498db;
+          --shadow-color: rgba(0, 0, 0, 0.3);
+          --shadow-strong: rgba(0, 0, 0, 0.4);
+          --error-bg: #4a1e1e;
+          --error-text: #e74c3c;
+          --info-bg: #2c3e50;
+          --info-border: #3498db;
+        }
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-start) 0%,
+          var(--bg-gradient-end) 100%
+        );
+        color: var(--text-color);
+        min-height: 100vh;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+
+      .header {
+        background: var(--surface-color);
+        backdrop-filter: blur(10px);
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 20px var(--shadow-color);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: 0.75rem;
+          text-align: center;
+        }
+      }
+
+      h1 {
+        color: var(--text-primary);
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .subtitle {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.2rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+          font-size: 0.75rem;
+          line-height: 1.3;
+        }
+      }
+
+      .controls {
+        background: var(--surface-secondary);
+        padding: 1rem 2rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+        transition: background 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .controls {
+          padding: 0.5rem;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.5rem;
+        }
+      }
+
+      .input-group {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .input-with-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex: 1;
+      }
+
+      .input-with-buttons input {
+        flex: 1;
+      }
+
+      .input-with-buttons button {
+        padding: 0.5rem 0.75rem;
+        min-width: 44px;
+        width: auto;
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 768px) {
+        .input-group {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.2rem;
+        }
+
+        .input-group label {
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+
+        .input-with-buttons {
+          flex-direction: row;
+          gap: 0.25rem;
+        }
+
+        .input-with-buttons button {
+          min-width: 42px;
+          width: 42px;
+          padding: 0.6rem 0.5rem;
+          font-size: 1.1rem;
+        }
+      }
+
+      input[type="text"],
+      select {
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        font-size: 0.9rem;
+        transition: border-color 0.3s ease, background-color 0.3s ease,
+          color 0.3s ease;
+        min-width: 150px;
+        background: var(--surface-color);
+        color: var(--text-color);
+      }
+
+      input[type="text"] {
+        min-width: 250px;
+      }
+
+      input[type="text"]:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--border-focus);
+      }
+
+      @media (max-width: 768px) {
+        input[type="text"],
+        select {
+          min-width: unset;
+          width: 100%;
+          padding: 0.6rem 0.75rem;
+          font-size: 16px; /* Prevents zoom on iOS */
+          min-height: 42px; /* Touch-friendly minimum */
+        }
+      }
+      button {
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-start),
+          var(--bg-gradient-end)
+        );
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          background 0.3s ease;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px var(--shadow-color);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      @media (max-width: 768px) {
+        button {
+          padding: 0.6rem 1rem;
+          min-height: 42px;
+          width: 100%;
+          font-size: 0.9rem;
+        }
+
+        button:hover {
+          transform: none; /* Disable hover effects on mobile */
+        }
+      }
+
+      .main-container {
+        position: relative;
+        height: calc(100svh - 90px);
+      }
+
+      @media (max-width: 768px) {
+        .main-container {
+          height: calc(100svh - 90px);
+        }
+      }
+
+      #cy {
+        width: calc(100% - 1rem);
+        height: calc(100% - 1rem);
+        background: var(--surface-color);
+        margin: 0.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 25px var(--shadow-strong);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        #cy {
+          width: calc(100% - 0.5rem);
+          height: calc(100% - 0.5rem);
+          margin: 0.25rem;
+          border-radius: 6px;
+        }
+      }
+
+      .loading {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+      }
+
+      .spinner {
+        border: 3px solid var(--border-color);
+        border-top: 3px solid var(--border-focus);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 1rem auto;
+        transition: border-color 0.3s ease;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .legend {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: var(--surface-tertiary);
+        border-radius: 8px;
+        transition: background 0.3s ease;
+      }
+
+      .legend h3 {
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin: 0.5rem 0;
+        font-size: 0.8rem;
+        color: var(--text-color);
+        transition: color 0.3s ease;
+      }
+
+      .legend-symbol {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        border-radius: 50%;
+      }
+
+      .positive {
+        background: #27ae60;
+      }
+      .negative {
+        background: #e74c3c;
+      }
+      .neutral {
+        background: #95a5a6;
+      }
+
+      .error {
+        background: var(--error-bg);
+        color: var(--error-text);
+        padding: 1rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+
+      .theme-display {
+        background: var(--info-bg);
+        padding: 0.8rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--info-border);
+        transition: background 0.3s ease, border-color 0.3s ease;
+      }
+
+      .theme-display strong {
+        color: var(--text-primary);
+        transition: color 0.3s ease;
+      }
+
+      /* Mobile-specific compact styles */
+      @media (max-width: 768px) {
+        .legend {
+          margin-top: 0.5rem;
+          padding: 0.75rem;
+        }
+
+        .legend h3 {
+          font-size: 0.8rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .legend-item {
+          margin: 0.25rem 0;
+          font-size: 0.7rem;
+          align-items: flex-start;
+        }
+
+        .legend-symbol {
+          width: 16px;
+          height: 16px;
+          margin-right: 0.4rem;
+          margin-top: 1px;
+          flex-shrink: 0;
+        }
+
+        .theme-display {
+          padding: 0.5rem;
+          font-size: 0.8rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .loading {
+          padding: 1rem;
+        }
+
+        .spinner {
+          width: 30px;
+          height: 30px;
+          margin: 0.5rem auto;
+        }
+
+        .error {
+          padding: 0.75rem;
+          font-size: 0.85rem;
+          margin: 0.5rem 0;
+        }
+      }
+
+      /* Modal Styles */
+      .modal {
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: var(--surface-color);
+        border-radius: 12px;
+        width: 90%;
+        max-width: 500px;
+        max-height: 80vh;
+        overflow-y: auto;
+        box-shadow: 0 8px 32px var(--shadow-strong);
+        animation: modalFadeIn 0.3s ease;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .modal-header h3 {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+      }
+
+      .close {
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+        line-height: 1;
+      }
+
+      .close:hover {
+        color: var(--text-primary);
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .modal-content {
+          width: 95%;
+          max-height: 90vh;
+        }
+
+        .modal-header {
+          padding: 1rem;
+        }
+
+        .modal-header h3 {
+          font-size: 1.1rem;
+        }
+
+        .modal-body {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <div class="input-group">
+        <label for="theme">Topic for AI generated causal loop diagram</label>
+        <div class="input-with-buttons">
+          <input
+            type="text"
+            id="theme"
+            placeholder="e.g., Climate Change, Economic Growth, Urban Development..."
+          />
+          <button id="generateBtn">✨</button>
+          <button id="settingsBtn">🔑</button>
+          <button id="helpBtn">❔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Legend & Instructions</h3>
+          <span class="close" id="closeModal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div
+            id="modalThemeDisplay"
+            class="theme-display"
+            style="display: none"
+          >
+            <strong>Current Theme:</strong> <span id="modalCurrentTheme"></span>
+          </div>
+
+          <div class="legend">
+            <h3>Legend</h3>
+            <div class="legend-item">
+              <div class="legend-symbol positive"></div>
+              Positive relationship (+)
+            </div>
+            <div class="legend-item">
+              <div class="legend-symbol negative"></div>
+              Negative relationship (-)
+            </div>
+            <div class="legend-item">
+              <div class="legend-symbol neutral"></div>
+              Variable node
+            </div>
+            <div
+              class="legend-item"
+              style="
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
+              "
+            >
+              <strong>💡 Tip:</strong> Double-click any node to expand the graph
+              with additional related variables
+            </div>
+            <div
+              class="legend-item"
+              style="
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
+              "
+            >
+              <strong>🔑 API Key:</strong> Get your free Groq API key at
+              <a
+                href="https://console.groq.com/keys"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="color: var(--border-focus); text-decoration: underline"
+                >console.groq.com/keys</a
+              >
+            </div>
+
+            <div
+              class="legend-item"
+              style="
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
+              "
+            >
+              Created by @julienreszka
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-container">
+      <div id="cy"></div>
+      <div
+        id="loadingIndicator"
+        class="loading"
+        style="
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 100;
+          background: var(--surface-color);
+          padding: 2rem;
+          border-radius: 12px;
+          box-shadow: 0 4px 25px var(--shadow-strong);
+        "
+      >
+        <div class="spinner"></div>
+        <p>Generating causal loop diagram...</p>
+      </div>
+      <div
+        id="errorDisplay"
+        class="error"
+        style="
+          display: none;
+          position: absolute;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 100;
+          max-width: 500px;
+        "
+      ></div>
+    </div>
+
+    <script>
+      // Global variables
+      let cy;
+      let groqApiKey = localStorage.getItem("groqApiKey");
+
+      // Initialize Cytoscape
+      function initializeCytoscape() {
+        try {
+          if (typeof cytoscape === "undefined") {
+            showError("Cytoscape library not loaded. Please refresh the page.");
+            return;
+          }
+
+          cy = cytoscape({
+            container: document.getElementById("cy"),
+
+            style: [
+              {
+                selector: "node",
+                style: {
+                  "background-color": getComputedStyle(document.documentElement)
+                    .getPropertyValue("--text-secondary")
+                    .trim(),
+                  label: "data(label)",
+                  color: getComputedStyle(document.documentElement)
+                    .getPropertyValue("--text-primary")
+                    .trim(),
+                  "text-valign": "center",
+                  "text-halign": "center",
+                  "font-size": "12px",
+                  "font-weight": "bold",
+                  width: "80px",
+                  height: "80px",
+                  "text-wrap": "wrap",
+                  "text-max-width": "70px",
+                  "border-width": 2,
+                  "border-color": getComputedStyle(document.documentElement)
+                    .getPropertyValue("--border-color")
+                    .trim(),
+                },
+              },
+              {
+                selector: "edge",
+                style: {
+                  width: 3,
+                  "line-color": getComputedStyle(document.documentElement)
+                    .getPropertyValue("--border-focus")
+                    .trim(),
+                  "target-arrow-color": getComputedStyle(
+                    document.documentElement
+                  )
+                    .getPropertyValue("--border-focus")
+                    .trim(),
+                  "target-arrow-shape": "triangle",
+                  "curve-style": "bezier",
+                  label: "data(polarity)",
+                  "font-size": "16px",
+                  "font-weight": "bold",
+                  "text-background-color": getComputedStyle(
+                    document.documentElement
+                  )
+                    .getPropertyValue("--surface-color")
+                    .trim(),
+                  "text-background-opacity": 0.9,
+                  "text-background-padding": "3px",
+                  color: getComputedStyle(document.documentElement)
+                    .getPropertyValue("--text-primary")
+                    .trim(),
+                },
+              },
+              {
+                selector: 'edge[polarity = "+"]',
+                style: {
+                  "line-color": "#27ae60",
+                  "target-arrow-color": "#27ae60",
+                  color: "#27ae60",
+                },
+              },
+              {
+                selector: 'edge[polarity = "-"]',
+                style: {
+                  "line-color": "#e74c3c",
+                  "target-arrow-color": "#e74c3c",
+                  color: "#e74c3c",
+                },
+              },
+            ],
+
+            layout: {
+              name: "cose",
+              padding: 50,
+              nodeOverlap: 20,
+              idealEdgeLength: 100,
+              nodeRepulsion: 8000,
+            },
+          });
+
+          // Add double-click event listener for nodes
+          cy.on("dblclick", "node", function (evt) {
+            const node = evt.target;
+            const nodeLabel = node.data("label");
+            const currentTheme = document.getElementById("theme").value.trim();
+
+            if (currentTheme) {
+              expandNode(nodeLabel, currentTheme);
+            } else {
+              showError(
+                "Please generate a diagram first before expanding nodes"
+              );
+            }
+          });
+        } catch (error) {
+          showError(`Failed to initialize graph: ${error.message}`);
+        }
+      }
+
+      // Check API key and prompt if needed
+      async function ensureApiKey() {
+        if (!groqApiKey) {
+          groqApiKey = prompt(
+            "Please enter your Groq API key (get one at console.groq.com/keys):"
+          );
+          if (!groqApiKey) {
+            showError("API key is required to generate diagrams");
+            return false;
+          }
+          localStorage.setItem("groqApiKey", groqApiKey);
+        }
+        return true;
+      }
+
+      // Get COSE layout options
+      function getCoseLayoutOptions(nodeCount) {
+        return {
+          name: "cose",
+          padding: 50,
+          nodeOverlap: 20,
+          idealEdgeLength: 100,
+          nodeRepulsion: 8000,
+        };
+      }
+
+      // Generate causal loop diagram using Groq API
+      async function generateDiagram(theme) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        const prompt = `Create a causal loop diagram for the topic: "${theme}". 
+            
+            Return a JSON object with this structure:
+            {
+                "nodes": [
+                    {"id": "node1", "label": "Variable Name"},
+                    {"id": "node2", "label": "Another Variable"}
+                ],
+                "edges": [
+                    {"source": "node1", "target": "node2", "polarity": "+", "description": "explanation"},
+                    {"source": "node2", "target": "node1", "polarity": "-", "description": "explanation"}
+                ]
+            }
+
+            Rules:
+            - Create 6-10 interconnected variables that form meaningful causal loops
+            - Use "+" for positive relationships (increase causes increase)  
+            - Use "-" for negative relationships (increase causes decrease)
+            - Include at least 2-3 feedback loops (reinforcing or balancing)
+            - Make variables specific and measurable when possible
+            - Ensure the diagram shows systemic thinking about ${theme}
+            
+            Only return valid JSON, no additional text.`;
+
+        try {
+          const response = await fetch(
+            "https://api.groq.com/openai/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${groqApiKey}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                model: "llama-3.1-8b-instant",
+                messages: [
+                  {
+                    role: "user",
+                    content: prompt,
+                  },
+                ],
+                temperature: 0.7,
+                max_tokens: 2000,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          let diagramData;
+          try {
+            const content = data.choices[0].message.content.trim();
+
+            // Try to extract JSON from the response
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            const jsonString = jsonMatch ? jsonMatch[0] : content;
+
+            diagramData = JSON.parse(jsonString);
+          } catch (parseError) {
+            showError("Failed to parse AI response. Please try again.");
+            return;
+          }
+
+          renderDiagram(diagramData);
+          showTheme(theme);
+        } catch (error) {
+          showError(`Failed to generate diagram: ${error.message}`);
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // Render the diagram in Cytoscape
+      function renderDiagram(data) {
+        try {
+          if (!cy) {
+            showError("Graph not initialized. Please refresh the page.");
+            return;
+          }
+
+          if (!data || !data.nodes || !data.edges) {
+            showError("Invalid diagram data received from API");
+            return;
+          }
+
+          // Create a set of valid node IDs for validation
+          const nodeIds = new Set(data.nodes.map((node) => node.id));
+
+          // Filter out edges that reference non-existent nodes
+          const validEdges = data.edges.filter((edge) => {
+            const sourceExists = nodeIds.has(edge.source);
+            const targetExists = nodeIds.has(edge.target);
+
+            return sourceExists && targetExists;
+          });
+
+          const elements = [
+            ...data.nodes.map((node) => ({
+              data: { id: node.id, label: node.label },
+            })),
+            ...validEdges.map((edge) => ({
+              data: {
+                id: `${edge.source}-${edge.target}`,
+                source: edge.source,
+                target: edge.target,
+                polarity: edge.polarity,
+              },
+            })),
+          ];
+
+          cy.elements().remove();
+          cy.add(elements);
+
+          // Use COSE layout
+          const layoutOptions = getCoseLayoutOptions(
+            elements.filter((el) => !el.data.source).length
+          );
+
+          cy.layout(layoutOptions).run();
+        } catch (error) {
+          showError(`Failed to render diagram: ${error.message}`);
+        }
+      }
+
+      // Expand node with additional connections
+      async function expandNode(nodeLabel, theme) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        // Get current nodes and edges for context
+        const currentNodes = cy.nodes().map((n) => n.data("label"));
+        const currentEdges = cy.edges().map((e) => ({
+          source: e.source().data("label"),
+          target: e.target().data("label"),
+          polarity: e.data("polarity"),
+        }));
+
+        const prompt = `Given an existing causal loop diagram about "${theme}", expand the node "${nodeLabel}" with 2-4 additional relevant connections.
+
+        Current diagram context:
+        - Existing nodes: ${currentNodes.join(", ")}
+        - Node to expand: "${nodeLabel}"
+        
+        Return a JSON object with this structure:
+        {
+            "newNodes": [
+                {"id": "newnode1", "label": "New Variable Name"},
+                {"id": "newnode2", "label": "Another New Variable"}
+            ],
+            "newEdges": [
+                {"source": "existing_node_id", "target": "newnode1", "polarity": "+", "description": "explanation"},
+                {"source": "newnode1", "target": "existing_node_id", "polarity": "-", "description": "explanation"}
+            ]
+        }
+
+        Rules:
+        - Create 2-4 new nodes that logically connect to "${nodeLabel}"
+        - Include edges that connect new nodes to "${nodeLabel}" and/or existing nodes
+        - Use "+" for positive relationships, "-" for negative relationships
+        - Ensure new connections enhance the systemic understanding of ${theme}
+        - For existing nodes, use their exact labels as IDs (replace spaces with underscores, lowercase)
+        - For "${nodeLabel}", use the ID: "${nodeLabel
+          .toLowerCase()
+          .replace(/\s+/g, "_")}"
+        
+        Only return valid JSON, no additional text.`;
+
+        try {
+          const response = await fetch(
+            "https://api.groq.com/openai/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                Authorization: `Bearer ${groqApiKey}`,
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                model: "llama-3.1-8b-instant",
+                messages: [
+                  {
+                    role: "user",
+                    content: prompt,
+                  },
+                ],
+                temperature: 0.7,
+                max_tokens: 1500,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          let expansionData;
+          try {
+            const content = data.choices[0].message.content.trim();
+
+            // Try to extract JSON from the response
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            const jsonString = jsonMatch ? jsonMatch[0] : content;
+
+            expansionData = JSON.parse(jsonString);
+          } catch (parseError) {
+            showError(
+              "Failed to parse AI expansion response. Please try again."
+            );
+            return;
+          }
+
+          addNodesToExistingDiagram(expansionData);
+        } catch (error) {
+          showError(`Failed to expand node: ${error.message}`);
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // Add new nodes and edges to existing diagram
+      function addNodesToExistingDiagram(data) {
+        try {
+          if (!cy) {
+            showError("Graph not initialized. Please refresh the page.");
+            return;
+          }
+
+          if (!data || !data.newNodes || !data.newEdges) {
+            showError("Invalid expansion data received from API");
+            return;
+          }
+
+          // Create a map of existing node labels to actual IDs for reference
+          const existingNodeMap = {};
+          cy.nodes().forEach((node) => {
+            const label = node.data("label");
+            const actualId = node.data("id");
+            // Map both label and potential ID formats to the actual ID
+            existingNodeMap[label] = actualId;
+            existingNodeMap[label.toLowerCase().replace(/\s+/g, "_")] =
+              actualId;
+            existingNodeMap[actualId] = actualId;
+          });
+
+          // Validate new edges and resolve node references
+          const newNodeIds = new Set(data.newNodes.map((node) => node.id));
+          const allValidIds = new Set([
+            ...Object.values(existingNodeMap),
+            ...newNodeIds,
+          ]);
+
+          const validEdges = data.newEdges.filter((edge) => {
+            // Try to resolve source and target IDs
+            let sourceId = edge.source;
+            let targetId = edge.target;
+
+            // If source/target is a label or label-like ID, convert to actual node ID
+            if (existingNodeMap[edge.source]) {
+              sourceId = existingNodeMap[edge.source];
+            }
+            if (existingNodeMap[edge.target]) {
+              targetId = existingNodeMap[edge.target];
+            }
+
+            const sourceValid = allValidIds.has(sourceId);
+            const targetValid = allValidIds.has(targetId);
+
+            // Update edge with resolved IDs
+            edge.source = sourceId;
+            edge.target = targetId;
+
+            return sourceValid && targetValid;
+          });
+
+          // Add new nodes and valid edges
+          const newElements = [
+            ...data.newNodes.map((node) => ({
+              data: { id: node.id, label: node.label },
+            })),
+            ...validEdges.map((edge) => ({
+              data: {
+                id: `${edge.source}-${edge.target}`,
+                source: edge.source,
+                target: edge.target,
+                polarity: edge.polarity,
+              },
+            })),
+          ];
+
+          cy.add(newElements);
+
+          // Re-run COSE layout to accommodate new nodes
+          const layoutOptions = getCoseLayoutOptions(cy.nodes().length);
+
+          cy.layout(layoutOptions).run();
+        } catch (error) {
+          showError(`Failed to add new connections: ${error.message}`);
+        }
+      }
+
+      // UI Helper functions
+      function showLoading(show) {
+        document.getElementById("loadingIndicator").style.display = show
+          ? "block"
+          : "none";
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById("errorDisplay");
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+      }
+
+      function hideError() {
+        document.getElementById("errorDisplay").style.display = "none";
+      }
+
+      function showTheme(theme) {
+        // Update modal theme display only
+        document.getElementById("modalCurrentTheme").textContent = theme;
+        document.getElementById("modalThemeDisplay").style.display = "block";
+      }
+
+      // Event listeners
+      document.getElementById("generateBtn").addEventListener("click", () => {
+        const theme = document.getElementById("theme").value.trim();
+        if (!theme) {
+          showError("Please enter a topic for the causal loop diagram");
+          return;
+        }
+        generateDiagram(theme);
+      });
+
+      document.getElementById("settingsBtn").addEventListener("click", () => {
+        const newKey = prompt(
+          "Enter Groq API key (get one at console.groq.com/keys):",
+          groqApiKey || ""
+        );
+
+        groqApiKey = newKey;
+        localStorage.setItem("groqApiKey", newKey);
+        if (!newKey) {
+          showError(
+            "API key cleared. Please set a new key to generate diagrams."
+          );
+        } else {
+          hideError();
+        }
+        alert("API key updated successfully!");
+      });
+
+      document.getElementById("theme").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          document.getElementById("generateBtn").click();
+        }
+      });
+
+      // Help modal functionality
+      document.getElementById("helpBtn").addEventListener("click", () => {
+        const modal = document.getElementById("helpModal");
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        // Sync current theme to modal if exists
+        if (currentTheme) {
+          document.getElementById("modalCurrentTheme").textContent =
+            currentTheme;
+          document.getElementById("modalThemeDisplay").style.display = "block";
+        } else {
+          document.getElementById("modalThemeDisplay").style.display = "none";
+        }
+
+        modal.style.display = "flex";
+        document.body.style.overflow = "hidden";
+      });
+
+      // Close modal functionality
+      document
+        .getElementById("closeModal")
+        .addEventListener("click", closeHelpModal);
+      document.getElementById("helpModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("helpModal")) {
+          closeHelpModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          document.getElementById("helpModal").style.display === "flex"
+        ) {
+          closeHelpModal();
+        }
+      });
+
+      function closeHelpModal() {
+        document.getElementById("helpModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      // Initialize application
+      window.addEventListener("load", () => {
+        // Wait for all libraries to load
+        setTimeout(() => {
+          initializeCytoscape();
+
+          // Listen for theme changes and update Cytoscape
+          const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+          mediaQuery.addEventListener("change", () => {
+            if (cy) {
+              // Reinitialize Cytoscape with new theme colors
+              setTimeout(() => {
+                const currentElements = cy.elements().jsons();
+                cy.destroy();
+                initializeCytoscape();
+                if (currentElements.length > 0) {
+                  cy.add(currentElements);
+                  const layoutOptions = getCoseLayoutOptions(cy.nodes().length);
+                  cy.layout(layoutOptions).run();
+                }
+              }, 100);
+            }
+          });
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
