@@ -725,6 +725,10 @@
               <strong>💡 Tip:</strong> Double-click any node to expand the graph
               with additional related variables
             </div>
+            <div class="legend-item" style="margin-top: 0.5rem">
+              <strong>🎯 New Topic:</strong> Double-click empty space to add a
+              new topic and grow your diagram organically
+            </div>
             <div
               class="legend-item"
               style="
@@ -1008,6 +1012,23 @@
               showError(
                 "Please generate a diagram first before expanding nodes"
               );
+            }
+          });
+
+          // Add double-click event listener for empty space (background)
+          cy.on("dblclick", function (evt) {
+            // Check if the target is the background (not a node or edge)
+            if (evt.target === cy) {
+              // Check if we have an existing diagram
+              if (cy.nodes().length === 0) {
+                showError(
+                  "Please generate a diagram first before adding topics"
+                );
+                return;
+              }
+
+              // Prompt for new topic
+              promptForNewTopic();
             }
           });
         } catch (error) {
@@ -1405,6 +1426,122 @@
         // Update modal theme display only
         document.getElementById("modalCurrentTheme").textContent = theme;
         document.getElementById("modalThemeDisplay").style.display = "block";
+      }
+
+      // Prompt for new topic to add to existing diagram
+      function promptForNewTopic() {
+        const newTopic = prompt(
+          "What topic would you like to add to this diagram?\n\nThis will generate new nodes and connect them to the existing diagram."
+        );
+
+        if (newTopic && newTopic.trim()) {
+          expandGraphWithTopic(newTopic.trim());
+        }
+      }
+
+      // Expand existing graph with a new topic
+      async function expandGraphWithTopic(newTopic) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        // Get current diagram context
+        const currentNodes = cy.nodes().map((n) => n.data("label"));
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        const basePrompt = `Given an existing causal loop diagram about "${currentTheme}", add the topic "${newTopic}" to expand the diagram with relevant connections.`;
+
+        const newsPrompt =
+          currentProvider === "grok" || currentProvider === "grok-fast"
+            ? " Consider recent developments and current events for both topics."
+            : "";
+
+        const prompt = `${basePrompt}${newsPrompt}
+
+        Current diagram nodes: ${currentNodes.join(", ")}
+        New topic to integrate: "${newTopic}"
+        
+        Return a JSON object with this structure:
+        {
+            "newNodes": [
+                {"id": "new_node_1", "label": "New Variable Name"},
+                {"id": "new_node_2", "label": "Another New Variable"}
+            ],
+            "newEdges": [
+                {"source": "existing_node_id", "target": "new_node_1", "polarity": "+", "description": "explanation"},
+                {"source": "new_node_1", "target": "existing_node_id", "polarity": "-", "description": "explanation"}
+            ]
+        }
+
+        Rules:
+        - Create 3-5 new nodes related to "${newTopic}"
+        - Connect these new nodes meaningfully to existing nodes where logical relationships exist
+        - Use "+" for positive relationships, "-" for negative relationships
+        - For existing nodes, use their exact labels as IDs (replace spaces with underscores, lowercase)
+        - Ensure the new topic enhances the systemic understanding of the overall diagram
+        - Make the integration feel natural and logical
+        
+        Only return valid JSON, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 2000,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          let expansionData;
+          try {
+            const content = data.choices[0].message.content.trim();
+
+            // Try to extract JSON from the response
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            const jsonString = jsonMatch ? jsonMatch[0] : content;
+
+            expansionData = JSON.parse(jsonString);
+          } catch (parseError) {
+            showError(
+              "Failed to parse AI response for topic expansion. Please try again."
+            );
+            return;
+          }
+
+          addNodesToExistingDiagram(expansionData);
+
+          // Update the main theme to reflect the expanded diagram
+          const originalTheme = currentTheme;
+          const expandedTheme = `${originalTheme} + ${newTopic}`;
+          document.getElementById("theme").value = expandedTheme;
+          showTheme(expandedTheme);
+        } catch (error) {
+          showError(
+            `Failed to expand diagram with new topic: ${error.message}`
+          );
+        } finally {
+          showLoading(false);
+        }
       }
 
       // Event listeners
