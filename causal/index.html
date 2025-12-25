@@ -596,16 +596,23 @@
 
       .input-with-button input {
         flex: 1;
+        min-height: 44px; /* Touch-friendly height */
       }
 
       .toggle-key {
-        min-width: 42px;
-        width: 42px;
-        padding: 0.5rem;
-        font-size: 0.9rem;
+        min-width: 44px;
+        width: 44px;
+        min-height: 44px;
+        padding: 0.75rem;
+        font-size: 1rem;
         background: var(--surface-tertiary);
         border: 2px solid var(--border-color);
         color: var(--text-secondary);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
       }
 
       .toggle-key:hover {
@@ -656,13 +663,39 @@
         }
 
         .input-with-button {
-          flex-direction: column;
-          align-items: stretch;
+          gap: 0.75rem;
+          margin-bottom: 1rem;
+        }
+
+        .input-with-button input {
+          min-height: 48px;
+          padding: 0.75rem 1rem;
+          font-size: 16px;
+          border-radius: 8px;
         }
 
         .toggle-key {
-          width: 100%;
-          min-width: unset;
+          min-width: 48px;
+          width: 48px;
+          min-height: 48px;
+          padding: 0.75rem;
+          font-size: 1.1rem;
+        }
+
+        .api-key-section {
+          margin-bottom: 2rem;
+        }
+
+        .api-key-section label {
+          font-size: 1rem;
+          margin-bottom: 0.75rem;
+        }
+
+        .api-key-section small {
+          font-size: 0.85rem;
+          line-height: 1.4;
+          display: block;
+          margin-top: 0.75rem;
         }
       }
     </style>
