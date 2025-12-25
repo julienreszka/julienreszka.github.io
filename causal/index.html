@@ -756,12 +756,20 @@
                 border-top: 1px solid var(--border-color);
               "
             >
-              <strong>💡 Tip:</strong> Double-click/double-tap any node to
-              expand the graph with additional related variables
+              <strong>📊 Click Node:</strong> Get current trends and
+              developments
             </div>
             <div class="legend-item" style="margin-top: 0.5rem">
-              <strong>🎯 New Topic:</strong> Double-click/double-tap empty space
-              to add a new topic and grow your diagram organically
+              <strong>💡 Double-click/double-tap Node:</strong> Expand the graph
+              with additional related variables
+            </div>
+            <div class="legend-item" style="margin-top: 0.5rem">
+              <strong>🔗 Click Edge:</strong> Explain why this relationship
+              exists
+            </div>
+            <div class="legend-item" style="margin-top: 0.5rem">
+              <strong>🎯 Double-click/double-tap Space:</strong> Add a new topic
+              and grow your diagram organically
             </div>
             <div
               class="legend-item"
@@ -1447,7 +1455,12 @@
       // Handle node tap/touch events for double-tap detection
       function handleNodeTap(evt) {
         // Only handle tap events on mobile devices
-        if (!isMobileDevice()) return;
+        if (!isMobileDevice()) {
+          // On desktop, handle single click for node explanation
+          const node = evt.target;
+          explainNode(node);
+          return;
+        }
 
         const currentTime = new Date().getTime();
         const node = evt.target;
@@ -1457,7 +1470,7 @@
           lastTapTarget === node &&
           currentTime - lastTapTime < DOUBLE_TAP_DELAY
         ) {
-          // Double-tap detected
+          // Double-tap detected - expand node
           const nodeLabel = node.data("label");
           const currentTheme = document.getElementById("theme").value.trim();
 
@@ -1471,9 +1484,21 @@
           lastTapTime = 0;
           lastTapTarget = null;
         } else {
-          // Single tap - store for potential double-tap
+          // Single tap - could be start of double-tap or just explanation
           lastTapTime = currentTime;
           lastTapTarget = node;
+
+          // Show explanation after delay if no second tap
+          setTimeout(() => {
+            if (
+              lastTapTarget === node &&
+              new Date().getTime() - lastTapTime >= DOUBLE_TAP_DELAY
+            ) {
+              explainNode(node);
+              lastTapTime = 0;
+              lastTapTarget = null;
+            }
+          }, DOUBLE_TAP_DELAY);
         }
       }
 
@@ -1506,6 +1531,72 @@
           // Single tap - store for potential double-tap
           lastTapTime = currentTime;
           lastTapTarget = cy;
+        }
+      }
+
+      // Explain current trends and developments for a node
+      async function explainNode(node) {
+        if (!(await ensureApiKey())) return;
+
+        const nodeLabel = node.data("label");
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        // Show loading state
+        const loadingMessage = `Getting trends for ${nodeLabel}...`;
+        showInfo(loadingMessage);
+
+        const newsPrompt =
+          currentProvider === "grok" || currentProvider === "grok-fast"
+            ? " Focus on recent developments and current events."
+            : "";
+
+        const prompt = `What are current trends or recent developments regarding "${nodeLabel}" in "${currentTheme}"?${newsPrompt}
+
+        Keep your explanation:
+        - Under 100 words
+        - Focus on current state, recent changes, or emerging trends
+        - Practical and relevant to today
+        - Suitable for a mobile alert popup
+
+        Return only the explanation, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.5,
+              max_tokens: 150,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const explanation = data.choices[0].message.content.trim();
+
+          hideInfo();
+
+          // Show explanation in alert
+          alert(`📊 ${nodeLabel}\n\n${explanation}`);
+        } catch (error) {
+          hideInfo();
+          showError(`Failed to get trends for ${nodeLabel}: ${error.message}`);
+          setTimeout(hideError, 3000);
         }
       }
 
