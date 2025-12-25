@@ -443,7 +443,7 @@
         transform: translate(-50%, -50%);
         z-index: 1000;
         max-width: 90vw;
-        width: 500px;
+        width: 920px;
         max-height: 80vh;
         overflow: auto;
         box-shadow: 0 8px 32px var(--shadow-strong);
@@ -694,32 +694,62 @@
         }
 
         .input-with-button {
-          gap: 0.75rem;
-          margin-bottom: 1rem;
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+          flex-direction: column;
+          align-items: stretch;
         }
 
         .input-with-button input {
-          min-height: 48px;
-          padding: 0.75rem 1.5rem;
+          min-height: 52px;
+          padding: 1rem 1.5rem;
           font-size: 16px;
           border-radius: 1.75rem;
+          border: 3px solid var(--border-color);
+          transition: all 0.3s ease;
+        }
+
+        .input-with-button input:focus {
+          border-color: var(--border-focus);
+          box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
         }
 
         .toggle-key {
-          min-width: 48px;
-          width: 48px;
-          min-height: 48px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
+          min-width: 52px;
+          width: 100%;
+          min-height: 52px;
+          padding: 1rem;
+          font-size: 1.2rem;
+          margin-top: 0.5rem;
+          border: 3px solid var(--border-color);
+          transition: all 0.3s ease;
+        }
+
+        .toggle-key:active {
+          transform: scale(0.98);
+          background: var(--border-focus);
+          color: white;
         }
 
         .api-key-section {
-          margin-bottom: 2rem;
+          margin-bottom: 2.5rem;
+          padding: 1rem;
+          background: var(--surface-tertiary);
+          border-radius: 1.75rem;
         }
 
         .api-key-section label {
-          font-size: 1rem;
-          margin-bottom: 0.75rem;
+          font-size: 1.1rem;
+          margin-bottom: 1rem;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+
+        .api-key-section label::after {
+          content: " (tap to toggle visibility)";
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          font-weight: 400;
         }
 
         .api-key-section small {
