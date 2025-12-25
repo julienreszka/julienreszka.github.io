@@ -1148,6 +1148,21 @@
               Share this link to give others access with your API keys
               pre-configured
             </small>
+
+            <button id="copyAppLinkWithGraph" class="copy-link-button">
+              🔗📊 Copy App Link with API Keys + Current Graph
+            </button>
+            <small
+              style="
+                color: var(--text-secondary);
+                font-size: 0.8rem;
+                margin-top: 0.5rem;
+                display: block;
+                text-align: center;
+              "
+            >
+              Share your complete setup including the current diagram
+            </small>
           </div>
         </div>
       </div>
@@ -2340,6 +2355,8 @@
         navigator.clipboard
           .writeText(shareableUrl)
           .then(() => {
+            // Close modal temporarily to show toast
+            closeSettingsModal();
             showSuccess("App link copied to clipboard! 📋");
           })
           .catch(() => {
@@ -2350,9 +2367,104 @@
             textArea.select();
             document.execCommand("copy");
             document.body.removeChild(textArea);
+            // Close modal temporarily to show toast
+            closeSettingsModal();
             showSuccess("App link copied to clipboard! 📋");
           });
       });
+
+      // Copy app link with API keys AND current graph
+      document
+        .getElementById("copyAppLinkWithGraph")
+        .addEventListener("click", () => {
+          // Check if there's a current diagram
+          if (!cy || cy.nodes().length === 0) {
+            closeSettingsModal();
+            showError(
+              "Please generate a diagram first before sharing app link with graph"
+            );
+            setTimeout(hideError, 3000);
+            return;
+          }
+
+          try {
+            const currentGroqKey = document
+              .getElementById("groqApiKey")
+              .value.trim();
+            const currentGrokKey = document
+              .getElementById("grokApiKey")
+              .value.trim();
+            const selectedProvider = document.querySelector(
+              'input[name="provider"]:checked'
+            ).value;
+
+            // Collect current diagram data
+            const nodes = cy.nodes().map((node) => ({
+              id: node.data("id"),
+              label: node.data("label"),
+            }));
+
+            const edges = cy.edges().map((edge) => ({
+              source: edge.source().data("id"),
+              target: edge.target().data("id"),
+              polarity: edge.data("polarity"),
+            }));
+
+            const currentTheme = document.getElementById("theme").value.trim();
+
+            const diagramData = {
+              nodes,
+              edges,
+              theme: currentTheme,
+            };
+
+            // Get current URL without query params
+            const baseUrl = window.location.origin + window.location.pathname;
+
+            // Build query params with both API keys and graph data
+            const params = new URLSearchParams();
+            params.set("provider", selectedProvider);
+
+            if (currentGroqKey) {
+              params.set("groqKey", currentGroqKey);
+            }
+
+            if (currentGrokKey) {
+              params.set("grokKey", currentGrokKey);
+            }
+
+            // Encode diagram data as base64
+            const encodedData = btoa(JSON.stringify(diagramData));
+            params.set("data", encodedData);
+
+            const shareableUrl = `${baseUrl}?${params.toString()}`;
+
+            // Copy to clipboard
+            navigator.clipboard
+              .writeText(shareableUrl)
+              .then(() => {
+                // Close modal temporarily to show toast
+                closeSettingsModal();
+                showSuccess("Complete app link copied to clipboard! 🔗📊");
+              })
+              .catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = shareableUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+                // Close modal temporarily to show toast
+                closeSettingsModal();
+                showSuccess("Complete app link copied to clipboard! 🔗📊");
+              });
+          } catch (error) {
+            closeSettingsModal();
+            showError(`Failed to create complete share link: ${error.message}`);
+            setTimeout(hideError, 3000);
+          }
+        });
 
       // Share diagram by encoding data in URL
       function shareDiagram() {
@@ -2473,7 +2585,7 @@
           color: white;
           padding: 1rem 1.5rem;
           border-radius: 1.75rem;
-          z-index: 10000;
+          z-index: 2147483647;
           font-weight: 500;
           box-shadow: 0 4px 15px rgba(0,0,0,0.2);
           animation: slideIn 0.3s ease;
