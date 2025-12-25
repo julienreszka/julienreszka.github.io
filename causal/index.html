@@ -940,6 +940,7 @@
           />
           <button id="generateBtn">✨</button>
           <button id="settingsBtn">⚙️</button>
+          <button id="shareBtn">🔗</button>
           <button id="helpBtn">❔</button>
         </div>
       </div>
@@ -2200,6 +2201,10 @@
         openSettingsModal();
       });
 
+      document.getElementById("shareBtn").addEventListener("click", () => {
+        shareDiagram();
+      });
+
       // Settings modal functionality
       function openSettingsModal() {
         // Load current settings
@@ -2349,6 +2354,113 @@
           });
       });
 
+      // Share diagram by encoding data in URL
+      function shareDiagram() {
+        if (!cy || cy.nodes().length === 0) {
+          showError("Please generate a diagram first before sharing");
+          return;
+        }
+
+        try {
+          // Collect current diagram data
+          const nodes = cy.nodes().map((node) => ({
+            id: node.data("id"),
+            label: node.data("label"),
+          }));
+
+          const edges = cy.edges().map((edge) => ({
+            source: edge.source().data("id"),
+            target: edge.target().data("id"),
+            polarity: edge.data("polarity"),
+          }));
+
+          const currentTheme = document.getElementById("theme").value.trim();
+
+          const diagramData = {
+            nodes,
+            edges,
+            theme: currentTheme,
+          };
+
+          // Encode data as base64 to make URL cleaner
+          const encodedData = btoa(JSON.stringify(diagramData));
+
+          // Get current URL without query params
+          const baseUrl = window.location.origin + window.location.pathname;
+
+          // Build shareable URL
+          const shareUrl = `${baseUrl}?data=${encodedData}`;
+
+          // Copy to clipboard
+          navigator.clipboard
+            .writeText(shareUrl)
+            .then(() => {
+              showSuccess("Diagram link copied to clipboard! 🔗");
+            })
+            .catch(() => {
+              // Fallback for older browsers
+              const textArea = document.createElement("textarea");
+              textArea.value = shareUrl;
+              document.body.appendChild(textArea);
+              textArea.select();
+              document.execCommand("copy");
+              document.body.removeChild(textArea);
+              showSuccess("Diagram link copied to clipboard! 🔗");
+            });
+        } catch (error) {
+          showError(`Failed to create share link: ${error.message}`);
+        }
+      }
+
+      // Parse shared diagram data from URL
+      function parseSharedDiagram() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataParam = urlParams.get("data");
+
+        if (dataParam) {
+          try {
+            // Decode the base64 data
+            const decodedData = JSON.parse(atob(dataParam));
+
+            if (decodedData.nodes && decodedData.edges && decodedData.theme) {
+              // Store the data to be loaded after Cytoscape is initialized
+              window.sharedDiagramData = decodedData;
+              return true;
+            }
+          } catch (error) {
+            console.error("Failed to parse shared diagram:", error);
+            showError("Invalid shared diagram link");
+            setTimeout(hideError, 3000);
+          }
+        }
+
+        return false;
+      }
+
+      // Load shared diagram after Cytoscape is initialized
+      function loadSharedDiagram() {
+        if (window.sharedDiagramData && cy) {
+          const decodedData = window.sharedDiagramData;
+
+          // Set the theme
+          document.getElementById("theme").value = decodedData.theme;
+
+          // Render the diagram
+          renderDiagram(decodedData);
+
+          // Show theme
+          showTheme(decodedData.theme);
+
+          // Show success message
+          setTimeout(() => {
+            showSuccess("Shared diagram loaded! 📊");
+          }, 500);
+
+          // Clear the stored data
+          delete window.sharedDiagramData;
+        }
+      }
+
       // Show success message function
       function showSuccess(message) {
         const successDiv = document.createElement("div");
@@ -2425,6 +2537,10 @@
 
       // Parse URL parameters on load
       function parseUrlParams() {
+        // First check for shared diagram data
+        const hasSharedDiagram = parseSharedDiagram();
+
+        // Then parse other URL parameters (API keys, provider)
         const urlParams = new URLSearchParams(window.location.search);
 
         const providerParam = urlParams.get("provider");
@@ -2450,8 +2566,11 @@
           localStorage.setItem("grokApiKey", grokApiKey);
         }
 
-        // Show success message if any parameters were loaded
-        if (providerParam || groqKeyParam || grokKeyParam) {
+        // Show success message if any parameters were loaded (but not if shared diagram was loaded)
+        if (
+          !hasSharedDiagram &&
+          (providerParam || groqKeyParam || grokKeyParam)
+        ) {
           setTimeout(() => {
             showSuccess("Settings loaded from URL! 🔗");
           }, 1000);
@@ -2466,6 +2585,9 @@
         // Wait for all libraries to load
         setTimeout(() => {
           initializeCytoscape();
+
+          // Load shared diagram after Cytoscape is initialized
+          loadSharedDiagram();
 
           // Listen for theme changes and update Cytoscape
           const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
