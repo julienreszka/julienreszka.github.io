@@ -508,6 +508,163 @@
           padding: 1rem;
         }
       }
+
+      /* Settings Modal Styles */
+      .settings-section {
+        margin-bottom: 2rem;
+      }
+
+      .settings-section h4 {
+        color: var(--text-primary);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        cursor: pointer;
+        padding: 1rem;
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+      }
+
+      .radio-option:hover {
+        border-color: var(--border-focus);
+        background-color: var(--surface-tertiary);
+      }
+
+      .radio-option input[type="radio"] {
+        margin: 0;
+        margin-top: 0.25rem;
+      }
+
+      .radio-option input[type="radio"]:checked + .radio-label {
+        color: var(--border-focus);
+      }
+
+      .radio-option:has(input[type="radio"]:checked) {
+        border-color: var(--border-focus);
+        background-color: var(--surface-tertiary);
+      }
+
+      .radio-label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        flex: 1;
+      }
+
+      .radio-label strong {
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+
+      .radio-label small {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        line-height: 1.3;
+      }
+
+      .api-key-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .api-key-section label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+      }
+
+      .input-with-button {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .input-with-button input {
+        flex: 1;
+      }
+
+      .toggle-key {
+        min-width: 42px;
+        width: 42px;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        background: var(--surface-tertiary);
+        border: 2px solid var(--border-color);
+        color: var(--text-secondary);
+      }
+
+      .toggle-key:hover {
+        background: var(--border-focus);
+        color: white;
+      }
+
+      .api-key-section small {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        line-height: 1.3;
+      }
+
+      .api-key-section small a {
+        color: var(--border-focus);
+        text-decoration: underline;
+      }
+
+      .save-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: var(--border-focus);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .save-button:hover {
+        background-color: #5a6fd8;
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 768px) {
+        .radio-option {
+          padding: 0.75rem;
+        }
+
+        .radio-label strong {
+          font-size: 0.9rem;
+        }
+
+        .radio-label small {
+          font-size: 0.75rem;
+        }
+
+        .input-with-button {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .toggle-key {
+          width: 100%;
+          min-width: unset;
+        }
+      }
     </style>
   </head>
   <body>
@@ -521,7 +678,7 @@
             placeholder="e.g., Climate Change, Economic Growth, Urban Development..."
           />
           <button id="generateBtn">✨</button>
-          <button id="settingsBtn">🔑</button>
+          <button id="settingsBtn">⚙️</button>
           <button id="helpBtn">❔</button>
         </div>
       </div>
@@ -576,14 +733,8 @@
                 border-top: 1px solid var(--border-color);
               "
             >
-              <strong>🔑 API Key:</strong> Get your free Groq API key at
-              <a
-                href="https://console.groq.com/keys"
-                target="_blank"
-                rel="noopener noreferrer"
-                style="color: var(--border-focus); text-decoration: underline"
-                >console.groq.com/keys</a
-              >
+              <strong>⚙️ Settings:</strong> Configure your AI provider and API
+              keys in Settings
             </div>
 
             <div
@@ -596,6 +747,115 @@
             >
               Created by @julienreszka
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <span class="close" id="closeSettingsModal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h4>AI Provider</h4>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="provider"
+                  value="groq"
+                  id="groqProvider"
+                  checked
+                />
+                <span class="radio-label">
+                  <strong>Groq</strong>
+                  <small>Fast, cost-effective (Llama models)</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="provider"
+                  value="grok"
+                  id="grokProvider"
+                />
+                <span class="radio-label">
+                  <strong>Grok 4</strong>
+                  <small>Advanced reasoning with real-time information</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="provider"
+                  value="grok-fast"
+                  id="grokFastProvider"
+                />
+                <span class="radio-label">
+                  <strong>Grok 4.1 Fast</strong>
+                  <small>Lightning fast with current events & news</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h4>API Keys</h4>
+
+            <div class="api-key-section" id="groqKeySection">
+              <label for="groqApiKey">Groq API Key</label>
+              <div class="input-with-button">
+                <input
+                  type="password"
+                  id="groqApiKey"
+                  placeholder="Enter your Groq API key"
+                />
+                <button type="button" id="toggleGroqKey" class="toggle-key">
+                  👁️
+                </button>
+              </div>
+              <small
+                >Get your free key at
+                <a href="https://console.groq.com/keys" target="_blank"
+                  >console.groq.com/keys</a
+                ></small
+              >
+            </div>
+
+            <div
+              class="api-key-section"
+              id="grokKeySection"
+              style="display: none"
+            >
+              <label for="grokApiKey">Grok (xAI) API Key</label>
+              <div class="input-with-button">
+                <input
+                  type="password"
+                  id="grokApiKey"
+                  placeholder="Enter your Grok API key"
+                />
+                <button type="button" id="toggleGrokKey" class="toggle-key">
+                  👁️
+                </button>
+              </div>
+              <small
+                >Get your key at
+                <a
+                  href="https://console.x.ai/team/default/api-keys"
+                  target="_blank"
+                  >console.x.ai</a
+                >
+                (works for both Grok 4 & Grok 4.1 Fast)</small
+              >
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <button id="saveSettings" class="save-button">Save Settings</button>
           </div>
         </div>
       </div>
@@ -640,7 +900,9 @@
     <script>
       // Global variables
       let cy;
-      let groqApiKey = localStorage.getItem("groqApiKey");
+      let currentProvider = localStorage.getItem("aiProvider") || "groq";
+      let groqApiKey = localStorage.getItem("groqApiKey") || "";
+      let grokApiKey = localStorage.getItem("grokApiKey") || "";
 
       // Initialize Cytoscape
       function initializeCytoscape() {
@@ -755,15 +1017,16 @@
 
       // Check API key and prompt if needed
       async function ensureApiKey() {
-        if (!groqApiKey) {
-          groqApiKey = prompt(
-            "Please enter your Groq API key (get one at console.groq.com/keys):"
-          );
-          if (!groqApiKey) {
-            showError("API key is required to generate diagrams");
-            return false;
-          }
-          localStorage.setItem("groqApiKey", groqApiKey);
+        const currentKey = currentProvider === "groq" ? groqApiKey : grokApiKey;
+        if (!currentKey) {
+          const providerName =
+            currentProvider === "groq"
+              ? "Groq"
+              : currentProvider === "grok-fast"
+              ? "Grok 4.1 Fast"
+              : "Grok 4";
+          showError(`Please set your ${providerName} API key in Settings ⚙️`);
+          return false;
         }
         return true;
       }
@@ -779,14 +1042,21 @@
         };
       }
 
-      // Generate causal loop diagram using Groq API
+      // Generate causal loop diagram using selected AI provider
       async function generateDiagram(theme) {
         if (!(await ensureApiKey())) return;
 
         showLoading(true);
         hideError();
 
-        const prompt = `Create a causal loop diagram for the topic: "${theme}". 
+        const basePrompt = `Create a causal loop diagram for the topic: "${theme}".`;
+
+        const newsPrompt =
+          currentProvider === "grok" || currentProvider === "grok-fast"
+            ? " Consider recent developments and current events that might affect these relationships."
+            : "";
+
+        const prompt = `${basePrompt}${newsPrompt}
             
             Return a JSON object with this structure:
             {
@@ -810,28 +1080,27 @@
             
             Only return valid JSON, no additional text.`;
 
+        const apiConfig = getApiConfig();
+
         try {
-          const response = await fetch(
-            "https://api.groq.com/openai/v1/chat/completions",
-            {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${groqApiKey}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                model: "llama-3.1-8b-instant",
-                messages: [
-                  {
-                    role: "user",
-                    content: prompt,
-                  },
-                ],
-                temperature: 0.7,
-                max_tokens: 2000,
-              }),
-            }
-          );
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 2000,
+            }),
+          });
 
           if (!response.ok) {
             throw new Error(`API request failed: ${response.status}`);
@@ -959,28 +1228,27 @@
         
         Only return valid JSON, no additional text.`;
 
+        const apiConfig = getApiConfig();
+
         try {
-          const response = await fetch(
-            "https://api.groq.com/openai/v1/chat/completions",
-            {
-              method: "POST",
-              headers: {
-                Authorization: `Bearer ${groqApiKey}`,
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                model: "llama-3.1-8b-instant",
-                messages: [
-                  {
-                    role: "user",
-                    content: prompt,
-                  },
-                ],
-                temperature: 0.7,
-                max_tokens: 1500,
-              }),
-            }
-          );
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 1500,
+            }),
+          });
 
           if (!response.ok) {
             throw new Error(`API request failed: ${response.status}`);
@@ -1093,6 +1361,29 @@
         }
       }
 
+      // Get API configuration based on selected provider
+      function getApiConfig() {
+        if (currentProvider === "groq") {
+          return {
+            url: "https://api.groq.com/openai/v1/chat/completions",
+            key: groqApiKey,
+            model: "llama-3.1-8b-instant",
+          };
+        } else if (currentProvider === "grok-fast") {
+          return {
+            url: "https://api.x.ai/v1/chat/completions",
+            key: grokApiKey,
+            model: "grok-4-1-fast",
+          };
+        } else {
+          return {
+            url: "https://api.x.ai/v1/chat/completions",
+            key: grokApiKey,
+            model: "grok-4",
+          };
+        }
+      }
+
       // UI Helper functions
       function showLoading(show) {
         document.getElementById("loadingIndicator").style.display = show
@@ -1127,22 +1418,135 @@
       });
 
       document.getElementById("settingsBtn").addEventListener("click", () => {
-        const newKey = prompt(
-          "Enter Groq API key (get one at console.groq.com/keys):",
-          groqApiKey || ""
-        );
-
-        groqApiKey = newKey;
-        localStorage.setItem("groqApiKey", newKey);
-        if (!newKey) {
-          showError(
-            "API key cleared. Please set a new key to generate diagrams."
-          );
-        } else {
-          hideError();
-        }
-        alert("API key updated successfully!");
+        openSettingsModal();
       });
+
+      // Settings modal functionality
+      function openSettingsModal() {
+        // Load current settings
+        document.querySelector(
+          `input[name="provider"][value="${currentProvider}"]`
+        ).checked = true;
+        document.getElementById("groqApiKey").value = groqApiKey;
+        document.getElementById("grokApiKey").value = grokApiKey;
+
+        // Show appropriate API key section
+        toggleApiKeySection();
+
+        // Open modal
+        document.getElementById("settingsModal").style.display = "flex";
+        document.body.style.overflow = "hidden";
+      }
+
+      function toggleApiKeySection() {
+        const selectedProvider = document.querySelector(
+          'input[name="provider"]:checked'
+        ).value;
+        document.getElementById("groqKeySection").style.display =
+          selectedProvider === "groq" ? "block" : "none";
+        document.getElementById("grokKeySection").style.display =
+          selectedProvider === "grok" || selectedProvider === "grok-fast"
+            ? "block"
+            : "none";
+      }
+
+      function closeSettingsModal() {
+        document.getElementById("settingsModal").style.display = "none";
+        document.body.style.overflow = "auto";
+      }
+
+      // Settings modal event listeners
+      document
+        .getElementById("closeSettingsModal")
+        .addEventListener("click", closeSettingsModal);
+
+      document
+        .getElementById("settingsModal")
+        .addEventListener("click", (e) => {
+          if (e.target === document.getElementById("settingsModal")) {
+            closeSettingsModal();
+          }
+        });
+
+      // Provider radio buttons
+      document.querySelectorAll('input[name="provider"]').forEach((radio) => {
+        radio.addEventListener("change", toggleApiKeySection);
+      });
+
+      // API key toggle buttons
+      document.getElementById("toggleGroqKey").addEventListener("click", () => {
+        const input = document.getElementById("groqApiKey");
+        const button = document.getElementById("toggleGroqKey");
+        if (input.type === "password") {
+          input.type = "text";
+          button.textContent = "🙈";
+        } else {
+          input.type = "password";
+          button.textContent = "👁️";
+        }
+      });
+
+      document.getElementById("toggleGrokKey").addEventListener("click", () => {
+        const input = document.getElementById("grokApiKey");
+        const button = document.getElementById("toggleGrokKey");
+        if (input.type === "password") {
+          input.type = "text";
+          button.textContent = "🙈";
+        } else {
+          input.type = "password";
+          button.textContent = "👁️";
+        }
+      });
+
+      // Save settings
+      document.getElementById("saveSettings").addEventListener("click", () => {
+        const selectedProvider = document.querySelector(
+          'input[name="provider"]:checked'
+        ).value;
+        const newGroqKey = document.getElementById("groqApiKey").value.trim();
+        const newGrokKey = document.getElementById("grokApiKey").value.trim();
+
+        // Update global variables
+        currentProvider = selectedProvider;
+        groqApiKey = newGroqKey;
+        grokApiKey = newGrokKey;
+
+        // Save to localStorage
+        localStorage.setItem("aiProvider", currentProvider);
+        localStorage.setItem("groqApiKey", groqApiKey);
+        localStorage.setItem("grokApiKey", grokApiKey);
+
+        closeSettingsModal();
+        hideError();
+
+        // Show success message
+        showSuccess("Settings saved successfully!");
+      });
+
+      // Show success message function
+      function showSuccess(message) {
+        const successDiv = document.createElement("div");
+        successDiv.textContent = message;
+        successDiv.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #27ae60;
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 8px;
+          z-index: 10000;
+          font-weight: 500;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          animation: slideIn 0.3s ease;
+        `;
+
+        document.body.appendChild(successDiv);
+
+        setTimeout(() => {
+          successDiv.remove();
+        }, 3000);
+      }
 
       document.getElementById("theme").addEventListener("keypress", (e) => {
         if (e.key === "Enter") {
@@ -1179,11 +1583,14 @@
       });
 
       document.addEventListener("keydown", (e) => {
-        if (
-          e.key === "Escape" &&
-          document.getElementById("helpModal").style.display === "flex"
-        ) {
-          closeHelpModal();
+        if (e.key === "Escape") {
+          if (document.getElementById("helpModal").style.display === "flex") {
+            closeHelpModal();
+          } else if (
+            document.getElementById("settingsModal").style.display === "flex"
+          ) {
+            closeSettingsModal();
+          }
         }
       });
 
