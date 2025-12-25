@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
     <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
     <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <script src="https://unpkg.com/marked@9.1.6/marked.min.js"></script>
     <style>
       :root {
         /* Light theme variables */
@@ -425,13 +426,31 @@
       }
 
       /* Modal Styles */
-      .modal {
+      .modal,
+      .modal-dialog {
+        border: none;
+        border-radius: 12px;
+        padding: 0;
         position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
+        max-width: 90vw;
+        width: 500px;
+        max-height: 80vh;
+        overflow: hidden;
+        box-shadow: 0 8px 32px var(--shadow-strong);
+        background: transparent;
+      }
+
+      .modal-dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+      }
+
+      /* Legacy modal styles for any remaining div modals */
+      .modal {
         background-color: rgba(0, 0, 0, 0.5);
         backdrop-filter: blur(4px);
         display: flex;
@@ -442,12 +461,12 @@
       .modal-content {
         background: var(--surface-color);
         border-radius: 12px;
-        width: 90%;
-        max-width: 500px;
-        max-height: 80vh;
+        width: 100%;
+        max-height: 100%;
         overflow-y: auto;
-        box-shadow: 0 8px 32px var(--shadow-strong);
         animation: modalFadeIn 0.3s ease;
+        display: flex;
+        flex-direction: column;
       }
 
       .modal-header {
@@ -492,9 +511,14 @@
       }
 
       @media (max-width: 768px) {
-        .modal-content {
-          width: 95%;
+        .modal-dialog {
+          width: 95vw;
           max-height: 90vh;
+        }
+
+        .modal-content {
+          width: 100%;
+          max-height: 100%;
         }
 
         .modal-header {
@@ -862,7 +886,7 @@
     </div>
 
     <!-- Help Modal -->
-    <div id="helpModal" class="modal" style="display: none">
+    <dialog id="helpModal" class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h3>Legend & Instructions</h3>
@@ -939,10 +963,10 @@
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
 
     <!-- Settings Modal -->
-    <div id="settingsModal" class="modal" style="display: none">
+    <dialog id="settingsModal" class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h3>Settings</h3>
@@ -1048,7 +1072,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </dialog>
 
     <!-- Node Explanation Dialog -->
     <dialog id="nodeDialog" class="explanation-dialog">
@@ -1959,7 +1983,8 @@
         document.getElementById(
           "nodeDialogTitle"
         ).textContent = `📊 ${nodeLabel}`;
-        document.getElementById("nodeDialogContent").textContent = explanation;
+        document.getElementById("nodeDialogContent").innerHTML =
+          marked.parse(explanation);
         document.getElementById("nodeDialog").showModal();
       }
 
@@ -1969,8 +1994,8 @@
 
       function showRelationshipDialog(title, explanation) {
         document.getElementById("relationshipDialogTitle").textContent = title;
-        document.getElementById("relationshipDialogContent").textContent =
-          explanation;
+        document.getElementById("relationshipDialogContent").innerHTML =
+          marked.parse(explanation);
         document.getElementById("relationshipDialog").showModal();
       }
 
@@ -2083,30 +2108,6 @@
         }
       }
 
-      // Dialog management functions
-      function showNodeDialog(nodeLabel, explanation) {
-        document.getElementById(
-          "nodeDialogTitle"
-        ).textContent = `📊 ${nodeLabel}`;
-        document.getElementById("nodeDialogContent").textContent = explanation;
-        document.getElementById("nodeDialog").showModal();
-      }
-
-      function closeNodeDialog() {
-        document.getElementById("nodeDialog").close();
-      }
-
-      function showRelationshipDialog(title, explanation) {
-        document.getElementById("relationshipDialogTitle").textContent = title;
-        document.getElementById("relationshipDialogContent").textContent =
-          explanation;
-        document.getElementById("relationshipDialog").showModal();
-      }
-
-      function closeRelationshipDialog() {
-        document.getElementById("relationshipDialog").close();
-      }
-
       // Event listeners
       document.getElementById("generateBtn").addEventListener("click", () => {
         const theme = document.getElementById("theme").value.trim();
@@ -2134,7 +2135,7 @@
         toggleApiKeySection();
 
         // Open modal
-        document.getElementById("settingsModal").style.display = "flex";
+        document.getElementById("settingsModal").showModal();
         document.body.style.overflow = "hidden";
       }
 
@@ -2151,7 +2152,7 @@
       }
 
       function closeSettingsModal() {
-        document.getElementById("settingsModal").style.display = "none";
+        document.getElementById("settingsModal").close();
         document.body.style.overflow = "auto";
       }
 
@@ -2268,7 +2269,7 @@
           document.getElementById("modalThemeDisplay").style.display = "none";
         }
 
-        modal.style.display = "flex";
+        modal.showModal();
         document.body.style.overflow = "hidden";
       });
 
@@ -2284,18 +2285,16 @@
 
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape") {
-          if (document.getElementById("helpModal").style.display === "flex") {
+          if (document.getElementById("helpModal").open) {
             closeHelpModal();
-          } else if (
-            document.getElementById("settingsModal").style.display === "flex"
-          ) {
+          } else if (document.getElementById("settingsModal").open) {
             closeSettingsModal();
           }
         }
       });
 
       function closeHelpModal() {
-        document.getElementById("helpModal").style.display = "none";
+        document.getElementById("helpModal").close();
         document.body.style.overflow = "auto";
       }
 
