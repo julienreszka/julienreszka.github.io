@@ -699,6 +699,149 @@
           margin-top: 0.75rem;
         }
       }
+
+      /* Explanation Dialog Styles */
+      .explanation-dialog {
+        border: none;
+        border-radius: 12px;
+        padding: 0;
+        max-width: 90vw;
+        width: 500px;
+        max-height: 80vh;
+        overflow: hidden;
+        box-shadow: 0 8px 32px var(--shadow-strong);
+        backdrop-filter: blur(10px);
+        background: transparent;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .explanation-dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+      }
+
+      .dialog-content {
+        background: var(--surface-color);
+        border-radius: 12px;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .dialog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--surface-secondary);
+      }
+
+      .dialog-header h3 {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .dialog-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        padding: 0.25rem;
+        border-radius: 4px;
+        transition: all 0.2s ease;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .dialog-close:hover {
+        background: var(--error-bg);
+        color: var(--error-text);
+        transform: none;
+        box-shadow: none;
+      }
+
+      .dialog-body {
+        padding: 1.5rem;
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .dialog-body p {
+        margin: 0;
+        line-height: 1.6;
+        color: var(--text-color);
+        font-size: 0.95rem;
+      }
+
+      .dialog-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        background: var(--surface-tertiary);
+      }
+
+      .dialog-btn {
+        background: var(--border-focus);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+        min-width: 80px;
+      }
+
+      .dialog-btn:hover {
+        background: #5a6fd8;
+        transform: none;
+        box-shadow: none;
+      }
+
+      @media (max-width: 768px) {
+        .explanation-dialog {
+          width: 95vw;
+          max-height: 85vh;
+        }
+
+        .dialog-header {
+          padding: 1rem;
+        }
+
+        .dialog-header h3 {
+          font-size: 1rem;
+        }
+
+        .dialog-body {
+          padding: 1rem;
+        }
+
+        .dialog-body p {
+          font-size: 0.9rem;
+        }
+
+        .dialog-footer {
+          padding: 0.75rem 1rem;
+        }
+
+        .dialog-btn {
+          padding: 0.6rem 1.2rem;
+          font-size: 0.85rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -907,6 +1050,44 @@
       </div>
     </div>
 
+    <!-- Node Explanation Dialog -->
+    <dialog id="nodeDialog" class="explanation-dialog">
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <h3 id="nodeDialogTitle">📊 Node Title</h3>
+          <button class="dialog-close" onclick="closeNodeDialog()">
+            &times;
+          </button>
+        </div>
+        <div class="dialog-body">
+          <p id="nodeDialogContent">Loading explanation...</p>
+        </div>
+        <div class="dialog-footer">
+          <button onclick="closeNodeDialog()" class="dialog-btn">Close</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Relationship Explanation Dialog -->
+    <dialog id="relationshipDialog" class="explanation-dialog">
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <h3 id="relationshipDialogTitle">🔗 Relationship</h3>
+          <button class="dialog-close" onclick="closeRelationshipDialog()">
+            &times;
+          </button>
+        </div>
+        <div class="dialog-body">
+          <p id="relationshipDialogContent">Loading explanation...</p>
+        </div>
+        <div class="dialog-footer">
+          <button onclick="closeRelationshipDialog()" class="dialog-btn">
+            Close
+          </button>
+        </div>
+      </div>
+    </dialog>
+
     <div class="main-container">
       <div id="cy"></div>
       <div
@@ -954,6 +1135,11 @@
       let lastTapTime = 0;
       let lastTapTarget = null;
       const DOUBLE_TAP_DELAY = 300; // ms
+
+      // Desktop click detection variables
+      let lastClickTime = 0;
+      let lastClickTarget = null;
+      const DOUBLE_CLICK_DELAY = 300; // ms
 
       // Check if device is mobile/touch-capable
       function isMobileDevice() {
@@ -1070,20 +1256,7 @@
             explainRelationship(edge);
           });
 
-          // Keep double-click for desktop compatibility
-          cy.on("dblclick", "node", function (evt) {
-            const node = evt.target;
-            const nodeLabel = node.data("label");
-            const currentTheme = document.getElementById("theme").value.trim();
-
-            if (currentTheme) {
-              expandNode(nodeLabel, currentTheme);
-            } else {
-              showError(
-                "Please generate a diagram first before expanding nodes"
-              );
-            }
-          });
+          // Note: Desktop double-click is now handled in handleNodeTap function
 
           // Keep double-click for desktop compatibility
           cy.on("dblclick", function (evt) {
@@ -1454,17 +1627,51 @@
 
       // Handle node tap/touch events for double-tap detection
       function handleNodeTap(evt) {
-        // Only handle tap events on mobile devices
+        const node = evt.target;
+        const currentTime = new Date().getTime();
+
         if (!isMobileDevice()) {
-          // On desktop, handle single click for node explanation
-          const node = evt.target;
-          explainNode(node);
+          // Desktop click handling - detect single vs double click
+          if (
+            lastClickTarget === node &&
+            currentTime - lastClickTime < DOUBLE_CLICK_DELAY
+          ) {
+            // Double-click detected - expand node
+            const nodeLabel = node.data("label");
+            const currentTheme = document.getElementById("theme").value.trim();
+
+            if (currentTheme) {
+              expandNode(nodeLabel, currentTheme);
+            } else {
+              showError(
+                "Please generate a diagram first before expanding nodes"
+              );
+            }
+
+            // Reset to prevent triple-click
+            lastClickTime = 0;
+            lastClickTarget = null;
+          } else {
+            // Single click - could be start of double-click or just explanation
+            lastClickTime = currentTime;
+            lastClickTarget = node;
+
+            // Show explanation after delay if no second click
+            setTimeout(() => {
+              if (
+                lastClickTarget === node &&
+                new Date().getTime() - lastClickTime >= DOUBLE_CLICK_DELAY
+              ) {
+                explainNode(node);
+                lastClickTime = 0;
+                lastClickTarget = null;
+              }
+            }, DOUBLE_CLICK_DELAY);
+          }
           return;
         }
 
-        const currentTime = new Date().getTime();
-        const node = evt.target;
-
+        // Mobile tap handling - detect single vs double tap
         // Check if this is a double-tap
         if (
           lastTapTarget === node &&
@@ -1591,8 +1798,8 @@
 
           hideInfo();
 
-          // Show explanation in alert
-          alert(`📊 ${nodeLabel}\n\n${explanation}`);
+          // Show explanation in dialog
+          showNodeDialog(nodeLabel, explanation);
         } catch (error) {
           hideInfo();
           showError(`Failed to get trends for ${nodeLabel}: ${error.message}`);
@@ -1660,10 +1867,11 @@
 
           hideInfo();
 
-          // Show explanation in alert
+          // Show explanation in dialog
           const relationshipSymbol = polarity === "+" ? "➕" : "➖";
-          alert(
-            `${relationshipSymbol} ${sourceLabel} → ${targetLabel}\n\n${explanation}`
+          showRelationshipDialog(
+            `${relationshipSymbol} ${sourceLabel} → ${targetLabel}`,
+            explanation
           );
         } catch (error) {
           hideInfo();
@@ -1744,6 +1952,30 @@
         if (newTopic && newTopic.trim()) {
           expandGraphWithTopic(newTopic.trim());
         }
+      }
+
+      // Dialog management functions
+      function showNodeDialog(nodeLabel, explanation) {
+        document.getElementById(
+          "nodeDialogTitle"
+        ).textContent = `📊 ${nodeLabel}`;
+        document.getElementById("nodeDialogContent").textContent = explanation;
+        document.getElementById("nodeDialog").showModal();
+      }
+
+      function closeNodeDialog() {
+        document.getElementById("nodeDialog").close();
+      }
+
+      function showRelationshipDialog(title, explanation) {
+        document.getElementById("relationshipDialogTitle").textContent = title;
+        document.getElementById("relationshipDialogContent").textContent =
+          explanation;
+        document.getElementById("relationshipDialog").showModal();
+      }
+
+      function closeRelationshipDialog() {
+        document.getElementById("relationshipDialog").close();
       }
 
       // Expand existing graph with a new topic
@@ -1849,6 +2081,30 @@
         } finally {
           showLoading(false);
         }
+      }
+
+      // Dialog management functions
+      function showNodeDialog(nodeLabel, explanation) {
+        document.getElementById(
+          "nodeDialogTitle"
+        ).textContent = `📊 ${nodeLabel}`;
+        document.getElementById("nodeDialogContent").textContent = explanation;
+        document.getElementById("nodeDialog").showModal();
+      }
+
+      function closeNodeDialog() {
+        document.getElementById("nodeDialog").close();
+      }
+
+      function showRelationshipDialog(title, explanation) {
+        document.getElementById("relationshipDialogTitle").textContent = title;
+        document.getElementById("relationshipDialogContent").textContent =
+          explanation;
+        document.getElementById("relationshipDialog").showModal();
+      }
+
+      function closeRelationshipDialog() {
+        document.getElementById("relationshipDialog").close();
       }
 
       // Event listeners
