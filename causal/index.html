@@ -11,8 +11,8 @@
     <style>
       :root {
         /* Light theme variables */
-        --bg-gradient-start: #667eea;
-        --bg-gradient-end: #764ba2;
+        --bg-gradient-start: #ffffff;
+        --bg-gradient-end: #f8f9fa;
         --text-color: #333;
         --text-secondary: #7f8c8d;
         --text-primary: #2c3e50;
@@ -20,13 +20,16 @@
         --surface-secondary: rgba(255, 255, 255, 0.9);
         --surface-tertiary: #f8f9fa;
         --border-color: #e0e0e0;
-        --border-focus: #667eea;
+        --border-focus: #3498db;
         --shadow-color: rgba(0, 0, 0, 0.1);
         --shadow-strong: rgba(0, 0, 0, 0.1);
         --error-bg: #fee;
         --error-text: #c33;
         --info-bg: #e8f4fd;
-        --info-border: #667eea;
+        --info-border: #3498db;
+        --node-bg: #3498db;
+        --node-border: #2980b9;
+        --node-text: #ffffff;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -48,6 +51,9 @@
           --error-text: #e74c3c;
           --info-bg: #2c3e50;
           --info-border: #3498db;
+          --node-bg: #3498db;
+          --node-border: #2980b9;
+          --node-text: #ffffff;
         }
       }
 
@@ -1186,11 +1192,11 @@
                 selector: "node",
                 style: {
                   "background-color": getComputedStyle(document.documentElement)
-                    .getPropertyValue("--text-secondary")
+                    .getPropertyValue("--node-bg")
                     .trim(),
                   label: "data(label)",
                   color: getComputedStyle(document.documentElement)
-                    .getPropertyValue("--text-primary")
+                    .getPropertyValue("--node-text")
                     .trim(),
                   "text-valign": "center",
                   "text-halign": "center",
@@ -1202,7 +1208,7 @@
                   "text-max-width": "70px",
                   "border-width": 2,
                   "border-color": getComputedStyle(document.documentElement)
-                    .getPropertyValue("--border-color")
+                    .getPropertyValue("--node-border")
                     .trim(),
                 },
               },
