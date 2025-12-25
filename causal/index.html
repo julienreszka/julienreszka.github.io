@@ -722,12 +722,12 @@
                 border-top: 1px solid var(--border-color);
               "
             >
-              <strong>💡 Tip:</strong> Double-click any node to expand the graph
-              with additional related variables
+              <strong>💡 Tip:</strong> Double-click/double-tap any node to
+              expand the graph with additional related variables
             </div>
             <div class="legend-item" style="margin-top: 0.5rem">
-              <strong>🎯 New Topic:</strong> Double-click empty space to add a
-              new topic and grow your diagram organically
+              <strong>🎯 New Topic:</strong> Double-click/double-tap empty space
+              to add a new topic and grow your diagram organically
             </div>
             <div
               class="legend-item"
@@ -908,6 +908,11 @@
       let groqApiKey = localStorage.getItem("groqApiKey") || "";
       let grokApiKey = localStorage.getItem("grokApiKey") || "";
 
+      // Touch/tap detection variables for mobile double-tap
+      let lastTapTime = 0;
+      let lastTapTarget = null;
+      const DOUBLE_TAP_DELAY = 300; // ms
+
       // Initialize Cytoscape
       function initializeCytoscape() {
         try {
@@ -1000,7 +1005,19 @@
             },
           });
 
-          // Add double-click event listener for nodes
+          // Add universal tap/click handlers for both desktop and mobile
+          cy.on("tap", "node", function (evt) {
+            handleNodeTap(evt);
+          });
+
+          cy.on("tap", function (evt) {
+            // Check if the target is the background (not a node or edge)
+            if (evt.target === cy) {
+              handleBackgroundTap(evt);
+            }
+          });
+
+          // Keep double-click for desktop compatibility
           cy.on("dblclick", "node", function (evt) {
             const node = evt.target;
             const nodeLabel = node.data("label");
@@ -1015,7 +1032,7 @@
             }
           });
 
-          // Add double-click event listener for empty space (background)
+          // Keep double-click for desktop compatibility
           cy.on("dblclick", function (evt) {
             // Check if the target is the background (not a node or edge)
             if (evt.target === cy) {
@@ -1379,6 +1396,65 @@
           cy.layout(layoutOptions).run();
         } catch (error) {
           showError(`Failed to add new connections: ${error.message}`);
+        }
+      }
+
+      // Handle node tap/touch events for double-tap detection
+      function handleNodeTap(evt) {
+        const currentTime = new Date().getTime();
+        const node = evt.target;
+
+        // Check if this is a double-tap
+        if (
+          lastTapTarget === node &&
+          currentTime - lastTapTime < DOUBLE_TAP_DELAY
+        ) {
+          // Double-tap detected
+          const nodeLabel = node.data("label");
+          const currentTheme = document.getElementById("theme").value.trim();
+
+          if (currentTheme) {
+            expandNode(nodeLabel, currentTheme);
+          } else {
+            showError("Please generate a diagram first before expanding nodes");
+          }
+
+          // Reset to prevent triple-tap
+          lastTapTime = 0;
+          lastTapTarget = null;
+        } else {
+          // Single tap - store for potential double-tap
+          lastTapTime = currentTime;
+          lastTapTarget = node;
+        }
+      }
+
+      // Handle background tap/touch events for double-tap detection
+      function handleBackgroundTap(evt) {
+        const currentTime = new Date().getTime();
+
+        // Check if this is a double-tap on background
+        if (
+          lastTapTarget === cy &&
+          currentTime - lastTapTime < DOUBLE_TAP_DELAY
+        ) {
+          // Double-tap detected on background
+          // Check if we have an existing diagram
+          if (cy.nodes().length === 0) {
+            showError("Please generate a diagram first before adding topics");
+            return;
+          }
+
+          // Prompt for new topic
+          promptForNewTopic();
+
+          // Reset to prevent triple-tap
+          lastTapTime = 0;
+          lastTapTarget = null;
+        } else {
+          // Single tap - store for potential double-tap
+          lastTapTime = currentTime;
+          lastTapTarget = cy;
         }
       }
 
