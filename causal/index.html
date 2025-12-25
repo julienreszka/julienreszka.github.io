@@ -683,6 +683,27 @@
         transform: translateY(-1px);
       }
 
+      .copy-link-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: var(--surface-tertiary);
+        color: var(--text-primary);
+        border: 2px solid var(--border-color);
+        border-radius: 1.75rem;
+        font-weight: 500;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+      }
+
+      .copy-link-button:hover {
+        background: var(--border-focus);
+        color: white;
+        border-color: var(--border-focus);
+        transform: translateY(-1px);
+      }
+
       @media (max-width: 768px) {
         .radio-option {
           padding: 0.75rem;
@@ -1108,6 +1129,24 @@
 
           <div class="settings-section">
             <button id="saveSettings" class="save-button">Save Settings</button>
+          </div>
+
+          <div class="settings-section">
+            <button id="copyAppLink" class="copy-link-button">
+              📋 Copy App Link with API Keys
+            </button>
+            <small
+              style="
+                color: var(--text-secondary);
+                font-size: 0.8rem;
+                margin-top: 0.5rem;
+                display: block;
+                text-align: center;
+              "
+            >
+              Share this link to give others access with your API keys
+              pre-configured
+            </small>
           </div>
         </div>
       </div>
@@ -2263,6 +2302,53 @@
         showSuccess("Settings saved successfully!");
       });
 
+      // Copy app link with API keys
+      document.getElementById("copyAppLink").addEventListener("click", () => {
+        const currentGroqKey = document
+          .getElementById("groqApiKey")
+          .value.trim();
+        const currentGrokKey = document
+          .getElementById("grokApiKey")
+          .value.trim();
+        const selectedProvider = document.querySelector(
+          'input[name="provider"]:checked'
+        ).value;
+
+        // Get current URL without query params
+        const baseUrl = window.location.origin + window.location.pathname;
+
+        // Build query params
+        const params = new URLSearchParams();
+        params.set("provider", selectedProvider);
+
+        if (currentGroqKey) {
+          params.set("groqKey", currentGroqKey);
+        }
+
+        if (currentGrokKey) {
+          params.set("grokKey", currentGrokKey);
+        }
+
+        const shareableUrl = `${baseUrl}?${params.toString()}`;
+
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(shareableUrl)
+          .then(() => {
+            showSuccess("App link copied to clipboard! 📋");
+          })
+          .catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = shareableUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            showSuccess("App link copied to clipboard! 📋");
+          });
+      });
+
       // Show success message function
       function showSuccess(message) {
         const successDiv = document.createElement("div");
@@ -2337,8 +2423,46 @@
         document.body.style.overflow = "auto";
       }
 
+      // Parse URL parameters on load
+      function parseUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const providerParam = urlParams.get("provider");
+        const groqKeyParam = urlParams.get("groqKey");
+        const grokKeyParam = urlParams.get("grokKey");
+
+        // Update settings if parameters are present
+        if (
+          providerParam &&
+          ["groq", "grok", "grok-fast"].includes(providerParam)
+        ) {
+          currentProvider = providerParam;
+          localStorage.setItem("aiProvider", currentProvider);
+        }
+
+        if (groqKeyParam) {
+          groqApiKey = groqKeyParam;
+          localStorage.setItem("groqApiKey", groqApiKey);
+        }
+
+        if (grokKeyParam) {
+          grokApiKey = grokKeyParam;
+          localStorage.setItem("grokApiKey", grokApiKey);
+        }
+
+        // Show success message if any parameters were loaded
+        if (providerParam || groqKeyParam || grokKeyParam) {
+          setTimeout(() => {
+            showSuccess("Settings loaded from URL! 🔗");
+          }, 1000);
+        }
+      }
+
       // Initialize application
       window.addEventListener("load", () => {
+        // Parse URL parameters first
+        parseUrlParams();
+
         // Wait for all libraries to load
         setTimeout(() => {
           initializeCytoscape();
