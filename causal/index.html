@@ -947,6 +947,11 @@
       let lastTapTarget = null;
       const DOUBLE_TAP_DELAY = 300; // ms
 
+      // Check if device is mobile/touch-capable
+      function isMobileDevice() {
+        return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      }
+
       // Initialize Cytoscape
       function initializeCytoscape() {
         try {
@@ -1435,6 +1440,9 @@
 
       // Handle node tap/touch events for double-tap detection
       function handleNodeTap(evt) {
+        // Only handle tap events on mobile devices
+        if (!isMobileDevice()) return;
+
         const currentTime = new Date().getTime();
         const node = evt.target;
 
@@ -1465,6 +1473,9 @@
 
       // Handle background tap/touch events for double-tap detection
       function handleBackgroundTap(evt) {
+        // Only handle tap events on mobile devices
+        if (!isMobileDevice()) return;
+
         const currentTime = new Date().getTime();
 
         // Check if this is a double-tap on background
