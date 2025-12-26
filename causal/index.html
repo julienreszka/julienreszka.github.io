@@ -1654,7 +1654,10 @@
             return;
           }
 
-          addNodesToExistingDiagram(expansionData);
+          // After adding nodes, highlight the expanded node after layout
+          addNodesToExistingDiagram(expansionData, function () {
+            highlightNodeByLabel(nodeLabel);
+          });
         } catch (error) {
           showError(`Failed to expand node: ${error.message}`);
         } finally {
@@ -1663,7 +1666,7 @@
       }
 
       // Add new nodes and edges to existing diagram
-      function addNodesToExistingDiagram(data) {
+      function addNodesToExistingDiagram(data, afterLayoutCallback) {
         try {
           if (!cy) {
             showError("Graph not initialized. Please refresh the page.");
@@ -1737,9 +1740,46 @@
           // Re-run COSE layout to accommodate new nodes
           const layoutOptions = getCoseLayoutOptions(cy.nodes().length);
 
-          cy.layout(layoutOptions).run();
+          const layout = cy.layout(layoutOptions);
+          layout.run();
+
+          // After layout animation, call the callback (e.g., to highlight node)
+          if (typeof afterLayoutCallback === "function") {
+            cy.one("layoutstop", () => {
+              setTimeout(afterLayoutCallback, 50); // slight delay for rendering
+            });
+          }
         } catch (error) {
           showError(`Failed to add new connections: ${error.message}`);
+        }
+      }
+      // Highlight a node by its label (temporary effect)
+      function highlightNodeByLabel(nodeLabel) {
+        if (!cy) return;
+        // Find node by label
+        const node = cy.nodes().filter((n) => n.data("label") === nodeLabel);
+        if (node && node.length > 0) {
+          // Save original style
+          const origBg = node.style("background-color");
+          const origBorder = node.style("border-color");
+          const origBorderWidth = node.style("border-width");
+          // Set highlight style
+          node.style({
+            "background-color": "#ffe066", // yellow
+            "border-color": "#ffae00",
+            "border-width": "6px",
+            "transition-property":
+              "background-color, border-color, border-width",
+            "transition-duration": "0.3s",
+          });
+          // Revert after 1.2s
+          setTimeout(() => {
+            node.style({
+              "background-color": origBg,
+              "border-color": origBorder,
+              "border-width": origBorderWidth,
+            });
+          }, 1200);
         }
       }
 
