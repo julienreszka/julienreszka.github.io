@@ -199,6 +199,43 @@
         color: var(--text-color);
       }
 
+      .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .filter-group label {
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+      }
+
+      .filter-group select {
+        padding: 0.5rem;
+        border: 2px solid var(--border-color);
+        border-radius: 0.75rem;
+        background: var(--surface-color);
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        min-width: 250px;
+        min-height: 80px;
+      }
+
+      .filter-group select[multiple] {
+        min-height: 120px;
+      }
+
+      .filter-group select:focus {
+        outline: none;
+        border-color: var(--border-focus);
+      }
+
+      #applyFilter {
+        display: none;
+      }
+
       input[type="text"] {
         min-width: 250px;
       }
@@ -942,6 +979,25 @@
           <button id="settingsBtn">⚙️</button>
           <button id="shareBtn">🔗</button>
           <button id="helpBtn">❔</button>
+        </div>
+        <div class="filter-group" style="margin-top: 0.75rem">
+          <label for="relationshipFilter">Focus on relationships:</label>
+          <select id="relationshipFilter" multiple>
+            <option value="funds">💰 Funds</option>
+            <option value="controls">🎛️ Controls</option>
+            <option value="regulates">📋 Regulates</option>
+            <option value="advises">💡 Advises</option>
+            <option value="oversees">👁️ Oversees</option>
+            <option value="cooperates">🤝 Cooperates</option>
+            <option value="reports_to">📊 Reports to</option>
+            <option value="influences">🔄 Influences</option>
+            <option value="monitors">🔍 Monitors</option>
+            <option value="implements">⚙️ Implements</option>
+            <option value="enforces">⚖️ Enforces</option>
+          </select>
+          <small style="color: var(--text-secondary); font-size: 0.8rem"
+            >Hold Ctrl/Cmd to select multiple</small
+          >
         </div>
       </div>
     </div>
@@ -1757,6 +1813,13 @@
         showLoading(true);
         hideError();
 
+        // Get selected relationship types
+        const relationshipSelect =
+          document.getElementById("relationshipFilter");
+        const selectedRelationships = Array.from(
+          relationshipSelect.selectedOptions
+        ).map((option) => option.value);
+
         const basePrompt = `Create a governance network diagram for the topic: "${theme}".`;
 
         const newsPrompt =
@@ -1764,7 +1827,43 @@
             ? " Consider recent developments and current events that might affect these relationships."
             : "";
 
-        const prompt = `${basePrompt}${newsPrompt}
+        // Build relationship focus instruction
+        let relationshipFocus = "";
+        if (selectedRelationships.length > 0) {
+          const focusInstructions = selectedRelationships
+            .map((rel) => {
+              switch (rel) {
+                case "funds":
+                  return `Answer the question "Who funds ${theme}?" Create institutions that provide funding TO ${theme} (e.g., Taxpayers → ${theme} (funds), Treasury → ${theme} (funds))`;
+                case "controls":
+                  return `Answer the question "Who controls ${theme}?" Create institutions that have control OVER ${theme} (e.g., Parent_Organization → ${theme} (controls))`;
+                case "regulates":
+                  return `Answer the question "Who regulates ${theme}?" Create institutions that regulate ${theme} (e.g., Regulatory_Body → ${theme} (regulates))`;
+                case "oversees":
+                  return `Answer the question "Who oversees ${theme}?" Create institutions that oversee ${theme} (e.g., Oversight_Committee → ${theme} (oversees))`;
+                case "advises":
+                  return `Answer the question "Who advises ${theme}?" Create institutions that provide advice TO ${theme} (e.g., Advisory_Council → ${theme} (advises))`;
+                case "reports_to":
+                  return `Answer the question "Who does ${theme} report to?" Create institutions that ${theme} reports TO (e.g., ${theme} → Higher_Authority (reports_to))`;
+                case "cooperates":
+                  return `Answer the question "Who cooperates with ${theme}?" Create institutions that cooperate WITH ${theme} (bidirectional cooperation)`;
+                case "influences":
+                  return `Answer the question "Who influences ${theme}?" Create institutions that influence ${theme} (e.g., Stakeholder → ${theme} (influences))`;
+                case "monitors":
+                  return `Answer the question "Who monitors ${theme}?" Create institutions that monitor ${theme} (e.g., Watchdog_Agency → ${theme} (monitors))`;
+                case "implements":
+                  return `Answer the question "What does ${theme} implement?" Create institutions that ${theme} implements policies FOR (e.g., ${theme} → Policy_Owner (implements))`;
+                case "enforces":
+                  return `Answer the question "What does ${theme} enforce?" Create institutions that ${theme} enforces rules FOR (e.g., ${theme} → Legal_Authority (enforces))`;
+                default:
+                  return `Focus on "${rel}" relationships`;
+              }
+            })
+            .join(". ");
+          relationshipFocus = ` QUESTION-FOCUSED GENERATION: ${focusInstructions}. Create a network that clearly answers these questions with the correct directional relationships.`;
+        }
+
+        const prompt = `${basePrompt}${newsPrompt}${relationshipFocus}
             
             Return a JSON object with this structure:
             {
@@ -1780,8 +1879,15 @@
 
             Rules:
             - Create 6-10 interconnected institutions and government bodies
-            - Use relationship types: "reports_to", "oversees", "coordinates_with", "influences", "advises", "regulates", "controls", "funds", "monitors", "cooperates", "negotiates", "implements", "enforces"  
-            - IMPORTANT: Include at least one "funds" relationship to show financial flows between institutions
+            ${
+              selectedRelationships.length > 0
+                ? `- CRITICAL: Use ONLY these relationship types: ${selectedRelationships
+                    .map((r) => `"${r}"`)
+                    .join(", ")}
+            - DO NOT use any other relationship types not in the selected focus`
+                : `- Use relationship types: "reports_to", "oversees", "coordinates_with", "influences", "advises", "regulates", "controls", "funds", "monitors", "cooperates", "negotiates", "implements", "enforces"`
+            }
+            - Include powerLevel (1-5): 1=advisory, 2=weak influence, 3=moderate, 4=strong influence, 5=final decision
             - FUNDING DIRECTION: If topic is "funds [Organization]" (e.g., "funds NATO"), focus on who provides funding TO that organization - show edges FROM funders TO the organization. If topic is "[Organization] funds" (e.g., "NATO funds"), focus on who that organization provides funding TO - show edges FROM the organization TO recipients.
             - EXAMPLE: For "funds NATO", create edges like "US_Congress → NATO (funds)", "Germany_Parliament → NATO (funds)", NOT "NATO → US_Pentagon (funds)"
             - Include powerLevel (1-5): 1=advisory, 2=weak influence, 3=moderate, 4=strong influence, 5=final decision
@@ -2008,7 +2114,49 @@
           weight: e.data("weight") || 1,
         }));
 
-        const prompt = `Given an existing governance network about "${theme}", expand the institution "${nodeLabel}" with 2-4 additional relevant institutional connections.
+        // Get selected relationship types for focus
+        const relationshipSelect =
+          document.getElementById("relationshipFilter");
+        const selectedRelationships = Array.from(
+          relationshipSelect.selectedOptions
+        ).map((option) => option.value);
+
+        let relationshipFocus = "";
+        if (selectedRelationships.length > 0) {
+          const focusInstructions = selectedRelationships
+            .map((rel) => {
+              switch (rel) {
+                case "funds":
+                  return `Answer "Who funds ${nodeLabel}?" Add institutions that provide funding TO ${nodeLabel} (e.g., Funding_Source → ${nodeLabel} (funds))`;
+                case "controls":
+                  return `Answer "Who controls ${nodeLabel}?" Add institutions that control ${nodeLabel} (e.g., Parent_Body → ${nodeLabel} (controls))`;
+                case "regulates":
+                  return `Answer "Who regulates ${nodeLabel}?" Add institutions that regulate ${nodeLabel} (e.g., Regulator → ${nodeLabel} (regulates))`;
+                case "oversees":
+                  return `Answer "Who oversees ${nodeLabel}?" Add institutions that oversee ${nodeLabel} (e.g., Oversight_Body → ${nodeLabel} (oversees))`;
+                case "advises":
+                  return `Answer "Who advises ${nodeLabel}?" Add institutions that advise ${nodeLabel} (e.g., Advisor → ${nodeLabel} (advises))`;
+                case "reports_to":
+                  return `Answer "Who does ${nodeLabel} report to?" Add institutions that ${nodeLabel} reports TO (e.g., ${nodeLabel} → Superior (reports_to))`;
+                case "cooperates":
+                  return `Answer "Who cooperates with ${nodeLabel}?" Add institutions that cooperate WITH ${nodeLabel} (bidirectional)`;
+                case "influences":
+                  return `Answer "Who influences ${nodeLabel}?" Add institutions that influence ${nodeLabel} (e.g., Influencer → ${nodeLabel} (influences))`;
+                case "monitors":
+                  return `Answer "Who monitors ${nodeLabel}?" Add institutions that monitor ${nodeLabel} (e.g., Monitor → ${nodeLabel} (monitors))`;
+                case "implements":
+                  return `Answer "What does ${nodeLabel} implement?" Add institutions that ${nodeLabel} implements FOR (e.g., ${nodeLabel} → Authority (implements))`;
+                case "enforces":
+                  return `Answer "What does ${nodeLabel} enforce?" Add institutions that ${nodeLabel} enforces FOR (e.g., ${nodeLabel} → Legal_Body (enforces))`;
+                default:
+                  return `Focus on "${rel}" relationships with ${nodeLabel}`;
+              }
+            })
+            .join(". ");
+          relationshipFocus = ` QUESTION-FOCUSED EXPANSION: ${focusInstructions}.`;
+        }
+
+        const prompt = `Given an existing governance network about "${theme}", expand the institution "${nodeLabel}" with 2-4 additional relevant institutional connections.${relationshipFocus}
 
         Current governance network context:
         - Existing institutions: ${currentNodes
@@ -2030,13 +2178,17 @@
 
         Rules:
         - Create 2-4 new institutions that logically connect to "${nodeLabel}"
+        ${
+          selectedRelationships.length > 0
+            ? `- CRITICAL: Use ONLY these relationship types: ${selectedRelationships
+                .map((r) => `"${r}"`)
+                .join(", ")}
+        - DO NOT use any other relationship types not in the selected focus`
+            : `- Use relationship types: "reports_to", "oversees", "coordinates_with", "influences", "advises", "regulates", "controls", "funds", "monitors", "cooperates", "negotiates", "implements", "enforces"`
+        }
         - CRITICAL: Include edges that connect new institutions to "${nodeLabel}" (ID: ${targetNodeId}) and/or existing institutions
         - IMPORTANT: When referencing "${nodeLabel}" in edges, use the exact ID "${targetNodeId}"
         - For other existing institutions, use their exact IDs from the list above
-        - Use relationship types: "reports_to", "oversees", "coordinates_with", "influences", "advises", "regulates", "controls", "funds", "monitors", "cooperates", "negotiates", "implements", "enforces"
-        - Try to include at least one "funds" relationship if appropriate for the governance context
-        - FUNDING DIRECTION: Consider if the context suggests focusing on who provides funding TO institutions or who institutions provide funding TO
-        - EXAMPLE: For funding NATO context, show "Member_Country → NATO (funds)", not "NATO → Recipient (funds)"
         - Include powerLevel (1-5) and appropriate institution type and sectors
         - IMPORTANT: Use "international" type for: NATO, EU, UN, WHO, World Bank, IMF, WTO, and similar international/supranational organizations
         - Use "executive" for: Presidents, Prime Ministers, Cabinets, Government Ministries
