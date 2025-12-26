@@ -975,7 +975,7 @@
           <input
             type="text"
             id="theme"
-            placeholder="e.g., NATO, Climate Research, SpaceX, Ukraine, Open Source Projects..."
+            placeholder="e.g., NASA Space Programs, NIH Cancer Research, Gates Foundation Global Health, NSF AI Research, DOE Clean Energy..."
           />
           <button id="generateBtn">✨</button>
           <button id="settingsBtn">⚙️</button>
@@ -1266,6 +1266,36 @@
                 🏛️
               </div>
               <span><strong>Subsidy:</strong> Government support programs</span>
+            </div>
+
+            <div
+              class="legend-item"
+              style="
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
+              "
+            >
+              <strong>✅ Tips for Credible Data:</strong>
+              <ul style="margin: 0.5rem 0; font-size: 0.9rem; line-height: 1.4">
+                <li>
+                  Use specific organizations: "NIH Cancer Research" vs "Health
+                  Research"
+                </li>
+                <li>
+                  Try established programs: "NASA Artemis Program", "Gates
+                  Foundation Malaria"
+                </li>
+                <li>
+                  Include agency names: "NSF AI Research", "DOE Clean Energy"
+                </li>
+                <li>
+                  Avoid vague terms: Use "DARPA" instead of "Military Research"
+                </li>
+                <li>
+                  Recent topics work best with Grok models (2024-2025 data)
+                </li>
+              </ul>
             </div>
 
             <div
@@ -1778,11 +1808,11 @@
         showLoading(true);
         hideError();
 
-        const basePrompt = `Create a funding network diagram for the topic: "${theme}".`;
+        const basePrompt = `Create a REALISTIC funding network diagram for the topic: "${theme}" using actual organizations and verified funding relationships.`;
 
         const newsPrompt =
           currentProvider === "grok" || currentProvider === "grok-fast"
-            ? " Consider recent funding developments and current financial relationships."
+            ? " Use recent real-world funding data and current financial relationships from 2024-2025."
             : "";
 
         const prompt = `${basePrompt}${newsPrompt}
@@ -1790,25 +1820,39 @@
             Return a JSON object with this structure:
             {
                 "nodes": [
-                    {"id": "funder1", "label": "Funder Name", "fundingAmount": 50000000, "type": "government", "description": "Brief description"},
-                    {"id": "recipient1", "label": "Recipient Name", "fundingAmount": 30000000, "type": "organization", "description": "Brief description"}
+                    {"id": "funder1", "label": "Real Organization Name", "fundingAmount": 50000000, "type": "government", "description": "Specific role and mission"},
+                    {"id": "recipient1", "label": "Real Recipient Name", "fundingAmount": 30000000, "type": "organization", "description": "What they do with the funding"}
                 ],
                 "edges": [
-                    {"source": "funder1", "target": "recipient1", "amount": 50000000, "fundingType": "direct", "description": "Purpose of funding"}
+                    {"source": "funder1", "target": "recipient1", "amount": 50000000, "fundingType": "direct", "description": "Specific purpose and expected outcomes"}
                 ]
             }
 
-            Rules:
-            - Create 6-12 organizations showing who funds ${theme}
-            - ALL amounts must be integers in US dollars (no currency symbols, no M/B suffixes)
-            - Use realistic funding figures: 1000000 = $1M, 1000000000 = $1B
-            - Show clear funding flow: Funder → Recipient
+            CREDIBILITY REQUIREMENTS:
+            - Use REAL organizations, agencies, and institutions (e.g., NIH, NSF, Gates Foundation, etc.)
+            - Base funding amounts on publicly available data or realistic industry standards
+            - For government funding: Use typical agency budget ranges (NIH: $40B+, NSF: $8B+, etc.)
+            - For corporate funding: Use realistic CSR/R&D budgets for major companies
+            - For foundations: Use actual foundation giving capacities
+            - Cross-reference funding amounts with organization size and mission
+            
+            SPECIFIC RULES:
+            - Create 8-12 organizations with REAL names and verified roles in ${theme}
+            - ALL amounts must be realistic integers in US dollars (research typical funding levels)
+            - Government agencies: 10M-5B range depending on scope
+            - Large foundations: 1M-500M range
+            - Corporate funding: 100K-100M range
+            - Small nonprofits: 10K-10M range
             - Node types: "government", "corporate", "nonprofit", "individual", "international", "foundation"
             - Funding types: "direct", "grant", "investment", "donation", "contract", "subsidy"
-            - Include both major funders and smaller contributors
-            - Make ${theme} a central node that receives funding from multiple sources
-            - Include brief descriptions explaining the funding relationship
-            - Examples: 50000000 (50M), 1000000000 (1B), 5000000 (5M)
+            - Include descriptions with specific outcomes, timelines, and measurable goals
+            - Ensure funding flows make logical sense (who actually funds what in real life)
+            
+            VALIDATION:
+            - Each organization must be identifiable and have a real mission related to ${theme}
+            - Funding amounts must align with organization's typical giving/receiving capacity
+            - Relationships must be plausible based on real-world partnerships
+            - Include mix of federal, state, private, and international funding sources
 
             Only return valid JSON, no additional text.`;
 
@@ -1829,7 +1873,7 @@
                   content: prompt,
                 },
               ],
-              temperature: 0.7,
+              temperature: 0.3, // Lower temperature for more factual, realistic data
               max_tokens: 2000,
             }),
           });
@@ -1854,6 +1898,27 @@
             return;
           }
 
+          // Validate data credibility before rendering
+          const credibilityIssues = validateDataCredibility(diagramData);
+          if (credibilityIssues.length > 0) {
+            console.warn("Data credibility issues:", credibilityIssues);
+            showError(
+              `Data may not be fully credible. Issues found: ${credibilityIssues
+                .slice(0, 2)
+                .join("; ")}${
+                credibilityIssues.length > 2 ? "..." : ""
+              }. Please try regenerating for more accurate data.`
+            );
+            // Still render the diagram but warn the user
+          } else {
+            // Show success message for high-quality data
+            setTimeout(() => {
+              showSuccess(
+                "✅ High-quality funding data generated with realistic amounts and credible organizations!"
+              );
+            }, 500);
+          }
+
           renderDiagram(diagramData);
           showTheme(theme);
         } catch (error) {
@@ -1861,6 +1926,74 @@
         } finally {
           showLoading(false);
         }
+      }
+
+      // Data validation functions for credibility
+      function validateFundingAmount(amount, organizationType) {
+        const numericAmount = parseInt(amount) || 0;
+
+        // Define realistic funding ranges by organization type
+        const fundingRanges = {
+          government: { min: 1000000, max: 50000000000 }, // $1M - $50B
+          corporate: { min: 100000, max: 1000000000 }, // $100K - $1B
+          foundation: { min: 50000, max: 2000000000 }, // $50K - $2B
+          nonprofit: { min: 10000, max: 100000000 }, // $10K - $100M
+          individual: { min: 1000, max: 50000000 }, // $1K - $50M
+          international: { min: 1000000, max: 10000000000 }, // $1M - $10B
+          organization: { min: 10000, max: 500000000 }, // $10K - $500M
+        };
+
+        const range =
+          fundingRanges[organizationType] || fundingRanges.organization;
+        return numericAmount >= range.min && numericAmount <= range.max;
+      }
+
+      function validateDataCredibility(data) {
+        const issues = [];
+
+        // Check for unrealistic funding amounts
+        data.nodes.forEach((node) => {
+          const amount = parseInt(node.fundingAmount) || 0;
+          if (!validateFundingAmount(amount, node.type)) {
+            issues.push(
+              `Unrealistic funding amount for ${node.label} (${
+                node.type
+              }): ${formatCurrency(amount)}`
+            );
+          }
+        });
+
+        data.edges.forEach((edge) => {
+          const amount = parseInt(edge.amount) || 0;
+          if (amount < 1000 || amount > 100000000000) {
+            // $1K - $100B range
+            issues.push(`Unrealistic edge amount: ${formatCurrency(amount)}`);
+          }
+        });
+
+        // Check for suspicious patterns
+        const nodeLabels = data.nodes.map((n) => n.label.toLowerCase());
+        const genericNames = [
+          "organization",
+          "company",
+          "agency",
+          "foundation",
+          "group",
+          "entity",
+        ];
+        const genericCount = nodeLabels.filter((label) =>
+          genericNames.some(
+            (generic) => label.includes(generic) && !label.includes(" ")
+          )
+        ).length;
+
+        if (genericCount > data.nodes.length * 0.3) {
+          issues.push(
+            "Too many generic organization names - need more specific real organizations"
+          );
+        }
+
+        return issues;
       }
 
       // Render the diagram in Cytoscape
@@ -2056,7 +2189,7 @@
           fundingType: e.data("fundingType") || "direct",
         }));
 
-        const prompt = `Given an existing funding network about "${theme}", expand "${nodeLabel}" by showing organizations that provide funding TO "${nodeLabel}".
+        const prompt = `Given an existing funding network about "${theme}", expand "${nodeLabel}" by finding REAL organizations that actually provide funding TO "${nodeLabel}" in the real world.
 
         Current funding network context:
         - Existing organizations: ${currentNodes
@@ -2067,33 +2200,39 @@
         Return a JSON object with this structure:
         {
             "newNodes": [
-                {"id": "newfunder1", "label": "New Funder Name", "fundingAmount": 25000000, "type": "government", "description": "Brief description"},
-                {"id": "newfunder2", "label": "Another Funder", "fundingAmount": 10000000, "type": "foundation", "description": "Brief description"}
+                {"id": "newfunder1", "label": "Real Funder Name", "fundingAmount": 25000000, "type": "government", "description": "Specific mission and role"},
+                {"id": "newfunder2", "label": "Another Real Funder", "fundingAmount": 10000000, "type": "foundation", "description": "Why they fund this area"}
             ],
             "newEdges": [
-                {"source": "newfunder1", "target": "${targetNodeId}", "amount": 25000000, "fundingType": "grant", "description": "Purpose of funding"},
-                {"source": "newfunder2", "target": "${targetNodeId}", "amount": 10000000, "fundingType": "donation", "description": "Purpose of funding"}
+                {"source": "newfunder1", "target": "${targetNodeId}", "amount": 25000000, "fundingType": "grant", "description": "Specific program and expected outcomes"},
+                {"source": "newfunder2", "target": "${targetNodeId}", "amount": 10000000, "fundingType": "donation", "description": "Strategic initiative details"}
             ],
             "updatedNode": {
                 "id": "${targetNodeId}",
                 "fundingAmount": 35000000,
-                "description": "Updated description showing total funding received"
+                "description": "Updated description with comprehensive funding portfolio"
             }
         }
 
+        CREDIBILITY REQUIREMENTS:
+        - Research and use REAL organizations that actually fund "${nodeLabel}" or similar entities
+        - Base funding amounts on publicly available grants databases, annual reports, or typical funding levels
+        - Verify that the funding relationships make logical sense in the real world
+        - Use actual funding mechanisms (e.g., federal grants, foundation programs, corporate partnerships)
+        
         CRITICAL RULES:
         - "${nodeLabel}" (ID: ${targetNodeId}) is ALWAYS the funding RECIPIENT (target of all new edges)
-        - Create 2-4 new organizations that give money TO "${nodeLabel}"
-        - ALL new edges must have target="${targetNodeId}" (the organization we're expanding)
-        - The new nodes are funding SOURCES that provide money to the expanded node
-        - Calculate the TOTAL funding "${nodeLabel}" receives from all new funding sources
-        - Update "${nodeLabel}"'s fundingAmount to reflect the total it receives from new funders
-        - ALL amounts must be integers in US dollars (no currency symbols, no M/B suffixes)
-        - Use realistic figures: 1000000 = $1M, 1000000000 = $1B
+        - Create 2-4 REAL organizations that actually give money TO organizations like "${nodeLabel}"
+        - Research typical funding sources for this type of organization/initiative
+        - ALL amounts must be realistic based on funder capacity and typical grant sizes
+        - Government sources: Check actual agency budgets and grant programs
+        - Foundation sources: Verify foundation focus areas and giving capacity
+        - Corporate sources: Ensure alignment with company CSR/strategic interests
+        - Calculate realistic TOTAL funding that "${nodeLabel}" would receive
         - Node types: "government", "corporate", "nonprofit", "individual", "international", "foundation"
         - Funding types: "direct", "grant", "investment", "donation", "contract", "subsidy"
-        - Focus on diverse funding sources (mix of government, private, international, etc.)
-        - Include brief descriptions explaining why each funder supports ${nodeLabel}
+        - Include specific program names, grant cycles, or funding initiatives where applicable
+        - Descriptions must explain the strategic rationale and expected measurable outcomes
 
         Only return valid JSON, no additional text.`;
 
@@ -2502,21 +2641,24 @@
             ? " Focus on recent developments and current funding activities."
             : "";
 
-        const prompt = `Explain "${nodeLabel}" and its role in funding "${currentTheme}".${newsPrompt}
+        const prompt = `Provide a factual, credible explanation of "${nodeLabel}" and its verified role in funding "${currentTheme}".${newsPrompt}
 
         Context: ${roleContext}This is a ${organizationType} organization with ${fundingAmount} in funding capacity.
 
-        Keep your explanation:
+        Requirements for credible explanation:
         - Under 150 words
-        - Start with what the organization is and its primary purpose
-        - Explain its specific role in funding ${currentTheme} activities
-        - Mention the funding amount ${fundingAmount} and explain WHY they receive/provide this amount
-        - Detail what specific outcomes and achievements are expected from this funding
-        - Include what impact this funding is intended to create in ${currentTheme}
-        - Mention recent funding activities or trends if relevant
+        - Start with FACTUAL information about what the organization actually is and does
+        - Use real data: founding year, headquarters, key leadership, mission statement
+        - Explain its VERIFIED role in funding ${currentTheme} activities with specific examples
+        - Justify the funding amount ${fundingAmount} with real-world context (budget size, typical grants, etc.)
+        - Detail SPECIFIC, measurable outcomes this funding has achieved or is expected to achieve
+        - Include concrete impact metrics and success stories in ${currentTheme}
+        - Reference actual programs, initiatives, or partnerships if known
+        - Mention recent developments with dates and sources when possible
+        - Avoid speculation - stick to verifiable information
         - Suitable for a mobile dialog popup
 
-        Return only the explanation, no additional text.`;
+        Return only the factual explanation, no additional text.`;
 
         const apiConfig = getApiConfig();
 
@@ -2582,16 +2724,21 @@
         const loadingMessage = `Explaining ${sourceLabel} → ${targetLabel}...`;
         showInfo(loadingMessage);
 
-        const prompt = `Explain the funding relationship where "${sourceLabel}" provides ${amount} in "${fundingType}" funding to "${targetLabel}" in the context of "${currentTheme}".
+        const prompt = `Provide a factual explanation of the verified funding relationship where "${sourceLabel}" provides ${amount} in "${fundingType}" funding to "${targetLabel}" for "${currentTheme}".
 
-        Keep your explanation:
+        Requirements for credible explanation:
         - Under 100 words
-        - Clear and simple
-        - Focused on why ${sourceLabel} funds ${targetLabel}
-        - Explain the purpose and impact of this ${amount} ${fundingType} funding
+        - Use REAL information about this funding relationship if it exists
+        - Explain the strategic rationale: WHY ${sourceLabel} specifically funds ${targetLabel}
+        - Detail the SPECIFIC purpose: what exactly this ${amount} ${fundingType} funding supports
+        - Include measurable outcomes, timelines, or performance metrics
+        - Mention the funding mechanism (grants program, partnership agreement, etc.)
+        - Reference actual initiatives, research projects, or programs being funded
+        - Explain how this aligns with ${sourceLabel}'s mission and ${targetLabel}'s capabilities
+        - Include impact on ${currentTheme} goals with concrete examples
         - Suitable for a mobile dialog popup
 
-        Return only the explanation, no additional text.`;
+        Return only the factual explanation, no additional text.`;
 
         const apiConfig = getApiConfig();
 
