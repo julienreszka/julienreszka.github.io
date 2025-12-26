@@ -1312,6 +1312,36 @@
       </div>
     </dialog>
 
+    <!-- Starting Point Suggestion Dialog -->
+    <dialog id="startingSuggestionDialog" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🏁 Suggested Starting Points</h3>
+          <span class="close" onclick="closeStartingSuggestionDialog()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="theme-display">
+            <strong>Goal destination:</strong>
+            <span id="startingSuggestionGoal"></span>
+          </div>
+          <div class="settings-section">
+            <h4>Where are you starting from:</h4>
+            <div id="startingSuggestionList" class="radio-group">
+              <!-- Starting point suggestions will be populated here -->
+            </div>
+          </div>
+          <div class="settings-section">
+            <button id="useSelectedStarting" class="save-button" disabled>
+              Use Selected Starting Point
+            </button>
+            <button id="customStartingBtn" class="copy-link-button" style="margin-top: 0.5rem;">
+              Enter Custom Starting Point Instead
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
     <div class="main-container">
       <div id="cy"></div>
       <div
@@ -2453,6 +2483,112 @@
         document.body.style.overflow = "hidden";
       }
 
+      // Starting point suggestion dialog management
+      function closeStartingSuggestionDialog() {
+        document.getElementById("startingSuggestionDialog").close();
+        document.body.style.overflow = "auto";
+      }
+
+      // Suggest starting points based on destination goal
+      async function suggestStartingPoints(destination) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        const prompt = `Given the destination goal "${destination}", suggest 5-6 relevant starting points that someone might be coming from to reach this goal.
+
+        Return a JSON array of starting point suggestions with this structure:
+        [
+            {"starting": "Specific starting situation", "description": "Brief explanation of this starting point"},
+            {"starting": "Another starting point", "description": "Brief explanation"}
+        ]
+
+        Rules:
+        - Make starting points realistic and relatable to "${destination}"
+        - Include both beginner and intermediate starting situations
+        - Vary the scope from complete novice to partial progress scenarios
+        - Keep descriptions under 15 words
+        - Focus on realistic current situations people might be in
+        
+        Only return valid JSON array, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiConfig.key}`,
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.8,
+              max_tokens: 800,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const data = await response.json();
+          const content = data.choices[0].message.content.trim();
+          
+          let startingSuggestions;
+          try {
+            const jsonString = content.replace(/```json\n?/, "").replace(/```$/, "");
+            startingSuggestions = JSON.parse(jsonString);
+          } catch (parseError) {
+            throw new Error(`Failed to parse starting point suggestions: ${parseError.message}`);
+          }
+
+          showStartingSuggestionDialog(destination, startingSuggestions);
+        } catch (error) {
+          showError(`Failed to suggest starting points: ${error.message}`);
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // Show starting point suggestion dialog
+      function showStartingSuggestionDialog(destination, suggestions) {
+        document.getElementById("startingSuggestionGoal").textContent = destination;
+        
+        const startingList = document.getElementById("startingSuggestionList");
+        startingList.innerHTML = "";
+        
+        suggestions.forEach((suggestion, index) => {
+          const startingOption = document.createElement("div");
+          startingOption.className = "radio-option";
+          startingOption.innerHTML = `
+            <input type="radio" name="suggestedStarting" id="starting${index}" value="${suggestion.starting}">
+            <label for="starting${index}" class="radio-label">
+              <strong>${suggestion.starting}</strong>
+              <small>${suggestion.description}</small>
+            </label>
+          `;
+          startingList.appendChild(startingOption);
+        });
+        
+        // Add event listeners to radio buttons
+        document.querySelectorAll('input[name="suggestedStarting"]').forEach(radio => {
+          radio.addEventListener('change', () => {
+            document.getElementById("useSelectedStarting").disabled = false;
+          });
+        });
+        
+        document.getElementById("startingSuggestionDialog").showModal();
+        document.body.style.overflow = "hidden";
+      }
+
       // Expand existing graph with a new topic
       async function expandGraphWithTopic(newTopic) {
         if (!(await ensureApiKey())) return;
@@ -2569,11 +2705,16 @@
           .value.trim();
         const destination = document.getElementById("destination").value.trim();
 
-        if (!startingPoint) {
-          showError("Please describe your starting point");
+        if (!startingPoint && !destination) {
+          showError("Please describe either your starting point or destination goal");
           return;
         }
-        if (!destination) {
+        if (!startingPoint && destination) {
+          // If no starting point but has destination, suggest starting points
+          suggestStartingPoints(destination);
+          return;
+        }
+        if (!destination && startingPoint) {
           // If no destination but has starting point, suggest goals
           suggestGoals(startingPoint);
           return;
@@ -3086,6 +3227,8 @@
             closeSettingsModal();
           } else if (document.getElementById("goalSuggestionDialog").open) {
             closeGoalSuggestionDialog();
+          } else if (document.getElementById("startingSuggestionDialog").open) {
+            closeStartingSuggestionDialog();
           }
         }
       });
@@ -3115,6 +3258,34 @@
       document.getElementById("goalSuggestionDialog").addEventListener("click", (e) => {
         if (e.target === document.getElementById("goalSuggestionDialog")) {
           closeGoalSuggestionDialog();
+        }
+      });
+
+      // Starting point suggestion dialog event listeners
+      document.getElementById("useSelectedStarting").addEventListener("click", () => {
+        const selectedStarting = document.querySelector('input[name="suggestedStarting"]:checked');
+        if (selectedStarting) {
+          document.getElementById("startingPoint").value = selectedStarting.value;
+          closeStartingSuggestionDialog();
+          
+          // Auto-generate the diagram
+          const destination = document.getElementById("destination").value.trim();
+          generateDiagram(selectedStarting.value, destination);
+        }
+      });
+
+      document.getElementById("customStartingBtn").addEventListener("click", () => {
+        closeStartingSuggestionDialog();
+        // Focus on the starting point input for custom entry
+        setTimeout(() => {
+          document.getElementById("startingPoint").focus();
+        }, 100);
+      });
+
+      // Close starting point suggestion dialog when clicking outside
+      document.getElementById("startingSuggestionDialog").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("startingSuggestionDialog")) {
+          closeStartingSuggestionDialog();
         }
       });
 
