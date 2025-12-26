@@ -1,0 +1,2746 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Control Network Visualizer</title>
+    <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+    <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <script src="https://unpkg.com/marked@9.1.6/marked.min.js"></script>
+    <style>
+      :root {
+        /* Light theme variables */
+        --bg-gradient-start: #ffffff;
+        --bg-gradient-end: #f8f9fa;
+        --text-color: #333;
+        --text-secondary: #7f8c8d;
+        --text-primary: #2c3e50;
+        --surface-color: rgba(255, 255, 255, 0.95);
+        --surface-secondary: rgba(255, 255, 255, 0.9);
+        --surface-tertiary: #f8f9fa;
+        --border-color: #e0e0e0;
+        --border-focus: #3498db;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+        --shadow-strong: rgba(0, 0, 0, 0.1);
+        --error-bg: #fee;
+        --error-text: #c33;
+        --info-bg: #e8f4fd;
+        --info-border: #3498db;
+        --node-bg: #3498db;
+        --node-border: #2980b9;
+        --node-text: #ffffff;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          /* Dark theme variables */
+          --bg-gradient-start: #2c3e50;
+          --bg-gradient-end: #34495e;
+          --text-color: #ecf0f1;
+          --text-secondary: #95a5a6;
+          --text-primary: #ecf0f1;
+          --surface-color: rgba(52, 73, 94, 0.95);
+          --surface-secondary: rgba(44, 62, 80, 0.9);
+          --surface-tertiary: #34495e;
+          --border-color: #4a5c6a;
+          --border-focus: #3498db;
+          --shadow-color: rgba(0, 0, 0, 0.3);
+          --shadow-strong: rgba(0, 0, 0, 0.4);
+          --error-bg: #4a1e1e;
+          --error-text: #e74c3c;
+          --info-bg: #2c3e50;
+          --info-border: #3498db;
+          --node-bg: #3498db;
+          --node-border: #2980b9;
+          --node-text: #ffffff;
+        }
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-start) 0%,
+          var(--bg-gradient-end) 100%
+        );
+        color: var(--text-color);
+        height: 100svh;
+        max-height: 100svh;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+
+      .header {
+        background: var(--surface-color);
+        backdrop-filter: blur(10px);
+        padding: 1rem 2rem;
+        box-shadow: 0 2px 20px var(--shadow-color);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: 0.75rem;
+          text-align: center;
+        }
+      }
+
+      h1 {
+        color: var(--text-primary);
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        transition: color 0.3s ease;
+      }
+
+      .subtitle {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 1.2rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+          font-size: 0.75rem;
+          line-height: 1.3;
+        }
+      }
+
+      .controls {
+        background: var(--surface-secondary);
+        padding: 1rem 2rem;
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+        transition: background 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        .controls {
+          padding: 0.5rem;
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.5rem;
+        }
+      }
+
+      .input-group {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+      }
+
+      .input-with-buttons {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        flex: 1;
+      }
+
+      .input-with-buttons input {
+        flex: 1;
+      }
+
+      .input-with-buttons button {
+        padding: 0.5rem 0.75rem;
+        min-width: 44px;
+        width: auto;
+        font-size: 1.2rem;
+      }
+
+      @media (max-width: 768px) {
+        .input-group {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.2rem;
+        }
+
+        .input-group label {
+          font-size: 0.8rem;
+          font-weight: 600;
+          color: var(--text-primary);
+        }
+
+        .input-with-buttons {
+          flex-direction: row;
+          gap: 0.25rem;
+        }
+
+        .input-with-buttons button {
+          min-width: 42px;
+          width: 42px;
+          padding: 0.6rem 0.5rem;
+          font-size: 1.1rem;
+        }
+      }
+
+      input[type="text"],
+      select {
+        padding: 0.5rem 1.5rem;
+        border: 2px solid var(--border-color);
+        border-radius: 1.75rem;
+        font-size: 0.9rem;
+        transition: border-color 0.3s ease, background-color 0.3s ease,
+          color 0.3s ease;
+        min-width: 150px;
+        background: var(--surface-color);
+        color: var(--text-color);
+      }
+
+      input[type="text"] {
+        min-width: 250px;
+      }
+
+      input[type="text"]:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--border-focus);
+      }
+
+      @media (max-width: 768px) {
+        input[type="text"],
+        select {
+          min-width: unset;
+          width: 100%;
+          padding: 0.6rem 1.25rem;
+          font-size: 16px; /* Prevents zoom on iOS */
+          min-height: 42px; /* Touch-friendly minimum */
+        }
+      }
+      button {
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-start),
+          var(--bg-gradient-end)
+        );
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 1.75rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          background 0.3s ease;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px var(--shadow-color);
+      }
+
+      button:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+      }
+
+      @media (max-width: 768px) {
+        button {
+          padding: 0.6rem 1rem;
+          min-height: 42px;
+          width: 100%;
+          font-size: 0.9rem;
+        }
+
+        button:hover {
+          transform: none; /* Disable hover effects on mobile */
+        }
+      }
+
+      .main-container {
+        position: relative;
+        height: calc(100svh - 90px);
+      }
+
+      @media (max-width: 768px) {
+        .main-container {
+          height: calc(100svh - 90px);
+        }
+      }
+
+      #cy {
+        width: calc(100% - 1rem);
+        height: calc(100% - 1rem);
+        background: var(--surface-color);
+        margin: 0.5rem;
+        border-radius: 1.75rem;
+        box-shadow: 0 4px 25px var(--shadow-strong);
+        transition: background 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      @media (max-width: 768px) {
+        #cy {
+          width: calc(100% - 0.5rem);
+          height: calc(100% - 0.5rem);
+          margin: 0.25rem;
+          border-radius: 1.75rem;
+        }
+      }
+
+      .loading {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+      }
+
+      .spinner {
+        border: 3px solid var(--border-color);
+        border-top: 3px solid var(--border-focus);
+        border-radius: 1.75rem;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 1rem auto;
+        transition: border-color 0.3s ease;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .legend {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: var(--surface-tertiary);
+        border-radius: 1.75rem;
+        transition: background 0.3s ease;
+      }
+
+      .legend h3 {
+        margin-bottom: 0.5rem;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        margin: 0.5rem 0;
+        font-size: 0.8rem;
+        color: var(--text-color);
+        transition: color 0.3s ease;
+      }
+
+      .legend-symbol {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+        border-radius: 1.75rem;
+      }
+
+      .strong {
+        background: #27ae60;
+      }
+      .weak {
+        background: #3498db;
+      }
+      .entity {
+        background: #95a5a6;
+      }
+
+      .error {
+        background: var(--error-bg);
+        color: var(--error-text);
+        padding: 1rem;
+        border-radius: 1.75rem;
+        margin: 1rem 0;
+        transition: background 0.3s ease, color 0.3s ease;
+      }
+
+      .theme-display {
+        background: var(--info-bg);
+        padding: 0.8rem;
+        border-radius: 1.75rem;
+        margin-bottom: 1rem;
+        border-left: 4px solid var(--info-border);
+        transition: background 0.3s ease, border-color 0.3s ease;
+      }
+
+      .theme-display strong {
+        color: var(--text-primary);
+        transition: color 0.3s ease;
+      }
+
+      /* Mobile-specific compact styles */
+      @media (max-width: 768px) {
+        .legend {
+          margin-top: 0.5rem;
+          padding: 0.75rem;
+        }
+
+        .legend h3 {
+          font-size: 0.8rem;
+          margin-bottom: 0.25rem;
+        }
+
+        .legend-item {
+          margin: 0.25rem 0;
+          font-size: 0.7rem;
+          align-items: flex-start;
+        }
+
+        .legend-symbol {
+          width: 16px;
+          height: 16px;
+          margin-right: 0.4rem;
+          margin-top: 1px;
+          flex-shrink: 0;
+        }
+
+        .theme-display {
+          padding: 0.5rem;
+          font-size: 0.8rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .loading {
+          padding: 1rem;
+        }
+
+        .spinner {
+          width: 30px;
+          height: 30px;
+          margin: 0.5rem auto;
+        }
+
+        .error {
+          padding: 0.75rem;
+          font-size: 0.85rem;
+          margin: 0.5rem 0;
+        }
+      }
+
+      /* Modal Styles */
+      .modal,
+      .modal-dialog {
+        border: none;
+        border-radius: 1.75rem;
+        padding: 0;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000;
+        max-width: 90vw;
+        width: 920px;
+        max-height: 80vh;
+        overflow: auto;
+        box-shadow: 0 8px 32px var(--shadow-strong);
+        background: transparent;
+      }
+
+      .modal-dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+      }
+
+      /* Legacy modal styles for any remaining div modals */
+      .modal {
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-content {
+        background: var(--surface-color);
+        border-radius: 1.75rem;
+        width: 100%;
+        animation: modalFadeIn 0.3s ease;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .modal-header h3 {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 1.2rem;
+      }
+
+      .close {
+        font-size: 2rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        transition: color 0.3s ease;
+        line-height: 1;
+      }
+
+      .close:hover {
+        color: var(--text-primary);
+      }
+
+      .modal-body {
+        padding: 1.5rem;
+      }
+
+      @keyframes modalFadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.9);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .modal-dialog {
+          width: 95vw;
+          max-height: 90vh;
+          overflow: auto;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .modal-content {
+          width: 100%;
+        }
+
+        .modal-header {
+          padding: 1rem;
+        }
+
+        .modal-header h3 {
+          font-size: 1.1rem;
+        }
+
+        .modal-body {
+          padding: 1rem;
+        }
+      }
+
+      /* Settings Modal Styles */
+      .settings-section {
+        margin-bottom: 2rem;
+      }
+
+      .settings-section h4 {
+        color: var(--text-primary);
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.75rem;
+        cursor: pointer;
+        padding: 1rem;
+        border: 2px solid var(--border-color);
+        border-radius: 1.75rem;
+        transition: border-color 0.3s ease, background-color 0.3s ease;
+      }
+
+      .radio-option:hover {
+        border-color: var(--border-focus);
+        background-color: var(--surface-tertiary);
+      }
+
+      .radio-option input[type="radio"] {
+        margin: 0;
+        margin-top: 0.25rem;
+      }
+
+      .radio-option input[type="radio"]:checked + .radio-label {
+        color: var(--border-focus);
+      }
+
+      .radio-option:has(input[type="radio"]:checked) {
+        border-color: var(--border-focus);
+        background-color: var(--surface-tertiary);
+      }
+
+      .radio-label {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        flex: 1;
+      }
+
+      .radio-label strong {
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+
+      .radio-label small {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        line-height: 1.3;
+      }
+
+      .api-key-section {
+        margin-bottom: 1.5rem;
+      }
+
+      .api-key-section label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--text-primary);
+        font-size: 0.9rem;
+      }
+
+      .input-with-button {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .input-with-button input {
+        flex: 1;
+        min-height: 44px; /* Touch-friendly height */
+        border-radius: 1.75rem;
+        background: var(--surface-color);
+        color: var(--text-color);
+        border: 2px solid var(--border-color);
+      }
+
+      .toggle-key {
+        min-width: 44px;
+        width: 44px;
+        min-height: 44px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        background: var(--surface-tertiary);
+        border: 2px solid var(--border-color);
+        color: var(--text-secondary);
+        border-radius: 1.75rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .toggle-key:hover {
+        background: var(--border-focus);
+        color: white;
+      }
+
+      .api-key-section small {
+        color: var(--text-secondary);
+        font-size: 0.8rem;
+        line-height: 1.3;
+      }
+
+      .api-key-section small a {
+        color: var(--border-focus);
+        text-decoration: underline;
+      }
+
+      .save-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: var(--border-focus);
+        color: white;
+        border: none;
+        border-radius: 1.75rem;
+        font-weight: 600;
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .save-button:hover {
+        background-color: #5a6fd8;
+        transform: translateY(-1px);
+      }
+
+      .copy-link-button {
+        width: 100%;
+        padding: 0.75rem;
+        background: var(--surface-tertiary);
+        color: var(--text-primary);
+        border: 2px solid var(--border-color);
+        border-radius: 1.75rem;
+        font-weight: 500;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+      }
+
+      .copy-link-button:hover {
+        background: var(--border-focus);
+        color: white;
+        border-color: var(--border-focus);
+        transform: translateY(-1px);
+      }
+
+      @media (max-width: 768px) {
+        .radio-option {
+          padding: 0.75rem;
+        }
+
+        .radio-label strong {
+          font-size: 0.9rem;
+        }
+
+        .radio-label small {
+          font-size: 0.75rem;
+        }
+
+        .input-with-button {
+          gap: 1rem;
+          margin-bottom: 1.5rem;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .input-with-button input {
+          min-height: 52px;
+          padding: 1rem 1.5rem;
+          font-size: 16px;
+          border-radius: 1.75rem;
+          border: 3px solid var(--border-color);
+          transition: all 0.3s ease;
+        }
+
+        .input-with-button input:focus {
+          border-color: var(--border-focus);
+          box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .toggle-key {
+          min-width: 52px;
+          width: 100%;
+          min-height: 52px;
+          padding: 1rem;
+          font-size: 1.2rem;
+          margin-top: 0.5rem;
+          border: 3px solid var(--border-color);
+          transition: all 0.3s ease;
+        }
+
+        .toggle-key:active {
+          transform: scale(0.98);
+          background: var(--border-focus);
+          color: white;
+        }
+
+        .api-key-section {
+          margin-bottom: 2.5rem;
+          padding: 1rem;
+          background: var(--surface-tertiary);
+          border-radius: 1.75rem;
+        }
+
+        .api-key-section label {
+          font-size: 1.1rem;
+          margin-bottom: 1rem;
+          font-weight: 700;
+          color: var(--text-primary);
+        }
+
+        .api-key-section label::after {
+          content: " (tap to toggle visibility)";
+          font-size: 0.8rem;
+          color: var(--text-secondary);
+          font-weight: 400;
+        }
+
+        .api-key-section small {
+          font-size: 0.85rem;
+          line-height: 1.4;
+          display: block;
+          margin-top: 0.75rem;
+        }
+      }
+
+      /* Explanation Dialog Styles */
+      .explanation-dialog {
+        border: none;
+        border-radius: 1.75rem;
+        padding: 0;
+        max-width: 90vw;
+        width: 500px;
+        max-height: 80vh;
+        overflow: hidden;
+        box-shadow: 0 8px 32px var(--shadow-strong);
+        backdrop-filter: blur(10px);
+        background: transparent;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .explanation-dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+      }
+
+      .dialog-content {
+        background: var(--surface-color);
+        border-radius: 1.75rem;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .dialog-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        background: var(--surface-secondary);
+      }
+
+      .dialog-header h3 {
+        margin: 0;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .dialog-close {
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: var(--text-secondary);
+        padding: 0.25rem;
+        border-radius: 1.75rem;
+        transition: all 0.2s ease;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .dialog-close:hover {
+        background: var(--error-bg);
+        color: var(--error-text);
+        transform: none;
+        box-shadow: none;
+      }
+
+      .dialog-body {
+        padding: 1.5rem;
+        flex: 1;
+        overflow-y: auto;
+      }
+
+      .dialog-body p {
+        margin: 0;
+        line-height: 1.6;
+        color: var(--text-color);
+        font-size: 0.95rem;
+      }
+
+      .dialog-footer {
+        padding: 1rem 1.5rem;
+        border-top: 1px solid var(--border-color);
+        display: flex;
+        justify-content: flex-end;
+        background: var(--surface-tertiary);
+      }
+
+      .dialog-btn {
+        background: var(--border-focus);
+        color: white;
+        border: none;
+        padding: 0.5rem 1.5rem;
+        border-radius: 1.75rem;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: background-color 0.2s ease;
+        min-width: 80px;
+      }
+
+      .dialog-btn:hover {
+        background: #5a6fd8;
+        transform: none;
+        box-shadow: none;
+      }
+
+      @media (max-width: 768px) {
+        .explanation-dialog {
+          width: 95vw;
+          max-height: 85vh;
+        }
+
+        .dialog-header {
+          padding: 1rem;
+        }
+
+        .dialog-header h3 {
+          font-size: 1rem;
+        }
+
+        .dialog-body {
+          padding: 1rem;
+        }
+
+        .dialog-body p {
+          font-size: 0.9rem;
+        }
+
+        .dialog-footer {
+          padding: 0.75rem 1rem;
+        }
+
+        .dialog-btn {
+          padding: 0.6rem 1.2rem;
+          font-size: 0.85rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="controls">
+      <div class="input-group">
+        <label for="theme">Topic for AI generated control network</label>
+        <div class="input-with-buttons">
+          <input
+            type="text"
+            id="theme"
+            placeholder="e.g., NATO, European Union, Tech Industry, Global Finance..."
+          />
+          <button id="generateBtn">✨</button>
+          <button id="settingsBtn">⚙️</button>
+          <button id="shareBtn">🔗</button>
+          <button id="helpBtn">❔</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Help Modal -->
+    <dialog id="helpModal" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Legend & Instructions</h3>
+          <span class="close" id="closeModal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div
+            id="modalThemeDisplay"
+            class="theme-display"
+            style="display: none"
+          >
+            <strong>Current Theme:</strong> <span id="modalCurrentTheme"></span>
+          </div>
+
+          <div class="legend">
+            <h3>Control Network Legend</h3>
+            <div class="legend-item">
+              <div class="legend-symbol strong"></div>
+              <span
+                ><strong>Strong Control:</strong> Direct authority, ownership,
+                legal power, military command</span
+              >
+            </div>
+            <div class="legend-item">
+              <div class="legend-symbol weak"></div>
+              <span
+                ><strong>Weak Control:</strong> Indirect influence, economic
+                leverage, soft power, advisory role</span
+              >
+            </div>
+            <div class="legend-item">
+              <div class="legend-symbol entity"></div>
+              <span
+                ><strong>Entity:</strong> Organization, country, institution,
+                group, or individual</span
+              >
+            </div>
+            <div
+              class="legend-item"
+              style="
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
+              "
+            >
+              <strong>📊 Click Node:</strong> See current trends and information
+              about this entity
+            </div>
+            <div class="legend-item" style="margin-top: 0.5rem">
+              <strong>💡 Double-click/double-tap Node:</strong> Expand to show
+              who controls this entity and who it controls
+            </div>
+            <div class="legend-item" style="margin-top: 0.5rem">
+              <strong>🔗 Click Edge:</strong> Understand how this control
+              relationship works
+            </div>
+            <div class="legend-item" style="margin-top: 0.5rem">
+              <strong>🎯 Double-click/double-tap Space:</strong> Add a new topic
+              and integrate it into the control network
+            </div>
+            <div
+              class="legend-item"
+              style="
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
+              "
+            >
+              <strong>⚙️ Settings:</strong> Configure your AI provider and API
+              keys in Settings
+            </div>
+
+            <div
+              class="legend-item"
+              style="
+                margin-top: 1rem;
+                padding-top: 0.5rem;
+                border-top: 1px solid var(--border-color);
+              "
+            >
+              Created by @julienreszka
+            </div>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Settings Modal -->
+    <dialog id="settingsModal" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Settings</h3>
+          <span class="close" id="closeSettingsModal">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="settings-section">
+            <h4>AI Provider</h4>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="provider"
+                  value="groq"
+                  id="groqProvider"
+                  checked
+                />
+                <span class="radio-label">
+                  <strong>Groq</strong>
+                  <small>Fast, cost-effective (Llama models)</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="provider"
+                  value="grok"
+                  id="grokProvider"
+                />
+                <span class="radio-label">
+                  <strong>Grok 4</strong>
+                  <small>Advanced reasoning with real-time information</small>
+                </span>
+              </label>
+              <label class="radio-option">
+                <input
+                  type="radio"
+                  name="provider"
+                  value="grok-fast"
+                  id="grokFastProvider"
+                />
+                <span class="radio-label">
+                  <strong>Grok 4.1 Fast</strong>
+                  <small>Lightning fast with current events & news</small>
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <h4>API Keys</h4>
+
+            <div class="api-key-section" id="groqKeySection">
+              <label for="groqApiKey">Groq API Key</label>
+              <div class="input-with-button">
+                <input
+                  type="password"
+                  id="groqApiKey"
+                  placeholder="Enter your Groq API key"
+                />
+                <button type="button" id="toggleGroqKey" class="toggle-key">
+                  👁️
+                </button>
+              </div>
+              <small
+                >Get your free key at
+                <a href="https://console.groq.com/keys" target="_blank"
+                  >console.groq.com/keys</a
+                ></small
+              >
+            </div>
+
+            <div
+              class="api-key-section"
+              id="grokKeySection"
+              style="display: none"
+            >
+              <label for="grokApiKey">Grok (xAI) API Key</label>
+              <div class="input-with-button">
+                <input
+                  type="password"
+                  id="grokApiKey"
+                  placeholder="Enter your Grok API key"
+                />
+                <button type="button" id="toggleGrokKey" class="toggle-key">
+                  👁️
+                </button>
+              </div>
+              <small
+                >Get your key at
+                <a
+                  href="https://console.x.ai/team/default/api-keys"
+                  target="_blank"
+                  >console.x.ai</a
+                >
+                (works for both Grok 4 & Grok 4.1 Fast)</small
+              >
+            </div>
+          </div>
+
+          <div class="settings-section">
+            <button id="saveSettings" class="save-button">Save Settings</button>
+          </div>
+
+          <div class="settings-section">
+            <button id="copyAppLink" class="copy-link-button">
+              📋 Copy App Link with API Keys
+            </button>
+            <small
+              style="
+                color: var(--text-secondary);
+                font-size: 0.8rem;
+                margin-top: 0.5rem;
+                display: block;
+                text-align: center;
+              "
+            >
+              Share this link to give others access with your API keys
+              pre-configured
+            </small>
+
+            <button id="copyAppLinkWithGraph" class="copy-link-button">
+              🔗📊 Copy App Link with API Keys + Current Graph
+            </button>
+            <small
+              style="
+                color: var(--text-secondary);
+                font-size: 0.8rem;
+                margin-top: 0.5rem;
+                display: block;
+                text-align: center;
+              "
+            >
+              Share your complete setup including the current diagram
+            </small>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Node Explanation Dialog -->
+    <dialog id="nodeDialog" class="explanation-dialog">
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <h3 id="nodeDialogTitle">📊 Node Title</h3>
+          <button class="dialog-close" onclick="closeNodeDialog()">
+            &times;
+          </button>
+        </div>
+        <div class="dialog-body">
+          <p id="nodeDialogContent">Loading explanation...</p>
+        </div>
+        <div class="dialog-footer">
+          <button onclick="closeNodeDialog()" class="dialog-btn">Close</button>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Relationship Explanation Dialog -->
+    <dialog id="relationshipDialog" class="explanation-dialog">
+      <div class="dialog-content">
+        <div class="dialog-header">
+          <h3 id="relationshipDialogTitle">🔗 Relationship</h3>
+          <button class="dialog-close" onclick="closeRelationshipDialog()">
+            &times;
+          </button>
+        </div>
+        <div class="dialog-body">
+          <p id="relationshipDialogContent">Loading explanation...</p>
+        </div>
+        <div class="dialog-footer">
+          <button onclick="closeRelationshipDialog()" class="dialog-btn">
+            Close
+          </button>
+        </div>
+      </div>
+    </dialog>
+
+    <div class="main-container">
+      <div id="cy"></div>
+      <div
+        id="loadingIndicator"
+        class="loading"
+        style="
+          display: none;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 100;
+          background: var(--surface-color);
+          padding: 2rem;
+          border-radius: 1.75rem;
+          box-shadow: 0 4px 25px var(--shadow-strong);
+        "
+      >
+        <div class="spinner"></div>
+        <p>Generating control network diagram...</p>
+      </div>
+      <div
+        id="errorDisplay"
+        class="error"
+        style="
+          display: none;
+          position: absolute;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          z-index: 100;
+          max-width: 500px;
+        "
+      ></div>
+    </div>
+
+    <script>
+      // Global variables
+      let cy;
+      let currentProvider = localStorage.getItem("aiProvider") || "groq";
+      let groqApiKey = localStorage.getItem("groqApiKey") || "";
+      let grokApiKey = localStorage.getItem("grokApiKey") || "";
+
+      // Touch/tap detection variables for mobile double-tap
+      let lastTapTime = 0;
+      let lastTapTarget = null;
+      const DOUBLE_TAP_DELAY = 300; // ms
+
+      // Desktop click detection variables
+      let lastClickTime = 0;
+      let lastClickTarget = null;
+      const DOUBLE_CLICK_DELAY = 300; // ms
+
+      // Check if device is mobile/touch-capable
+      function isMobileDevice() {
+        return "ontouchstart" in window || navigator.maxTouchPoints > 0;
+      }
+
+      // Initialize Cytoscape
+      function initializeCytoscape() {
+        try {
+          if (typeof cytoscape === "undefined") {
+            showError("Cytoscape library not loaded. Please refresh the page.");
+            return;
+          }
+
+          cy = cytoscape({
+            container: document.getElementById("cy"),
+
+            style: [
+              {
+                selector: "node",
+                style: {
+                  "background-color": getComputedStyle(document.documentElement)
+                    .getPropertyValue("--node-bg")
+                    .trim(),
+                  label: "data(label)",
+                  color: getComputedStyle(document.documentElement)
+                    .getPropertyValue("--node-text")
+                    .trim(),
+                  "text-valign": "center",
+                  "text-halign": "center",
+                  "font-size": "12px",
+                  "font-weight": "bold",
+                  width: "80px",
+                  height: "80px",
+                  "text-wrap": "wrap",
+                  "text-max-width": "70px",
+                  "border-width": 2,
+                  "border-color": getComputedStyle(document.documentElement)
+                    .getPropertyValue("--node-border")
+                    .trim(),
+                },
+              },
+              {
+                selector: "edge",
+                style: {
+                  width: 3,
+                  "line-color": getComputedStyle(document.documentElement)
+                    .getPropertyValue("--border-focus")
+                    .trim(),
+                  "target-arrow-color": getComputedStyle(
+                    document.documentElement
+                  )
+                    .getPropertyValue("--border-focus")
+                    .trim(),
+                  "target-arrow-shape": "triangle",
+                  "curve-style": "bezier",
+                  label: "data(polarity)",
+                  "font-size": "16px",
+                  "font-weight": "bold",
+                  "text-background-color": getComputedStyle(
+                    document.documentElement
+                  )
+                    .getPropertyValue("--surface-color")
+                    .trim(),
+                  "text-background-opacity": 0.9,
+                  "text-background-padding": "3px",
+                  color: getComputedStyle(document.documentElement)
+                    .getPropertyValue("--text-primary")
+                    .trim(),
+                },
+              },
+              {
+                selector: 'edge[polarity = "strong"]',
+                style: {
+                  "line-color": "#27ae60",
+                  "target-arrow-color": "#27ae60",
+                  color: "#27ae60",
+                  width: 4,
+                },
+              },
+              {
+                selector: 'edge[polarity = "weak"]',
+                style: {
+                  "line-color": "#3498db",
+                  "target-arrow-color": "#3498db",
+                  color: "#3498db",
+                  width: 2,
+                },
+              },
+            ],
+
+            layout: {
+              name: "cose",
+              padding: 50,
+              nodeOverlap: 20,
+              idealEdgeLength: 100,
+              nodeRepulsion: 8000,
+            },
+          });
+
+          // Add universal tap/click handlers for both desktop and mobile
+          cy.on("tap", "node", function (evt) {
+            handleNodeTap(evt);
+          });
+
+          cy.on("tap", function (evt) {
+            // Check if the target is the background (not a node or edge)
+            if (evt.target === cy) {
+              handleBackgroundTap(evt);
+            }
+          });
+
+          // Add click handler for edges to explain relationships
+          cy.on("tap", "edge", function (evt) {
+            const edge = evt.target;
+            explainRelationship(edge);
+          });
+
+          // Note: Desktop double-click is now handled in handleNodeTap function
+
+          // Keep double-click for desktop compatibility
+          cy.on("dblclick", function (evt) {
+            // Check if the target is the background (not a node or edge)
+            if (evt.target === cy) {
+              // Check if we have an existing diagram
+              if (cy.nodes().length === 0) {
+                showError(
+                  "Please generate a diagram first before adding topics"
+                );
+                return;
+              }
+
+              // Prompt for new topic
+              promptForNewTopic();
+            }
+          });
+        } catch (error) {
+          showError(`Failed to initialize graph: ${error.message}`);
+        }
+      }
+
+      // Check API key and prompt if needed
+      async function ensureApiKey() {
+        const currentKey = currentProvider === "groq" ? groqApiKey : grokApiKey;
+        if (!currentKey) {
+          const providerName =
+            currentProvider === "groq"
+              ? "Groq"
+              : currentProvider === "grok-fast"
+              ? "Grok 4.1 Fast"
+              : "Grok 4";
+          showError(`Please set your ${providerName} API key in Settings ⚙️`);
+          return false;
+        }
+        return true;
+      }
+
+      // Get COSE layout options
+      function getCoseLayoutOptions(nodeCount) {
+        return {
+          name: "cose",
+          padding: 50,
+          nodeOverlap: 20,
+          idealEdgeLength: 100,
+          nodeRepulsion: 8000,
+        };
+      }
+
+      // Generate control network diagram using selected AI provider
+      async function generateDiagram(theme) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        const basePrompt = `Create a control network diagram for the topic: "${theme}".`;
+
+        const newsPrompt =
+          currentProvider === "grok" || currentProvider === "grok-fast"
+            ? " Consider recent developments and current events that might affect these power relationships."
+            : "";
+
+        const prompt = `${basePrompt}${newsPrompt}
+            
+            Return a JSON object with this structure:
+            {
+                "nodes": [
+                    {"id": "node1", "label": "Entity Name"},
+                    {"id": "node2", "label": "Another Entity"}
+                ],
+                "edges": [
+                    {"source": "node1", "target": "node2", "polarity": "strong", "description": "explanation"},
+                    {"source": "node2", "target": "node1", "polarity": "weak", "description": "explanation"}
+                ]
+            }
+
+            Rules:
+            - Create 6-10 interconnected entities that form meaningful control relationships
+            - Use "strong" for direct control/influence relationships (ownership, legal authority, military control)
+            - Use "weak" for indirect influence or partial control (economic leverage, soft power, advisory roles)
+            - Focus on "who controls who" - power structures, governance, influence networks
+            - CRITICAL: Ensure EVERY entity has at least one INCOMING control relationship (who controls it)
+            - Include external controlling forces: voters, member states, parent organizations, funding sources
+            - Show hierarchies: include both the controllers and the controlled
+            - Include specific entities like countries, organizations, companies, institutions, political parties, voters
+            - Make entities concrete and identifiable (e.g., "United States", "NATO", "Member State Governments", "EU Voters")
+            - Show realistic power dynamics: most entities are controlled by something/someone
+            
+            Only return valid JSON, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 2000,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          let diagramData;
+          try {
+            const content = data.choices[0].message.content.trim();
+
+            // Try to extract JSON from the response
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            const jsonString = jsonMatch ? jsonMatch[0] : content;
+
+            diagramData = JSON.parse(jsonString);
+          } catch (parseError) {
+            showError("Failed to parse AI response. Please try again.");
+            return;
+          }
+
+          renderDiagram(diagramData);
+          showTheme(theme);
+        } catch (error) {
+          showError(`Failed to generate diagram: ${error.message}`);
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // Render the diagram in Cytoscape
+      function renderDiagram(data) {
+        try {
+          if (!cy) {
+            showError("Graph not initialized. Please refresh the page.");
+            return;
+          }
+
+          if (!data || !data.nodes || !data.edges) {
+            showError("Invalid diagram data received from API");
+            return;
+          }
+
+          // Create a set of valid node IDs for validation
+          const nodeIds = new Set(data.nodes.map((node) => node.id));
+
+          // Filter out edges that reference non-existent nodes
+          const validEdges = data.edges.filter((edge) => {
+            const sourceExists = nodeIds.has(edge.source);
+            const targetExists = nodeIds.has(edge.target);
+
+            return sourceExists && targetExists;
+          });
+
+          const elements = [
+            ...data.nodes.map((node) => ({
+              data: { id: node.id, label: node.label },
+            })),
+            ...validEdges.map((edge) => ({
+              data: {
+                id: `${edge.source}-${edge.target}`,
+                source: edge.source,
+                target: edge.target,
+                polarity: edge.polarity,
+              },
+            })),
+          ];
+
+          cy.elements().remove();
+          cy.add(elements);
+
+          // Use COSE layout
+          const layoutOptions = getCoseLayoutOptions(
+            elements.filter((el) => !el.data.source).length
+          );
+
+          cy.layout(layoutOptions).run();
+        } catch (error) {
+          showError(`Failed to render diagram: ${error.message}`);
+        }
+      }
+
+      // Expand node with additional connections
+      async function expandNode(nodeLabel, theme) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        // Get current nodes and edges for context
+        const currentNodes = cy.nodes().map((n) => n.data("label"));
+        const currentEdges = cy.edges().map((e) => ({
+          source: e.source().data("label"),
+          target: e.target().data("label"),
+          polarity: e.data("polarity"),
+        }));
+
+        const prompt = `Given an existing control network diagram about "${theme}", expand the entity "${nodeLabel}" with 2-4 additional relevant control relationships.
+
+        Current diagram context:
+        - Existing entities: ${currentNodes.join(", ")}
+        - Entity to expand: "${nodeLabel}"
+        
+        Return a JSON object with this structure:
+        {
+            "newNodes": [
+                {"id": "newnode1", "label": "New Entity Name"},
+                {"id": "newnode2", "label": "Another New Entity"}
+            ],
+            "newEdges": [
+                {"source": "existing_node_id", "target": "newnode1", "polarity": "strong", "description": "explanation"},
+                {"source": "newnode1", "target": "existing_node_id", "polarity": "weak", "description": "explanation"}
+            ]
+        }
+
+        Rules:
+        - Create 2-4 new entities that have control relationships with "${nodeLabel}"
+        - IMPORTANT: Show both who controls "${nodeLabel}" AND who "${nodeLabel}" controls
+        - Include edges showing who controls whom (source controls target)
+        - Use "strong" for direct control/influence (ownership, legal authority, military control)
+        - Use "weak" for indirect influence (economic leverage, soft power, advisory roles)
+        - Focus on real power structures - who has authority over whom
+        - For existing entities, use their exact labels as IDs (replace spaces with underscores, lowercase)
+        - For "${nodeLabel}", use the ID: "${nodeLabel
+          .toLowerCase()
+          .replace(/\s+/g, "_")}"
+        
+        Only return valid JSON, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 1500,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          let expansionData;
+          try {
+            const content = data.choices[0].message.content.trim();
+
+            // Try to extract JSON from the response
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            const jsonString = jsonMatch ? jsonMatch[0] : content;
+
+            expansionData = JSON.parse(jsonString);
+          } catch (parseError) {
+            showError(
+              "Failed to parse AI expansion response. Please try again."
+            );
+            return;
+          }
+
+          addNodesToExistingDiagram(expansionData);
+        } catch (error) {
+          showError(`Failed to expand node: ${error.message}`);
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // Add new nodes and edges to existing diagram
+      function addNodesToExistingDiagram(data) {
+        try {
+          if (!cy) {
+            showError("Graph not initialized. Please refresh the page.");
+            return;
+          }
+
+          if (!data || !data.newNodes || !data.newEdges) {
+            showError("Invalid expansion data received from API");
+            return;
+          }
+
+          // Create a map of existing node labels to actual IDs for reference
+          const existingNodeMap = {};
+          cy.nodes().forEach((node) => {
+            const label = node.data("label");
+            const actualId = node.data("id");
+            // Map both label and potential ID formats to the actual ID
+            existingNodeMap[label] = actualId;
+            existingNodeMap[label.toLowerCase().replace(/\s+/g, "_")] =
+              actualId;
+            existingNodeMap[actualId] = actualId;
+          });
+
+          // Validate new edges and resolve node references
+          const newNodeIds = new Set(data.newNodes.map((node) => node.id));
+          const allValidIds = new Set([
+            ...Object.values(existingNodeMap),
+            ...newNodeIds,
+          ]);
+
+          const validEdges = data.newEdges.filter((edge) => {
+            // Try to resolve source and target IDs
+            let sourceId = edge.source;
+            let targetId = edge.target;
+
+            // If source/target is a label or label-like ID, convert to actual node ID
+            if (existingNodeMap[edge.source]) {
+              sourceId = existingNodeMap[edge.source];
+            }
+            if (existingNodeMap[edge.target]) {
+              targetId = existingNodeMap[edge.target];
+            }
+
+            const sourceValid = allValidIds.has(sourceId);
+            const targetValid = allValidIds.has(targetId);
+
+            // Update edge with resolved IDs
+            edge.source = sourceId;
+            edge.target = targetId;
+
+            return sourceValid && targetValid;
+          });
+
+          // Add new nodes and valid edges
+          const newElements = [
+            ...data.newNodes.map((node) => ({
+              data: { id: node.id, label: node.label },
+            })),
+            ...validEdges.map((edge) => ({
+              data: {
+                id: `${edge.source}-${edge.target}`,
+                source: edge.source,
+                target: edge.target,
+                polarity: edge.polarity,
+              },
+            })),
+          ];
+
+          cy.add(newElements);
+
+          // Re-run COSE layout to accommodate new nodes
+          const layoutOptions = getCoseLayoutOptions(cy.nodes().length);
+
+          cy.layout(layoutOptions).run();
+        } catch (error) {
+          showError(`Failed to add new connections: ${error.message}`);
+        }
+      }
+
+      // Handle node tap/touch events for double-tap detection
+      function handleNodeTap(evt) {
+        const node = evt.target;
+        const currentTime = new Date().getTime();
+
+        if (!isMobileDevice()) {
+          // Desktop click handling - detect single vs double click
+          if (
+            lastClickTarget === node &&
+            currentTime - lastClickTime < DOUBLE_CLICK_DELAY
+          ) {
+            // Double-click detected - expand node
+            const nodeLabel = node.data("label");
+            const currentTheme = document.getElementById("theme").value.trim();
+
+            if (currentTheme) {
+              expandNode(nodeLabel, currentTheme);
+            } else {
+              showError(
+                "Please generate a diagram first before expanding nodes"
+              );
+            }
+
+            // Reset to prevent triple-click
+            lastClickTime = 0;
+            lastClickTarget = null;
+          } else {
+            // Single click - could be start of double-click or just explanation
+            lastClickTime = currentTime;
+            lastClickTarget = node;
+
+            // Show explanation after delay if no second click
+            setTimeout(() => {
+              if (
+                lastClickTarget === node &&
+                new Date().getTime() - lastClickTime >= DOUBLE_CLICK_DELAY
+              ) {
+                explainNode(node);
+                lastClickTime = 0;
+                lastClickTarget = null;
+              }
+            }, DOUBLE_CLICK_DELAY);
+          }
+          return;
+        }
+
+        // Mobile tap handling - detect single vs double tap
+        // Check if this is a double-tap
+        if (
+          lastTapTarget === node &&
+          currentTime - lastTapTime < DOUBLE_TAP_DELAY
+        ) {
+          // Double-tap detected - expand node
+          const nodeLabel = node.data("label");
+          const currentTheme = document.getElementById("theme").value.trim();
+
+          if (currentTheme) {
+            expandNode(nodeLabel, currentTheme);
+          } else {
+            showError("Please generate a diagram first before expanding nodes");
+          }
+
+          // Reset to prevent triple-tap
+          lastTapTime = 0;
+          lastTapTarget = null;
+        } else {
+          // Single tap - could be start of double-tap or just explanation
+          lastTapTime = currentTime;
+          lastTapTarget = node;
+
+          // Show explanation after delay if no second tap
+          setTimeout(() => {
+            if (
+              lastTapTarget === node &&
+              new Date().getTime() - lastTapTime >= DOUBLE_TAP_DELAY
+            ) {
+              explainNode(node);
+              lastTapTime = 0;
+              lastTapTarget = null;
+            }
+          }, DOUBLE_TAP_DELAY);
+        }
+      }
+
+      // Handle background tap/touch events for double-tap detection
+      function handleBackgroundTap(evt) {
+        // Only handle tap events on mobile devices
+        if (!isMobileDevice()) return;
+
+        const currentTime = new Date().getTime();
+
+        // Check if this is a double-tap on background
+        if (
+          lastTapTarget === cy &&
+          currentTime - lastTapTime < DOUBLE_TAP_DELAY
+        ) {
+          // Double-tap detected on background
+          // Check if we have an existing diagram
+          if (cy.nodes().length === 0) {
+            showError("Please generate a diagram first before adding topics");
+            return;
+          }
+
+          // Prompt for new topic
+          promptForNewTopic();
+
+          // Reset to prevent triple-tap
+          lastTapTime = 0;
+          lastTapTarget = null;
+        } else {
+          // Single tap - store for potential double-tap
+          lastTapTime = currentTime;
+          lastTapTarget = cy;
+        }
+      }
+
+      // Explain current trends and developments for a node
+      async function explainNode(node) {
+        if (!(await ensureApiKey())) return;
+
+        const nodeLabel = node.data("label");
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        // Show loading state
+        const loadingMessage = `Getting trends for ${nodeLabel}...`;
+        showInfo(loadingMessage);
+
+        const newsPrompt =
+          currentProvider === "grok" || currentProvider === "grok-fast"
+            ? " Focus on recent developments and current events."
+            : "";
+
+        const prompt = `What are current trends or recent developments regarding "${nodeLabel}" in "${currentTheme}"?${newsPrompt}
+
+        Keep your explanation:
+        - Under 100 words
+        - Focus on current state, recent changes, or emerging trends
+        - Practical and relevant to today
+        - Suitable for a mobile alert popup
+
+        Return only the explanation, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.5,
+              max_tokens: 150,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const explanation = data.choices[0].message.content.trim();
+
+          hideInfo();
+
+          // Show explanation in dialog
+          showNodeDialog(nodeLabel, explanation);
+        } catch (error) {
+          hideInfo();
+          showError(`Failed to get trends for ${nodeLabel}: ${error.message}`);
+          setTimeout(hideError, 3000);
+        }
+      }
+
+      // Explain the relationship between two connected nodes
+      async function explainRelationship(edge) {
+        if (!(await ensureApiKey())) return;
+
+        const sourceNode = edge.source();
+        const targetNode = edge.target();
+        const sourceLabel = sourceNode.data("label");
+        const targetLabel = targetNode.data("label");
+        const polarity = edge.data("polarity");
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        // Show loading state
+        const loadingMessage = `Explaining ${sourceLabel} → ${targetLabel}...`;
+        showInfo(loadingMessage);
+
+        const controlType =
+          polarity === "strong" ? "strong control" : "weak influence";
+
+        const prompt = `Explain how "${sourceLabel}" controls or influences "${targetLabel}" in the context of "${currentTheme}".
+
+        Type of control: ${controlType}
+
+        Keep your explanation:
+        - Under 100 words
+        - Clear and simple
+        - Focused on the mechanism of control (how the control is exercised)
+        - Include specific examples if possible
+        - Suitable for a mobile alert popup
+
+        Return only the explanation, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.5,
+              max_tokens: 150,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+          const explanation = data.choices[0].message.content.trim();
+
+          hideInfo();
+
+          // Show explanation in dialog
+          const relationshipSymbol = polarity === "strong" ? "🔗" : "↝";
+          showRelationshipDialog(
+            `${relationshipSymbol} ${sourceLabel} → ${targetLabel}`,
+            explanation
+          );
+        } catch (error) {
+          hideInfo();
+          showError(`Failed to explain relationship: ${error.message}`);
+          setTimeout(hideError, 3000);
+        }
+      }
+
+      // Get API configuration based on selected provider
+      function getApiConfig() {
+        if (currentProvider === "groq") {
+          return {
+            url: "https://api.groq.com/openai/v1/chat/completions",
+            key: groqApiKey,
+            model: "llama-3.1-8b-instant",
+          };
+        } else if (currentProvider === "grok-fast") {
+          return {
+            url: "https://api.x.ai/v1/chat/completions",
+            key: grokApiKey,
+            model: "grok-4-1-fast",
+          };
+        } else {
+          return {
+            url: "https://api.x.ai/v1/chat/completions",
+            key: grokApiKey,
+            model: "grok-4",
+          };
+        }
+      }
+
+      // UI Helper functions
+      function showLoading(show) {
+        document.getElementById("loadingIndicator").style.display = show
+          ? "block"
+          : "none";
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById("errorDisplay");
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+      }
+
+      function hideError() {
+        document.getElementById("errorDisplay").style.display = "none";
+      }
+
+      function showInfo(message) {
+        const errorDiv = document.getElementById("errorDisplay");
+        errorDiv.textContent = message;
+        errorDiv.style.background = "var(--info-bg)";
+        errorDiv.style.color = "var(--border-focus)";
+        errorDiv.style.borderLeft = "4px solid var(--border-focus)";
+        errorDiv.style.display = "block";
+      }
+
+      function hideInfo() {
+        const errorDiv = document.getElementById("errorDisplay");
+        errorDiv.style.background = "var(--error-bg)";
+        errorDiv.style.color = "var(--error-text)";
+        errorDiv.style.borderLeft = "none";
+        errorDiv.style.display = "none";
+      }
+
+      function showTheme(theme) {
+        // Update modal theme display only
+        document.getElementById("modalCurrentTheme").textContent = theme;
+        document.getElementById("modalThemeDisplay").style.display = "block";
+      }
+
+      // Prompt for new topic to add to existing diagram
+      function promptForNewTopic() {
+        const newTopic = prompt(
+          "What topic would you like to add to this diagram?\n\nThis will generate new nodes and connect them to the existing diagram."
+        );
+
+        if (newTopic && newTopic.trim()) {
+          expandGraphWithTopic(newTopic.trim());
+        }
+      }
+
+      // Dialog management functions
+      function showNodeDialog(nodeLabel, explanation) {
+        document.getElementById(
+          "nodeDialogTitle"
+        ).textContent = `📊 ${nodeLabel}`;
+        document.getElementById("nodeDialogContent").innerHTML =
+          marked.parse(explanation);
+        document.getElementById("nodeDialog").showModal();
+      }
+
+      function closeNodeDialog() {
+        document.getElementById("nodeDialog").close();
+      }
+
+      function showRelationshipDialog(title, explanation) {
+        document.getElementById("relationshipDialogTitle").textContent = title;
+        document.getElementById("relationshipDialogContent").innerHTML =
+          marked.parse(explanation);
+        document.getElementById("relationshipDialog").showModal();
+      }
+
+      function closeRelationshipDialog() {
+        document.getElementById("relationshipDialog").close();
+      }
+
+      // Expand existing graph with a new topic
+      async function expandGraphWithTopic(newTopic) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        // Get current diagram context
+        const currentNodes = cy.nodes().map((n) => n.data("label"));
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        const basePrompt = `Given an existing control network diagram about "${currentTheme}", add the topic "${newTopic}" to expand the diagram with relevant control relationships.`;
+
+        const newsPrompt =
+          currentProvider === "grok" || currentProvider === "grok-fast"
+            ? " Consider recent developments and current events for both topics."
+            : "";
+
+        const prompt = `${basePrompt}${newsPrompt}
+
+        Current diagram entities: ${currentNodes.join(", ")}
+        New topic to integrate: "${newTopic}"
+        
+        Return a JSON object with this structure:
+        {
+            "newNodes": [
+                {"id": "new_node_1", "label": "New Entity Name"},
+                {"id": "new_node_2", "label": "Another New Entity"}
+            ],
+            "newEdges": [
+                {"source": "existing_node_id", "target": "new_node_1", "polarity": "strong", "description": "explanation"},
+                {"source": "new_node_1", "target": "existing_node_id", "polarity": "weak", "description": "explanation"}
+            ]
+        }
+
+        Rules:
+        - Create 3-5 new entities related to "${newTopic}"
+        - Connect these new entities meaningfully to existing entities where control relationships exist
+        - IMPORTANT: Show realistic control hierarchies - who controls the new entities AND who they control
+        - Use "strong" for direct control/influence (ownership, legal authority, military control)
+        - Use "weak" for indirect influence (economic leverage, soft power, advisory roles)
+        - For existing entities, use their exact labels as IDs (replace spaces with underscores, lowercase)
+        - Focus on "who controls who" - show how ${newTopic} entities control or are controlled by existing entities
+        - Make the integration feel natural and logical
+        
+        Only return valid JSON, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiConfig.key}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.7,
+              max_tokens: 2000,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`API request failed: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          let expansionData;
+          try {
+            const content = data.choices[0].message.content.trim();
+
+            // Try to extract JSON from the response
+            const jsonMatch = content.match(/\{[\s\S]*\}/);
+            const jsonString = jsonMatch ? jsonMatch[0] : content;
+
+            expansionData = JSON.parse(jsonString);
+          } catch (parseError) {
+            showError(
+              "Failed to parse AI response for topic expansion. Please try again."
+            );
+            return;
+          }
+
+          addNodesToExistingDiagram(expansionData);
+
+          // Update the main theme to reflect the expanded diagram
+          const originalTheme = currentTheme;
+          const expandedTheme = `${originalTheme} + ${newTopic}`;
+          document.getElementById("theme").value = expandedTheme;
+          showTheme(expandedTheme);
+        } catch (error) {
+          showError(
+            `Failed to expand diagram with new topic: ${error.message}`
+          );
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // Event listeners
+      document.getElementById("generateBtn").addEventListener("click", () => {
+        const theme = document.getElementById("theme").value.trim();
+        if (!theme) {
+          showError("Please enter a topic for the control network diagram");
+          return;
+        }
+        generateDiagram(theme);
+      });
+
+      document.getElementById("settingsBtn").addEventListener("click", () => {
+        openSettingsModal();
+      });
+
+      document.getElementById("shareBtn").addEventListener("click", () => {
+        shareDiagram();
+      });
+
+      // Settings modal functionality
+      function openSettingsModal() {
+        // Load current settings
+        document.querySelector(
+          `input[name="provider"][value="${currentProvider}"]`
+        ).checked = true;
+        document.getElementById("groqApiKey").value = groqApiKey;
+        document.getElementById("grokApiKey").value = grokApiKey;
+
+        // Show appropriate API key section
+        toggleApiKeySection();
+
+        // Open modal
+        document.getElementById("settingsModal").showModal();
+        document.body.style.overflow = "hidden";
+      }
+
+      function toggleApiKeySection() {
+        const selectedProvider = document.querySelector(
+          'input[name="provider"]:checked'
+        ).value;
+        document.getElementById("groqKeySection").style.display =
+          selectedProvider === "groq" ? "block" : "none";
+        document.getElementById("grokKeySection").style.display =
+          selectedProvider === "grok" || selectedProvider === "grok-fast"
+            ? "block"
+            : "none";
+      }
+
+      function closeSettingsModal() {
+        document.getElementById("settingsModal").close();
+        document.body.style.overflow = "auto";
+      }
+
+      // Settings modal event listeners
+      document
+        .getElementById("closeSettingsModal")
+        .addEventListener("click", closeSettingsModal);
+
+      document
+        .getElementById("settingsModal")
+        .addEventListener("click", (e) => {
+          if (e.target === document.getElementById("settingsModal")) {
+            closeSettingsModal();
+          }
+        });
+
+      // Provider radio buttons
+      document.querySelectorAll('input[name="provider"]').forEach((radio) => {
+        radio.addEventListener("change", toggleApiKeySection);
+      });
+
+      // API key toggle buttons
+      document.getElementById("toggleGroqKey").addEventListener("click", () => {
+        const input = document.getElementById("groqApiKey");
+        const button = document.getElementById("toggleGroqKey");
+        if (input.type === "password") {
+          input.type = "text";
+          button.textContent = "🙈";
+        } else {
+          input.type = "password";
+          button.textContent = "👁️";
+        }
+      });
+
+      document.getElementById("toggleGrokKey").addEventListener("click", () => {
+        const input = document.getElementById("grokApiKey");
+        const button = document.getElementById("toggleGrokKey");
+        if (input.type === "password") {
+          input.type = "text";
+          button.textContent = "🙈";
+        } else {
+          input.type = "password";
+          button.textContent = "👁️";
+        }
+      });
+
+      // Save settings
+      document.getElementById("saveSettings").addEventListener("click", () => {
+        const selectedProvider = document.querySelector(
+          'input[name="provider"]:checked'
+        ).value;
+        const newGroqKey = document.getElementById("groqApiKey").value.trim();
+        const newGrokKey = document.getElementById("grokApiKey").value.trim();
+
+        // Update global variables
+        currentProvider = selectedProvider;
+        groqApiKey = newGroqKey;
+        grokApiKey = newGrokKey;
+
+        // Save to localStorage
+        localStorage.setItem("aiProvider", currentProvider);
+        localStorage.setItem("groqApiKey", groqApiKey);
+        localStorage.setItem("grokApiKey", grokApiKey);
+
+        closeSettingsModal();
+        hideError();
+
+        // Show success message
+        showSuccess("Settings saved successfully!");
+      });
+
+      // Copy app link with API keys
+      document.getElementById("copyAppLink").addEventListener("click", () => {
+        const currentGroqKey = document
+          .getElementById("groqApiKey")
+          .value.trim();
+        const currentGrokKey = document
+          .getElementById("grokApiKey")
+          .value.trim();
+        const selectedProvider = document.querySelector(
+          'input[name="provider"]:checked'
+        ).value;
+
+        // Get current URL without query params
+        const baseUrl = window.location.origin + window.location.pathname;
+
+        // Build query params
+        const params = new URLSearchParams();
+        params.set("provider", selectedProvider);
+
+        if (currentGroqKey) {
+          params.set("groqKey", currentGroqKey);
+        }
+
+        if (currentGrokKey) {
+          params.set("grokKey", currentGrokKey);
+        }
+
+        const shareableUrl = `${baseUrl}?${params.toString()}`;
+
+        // Copy to clipboard
+        navigator.clipboard
+          .writeText(shareableUrl)
+          .then(() => {
+            // Close modal temporarily to show toast
+            closeSettingsModal();
+            showSuccess("App link copied to clipboard! 📋");
+          })
+          .catch(() => {
+            // Fallback for older browsers
+            const textArea = document.createElement("textarea");
+            textArea.value = shareableUrl;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            // Close modal temporarily to show toast
+            closeSettingsModal();
+            showSuccess("App link copied to clipboard! 📋");
+          });
+      });
+
+      // Copy app link with API keys AND current graph
+      document
+        .getElementById("copyAppLinkWithGraph")
+        .addEventListener("click", () => {
+          // Check if there's a current diagram
+          if (!cy || cy.nodes().length === 0) {
+            closeSettingsModal();
+            showError(
+              "Please generate a diagram first before sharing app link with graph"
+            );
+            setTimeout(hideError, 3000);
+            return;
+          }
+
+          try {
+            const currentGroqKey = document
+              .getElementById("groqApiKey")
+              .value.trim();
+            const currentGrokKey = document
+              .getElementById("grokApiKey")
+              .value.trim();
+            const selectedProvider = document.querySelector(
+              'input[name="provider"]:checked'
+            ).value;
+
+            // Collect current diagram data
+            const nodes = cy.nodes().map((node) => ({
+              id: node.data("id"),
+              label: node.data("label"),
+            }));
+
+            const edges = cy.edges().map((edge) => ({
+              source: edge.source().data("id"),
+              target: edge.target().data("id"),
+              polarity: edge.data("polarity"),
+            }));
+
+            const currentTheme = document.getElementById("theme").value.trim();
+
+            const diagramData = {
+              nodes,
+              edges,
+              theme: currentTheme,
+            };
+
+            // Get current URL without query params
+            const baseUrl = window.location.origin + window.location.pathname;
+
+            // Build query params with both API keys and graph data
+            const params = new URLSearchParams();
+            params.set("provider", selectedProvider);
+
+            if (currentGroqKey) {
+              params.set("groqKey", currentGroqKey);
+            }
+
+            if (currentGrokKey) {
+              params.set("grokKey", currentGrokKey);
+            }
+
+            // Encode diagram data as base64
+            const encodedData = btoa(JSON.stringify(diagramData));
+            params.set("data", encodedData);
+
+            const shareableUrl = `${baseUrl}?${params.toString()}`;
+
+            // Copy to clipboard
+            navigator.clipboard
+              .writeText(shareableUrl)
+              .then(() => {
+                // Close modal temporarily to show toast
+                closeSettingsModal();
+                showSuccess("Complete app link copied to clipboard! 🔗📊");
+              })
+              .catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = shareableUrl;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand("copy");
+                document.body.removeChild(textArea);
+                // Close modal temporarily to show toast
+                closeSettingsModal();
+                showSuccess("Complete app link copied to clipboard! 🔗📊");
+              });
+          } catch (error) {
+            closeSettingsModal();
+            showError(`Failed to create complete share link: ${error.message}`);
+            setTimeout(hideError, 3000);
+          }
+        });
+
+      // Share diagram by encoding data in URL
+      function shareDiagram() {
+        if (!cy || cy.nodes().length === 0) {
+          showError("Please generate a diagram first before sharing");
+          return;
+        }
+
+        try {
+          // Collect current diagram data
+          const nodes = cy.nodes().map((node) => ({
+            id: node.data("id"),
+            label: node.data("label"),
+          }));
+
+          const edges = cy.edges().map((edge) => ({
+            source: edge.source().data("id"),
+            target: edge.target().data("id"),
+            polarity: edge.data("polarity"),
+          }));
+
+          const currentTheme = document.getElementById("theme").value.trim();
+
+          const diagramData = {
+            nodes,
+            edges,
+            theme: currentTheme,
+          };
+
+          // Encode data as base64 to make URL cleaner
+          const encodedData = btoa(JSON.stringify(diagramData));
+
+          // Get current URL without query params
+          const baseUrl = window.location.origin + window.location.pathname;
+
+          // Build shareable URL
+          const shareUrl = `${baseUrl}?data=${encodedData}`;
+
+          // Copy to clipboard
+          navigator.clipboard
+            .writeText(shareUrl)
+            .then(() => {
+              showSuccess("Diagram link copied to clipboard! 🔗");
+            })
+            .catch(() => {
+              // Fallback for older browsers
+              const textArea = document.createElement("textarea");
+              textArea.value = shareUrl;
+              document.body.appendChild(textArea);
+              textArea.select();
+              document.execCommand("copy");
+              document.body.removeChild(textArea);
+              showSuccess("Diagram link copied to clipboard! 🔗");
+            });
+        } catch (error) {
+          showError(`Failed to create share link: ${error.message}`);
+        }
+      }
+
+      // Parse shared diagram data from URL
+      function parseSharedDiagram() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const dataParam = urlParams.get("data");
+
+        if (dataParam) {
+          try {
+            // Decode the base64 data
+            const decodedData = JSON.parse(atob(dataParam));
+
+            if (decodedData.nodes && decodedData.edges && decodedData.theme) {
+              // Store the data to be loaded after Cytoscape is initialized
+              window.sharedDiagramData = decodedData;
+              return true;
+            }
+          } catch (error) {
+            console.error("Failed to parse shared diagram:", error);
+            showError("Invalid shared diagram link");
+            setTimeout(hideError, 3000);
+          }
+        }
+
+        return false;
+      }
+
+      // Load shared diagram after Cytoscape is initialized
+      function loadSharedDiagram() {
+        if (window.sharedDiagramData && cy) {
+          const decodedData = window.sharedDiagramData;
+
+          // Set the theme
+          document.getElementById("theme").value = decodedData.theme;
+
+          // Render the diagram
+          renderDiagram(decodedData);
+
+          // Show theme
+          showTheme(decodedData.theme);
+
+          // Show success message
+          setTimeout(() => {
+            showSuccess("Shared diagram loaded! 📊");
+          }, 500);
+
+          // Clear the stored data
+          delete window.sharedDiagramData;
+        }
+      }
+
+      // Show success message function
+      function showSuccess(message) {
+        const successDiv = document.createElement("div");
+        successDiv.textContent = message;
+        successDiv.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          background: #27ae60;
+          color: white;
+          padding: 1rem 1.5rem;
+          border-radius: 1.75rem;
+          z-index: 2147483647;
+          font-weight: 500;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          animation: slideIn 0.3s ease;
+        `;
+
+        document.body.appendChild(successDiv);
+
+        setTimeout(() => {
+          successDiv.remove();
+        }, 3000);
+      }
+
+      document.getElementById("theme").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          document.getElementById("generateBtn").click();
+        }
+      });
+
+      // Help modal functionality
+      document.getElementById("helpBtn").addEventListener("click", () => {
+        const modal = document.getElementById("helpModal");
+        const currentTheme = document.getElementById("theme").value.trim();
+
+        // Sync current theme to modal if exists
+        if (currentTheme) {
+          document.getElementById("modalCurrentTheme").textContent =
+            currentTheme;
+          document.getElementById("modalThemeDisplay").style.display = "block";
+        } else {
+          document.getElementById("modalThemeDisplay").style.display = "none";
+        }
+
+        modal.showModal();
+        document.body.style.overflow = "hidden";
+      });
+
+      // Close modal functionality
+      document
+        .getElementById("closeModal")
+        .addEventListener("click", closeHelpModal);
+      document.getElementById("helpModal").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("helpModal")) {
+          closeHelpModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          if (document.getElementById("helpModal").open) {
+            closeHelpModal();
+          } else if (document.getElementById("settingsModal").open) {
+            closeSettingsModal();
+          }
+        }
+      });
+
+      function closeHelpModal() {
+        document.getElementById("helpModal").close();
+        document.body.style.overflow = "auto";
+      }
+
+      // Parse URL parameters on load
+      function parseUrlParams() {
+        // First check for shared diagram data
+        const hasSharedDiagram = parseSharedDiagram();
+
+        // Then parse other URL parameters (API keys, provider)
+        const urlParams = new URLSearchParams(window.location.search);
+
+        const providerParam = urlParams.get("provider");
+        const groqKeyParam = urlParams.get("groqKey");
+        const grokKeyParam = urlParams.get("grokKey");
+
+        // Update settings if parameters are present
+        if (
+          providerParam &&
+          ["groq", "grok", "grok-fast"].includes(providerParam)
+        ) {
+          currentProvider = providerParam;
+          localStorage.setItem("aiProvider", currentProvider);
+        }
+
+        if (groqKeyParam) {
+          groqApiKey = groqKeyParam;
+          localStorage.setItem("groqApiKey", groqApiKey);
+        }
+
+        if (grokKeyParam) {
+          grokApiKey = grokKeyParam;
+          localStorage.setItem("grokApiKey", grokApiKey);
+        }
+
+        // Show success message if any parameters were loaded (but not if shared diagram was loaded)
+        if (
+          !hasSharedDiagram &&
+          (providerParam || groqKeyParam || grokKeyParam)
+        ) {
+          setTimeout(() => {
+            showSuccess("Settings loaded from URL! 🔗");
+          }, 1000);
+        }
+      }
+
+      // Initialize application
+      window.addEventListener("load", () => {
+        // Parse URL parameters first
+        parseUrlParams();
+
+        // Wait for all libraries to load
+        setTimeout(() => {
+          initializeCytoscape();
+
+          // Load shared diagram after Cytoscape is initialized
+          loadSharedDiagram();
+
+          // Listen for theme changes and update Cytoscape
+          const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
+          mediaQuery.addEventListener("change", () => {
+            if (cy) {
+              // Reinitialize Cytoscape with new theme colors
+              setTimeout(() => {
+                const currentElements = cy.elements().jsons();
+                cy.destroy();
+                initializeCytoscape();
+                if (currentElements.length > 0) {
+                  cy.add(currentElements);
+                  const layoutOptions = getCoseLayoutOptions(cy.nodes().length);
+                  cy.layout(layoutOptions).run();
+                }
+              }, 100);
+            }
+          });
+        }, 100);
+      });
+    </script>
+  </body>
+</html>
