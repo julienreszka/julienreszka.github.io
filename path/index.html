@@ -941,22 +941,14 @@
       <div class="input-group">
         <label for="startingPoint">Starting Point (where you are now)</label>
         <div class="input-with-buttons">
-          <input
-            type="text"
-            id="startingPoint"
-            placeholder="e.g., I live in a small town in France, weigh 90kg and am 1m80..."
-          />
+          <input type="text" id="startingPoint" placeholder="Fat" />
         </div>
       </div>
 
       <div class="input-group">
         <label for="destination">Destination Goal (where you want to be)</label>
         <div class="input-with-buttons">
-          <input
-            type="text"
-            id="destination"
-            placeholder="e.g., Get fit, Become a software engineer, Learn piano..."
-          />
+          <input type="text" id="destination" placeholder="e.g., Fit" />
           <button id="generateBtn">🗺️ Find Path</button>
           <button id="settingsBtn">⚙️</button>
           <button id="shareBtn">🔗</button>
@@ -1218,7 +1210,7 @@
 
           <div class="settings-section">
             <button id="copyAppLink" class="copy-link-button">
-              📋 Copy App Link with API Keys
+              📋 Copy App Settings Link
             </button>
             <small
               style="
@@ -1234,7 +1226,7 @@
             </small>
 
             <button id="copyAppLinkWithGraph" class="copy-link-button">
-              🔗📊 Copy App Link with API Keys + Current Graph
+              🔗📊 Copy Complete Link (settings + journey)
             </button>
             <small
               style="
@@ -1696,8 +1688,11 @@
                 id: `${edge.source}-${edge.target}`,
                 source: edge.source,
                 target: edge.target,
-                type: edge.type || "leads_to",
+                type: edge.type || edge.relationship || "leads_to",
                 description: edge.description || "",
+                // Support legacy polarity property
+                polarity: edge.polarity,
+                relationship: edge.relationship || edge.type || "leads_to",
               },
             })),
           ];
@@ -2611,7 +2606,81 @@
           });
       });
 
-      // Copy app link with API keys AND current graph
+      // Shared function to collect current diagram data with all properties
+      function collectDiagramData() {
+        if (!cy || cy.nodes().length === 0) {
+          return null;
+        }
+
+        const nodes = cy.nodes().map((node) => ({
+          id: node.data("id"),
+          label: node.data("label"),
+          type: node.data("type") || "action", // Include node type for styling
+        }));
+
+        const edges = cy.edges().map((edge) => ({
+          source: edge.source().data("id"),
+          target: edge.target().data("id"),
+          type: edge.data("type") || edge.data("relationship") || "leads_to", // Include edge type
+          relationship: edge.data("relationship") || edge.data("type") || "leads_to",
+          polarity: edge.data("polarity"), // Keep for backwards compatibility
+          description: edge.data("description") || "",
+        }));
+
+        const startingPoint = document
+          .getElementById("startingPoint")
+          .value.trim();
+        const destination = document.getElementById("destination").value.trim();
+        const currentJourney =
+          startingPoint && destination
+            ? `${startingPoint} → ${destination}`
+            : "Unnamed Journey";
+
+        return {
+          nodes,
+          edges,
+          journey: currentJourney,
+          startingPoint,
+          destination,
+        };
+      }
+
+      // Unicode-safe base64 encoding
+      function unicodeBase64Encode(str) {
+        try {
+          // First encode to UTF-8, then to base64
+          return btoa(
+            encodeURIComponent(str).replace(
+              /%([0-9A-F]{2})/g,
+              function (match, p1) {
+                return String.fromCharCode(parseInt(p1, 16));
+              }
+            )
+          );
+        } catch (error) {
+          // Fallback: use URL encoding if base64 fails
+          return encodeURIComponent(str);
+        }
+      }
+
+      // Unicode-safe base64 decoding
+      function unicodeBase64Decode(str) {
+        try {
+          // First decode from base64, then from UTF-8
+          return decodeURIComponent(
+            Array.prototype.map
+              .call(atob(str), function (c) {
+                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+              })
+              .join("")
+          );
+        } catch (error) {
+          // Fallback: assume it's URL encoded
+          return decodeURIComponent(str);
+        }
+      }
+
+      // Copy complete app link with API keys AND current journey path
       document
         .getElementById("copyAppLinkWithGraph")
         .addEventListener("click", () => {
@@ -2619,13 +2688,21 @@
           if (!cy || cy.nodes().length === 0) {
             closeSettingsModal();
             showError(
-              "Please generate a diagram first before sharing app link with graph"
+              "Please generate a diagram first before sharing complete app link"
             );
             setTimeout(hideError, 3000);
             return;
           }
 
           try {
+            const diagramData = collectDiagramData();
+            if (!diagramData) {
+              closeSettingsModal();
+              showError("Please generate a diagram first before sharing");
+              setTimeout(hideError, 3000);
+              return;
+            }
+
             const currentGroqKey = document
               .getElementById("groqApiKey")
               .value.trim();
@@ -2635,37 +2712,6 @@
             const selectedProvider = document.querySelector(
               'input[name="provider"]:checked'
             ).value;
-
-            // Collect current diagram data
-            const nodes = cy.nodes().map((node) => ({
-              id: node.data("id"),
-              label: node.data("label"),
-            }));
-
-            const edges = cy.edges().map((edge) => ({
-              source: edge.source().data("id"),
-              target: edge.target().data("id"),
-              polarity: edge.data("polarity"),
-            }));
-
-            const startingPoint = document
-              .getElementById("startingPoint")
-              .value.trim();
-            const destination = document
-              .getElementById("destination")
-              .value.trim();
-            const currentJourney =
-              startingPoint && destination
-                ? `${startingPoint} → ${destination}`
-                : "Unnamed Journey";
-
-            const diagramData = {
-              nodes,
-              edges,
-              journey: currentJourney,
-              startingPoint,
-              destination,
-            };
 
             // Get current URL without query params
             const baseUrl = window.location.origin + window.location.pathname;
@@ -2682,8 +2728,10 @@
               params.set("grokKey", currentGrokKey);
             }
 
-            // Encode diagram data as base64
-            const encodedData = btoa(JSON.stringify(diagramData));
+            // Encode diagram data as base64 (Unicode-safe)
+            const encodedData = unicodeBase64Encode(
+              JSON.stringify(diagramData)
+            );
             params.set("data", encodedData);
 
             const shareableUrl = `${baseUrl}?${params.toString()}`;
@@ -2694,7 +2742,7 @@
               .then(() => {
                 // Close modal temporarily to show toast
                 closeSettingsModal();
-                showSuccess("Complete app link copied to clipboard! 🔗📊");
+                showSuccess("Complete app link with settings and journey copied! 📋🗺️");
               })
               .catch(() => {
                 // Fallback for older browsers
@@ -2710,12 +2758,12 @@
               });
           } catch (error) {
             closeSettingsModal();
-            showError(`Failed to create complete share link: ${error.message}`);
+            showError(`Failed to create complete app link: ${error.message}`);
             setTimeout(hideError, 3000);
           }
         });
 
-      // Share diagram by encoding data in URL
+      // Share diagram by encoding data in URL (path data only, no API keys)
       function shareDiagram() {
         if (!cy || cy.nodes().length === 0) {
           showError("Please generate a diagram first before sharing");
@@ -2723,51 +2771,27 @@
         }
 
         try {
-          // Collect current diagram data
-          const nodes = cy.nodes().map((node) => ({
-            id: node.data("id"),
-            label: node.data("label"),
-          }));
+          // Collect current diagram data only (no API keys)
+          const diagramData = collectDiagramData();
+          if (!diagramData) {
+            showError("No diagram data to share");
+            return;
+          }
 
-          const edges = cy.edges().map((edge) => ({
-            source: edge.source().data("id"),
-            target: edge.target().data("id"),
-            polarity: edge.data("polarity"),
-          }));
-
-          const startingPoint = document
-            .getElementById("startingPoint")
-            .value.trim();
-          const destination = document
-            .getElementById("destination")
-            .value.trim();
-          const currentJourney =
-            startingPoint && destination
-              ? `${startingPoint} → ${destination}`
-              : "Unnamed Journey";
-
-          const diagramData = {
-            nodes,
-            edges,
-            journey: currentJourney,
-            startingPoint,
-            destination,
-          };
-
-          // Encode data as base64 to make URL cleaner
-          const encodedData = btoa(JSON.stringify(diagramData));
+          // Encode data as base64 to make URL cleaner (Unicode-safe)
+          const encodedData = unicodeBase64Encode(JSON.stringify(diagramData));
 
           // Get current URL without query params
           const baseUrl = window.location.origin + window.location.pathname;
 
-          // Build shareable URL
+          // Build shareable URL with only diagram data
           const shareUrl = `${baseUrl}?data=${encodedData}`;
 
           // Copy to clipboard
           navigator.clipboard
             .writeText(shareUrl)
             .then(() => {
-              showSuccess("Diagram link copied to clipboard! 🔗");
+              showSuccess("Journey path copied to clipboard! 🗺️");
             })
             .catch(() => {
               // Fallback for older browsers
@@ -2777,7 +2801,7 @@
               textArea.select();
               document.execCommand("copy");
               document.body.removeChild(textArea);
-              showSuccess("Diagram link copied to clipboard! 🔗");
+              showSuccess("Journey path copied to clipboard! 🗺️");
             });
         } catch (error) {
           showError(`Failed to create share link: ${error.message}`);
@@ -2791,10 +2815,10 @@
 
         if (dataParam) {
           try {
-            // Decode the base64 data
-            const decodedData = JSON.parse(atob(dataParam));
+            // Decode the base64 data (Unicode-safe)
+            const decodedData = JSON.parse(unicodeBase64Decode(dataParam));
 
-            if (decodedData.nodes && decodedData.edges && decodedData.theme) {
+            if (decodedData.nodes && decodedData.edges && (decodedData.journey || (decodedData.startingPoint && decodedData.destination))) {
               // Store the data to be loaded after Cytoscape is initialized
               window.sharedDiagramData = decodedData;
               return true;
