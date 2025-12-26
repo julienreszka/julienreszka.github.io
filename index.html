@@ -1,30 +1,132 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta 
-      charset="UTF-8">
-    <meta 
+    <meta charset="UTF-8" />
+    <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>
-      Julien Reszka on Github Pages
-    </title>
+    <title>Julien Reszka on Github Pages</title>
+    <!-- Open Graph image for Economic Simulator -->
+    <meta property="og:title" content="Economic Simulator by Julien Reszka" />
+    <meta
+      property="og:description"
+      content="Explore interactive economic models and simulations."
+    />
+    <meta property="og:image" content="economic-simulator/og-image.png" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/economic-simulator/"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap"
+    />
+    <style>
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background: linear-gradient(135deg, #f8fafc 0%, #e0e7ef 100%);
+        color: #222;
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 1.5rem;
+        box-shadow: 0 8px 32px rgba(60, 60, 120, 0.08);
+        padding: 2.5rem 2rem 2rem 2rem;
+        max-width: 420px;
+        margin: 2rem auto;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2.1rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #2c3e50;
+        letter-spacing: -1px;
+      }
+      p {
+        font-size: 1.08rem;
+        color: #4a5a6a;
+        margin: 1.1rem 0;
+      }
+      a {
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+      }
+      a:hover {
+        color: #1e40af;
+        text-decoration: underline;
+      }
+      .sim-link {
+        display: block;
+        margin: 2rem auto 1.5rem auto;
+        background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+        color: #fff;
+        font-size: 1.15rem;
+        font-weight: 700;
+        padding: 1.1rem 0;
+        border-radius: 1.2rem;
+        box-shadow: 0 2px 12px rgba(37, 99, 235, 0.08);
+        width: 100%;
+        max-width: 320px;
+        transition: background 0.2s, transform 0.15s;
+      }
+      .sim-link:hover {
+        background: linear-gradient(90deg, #1e40af 0%, #0ea5e9 100%);
+        transform: translateY(-2px) scale(1.03);
+      }
+      .og-preview {
+        margin: 1.5rem auto 0.5rem auto;
+        border-radius: 1.1rem;
+        box-shadow: 0 4px 16px rgba(60, 60, 120, 0.1);
+        max-width: 320px;
+        width: 100%;
+        display: block;
+      }
+      @media (max-width: 600px) {
+        .container {
+          padding: 1.2rem 0.5rem;
+        }
+        h1 {
+          font-size: 1.3rem;
+        }
+        .sim-link {
+          font-size: 1rem;
+          padding: 0.9rem 0;
+        }
+      }
+    </style>
   </head>
   <body>
-  <h1>
-    Welcome on my github pages
-  </h1>
-  <p>
-    I created this using <a 
-      href="https://pages.github.com/"
-    >pages.github.com</a>.
-  </p>
-  <p>
-    Sorry but there is no content yet.
-  </p>
-  <p>
-    Come back later for more content
-  </p>
-</body>
+    <div class="container">
+      <h1>👋 Welcome to Julien Reszka's Github Pages</h1>
+      <p>
+        Explore my interactive tools and experiments.<br />
+        Built with
+        <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
+      </p>
+      <a class="sim-link" href="economic-simulator/index.html">
+        🚀 Try the Economic Simulator
+      </a>
+      <img
+        class="og-preview"
+        src="economic-simulator/og-image.png"
+        alt="Economic Simulator Preview"
+        loading="lazy"
+      />
+      <p style="font-size: 0.98rem; color: #7b8794">
+        More content coming soon. Stay tuned!
+      </p>
+    </div>
+  </body>
 </html>
