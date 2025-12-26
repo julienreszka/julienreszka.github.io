@@ -1342,6 +1342,35 @@
       </div>
     </dialog>
 
+    <!-- Journey Discovery Dialog -->
+    <dialog id="journeyDiscoveryDialog" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🗺️ Discover Your Journey</h3>
+          <span class="close" onclick="closeJourneyDiscoveryDialog()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="theme-display">
+            <strong>Let's help you find a path to explore!</strong>
+          </div>
+          <div class="settings-section">
+            <h4>Popular journeys to get you started:</h4>
+            <div id="journeyDiscoveryList" class="radio-group">
+              <!-- Popular journey suggestions will be populated here -->
+            </div>
+          </div>
+          <div class="settings-section">
+            <button id="useSelectedJourney" class="save-button" disabled>
+              Explore This Journey
+            </button>
+            <button id="customJourneyBtn" class="copy-link-button" style="margin-top: 0.5rem;">
+              I'll Enter My Own Journey
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
     <div class="main-container">
       <div id="cy"></div>
       <div
@@ -2589,6 +2618,75 @@
         document.body.style.overflow = "hidden";
       }
 
+      // Journey discovery dialog management
+      function closeJourneyDiscoveryDialog() {
+        document.getElementById("journeyDiscoveryDialog").close();
+        document.body.style.overflow = "auto";
+      }
+
+      // Show journey discovery dialog with popular examples
+      function showJourneyDiscoveryDialog() {
+        const popularJourneys = [
+          {
+            starting: "Unfit",
+            destination: "Fit and Healthy",
+            description: "Build fitness habits and improve overall health"
+          },
+          {
+            starting: "Broke", 
+            destination: "Financially Stable",
+            description: "Create emergency fund and stable income"
+          },
+          {
+            starting: "Anxious",
+            destination: "Confident", 
+            description: "Build self-confidence and reduce anxiety"
+          },
+          {
+            starting: "Beginner",
+            destination: "Learn Programming",
+            description: "Master coding skills from scratch"
+          },
+          {
+            starting: "Lonely",
+            destination: "Strong Social Circle",
+            description: "Build meaningful friendships and connections"
+          },
+          {
+            starting: "Disorganized",
+            destination: "Highly Productive",
+            description: "Master time management and productivity"
+          }
+        ];
+        
+        const journeyList = document.getElementById("journeyDiscoveryList");
+        journeyList.innerHTML = "";
+        
+        popularJourneys.forEach((journey, index) => {
+          const journeyOption = document.createElement("div");
+          journeyOption.className = "radio-option";
+          journeyOption.innerHTML = `
+            <input type="radio" name="suggestedJourney" id="journey${index}" 
+                   data-starting="${journey.starting}" data-destination="${journey.destination}">
+            <label for="journey${index}" class="radio-label">
+              <strong>${journey.starting} → ${journey.destination}</strong>
+              <small>${journey.description}</small>
+            </label>
+          `;
+          journeyList.appendChild(journeyOption);
+        });
+        
+        // Add event listeners to radio buttons
+        document.querySelectorAll('input[name="suggestedJourney"]').forEach(radio => {
+          radio.addEventListener('change', () => {
+            document.getElementById("useSelectedJourney").disabled = false;
+          });
+        });
+        
+        document.getElementById("journeyDiscoveryDialog").showModal();
+        document.body.style.overflow = "hidden";
+      }
+
       // Expand existing graph with a new topic
       async function expandGraphWithTopic(newTopic) {
         if (!(await ensureApiKey())) return;
@@ -2706,7 +2804,8 @@
         const destination = document.getElementById("destination").value.trim();
 
         if (!startingPoint && !destination) {
-          showError("Please describe either your starting point or destination goal");
+          // If both are empty, show journey discovery modal
+          showJourneyDiscoveryDialog();
           return;
         }
         if (!startingPoint && destination) {
@@ -3229,6 +3328,8 @@
             closeGoalSuggestionDialog();
           } else if (document.getElementById("startingSuggestionDialog").open) {
             closeStartingSuggestionDialog();
+          } else if (document.getElementById("journeyDiscoveryDialog").open) {
+            closeJourneyDiscoveryDialog();
           }
         }
       });
@@ -3286,6 +3387,37 @@
       document.getElementById("startingSuggestionDialog").addEventListener("click", (e) => {
         if (e.target === document.getElementById("startingSuggestionDialog")) {
           closeStartingSuggestionDialog();
+        }
+      });
+
+      // Journey discovery dialog event listeners
+      document.getElementById("useSelectedJourney").addEventListener("click", () => {
+        const selectedJourney = document.querySelector('input[name="suggestedJourney"]:checked');
+        if (selectedJourney) {
+          const startingPoint = selectedJourney.dataset.starting;
+          const destination = selectedJourney.dataset.destination;
+          
+          document.getElementById("startingPoint").value = startingPoint;
+          document.getElementById("destination").value = destination;
+          closeJourneyDiscoveryDialog();
+          
+          // Auto-generate the diagram
+          generateDiagram(startingPoint, destination);
+        }
+      });
+
+      document.getElementById("customJourneyBtn").addEventListener("click", () => {
+        closeJourneyDiscoveryDialog();
+        // Focus on the starting point input for custom entry
+        setTimeout(() => {
+          document.getElementById("startingPoint").focus();
+        }, 100);
+      });
+
+      // Close journey discovery dialog when clicking outside
+      document.getElementById("journeyDiscoveryDialog").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("journeyDiscoveryDialog")) {
+          closeJourneyDiscoveryDialog();
         }
       });
 
