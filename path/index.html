@@ -1282,6 +1282,36 @@
       </div>
     </dialog>
 
+    <!-- Goal Suggestion Dialog -->
+    <dialog id="goalSuggestionDialog" class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🎯 Suggested Goals</h3>
+          <span class="close" onclick="closeGoalSuggestionDialog()">&times;</span>
+        </div>
+        <div class="modal-body">
+          <div class="theme-display">
+            <strong>Starting from:</strong>
+            <span id="goalSuggestionStartingPoint"></span>
+          </div>
+          <div class="settings-section">
+            <h4>Choose your destination goal:</h4>
+            <div id="goalSuggestionList" class="radio-group">
+              <!-- Goal suggestions will be populated here -->
+            </div>
+          </div>
+          <div class="settings-section">
+            <button id="useSelectedGoal" class="save-button" disabled>
+              Use Selected Goal
+            </button>
+            <button id="customGoalBtn" class="copy-link-button" style="margin-top: 0.5rem;">
+              Enter Custom Goal Instead
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
     <div class="main-container">
       <div id="cy"></div>
       <div
@@ -2317,6 +2347,112 @@
         document.getElementById("relationshipDialog").close();
       }
 
+      // Goal suggestion dialog management
+      function closeGoalSuggestionDialog() {
+        document.getElementById("goalSuggestionDialog").close();
+        document.body.style.overflow = "auto";
+      }
+
+      // Suggest goals based on starting point
+      async function suggestGoals(startingPoint) {
+        if (!(await ensureApiKey())) return;
+
+        showLoading(true);
+        hideError();
+
+        const prompt = `Given the starting point "${startingPoint}", suggest 5-6 relevant improvement goals that someone might want to achieve.
+
+        Return a JSON array of goal suggestions with this structure:
+        [
+            {"goal": "Specific improvement goal", "description": "Brief explanation of this goal"},
+            {"goal": "Another goal", "description": "Brief explanation"}
+        ]
+
+        Rules:
+        - Make goals specific, achievable, and relevant to "${startingPoint}"
+        - Include both short-term and long-term improvement options
+        - Vary the scope from small improvements to major transformations
+        - Keep descriptions under 15 words
+        - Focus on positive outcomes and growth
+        
+        Only return valid JSON array, no additional text.`;
+
+        const apiConfig = getApiConfig();
+
+        try {
+          const response = await fetch(apiConfig.url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${apiConfig.key}`,
+            },
+            body: JSON.stringify({
+              model: apiConfig.model,
+              messages: [
+                {
+                  role: "user",
+                  content: prompt,
+                },
+              ],
+              temperature: 0.8,
+              max_tokens: 800,
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const data = await response.json();
+          const content = data.choices[0].message.content.trim();
+          
+          let goalSuggestions;
+          try {
+            const jsonString = content.replace(/```json\n?/, "").replace(/```$/, "");
+            goalSuggestions = JSON.parse(jsonString);
+          } catch (parseError) {
+            throw new Error(`Failed to parse goal suggestions: ${parseError.message}`);
+          }
+
+          showGoalSuggestionDialog(startingPoint, goalSuggestions);
+        } catch (error) {
+          showError(`Failed to suggest goals: ${error.message}`);
+        } finally {
+          showLoading(false);
+        }
+      }
+
+      // Show goal suggestion dialog
+      function showGoalSuggestionDialog(startingPoint, suggestions) {
+        document.getElementById("goalSuggestionStartingPoint").textContent = startingPoint;
+        
+        const goalList = document.getElementById("goalSuggestionList");
+        goalList.innerHTML = "";
+        
+        suggestions.forEach((suggestion, index) => {
+          const goalOption = document.createElement("div");
+          goalOption.className = "radio-option";
+          goalOption.innerHTML = `
+            <input type="radio" name="suggestedGoal" id="goal${index}" value="${suggestion.goal}">
+            <label for="goal${index}" class="radio-label">
+              <strong>${suggestion.goal}</strong>
+              <small>${suggestion.description}</small>
+            </label>
+          `;
+          goalList.appendChild(goalOption);
+        });
+        
+        // Add event listeners to radio buttons
+        document.querySelectorAll('input[name="suggestedGoal"]').forEach(radio => {
+          radio.addEventListener('change', () => {
+            document.getElementById("useSelectedGoal").disabled = false;
+          });
+        });
+        
+        document.getElementById("goalSuggestionDialog").showModal();
+        document.body.style.overflow = "hidden";
+      }
+
       // Expand existing graph with a new topic
       async function expandGraphWithTopic(newTopic) {
         if (!(await ensureApiKey())) return;
@@ -2438,7 +2574,8 @@
           return;
         }
         if (!destination) {
-          showError("Please describe your destination goal");
+          // If no destination but has starting point, suggest goals
+          suggestGoals(startingPoint);
           return;
         }
 
@@ -2947,7 +3084,37 @@
             closeHelpModal();
           } else if (document.getElementById("settingsModal").open) {
             closeSettingsModal();
+          } else if (document.getElementById("goalSuggestionDialog").open) {
+            closeGoalSuggestionDialog();
           }
+        }
+      });
+
+      // Goal suggestion dialog event listeners
+      document.getElementById("useSelectedGoal").addEventListener("click", () => {
+        const selectedGoal = document.querySelector('input[name="suggestedGoal"]:checked');
+        if (selectedGoal) {
+          document.getElementById("destination").value = selectedGoal.value;
+          closeGoalSuggestionDialog();
+          
+          // Auto-generate the diagram
+          const startingPoint = document.getElementById("startingPoint").value.trim();
+          generateDiagram(startingPoint, selectedGoal.value);
+        }
+      });
+
+      document.getElementById("customGoalBtn").addEventListener("click", () => {
+        closeGoalSuggestionDialog();
+        // Focus on the destination input for custom entry
+        setTimeout(() => {
+          document.getElementById("destination").focus();
+        }, 100);
+      });
+
+      // Close goal suggestion dialog when clicking outside
+      document.getElementById("goalSuggestionDialog").addEventListener("click", (e) => {
+        if (e.target === document.getElementById("goalSuggestionDialog")) {
+          closeGoalSuggestionDialog();
         }
       });
 
