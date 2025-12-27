@@ -893,8 +893,11 @@
         border-radius: 1.75rem;
         overflow: hidden;
         height: 100%;
+        width: 100%;
+        max-width: 100%;
         display: flex;
         flex-direction: column;
+        box-sizing: border-box;
       }
 
       .dialog-header {
@@ -904,6 +907,10 @@
         padding: 1.5rem;
         border-bottom: 1px solid var(--border-color);
         background: var(--surface-secondary);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        flex-shrink: 0;
       }
 
       .dialog-header h3 {
@@ -911,6 +918,12 @@
         color: var(--text-primary);
         font-size: 1.1rem;
         font-weight: 600;
+        flex: 1;
+        min-width: 0;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: calc(100% - 60px);
       }
 
       .dialog-close {
@@ -940,6 +953,9 @@
         padding: 1.5rem;
         flex: 1;
         overflow-y: auto;
+        overflow-x: hidden;
+        width: 100%;
+        box-sizing: border-box;
       }
 
       .dialog-body p {
@@ -947,6 +963,10 @@
         line-height: 1.6;
         color: var(--text-color);
         font-size: 0.95rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+        max-width: 100%;
       }
 
       .dialog-footer {
@@ -955,6 +975,10 @@
         display: flex;
         justify-content: flex-end;
         background: var(--surface-tertiary);
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        flex-shrink: 0;
       }
 
       .dialog-btn {
@@ -979,27 +1003,63 @@
       @media (max-width: 768px) {
         .explanation-dialog {
           width: 95vw;
+          max-width: 95vw;
+          height: auto;
           max-height: 85vh;
+          min-height: 200px;
+        }
+
+        .dialog-content {
+          min-height: 200px;
+          max-height: 85vh;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
         }
 
         .dialog-header {
           padding: 1rem;
+          flex-shrink: 0;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
         }
 
         .dialog-header h3 {
           font-size: 1rem;
+          flex: 1;
+          min-width: 0;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+          max-width: calc(100% - 50px);
         }
 
         .dialog-body {
           padding: 1rem;
+          padding-left: 2rem;
+          flex: 1;
+          overflow-y: auto;
+          overflow-x: hidden;
+          min-height: 100px;
+          width: 100%;
+          box-sizing: border-box;
         }
 
         .dialog-body p {
           font-size: 0.9rem;
+          word-wrap: break-word;
+          overflow-wrap: break-word;
+          hyphens: auto;
+          line-height: 1.5;
         }
 
         .dialog-footer {
           padding: 0.75rem 1rem;
+          flex-shrink: 0;
+          width: 100%;
+          max-width: 100%;
+          box-sizing: border-box;
         }
 
         .dialog-btn {
