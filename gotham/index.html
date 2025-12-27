@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>USSR Collapse Analysis</title>
+    <style>
+      #cy {
+        width: 1200px;
+        height: calc(95vh - 100px);
+        border: 1px solid #ccc;
+        display: block;
+      }
+
+      #breakdown {
+        width: 100%;
+        background-color: white;
+        box-sizing: border-box;
+        line-height: 28px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        background: #f9f9f9;
+        height: 100%;
+        max-height: calc(95vh - 100px);
+        overflow-y: scroll;
+      }
+
+      #timeline {
+        width: 100%;
+      }
+    </style>
+    <!-- vis-timeline CSS -->
+    <link
+      href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <!-- Add in <head> -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css"
+    />
+    <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  </head>
+
+  <body>
+    <div
+      style="
+        display: grid;
+        grid-template-columns: 0.6fr 1.4fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+        height: 95vh;
+      "
+    >
+      <div id="timeline" style="height: 100%"></div>
+      <div
+        style="
+          display: grid;
+          grid-template-rows: 1fr;
+          gap: 10px;
+          grid-row: span 2;
+        "
+      >
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 0.5fr 2.5fr;
+            gap: 10px;
+            height: 100%;
+          "
+        >
+          <div id="breakdown"></div>
+          <div>
+            <div
+              style="
+                margin-bottom: 10px;
+                display: flex;
+                gap: 10px;
+                align-items: center;
+              "
+            >
+              <input
+                type="text"
+                id="eventInput"
+                placeholder="Enter historical event (e.g., 'USSR collapse', 'French Revolution')"
+                style="width: 300px; padding: 8px; margin-right: 10px"
+              />
+              <button id="generateBtn">Generate Timeline</button>
+              <button id="recenterBtn">Recenter Graph</button>
+              <button id="editApiKeyBtn">Edit API Key</button>
+              <label for="layoutSelect">Layout:</label>
+              <select id="layoutSelect">
+                <option value="cose">Cose (Force-directed)</option>
+                <option value="breadthfirst">Breadth First</option>
+                <option value="dfs">Depth First</option>
+                <option value="grid">Grid</option>
+                <option value="circle">Circle</option>
+                <option value="concentric">Concentric</option>
+                <option value="random">Random</option>
+                <option value="preset">Preset</option>
+                <option value="cola">Cola</option>
+                <option value="dagre">Dagre</option>
+              </select>
+              <label for="generateSimultaneous" style="margin-left: 15px">
+                <input type="checkbox" id="generateSimultaneous" checked />
+                Generate Simultaneous Events
+              </label>
+              <label for="linearTemporal" style="margin-left: 15px">
+                <input type="checkbox" id="linearTemporal" />
+                Linear Temporal Chain
+              </label>
+              <label for="generateIsRelationships" style="margin-left: 15px">
+                <input type="checkbox" id="generateIsRelationships" checked />
+                Show Actor-Instance Links
+              </label>
+            </div>
+            <div id="cy"></div>
+          </div>
+        </div>
+      </div>
+      <div
+        id="map"
+        style="width: 100%; height: 100%; border: 1px solid #ccc"
+      ></div>
+    </div>
+
+    <script src="https://unpkg.com/cytoscape/dist/cytoscape.min.js"></script>
+
+    <!-- Load layout dependencies first -->
+    <script src="https://unpkg.com/webcola/WebCola/cola.min.js"></script>
+    <script src="https://unpkg.com/dagre/dist/dagre.min.js"></script>
+
+    <!-- Load layout extensions after cytoscape and dependencies -->
+    <script src="https://unpkg.com/cytoscape-cola@2.5.1/cytoscape-cola.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
+
+    <!-- vis-timeline JS -->
+    <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
+    <script>
+      // Wait for all scripts to load before initializing
+      document.addEventListener("DOMContentLoaded", function () {
+        // Register layout extensions after DOM loads
+        setTimeout(function () {
+          try {
+            // Register available extensions
+            if (typeof cytoscapeCola !== "undefined") {
+              cytoscape.use(cytoscapeCola);
+              console.log("Cola layout registered");
+            }
+            if (typeof cytoscapeDagre !== "undefined") {
+              cytoscape.use(cytoscapeDagre);
+              console.log("Dagre layout registered");
+            }
+          } catch (e) {
+            console.log("Extension registration error:", e);
+          }
+
+          // Initialize the application
+          initializeApp();
+        }, 200);
+      });
+
+      let loading = false;
+      let cy; // Declare cy globally
+
+      function initializeApp() {
+        // Dynamic data variables
+        let eventNodes = [];
+        let actorNodes = [];
+        let instanceNodes = [];
+        let timelineEvents = [];
+        let addressCoords = {};
+        let currentEventName = "historical event";
+
+        async function getBreakdownFromChatGPT(sentence) {
+          loading = true;
+          const loadingDiv = document.getElementById("breakdown");
+          loadingDiv.innerHTML = `<h3>Loading breakdown...</h3>`;
+          loadingDiv.style.display = "block";
+          // WARNING: Never expose your API key in production!
+          let key = localStorage.getItem("grok_api_key");
+          if (!key) {
+            console.log(
+              "No API key found in local storage. Prompting for key."
+            );
+
+            key = window.prompt("Please enter your GROK API key:");
+            // save in local storage
+            localStorage.setItem("grok_api_key", key);
+          }
+
+          const apiKey = key;
+          const prompt = `You are helping me understand ${currentEventName}. Brief me on "${sentence}"`;
+          try {
+            const response = await fetch(
+              "https://api.x.ai/v1/chat/completions",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                  // model with search on the web
+                  model: "grok-3-latest",
+                  messages: [{ role: "user", content: prompt }],
+                  stream: false,
+                  temperature: 0,
+                }),
+              }
+            );
+
+            const data = await response.json();
+            return (
+              data.choices?.[0]?.message?.content || "No breakdown available."
+            );
+          } catch (error) {
+            console.error("Error fetching breakdown:", error);
+            return "Error fetching breakdown.";
+          } finally {
+            loading = false;
+          }
+        }
+
+        async function generateTimelineFromGrok(eventName) {
+          currentEventName = eventName; // Store for breakdown context
+          loading = true;
+          const loadingDiv = document.getElementById("breakdown");
+          loadingDiv.innerHTML = `<h3>Generating timeline for "${eventName}"...</h3>`;
+          loadingDiv.style.display = "block";
+
+          let key = localStorage.getItem("grok_api_key");
+          if (!key) {
+            key = window.prompt("Please enter your GROK API key:");
+            localStorage.setItem("grok_api_key", key);
+          }
+
+          const prompt = `Generate a comprehensive timeline analysis for "${eventName}". Return a JSON object with the following structure:
+
+{
+  "events": [
+    {
+      "id": "event_1",
+      "label": "Event Name",
+      "date": "YYYY-MM-DD",
+      "description": "Brief description"
+    }
+  ],
+  "actors": [
+    {
+      "id": "actor_1",
+      "label": "Actor Name",
+      "category": "leadership|military|government|etc"
+    }
+  ],
+  "instances": [
+    {
+      "id": "instance_1",
+      "label": "Actor action description",
+      "actor": "actor_1",
+      "event": "event_1",
+      "date": "YYYY-MM-DD"
+    }
+  ],
+  "timelineEvents": [
+    {
+      "id": 1,
+      "content": "Event Name<br>Date",
+      "start": "YYYY-MM-DDTHH:mm:ss",
+      "group": "category",
+      "address": "Location"
+    }
+  ],
+  "addressCoords": {
+    "Location Name": [lat, lng]
+  }
+}
+
+Generate 15-25 key events, 8-15 main actors, and their interactions. Use real historical data. Return ONLY the JSON, no other text.`;
+
+          try {
+            const response = await fetch(
+              "https://api.x.ai/v1/chat/completions",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${key}`,
+                },
+                body: JSON.stringify({
+                  model: "grok-3-latest",
+                  messages: [{ role: "user", content: prompt }],
+                  stream: false,
+                  temperature: 0.3,
+                }),
+              }
+            );
+
+            const data = await response.json();
+            const content = data.choices?.[0]?.message?.content || "{}";
+
+            // Extract JSON from response (handle potential markdown formatting)
+            let jsonStr = content;
+            if (content.includes("```json")) {
+              jsonStr = content.split("```json")[1].split("```")[0];
+            } else if (content.includes("```")) {
+              jsonStr = content.split("```")[1].split("```")[0];
+            }
+
+            const timelineData = JSON.parse(jsonStr);
+
+            // Update global variables
+            eventNodes = timelineData.events.map((e) => ({
+              data: {
+                id: e.id,
+                label: e.label,
+                type: "event",
+                date: e.date,
+              },
+            }));
+
+            actorNodes = timelineData.actors.map((a) => ({
+              data: {
+                id: a.id,
+                label: a.label,
+                type: "actor",
+                category: a.category,
+              },
+            }));
+
+            instanceNodes = timelineData.instances.map((i) => ({
+              data: {
+                id: i.id,
+                label: i.label,
+                type: "instance",
+                actor: i.actor,
+                event: i.event,
+                date: i.date,
+              },
+            }));
+
+            timelineEvents = timelineData.timelineEvents;
+            addressCoords = timelineData.addressCoords;
+
+            // Reinitialize the visualization
+            initializeGraph();
+            initializeTimelineAndMap();
+
+            loadingDiv.innerHTML = `<h3>Timeline generated for "${eventName}"</h3><p>Click on any node or timeline event to get more details.</p>`;
+          } catch (error) {
+            console.error("Error generating timeline:", error);
+            loadingDiv.innerHTML = `<h3>Error generating timeline</h3><p>Please check your API key and try again. Error: ${error.message}</p>`;
+          } finally {
+            loading = false;
+          }
+        }
+
+        // Create "is" relationships between general actors and their last instances only
+        const createIsRelationships = () => {
+          const generateIsCheckbox = document.getElementById(
+            "generateIsRelationships"
+          );
+          if (!generateIsCheckbox || !generateIsCheckbox.checked) {
+            return [];
+          }
+
+          const actorLastInstances = {};
+
+          // Find the last instance for each actor (by date)
+          instanceNodes.forEach((instance) => {
+            const actor = instance.data.actor;
+            if (
+              !actorLastInstances[actor] ||
+              new Date(instance.data.date) >
+                new Date(actorLastInstances[actor].data.date)
+            ) {
+              actorLastInstances[actor] = instance;
+            }
+          });
+
+          // Create is relationships only for last instances
+          return Object.values(actorLastInstances).map((instance) => ({
+            data: {
+              source: instance.data.actor,
+              target: instance.data.id,
+              relationship: "is",
+              type: "is",
+            },
+          }));
+        };
+
+        // Create participation relationships between instances and events
+        const createParticipationEdges = () => {
+          return instanceNodes.map((instance) => ({
+            data: {
+              source: instance.data.id,
+              target: instance.data.event,
+              relationship: "participates",
+              type: "participation",
+            },
+          }));
+        };
+
+        // Create linear temporal chains for each character
+        const createCharacterTimelines = () => {
+          const characterInstances = {};
+
+          // Group instances by actor
+          instanceNodes.forEach((instance) => {
+            const actor = instance.data.actor;
+            if (!characterInstances[actor]) {
+              characterInstances[actor] = [];
+            }
+            characterInstances[actor].push(instance);
+          });
+
+          const timelineEdges = [];
+
+          // Create linear chains for each character
+          Object.values(characterInstances).forEach((instances) => {
+            // Sort instances by date
+            instances.sort(
+              (a, b) => new Date(a.data.date) - new Date(b.data.date)
+            );
+
+            // Connect consecutive instances
+            for (let i = 0; i < instances.length - 1; i++) {
+              timelineEdges.push({
+                data: {
+                  source: instances[i].data.id,
+                  target: instances[i + 1].data.id,
+                  relationship: "happens_before",
+                  type: "character_timeline",
+                },
+              });
+            }
+          });
+
+          return timelineEdges;
+        };
+
+        // Create temporal relationships between events (algorithmically based on dates)
+        const createTemporalEdges = () => {
+          // Sort events by date
+          const sortedEvents = eventNodes
+            .slice()
+            .sort((a, b) => new Date(a.data.date) - new Date(b.data.date));
+
+          const temporalEdges = [];
+
+          // Group events by date to handle simultaneous events
+          const eventsByDate = {};
+          sortedEvents.forEach((event) => {
+            const dateKey = event.data.date;
+            if (!eventsByDate[dateKey]) {
+              eventsByDate[dateKey] = [];
+            }
+            eventsByDate[dateKey].push(event);
+          });
+
+          const dateKeys = Object.keys(eventsByDate).sort();
+
+          // Create temporal edges between different dates
+          const linearTemporalCheckbox =
+            document.getElementById("linearTemporal");
+          if (linearTemporalCheckbox && linearTemporalCheckbox.checked) {
+            // Linear chain: connect events in sequence
+            for (let i = 0; i < sortedEvents.length - 1; i++) {
+              temporalEdges.push({
+                data: {
+                  source: sortedEvents[i].data.id,
+                  target: sortedEvents[i + 1].data.id,
+                  relationship: "happens_before",
+                  type: "temporal",
+                },
+              });
+            }
+          } else {
+            // Full mesh between date groups
+            for (let i = 1; i < dateKeys.length; i++) {
+              const prevDateEvents = eventsByDate[dateKeys[i - 1]];
+              const currentDateEvents = eventsByDate[dateKeys[i]];
+
+              // Connect each event from previous date to each event in current date
+              prevDateEvents.forEach((prevEvent) => {
+                currentDateEvents.forEach((currentEvent) => {
+                  temporalEdges.push({
+                    data: {
+                      source: prevEvent.data.id,
+                      target: currentEvent.data.id,
+                      relationship: "happens_before",
+                      type: "temporal",
+                    },
+                  });
+                });
+              });
+            }
+          }
+
+          // Handle events on the same date
+          const generateSimultaneousCheckbox = document.getElementById(
+            "generateSimultaneous"
+          );
+          if (
+            generateSimultaneousCheckbox &&
+            generateSimultaneousCheckbox.checked
+          ) {
+            dateKeys.forEach((dateKey) => {
+              const eventsOnSameDate = eventsByDate[dateKey];
+              if (eventsOnSameDate.length > 1) {
+                // Create bidirectional "simultaneous" relationships
+                for (let i = 0; i < eventsOnSameDate.length; i++) {
+                  for (let j = i + 1; j < eventsOnSameDate.length; j++) {
+                    temporalEdges.push({
+                      data: {
+                        source: eventsOnSameDate[i].data.id,
+                        target: eventsOnSameDate[j].data.id,
+                        relationship: "simultaneous",
+                        type: "simultaneous",
+                      },
+                    });
+                  }
+                }
+              }
+            });
+          }
+
+          return temporalEdges;
+        };
+
+        let cy; // Declare cy globally
+        let categoryColors = {}; // Store dynamic category colors
+        let map; // Declare map globally to manage its lifecycle
+
+        // Generate a color for a category using a hash function
+        function getCategoryColor(category) {
+          if (categoryColors[category]) {
+            return categoryColors[category];
+          }
+
+          // Simple hash function to generate consistent colors
+          let hash = 0;
+          for (let i = 0; i < category.length; i++) {
+            hash = category.charCodeAt(i) + ((hash << 5) - hash);
+          }
+
+          // Convert hash to HSL color with good saturation and lightness
+          const hue = Math.abs(hash % 360);
+          const saturation = 65 + (Math.abs(hash) % 20); // 65-85%
+          const lightness = 45 + (Math.abs(hash) % 15); // 45-60%
+
+          const color = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+          categoryColors[category] = color;
+          return color;
+        }
+
+        function initializeGraph() {
+          // Create edges dynamically
+          const participationEdges = createParticipationEdges();
+          const isRelationships = createIsRelationships();
+          const characterTimelineEdges = createCharacterTimelines();
+          const temporalEdges = createTemporalEdges();
+
+          const nodes = [...eventNodes, ...actorNodes, ...instanceNodes];
+          const edges = [
+            ...participationEdges,
+            ...isRelationships,
+            ...characterTimelineEdges,
+            ...temporalEdges,
+          ];
+
+          // Generate dynamic category styles
+          const uniqueCategories = [
+            ...new Set(
+              actorNodes.map((node) => node.data.category).filter(Boolean)
+            ),
+          ];
+          const dynamicCategoryStyles = uniqueCategories.map((category) => ({
+            selector: `node[category='${category}']`,
+            style: {
+              "background-color": getCategoryColor(category),
+            },
+          }));
+
+          if (cy) {
+            cy.destroy();
+          }
+
+          cy = cytoscape({
+            container: document.getElementById("cy"),
+            elements: [...nodes, ...edges],
+            style: [
+              ...dynamicCategoryStyles,
+              {
+                selector: "node[type='event']",
+                style: {
+                  label: "data(label)",
+                  "background-color": "#FF6B6B",
+                  color: "#fff",
+                  "text-valign": "center",
+                  "text-halign": "center",
+                  padding: "10px",
+                  shape: "rectangle",
+                  "font-size": "10px",
+                  "text-background-color": "rgba(0,0,0,0.7)",
+                  "text-background-opacity": 1,
+                  "text-background-padding": "2px",
+                },
+              },
+              {
+                selector: "node[type='actor']",
+                style: {
+                  label: "data(label)",
+                  "background-color": "#4ECDC4",
+                  color: "#fff",
+                  "text-valign": "center",
+                  "text-halign": "center",
+                  padding: "15px",
+                  shape: "ellipse",
+                  "font-size": "12px",
+                  "text-background-color": "rgba(0,0,0,0.7)",
+                  "text-background-opacity": 1,
+                  "text-background-padding": "2px",
+                },
+              },
+              {
+                selector: "node[type='instance']",
+                style: {
+                  label: "data(label)",
+                  "background-color": "#45B7D1",
+                  color: "#fff",
+                  "text-valign": "center",
+                  "text-halign": "center",
+                  padding: "8px",
+                  shape: "diamond",
+                  "font-size": "9px",
+                  "text-background-color": "rgba(0,0,0,0.7)",
+                  "text-background-opacity": 1,
+                  "text-background-padding": "2px",
+                },
+              },
+              {
+                selector: "edge[type='temporal']",
+                style: {
+                  "curve-style": "bezier",
+                  "line-color": "#E67E22",
+                  width: 2,
+                  "target-arrow-shape": "triangle",
+                  "target-arrow-color": "#E67E22",
+                  label: "data(relationship)",
+                  "font-size": "6px",
+                  "text-rotation": "autorotate",
+                  "text-margin-y": -6,
+                  color: "#D35400",
+                  "line-style": "dashed",
+                },
+              },
+              {
+                selector: "edge[type='simultaneous']",
+                style: {
+                  "curve-style": "bezier",
+                  "line-color": "#9B59B6",
+                  width: 1.5,
+                  "target-arrow-shape": "none",
+                  label: "data(relationship)",
+                  "font-size": "6px",
+                  "text-rotation": "autorotate",
+                  "text-margin-y": -6,
+                  color: "#8E44AD",
+                  "line-style": "dotted",
+                },
+              },
+              {
+                selector: "edge[type='is']",
+                style: {
+                  "curve-style": "bezier",
+                  "line-color": "#16A085",
+                  width: 2,
+                  "target-arrow-shape": "triangle",
+                  "target-arrow-color": "#16A085",
+                  label: "data(relationship)",
+                  "font-size": "8px",
+                  "text-rotation": "autorotate",
+                  "text-margin-y": -8,
+                  color: "#148F77",
+                  "line-style": "solid",
+                },
+              },
+              {
+                selector: "edge[type='participation']",
+                style: {
+                  "curve-style": "bezier",
+                  "line-color": "#8E44AD",
+                  width: 1.5,
+                  "target-arrow-shape": "triangle",
+                  "target-arrow-color": "#8E44AD",
+                  label: "data(relationship)",
+                  "font-size": "8px",
+                  "text-rotation": "autorotate",
+                  "text-margin-y": -8,
+                  color: "#7D3C98",
+                },
+              },
+              {
+                selector: "edge[type='character_timeline']",
+                style: {
+                  "curve-style": "bezier",
+                  "line-color": "#F39C12",
+                  width: 3,
+                  "target-arrow-shape": "triangle",
+                  "target-arrow-color": "#F39C12",
+                  label: "data(relationship)",
+                  "font-size": "6px",
+                  "text-rotation": "autorotate",
+                  "text-margin-y": -6,
+                  color: "#E67E22",
+                  "line-style": "solid",
+                },
+              },
+              {
+                selector:
+                  "edge[type!='temporal'][type!='simultaneous'][type!='is'][type!='participation'][type!='character_timeline']",
+                style: {
+                  "curve-style": "bezier",
+                  "line-color": "#95A5A6",
+                  width: 1,
+                  "target-arrow-shape": "triangle",
+                  "target-arrow-color": "#95A5A6",
+                  label: "data(relationship)",
+                  "font-size": "8px",
+                  "text-rotation": "autorotate",
+                  "text-margin-y": -8,
+                  color: "#7F8C8D",
+                },
+              },
+            ],
+            layout: {
+              name: "cose",
+              animate: true,
+              nodeRepulsion: 140000,
+            },
+          });
+        }
+
+        // Function to apply different layouts
+        function applyLayout(layoutName) {
+          let layoutOptions = { name: layoutName, animate: true };
+
+          switch (layoutName) {
+            case "cose":
+              layoutOptions = {
+                name: "cose",
+                animate: true,
+                nodeRepulsion: 140000,
+                idealEdgeLength: 100,
+                edgeElasticity: 100,
+              };
+              break;
+            case "breadthfirst":
+              layoutOptions = {
+                name: "breadthfirst",
+                animate: true,
+                directed: true,
+                spacingFactor: 2,
+                circle: false,
+              };
+              break;
+            case "dfs":
+              layoutOptions = {
+                name: "breadthfirst",
+                animate: true,
+                directed: true,
+                spacingFactor: 2,
+                circle: false,
+                depthSort: function (a, b) {
+                  return b.degree() - a.degree(); // Prioritize higher degree nodes for DFS-like behavior
+                },
+              };
+              break;
+            case "grid":
+              layoutOptions = {
+                name: "grid",
+                animate: true,
+                rows: undefined,
+                cols: undefined,
+              };
+              break;
+            case "circle":
+              layoutOptions = {
+                name: "circle",
+                animate: true,
+                radius: 300,
+              };
+              break;
+            case "concentric":
+              layoutOptions = {
+                name: "concentric",
+                animate: true,
+                concentric: function (node) {
+                  return node.data("type") === "event" ? 2 : 1;
+                },
+                levelWidth: function () {
+                  return 1;
+                },
+              };
+              break;
+            case "random":
+              layoutOptions = {
+                name: "random",
+                animate: true,
+              };
+              break;
+            case "preset":
+              layoutOptions = {
+                name: "preset",
+                animate: true,
+              };
+              break;
+            case "cola":
+              layoutOptions = {
+                name: "cola",
+                animate: true,
+                nodeSpacing: 5,
+                edgeLengthVal: 45,
+                animate: true,
+                randomize: false,
+                maxSimulationTime: 1500,
+              };
+              break;
+            case "dagre":
+              layoutOptions = {
+                name: "dagre",
+                animate: true,
+                directed: true,
+                padding: 10,
+                spacingFactor: 1.25,
+                rankDir: "TB",
+                ranker: "network-simplex",
+              };
+              break;
+          }
+
+          cy.layout(layoutOptions).run();
+        }
+
+        // Event handlers for the graph
+        function setupEventHandlers() {
+          // Generate button event listener
+          document
+            .getElementById("generateBtn")
+            .addEventListener("click", function () {
+              const eventInput = document
+                .getElementById("eventInput")
+                .value.trim();
+              if (eventInput) {
+                generateTimelineFromGrok(eventInput);
+              } else {
+                alert("Please enter a historical event name");
+              }
+            });
+
+          // Allow Enter key to trigger generation
+          document
+            .getElementById("eventInput")
+            .addEventListener("keypress", function (e) {
+              if (e.key === "Enter") {
+                const eventInput = e.target.value.trim();
+                if (eventInput) {
+                  generateTimelineFromGrok(eventInput);
+                } else {
+                  alert("Please enter a historical event name");
+                }
+              }
+            });
+          // Layout selector event listener
+          document
+            .getElementById("layoutSelect")
+            .addEventListener("change", function (e) {
+              if (cy) applyLayout(e.target.value);
+            });
+
+          // Generate simultaneous events toggle listener
+          document
+            .getElementById("generateSimultaneous")
+            .addEventListener("change", function (e) {
+              if (cy) {
+                // Regenerate the graph with or without simultaneous edges
+                const participationEdges = createParticipationEdges();
+                const newTemporalEdges = createTemporalEdges();
+                const newIsRelationships = createIsRelationships();
+                const characterTimelineEdges = createCharacterTimelines();
+                const newEdges = [
+                  ...participationEdges,
+                  ...newIsRelationships,
+                  ...characterTimelineEdges,
+                  ...newTemporalEdges,
+                ];
+
+                // Remove all edges and add the new ones
+                cy.edges().remove();
+                cy.add(newEdges);
+
+                // Reapply current layout
+                const currentLayout =
+                  document.getElementById("layoutSelect").value;
+                applyLayout(currentLayout);
+              }
+            });
+
+          // Linear temporal chain toggle listener
+          document
+            .getElementById("linearTemporal")
+            .addEventListener("change", function (e) {
+              if (cy) {
+                // Regenerate the graph with linear or mesh temporal connections
+                const participationEdges = createParticipationEdges();
+                const newTemporalEdges = createTemporalEdges();
+                const newIsRelationships = createIsRelationships();
+                const characterTimelineEdges = createCharacterTimelines();
+                const newEdges = [
+                  ...participationEdges,
+                  ...newIsRelationships,
+                  ...characterTimelineEdges,
+                  ...newTemporalEdges,
+                ];
+
+                // Remove all edges and add the new ones
+                cy.edges().remove();
+                cy.add(newEdges);
+
+                // Reapply current layout
+                const currentLayout =
+                  document.getElementById("layoutSelect").value;
+                applyLayout(currentLayout);
+              }
+            });
+
+          // Generate is relationships toggle listener
+          document
+            .getElementById("generateIsRelationships")
+            .addEventListener("change", function (e) {
+              if (cy) {
+                // Regenerate the graph with or without is relationships
+                const participationEdges = createParticipationEdges();
+                const newTemporalEdges = createTemporalEdges();
+                const newIsRelationships = createIsRelationships();
+                const characterTimelineEdges = createCharacterTimelines();
+                const newEdges = [
+                  ...participationEdges,
+                  ...newIsRelationships,
+                  ...characterTimelineEdges,
+                  ...newTemporalEdges,
+                ];
+
+                // Remove all edges and add the new ones
+                cy.edges().remove();
+                cy.add(newEdges);
+
+                // Reapply current layout
+                const currentLayout =
+                  document.getElementById("layoutSelect").value;
+                applyLayout(currentLayout);
+              }
+            });
+
+          cy.on("tap", "node", function (evt) {
+            if (loading) {
+              return;
+            }
+            const node = evt.target;
+
+            const sentence = node.data("label");
+            getBreakdownFromChatGPT(sentence).then((breakdown) => {
+              const breakdownDiv = document.getElementById("breakdown");
+              breakdownDiv.innerHTML = `<h3>Breakdown of "${sentence}"</h3><p>${marked.parse(
+                breakdown
+              )}</p>`;
+            });
+          });
+
+          document
+            .getElementById("recenterBtn")
+            .addEventListener("click", function () {
+              if (cy) cy.fit();
+            });
+
+          // Edit API key button event listener
+          document
+            .getElementById("editApiKeyBtn")
+            .addEventListener("click", function () {
+              const currentKey = localStorage.getItem("grok_api_key");
+              const newKey = window.prompt(
+                "Enter your GROK API key:",
+                currentKey || ""
+              );
+              if (newKey) {
+                localStorage.setItem("grok_api_key", newKey);
+                console.log("API key updated successfully");
+                alert("API key updated successfully!");
+              }
+            });
+        }
+
+        function initializeTimelineAndMap() {
+          // Generate dynamic groups based on actual timeline event groups
+          const uniqueGroups = [
+            ...new Set(
+              timelineEvents.map((event) => event.group).filter(Boolean)
+            ),
+          ];
+          const groupsData = uniqueGroups.map((group) => ({
+            id: group,
+            content: group.charAt(0).toUpperCase() + group.slice(1),
+          }));
+
+          // Add "other" group as fallback
+          if (!groupsData.find((g) => g.id === "other")) {
+            groupsData.push({ id: "other", content: "Other" });
+          }
+
+          const groups = new vis.DataSet(groupsData);
+
+          // Use dynamic timeline events
+          const items = new vis.DataSet(timelineEvents);
+
+          const options = {
+            width: "100%",
+            height: "47.5vh",
+            margin: {
+              item: 20,
+            },
+            stack: true,
+            showCurrentTime: true,
+            zoomMin: 1000, // 1 second
+            zoomMax: 1000 * 60 * 60 * 24 * 366 * 40, // 40 years
+            orientation: "top",
+          };
+
+          // Destroy existing timeline if it exists
+          const timelineContainer = document.getElementById("timeline");
+          timelineContainer.innerHTML = "";
+
+          const timeline = new vis.Timeline(timelineContainer, items, options);
+          timeline.setGroups(groups);
+
+          // Add click handler for timeline events
+          timeline.on("select", function (props) {
+            if (loading) return;
+            if (props.items.length > 0) {
+              const eventId = props.items[0];
+              const event = timelineEvents.find((e) => e.id === eventId);
+              if (event) {
+                const sentence = event.content.replace(/<br>/g, " "); // Remove <br> for prompt
+                getBreakdownFromChatGPT(sentence).then((breakdown) => {
+                  const breakdownDiv = document.getElementById("breakdown");
+                  breakdownDiv.innerHTML = `<h3>Breakdown of "${sentence}"</h3><p>${marked.parse(
+                    breakdown
+                  )}</p>`;
+                  breakdownDiv.scrollIntoView({ behavior: "smooth" });
+                });
+              }
+            }
+          });
+
+          // Initialize Leaflet map
+          const mapContainer = document.getElementById("map");
+
+          // Destroy existing map if it exists
+          if (map) {
+            map.remove();
+            map = null;
+          }
+
+          mapContainer.innerHTML = "";
+          map = L.map(mapContainer, {
+            center: [50, 0], // Default center
+            zoom: 2,
+            preferCanvas: false,
+          });
+
+          // Add tile layer
+          L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; OpenStreetMap contributors",
+            maxZoom: 19,
+          }).addTo(map);
+
+          // Invalidate size after a short delay to ensure proper rendering
+          setTimeout(() => {
+            map.invalidateSize();
+          }, 100);
+
+          // Create a marker cluster group
+          const markers = L.markerClusterGroup();
+
+          // Add markers for each event using dynamic coordinates
+          timelineEvents.forEach((event) => {
+            const coords = addressCoords[event.address];
+            if (coords) {
+              const marker = L.marker(coords).bindPopup(
+                `<b>${event.content}</b><br>${event.start}<br>${event.address}`
+              );
+              markers.addLayer(marker);
+            }
+          });
+
+          // Add the cluster group to the map
+          map.addLayer(markers);
+
+          // Center map on first coordinate if available
+          const firstCoords = Object.values(addressCoords)[0];
+          if (firstCoords) {
+            map.setView(firstCoords, 6);
+          }
+        }
+
+        // Initialize all components
+        initializeTimelineAndMap();
+        initializeGraph();
+        setupEventHandlers();
+
+        // Set default input value but don't auto-generate
+        document.getElementById("eventInput").value = "USSR collapse";
+      }
+    </script>
+  </body>
+</html>
