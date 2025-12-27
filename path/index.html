@@ -13,8 +13,8 @@
       content="path finder, journey planner, goal setting, AI planning, personal development, route mapping, universal navigation"
     />
     <script src="https://unpkg.com/cytoscape@3.26.0/dist/cytoscape.min.js"></script>
-    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
     <script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+    <script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
     <script src="https://unpkg.com/marked@9.1.6/marked.min.js"></script>
     <style>
       :root {
@@ -1290,6 +1290,39 @@
           </div>
 
           <div class="settings-section">
+            <h4>Graph Layout</h4>
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" name="layout" value="auto" checked />
+                <div class="radio-label">
+                  <strong>Automatic (Recommended)</strong>
+                  <small>Uses COSE layout for optimal node positioning</small>
+                </div>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="layout" value="cose" />
+                <div class="radio-label">
+                  <strong>COSE (Force-directed)</strong>
+                  <small
+                    >Physics-based layout that simulates forces between nodes
+                    for organic positioning</small
+                  >
+                </div>
+              </label>
+              <label class="radio-option">
+                <input type="radio" name="layout" value="dagre" />
+                <div class="radio-label">
+                  <strong>Dagre (Hierarchical)</strong>
+                  <small
+                    >Structured top-down layout ideal for workflow and process
+                    visualization</small
+                  >
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <div class="settings-section">
             <button id="saveSettings" class="save-button">Save Settings</button>
           </div>
 
@@ -1516,6 +1549,7 @@
       let currentProvider = localStorage.getItem("aiProvider") || "groq";
       let groqApiKey = localStorage.getItem("groqApiKey") || "";
       let grokApiKey = localStorage.getItem("grokApiKey") || "";
+      let currentLayout = localStorage.getItem("graphLayout") || "auto";
 
       // Touch/tap detection variables for mobile double-tap
       let lastTapTime = 0;
@@ -1538,6 +1572,25 @@
           if (typeof cytoscape === "undefined") {
             showError("Cytoscape library not loaded. Please refresh the page.");
             return;
+          }
+
+          // Register the dagre extension if available
+          if (
+            typeof cytoscape !== "undefined" &&
+            typeof dagre !== "undefined" &&
+            cytoscape.use
+          ) {
+            try {
+              // Check if dagre extension is available and register it
+              if (
+                window.cytoscapeDagre &&
+                typeof window.cytoscapeDagre === "function"
+              ) {
+                cytoscape.use(window.cytoscapeDagre);
+              }
+            } catch (error) {
+              console.warn("Could not register dagre extension:", error);
+            }
           }
 
           cy = cytoscape({
@@ -1742,36 +1795,109 @@
         return true;
       }
 
-      // Get COSE layout options
-      function getCoseLayoutOptions(nodeCount) {
-        // For smaller graphs, use breadthfirst to avoid overlapping issues
-        if (nodeCount <= 8) {
-          return {
-            name: "breadthfirst",
-            directed: true,
-            padding: 60,
-            spacingFactor: 2.0,
-            avoidOverlap: true,
-            nodeDimensionsIncludeLabels: true,
-          };
-        }
+      // Get layout options based on user preference and node count
+      function getLayoutOptions(nodeCount) {
+        // Ensure nodeCount is a valid number (fallback to 1 if invalid)
+        nodeCount = nodeCount && nodeCount > 0 ? nodeCount : 1;
 
-        // For larger graphs, use COSE with better spacing
-        return {
-          name: "cose",
-          padding: 60,
-          nodeOverlap: 400, // Increased significantly to prevent overlapping
-          idealEdgeLength: 150, // Increased for better spacing
-          nodeRepulsion: 12000, // Increased to push nodes apart more
-          nestingFactor: 1.2,
-          gravity: 1,
-          numIter: 1000,
-          initialTemp: 1000,
-          coolingFactor: 0.99,
-          minTemp: 1.0,
-          avoidOverlap: true,
-          nodeDimensionsIncludeLabels: true,
-        };
+        const layoutType = currentLayout === "auto" ? "cose" : currentLayout;
+
+        switch (layoutType) {
+          case "cose":
+            return {
+              name: "cose",
+              padding: 60,
+              nodeOverlap: 400,
+              idealEdgeLength: 150,
+              nodeRepulsion: 12000,
+              nestingFactor: 1.2,
+              gravity: 1,
+              numIter: 1000,
+              initialTemp: 1000,
+              coolingFactor: 0.99,
+              minTemp: 1.0,
+              avoidOverlap: true,
+              nodeDimensionsIncludeLabels: true,
+            };
+
+          case "dagre":
+            // Check if dagre extension is available
+            try {
+              // Test if we can create a dagre layout
+              if (typeof dagre === "undefined" || !cy || !cy.layout) {
+                console.warn(
+                  "Dagre extension not available, falling back to COSE layout"
+                );
+                return {
+                  name: "cose",
+                  padding: 60,
+                  nodeOverlap: 400,
+                  idealEdgeLength: 150,
+                  nodeRepulsion: 12000,
+                  nestingFactor: 1.2,
+                  gravity: 1,
+                  numIter: 1000,
+                  initialTemp: 1000,
+                  coolingFactor: 0.99,
+                  minTemp: 1.0,
+                  avoidOverlap: true,
+                  nodeDimensionsIncludeLabels: true,
+                };
+              }
+              // Try to create a test layout to see if dagre is registered
+              const testLayout = cy.layout({ name: "dagre" });
+              if (!testLayout) {
+                throw new Error("Dagre layout not available");
+              }
+            } catch (error) {
+              console.warn(
+                "Dagre extension not available, falling back to COSE layout:",
+                error
+              );
+              return {
+                name: "cose",
+                padding: 60,
+                nodeOverlap: 400,
+                idealEdgeLength: 150,
+                nodeRepulsion: 12000,
+                nestingFactor: 1.2,
+                gravity: 1,
+                numIter: 1000,
+                initialTemp: 1000,
+                coolingFactor: 0.99,
+                minTemp: 1.0,
+                avoidOverlap: true,
+                nodeDimensionsIncludeLabels: true,
+              };
+            }
+            return {
+              name: "dagre",
+              padding: 60,
+              directed: true,
+              rankDir: "TB", // Top to bottom
+              spacingFactor: 1.5,
+              avoidOverlap: true,
+              nodeDimensionsIncludeLabels: true,
+            };
+
+          default:
+            // Default to COSE layout
+            return {
+              name: "cose",
+              padding: 60,
+              nodeOverlap: 400,
+              idealEdgeLength: 150,
+              nodeRepulsion: 12000,
+              nestingFactor: 1.2,
+              gravity: 1,
+              numIter: 1000,
+              initialTemp: 1000,
+              coolingFactor: 0.99,
+              minTemp: 1.0,
+              avoidOverlap: true,
+              nodeDimensionsIncludeLabels: true,
+            };
+        }
       }
 
       // Generate path finder journey using selected AI provider
@@ -1991,9 +2117,9 @@
 
           // After preset, apply COSE layout for better arrangement
           setTimeout(() => {
-            const layoutOptions = getCoseLayoutOptions(
-              elements.filter((el) => !el.data.source).length
-            );
+            const nodeElements = elements.filter((el) => !el.data.source);
+            const nodeCount = nodeElements.length || 1; // Ensure at least 1
+            const layoutOptions = getLayoutOptions(nodeCount);
 
             cy.layout({
               ...layoutOptions,
@@ -2185,7 +2311,7 @@
           cy.add(newElements);
 
           // Re-run COSE layout to accommodate new nodes
-          const layoutOptions = getCoseLayoutOptions(cy.nodes().length);
+          const layoutOptions = getLayoutOptions(cy.nodes().length);
 
           const layout = cy.layout(layoutOptions);
           layout.run();
@@ -3071,9 +3197,31 @@
       // Settings modal functionality
       function openSettingsModal() {
         // Load current settings
-        document.querySelector(
+        const providerRadio = document.querySelector(
           `input[name="provider"][value="${currentProvider}"]`
-        ).checked = true;
+        );
+        if (providerRadio) {
+          providerRadio.checked = true;
+        }
+
+        // Handle layout selection with fallback for invalid values
+        const validLayouts = ["auto", "cose", "dagre"];
+        const layoutToUse = validLayouts.includes(currentLayout)
+          ? currentLayout
+          : "auto";
+        const layoutRadio = document.querySelector(
+          `input[name="layout"][value="${layoutToUse}"]`
+        );
+        if (layoutRadio) {
+          layoutRadio.checked = true;
+        }
+
+        // Update currentLayout if it was invalid
+        if (!validLayouts.includes(currentLayout)) {
+          currentLayout = "auto";
+          localStorage.setItem("graphLayout", currentLayout);
+        }
+
         document.getElementById("groqApiKey").value = groqApiKey;
         document.getElementById("grokApiKey").value = grokApiKey;
 
@@ -3150,24 +3298,36 @@
         const selectedProvider = document.querySelector(
           'input[name="provider"]:checked'
         ).value;
+        const selectedLayout = document.querySelector(
+          'input[name="layout"]:checked'
+        ).value;
         const newGroqKey = document.getElementById("groqApiKey").value.trim();
         const newGrokKey = document.getElementById("grokApiKey").value.trim();
 
         // Update global variables
         currentProvider = selectedProvider;
+        currentLayout = selectedLayout;
         groqApiKey = newGroqKey;
         grokApiKey = newGrokKey;
 
         // Save to localStorage
         localStorage.setItem("aiProvider", currentProvider);
+        localStorage.setItem("graphLayout", currentLayout);
         localStorage.setItem("groqApiKey", groqApiKey);
         localStorage.setItem("grokApiKey", grokApiKey);
 
         closeSettingsModal();
         hideError();
 
-        // Show success message
-        showSuccess("Settings saved successfully!");
+        // Re-apply layout if there's an existing graph
+        if (cy && cy.nodes().length > 0) {
+          const layoutOptions = getLayoutOptions(cy.nodes().length);
+          cy.layout(layoutOptions).run();
+          showSuccess("Layout updated! Settings saved successfully!");
+        } else {
+          // Show success message
+          showSuccess("Settings saved successfully!");
+        }
       });
 
       // Copy app link with API keys
@@ -3766,7 +3926,7 @@
                 initializeCytoscape();
                 if (currentElements.length > 0) {
                   cy.add(currentElements);
-                  const layoutOptions = getCoseLayoutOptions(cy.nodes().length);
+                  const layoutOptions = getLayoutOptions(cy.nodes().length);
                   cy.layout(layoutOptions).run();
                 }
               }, 100);
