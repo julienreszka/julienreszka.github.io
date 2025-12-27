@@ -243,31 +243,31 @@
             localStorage.setItem("grok_api_key", key);
           }
 
-          const prompt = `Generate a comprehensive timeline analysis for "${eventName}". Return a JSON object with the following structure:
+          const prompt = `Generate a timeline analysis for "${eventName}". Return ONLY valid JSON with this EXACT structure:
 
 {
   "events": [
     {
       "id": "event_1",
       "label": "Event Name",
-      "date": "YYYY-MM-DD",
+      "datetime": "YYYY-MM-DDTHH:mm:ss",
       "description": "Brief description"
     }
   ],
   "actors": [
     {
-      "id": "actor_1",
+      "id": "actor_1", 
       "label": "Actor Name",
-      "category": "leadership|military|government|etc"
+      "category": "leadership|military|government|civilian"
     }
   ],
   "instances": [
     {
       "id": "instance_1",
-      "label": "Actor action description",
+      "label": "Action description", 
       "actor": "actor_1",
       "event": "event_1",
-      "date": "YYYY-MM-DD"
+      "datetime": "YYYY-MM-DDTHH:mm:ss"
     }
   ],
   "timelineEvents": [
@@ -280,11 +280,11 @@
     }
   ],
   "addressCoords": {
-    "Location Name": [lat, lng]
+    "Location": [lat, lng]
   }
 }
 
-Generate 15-25 key events, 8-15 main actors, and their interactions. Use real historical data. Return ONLY the JSON, no other text.`;
+Generate 10-15 key events, 6-10 actors, and their interactions. Use real historical data. Return ONLY the JSON, no text before or after.`;
 
           try {
             const response = await fetch(
@@ -307,6 +307,13 @@ Generate 15-25 key events, 8-15 main actors, and their interactions. Use real hi
             const data = await response.json();
             const content = data.choices?.[0]?.message?.content || "{}";
 
+            // Check if response was truncated
+            if (data.choices?.[0]?.finish_reason === "length") {
+              throw new Error(
+                "Response was truncated due to length limits. Try asking for fewer events or a shorter time period."
+              );
+            }
+
             // Extract JSON from response (handle potential markdown formatting)
             let jsonStr = content;
             if (content.includes("```json")) {
@@ -315,15 +322,108 @@ Generate 15-25 key events, 8-15 main actors, and their interactions. Use real hi
               jsonStr = content.split("```")[1].split("```")[0];
             }
 
-            const timelineData = JSON.parse(jsonStr);
+            // Clean up the JSON string
+            jsonStr = jsonStr.trim();
+
+            // Check if JSON is complete by looking for proper closing
+            if (!jsonStr.endsWith("}") && !jsonStr.endsWith("]}")) {
+              console.warn(
+                "JSON appears to be truncated, attempting to fix..."
+              );
+
+              // Try to find the last complete object/array and close properly
+              let lastCompleteIndex = -1;
+              let depth = 0;
+              let inString = false;
+              let escaped = false;
+
+              for (let i = 0; i < jsonStr.length; i++) {
+                const char = jsonStr[i];
+
+                if (escaped) {
+                  escaped = false;
+                  continue;
+                }
+
+                if (char === "\\") {
+                  escaped = true;
+                  continue;
+                }
+
+                if (char === '"') {
+                  inString = !inString;
+                  continue;
+                }
+
+                if (inString) continue;
+
+                if (char === "{" || char === "[") {
+                  depth++;
+                } else if (char === "}" || char === "]") {
+                  depth--;
+                  if (depth === 0) {
+                    lastCompleteIndex = i;
+                  }
+                }
+              }
+
+              if (lastCompleteIndex > 0) {
+                jsonStr = jsonStr.substring(0, lastCompleteIndex + 1);
+                console.log(
+                  "Truncated JSON fixed to:",
+                  jsonStr.length,
+                  "characters"
+                );
+              } else {
+                throw new Error(
+                  "Response is incomplete. Please try again with a simpler request."
+                );
+              }
+            }
+
+            // Try to fix common JSON issues
+            jsonStr = jsonStr.replace(/,(\s*[}\]])/g, "$1"); // Remove trailing commas
+            jsonStr = jsonStr.replace(/([{,]\s*)(\w+):/g, '$1"$2":'); // Add quotes to unquoted keys
+
+            let timelineData;
+            try {
+              timelineData = JSON.parse(jsonStr);
+            } catch (parseError) {
+              console.error("JSON parsing failed:", parseError);
+              console.error("Raw content length:", content.length);
+              console.error("JSON string length:", jsonStr.length);
+              console.error("Last 200 chars:", jsonStr.slice(-200));
+
+              // Try to extract valid JSON using regex as fallback
+              const jsonMatch = content.match(/\{[\s\S]*\}/);
+              if (jsonMatch) {
+                try {
+                  let fallbackJson = jsonMatch[0];
+                  // Try to close incomplete structures
+                  if (!fallbackJson.endsWith("}")) {
+                    fallbackJson += "}";
+                  }
+                  timelineData = JSON.parse(fallbackJson);
+                } catch (secondParseError) {
+                  throw new Error(
+                    `Failed to parse JSON response. The response may be too long or incomplete. Try asking for fewer events. Error: ${parseError.message}`
+                  );
+                }
+              } else {
+                throw new Error(
+                  "No valid JSON found in response. Please try again with a simpler request."
+                );
+              }
+            }
 
             // Update global variables
             eventNodes = timelineData.events.map((e) => ({
               data: {
                 id: e.id,
                 label: e.label,
+                datetime: formatDateTime(e.datetime),
                 type: "event",
-                date: e.date,
+                date: e.datetime,
               },
             }));
 
@@ -340,10 +440,11 @@ Generate 15-25 key events, 8-15 main actors, and their interactions. Use real hi
               data: {
                 id: i.id,
                 label: i.label,
+                datetime: formatDateTime(i.datetime),
                 type: "instance",
                 actor: i.actor,
                 event: i.event,
-                date: i.date,
+                date: i.datetime,
               },
             }));
 
@@ -540,6 +641,18 @@ Generate 15-25 key events, 8-15 main actors, and their interactions. Use real hi
         let categoryColors = {}; // Store dynamic category colors
         let map; // Declare map globally to manage its lifecycle
 
+        // Format datetime for display on nodes
+        function formatDateTime(datetimeStr) {
+          try {
+            const date = new Date(datetimeStr);
+            const dateOnly = date.toISOString().split("T")[0]; // YYYY-MM-DD
+            const timeOnly = date.toTimeString().split(" ")[0].slice(0, 5); // HH:mm
+            return `${dateOnly} ${timeOnly}`;
+          } catch {
+            return datetimeStr; // fallback to original string if parsing fails
+          }
+        }
+
         // Generate a color for a category using a hash function
         function getCategoryColor(category) {
           if (categoryColors[category]) {
@@ -602,17 +715,23 @@ Generate 15-25 key events, 8-15 main actors, and their interactions. Use real hi
               {
                 selector: "node[type='event']",
                 style: {
-                  label: "data(label)",
+                  label: function (ele) {
+                    return ele.data("label") + "\n" + ele.data("datetime");
+                  },
                   "background-color": "#FF6B6B",
                   color: "#fff",
                   "text-valign": "center",
                   "text-halign": "center",
                   padding: "10px",
                   shape: "rectangle",
-                  "font-size": "10px",
+                  "font-size": "14px",
+                  "text-wrap": "wrap",
+                  "text-max-width": "120px",
                   "text-background-color": "rgba(0,0,0,0.7)",
                   "text-background-opacity": 1,
-                  "text-background-padding": "2px",
+                  "text-background-padding": "3px",
+                  width: "120px",
+                  height: "80px",
                 },
               },
               {
@@ -625,7 +744,7 @@ Generate 15-25 key events, 8-15 main actors, and their interactions. Use real hi
                   "text-halign": "center",
                   padding: "15px",
                   shape: "ellipse",
-                  "font-size": "12px",
+                  "font-size": "14px",
                   "text-background-color": "rgba(0,0,0,0.7)",
                   "text-background-opacity": 1,
                   "text-background-padding": "2px",
@@ -634,17 +753,23 @@ Generate 15-25 key events, 8-15 main actors, and their interactions. Use real hi
               {
                 selector: "node[type='instance']",
                 style: {
-                  label: "data(label)",
+                  label: function (ele) {
+                    return ele.data("label") + "\n" + ele.data("datetime");
+                  },
                   "background-color": "#45B7D1",
                   color: "#fff",
                   "text-valign": "center",
                   "text-halign": "center",
                   padding: "8px",
                   shape: "diamond",
-                  "font-size": "9px",
+                  "font-size": "12px",
+                  "text-wrap": "wrap",
+                  "text-max-width": "100px",
                   "text-background-color": "rgba(0,0,0,0.7)",
                   "text-background-opacity": 1,
                   "text-background-padding": "2px",
+                  width: "100px",
+                  height: "60px",
                 },
               },
               {
