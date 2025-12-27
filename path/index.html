@@ -2412,8 +2412,23 @@
 
           hideInfo();
 
+          // Get relationship info for display
+          const relationship = edge.data("relationship") || edge.data("type") || "leads_to";
+          const polarity = edge.data("polarity");
+          
+          // Choose appropriate symbol for path finder relationships
+          let relationshipSymbol = "→";
+          if (polarity === "+") {
+            relationshipSymbol = "➕";
+          } else if (polarity === "-") {
+            relationshipSymbol = "➖";
+          } else if (relationship === "requires") {
+            relationshipSymbol = "🔗";
+          } else if (relationship === "enables") {
+            relationshipSymbol = "✨";
+          }
+          
           // Show explanation in dialog
-          const relationshipSymbol = polarity === "+" ? "➕" : "➖";
           showRelationshipDialog(
             `${relationshipSymbol} ${sourceLabel} → ${targetLabel}`,
             explanation
@@ -2825,7 +2840,7 @@
             ? `${startingPoint} → ${destination}`
             : "current path";
 
-        const basePrompt = `Given an existing causal loop diagram about "${currentTheme}", add the topic "${newTopic}" to expand the diagram with relevant connections.`;
+        const basePrompt = `Given an existing journey path about "${currentJourney}", add the topic "${newTopic}" to expand the diagram with relevant connections.`;
 
         const newsPrompt =
           currentProvider === "grok" || currentProvider === "grok-fast"
