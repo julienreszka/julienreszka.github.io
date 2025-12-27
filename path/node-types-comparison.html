@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Universal Path Finder - Node Types Comparison</title>
+    <style>
+      :root {
+        --bg-gradient-start: #ffffff;
+        --bg-gradient-end: #f8f9fa;
+        --text-color: #333;
+        --text-secondary: #7f8c8d;
+        --text-primary: #2c3e50;
+        --surface-color: rgba(255, 255, 255, 0.95);
+        --border-color: #e0e0e0;
+        --accent-blue: #3498db;
+        --accent-green: #27ae60;
+        --accent-orange: #f39c12;
+        --accent-red: #e74c3c;
+        --accent-purple: #9b59b6;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg-gradient-start: #2c3e50;
+          --bg-gradient-end: #34495e;
+          --text-color: #ecf0f1;
+          --text-secondary: #95a5a6;
+          --text-primary: #ecf0f1;
+          --surface-color: rgba(52, 73, 94, 0.95);
+          --border-color: #4a5c6a;
+        }
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--bg-gradient-start) 0%,
+          var(--bg-gradient-end) 100%
+        );
+        color: var(--text-color);
+        padding: 2rem;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: var(--surface-color);
+        border-radius: 1.5rem;
+        padding: 2rem;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: var(--text-primary);
+        margin-bottom: 2rem;
+        font-size: 2.5rem;
+      }
+
+      .intro {
+        text-align: center;
+        color: var(--text-secondary);
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+      }
+
+      .table-container {
+        overflow-x: auto;
+        border-radius: 1rem;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        font-size: 0.95rem;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        table {
+          background: var(--bg-gradient-end);
+        }
+      }
+
+      th,
+      td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      th {
+        background: var(--accent-blue);
+        color: white;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      tr:nth-child(even) {
+        background: rgba(52, 152, 219, 0.05);
+      }
+
+      tr:hover {
+        background: rgba(52, 152, 219, 0.1);
+        transition: background 0.2s ease;
+      }
+
+      .node-type {
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .current {
+        background: rgba(39, 174, 96, 0.1);
+        border-left: 4px solid var(--accent-green);
+      }
+
+      .current .node-type {
+        color: var(--accent-green);
+      }
+
+      .new {
+        background: rgba(243, 156, 18, 0.1);
+        border-left: 4px solid var(--accent-orange);
+      }
+
+      .new .node-type {
+        color: var(--accent-orange);
+      }
+
+      .complexity-low {
+        color: var(--accent-green);
+        font-weight: 600;
+      }
+
+      .complexity-medium {
+        color: var(--accent-orange);
+        font-weight: 600;
+      }
+
+      .complexity-high {
+        color: var(--accent-red);
+        font-weight: 600;
+      }
+
+      .priority-high {
+        background: rgba(231, 76, 60, 0.1);
+        color: var(--accent-red);
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        display: inline-block;
+      }
+
+      .priority-medium {
+        background: rgba(243, 156, 18, 0.1);
+        color: var(--accent-orange);
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        display: inline-block;
+      }
+
+      .priority-low {
+        background: rgba(52, 152, 219, 0.1);
+        color: var(--accent-blue);
+        font-weight: 600;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        display: inline-block;
+      }
+
+      .emoji {
+        font-size: 1.2rem;
+        margin-right: 0.5rem;
+      }
+
+      .legend {
+        display: flex;
+        gap: 2rem;
+        justify-content: center;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 1rem;
+        font-size: 0.9rem;
+        font-weight: 500;
+      }
+
+      .legend-current {
+        background: rgba(39, 174, 96, 0.1);
+        color: var(--accent-green);
+        border: 2px solid var(--accent-green);
+      }
+
+      .legend-new {
+        background: rgba(243, 156, 18, 0.1);
+        color: var(--accent-orange);
+        border: 2px solid var(--accent-orange);
+      }
+
+      @media (max-width: 768px) {
+        body {
+          padding: 1rem;
+        }
+
+        .container {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        th,
+        td {
+          padding: 0.75rem 0.5rem;
+          font-size: 0.85rem;
+        }
+
+        .legend {
+          flex-direction: column;
+          align-items: center;
+          gap: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🗺️ Universal Path Finder Node Types</h1>
+      <div class="intro">
+        Comparing current and proposed node types for enhanced journey planning
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Node Type</th>
+              <th>Purpose</th>
+              <th>Implementation Complexity</th>
+              <th>User Value</th>
+              <th>Priority</th>
+              <th>Use Cases</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Current Node Types -->
+            <tr class="current">
+              <td class="node-type">
+                <span class="emoji">🏁</span>Starting Point
+              </td>
+              <td>Define current situation/status</td>
+              <td class="complexity-low">Low</td>
+              <td>Essential foundation for all journeys</td>
+              <td class="priority-high">Core</td>
+              <td>Weight status, skill level, financial state</td>
+            </tr>
+            <tr class="current">
+              <td class="node-type">
+                <span class="emoji">⚡</span>Action Steps
+              </td>
+              <td>Specific tasks to execute</td>
+              <td class="complexity-low">Low</td>
+              <td>Direct actionable guidance</td>
+              <td class="priority-high">Core</td>
+              <td>Exercise routine, study sessions, job applications</td>
+            </tr>
+            <tr class="current">
+              <td class="node-type"><span class="emoji">🏆</span>Milestones</td>
+              <td>Key achievements and progress markers</td>
+              <td class="complexity-low">Low</td>
+              <td>Motivation and progress tracking</td>
+              <td class="priority-high">Core</td>
+              <td>Lose 10 pounds, complete certification, save $1000</td>
+            </tr>
+            <tr class="current">
+              <td class="node-type"><span class="emoji">🛠️</span>Resources</td>
+              <td>Tools, knowledge, support needed</td>
+              <td class="complexity-low">Low</td>
+              <td>Practical requirement identification</td>
+              <td class="priority-high">Core</td>
+              <td>Gym membership, textbooks, mentorship</td>
+            </tr>
+            <tr class="current">
+              <td class="node-type"><span class="emoji">🎯</span>Goal</td>
+              <td>Final destination/achievement</td>
+              <td class="complexity-low">Low</td>
+              <td>Clear target and motivation</td>
+              <td class="priority-high">Core</td>
+              <td>Fitness goal, career position, financial target</td>
+            </tr>
+
+            <!-- High Priority New Types -->
+            <tr class="new">
+              <td class="node-type"><span class="emoji">🚧</span>Obstacle</td>
+              <td>Known barriers to overcome</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Proactive problem solving</td>
+              <td class="priority-high">High</td>
+              <td>Time constraints, budget limits, fear of failure</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type">
+                <span class="emoji">⚖️</span>Decision Point
+              </td>
+              <td>Critical choices affecting journey</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Strategic decision guidance</td>
+              <td class="priority-high">High</td>
+              <td>Career path choice, location move, investment options</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type"><span class="emoji">📋</span>Checkpoint</td>
+              <td>Regular review and assessment points</td>
+              <td class="complexity-low">Low</td>
+              <td>Progress monitoring and course correction</td>
+              <td class="priority-high">High</td>
+              <td>Monthly weight check, quarterly review, skill assessment</td>
+            </tr>
+
+            <!-- Medium Priority New Types -->
+            <tr class="new">
+              <td class="node-type"><span class="emoji">⚠️</span>Risk</td>
+              <td>Potential setbacks to mitigate</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Risk management and contingency planning</td>
+              <td class="priority-medium">Medium</td>
+              <td>Injury risk, market volatility, skill obsolescence</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type"><span class="emoji">👨‍🏫</span>Mentor</td>
+              <td>People who guide and advise</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Personalized guidance and wisdom</td>
+              <td class="priority-medium">Medium</td>
+              <td>Industry expert, life coach, experienced peer</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type"><span class="emoji">📚</span>Skill Gap</td>
+              <td>Specific abilities to develop</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Targeted learning focus</td>
+              <td class="priority-medium">Medium</td>
+              <td>Programming language, communication skills, leadership</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type">
+                <span class="emoji">🧠</span>Mindset Shift
+              </td>
+              <td>Mental attitude changes needed</td>
+              <td class="complexity-high">High</td>
+              <td>Psychological transformation support</td>
+              <td class="priority-medium">Medium</td>
+              <td>Growth mindset, confidence building, risk tolerance</td>
+            </tr>
+
+            <!-- Lower Priority New Types -->
+            <tr class="new">
+              <td class="node-type"><span class="emoji">⏳</span>Transition</td>
+              <td>Major life changes or phase shifts</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Change management guidance</td>
+              <td class="priority-low">Low</td>
+              <td>Career change, relationship status, life stage</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type">
+                <span class="emoji">⏱️</span>Waiting Period
+              </td>
+              <td>Times requiring patience for results</td>
+              <td class="complexity-low">Low</td>
+              <td>Managing expectations and interim activities</td>
+              <td class="priority-low">Low</td>
+              <td>
+                Job application response, muscle growth, investment returns
+              </td>
+            </tr>
+            <tr class="new">
+              <td class="node-type"><span class="emoji">🤝</span>Community</td>
+              <td>Groups for support and networking</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Social support and accountability</td>
+              <td class="priority-low">Low</td>
+              <td>Fitness group, professional association, online forum</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type"><span class="emoji">🔄</span>Habit</td>
+              <td>Behaviors to build or break</td>
+              <td class="complexity-high">High</td>
+              <td>Long-term behavioral change</td>
+              <td class="priority-low">Low</td>
+              <td>Daily exercise, reading routine, meal planning</td>
+            </tr>
+            <tr class="new">
+              <td class="node-type">
+                <span class="emoji">🌍</span>Environment
+              </td>
+              <td>Physical/social settings to optimize</td>
+              <td class="complexity-medium">Medium</td>
+              <td>Contextual success factors</td>
+              <td class="priority-low">Low</td>
+              <td>Home office setup, social circle, geographic location</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="legend">
+        <div class="legend-item legend-current">
+          <span>●</span> Current Node Types (Implemented)
+        </div>
+        <div class="legend-item legend-new">
+          <span>●</span> Proposed Node Types (New)
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
