@@ -125,6 +125,54 @@
         }
       }
 
+      /* App Header Styles */
+      .app-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: var(--surface-color);
+        border-bottom: 1px solid var(--border-color);
+        backdrop-filter: blur(10px);
+      }
+
+      .app-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        margin: 0;
+        letter-spacing: 2px;
+      }
+
+      .header-buttons {
+        display: flex;
+        gap: 0.5rem;
+      }
+
+      .header-buttons button {
+        background: var(--surface-secondary);
+        border: 1px solid var(--border-color);
+        border-radius: 50%;
+        width: 40px;
+        aspect-ratio: 1;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+        box-sizing: border-box;
+      }
+
+      .header-buttons button:hover {
+        background: var(--border-focus);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
+      }
+
+      /* Controls Styles */
       .controls {
         background: var(--surface-secondary);
         padding: 1rem 2rem;
@@ -271,12 +319,12 @@
 
       .main-container {
         position: relative;
-        height: calc(100svh - 90px);
+        height: calc(100svh - 160px);
       }
 
       @media (max-width: 768px) {
         .main-container {
-          height: calc(100svh - 90px);
+          height: calc(100svh - 280px);
         }
       }
 
@@ -962,6 +1010,15 @@
     </style>
   </head>
   <body>
+    <div class="app-header">
+      <h1 class="app-title">UPF</h1>
+      <div class="header-buttons">
+        <button id="settingsBtn">⚙️</button>
+        <button id="shareBtn">🔗</button>
+        <button id="helpBtn">❔</button>
+      </div>
+    </div>
+
     <div class="controls">
       <div class="input-group">
         <label for="startingPoint">Starting Point (where you are now)</label>
@@ -974,12 +1031,9 @@
         <label for="destination">Destination Goal (where you want to be)</label>
         <div class="input-with-buttons">
           <input type="text" id="destination" placeholder="e.g., Fit" />
-          <button id="generateBtn">🗺️ Find Path</button>
-          <button id="settingsBtn">⚙️</button>
-          <button id="shareBtn">🔗</button>
-          <button id="helpBtn">❔</button>
         </div>
       </div>
+      <button id="generateBtn">🗺️ Find Path</button>
     </div>
 
     <!-- Help Modal -->
@@ -1183,16 +1237,19 @@
 
             <div class="api-key-section" id="groqKeySection">
               <label for="groqApiKey">Groq API Key</label>
-              <div class="input-with-button">
-                <input
-                  type="password"
-                  id="groqApiKey"
-                  placeholder="Enter your Groq API key"
-                />
-                <button type="button" id="toggleGroqKey" class="toggle-key">
-                  👁️
-                </button>
-              </div>
+              <form autocomplete="off">
+                <div class="input-with-button">
+                  <input
+                    type="password"
+                    id="groqApiKey"
+                    placeholder="Enter your Groq API key"
+                    autocomplete="new-password"
+                  />
+                  <button type="button" id="toggleGroqKey" class="toggle-key">
+                    👁️
+                  </button>
+                </div>
+              </form>
               <small
                 >Get your free key at
                 <a href="https://console.groq.com/keys" target="_blank"
@@ -1207,16 +1264,19 @@
               style="display: none"
             >
               <label for="grokApiKey">Grok (xAI) API Key</label>
-              <div class="input-with-button">
-                <input
-                  type="password"
-                  id="grokApiKey"
-                  placeholder="Enter your Grok API key"
-                />
-                <button type="button" id="toggleGrokKey" class="toggle-key">
-                  👁️
-                </button>
-              </div>
+              <form autocomplete="off">
+                <div class="input-with-button">
+                  <input
+                    type="password"
+                    id="grokApiKey"
+                    placeholder="Enter your Grok API key"
+                    autocomplete="new-password"
+                  />
+                  <button type="button" id="toggleGrokKey" class="toggle-key">
+                    👁️
+                  </button>
+                </div>
+              </form>
               <small
                 >Get your key at
                 <a
@@ -1312,7 +1372,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3>🎯 Suggested Goals</h3>
-          <span class="close" onclick="closeGoalSuggestionDialog()">&times;</span>
+          <span class="close" onclick="closeGoalSuggestionDialog()"
+            >&times;</span
+          >
         </div>
         <div class="modal-body">
           <div class="theme-display">
@@ -1330,7 +1392,11 @@
           <button id="useSelectedGoal" class="save-button" disabled>
             Use Selected Goal
           </button>
-          <button id="customGoalBtn" class="copy-link-button" style="margin-top: 0.5rem;">
+          <button
+            id="customGoalBtn"
+            class="copy-link-button"
+            style="margin-top: 0.5rem"
+          >
             Enter Custom Goal Instead
           </button>
         </div>
@@ -1342,7 +1408,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3>🏁 Suggested Starting Points</h3>
-          <span class="close" onclick="closeStartingSuggestionDialog()">&times;</span>
+          <span class="close" onclick="closeStartingSuggestionDialog()"
+            >&times;</span
+          >
         </div>
         <div class="modal-body">
           <div class="theme-display">
@@ -1360,7 +1428,11 @@
           <button id="useSelectedStarting" class="save-button" disabled>
             Use Selected Starting Point
           </button>
-          <button id="customStartingBtn" class="copy-link-button" style="margin-top: 0.5rem;">
+          <button
+            id="customStartingBtn"
+            class="copy-link-button"
+            style="margin-top: 0.5rem"
+          >
             Enter Custom Starting Point Instead
           </button>
         </div>
@@ -1372,7 +1444,9 @@
       <div class="modal-content">
         <div class="modal-header">
           <h3>🗺️ Discover Your Journey</h3>
-          <span class="close" onclick="closeJourneyDiscoveryDialog()">&times;</span>
+          <span class="close" onclick="closeJourneyDiscoveryDialog()"
+            >&times;</span
+          >
         </div>
         <div class="modal-body">
           <div class="theme-display">
@@ -1389,7 +1463,11 @@
           <button id="useSelectedJourney" class="save-button" disabled>
             Explore This Journey
           </button>
-          <button id="customJourneyBtn" class="copy-link-button" style="margin-top: 0.5rem;">
+          <button
+            id="customJourneyBtn"
+            class="copy-link-button"
+            style="margin-top: 0.5rem"
+          >
             I'll Enter My Own Journey
           </button>
         </div>
@@ -1674,10 +1752,10 @@
             padding: 60,
             spacingFactor: 2.0,
             avoidOverlap: true,
-            nodeDimensionsIncludeLabels: true
+            nodeDimensionsIncludeLabels: true,
           };
         }
-        
+
         // For larger graphs, use COSE with better spacing
         return {
           name: "cose",
@@ -1692,7 +1770,7 @@
           coolingFactor: 0.99,
           minTemp: 1.0,
           avoidOverlap: true,
-          nodeDimensionsIncludeLabels: true
+          nodeDimensionsIncludeLabels: true,
         };
       }
 
@@ -1804,27 +1882,29 @@
 
           // Create a set of valid node IDs for validation
           const nodeIds = new Set(data.nodes.map((node) => node.id));
-          
+
           // Check for duplicate node IDs and fix them
           const uniqueNodes = [];
           const seenIds = new Set();
-          
+
           data.nodes.forEach((node, index) => {
             let nodeId = node.id;
-            
+
             // If we've seen this ID before, make it unique
             if (seenIds.has(nodeId)) {
               nodeId = `${node.id}_${index}`;
-              console.warn(`Duplicate node ID detected: ${node.id}, renamed to: ${nodeId}`);
+              console.warn(
+                `Duplicate node ID detected: ${node.id}, renamed to: ${nodeId}`
+              );
             }
-            
+
             seenIds.add(nodeId);
             uniqueNodes.push({
               ...node,
-              id: nodeId
+              id: nodeId,
             });
           });
-          
+
           // Update nodeIds set with unique IDs
           const finalNodeIds = new Set(uniqueNodes.map((node) => node.id));
 
@@ -1832,31 +1912,37 @@
           const validEdges = data.edges.filter((edge) => {
             const sourceExists = finalNodeIds.has(edge.source);
             const targetExists = finalNodeIds.has(edge.target);
-            
+
             // Also filter out self-loops which can cause overlapping issues
             const notSelfLoop = edge.source !== edge.target;
-            
+
             // Log problematic edges for debugging
             if (!sourceExists) {
-              console.warn(`Edge references non-existent source node: ${edge.source}`);
+              console.warn(
+                `Edge references non-existent source node: ${edge.source}`
+              );
             }
             if (!targetExists) {
-              console.warn(`Edge references non-existent target node: ${edge.target}`);
+              console.warn(
+                `Edge references non-existent target node: ${edge.target}`
+              );
             }
             if (!notSelfLoop) {
-              console.warn(`Self-loop detected: ${edge.source} -> ${edge.target}`);
+              console.warn(
+                `Self-loop detected: ${edge.source} -> ${edge.target}`
+              );
             }
 
             return sourceExists && targetExists && notSelfLoop;
           });
-          
+
           // Deduplicate edges to prevent multiple edges between same nodes
           const uniqueEdges = [];
           const seenEdgePairs = new Set();
-          
-          validEdges.forEach(edge => {
+
+          validEdges.forEach((edge) => {
             const edgeKey = `${edge.source}-${edge.target}`;
-            
+
             // Only add if we haven't seen this exact edge before
             if (!seenEdgePairs.has(edgeKey)) {
               seenEdgePairs.add(edgeKey);
@@ -1873,12 +1959,12 @@
               },
               position: {
                 x: (index % 4) * 200 + Math.random() * 50,
-                y: Math.floor(index / 4) * 150 + Math.random() * 50
-              }
+                y: Math.floor(index / 4) * 150 + Math.random() * 50,
+              },
             })),
             ...uniqueEdges.map((edge) => {
               const edgeId = `${edge.source}-${edge.target}`;
-              
+
               return {
                 data: {
                   id: edgeId,
@@ -1898,21 +1984,21 @@
 
           // Use preset positions first, then improve with layout
           cy.layout({
-            name: 'preset',
+            name: "preset",
             fit: true,
-            padding: 50
+            padding: 50,
           }).run();
-          
+
           // After preset, apply COSE layout for better arrangement
           setTimeout(() => {
             const layoutOptions = getCoseLayoutOptions(
               elements.filter((el) => !el.data.source).length
             );
-            
+
             cy.layout({
               ...layoutOptions,
               randomize: false, // Use existing positions as starting point
-              fit: true
+              fit: true,
             }).run();
           }, 100);
         } catch (error) {
@@ -2413,9 +2499,10 @@
           hideInfo();
 
           // Get relationship info for display
-          const relationship = edge.data("relationship") || edge.data("type") || "leads_to";
+          const relationship =
+            edge.data("relationship") || edge.data("type") || "leads_to";
           const polarity = edge.data("polarity");
-          
+
           // Choose appropriate symbol for path finder relationships
           let relationshipSymbol = "→";
           if (polarity === "+") {
@@ -2427,7 +2514,7 @@
           } else if (relationship === "enables") {
             relationshipSymbol = "✨";
           }
-          
+
           // Show explanation in dialog
           showRelationshipDialog(
             `${relationshipSymbol} ${sourceLabel} → ${targetLabel}`,
@@ -2599,13 +2686,17 @@
 
           const data = await response.json();
           const content = data.choices[0].message.content.trim();
-          
+
           let goalSuggestions;
           try {
-            const jsonString = content.replace(/```json\n?/, "").replace(/```$/, "");
+            const jsonString = content
+              .replace(/```json\n?/, "")
+              .replace(/```$/, "");
             goalSuggestions = JSON.parse(jsonString);
           } catch (parseError) {
-            throw new Error(`Failed to parse goal suggestions: ${parseError.message}`);
+            throw new Error(
+              `Failed to parse goal suggestions: ${parseError.message}`
+            );
           }
 
           showGoalSuggestionDialog(startingPoint, goalSuggestions);
@@ -2618,11 +2709,12 @@
 
       // Show goal suggestion dialog
       function showGoalSuggestionDialog(startingPoint, suggestions) {
-        document.getElementById("goalSuggestionStartingPoint").textContent = startingPoint;
-        
+        document.getElementById("goalSuggestionStartingPoint").textContent =
+          startingPoint;
+
         const goalList = document.getElementById("goalSuggestionList");
         goalList.innerHTML = "";
-        
+
         suggestions.forEach((suggestion, index) => {
           const goalOption = document.createElement("div");
           goalOption.className = "radio-option";
@@ -2635,14 +2727,16 @@
           `;
           goalList.appendChild(goalOption);
         });
-        
+
         // Add event listeners to radio buttons
-        document.querySelectorAll('input[name="suggestedGoal"]').forEach(radio => {
-          radio.addEventListener('change', () => {
-            document.getElementById("useSelectedGoal").disabled = false;
+        document
+          .querySelectorAll('input[name="suggestedGoal"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", () => {
+              document.getElementById("useSelectedGoal").disabled = false;
+            });
           });
-        });
-        
+
         document.getElementById("goalSuggestionDialog").showModal();
         document.body.style.overflow = "hidden";
       }
@@ -2705,13 +2799,17 @@
 
           const data = await response.json();
           const content = data.choices[0].message.content.trim();
-          
+
           let startingSuggestions;
           try {
-            const jsonString = content.replace(/```json\n?/, "").replace(/```$/, "");
+            const jsonString = content
+              .replace(/```json\n?/, "")
+              .replace(/```$/, "");
             startingSuggestions = JSON.parse(jsonString);
           } catch (parseError) {
-            throw new Error(`Failed to parse starting point suggestions: ${parseError.message}`);
+            throw new Error(
+              `Failed to parse starting point suggestions: ${parseError.message}`
+            );
           }
 
           showStartingSuggestionDialog(destination, startingSuggestions);
@@ -2724,11 +2822,12 @@
 
       // Show starting point suggestion dialog
       function showStartingSuggestionDialog(destination, suggestions) {
-        document.getElementById("startingSuggestionGoal").textContent = destination;
-        
+        document.getElementById("startingSuggestionGoal").textContent =
+          destination;
+
         const startingList = document.getElementById("startingSuggestionList");
         startingList.innerHTML = "";
-        
+
         suggestions.forEach((suggestion, index) => {
           const startingOption = document.createElement("div");
           startingOption.className = "radio-option";
@@ -2741,14 +2840,16 @@
           `;
           startingList.appendChild(startingOption);
         });
-        
+
         // Add event listeners to radio buttons
-        document.querySelectorAll('input[name="suggestedStarting"]').forEach(radio => {
-          radio.addEventListener('change', () => {
-            document.getElementById("useSelectedStarting").disabled = false;
+        document
+          .querySelectorAll('input[name="suggestedStarting"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", () => {
+              document.getElementById("useSelectedStarting").disabled = false;
+            });
           });
-        });
-        
+
         document.getElementById("startingSuggestionDialog").showModal();
         document.body.style.overflow = "hidden";
       }
@@ -2765,38 +2866,38 @@
           {
             starting: "Unfit",
             destination: "Fit and Healthy",
-            description: "Build fitness habits and improve overall health"
+            description: "Build fitness habits and improve overall health",
           },
           {
-            starting: "Broke", 
+            starting: "Broke",
             destination: "Financially Stable",
-            description: "Create emergency fund and stable income"
+            description: "Create emergency fund and stable income",
           },
           {
             starting: "Anxious",
-            destination: "Confident", 
-            description: "Build self-confidence and reduce anxiety"
+            destination: "Confident",
+            description: "Build self-confidence and reduce anxiety",
           },
           {
             starting: "Beginner",
             destination: "Learn Programming",
-            description: "Master coding skills from scratch"
+            description: "Master coding skills from scratch",
           },
           {
             starting: "Lonely",
             destination: "Strong Social Circle",
-            description: "Build meaningful friendships and connections"
+            description: "Build meaningful friendships and connections",
           },
           {
             starting: "Disorganized",
             destination: "Highly Productive",
-            description: "Master time management and productivity"
-          }
+            description: "Master time management and productivity",
+          },
         ];
-        
+
         const journeyList = document.getElementById("journeyDiscoveryList");
         journeyList.innerHTML = "";
-        
+
         popularJourneys.forEach((journey, index) => {
           const journeyOption = document.createElement("div");
           journeyOption.className = "radio-option";
@@ -2810,14 +2911,16 @@
           `;
           journeyList.appendChild(journeyOption);
         });
-        
+
         // Add event listeners to radio buttons
-        document.querySelectorAll('input[name="suggestedJourney"]').forEach(radio => {
-          radio.addEventListener('change', () => {
-            document.getElementById("useSelectedJourney").disabled = false;
+        document
+          .querySelectorAll('input[name="suggestedJourney"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", () => {
+              document.getElementById("useSelectedJourney").disabled = false;
+            });
           });
-        });
-        
+
         document.getElementById("journeyDiscoveryDialog").showModal();
         document.body.style.overflow = "hidden";
       }
@@ -3134,7 +3237,8 @@
           source: edge.source().data("id"),
           target: edge.target().data("id"),
           type: edge.data("type") || edge.data("relationship") || "leads_to", // Include edge type
-          relationship: edge.data("relationship") || edge.data("type") || "leads_to",
+          relationship:
+            edge.data("relationship") || edge.data("type") || "leads_to",
           polarity: edge.data("polarity"), // Keep for backwards compatibility
           description: edge.data("description") || "",
         }));
@@ -3254,7 +3358,9 @@
               .then(() => {
                 // Close modal temporarily to show toast
                 closeSettingsModal();
-                showSuccess("Complete app link with settings and journey copied! 📋🗺️");
+                showSuccess(
+                  "Complete app link with settings and journey copied! 📋🗺️"
+                );
               })
               .catch(() => {
                 // Fallback for older browsers
@@ -3330,7 +3436,12 @@
             // Decode the base64 data (Unicode-safe)
             const decodedData = JSON.parse(unicodeBase64Decode(dataParam));
 
-            if (decodedData.nodes && decodedData.edges && (decodedData.journey || (decodedData.startingPoint && decodedData.destination))) {
+            if (
+              decodedData.nodes &&
+              decodedData.edges &&
+              (decodedData.journey ||
+                (decodedData.startingPoint && decodedData.destination))
+            ) {
               // Store the data to be loaded after Cytoscape is initialized
               window.sharedDiagramData = decodedData;
               return true;
@@ -3470,17 +3581,23 @@
       });
 
       // Goal suggestion dialog event listeners
-      document.getElementById("useSelectedGoal").addEventListener("click", () => {
-        const selectedGoal = document.querySelector('input[name="suggestedGoal"]:checked');
-        if (selectedGoal) {
-          document.getElementById("destination").value = selectedGoal.value;
-          closeGoalSuggestionDialog();
-          
-          // Auto-generate the diagram
-          const startingPoint = document.getElementById("startingPoint").value.trim();
-          generateDiagram(startingPoint, selectedGoal.value);
-        }
-      });
+      document
+        .getElementById("useSelectedGoal")
+        .addEventListener("click", () => {
+          const selectedGoal = document.querySelector(
+            'input[name="suggestedGoal"]:checked'
+          );
+          if (selectedGoal) {
+            document.getElementById("destination").value = selectedGoal.value;
+            closeGoalSuggestionDialog();
+
+            // Auto-generate the diagram
+            const startingPoint = document
+              .getElementById("startingPoint")
+              .value.trim();
+            generateDiagram(startingPoint, selectedGoal.value);
+          }
+        });
 
       document.getElementById("customGoalBtn").addEventListener("click", () => {
         closeGoalSuggestionDialog();
@@ -3491,70 +3608,93 @@
       });
 
       // Close goal suggestion dialog when clicking outside
-      document.getElementById("goalSuggestionDialog").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("goalSuggestionDialog")) {
-          closeGoalSuggestionDialog();
-        }
-      });
+      document
+        .getElementById("goalSuggestionDialog")
+        .addEventListener("click", (e) => {
+          if (e.target === document.getElementById("goalSuggestionDialog")) {
+            closeGoalSuggestionDialog();
+          }
+        });
 
       // Starting point suggestion dialog event listeners
-      document.getElementById("useSelectedStarting").addEventListener("click", () => {
-        const selectedStarting = document.querySelector('input[name="suggestedStarting"]:checked');
-        if (selectedStarting) {
-          document.getElementById("startingPoint").value = selectedStarting.value;
-          closeStartingSuggestionDialog();
-          
-          // Auto-generate the diagram
-          const destination = document.getElementById("destination").value.trim();
-          generateDiagram(selectedStarting.value, destination);
-        }
-      });
+      document
+        .getElementById("useSelectedStarting")
+        .addEventListener("click", () => {
+          const selectedStarting = document.querySelector(
+            'input[name="suggestedStarting"]:checked'
+          );
+          if (selectedStarting) {
+            document.getElementById("startingPoint").value =
+              selectedStarting.value;
+            closeStartingSuggestionDialog();
 
-      document.getElementById("customStartingBtn").addEventListener("click", () => {
-        closeStartingSuggestionDialog();
-        // Focus on the starting point input for custom entry
-        setTimeout(() => {
-          document.getElementById("startingPoint").focus();
-        }, 100);
-      });
+            // Auto-generate the diagram
+            const destination = document
+              .getElementById("destination")
+              .value.trim();
+            generateDiagram(selectedStarting.value, destination);
+          }
+        });
+
+      document
+        .getElementById("customStartingBtn")
+        .addEventListener("click", () => {
+          closeStartingSuggestionDialog();
+          // Focus on the starting point input for custom entry
+          setTimeout(() => {
+            document.getElementById("startingPoint").focus();
+          }, 100);
+        });
 
       // Close starting point suggestion dialog when clicking outside
-      document.getElementById("startingSuggestionDialog").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("startingSuggestionDialog")) {
-          closeStartingSuggestionDialog();
-        }
-      });
+      document
+        .getElementById("startingSuggestionDialog")
+        .addEventListener("click", (e) => {
+          if (
+            e.target === document.getElementById("startingSuggestionDialog")
+          ) {
+            closeStartingSuggestionDialog();
+          }
+        });
 
       // Journey discovery dialog event listeners
-      document.getElementById("useSelectedJourney").addEventListener("click", () => {
-        const selectedJourney = document.querySelector('input[name="suggestedJourney"]:checked');
-        if (selectedJourney) {
-          const startingPoint = selectedJourney.dataset.starting;
-          const destination = selectedJourney.dataset.destination;
-          
-          document.getElementById("startingPoint").value = startingPoint;
-          document.getElementById("destination").value = destination;
-          closeJourneyDiscoveryDialog();
-          
-          // Auto-generate the diagram
-          generateDiagram(startingPoint, destination);
-        }
-      });
+      document
+        .getElementById("useSelectedJourney")
+        .addEventListener("click", () => {
+          const selectedJourney = document.querySelector(
+            'input[name="suggestedJourney"]:checked'
+          );
+          if (selectedJourney) {
+            const startingPoint = selectedJourney.dataset.starting;
+            const destination = selectedJourney.dataset.destination;
 
-      document.getElementById("customJourneyBtn").addEventListener("click", () => {
-        closeJourneyDiscoveryDialog();
-        // Focus on the starting point input for custom entry
-        setTimeout(() => {
-          document.getElementById("startingPoint").focus();
-        }, 100);
-      });
+            document.getElementById("startingPoint").value = startingPoint;
+            document.getElementById("destination").value = destination;
+            closeJourneyDiscoveryDialog();
+
+            // Auto-generate the diagram
+            generateDiagram(startingPoint, destination);
+          }
+        });
+
+      document
+        .getElementById("customJourneyBtn")
+        .addEventListener("click", () => {
+          closeJourneyDiscoveryDialog();
+          // Focus on the starting point input for custom entry
+          setTimeout(() => {
+            document.getElementById("startingPoint").focus();
+          }, 100);
+        });
 
       // Close journey discovery dialog when clicking outside
-      document.getElementById("journeyDiscoveryDialog").addEventListener("click", (e) => {
-        if (e.target === document.getElementById("journeyDiscoveryDialog")) {
-          closeJourneyDiscoveryDialog();
-        }
-      });
+      document
+        .getElementById("journeyDiscoveryDialog")
+        .addEventListener("click", (e) => {
+          if (e.target === document.getElementById("journeyDiscoveryDialog")) {
+            closeJourneyDiscoveryDialog();
+          }
+        });
 
       function closeHelpModal() {
         document.getElementById("helpModal").close();
