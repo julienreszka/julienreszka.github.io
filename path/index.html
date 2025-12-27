@@ -1554,6 +1554,9 @@
                     .trim(),
                   "target-arrow-shape": "triangle",
                   "curve-style": "bezier",
+                  "control-point-step-size": 60,
+                  "control-point-weights": [0.25, 0.75],
+                  "edge-distances": "node-position",
                   label: "",
                   "font-size": "14px",
                   "font-weight": "bold",
@@ -1663,12 +1666,33 @@
 
       // Get COSE layout options
       function getCoseLayoutOptions(nodeCount) {
+        // For smaller graphs, use breadthfirst to avoid overlapping issues
+        if (nodeCount <= 8) {
+          return {
+            name: "breadthfirst",
+            directed: true,
+            padding: 60,
+            spacingFactor: 2.0,
+            avoidOverlap: true,
+            nodeDimensionsIncludeLabels: true
+          };
+        }
+        
+        // For larger graphs, use COSE with better spacing
         return {
           name: "cose",
-          padding: 50,
-          nodeOverlap: 20,
-          idealEdgeLength: 100,
-          nodeRepulsion: 8000,
+          padding: 60,
+          nodeOverlap: 400, // Increased significantly to prevent overlapping
+          idealEdgeLength: 150, // Increased for better spacing
+          nodeRepulsion: 12000, // Increased to push nodes apart more
+          nestingFactor: 1.2,
+          gravity: 1,
+          numIter: 1000,
+          initialTemp: 1000,
+          coolingFactor: 0.99,
+          minTemp: 1.0,
+          avoidOverlap: true,
+          nodeDimensionsIncludeLabels: true
         };
       }
 
@@ -1780,46 +1804,117 @@
 
           // Create a set of valid node IDs for validation
           const nodeIds = new Set(data.nodes.map((node) => node.id));
+          
+          // Check for duplicate node IDs and fix them
+          const uniqueNodes = [];
+          const seenIds = new Set();
+          
+          data.nodes.forEach((node, index) => {
+            let nodeId = node.id;
+            
+            // If we've seen this ID before, make it unique
+            if (seenIds.has(nodeId)) {
+              nodeId = `${node.id}_${index}`;
+              console.warn(`Duplicate node ID detected: ${node.id}, renamed to: ${nodeId}`);
+            }
+            
+            seenIds.add(nodeId);
+            uniqueNodes.push({
+              ...node,
+              id: nodeId
+            });
+          });
+          
+          // Update nodeIds set with unique IDs
+          const finalNodeIds = new Set(uniqueNodes.map((node) => node.id));
 
           // Filter out edges that reference non-existent nodes
           const validEdges = data.edges.filter((edge) => {
-            const sourceExists = nodeIds.has(edge.source);
-            const targetExists = nodeIds.has(edge.target);
+            const sourceExists = finalNodeIds.has(edge.source);
+            const targetExists = finalNodeIds.has(edge.target);
+            
+            // Also filter out self-loops which can cause overlapping issues
+            const notSelfLoop = edge.source !== edge.target;
+            
+            // Log problematic edges for debugging
+            if (!sourceExists) {
+              console.warn(`Edge references non-existent source node: ${edge.source}`);
+            }
+            if (!targetExists) {
+              console.warn(`Edge references non-existent target node: ${edge.target}`);
+            }
+            if (!notSelfLoop) {
+              console.warn(`Self-loop detected: ${edge.source} -> ${edge.target}`);
+            }
 
-            return sourceExists && targetExists;
+            return sourceExists && targetExists && notSelfLoop;
+          });
+          
+          // Deduplicate edges to prevent multiple edges between same nodes
+          const uniqueEdges = [];
+          const seenEdgePairs = new Set();
+          
+          validEdges.forEach(edge => {
+            const edgeKey = `${edge.source}-${edge.target}`;
+            
+            // Only add if we haven't seen this exact edge before
+            if (!seenEdgePairs.has(edgeKey)) {
+              seenEdgePairs.add(edgeKey);
+              uniqueEdges.push(edge);
+            }
           });
 
           const elements = [
-            ...data.nodes.map((node) => ({
+            ...uniqueNodes.map((node, index) => ({
               data: {
                 id: node.id,
                 label: node.label,
                 type: node.type || "action",
               },
+              position: {
+                x: (index % 4) * 200 + Math.random() * 50,
+                y: Math.floor(index / 4) * 150 + Math.random() * 50
+              }
             })),
-            ...validEdges.map((edge) => ({
-              data: {
-                id: `${edge.source}-${edge.target}`,
-                source: edge.source,
-                target: edge.target,
-                type: edge.type || edge.relationship || "leads_to",
-                description: edge.description || "",
-                // Support legacy polarity property
-                polarity: edge.polarity,
-                relationship: edge.relationship || edge.type || "leads_to",
-              },
-            })),
+            ...uniqueEdges.map((edge) => {
+              const edgeId = `${edge.source}-${edge.target}`;
+              
+              return {
+                data: {
+                  id: edgeId,
+                  source: edge.source,
+                  target: edge.target,
+                  type: edge.type || edge.relationship || "leads_to",
+                  description: edge.description || "",
+                  polarity: edge.polarity,
+                  relationship: edge.relationship || edge.type || "leads_to",
+                },
+              };
+            }),
           ];
 
           cy.elements().remove();
           cy.add(elements);
 
-          // Use COSE layout
-          const layoutOptions = getCoseLayoutOptions(
-            elements.filter((el) => !el.data.source).length
-          );
-
-          cy.layout(layoutOptions).run();
+          // Use preset positions first, then improve with layout
+          cy.layout({
+            name: 'preset',
+            fit: true,
+            padding: 50
+          }).run();
+          
+          // After preset, apply COSE layout for better arrangement
+          setTimeout(() => {
+            const layoutOptions = getCoseLayoutOptions(
+              elements.filter((el) => !el.data.source).length
+            );
+            
+            cy.layout({
+              ...layoutOptions,
+              randomize: false, // Use existing positions as starting point
+              fit: true
+            }).run();
+          }, 100);
         } catch (error) {
           showError(`Failed to render diagram: ${error.message}`);
         }
