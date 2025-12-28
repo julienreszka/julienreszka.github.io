@@ -103,6 +103,20 @@
 
         <form id="paramsFormArmey">
           <div class="param-group">
+            <label for="curve-type-select">Curve Model Type:</label>
+            <select id="curve-type-select" aria-describedby="curve-type-help">
+              <option value="quadratic" selected>
+                Quadratic (Traditional Armey)
+              </option>
+              <option value="linear">Linear Decline</option>
+            </select>
+            <small id="curve-type-help" class="help-text">
+              Quadratic shows diminishing returns; Linear shows constant slope
+              relationship
+            </small>
+          </div>
+
+          <div class="param-group">
             <label for="beta0-armey"
               >Intercept (β₀, base growth, e.g., 2):</label
             >
@@ -112,7 +126,7 @@
               value="2"
               step="0.1"
               min="0"
-              max="10"
+              max="20"
               aria-describedby="beta0-armey-help"
             />
             <small id="beta0-armey-help" class="sr-only"
@@ -120,7 +134,7 @@
             >
           </div>
 
-          <div class="param-group">
+          <div class="param-group" id="beta1-group">
             <label for="beta1-armey"
               >Linear coefficient (β₁, positive, e.g., 0.5):</label
             >
@@ -138,7 +152,7 @@
             >
           </div>
 
-          <div class="param-group">
+          <div class="param-group" id="beta2-group">
             <label for="beta2-armey"
               >Quadratic coefficient (β₂, negative, e.g., -0.01):</label
             >
@@ -153,6 +167,27 @@
             />
             <small id="beta2-armey-help" class="sr-only"
               >Diminishing returns effect (must be negative)</small
+            >
+          </div>
+
+          <div
+            class="param-group"
+            id="linear-slope-group"
+            style="display: none"
+          >
+            <label for="linear-slope">Linear slope (e.g., -0.3):</label>
+            <input
+              type="number"
+              id="linear-slope"
+              value="-0.3"
+              step="0.01"
+              min="-1"
+              max="1"
+              aria-describedby="linear-slope-help"
+            />
+            <small id="linear-slope-help" class="sr-only"
+              >Rate of change in growth per percentage point of government
+              spending (can be positive or negative)</small
             >
           </div>
         </form>
@@ -753,6 +788,53 @@
             government growth becomes counterproductive to overall economic
             prosperity.
           </p>
+
+          <h3>Why We Include the Linear Decline Model</h3>
+          <p>
+            The linear decline model reflects a more hardcore libertarian
+            perspective:
+            <strong>government spending is fundamentally parasitic</strong> and
+            the relationship with growth is simply negative. No optimal point,
+            no beneficial phase - just diminishing returns from minute one.
+          </p>
+          <ul>
+            <li>
+              <strong>Austrian School Reality:</strong> Government cannot create
+              wealth, only redistribute it. Every dollar spent by government is
+              a dollar not invested by someone who actually earned it
+            </li>
+            <li>
+              <strong>Crowding Out is Immediate:</strong> Government spending
+              doesn't need to reach some magical threshold to become harmful -
+              it displaces private investment from the first penny
+            </li>
+            <li>
+              <strong>Bureaucratic Inefficiency:</strong> Government agencies
+              have no profit motive, no competition, and no skin in the game.
+              They will always be less efficient than market alternatives
+            </li>
+            <li>
+              <strong>Political Rent-Seeking:</strong> Government spending
+              creates constituencies that lobby for more spending, creating a
+              vicious cycle of growth-destroying expansion
+            </li>
+            <li>
+              <strong>Real World Evidence:</strong> Look at the data - many of
+              the fastest-growing countries (Singapore, Hong Kong historically,
+              Estonia) have smaller governments, while high-spending European
+              countries stagnate
+            </li>
+          </ul>
+          <p>
+            The linear model cuts through academic hand-wringing and states the
+            obvious:
+            <strong
+              >the best government spending level for growth is as close to zero
+              as possible</strong
+            >
+            while maintaining basic rule of law. Everything else is just
+            politicians and bureaucrats justifying their existence.
+          </p>
         </div>
       </section>
 
@@ -1195,9 +1277,22 @@
         return countryData[selection] || [];
       }
 
-      function simulateCurveArmey(beta0, beta1, beta2) {
+      function simulateCurveArmey(
+        beta0,
+        beta1,
+        beta2,
+        curveType = "quadratic",
+        linearSlope = 0.1
+      ) {
         const spending = Array.from({ length: 76 }, (_, i) => i); // 0% to 75%
-        const growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
+        let growth;
+
+        if (curveType === "quadratic") {
+          growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
+        } else {
+          // Simple linear relationship: growth = beta0 + linearSlope * spending
+          growth = spending.map((g) => beta0 + linearSlope * g);
+        }
 
         const countriesToShow = getCountryDataToShow();
         const highlightCountry = document.getElementById(
@@ -1206,13 +1301,16 @@
 
         const datasets = [
           {
-            label: "Theoretical Armey Curve",
+            label:
+              curveType === "quadratic"
+                ? "Theoretical Armey Curve (Quadratic)"
+                : "Theoretical Armey Curve (Linear)",
             data: spending.map((x, i) => ({ x: x, y: growth[i] })),
             borderColor: "#007bff",
             backgroundColor: "rgba(0, 123, 255, 0.1)",
             borderWidth: 3,
             fill: true,
-            tension: 0.4,
+            tension: curveType === "quadratic" ? 0.4 : 0,
             type: "line",
             pointRadius: 0,
           },
@@ -1368,31 +1466,99 @@
         });
 
         // Calculate optimal
-        const optimal = -beta1 / (2 * beta2);
-        const maxGrowth = beta0 + beta1 * optimal + beta2 * optimal * optimal;
+        let optimal, maxGrowth;
+
+        if (curveType === "quadratic") {
+          optimal = -beta1 / (2 * beta2);
+          maxGrowth = beta0 + beta1 * optimal + beta2 * optimal * optimal;
+        } else {
+          // For linear, there's no optimal point - it's always increasing or decreasing
+          if (linearSlope > 0) {
+            optimal = 75; // Maximum spending point
+            maxGrowth = beta0 + linearSlope * 75;
+          } else if (linearSlope < 0) {
+            optimal = 0; // Minimum spending point
+            maxGrowth = beta0;
+          } else {
+            optimal = "N/A"; // Flat line
+            maxGrowth = beta0;
+          }
+        }
+
+        const optimalText =
+          typeof optimal === "number" ? optimal.toFixed(2) : optimal;
+        const maxGrowthText =
+          typeof maxGrowth === "number" ? maxGrowth.toFixed(2) : "N/A";
 
         document.getElementById("optimal-armey").innerHTML = `
-                <strong>Optimal Government Spending:</strong> ${optimal.toFixed(
-                  2
-                )}% of GDP<br>
-                <strong>Maximum Growth Rate:</strong> ${maxGrowth.toFixed(
-                  2
-                )}%<br>
-                <em>This is where government spending maximizes economic growth while minimizing inefficiency.</em>
+                <strong>Optimal Government Spending:</strong> ${optimalText}% of GDP<br>
+                <strong>Maximum Growth Rate:</strong> ${maxGrowthText}%<br>
+                <em>${
+                  curveType === "quadratic"
+                    ? "This is where government spending maximizes economic growth while minimizing inefficiency."
+                    : linearSlope > 0
+                    ? "Linear model: Growth increases continuously with spending."
+                    : linearSlope < 0
+                    ? "Linear model: Growth decreases continuously with spending."
+                    : "Linear model: Growth is constant regardless of spending."
+                }</em>
             `;
       }
 
       function updateArmeySimulation() {
+        const curveType = document.getElementById("curve-type-select").value;
         const beta0 = parseFloat(document.getElementById("beta0-armey").value);
         const beta1 = parseFloat(document.getElementById("beta1-armey").value);
-        const beta2 = parseFloat(document.getElementById("beta2-armey").value);
 
-        if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
-          simulateCurveArmey(beta0, beta1, beta2);
+        let beta2, linearSlope;
+
+        if (curveType === "quadratic") {
+          beta2 = parseFloat(document.getElementById("beta2-armey").value);
+          if (!isNaN(beta0) && !isNaN(beta1) && !isNaN(beta2) && beta2 < 0) {
+            simulateCurveArmey(beta0, beta1, beta2, curveType);
+          }
+        } else {
+          linearSlope = parseFloat(
+            document.getElementById("linear-slope").value
+          );
+          if (!isNaN(beta0) && !isNaN(linearSlope)) {
+            simulateCurveArmey(beta0, beta1, 0, curveType, linearSlope);
+          }
         }
       }
 
+      function toggleParameterGroups() {
+        const curveType = document.getElementById("curve-type-select").value;
+        const beta1Group = document.getElementById("beta1-group");
+        const beta2Group = document.getElementById("beta2-group");
+        const linearSlopeGroup = document.getElementById("linear-slope-group");
+
+        if (curveType === "quadratic") {
+          beta1Group.style.display = "block";
+          beta2Group.style.display = "block";
+          linearSlopeGroup.style.display = "none";
+
+          // Reset to quadratic defaults
+          document.getElementById("beta0-armey").value = "2";
+          document.getElementById("beta1-armey").value = "0.5";
+          document.getElementById("beta2-armey").value = "-0.01";
+        } else {
+          beta1Group.style.display = "none";
+          beta2Group.style.display = "none";
+          linearSlopeGroup.style.display = "block";
+
+          // Reset to linear defaults
+          document.getElementById("beta0-armey").value = "16";
+          document.getElementById("linear-slope").value = "-0.3";
+        }
+
+        updateArmeySimulation();
+      }
+
       // Event listeners
+      document
+        .getElementById("curve-type-select")
+        .addEventListener("change", toggleParameterGroups);
       document
         .getElementById("beta0-armey")
         .addEventListener("input", updateArmeySimulation);
@@ -1401,6 +1567,9 @@
         .addEventListener("input", updateArmeySimulation);
       document
         .getElementById("beta2-armey")
+        .addEventListener("input", updateArmeySimulation);
+      document
+        .getElementById("linear-slope")
         .addEventListener("input", updateArmeySimulation);
       document
         .getElementById("country-select")
@@ -1424,7 +1593,7 @@
         });
 
       // Initial simulation and data loading
-      simulateCurveArmey(2, 0.5, -0.01);
+      simulateCurveArmey(2, 0.5, -0.01, "quadratic");
 
       // Load real data from World Bank API
       updateDataStatus("Loading data from World Bank API...");
