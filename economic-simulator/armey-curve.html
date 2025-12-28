@@ -1191,7 +1191,7 @@
       }
 
       function simulateCurveArmey(beta0, beta1, beta2) {
-        const spending = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
+        const spending = Array.from({ length: 76 }, (_, i) => i); // 0% to 75%
         const growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
 
         const countriesToShow = getCountryDataToShow();
@@ -1351,7 +1351,7 @@
                 },
                 grid: { color: "rgba(0,0,0,0.1)" },
                 min: 0,
-                max: 100,
+                max: 75,
               },
               y: {
                 type: "linear",
