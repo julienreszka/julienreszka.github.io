@@ -477,6 +477,23 @@ footer h3 {
   }
 }
 
+/* Info and warning cards */
+.info-card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 8px;
+  border: 1px solid #e3f2fd;
+}
+
+.warning-card {
+  background-color: #fff3cd;
+  padding: 15px;
+  margin: 20px 0;
+  border-radius: 8px;
+  border: 1px solid #fff8e1;
+}
+
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
   body {
@@ -634,5 +651,15 @@ footer h3 {
   div[style*="background: white"]:hover {
     transform: translateY(-3px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  .info-card {
+    background-color: #2d2d2d !important;
+    border-color: #424242 !important;
+  }
+
+  .warning-card {
+    background-color: #2d2d2d !important;
+    border-color: #424242 !important;
   }
 }
