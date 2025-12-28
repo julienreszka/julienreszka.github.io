@@ -338,6 +338,37 @@
             high rates.
           </p>
 
+          <h3>How Consent to Taxation is Computed</h3>
+          <p>
+            For real country data points, consent to taxation is calculated
+            using a two-step process that combines theoretical expectations with
+            actual tax collection efficiency:
+          </p>
+          <ol>
+            <li>
+              <strong>Base Laffer Curve:</strong> First, we calculate where each
+              country should theoretically fall on the curve based on their tax
+              burden compared to the optimal rate (32%). Countries closer to the
+              optimal rate get higher base consent scores using the same
+              Gaussian formula.
+            </li>
+            <li>
+              <strong>Efficiency Adjustment:</strong> Then we adjust this score
+              based on how efficiently the country actually collects taxes. We
+              calculate an efficiency ratio (tax revenue ÷ tax burden) and use
+              this to boost or penalize the consent score. Countries that
+              collect taxes more effectively get higher final consent scores,
+              reflecting that citizens are more willing to pay taxes when they
+              see effective governance.
+            </li>
+          </ol>
+          <p>
+            This approach recognizes that consent to taxation depends not just
+            on the tax rate itself, but also on citizens' perception of whether
+            their taxes are being collected and used effectively by competent
+            institutions.
+          </p>
+
           <h3>Policy Implications</h3>
           <ul>
             <li>
