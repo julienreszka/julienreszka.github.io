@@ -12,12 +12,12 @@ const path = require('path');
 // Country classifications (matching the main application)
 const developedCountries = [
   'USA', 'DEU', 'FRA', 'GBR', 'JPN', 'CAN', 'AUS', 'CHE',
-  'NLD', 'SWE', 'NOR', 'DNK', 'KOR', 'SGP', 'FIN', 'AUT', 'BEL', 'IRL', 'POL'
+  'NLD', 'SWE', 'NOR', 'DNK', 'KOR', 'SGP', 'FIN', 'AUT', 'BEL', 'IRL', 'POL', 'ISR'
 ];
 
 const developingCountries = [
   'CHN', 'IND', 'VNM', 'BGD', 'ETH', 'RWA', 'IDN', 'PHL',
-  'BRA', 'MEX', 'TUR', 'CHL', 'ZAF', 'ARG', 'VEN', 'THA', 'MYS', 'EGY'
+  'BRA', 'MEX', 'TUR', 'CHL', 'ZAF', 'ARG', 'VEN', 'THA', 'MYS', 'EGY', 'PRK', 'CUB', 'RUS', 'IRN'
 ];
 
 /**
