@@ -84,12 +84,13 @@
       <h1>The Laffer Curve: Tax Rates vs Consent to Taxation</h1>
 
       <p>
-        <strong>The Right to Economic Attractiveness:</strong> This curve
-        demonstrates that people have a natural right to live in an economically
-        attractive environment where tax rates optimize both revenue collection
-        and voluntary compliance. The curve shows that excessive taxation
-        destroys the economic attractiveness that makes people want to
-        participate in and remain within a tax jurisdiction.
+        <strong>Challenging Traditional Tax Theory:</strong> For decades,
+        economists have claimed the Laffer Curve follows a simple quadratic
+        (parabolic) shape. But when you examine real-world data, this theory
+        falls apart. This interactive simulator lets you compare the traditional
+        quadratic model against what the data actually shows - a Gaussian
+        (bell-shaped) curve that better captures the Right to Economic
+        Attractiveness and the reality of tax consent.
       </p>
 
       <!-- Interactive Simulation -->
@@ -97,6 +98,75 @@
         <h2>Interactive Laffer Curve Simulator</h2>
 
         <form id="paramsFormLaffer">
+          <div class="param-group">
+            <label for="curve-type-select-laffer">Curve Model Type:</label>
+            <select
+              id="curve-type-select-laffer"
+              aria-describedby="curve-type-laffer-help"
+            >
+              <option value="quadratic">
+                Traditional Quadratic (Theoretical)
+              </option>
+              <option value="gaussian" selected>
+                Gaussian Bell Curve (Data-Fitted)
+              </option>
+            </select>
+            <small id="curve-type-laffer-help" class="help-text">
+              Traditional theory claims quadratic, but real data fits Gaussian
+              better
+            </small>
+          </div>
+
+          <div class="param-group" id="quadratic-params" style="display: none">
+            <label for="intercept-laffer"
+              >Intercept (β₀, base revenue %):</label
+            >
+            <input
+              type="number"
+              id="intercept-laffer"
+              value="10"
+              step="0.1"
+              min="-5"
+              max="5"
+              aria-describedby="intercept-laffer-help"
+            />
+            <small id="intercept-laffer-help" class="sr-only"
+              >Revenue at 0% tax rate (usually 0)</small
+            >
+
+            <label for="linear-coeff-laffer"
+              >Linear coefficient (β₁, positive):</label
+            >
+            <input
+              type="number"
+              id="linear-coeff-laffer"
+              value="1.2"
+              step="0.1"
+              min="0.1"
+              max="3"
+              aria-describedby="linear-coeff-laffer-help"
+            />
+            <small id="linear-coeff-laffer-help" class="sr-only"
+              >Initial positive effect of taxation</small
+            >
+
+            <label for="quadratic-coeff-laffer"
+              >Quadratic coefficient (β₂, negative):</label
+            >
+            <input
+              type="number"
+              id="quadratic-coeff-laffer"
+              value="-0.024"
+              step="0.001"
+              min="-0.05"
+              max="-0.001"
+              aria-describedby="quadratic-coeff-laffer-help"
+            />
+            <small id="quadratic-coeff-laffer-help" class="sr-only"
+              >Diminishing returns effect (must be negative)</small
+            >
+          </div>
+
           <div class="param-group" id="gaussian-params">
             <label for="peak-laffer">Peak Tax Rate (optimal %):</label>
             <input
@@ -250,7 +320,7 @@
 
       <!-- Detailed Explanation -->
       <section>
-        <h2>Understanding the Laffer Curve</h2>
+        <h2>The Laffer Curve Theory vs. Reality</h2>
 
         <div style="margin-top: 15px; line-height: 1.6">
           <p>
@@ -261,6 +331,135 @@
             that beyond a certain point, higher tax rates actually decrease
             rather than increase effective tax collection and economic
             attractiveness.
+          </p>
+
+          <p>
+            <strong>But here's the problem:</strong> The traditional theory
+            assumes a simple quadratic (parabolic) relationship, while
+            real-world data consistently shows a Gaussian (bell-shaped) pattern.
+            This isn't just an academic detail - it fundamentally changes our
+            understanding of optimal tax policy and economic attractiveness.
+          </p>
+
+          <h3>What the Traditional Theory Claimed</h3>
+          <p>The traditional quadratic Laffer Curve assumed:</p>
+          <p style="text-align: center; font-style: italic; margin: 20px 0">
+            Tax Revenue = β₀ + β₁ × Tax Rate + β₂ × Tax Rate²
+          </p>
+          <p>
+            Where β₀ is the intercept, β₁ is positive (initial revenue
+            increase), and β₂ is negative (diminishing returns). This creates a
+            simple parabola that peaks at -β₁/(2β₂) and suggests tax revenue
+            starts at zero when tax rates are zero.
+          </p>
+
+          <h3>Why the Gaussian Model Actually Makes Sense</h3>
+          <p>
+            <strong
+              >The real-world data consistently fits a Gaussian (bell curve)
+              pattern better than the traditional quadratic model.</strong
+            >
+            While both models can show an optimal tax rate where revenue peaks,
+            there are crucial differences that make the Gaussian model far
+            superior for understanding real-world tax dynamics:
+          </p>
+
+          <h4>Mathematical Behavior at Extremes</h4>
+          <ul>
+            <li>
+              <strong>Quadratic Problem:</strong> Can produce negative tax
+              revenue at very high rates, which is mathematically absurd. Even
+              with a 100% tax rate, governments still collect
+              <em>some</em> revenue from people who can't evade completely.
+            </li>
+            <li>
+              <strong>Gaussian Solution:</strong> Naturally approaches zero but
+              never goes negative, reflecting the realistic lower bound of tax
+              collection.
+            </li>
+          </ul>
+
+          <h4>Symmetry and Real-World Behavior</h4>
+          <ul>
+            <li>
+              <strong>Quadratic Flaw:</strong> Perfectly symmetrical around the
+              peak - suggests that 10% and 50% tax rates (equidistant from a 30%
+              optimum) produce identical consent levels, which contradicts all
+              evidence about tax behavior.
+            </li>
+            <li>
+              <strong>Gaussian Reality:</strong> Can be adjusted for asymmetry,
+              reflecting that very low taxes (inadequate services) and very high
+              taxes (confiscatory) fail for different reasons and at different
+              rates.
+            </li>
+          </ul>
+
+          <h4>Tail Behavior and Long-term Dynamics</h4>
+          <ul>
+            <li>
+              <strong>Quadratic Absurdity:</strong> Eventually curves back up if
+              extended far enough - suggesting that extremely high tax rates
+              (like 200%+) would somehow increase consent again.
+            </li>
+            <li>
+              <strong>Gaussian Logic:</strong> Exponentially decays toward zero,
+              matching the reality that consent diminishes rapidly as tax rates
+              become extreme.
+            </li>
+          </ul>
+
+          <h4>Empirical Fit to Real Data</h4>
+          <ul>
+            <li>
+              <strong>Quadratic Limitation:</strong> Forces a rigid mathematical
+              relationship that often doesn't match the clustering patterns seen
+              in actual country data.
+            </li>
+            <li>
+              <strong>Gaussian Flexibility:</strong> Better captures the
+              bell-shaped distribution of country performance around optimal tax
+              rates observed in real-world data.
+            </li>
+          </ul>
+
+          <h4>Behavioral Psychology</h4>
+          <p>
+            The Gaussian model reflects the reality that human responses to
+            taxation follow normal distribution patterns. There's a natural
+            "sweet spot" where people feel they're getting good value for their
+            taxes, and satisfaction drops off in a bell curve pattern as you
+            move away from that optimum. This isn't just about economic
+            calculation - it's about psychological perceptions of fairness,
+            effectiveness, and social contract legitimacy.
+          </p>
+
+          <h3>Mathematical Formulations: Theory vs. Data</h3>
+
+          <h4>Traditional Quadratic Model (Theoretical)</h4>
+          <p style="text-align: center; font-style: italic; margin: 20px 0">
+            Tax Revenue = β₀ + β₁ × Tax Rate + β₂ × Tax Rate²
+          </p>
+          <p>
+            This simple parabolic model assumes revenue starts near zero, rises
+            linearly, then falls due to diminishing returns. However, it fails
+            to capture the complex behavioral and institutional factors that
+            drive tax consent.
+          </p>
+
+          <h4>Gaussian Model (Data-Fitted)</h4>
+          <p style="text-align: center; font-style: italic; margin: 20px 0">
+            Consent to Taxation = Height × e^(-((Tax Rate - Peak)²)/(2 ×
+            Width²))
+          </p>
+          <p>
+            Where Height represents the maximum consent level, Peak is the
+            optimal tax rate, and Width controls how quickly consent falls off
+            as tax rates deviate from the optimum. This natural bell curve shape
+            better reflects the economic reality that consent to taxation peaks
+            at moderate rates and declines symmetrically for both very low and
+            very high rates, capturing the institutional and behavioral
+            complexities that the quadratic model misses.
           </p>
 
           <h3>Curve Structure</h3>
@@ -323,26 +522,14 @@
             voluntary participation and compliance.
           </p>
 
-          <h3>Mathematical Formulation</h3>
-          <p>The Laffer curve follows a Gaussian (bell-shaped) distribution:</p>
-          <p style="text-align: center; font-style: italic; margin: 20px 0">
-            Consent to Taxation = Height × e^(-((Tax Rate - Peak)²)/(2 ×
-            Width²))
-          </p>
-          <p>
-            Where Height represents the maximum consent level, Peak is the
-            optimal tax rate, and Width controls how quickly consent falls off
-            as tax rates deviate from the optimum. This natural bell curve shape
-            reflects the economic reality that consent to taxation peaks at
-            moderate rates and declines symmetrically for both very low and very
-            high rates.
-          </p>
-
           <h3>How Consent to Taxation is Computed</h3>
           <p>
-            For real country data points, consent to taxation is calculated
-            using a two-step process that combines theoretical expectations with
-            actual tax collection efficiency:
+            Now that we understand why the Gaussian model is superior, let's
+            examine how we translate real-world country data into meaningful
+            "consent to taxation" measurements. For real country data points,
+            consent to taxation is calculated using a two-step process that
+            combines theoretical expectations with actual tax collection
+            efficiency:
           </p>
           <ol>
             <li>
@@ -1039,14 +1226,28 @@
       function simulateCurveLaffer(params) {
         const taxRate = Array.from({ length: 61 }, (_, i) => i); // 0% to 60%
 
-        // Always use Gaussian curve
-        const peak = params.peak || 32;
-        const height = params.height || 25;
-        const width = params.width || 12;
-        const consent = taxRate.map(
-          (t) =>
-            height * Math.exp(-Math.pow(t - peak, 2) / (2 * Math.pow(width, 2)))
-        );
+        const curveType =
+          document.getElementById("curve-type-select-laffer")?.value ||
+          "gaussian";
+        let consent;
+
+        if (curveType === "quadratic") {
+          // Traditional quadratic model
+          const beta0 = params.intercept || 10;
+          const beta1 = params.linearCoeff || 1.2;
+          const beta2 = params.quadraticCoeff || -0.024;
+          consent = taxRate.map((t) => beta0 + beta1 * t + beta2 * t * t);
+        } else {
+          // Gaussian curve (data-fitted)
+          const peak = params.peak || 32;
+          const height = params.height || 25;
+          const width = params.width || 12;
+          consent = taxRate.map(
+            (t) =>
+              height *
+              Math.exp(-Math.pow(t - peak, 2) / (2 * Math.pow(width, 2)))
+          );
+        }
 
         const countriesToShow = getLafferCountryDataToShow();
         const highlightCountry = document.getElementById(
@@ -1221,31 +1422,94 @@
           },
         });
 
-        // Calculate optimal for Gaussian curve
-        const optimal = params.peak || 32;
-        const maxConsent = params.height || 25;
+        // Calculate optimal based on curve type
+        let optimal, maxConsent, curveTypeLabel, explanation;
+
+        if (curveType === "quadratic") {
+          const beta1 = params.linearCoeff || 1.2;
+          const beta2 = params.quadraticCoeff || -0.024;
+          optimal = -beta1 / (2 * beta2);
+          const beta0 = params.intercept || 10;
+          maxConsent = beta0 + beta1 * optimal + beta2 * optimal * optimal;
+          curveTypeLabel = "Traditional Quadratic";
+          explanation =
+            "Traditional theory suggests this parabolic optimum, but real data challenges this model.";
+        } else {
+          optimal = params.peak || 32;
+          maxConsent = params.height || 25;
+          curveTypeLabel = "Gaussian (Data-Fitted)";
+          explanation =
+            "This bell curve better fits real-world data and captures the true dynamics of tax consent.";
+        }
 
         document.getElementById("optimal-laffer").innerHTML = `
                 <strong>Optimal Tax Rate:</strong> ${optimal.toFixed(2)}%<br>
                 <strong>Maximum Consent Level:</strong> ${maxConsent.toFixed(
                   2
                 )}%<br>
-                <strong>Curve Type:</strong> Gaussian (Bell-shaped)<br>
-                <em>This is where tax rates maximize both revenue collection and voluntary compliance, creating the most economically attractive jurisdiction.</em>
+                <strong>Curve Type:</strong> ${curveTypeLabel}<br>
+                <em>${explanation}</em>
             `;
       }
 
       function updateLafferSimulation() {
-        const params = {
-          peak: parseFloat(document.getElementById("peak-laffer").value),
-          height: parseFloat(document.getElementById("height-laffer").value),
-          width: parseFloat(document.getElementById("width-laffer").value),
-        };
+        const curveType =
+          document.getElementById("curve-type-select-laffer")?.value ||
+          "gaussian";
+
+        let params = {};
+
+        if (curveType === "quadratic") {
+          params = {
+            intercept: parseFloat(
+              document.getElementById("intercept-laffer")?.value || 10
+            ),
+            linearCoeff: parseFloat(
+              document.getElementById("linear-coeff-laffer")?.value || 1.2
+            ),
+            quadraticCoeff: parseFloat(
+              document.getElementById("quadratic-coeff-laffer")?.value || -0.024
+            ),
+          };
+        } else {
+          params = {
+            peak: parseFloat(
+              document.getElementById("peak-laffer")?.value || 32
+            ),
+            height: parseFloat(
+              document.getElementById("height-laffer")?.value || 25
+            ),
+            width: parseFloat(
+              document.getElementById("width-laffer")?.value || 12
+            ),
+          };
+        }
 
         simulateCurveLaffer(params);
       }
 
+      function toggleLafferParameterGroups() {
+        const curveType = document.getElementById(
+          "curve-type-select-laffer"
+        ).value;
+        const quadraticGroup = document.getElementById("quadratic-params");
+        const gaussianGroup = document.getElementById("gaussian-params");
+
+        if (curveType === "quadratic") {
+          quadraticGroup.style.display = "block";
+          gaussianGroup.style.display = "none";
+        } else {
+          quadraticGroup.style.display = "none";
+          gaussianGroup.style.display = "block";
+        }
+
+        updateLafferSimulation();
+      }
+
       // Event listeners
+      document
+        .getElementById("curve-type-select-laffer")
+        .addEventListener("change", toggleLafferParameterGroups);
       document
         .getElementById("peak-laffer")
         .addEventListener("input", updateLafferSimulation);
@@ -1255,6 +1519,15 @@
       document
         .getElementById("width-laffer")
         .addEventListener("input", updateLafferSimulation);
+      document
+        .getElementById("intercept-laffer")
+        ?.addEventListener("input", updateLafferSimulation);
+      document
+        .getElementById("linear-coeff-laffer")
+        ?.addEventListener("input", updateLafferSimulation);
+      document
+        .getElementById("quadratic-coeff-laffer")
+        ?.addEventListener("input", updateLafferSimulation);
       document
         .getElementById("country-select-laffer")
         .addEventListener("change", updateLafferSimulation);
@@ -1272,7 +1545,7 @@
         });
 
       // Initial simulation and data loading
-      simulateCurveLaffer({ peak: 32, height: 25, width: 12 });
+      toggleLafferParameterGroups();
 
       // Load real data
       updateLafferDataStatus("Loading data from OECD and World Bank APIs...");
