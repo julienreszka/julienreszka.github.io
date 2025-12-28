@@ -510,6 +510,19 @@ footer h3 {
     color: #ffffff;
   }
 
+  /* Links in dark mode */
+  a {
+    color: #6ea8fe !important;
+  }
+
+  a:hover {
+    color: #9ec5fe !important;
+  }
+
+  a:visited {
+    color: #b197fc !important;
+  }
+
   details {
     border-color: #444;
     background-color: #2d2d2d;
