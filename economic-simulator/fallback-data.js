@@ -1,5 +1,5 @@
       function getFallbackData() {
-        // Generated multi-period fallback data from World Bank API on 2025-12-28T08:01:31.843Z
+        // Generated multi-period fallback data from World Bank API on 2025-12-28T08:17:21.271Z
         // Contains data for all time periods: 2018-2023 (Recent), 2014-2023 (Decade), 2010-2023 (Long-term), 2005-2023 (Structural)
         // Countries included only if they have at least 3 years of data in each period
         const allPeriodData =         {
@@ -93,6 +93,13 @@
                                                 "name": "Norway",
                                                 "spending": 37.1,
                                                 "growth": 1.3,
+                                                "year": "2018-2023 (Recent)",
+                                                "dataPoints": 6
+                                      },
+                                      {
+                                                "name": "Poland",
+                                                "spending": 36.6,
+                                                "growth": 3.5,
                                                 "year": "2018-2023 (Recent)",
                                                 "dataPoints": 6
                                       },
@@ -309,6 +316,13 @@
                                                 "name": "Norway",
                                                 "spending": 37.5,
                                                 "growth": 1.5,
+                                                "year": "2014-2023 (Decade)",
+                                                "dataPoints": 10
+                                      },
+                                      {
+                                                "name": "Poland",
+                                                "spending": 35.8,
+                                                "growth": 3.8,
                                                 "year": "2014-2023 (Decade)",
                                                 "dataPoints": 10
                                       },
@@ -532,6 +546,13 @@
                                                 "name": "Norway",
                                                 "spending": 36.6,
                                                 "growth": 1.5,
+                                                "year": "2010-2023 (Long-term)",
+                                                "dataPoints": 14
+                                      },
+                                      {
+                                                "name": "Poland",
+                                                "spending": 35.7,
+                                                "growth": 3.5,
                                                 "year": "2010-2023 (Long-term)",
                                                 "dataPoints": 14
                                       },
@@ -762,6 +783,13 @@
                                                 "name": "Norway",
                                                 "spending": 35.5,
                                                 "growth": 1.5,
+                                                "year": "2005-2023 (Structural)",
+                                                "dataPoints": 19
+                                      },
+                                      {
+                                                "name": "Poland",
+                                                "spending": 35.9,
+                                                "growth": 3.8,
                                                 "year": "2005-2023 (Structural)",
                                                 "dataPoints": 19
                                       },
