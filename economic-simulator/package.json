@@ -5,6 +5,8 @@
   "main": "generate-og-images.js",
   "scripts": {
     "generate-images": "node generate-og-images.js",
+    "generate-fallback": "node generate-fallback-data.js",
+    "update-fallback": "node generate-fallback-data.js && echo 'Fallback data generated! Copy the function from fallback-data.js to armey-curve.html'",
     "install-deps": "npm install puppeteer"
   },
   "dependencies": {

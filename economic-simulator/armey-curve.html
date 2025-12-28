@@ -71,6 +71,12 @@
       .armey-specific h3 {
         color: #007bff !important;
       }
+
+      .help-text {
+        color: #666;
+        font-style: italic;
+        font-size: 0.9em;
+      }
     </style>
   </head>
 
@@ -98,12 +104,12 @@
         <form id="paramsFormArmey">
           <div class="param-group">
             <label for="beta0-armey"
-              >Intercept (β₀, base growth, e.g., 4.5):</label
+              >Intercept (β₀, base growth, e.g., 2):</label
             >
             <input
               type="number"
               id="beta0-armey"
-              value="4.5"
+              value="2"
               step="0.1"
               min="0"
               max="10"
@@ -150,6 +156,82 @@
             >
           </div>
         </form>
+
+        <div class="param-group">
+          <label for="country-select">Show Real Country Data:</label>
+          <select id="country-select" aria-describedby="country-select-help">
+            <option value="all">All Countries</option>
+            <option value="developed">Developed Countries</option>
+            <option value="developing">Developing Countries</option>
+            <option value="none">Hide Country Data</option>
+          </select>
+          <small id="country-select-help" class="help-text"
+            >Real-world data from
+            <a
+              href="https://data.worldbank.org/indicator/GC.XPN.TOTL.GD.ZS"
+              target="_blank"
+              rel="noopener"
+              >World Bank API</a
+            >
+            (<a
+              href="https://data.worldbank.org/indicator/GC.XPN.TOTL.GD.ZS"
+              target="_blank"
+              rel="noopener"
+              >Government expenditure</a
+            >
+            &
+            <a
+              href="https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG"
+              target="_blank"
+              rel="noopener"
+              >GDP growth</a
+            >)</small
+          >
+        </div>
+
+        <div class="param-group">
+          <label for="time-period-select">Time Period for Averaging:</label>
+          <select id="time-period-select" aria-describedby="time-period-help">
+            <option value="recent">
+              Recent (2018-2023) - Post-crisis stability
+            </option>
+            <option value="decade" selected>
+              Decade (2014-2023) - Full business cycle
+            </option>
+            <option value="long">
+              Long-term (2010-2023) - Including financial crisis
+            </option>
+            <option value="structural">
+              Structural (2005-2023) - Long-term trends
+            </option>
+          </select>
+          <small id="time-period-help" class="help-text"
+            >Longer periods smooth volatility but may include outdated
+            regimes</small
+          >
+          <div
+            id="data-status"
+            class="help-text"
+            style="margin-top: 5px; font-weight: bold"
+          >
+            Loading...
+          </div>
+        </div>
+
+        <div class="param-group">
+          <label for="highlight-country-select"
+            >Highlight Specific Country:</label
+          >
+          <select
+            id="highlight-country-select"
+            aria-describedby="highlight-country-help"
+          >
+            <option value="none">No country highlighted</option>
+          </select>
+          <small id="highlight-country-help" class="help-text"
+            >Select a country to highlight with a red dot</small
+          >
+        </div>
 
         <div
           class="chart-container"
@@ -322,6 +404,331 @@
             government intervention led to economic collapse.
           </p>
 
+          <h3>Data Sources</h3>
+          <p>
+            The real-world country data displayed in this simulator comes from
+            the World Bank's comprehensive database:
+          </p>
+          <ul>
+            <li>
+              <strong>Government Expenditure:</strong>
+              <a
+                href="https://data.worldbank.org/indicator/GC.XPN.TOTL.GD.ZS"
+                target="_blank"
+                rel="noopener"
+                >Total government expenditure (% of GDP)</a
+              >
+              - Includes all government spending on goods, services, wages,
+              transfers, and subsidies
+            </li>
+            <li>
+              <strong>Economic Growth:</strong>
+              <a
+                href="https://data.worldbank.org/indicator/NY.GDP.MKTP.KD.ZG"
+                target="_blank"
+                rel="noopener"
+                >GDP growth (annual %)</a
+              >
+              - Real GDP growth rate in constant local currency
+            </li>
+            <li>
+              <strong>Data Period:</strong> Averages calculated over
+              user-selected time periods (2005-2023 range)
+            </li>
+            <li>
+              <strong>Methodology:</strong> Countries included only if they have
+              at least 3 years of data in the selected period
+            </li>
+          </ul>
+          <p>
+            <em
+              >Note: You can download the raw data directly from the World
+              Bank's
+              <a
+                href="https://databank.worldbank.org/home.aspx"
+                target="_blank"
+                rel="noopener"
+                >DataBank</a
+              >
+              for your own analysis.</em
+            >
+          </p>
+
+          <h3>Why the Real-World Data Shows Scatter: Other Growth Factors</h3>
+          <p>
+            While the Armey curve relationship is visible in the data, you'll
+            notice significant scatter around the theoretical curve. This
+            reflects the reality that
+            <strong
+              >government size is just one of many factors affecting economic
+              growth</strong
+            >. Understanding these other factors helps explain why countries
+            with similar government spending levels can have vastly different
+            growth outcomes.
+          </p>
+
+          <h4>Key Growth Factors Beyond Government Size</h4>
+
+          <h5>1. Institutional Quality</h5>
+          <ul>
+            <li>
+              <strong>Rule of Law:</strong> Strong property rights and contract
+              enforcement enable investment and innovation
+            </li>
+            <li>
+              <strong>Regulatory Efficiency:</strong> Streamlined business
+              regulations reduce costs and encourage entrepreneurship
+            </li>
+            <li>
+              <strong>Government Effectiveness:</strong> Quality of public
+              administration and policy implementation matters more than size
+            </li>
+            <li>
+              <strong>Corruption Control:</strong> Clean governance ensures
+              resources go to productive uses
+            </li>
+          </ul>
+          <p>
+            <em
+              >Example: Singapore (17% spending, 2.8% growth) combines efficient
+              government with strong institutions, while some high-spending
+              countries struggle with bureaucratic inefficiency.</em
+            >
+          </p>
+
+          <h5>2. Development Stage and Catch-Up Potential</h5>
+          <ul>
+            <li>
+              <strong>Convergence Effect:</strong> Developing countries can grow
+              faster by adopting existing technologies
+            </li>
+            <li>
+              <strong>Productivity Gaps:</strong> Room for improvement varies
+              dramatically across countries
+            </li>
+            <li>
+              <strong>Infrastructure Needs:</strong> Countries with
+              infrastructure deficits can see high returns to investment
+            </li>
+          </ul>
+          <p>
+            <em
+              >Example: Ethiopia (8.5% spending, 6.5% growth) and Rwanda (19.7%
+              spending, 7.0% growth) benefit from catch-up growth potential
+              despite very different government sizes.</em
+            >
+          </p>
+
+          <h5>3. Demographics and Human Capital</h5>
+          <ul>
+            <li>
+              <strong>Age Structure:</strong> Young, working-age populations
+              drive growth; aging populations face headwinds
+            </li>
+            <li>
+              <strong>Education Quality:</strong> Skills matching, innovation
+              capacity, and adaptability to change
+            </li>
+            <li>
+              <strong>Health Outcomes:</strong> Healthy populations are more
+              productive and innovative
+            </li>
+          </ul>
+          <p>
+            <em
+              >Example: Japan (19.7% spending, 0.2% growth) faces demographic
+              headwinds with an aging population, while countries with young
+              populations have natural growth advantages.</em
+            >
+          </p>
+
+          <h5>4. Economic Structure and Openness</h5>
+          <ul>
+            <li>
+              <strong>Trade Integration:</strong> Access to global markets and
+              value chains
+            </li>
+            <li>
+              <strong>Sectoral Composition:</strong> Manufacturing vs. services
+              vs. agriculture productivity differences
+            </li>
+            <li>
+              <strong>Export Competitiveness:</strong> Currency levels, labor
+              costs, and specialization
+            </li>
+            <li>
+              <strong>Foreign Investment:</strong> Technology transfer and
+              capital inflows
+            </li>
+          </ul>
+          <p>
+            <em
+              >Example: Ireland (22.3% spending, 6.8% growth) benefits from
+              being a hub for multinational corporations and EU market
+              access.</em
+            >
+          </p>
+
+          <h5>5. Innovation and Technology</h5>
+          <ul>
+            <li>
+              <strong>R&D Investment:</strong> Both public and private research
+              spending drives long-term growth
+            </li>
+            <li>
+              <strong>Technology Adoption:</strong> Digital infrastructure and
+              automation capabilities
+            </li>
+            <li>
+              <strong>Knowledge Spillovers:</strong> Proximity to innovation
+              centers and universities
+            </li>
+            <li>
+              <strong>Entrepreneurial Culture:</strong> Risk-taking and business
+              creation rates
+            </li>
+          </ul>
+
+          <h5>6. Macroeconomic Stability</h5>
+          <ul>
+            <li>
+              <strong>Inflation Control:</strong> Price stability enables
+              long-term planning and investment
+            </li>
+            <li>
+              <strong>Financial Development:</strong> Access to credit and
+              efficient capital allocation
+            </li>
+            <li>
+              <strong>Exchange Rate Policy:</strong> Competitiveness and
+              stability for trade
+            </li>
+            <li>
+              <strong>Debt Sustainability:</strong> Manageable debt burdens and
+              fiscal space
+            </li>
+          </ul>
+
+          <h5>7. Natural Resources and Geography</h5>
+          <ul>
+            <li>
+              <strong>Resource Endowments:</strong> Can be a blessing or curse
+              depending on management
+            </li>
+            <li>
+              <strong>Geographic Location:</strong> Access to markets, climate,
+              and natural advantages
+            </li>
+            <li>
+              <strong>Energy Costs:</strong> Access to affordable energy for
+              industry and consumers
+            </li>
+          </ul>
+          <p>
+            <em
+              >Example: Norway manages oil wealth well through sovereign wealth
+              funds, while some resource-rich countries suffer from "Dutch
+              disease."</em
+            >
+          </p>
+
+          <h4>Understanding the Outliers</h4>
+
+          <div
+            style="
+              background-color: #f8f9fa;
+              padding: 15px;
+              border-left: 4px solid #007bff;
+              margin: 20px 0;
+            "
+          >
+            <h5>High Growth with Low Spending:</h5>
+            <ul>
+              <li>
+                <strong>Ethiopia (8.5% spending, 6.5% growth):</strong> Catch-up
+                growth, infrastructure investment, young population
+              </li>
+              <li>
+                <strong>Bangladesh (8.1% spending, 6.4% growth):</strong>
+                Manufacturing growth, demographic dividend, low base
+              </li>
+              <li>
+                <strong>Singapore (17% spending, 2.8% growth):</strong>
+                Efficient government, strategic location, high-value services
+              </li>
+            </ul>
+          </div>
+
+          <div
+            style="
+              background-color: #fff3cd;
+              padding: 15px;
+              border-left: 4px solid #ffc107;
+              margin: 20px 0;
+            "
+          >
+            <h5>Low Growth Despite Moderate Spending:</h5>
+            <ul>
+              <li>
+                <strong>Japan (19.7% spending, 0.2% growth):</strong> Aging
+                population, high debt, mature economy
+              </li>
+              <li>
+                <strong>Germany (30.2% spending, 0.5% growth):</strong> Energy
+                transition costs, mature manufacturing, demographic challenges
+              </li>
+              <li>
+                <strong>Argentina (22.7% spending, 0% growth):</strong>
+                Macroeconomic instability, inflation, institutional weaknesses
+              </li>
+            </ul>
+          </div>
+
+          <h4>Policy Implications</h4>
+          <p>
+            The scatter in the data teaches us that
+            <strong
+              >government size optimization is necessary but not
+              sufficient</strong
+            >
+            for growth. Successful growth strategies require:
+          </p>
+          <ul>
+            <li>
+              <strong>Quality over Quantity:</strong> Focus on efficient,
+              effective government rather than just optimal size
+            </li>
+            <li>
+              <strong>Institutional Development:</strong> Build rule of law,
+              regulatory quality, and government effectiveness
+            </li>
+            <li>
+              <strong>Complementary Policies:</strong> Combine fiscal
+              optimization with education, infrastructure, and innovation
+              policies
+            </li>
+            <li>
+              <strong>Context-Specific Solutions:</strong> Tailor policies to
+              each country's development stage, demographics, and structural
+              characteristics
+            </li>
+            <li>
+              <strong>Long-term Perspective:</strong> Some factors
+              (demographics, institutions) change slowly and require sustained
+              effort
+            </li>
+          </ul>
+
+          <p>
+            The Armey curve provides a useful framework for thinking about
+            optimal government size, but it should be understood as one tool
+            among many for designing growth-oriented economic policy. Countries
+            that successfully combine optimal government size with strong
+            institutions, sound macroeconomic policy, and investment in human
+            capital and innovation tend to achieve the highest sustainable
+            growth rates.
+          </p>
+
           <h3>Comparative Findings</h3>
           <ul>
             <li>
@@ -429,32 +836,468 @@
     </div>
 
     <script>
+      // World Bank API integration
+      let countryData = {
+        developed: [],
+        developing: [],
+      };
+
+      let isDataLoaded = false;
+
+      // Country classifications
+      const developedCountries = [
+        "USA",
+        "DEU",
+        "FRA",
+        "GBR",
+        "JPN",
+        "CAN",
+        "AUS",
+        "CHE",
+        "NLD",
+        "SWE",
+        "NOR",
+        "DNK",
+        "KOR",
+        "SGP",
+        "FIN",
+        "AUT",
+        "BEL",
+        "IRL",
+      ];
+
+      const developingCountries = [
+        "CHN",
+        "IND",
+        "VNM",
+        "BGD",
+        "ETH",
+        "RWA",
+        "IDN",
+        "PHL",
+        "BRA",
+        "MEX",
+        "TUR",
+        "CHL",
+        "ZAF",
+        "ARG",
+        "VEN",
+        "THA",
+        "MYS",
+        "EGY",
+      ];
+
+      // Fetch data from World Bank API
+      async function fetchWorldBankData() {
+        try {
+          const allCountries = [...developedCountries, ...developingCountries];
+          const countryString = allCountries.join(";");
+
+          // Fetch broader date range to allow for different averaging periods
+          // Fetch government expenditure data (% of GDP) - Total expenditure including transfers
+          const spendingResponse = await fetch(
+            `https://api.worldbank.org/v2/country/${countryString}/indicator/GC.XPN.TOTL.GD.ZS?date=2005:2023&format=json&per_page=1000`
+          );
+          const spendingData = await spendingResponse.json();
+
+          // Fetch GDP growth data
+          const growthResponse = await fetch(
+            `https://api.worldbank.org/v2/country/${countryString}/indicator/NY.GDP.MKTP.KD.ZG?date=2005:2023&format=json&per_page=1000`
+          );
+          const growthData = await growthResponse.json();
+
+          // Store raw data globally for processing with different time periods
+          window.rawSpendingData = spendingData[1];
+          window.rawGrowthData = growthData[1];
+
+          // Process with default time period
+          processDataForCurrentPeriod();
+        } catch (error) {
+          console.error("Error fetching World Bank data:", error);
+
+          // Fallback to local JSON data
+          try {
+            const fallbackResponse = await fetch("fallback-data.json");
+            const allPeriodData = await fallbackResponse.json();
+
+            // Store the fallback data globally for time period switching
+            window.fallbackData = allPeriodData;
+
+            // Process with current time period
+            processDataFromFallback();
+          } catch (fallbackError) {
+            console.error("Error loading fallback data:", fallbackError);
+            // Final fallback to embedded data
+            countryData = getFallbackData();
+            isDataLoaded = true;
+            updateDataStatus("Using embedded fallback data");
+            updateHighlightCountryOptions();
+            updateArmeySimulation();
+          }
+        }
+      }
+
+      function processDataForCurrentPeriod() {
+        const timePeriod = document.getElementById("time-period-select").value;
+        const dateRange = getDateRangeForPeriod(timePeriod);
+
+        // Process the data with selected time period
+        const processedData = processWorldBankData(
+          window.rawSpendingData,
+          window.rawGrowthData,
+          dateRange
+        );
+
+        // Update country data
+        countryData = processedData;
+        isDataLoaded = true;
+
+        // Update the UI to show data is loaded
+        updateDataStatus(`Data loaded: ${dateRange.label}`);
+
+        // Update the country highlight dropdown
+        updateHighlightCountryOptions();
+
+        // Refresh the chart
+        updateArmeySimulation();
+      }
+
+      function processDataFromFallback() {
+        const timePeriod = document.getElementById("time-period-select").value;
+        const dateRange = getDateRangeForPeriod(timePeriod);
+
+        // Use the appropriate period data from fallback
+        if (window.fallbackData && window.fallbackData[timePeriod]) {
+          countryData = window.fallbackData[timePeriod];
+          isDataLoaded = true;
+          updateDataStatus(`Using local fallback data: ${dateRange.label}`);
+        } else {
+          // If specific period not available, use embedded fallback
+          countryData = getFallbackData();
+          isDataLoaded = true;
+          updateDataStatus("Using embedded fallback data");
+        }
+
+        updateHighlightCountryOptions();
+        updateArmeySimulation();
+      }
+
+      function getDateRangeForPeriod(period) {
+        switch (period) {
+          case "recent":
+            return { start: 2018, end: 2023, label: "2018-2023 (Recent)" };
+          case "decade":
+            return { start: 2014, end: 2023, label: "2014-2023 (Decade)" };
+          case "long":
+            return { start: 2010, end: 2023, label: "2010-2023 (Long-term)" };
+          case "structural":
+            return { start: 2005, end: 2023, label: "2005-2023 (Structural)" };
+          default:
+            return { start: 2014, end: 2023, label: "2014-2023 (Default)" };
+        }
+      }
+
+      function processWorldBankData(
+        spendingRaw,
+        growthRaw,
+        dateRange = { start: 2014, end: 2023, label: "2014-2023" }
+      ) {
+        const countryAverages = {};
+
+        // Calculate averages for spending data
+        if (spendingRaw) {
+          spendingRaw.forEach((item) => {
+            if (
+              item.value !== null &&
+              item.date >= dateRange.start &&
+              item.date <= dateRange.end
+            ) {
+              const countryCode = item.countryiso3code;
+              if (!countryAverages[countryCode]) {
+                countryAverages[countryCode] = {
+                  name: item.country.value,
+                  spending: [],
+                  growth: [],
+                };
+              }
+              countryAverages[countryCode].spending.push(item.value);
+            }
+          });
+        }
+
+        // Calculate averages for growth data
+        if (growthRaw) {
+          growthRaw.forEach((item) => {
+            if (
+              item.value !== null &&
+              item.date >= dateRange.start &&
+              item.date <= dateRange.end
+            ) {
+              const countryCode = item.countryiso3code;
+              if (countryAverages[countryCode]) {
+                countryAverages[countryCode].growth.push(item.value);
+              }
+            }
+          });
+        }
+
+        // Calculate final averages and categorize
+        const developed = [];
+        const developing = [];
+
+        Object.entries(countryAverages).forEach(([code, data]) => {
+          // Require at least 3 years of data for reliable average
+          if (data.spending.length >= 3 && data.growth.length >= 3) {
+            const avgSpending =
+              data.spending.reduce((a, b) => a + b) / data.spending.length;
+            const avgGrowth =
+              data.growth.reduce((a, b) => a + b) / data.growth.length;
+
+            const countryInfo = {
+              name: data.name,
+              spending: Math.round(avgSpending * 10) / 10,
+              growth: Math.round(avgGrowth * 10) / 10,
+              year: dateRange.label,
+              dataPoints: data.spending.length,
+            };
+
+            if (developedCountries.includes(code)) {
+              developed.push(countryInfo);
+            } else {
+              developing.push(countryInfo);
+            }
+          }
+        });
+
+        return { developed, developing };
+      }
+
+      function getFallbackData() {
+        // Simplified fallback that returns recent period data only
+        // This is used as the final fallback when both API and JSON fail
+        return {
+          developed: [
+            {
+              name: "Australia",
+              spending: 28.5,
+              growth: 2.5,
+              year: "2018-2023 (Recent)",
+              dataPoints: 5,
+            },
+            {
+              name: "United States",
+              spending: 26.5,
+              growth: 2.5,
+              year: "2018-2023 (Recent)",
+              dataPoints: 6,
+            },
+            {
+              name: "Ireland",
+              spending: 22.3,
+              growth: 6.8,
+              year: "2018-2023 (Recent)",
+              dataPoints: 5,
+            },
+            {
+              name: "Singapore",
+              spending: 17.2,
+              growth: 2.8,
+              year: "2018-2023 (Recent)",
+              dataPoints: 6,
+            },
+          ],
+          developing: [
+            {
+              name: "Rwanda",
+              spending: 19.7,
+              growth: 7.0,
+              year: "2018-2023 (Recent)",
+              dataPoints: 6,
+            },
+            {
+              name: "Ethiopia",
+              spending: 8.5,
+              growth: 6.5,
+              year: "2018-2023 (Recent)",
+              dataPoints: 6,
+            },
+            {
+              name: "Bangladesh",
+              spending: 8.1,
+              growth: 6.4,
+              year: "2018-2023 (Recent)",
+              dataPoints: 4,
+            },
+            {
+              name: "Turkey",
+              spending: 32.3,
+              growth: 4.8,
+              year: "2018-2023 (Recent)",
+              dataPoints: 6,
+            },
+          ],
+        };
+      }
+
+      function updateDataStatus(message) {
+        const statusElement = document.getElementById("data-status");
+        if (statusElement) {
+          statusElement.textContent = message;
+          statusElement.style.color = isDataLoaded ? "#28a745" : "#dc3545";
+        }
+      }
+
+      function updateHighlightCountryOptions() {
+        const select = document.getElementById("highlight-country-select");
+        if (!select) return;
+
+        // Clear existing options except "none"
+        select.innerHTML =
+          '<option value="none">No country highlighted</option>';
+
+        if (!isDataLoaded) return;
+
+        // Get all countries and sort them alphabetically
+        const allCountries = [
+          ...countryData.developed,
+          ...countryData.developing,
+        ];
+        allCountries.sort((a, b) => a.name.localeCompare(b.name));
+
+        // Add country options
+        allCountries.forEach((country) => {
+          const option = document.createElement("option");
+          option.value = country.name;
+          option.textContent = country.name;
+          select.appendChild(option);
+        });
+      }
+
       // Armey Curve Implementation
       const ctxArmey = document
         .getElementById("growthChartArmey")
         .getContext("2d");
       let chartArmey;
 
+      function getCountryDataToShow() {
+        if (!isDataLoaded) return [];
+
+        const selection = document.getElementById("country-select").value;
+        if (selection === "none") return [];
+        if (selection === "all")
+          return [...countryData.developed, ...countryData.developing];
+        return countryData[selection] || [];
+      }
+
       function simulateCurveArmey(beta0, beta1, beta2) {
         const spending = Array.from({ length: 101 }, (_, i) => i); // 0% to 100%
         const growth = spending.map((g) => beta0 + beta1 * g + beta2 * g * g);
+
+        const countriesToShow = getCountryDataToShow();
+        const highlightCountry = document.getElementById(
+          "highlight-country-select"
+        )?.value;
+
+        const datasets = [
+          {
+            label: "Theoretical Armey Curve",
+            data: spending.map((x, i) => ({ x: x, y: growth[i] })),
+            borderColor: "#007bff",
+            backgroundColor: "rgba(0, 123, 255, 0.1)",
+            borderWidth: 3,
+            fill: true,
+            tension: 0.4,
+            type: "line",
+            pointRadius: 0,
+          },
+        ];
+
+        if (countriesToShow.length > 0) {
+          // Filter out the highlighted country from regular datasets
+          const highlightedCountryData =
+            highlightCountry !== "none"
+              ? countriesToShow.find((c) => c.name === highlightCountry)
+              : null;
+
+          // Filter countries excluding the highlighted one
+          const regularCountries = countriesToShow.filter(
+            (c) => c.name !== highlightCountry
+          );
+
+          // Add developed countries (excluding highlighted)
+          const developedCountries = regularCountries.filter((c) =>
+            countryData.developed.includes(c)
+          );
+          if (developedCountries.length > 0) {
+            datasets.push({
+              label: "Developed Countries",
+              data: developedCountries.map((c) => ({
+                x: c.spending,
+                y: c.growth,
+                countryName: c.name,
+                year: c.year,
+              })),
+              backgroundColor: "rgba(40, 167, 69, 0.8)",
+              borderColor: "#28a745",
+              borderWidth: 2,
+              pointRadius: 6,
+              pointHoverRadius: 8,
+              type: "scatter",
+              showLine: false,
+            });
+          }
+
+          // Add developing countries (excluding highlighted)
+          const developingCountries = regularCountries.filter((c) =>
+            countryData.developing.includes(c)
+          );
+          if (developingCountries.length > 0) {
+            datasets.push({
+              label: "Developing Countries",
+              data: developingCountries.map((c) => ({
+                x: c.spending,
+                y: c.growth,
+                countryName: c.name,
+                year: c.year,
+              })),
+              backgroundColor: "rgba(255, 193, 7, 0.8)",
+              borderColor: "#ffc107",
+              borderWidth: 2,
+              pointRadius: 6,
+              pointHoverRadius: 8,
+              type: "scatter",
+              showLine: false,
+            });
+          }
+
+          // Add highlighted country as a separate dataset with red styling
+          if (highlightedCountryData) {
+            datasets.push({
+              label: `Highlighted: ${highlightedCountryData.name}`,
+              data: [
+                {
+                  x: highlightedCountryData.spending,
+                  y: highlightedCountryData.growth,
+                  countryName: highlightedCountryData.name,
+                  year: highlightedCountryData.year,
+                },
+              ],
+              backgroundColor: "rgba(220, 53, 69, 0.9)",
+              borderColor: "#dc3545",
+              borderWidth: 3,
+              pointRadius: 8,
+              pointHoverRadius: 10,
+              type: "scatter",
+              showLine: false,
+            });
+          }
+        }
 
         if (chartArmey) chartArmey.destroy();
         chartArmey = new Chart(ctxArmey, {
           type: "line",
           data: {
-            labels: spending,
-            datasets: [
-              {
-                label: "GDP Growth Rate (%)",
-                data: growth,
-                borderColor: "#007bff",
-                backgroundColor: "rgba(0, 123, 255, 0.1)",
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-              },
-            ],
+            datasets: datasets,
           },
           options: {
             responsive: true,
@@ -467,13 +1310,31 @@
               tooltip: {
                 callbacks: {
                   title: function (tooltipItems) {
+                    const item = tooltipItems[0];
+                    if (item.dataset.type === "scatter") {
+                      const dataPoint = item.dataset.data[item.dataIndex];
+                      return dataPoint.countryName || "Country";
+                    }
                     return (
                       "Government Spending: " +
-                      tooltipItems[0].label +
+                      item.parsed.x.toFixed(1) +
                       "% of GDP"
                     );
                   },
                   label: function (context) {
+                    if (context.dataset.type === "scatter") {
+                      const dataPoint = context.dataset.data[context.dataIndex];
+                      return [
+                        "Gov Spending: " +
+                          context.parsed.x.toFixed(1) +
+                          "% of GDP",
+                        "Growth Rate: " + context.parsed.y.toFixed(1) + "%",
+                        "Period: " + (dataPoint.year || "2014-2023"),
+                        "Data points: " +
+                          (dataPoint.dataPoints || "N/A") +
+                          " years",
+                      ];
+                    }
                     return "Growth Rate: " + context.parsed.y.toFixed(2) + "%";
                   },
                 },
@@ -481,13 +1342,18 @@
             },
             scales: {
               x: {
+                type: "linear",
+                position: "bottom",
                 title: {
                   display: true,
                   text: "Government Spending (% of GDP)",
                 },
                 grid: { color: "rgba(0,0,0,0.1)" },
+                min: 0,
+                max: 100,
               },
               y: {
+                type: "linear",
                 title: { display: true, text: "GDP Growth Rate (%)" },
                 grid: { color: "rgba(0,0,0,0.1)" },
               },
@@ -530,9 +1396,33 @@
       document
         .getElementById("beta2-armey")
         .addEventListener("input", updateArmeySimulation);
+      document
+        .getElementById("country-select")
+        .addEventListener("change", updateArmeySimulation);
+      document
+        .getElementById("highlight-country-select")
+        .addEventListener("change", updateArmeySimulation);
+      document
+        .getElementById("time-period-select")
+        .addEventListener("change", function () {
+          if (window.rawSpendingData && window.rawGrowthData) {
+            // Use live API data
+            processDataForCurrentPeriod();
+          } else if (window.fallbackData) {
+            // Use fallback JSON data
+            processDataFromFallback();
+          } else {
+            // Use embedded fallback (no time period switching available)
+            updateArmeySimulation();
+          }
+        });
 
-      // Initial simulation
-      simulateCurveArmey(4.5, 0.5, -0.01);
+      // Initial simulation and data loading
+      simulateCurveArmey(2, 0.5, -0.01);
+
+      // Load real data from World Bank API
+      updateDataStatus("Loading data from World Bank API...");
+      fetchWorldBankData();
 
       // Handle resize
       let resizeTimeout;
