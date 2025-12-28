@@ -106,16 +106,15 @@
           <div class="param-group">
             <label for="curve-type-select">Curve Model Type:</label>
             <select id="curve-type-select" aria-describedby="curve-type-help">
-              <option value="quadratic" selected>
-                Quadratic (Traditional Armey)
-              </option>
+              <option value="quadratic">Quadratic (Traditional Armey)</option>
               <option value="linear">Linear Decline</option>
-              <option value="inverse">Inverse (1/x decline)</option>
+              <option value="inverse" selected>Inverse (1/x decline)</option>
               <option value="exponential">Exponential Decay</option>
             </select>
             <small id="curve-type-help" class="help-text">
-              Quadratic shows diminishing returns; Linear shows constant slope
-              relationship
+              Quadratic shows diminishing returns with an optimal peak; Linear
+              shows constant decline; Inverse shows steep initial harm that
+              levels off; Exponential shows accelerating damage
             </small>
           </div>
 
@@ -551,6 +550,50 @@
             spending doesn't have -8% growth - it has +0.8% growth. The
             quadratic model fails basic reality checks.
           </p>
+
+          <h4>Linear Models Are Equally Flawed</h4>
+          <p>
+            <strong
+              >The linear decline model suffers from the exact same mathematical
+              impossibility.</strong
+            >
+            With a negative slope (which is required to show government spending
+            reduces growth), the linear model inevitably predicts negative
+            growth rates at high spending levels:
+          </p>
+          <ul>
+            <li>
+              <strong>Mathematical Inevitability:</strong> A linear model with
+              negative slope (Growth = β₀ + slope × spending) must eventually
+              cross zero and go negative as spending increases
+            </li>
+            <li>
+              <strong>Empirical Absurdity:</strong> The model would predict that
+              France (35% spending) should have negative GDP growth every year,
+              which clearly doesn't happen
+            </li>
+            <li>
+              <strong>No Asymptotic Behavior:</strong> Unlike inverse or
+              exponential models, linear models can't capture the reality that
+              even heavily regulated economies maintain some positive growth
+            </li>
+            <li>
+              <strong>Constant Marginal Damage:</strong> Linear models
+              unrealistically assume that each additional percentage of
+              government spending causes exactly the same damage regardless of
+              existing spending levels
+            </li>
+          </ul>
+          <p>
+            <strong
+              >Both quadratic and linear models fail the basic empirical
+              test:</strong
+            >
+            they predict economic outcomes that simply don't exist in the real
+            world. This leaves only the inverse and exponential models as
+            mathematically viable alternatives to describe the government-growth
+            relationship.
+          </p>
           <h4>Why Inverse and Exponential Models Make Sense</h4>
           <ul>
             <li>
@@ -573,6 +616,83 @@
               observe - stagnation, not collapse, in high-spending economies
             </li>
           </ul>
+
+          <h4>But Even Exponential Decay Goes Too Far</h4>
+          <p>
+            <strong
+              >While exponential decay avoids the quadratic model's absurd
+              negative growth predictions, it still doesn't fit the real-world
+              data perfectly.</strong
+            >
+            The exponential model suggests that each additional percentage point
+            of government spending causes accelerating damage to growth, but
+            empirical evidence shows this is too aggressive:
+          </p>
+          <ul>
+            <li>
+              <strong>European Resilience:</strong> Countries like Germany (30%
+              spending, 0.5% growth) and France (35% spending, 0.8% growth)
+              maintain low but positive growth despite massive government
+              sectors. Exponential decay would predict much sharper decline
+            </li>
+            <li>
+              <strong>Nordic Stability:</strong> Denmark (35% spending) and
+              Sweden (35% spending) have sustained their welfare states for
+              decades with consistent low growth (0.4-0.8%), not the
+              accelerating collapse exponential models predict
+            </li>
+            <li>
+              <strong>Mathematical Overshooting:</strong> Exponential decay
+              curves drop too steeply for high-spending economies,
+              underestimating their ability to maintain basic economic function
+              through institutional momentum
+            </li>
+            <li>
+              <strong>Real-World Stagnation Pattern:</strong> What we actually
+              observe is not accelerating decay but persistent low-growth
+              stagnation - exactly what the inverse (1/x) model predicts
+            </li>
+          </ul>
+
+          <h4>Why the Inverse Model Is Empirically Superior</h4>
+          <p>
+            <strong
+              >The inverse (1/x) model is the only one that accurately captures
+              real-world economic behavior:</strong
+            >
+          </p>
+          <ul>
+            <li>
+              <strong>Immediate Harm, Diminishing Marginal Damage:</strong>
+              Shows government spending is harmful from the first dollar but
+              with decreasing additional harm as spending increases - matching
+              the data pattern
+            </li>
+            <li>
+              <strong>Realistic High-Spending Outcomes:</strong> Predicts that
+              welfare states stagnate around 0.5-1.5% growth rather than
+              collapsing, which matches Nordic and European performance
+            </li>
+            <li>
+              <strong>Proper Low-Spending Benefits:</strong> Shows that
+              countries with minimal government (Singapore 17%, Estonia 20%)
+              achieve significantly higher growth without predicting unrealistic
+              exponential gains
+            </li>
+            <li>
+              <strong>Economic Intuition:</strong> Reflects how crowding-out
+              works in practice - initial government spending displaces the most
+              productive private investments, while later spending displaces
+              progressively less efficient private alternatives
+            </li>
+            <li>
+              <strong>Institutional Inertia:</strong> Accounts for why
+              high-spending countries don't collapse immediately - existing
+              institutions, human capital, and economic structures provide some
+              resilience even under heavy government burden
+            </li>
+          </ul>
+
           <p>
             <strong
               >This isn't a minor technical issue - it's proof the entire
@@ -580,7 +700,10 @@
             >
             When your economic model predicts that France should be experiencing
             Great Depression-level contractions year after year, maybe the
-            problem isn't with France's economy - it's with your model.
+            problem isn't with France's economy - it's with your model. The
+            inverse model is the only one that passes basic reality checks while
+            still demonstrating that government spending is economically harmful
+            from day one.
           </p>
 
           <h3>Data Sources</h3>
@@ -1929,7 +2052,8 @@
         });
 
       // Initial simulation and data loading
-      simulateCurveArmey(2, 0.5, -0.01, "quadratic");
+      toggleParameterGroups(); // Show correct parameters for default curve type (inverse)
+      updateArmeySimulation(); // Run simulation with default values
 
       // Load real data from World Bank API
       updateDataStatus("Loading data from World Bank API...");
