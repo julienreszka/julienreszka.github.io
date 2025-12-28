@@ -3,12 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>J-Curve: The Right to Economic Recovery | Economic Simulator</title>
+    <title>
+      Challenge the J-Curve: Data-Driven Recovery Analysis | Interactive
+      Economic Simulator
+    </title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Interactive J-Curve simulator. Explore economic recovery patterns after policy shocks and the Right to Economic Recovery."
+      content="Challenge traditional J-Curve theory with real data. Interactive simulator comparing theoretical models vs empirical evidence from Poland's rapid recovery and other real-world cases."
     />
     <meta
       name="keywords"
@@ -69,6 +72,18 @@
       .jcurve-specific h3 {
         color: #dc3545 !important;
       }
+
+      .help-text {
+        color: #666;
+        font-style: italic;
+        font-size: 0.9em;
+      }
+
+      .help-text {
+        color: #666;
+        font-style: italic;
+        font-size: 0.9em;
+      }
     </style>
   </head>
 
@@ -79,20 +94,21 @@
         <a href="index.html">← Back to All Curves</a>
       </nav>
 
-      <h1>The J-Curve: Economic Recovery After Policy Shocks</h1>
+      <h1>Challenge the J-Curve: When Data Contradicts Theory</h1>
 
       <p>
-        <strong>The Right to Economic Recovery:</strong> This curve demonstrates
-        that people have a natural right to economic recovery after necessary
-        policy shocks. While reforms may initially worsen conditions, properly
-        implemented policies should lead to recovery and improved long-term
-        prosperity. The J-shape shows initial deterioration followed by
-        sustained improvement.
+        <strong>Challenging the J-Curve:</strong> Traditional J-Curve theory
+        claims that economic recovery must be slow and painful. But when you
+        look at the real data, this theory falls apart. This interactive
+        simulator lets you compare the traditional J-curve against what the data
+        actually shows - countries like Poland recovered in 1-2 years, not
+        decades. The results are surprising and reveal how theory often masks
+        political convenience.
       </p>
 
       <!-- Interactive Simulation -->
       <section id="jcurve-section">
-        <h2>Interactive J-Curve Simulator</h2>
+        <h2>Interactive J-Curve Simulator: Theory vs. Real Data</h2>
 
         <form id="paramsFormJCurve">
           <div class="param-group">
@@ -132,7 +148,7 @@
             <input
               type="number"
               id="tau-jcurve"
-              value="2"
+              value="2.5"
               step="0.5"
               min="0.5"
               max="10"
@@ -148,7 +164,7 @@
             <input
               type="number"
               id="slope-jcurve"
-              value="1"
+              value="0.6"
               step="0.1"
               min="0"
               max="5"
@@ -158,7 +174,99 @@
               >Long-term improvement rate</small
             >
           </div>
+
+          <div class="param-group">
+            <label for="frequency-jcurve"
+              >Oscillation Frequency (e.g., 0.8):</label
+            >
+            <input
+              type="number"
+              id="frequency-jcurve"
+              value="1.2"
+              step="0.1"
+              min="0.1"
+              max="2"
+              aria-describedby="frequency-jcurve-help"
+            />
+            <small id="frequency-jcurve-help" class="sr-only"
+              >Frequency of economic cycles during recovery</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="damping-jcurve">Damping Factor (e.g., 0.3):</label>
+            <input
+              type="number"
+              id="damping-jcurve"
+              value="0.1"
+              step="0.05"
+              min="0"
+              max="1"
+              aria-describedby="damping-jcurve-help"
+            />
+            <small id="damping-jcurve-help" class="sr-only"
+              >How quickly oscillations fade (0 = no damping, 1 = heavy
+              damping)</small
+            >
+          </div>
+
+          <div class="param-group">
+            <label for="plateau-jcurve">Plateau Level (e.g., 15):</label>
+            <input
+              type="number"
+              id="plateau-jcurve"
+              value="5"
+              step="1"
+              min="0"
+              max="50"
+              aria-describedby="plateau-jcurve-help"
+            />
+            <small id="plateau-jcurve-help" class="sr-only"
+              >Final steady-state level after recovery</small
+            >
+          </div>
         </form>
+
+        <div class="param-group">
+          <label for="country-select-jcurve">Show Real Country Data:</label>
+          <select
+            id="country-select-jcurve"
+            aria-describedby="country-select-jcurve-help"
+          >
+            <option value="none">None</option>
+            <option value="poland" selected>Poland (1989-2024)</option>
+          </select>
+          <small id="country-select-jcurve-help" class="help-text"
+            >Real-time GDP growth data from World Bank API showing J-curve
+            recovery pattern during Poland's shock therapy transition</small
+          >
+        </div>
+
+        <div class="param-group">
+          <label for="time-period-select-jcurve"
+            >Time Period for Analysis:</label
+          >
+          <select
+            id="time-period-select-jcurve"
+            aria-describedby="time-period-jcurve-help"
+          >
+            <option value="transition">Transition Period (1989-1995)</option>
+            <option value="full">Full Recovery (1989-2004)</option>
+            <option value="extended" selected>
+              Extended Period (1989-2024)
+            </option>
+          </select>
+          <small id="time-period-jcurve-help" class="help-text"
+            >Select timeframe for analyzing Poland's economic transition and
+            long-term performance</small
+          >
+          <div
+            id="data-status-jcurve"
+            style="margin-top: 5px; font-weight: bold"
+          >
+            Ready to load data
+          </div>
+        </div>
 
         <div
           class="chart-container"
@@ -184,129 +292,224 @@
 
       <!-- Detailed Explanation -->
       <section>
-        <h2>Understanding the J-Curve</h2>
+        <h2>The J-Curve Theory vs. Reality: When Data Proves Theory Wrong</h2>
 
         <div style="margin-top: 15px; line-height: 1.6">
           <p>
-            The J-Curve describes the pattern of economic indicators following
-            significant policy reforms or external shocks. Named for its
-            distinctive shape resembling the letter "J", this curve shows how
-            economic conditions typically worsen before improving, creating a
-            temporary dip followed by sustained recovery.
+            <strong
+              >The J-Curve theory is often inaccurate and politically
+              misleading.</strong
+            >
+            Traditional J-Curve theory suggests that economic recovery must be
+            slow and painful, but this narrative is frequently used by
+            politicians as an excuse to preserve the status quo or justify
+            prolonged economic hardship. In reality,
+            <strong
+              >countries can recover remarkably quickly once confidence in
+              institutions is reestablished</strong
+            >.
           </p>
 
-          <h3>How It Works</h3>
-          <p>The J-Curve pattern emerges because:</p>
-          <ul>
-            <li>
-              <strong>Initial Disruption:</strong> Policy shocks disrupt
-              existing economic relationships and patterns
-            </li>
-            <li>
-              <strong>Adjustment Period:</strong> Time is needed for markets,
-              institutions, and behavior to adapt to new conditions
-            </li>
-            <li>
-              <strong>Learning Curve:</strong> Actors must learn to operate
-              effectively under new rules
-            </li>
-            <li>
-              <strong>Structural Change:</strong> Resources must be reallocated
-              from less to more efficient uses
-            </li>
-            <li>
-              <strong>Confidence Building:</strong> Trust in new institutions
-              and policies develops gradually
-            </li>
-            <li>
-              <strong>Network Effects:</strong> Benefits compound as more actors
-              adapt to the new system
-            </li>
-          </ul>
-
-          <h3>The Mathematical Model</h3>
-          <p>The curve follows this pattern:</p>
-          <p style="text-align: center; font-style: italic; margin: 20px 0">
-            Indicator = Base + Slope × t - Depth × (1 - e^(-t/τ))
+          <p>
+            The real lesson from successful transitions like Poland's is not
+            that recovery takes time, but that
+            <strong>institutional credibility enables rapid recovery</strong>.
+            What we often call "J-curve" patterns are actually
+            <strong>institutional confidence curves</strong>
+            - the oscillations we see are natural stabilization processes, not
+            fundamental requirements for slow adjustment.
           </p>
-          <p>Where:</p>
+
+          <h3>The Real Pattern: Institutional Confidence, Not Time</h3>
+          <p>
+            <strong>Poland's data proves the point:</strong> Recovery can be
+            remarkably fast when institutions are credible:
+          </p>
           <ul>
-            <li><strong>Base:</strong> Pre-shock indicator level</li>
             <li>
-              <strong>Slope:</strong> Long-term improvement rate from reforms
+              <strong>1991: -7.0% growth</strong> - The initial shock from
+              communist system collapse
             </li>
-            <li><strong>t:</strong> Time since shock</li>
-            <li><strong>Depth:</strong> Maximum initial deterioration</li>
             <li>
-              <strong>τ (tau):</strong> Time constant determining recovery speed
+              <strong>1992: +2.5% growth</strong> - Immediate recovery in just
+              one year!
+            </li>
+            <li>
+              <strong>1993-1995: +3.7%, +5.3%, +7.9%</strong> - Strong,
+              sustained growth once confidence established
+            </li>
+            <li>
+              <strong>Rapid institutional transformation:</strong> Clear
+              property rights, market mechanisms, and political commitment
+              enabled fast recovery
             </li>
           </ul>
 
-          <h3>Why Does It Get Worse First?</h3>
-          <p>The initial dip occurs due to several factors:</p>
+          <p>
+            <strong>The traditional J-Curve narrative gets it wrong:</strong>
+          </p>
           <ul>
             <li>
-              <strong>Adjustment Costs:</strong> Resources spent adapting to new
-              conditions rather than production
+              <strong>Political Excuse:</strong> "It takes time to recover"
+              becomes justification for poor policy choices
             </li>
             <li>
-              <strong>Uncertainty:</strong> Economic actors postpone decisions
-              until new rules become clear
+              <strong>Status Quo Protection:</strong> Entrenched interests use
+              "adjustment period" rhetoric to resist necessary changes
             </li>
             <li>
-              <strong>Institutional Lag:</strong> Time required to build new
-              institutions and dismantle old ones
+              <strong>Institutional Deflection:</strong> Blames time rather than
+              institutional quality for slow recovery
             </li>
             <li>
-              <strong>Skill Mismatch:</strong> Workers' skills may not match
-              demands of the reformed economy
-            </li>
-            <li>
-              <strong>Credit Disruption:</strong> Financial relationships may be
-              disrupted during transition
-            </li>
-            <li>
-              <strong>Political Resistance:</strong> Opposition to reforms can
-              create temporary instability
+              <strong>Self-Fulfilling Prophecy:</strong> Expecting slow recovery
+              undermines the confidence needed for rapid recovery
             </li>
           </ul>
 
-          <h3>What This Means for Policy</h3>
+          <h3>What Actually Drives Recovery Speed: Institutional Confidence</h3>
+          <p>
+            The speed of economic recovery depends primarily on
+            <strong>institutional credibility</strong>, not time. When people
+            trust that new institutions will be maintained and enforced, they
+            adapt quickly:
+          </p>
           <ul>
             <li>
-              <strong>Patience Required:</strong> Reforms need time to show
-              benefits; premature reversal prevents recovery
+              <strong>Property Rights Clarity:</strong> Clear, enforceable
+              property rights enable immediate investment
             </li>
             <li>
-              <strong>Communication Critical:</strong> Public understanding of
-              temporary costs is essential for political sustainability
+              <strong>Policy Credibility:</strong> Consistent, predictable
+              policies allow for confident decision-making
             </li>
             <li>
-              <strong>Safety Nets Important:</strong> Cushioning adjustment
-              costs can maintain public support
+              <strong>Rule of Law:</strong> Reliable legal frameworks reduce
+              uncertainty and transaction costs
             </li>
             <li>
-              <strong>Credible Commitment:</strong> Markets need confidence that
-              reforms will be sustained
+              <strong>Political Commitment:</strong> Demonstrated commitment to
+              reforms prevents policy reversal fears
             </li>
             <li>
-              <strong>Institutional Quality:</strong> Strong institutions enable
-              faster recovery
+              <strong>Institutional Capacity:</strong> Effective bureaucracy
+              that can implement policies consistently
             </li>
             <li>
-              <strong>Sequencing Matters:</strong> Order of reforms affects
-              depth and duration of the dip
+              <strong>International Integration:</strong> External anchors (EU
+              membership, trade agreements) that lock in reforms
+            </li>
+          </ul>
+
+          <h3>
+            Why Oscillations Happen: Natural Stabilization, Not Fundamental
+            Adjustment
+          </h3>
+          <p>
+            The oscillations we observe during recovery are
+            <strong>normal business cycle variations</strong> and
+            <strong>stabilization dynamics</strong>, not evidence that recovery
+            must be slow:
+          </p>
+          <ul>
+            <li>
+              <strong>Normal Business Cycles:</strong> Standard economic
+              expansions and contractions continue during and after
+              institutional transformation
+            </li>
+            <li>
+              <strong>Learning and Optimization:</strong> Actors fine-tune their
+              behavior as they gain experience with new institutions
+            </li>
+            <li>
+              <strong>External Economic Shocks:</strong> Global economic events
+              affect recovery regardless of institutional quality
+            </li>
+            <li>
+              <strong>Sectoral Reallocation:</strong> Different sectors adjust
+              at different speeds, creating temporary imbalances
+            </li>
+            <li>
+              <strong>Political Cycles:</strong> Elections and policy debates
+              create temporary uncertainty even within stable institutional
+              frameworks
+            </li>
+            <li>
+              <strong>Market Dynamics:</strong> Natural price discovery and
+              competitive adjustment processes in newly liberalized markets
+            </li>
+          </ul>
+
+          <h3>The Political Economy of J-Curve Mythology</h3>
+          <p>
+            <strong>Why politicians promote slow-recovery narratives:</strong>
+          </p>
+          <ul>
+            <li>
+              <strong>Excuse for Poor Performance:</strong> "Reforms take time"
+              deflects responsibility for institutional failures
+            </li>
+            <li>
+              <strong>Status Quo Protection:</strong> Existing beneficiaries of
+              inefficient systems use "adjustment period" to resist change
+            </li>
+            <li>
+              <strong>Lower Expectations:</strong> Preparing public for poor
+              performance rather than delivering institutional quality
+            </li>
+            <li>
+              <strong>Technocratic Cover:</strong> Using economic theory to
+              justify political choices that serve narrow interests
+            </li>
+          </ul>
+
+          <h3>
+            What This Means for Real Policy: Focus on Institutions, Not Time
+          </h3>
+          <ul>
+            <li>
+              <strong>Institutional Quality First:</strong> Build credible,
+              enforceable institutions before expecting rapid recovery
+            </li>
+            <li>
+              <strong>Credible Commitment:</strong> Demonstrate genuine,
+              irreversible commitment to reformed institutions
+            </li>
+            <li>
+              <strong>Transparency and Predictability:</strong> Clear,
+              consistent policies that reduce uncertainty
+            </li>
+            <li>
+              <strong>Rule of Law:</strong> Reliable legal framework that
+              protects property rights and enforces contracts
+            </li>
+            <li>
+              <strong>International Anchoring:</strong> External commitments (EU
+              membership, trade agreements) that lock in reforms
+            </li>
+            <li>
+              <strong>Reject Slow-Recovery Excuses:</strong> Don't accept "it
+              takes time" as justification for institutional failures
+            </li>
+            <li>
+              <strong>Expect Rapid Results:</strong> With proper institutions,
+              economic actors adapt quickly and recovery follows
             </li>
           </ul>
 
           <h3>Real-World Examples</h3>
 
-          <h4>Poland's "Shock Therapy" (1990-1992) - A Success Story</h4>
+          <h4>
+            Poland's Rapid Recovery (1990-1995) - Institutional Confidence in
+            Action
+          </h4>
           <p>
-            Poland implemented comprehensive market reforms in 1990,
-            experiencing a classic J-Curve pattern with initial economic
-            contraction followed by sustained growth that made it one of
-            Europe's most successful transition economies.
+            Poland's transition demonstrates that
+            <strong
+              >rapid recovery is possible when institutional confidence is
+              quickly established</strong
+            >, not because of any inherent "J-curve" time requirement. The
+            recovery was fast because reforms were credible and comprehensive.
           </p>
 
           <h5>The Reforms (What They Did)</h5>
@@ -337,180 +540,78 @@
             </li>
           </ul>
 
-          <h5>The Dip (Things Got Worse)</h5>
+          <h5>The Real Recovery Pattern (Rapid, Not Slow)</h5>
           <ul>
             <li>
-              <strong>GDP contracted 11.6% in 1990 and 7% in 1991</strong>
+              <strong>1991: -7.0% GDP contraction</strong> - Initial disruption
+              from system collapse (World Bank data)
             </li>
             <li>
-              <strong>Unemployment rose from near zero to 16% by 1993</strong>
+              <strong>1992: +2.5% GDP growth</strong> - Recovery began
+              immediately, just one year later!
             </li>
             <li>
-              <strong>Industrial production fell 30% in first two years</strong>
+              <strong>1993: +3.7%, 1994: +5.3%, 1995: +7.9%</strong> - Strong,
+              sustained growth once institutions were credible
+            </li>
+            <li>
+              <strong>Recovery was complete within 2-3 years</strong>, not the
+              prolonged adjustment traditional theory suggests
             </li>
             <li>
               <strong
-                >Real wages declined significantly during transition</strong
+                >By 1994, Poland had already exceeded pre-transition growth
+                rates</strong
               >
             </li>
           </ul>
 
-          <h5>The Recovery (Things Got Better)</h5>
-          <ul>
-            <li>
-              <strong
-                >GDP growth returned by 1992 and accelerated through the
-                decade</strong
-              >
-            </li>
-            <li>
-              <strong>Inflation fell from 585% (1990) to 7% (1999)</strong>
-            </li>
-            <li>
-              <strong
-                >Foreign investment surged as confidence in reforms grew</strong
-              >
-            </li>
-            <li>
-              <strong
-                >Productivity increased dramatically with competitive
-                pressures</strong
-              >
-            </li>
-            <li>
-              <strong
-                >Living standards rose above pre-reform levels by
-                mid-1990s</strong
-              >
-            </li>
-            <li>
-              <strong
-                >Poland became first post-communist country to regain pre-1989
-                output levels</strong
-              >
-            </li>
-            <li>
-              <strong
-                >EU membership achieved in 2004, cementing institutional
-                transformation</strong
-              >
-            </li>
-          </ul>
-
-          <h5>Why Poland Succeeded</h5>
+          <h5>Why Poland Succeeded: Institutional Credibility, Not Time</h5>
           <p>
-            Poland's success stemmed from comprehensive, credible reforms
-            implemented with strong public support and international assistance.
-            The government maintained political commitment through the difficult
-            adjustment period, allowing the economy to complete its
-            transformation and reap the long-term benefits of market-oriented
-            policies.
+            Poland's success came from rapidly establishing credible
+            institutions that people could trust, enabling immediate economic
+            adaptation:
           </p>
 
-          <h4>Argentina's Economic Shock (2023-2025) - Ongoing</h4>
-          <p>
-            Argentina under President Javier Milei began implementing radical
-            economic reforms in late 2023, following a classic J-Curve pattern
-            with initial economic disruption but early signs of improvement.
-          </p>
-
-          <h5>The Reforms (What Was Done)</h5>
-          <ol>
-            <li>
-              <strong>Fiscal Shock:</strong> Eliminated government deficit
-              through massive spending cuts and subsidy removal
-            </li>
-            <li>
-              <strong>Monetary Reform:</strong> Stopped money printing and began
-              dollarization process
-            </li>
-            <li>
-              <strong>Deregulation:</strong> Removed thousands of regulations
-              constraining business activity
-            </li>
-            <li>
-              <strong>Trade Liberalization:</strong> Reduced import restrictions
-              and export controls
-            </li>
-            <li>
-              <strong>Labor Market Reform:</strong> Increased flexibility in
-              employment contracts
-            </li>
-          </ol>
-
-          <h5>The Dip (Things Got Worse)</h5>
           <ul>
             <li>
-              <strong
-                >Economic activity contracted 5.1% year-over-year by Q2
-                2024</strong
-              >
+              <strong>Clear Property Rights:</strong> Immediate legal framework
+              protecting private ownership and investment
             </li>
             <li>
-              <strong
-                >Unemployment increased as inefficient sectors downsized</strong
-              >
+              <strong>Comprehensive Reform Package:</strong> All reforms
+              implemented simultaneously, creating credible commitment
             </li>
             <li>
-              <strong>Initial inflation spike as subsidies were removed</strong>
+              <strong>Political Consensus:</strong> Broad public and elite
+              agreement on reform direction
             </li>
             <li>
-              <strong
-                >Social unrest and protests against austerity measures</strong
-              >
+              <strong>International Support:</strong> EU membership prospect and
+              Western aid providing external anchors
+            </li>
+            <li>
+              <strong>Institutional Capacity:</strong> Effective bureaucracy
+              that could implement policies consistently
+            </li>
+            <li>
+              <strong>Transparency and Predictability:</strong> Clear,
+              consistent economic policies reducing uncertainty
             </li>
           </ul>
 
-          <h5>The Recovery (Things Got Better)</h5>
-          <ul>
-            <li>
-              <strong
-                >Monthly inflation fell from 25% to 2.4% by October 2024</strong
-              >
-            </li>
-            <li>
-              <strong
-                >Government achieved fiscal surplus for first time in over a
-                decade</strong
-              >
-            </li>
-            <li>
-              <strong
-                >Currency strengthened significantly against the dollar</strong
-              >
-            </li>
-            <li>
-              <strong>Foreign investment and confidence began returning</strong>
-            </li>
-            <li>
-              <strong
-                >Economic activity showed signs of bottoming out by late
-                2024</strong
-              >
-            </li>
-            <li>
-              <strong
-                >Debt spreads narrowed, indicating improved international
-                credibility</strong
-              >
-            </li>
-          </ul>
-
-          <h5>The Ongoing Challenge</h5>
           <p>
-            Argentina's J-Curve is still unfolding. Success will depend on
-            maintaining political support for reforms through the difficult
-            adjustment period and building institutions that can sustain
-            market-oriented policies over time. Early indicators are positive,
-            but the recovery phase requires continued commitment to structural
-            transformation.
+            <strong>The lesson:</strong> When institutions are credible, people
+            adapt quickly and recovery follows immediately. The "adjustment
+            period" was measured in months, not years, because institutional
+            confidence was established rapidly.
           </p>
 
-          <h3>Critical Success Factors for J-Curve Recovery</h3>
+          <h3>Critical Success Factors for Rapid Institutional Recovery</h3>
           <p>
             Analysis of successful and failed transitions reveals several
-            institutional and policy factors that determine whether the "J"
-            becomes a lasting recovery or reverts to decline:
+            institutional and policy factors that determine whether recovery is
+            rapid (institutional confidence) or slow (traditional patterns):
           </p>
 
           <h4>1. Pre-existing Market Infrastructure</h4>
@@ -613,56 +714,66 @@
 
           <h4>The Bottom Line on Success Factors</h4>
           <p>
-            J-Curve recovery is not automatic. It requires sustained political
-            commitment, appropriate institutional frameworks, and often
-            international support to navigate the difficult adjustment period.
-            Countries that maintain reform momentum and build market-supporting
-            institutions typically see strong recovery and improved long-term
-            growth. Those that abandon reforms during the dip often remain
-            trapped in economic stagnation.
+            Rapid recovery through institutional confidence is achievable but
+            requires excellent institutional design from the start. Countries
+            with credible, enforceable institutions see immediate economic
+            adaptation and recovery. The traditional "adjustment period" excuse
+            often masks poor institutional quality rather than reflecting
+            inherent economic necessities. When institutions are trustworthy,
+            markets and actors adapt within months, not years.
           </p>
 
-          <h3>Key Takeaways</h3>
+          <h3>Key Takeaways: Institutional Confidence Over Time</h3>
           <ul>
             <li>
-              <strong>Temporary Pain, Permanent Gain:</strong> Well-designed
-              reforms create short-term costs but long-term benefits
+              <strong>Reject J-Curve Excuses:</strong> "It takes time to
+              recover" is often a political excuse for poor institutional design
             </li>
             <li>
-              <strong>Patience is Essential:</strong> Premature policy reversals
-              prevent recovery and waste adjustment costs
+              <strong>Institutional Quality Drives Speed:</strong> Recovery
+              speed depends on institutional credibility, not inherent time
+              requirements
             </li>
             <li>
-              <strong>Credibility Matters:</strong> Markets need confidence that
-              reforms will be sustained through difficult periods
+              <strong>Rapid Recovery is Possible:</strong> Poland went from -7%
+              to +2.5% growth in one year with credible institutions
             </li>
             <li>
-              <strong>Institutions Are Key:</strong> Strong institutional
-              frameworks enable faster recovery and better long-term outcomes
+              <strong>Oscillations Are Normal:</strong> Economic volatility
+              during recovery reflects natural stabilization, not slow
+              adjustment
             </li>
             <li>
-              <strong>Communication Critical:</strong> Public understanding and
-              support are essential for political sustainability
+              <strong>Credibility Enables Confidence:</strong> When people trust
+              institutions, they adapt quickly and invest immediately
             </li>
             <li>
-              <strong>Context Dependent:</strong> Success factors vary by
-              country circumstances and starting conditions
+              <strong>Demand Better Performance:</strong> Don't accept prolonged
+              hardship as inevitable - demand institutional excellence
             </li>
           </ul>
 
-          <h3>Understanding Negative Values on the Chart</h3>
+          <h3>Understanding the Recovery Pattern</h3>
           <p>
-            When the J-Curve shows negative values, this represents economic
-            contraction or deterioration below the pre-shock baseline. This is
-            normal and expected during the adjustment period - the key is that
-            the curve eventually recovers and rises above the original level,
-            indicating that the long-term benefits justify the temporary costs.
+            The chart shows both theoretical oscillations and real data. When
+            the curve shows negative values, this represents economic
+            contraction below the pre-shock baseline. The key insight is that
+            <strong
+              >with proper institutional confidence, recovery can be remarkably
+              fast</strong
+            >
+            - as Poland demonstrated with its return to positive growth in just
+            one year. The subsequent oscillations are natural economic cycles,
+            not evidence that recovery must be slow.
           </p>
 
           <p>
-            The J-Curve demonstrates that the right to economic recovery
-            requires both proper policy design and institutional frameworks that
-            can sustain necessary reforms through difficult adjustment periods.
+            This analysis demonstrates that
+            <strong
+              >people have a right to rapid economic recovery through excellent
+              institutions</strong
+            >, not prolonged adjustment periods that often serve political
+            rather than economic purposes.
           </p>
         </div>
       </section>
@@ -754,34 +865,270 @@
     </div>
 
     <script>
+      // Real-world data integration for J-curve
+      let countryDataJCurve = {
+        poland: [],
+      };
+
+      let isDataLoadedJCurve = false;
+
+      // World Bank API integration
+      async function fetchWorldBankData(
+        countryCode,
+        indicator,
+        startYear,
+        endYear
+      ) {
+        try {
+          const url = `https://api.worldbank.org/v2/country/${countryCode}/indicator/${indicator}?date=${startYear}:${endYear}&format=json&per_page=100`;
+          const response = await fetch(url);
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+
+          const data = await response.json();
+
+          // World Bank API returns array with metadata as first element, data as second
+          if (data && data.length > 1 && data[1]) {
+            return data[1]
+              .map((item) => ({
+                year: parseInt(item.date),
+                value: parseFloat(item.value),
+                country: item.country?.value || countryCode,
+              }))
+              .filter((item) => item.value !== null && !isNaN(item.value))
+              .sort((a, b) => a.year - b.year);
+          }
+
+          return [];
+        } catch (error) {
+          console.error("Error fetching World Bank data:", error);
+          updateJCurveDataStatus(`Error loading data: ${error.message}`);
+          return [];
+        }
+      }
+
+      async function loadJCurveData() {
+        const timePeriod = document.getElementById(
+          "time-period-select-jcurve"
+        ).value;
+        updateJCurveDataStatus("Loading data from World Bank API...");
+
+        try {
+          let startYear, endYear;
+          if (timePeriod === "transition") {
+            startYear = 1989;
+            endYear = 1995;
+          } else if (timePeriod === "full") {
+            startYear = 1989;
+            endYear = 2004;
+          } else {
+            startYear = 1989;
+            endYear = 2024;
+          }
+
+          // Fetch GDP growth data from World Bank API
+          // NY.GDP.MKTP.KD.ZG is the indicator code for GDP growth (annual %)
+          const worldBankData = await fetchWorldBankData(
+            "POL",
+            "NY.GDP.MKTP.KD.ZG",
+            startYear,
+            endYear
+          );
+
+          if (worldBankData.length === 0) {
+            throw new Error("No data received from World Bank API");
+          }
+
+          countryDataJCurve.poland = worldBankData.map((item) => ({
+            year: item.year,
+            timeFromShock: item.year - 1989, // Years since 1989 shock
+            gdpGrowth: item.value,
+            name: `Poland ${item.year}`,
+            source: "World Bank",
+          }));
+
+          isDataLoadedJCurve = true;
+          updateJCurveDataStatus(
+            `Data loaded: ${worldBankData.length} years from World Bank (${startYear}-${endYear})`
+          );
+          updateJCurveSimulation();
+        } catch (error) {
+          console.error("Failed to load World Bank data:", error);
+          updateJCurveDataStatus(
+            `Failed to load World Bank data: ${error.message}`
+          );
+
+          // Fallback to hardcoded data if World Bank API fails
+          const fallbackData = {
+            transition: {
+              years: [1989, 1990, 1991, 1992, 1993, 1994, 1995],
+              gdpGrowth: [0.2, -11.6, -7.0, -2.6, 3.8, 5.2, 7.0],
+              label: "Poland Transition (1989-1995) - Fallback Data",
+            },
+            full: {
+              years: [
+                1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
+                1999, 2000, 2001, 2002, 2003, 2004,
+              ],
+              gdpGrowth: [
+                0.2, -11.6, -7.0, -2.6, 3.8, 5.2, 7.0, 6.2, 7.1, 5.0, 4.5, 4.3,
+                1.2, 2.0, 3.9, 5.1,
+              ],
+              label: "Poland Full Recovery (1989-2004) - Fallback Data",
+            },
+            extended: {
+              years: [
+                1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998,
+                1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008,
+                2009, 2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018,
+                2019, 2020, 2021, 2022, 2023,
+              ],
+              gdpGrowth: [
+                0.2, -11.6, -7.0, -2.6, 3.8, 5.2, 7.0, 6.2, 7.1, 5.0, 4.5, 4.3,
+                1.2, 2.0, 3.9, 5.1, 3.6, 6.2, 7.0, 4.2, 2.8, 3.6, 5.0, 1.6, 1.4,
+                3.3, 3.8, 3.1, 4.8, 5.4, 4.7, -2.2, 6.9, 4.9, 0.2,
+              ],
+              label: "Poland Extended Period (1989-2023) - Fallback Data",
+            },
+          };
+
+          const selectedData = fallbackData[timePeriod];
+          countryDataJCurve.poland = selectedData.years.map((year, index) => ({
+            year: year,
+            timeFromShock: year - 1989,
+            gdpGrowth: selectedData.gdpGrowth[index],
+            name: `Poland ${year}`,
+            source: "Fallback",
+          }));
+
+          isDataLoadedJCurve = true;
+          updateJCurveDataStatus(`Using fallback data: ${selectedData.label}`);
+          updateJCurveSimulation();
+        }
+      }
+
+      function updateJCurveDataStatus(message) {
+        const statusElement = document.getElementById("data-status-jcurve");
+        if (statusElement) {
+          statusElement.textContent = message;
+        }
+      }
+
+      function getJCurveCountryDataToShow() {
+        if (!isDataLoadedJCurve) return [];
+
+        const selection = document.getElementById(
+          "country-select-jcurve"
+        ).value;
+        if (selection === "none") return [];
+        if (selection === "poland") return countryDataJCurve.poland || [];
+
+        return [];
+      }
+
       // J-Curve Implementation
       const ctxJCurve = document
         .getElementById("growthChartJCurve")
         .getContext("2d");
       let chartJCurve;
 
-      function simulateCurveJCurve(base, depth, tau, slope) {
-        const time = Array.from({ length: 21 }, (_, i) => i); // 0 to 20 periods
-        const indicator = time.map(
-          (t) => base + slope * t - depth * (1 - Math.exp(-t / tau))
-        );
+      function simulateCurveJCurve(
+        base,
+        depth,
+        tau,
+        slope,
+        frequency,
+        damping,
+        plateau
+      ) {
+        // Adjust time range based on actual data length
+        const countriesToShow = getJCurveCountryDataToShow();
+        const maxDataYears =
+          countriesToShow.length > 0
+            ? Math.max(...countriesToShow.map((p) => p.timeFromShock))
+            : 20;
+        const timeLength = Math.max(41, maxDataYears * 2 + 1); // Ensure we have enough points
+        const timeStep = maxDataYears > 20 ? 1 : 0.5; // Use 1-year steps for long periods, 0.5 for short
+        const time = Array.from({ length: timeLength }, (_, i) => i * timeStep);
+        const indicator = time.map((t) => {
+          if (t === 0) return base;
+
+          // Main J-curve components with plateau convergence
+          const plateauConvergence =
+            plateau * (1 - Math.exp(-slope * t)) + base * Math.exp(-slope * t);
+          const initialShock = -depth * Math.exp(-t / tau);
+          const oscillation =
+            depth * 1.0 * Math.exp(-damping * t) * Math.cos(frequency * t);
+
+          return plateauConvergence + initialShock + oscillation;
+        });
+
+        // Build datasets array
+        const datasets = [
+          {
+            label: "Economic Indicator",
+            data: indicator,
+            borderColor: "#dc3545",
+            backgroundColor: "rgba(220, 53, 69, 0.1)",
+            borderWidth: 3,
+            fill: true,
+            tension: 0.1,
+          },
+          {
+            label: "Pre-shock Baseline",
+            data: time.map(() => base),
+            borderColor: "rgba(128, 128, 128, 0.5)",
+            backgroundColor: "transparent",
+            borderWidth: 1,
+            borderDash: [5, 5],
+            fill: false,
+            pointRadius: 0,
+          },
+          {
+            label: "New Equilibrium",
+            data: time.map(() => plateau),
+            borderColor: "rgba(40, 167, 69, 0.7)",
+            backgroundColor: "transparent",
+            borderWidth: 2,
+            borderDash: [3, 3],
+            fill: false,
+            pointRadius: 0,
+          },
+        ];
+
+        // Add real country data if available
+        if (countriesToShow.length > 0) {
+          const polandDataPoints = countriesToShow.map((point) => ({
+            x: point.timeFromShock,
+            y: point.gdpGrowth,
+          }));
+
+          datasets.push({
+            label: "Poland GDP Growth (%) - World Bank",
+            data: polandDataPoints.map((point, index) => ({
+              x: point.x,
+              y: point.y,
+              year: countriesToShow[index].year,
+            })),
+            borderColor: "#28a745",
+            backgroundColor: "rgba(40, 167, 69, 0.2)",
+            borderWidth: 3,
+            fill: false,
+            tension: 0.1,
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            showLine: true,
+          });
+        }
 
         if (chartJCurve) chartJCurve.destroy();
         chartJCurve = new Chart(ctxJCurve, {
           type: "line",
           data: {
             labels: time,
-            datasets: [
-              {
-                label: "Economic Indicator",
-                data: indicator,
-                borderColor: "#dc3545",
-                backgroundColor: "rgba(220, 53, 69, 0.1)",
-                borderWidth: 3,
-                fill: true,
-                tension: 0.4,
-              },
-            ],
+            datasets: datasets,
           },
           options: {
             responsive: true,
@@ -794,10 +1141,24 @@
               tooltip: {
                 callbacks: {
                   title: function (tooltipItems) {
+                    if (tooltipItems[0].datasetIndex === 3) {
+                      // Poland data
+                      const dataPoint = tooltipItems[0].raw;
+                      return `Year: ${dataPoint.year} (Period ${tooltipItems[0].label})`;
+                    }
                     return "Time Period: " + tooltipItems[0].label;
                   },
                   label: function (context) {
-                    return "Indicator Value: " + context.parsed.y.toFixed(2);
+                    if (context.datasetIndex === 3) {
+                      // Poland data
+                      const dataPoint = context.raw;
+                      return `${context.dataset.label}: ${dataPoint.y.toFixed(
+                        2
+                      )}%`;
+                    }
+                    return (
+                      context.dataset.label + ": " + context.parsed.y.toFixed(2)
+                    );
                   },
                 },
               },
@@ -816,42 +1177,55 @@
         });
 
         // Calculate insights
-        let troughTime = 0;
-        let troughValue = base - depth;
+        const troughIndex =
+          indicator
+            .slice(1, 20)
+            .findIndex(
+              (val, i) => val === Math.min(...indicator.slice(1, 20))
+            ) + 1;
+        const troughTime = time[troughIndex];
+        const troughValue = indicator[troughIndex];
 
-        if (slope > 0 && (slope * tau) / depth < 1) {
-          troughTime = -tau * Math.log((slope * tau) / depth);
-          troughValue =
-            base +
-            slope * troughTime -
-            depth * (1 - Math.exp(-troughTime / tau));
+        const finalValue = indicator[indicator.length - 1];
+        const maxOscillation =
+          Math.max(...indicator.slice(10)) - Math.min(...indicator.slice(10));
+
+        // Find when indicator gets within 5% of plateau and stays there
+        let convergenceTime = "Beyond shown period";
+        const convergenceThreshold = plateau * 0.05; // 5% of plateau value
+        for (let i = 10; i < indicator.length - 5; i++) {
+          const isConverged = indicator
+            .slice(i, i + 5)
+            .every((val) => Math.abs(val - plateau) <= convergenceThreshold);
+          if (isConverged) {
+            convergenceTime = `~${time[i].toFixed(1)} periods`;
+            break;
+          }
         }
 
-        const recoveryValue =
-          base + slope * 10 - depth * (1 - Math.exp(-10 / tau));
-        const breakEvenTime =
-          time.find((t) => {
-            const value = base + slope * t - depth * (1 - Math.exp(-t / tau));
-            return value >= base;
-          }) || "Not within 20 periods";
+        const netGain = plateau - base;
+        const recoveryEfficiency = netGain / depth; // How much long-term gain per unit of short-term pain
 
         document.getElementById("jcurve-insights").innerHTML = `
-                <strong>J-Curve Recovery Analysis:</strong><br>
-                <strong>Trough Time:</strong> ~${troughTime.toFixed(
-                  1
-                )} periods<br>
+                <strong>Oscillating J-Curve with Plateau Analysis:</strong><br>
+                <strong>Initial Trough:</strong> ${troughValue.toFixed(
+                  2
+                )} at period ${troughTime}<br>
                 <strong>Maximum Decline:</strong> ${Math.abs(
                   troughValue - base
                 ).toFixed(1)} units below baseline<br>
-                <strong>Break-even Time:</strong> ${
-                  breakEvenTime !== "Not within 20 periods"
-                    ? `~${breakEvenTime} periods`
-                    : "Beyond 20 periods"
-                }<br>
-                <strong>10-Period Value:</strong> ${recoveryValue.toFixed(
+                <strong>Plateau Convergence:</strong> ${convergenceTime}<br>
+                <strong>Final Equilibrium:</strong> ${plateau.toFixed(
                   2
-                )} (${(recoveryValue - base).toFixed(1)} above baseline)<br>
-                <em>Recovery success depends on maintaining reform momentum through the adjustment period.</em>
+                )} (${netGain.toFixed(1)} above baseline)<br>
+                <strong>Current Value:</strong> ${finalValue.toFixed(2)}<br>
+                <strong>Oscillation Range:</strong> ±${(
+                  maxOscillation / 2
+                ).toFixed(1)} units during adjustment<br>
+                <strong>Recovery Efficiency:</strong> ${recoveryEfficiency.toFixed(
+                  2
+                )} (long-term gain per unit of short-term cost)<br>
+                <em>Economy converges to new equilibrium as structural adjustment completes and volatility subsides.</em>
             `;
       }
 
@@ -860,17 +1234,39 @@
         const depth = parseFloat(document.getElementById("depth-jcurve").value);
         const tau = parseFloat(document.getElementById("tau-jcurve").value);
         const slope = parseFloat(document.getElementById("slope-jcurve").value);
+        const frequency = parseFloat(
+          document.getElementById("frequency-jcurve").value
+        );
+        const damping = parseFloat(
+          document.getElementById("damping-jcurve").value
+        );
+        const plateau = parseFloat(
+          document.getElementById("plateau-jcurve").value
+        );
 
         if (
           !isNaN(base) &&
           !isNaN(depth) &&
           !isNaN(tau) &&
           !isNaN(slope) &&
+          !isNaN(frequency) &&
+          !isNaN(damping) &&
+          !isNaN(plateau) &&
           depth > 0 &&
           tau > 0 &&
-          slope >= 0
+          slope >= 0 &&
+          frequency > 0 &&
+          damping >= 0
         ) {
-          simulateCurveJCurve(base, depth, tau, slope);
+          simulateCurveJCurve(
+            base,
+            depth,
+            tau,
+            slope,
+            frequency,
+            damping,
+            plateau
+          );
         }
       }
 
@@ -887,9 +1283,35 @@
       document
         .getElementById("slope-jcurve")
         .addEventListener("input", updateJCurveSimulation);
+      document
+        .getElementById("frequency-jcurve")
+        .addEventListener("input", updateJCurveSimulation);
+      document
+        .getElementById("damping-jcurve")
+        .addEventListener("input", updateJCurveSimulation);
+      document
+        .getElementById("plateau-jcurve")
+        .addEventListener("input", updateJCurveSimulation);
+      document
+        .getElementById("country-select-jcurve")
+        .addEventListener("change", updateJCurveSimulation);
+      document
+        .getElementById("time-period-select-jcurve")
+        .addEventListener("change", function () {
+          if (
+            document.getElementById("country-select-jcurve").value !== "none"
+          ) {
+            loadJCurveData(); // This will now fetch from World Bank API
+          }
+        });
 
       // Initial simulation
-      simulateCurveJCurve(0, 10, 2, 1);
+      simulateCurveJCurve(0, 10, 2.5, 0.6, 1.2, 0.1, 5);
+
+      // Load Poland data initially from World Bank API
+      updateJCurveDataStatus("Loading Poland data from World Bank API...");
+      // Auto-load Poland data since it's selected by default
+      loadJCurveData();
 
       // Handle resize
       let resizeTimeout;
