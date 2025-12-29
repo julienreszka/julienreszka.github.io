@@ -19,48 +19,50 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <div class="app-header">
-      <h1 class="app-title">UPF</h1>
-      <div class="header-buttons">
-        <button id="settingsBtn">⚙️</button>
-        <button id="shareBtn">🔗</button>
-        <button id="helpBtn">❔</button>
-      </div>
-    </div>
+    <button class="drawer-toggle" id="drawerToggle">☰</button>
+    <div class="drawer-overlay" id="drawerOverlay"></div>
 
-    <div class="controls">
-      <div class="input-group">
-        <label for="startingPoint">Starting Point (where you are now)</label>
-        <div class="input-with-buttons">
+    <aside class="app-drawer" id="appDrawer">
+      <div class="app-header">
+        <h1 class="app-title">UPF</h1>
+        <div class="header-buttons">
+          <button id="settingsBtn">⚙️</button>
+          <button id="shareBtn">🔗</button>
+          <button id="helpBtn">❔</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="input-group">
+          <label for="startingPoint">Starting Point (where you are now)</label>
           <input type="text" id="startingPoint" placeholder="Fat" />
         </div>
-      </div>
 
-      <div class="destinations-container">
-        <div class="destinations-header">
-          <label>Destinations (in order)</label>
-          <button id="addDestinationBtn" class="add-btn">
-            + Add Destination
-          </button>
-        </div>
-        <div id="destinationsList">
-          <div class="input-group destination-group">
-            <div class="input-with-buttons">
-              <input
-                type="text"
-                class="destination-input"
-                placeholder="e.g., Fit"
-              />
-              <button class="remove-destination-btn" style="display: none">
-                ×
-              </button>
+        <div class="destinations-container">
+          <div class="destinations-header">
+            <label>Destinations (in order)</label>
+            <button id="addDestinationBtn" class="add-btn">
+              + Add Destination
+            </button>
+          </div>
+          <div id="destinationsList">
+            <div class="input-group destination-group">
+              <div class="input-with-buttons">
+                <input
+                  type="text"
+                  class="destination-input"
+                  placeholder="e.g., Fit"
+                />
+                <button class="remove-destination-btn" style="display: none">
+                  ×
+                </button>
+              </div>
             </div>
           </div>
         </div>
+        <button id="generateBtn">🗺️ Find Path</button>
       </div>
-      <button id="generateBtn">🗺️ Find Path</button>
-    </div>
-
+    </aside>
     <!-- Help Modal -->
     <dialog id="helpModal" class="modal-dialog">
       <div class="modal-content">

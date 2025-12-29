@@ -1,120 +1,120 @@
-      // Get API configuration based on selected provider
-      function getApiConfig() {
-        if (currentProvider === "groq") {
-          return {
-            url: "https://api.groq.com/openai/v1/chat/completions",
-            key: groqApiKey,
-            model: "llama-3.1-8b-instant",
-          };
-        } else if (currentProvider === "grok-fast") {
-          return {
-            url: "https://api.x.ai/v1/chat/completions",
-            key: grokApiKey,
-            model: "grok-4-1-fast",
-          };
-        } else {
-          return {
-            url: "https://api.x.ai/v1/chat/completions",
-            key: grokApiKey,
-            model: "grok-4",
-          };
-        }
-      }
+// Get API configuration based on selected provider
+function getApiConfig() {
+  if (currentProvider === "groq") {
+    return {
+      url: "https://api.groq.com/openai/v1/chat/completions",
+      key: groqApiKey,
+      model: "llama-3.1-8b-instant",
+    };
+  } else if (currentProvider === "grok-fast") {
+    return {
+      url: "https://api.x.ai/v1/chat/completions",
+      key: grokApiKey,
+      model: "grok-4-1-fast",
+    };
+  } else {
+    return {
+      url: "https://api.x.ai/v1/chat/completions",
+      key: grokApiKey,
+      model: "grok-4",
+    };
+  }
+}
 
-      // UI Helper functions
-      function showLoading(show) {
-        document.getElementById("loadingIndicator").style.display = show
-          ? "block"
-          : "none";
-      }
+// UI Helper functions
+function showLoading(show) {
+  document.getElementById("loadingIndicator").style.display = show
+    ? "block"
+    : "none";
+}
 
-      function showError(message) {
-        const errorDiv = document.getElementById("errorDisplay");
-        errorDiv.textContent = message;
-        errorDiv.style.display = "block";
-      }
+function showError(message) {
+  const errorDiv = document.getElementById("errorDisplay");
+  errorDiv.textContent = message;
+  errorDiv.style.display = "block";
+}
 
-      function hideError() {
-        document.getElementById("errorDisplay").style.display = "none";
-      }
+function hideError() {
+  document.getElementById("errorDisplay").style.display = "none";
+}
 
-      function showInfo(message) {
-        const errorDiv = document.getElementById("errorDisplay");
-        errorDiv.textContent = message;
-        errorDiv.style.background = "var(--info-bg)";
-        errorDiv.style.color = "var(--border-focus)";
-        errorDiv.style.borderLeft = "4px solid var(--border-focus)";
-        errorDiv.style.display = "block";
-      }
+function showInfo(message) {
+  const errorDiv = document.getElementById("errorDisplay");
+  errorDiv.textContent = message;
+  errorDiv.style.background = "var(--info-bg)";
+  errorDiv.style.color = "var(--border-focus)";
+  errorDiv.style.borderLeft = "4px solid var(--border-focus)";
+  errorDiv.style.display = "block";
+}
 
-      function hideInfo() {
-        const errorDiv = document.getElementById("errorDisplay");
-        errorDiv.style.background = "var(--error-bg)";
-        errorDiv.style.color = "var(--error-text)";
-        errorDiv.style.borderLeft = "none";
-        errorDiv.style.display = "none";
-      }
+function hideInfo() {
+  const errorDiv = document.getElementById("errorDisplay");
+  errorDiv.style.background = "var(--error-bg)";
+  errorDiv.style.color = "var(--error-text)";
+  errorDiv.style.borderLeft = "none";
+  errorDiv.style.display = "none";
+}
 
-      function showJourney(startingPoint, destinations) {
-        // Update modal journey display
-        const journeyText = Array.isArray(destinations)
-          ? `${startingPoint} → ${destinations.join(" → ")}`
-          : `${startingPoint} → ${destinations}`;
-        document.getElementById("modalCurrentJourney").textContent =
-          journeyText;
-        document.getElementById("modalJourneyDisplay").style.display = "block";
-      }
+function showJourney(startingPoint, destinations) {
+  // Update modal journey display
+  const journeyText = Array.isArray(destinations)
+    ? `${startingPoint} → ${destinations.join(" → ")}`
+    : `${startingPoint} → ${destinations}`;
+  document.getElementById("modalCurrentJourney").textContent =
+    journeyText;
+  document.getElementById("modalJourneyDisplay").style.display = "block";
+}
 
-      // Prompt for new topic to add to existing diagram
-      function promptForNewTopic() {
-        const newTopic = prompt(
-          "What topic would you like to add to this diagram?\n\nThis will generate new nodes and connect them to the existing diagram."
-        );
+// Prompt for new topic to add to existing diagram
+function promptForNewTopic() {
+  const newTopic = prompt(
+    "What topic would you like to add to this diagram?\n\nThis will generate new nodes and connect them to the existing diagram."
+  );
 
-        if (newTopic && newTopic.trim()) {
-          expandGraphWithTopic(newTopic.trim());
-        }
-      }
+  if (newTopic && newTopic.trim()) {
+    expandGraphWithTopic(newTopic.trim());
+  }
+}
 
-      // Dialog management functions
-      function showNodeDialog(nodeLabel, explanation) {
-        document.getElementById(
-          "nodeDialogTitle"
-        ).textContent = `📊 ${nodeLabel}`;
-        document.getElementById("nodeDialogContent").innerHTML =
-          marked.parse(explanation);
-        document.getElementById("nodeDialog").showModal();
-      }
+// Dialog management functions
+function showNodeDialog(nodeLabel, explanation) {
+  document.getElementById(
+    "nodeDialogTitle"
+  ).textContent = `📊 ${nodeLabel}`;
+  document.getElementById("nodeDialogContent").innerHTML =
+    marked.parse(explanation);
+  document.getElementById("nodeDialog").showModal();
+}
 
-      function closeNodeDialog() {
-        document.getElementById("nodeDialog").close();
-      }
+function closeNodeDialog() {
+  document.getElementById("nodeDialog").close();
+}
 
-      function showRelationshipDialog(title, explanation) {
-        document.getElementById("relationshipDialogTitle").textContent = title;
-        document.getElementById("relationshipDialogContent").innerHTML =
-          marked.parse(explanation);
-        document.getElementById("relationshipDialog").showModal();
-      }
+function showRelationshipDialog(title, explanation) {
+  document.getElementById("relationshipDialogTitle").textContent = title;
+  document.getElementById("relationshipDialogContent").innerHTML =
+    marked.parse(explanation);
+  document.getElementById("relationshipDialog").showModal();
+}
 
-      function closeRelationshipDialog() {
-        document.getElementById("relationshipDialog").close();
-      }
+function closeRelationshipDialog() {
+  document.getElementById("relationshipDialog").close();
+}
 
-      // Goal suggestion dialog management
-      function closeGoalSuggestionDialog() {
-        document.getElementById("goalSuggestionDialog").close();
-        document.body.style.overflow = "auto";
-      }
+// Goal suggestion dialog management
+function closeGoalSuggestionDialog() {
+  document.getElementById("goalSuggestionDialog").close();
+  document.body.style.overflow = "auto";
+}
 
-      // Suggest goals based on starting point
-      async function suggestGoals(startingPoint) {
-        if (!(await ensureApiKey())) return;
+// Suggest goals based on starting point
+async function suggestGoals(startingPoint) {
+  if (!(await ensureApiKey())) return;
 
-        showLoading(true);
-        hideError();
+  showLoading(true);
+  hideError();
 
-        const prompt = `Given the starting point "${startingPoint}", suggest 5-6 relevant improvement goals that someone might want to achieve.
+  const prompt = `Given the starting point "${startingPoint}", suggest 5-6 relevant improvement goals that someone might want to achieve.
 
         Return a JSON array of goal suggestions with this structure:
         [
@@ -131,103 +131,103 @@
         
         Only return valid JSON array, no additional text.`;
 
-        const apiConfig = getApiConfig();
+  const apiConfig = getApiConfig();
 
-        try {
-          const response = await fetch(apiConfig.url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${apiConfig.key}`,
-            },
-            body: JSON.stringify({
-              model: apiConfig.model,
-              messages: [
-                {
-                  role: "user",
-                  content: prompt,
-                },
-              ],
-              temperature: 0.8,
-              max_tokens: 800,
-            }),
-          });
+  try {
+    const response = await fetch(apiConfig.url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiConfig.key}`,
+      },
+      body: JSON.stringify({
+        model: apiConfig.model,
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        temperature: 0.8,
+        max_tokens: 800,
+      }),
+    });
 
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
 
-          const data = await response.json();
-          const content = data.choices[0].message.content.trim();
+    const data = await response.json();
+    const content = data.choices[0].message.content.trim();
 
-          let goalSuggestions;
-          try {
-            const jsonString = content
-              .replace(/```json\n?/, "")
-              .replace(/```$/, "");
-            goalSuggestions = JSON.parse(jsonString);
-          } catch (parseError) {
-            throw new Error(
-              `Failed to parse goal suggestions: ${parseError.message}`
-            );
-          }
+    let goalSuggestions;
+    try {
+      const jsonString = content
+        .replace(/```json\n?/, "")
+        .replace(/```$/, "");
+      goalSuggestions = JSON.parse(jsonString);
+    } catch (parseError) {
+      throw new Error(
+        `Failed to parse goal suggestions: ${parseError.message}`
+      );
+    }
 
-          showGoalSuggestionDialog(startingPoint, goalSuggestions);
-        } catch (error) {
-          showError(`Failed to suggest goals: ${error.message}`);
-        } finally {
-          showLoading(false);
-        }
-      }
+    showGoalSuggestionDialog(startingPoint, goalSuggestions);
+  } catch (error) {
+    showError(`Failed to suggest goals: ${error.message}`);
+  } finally {
+    showLoading(false);
+  }
+}
 
-      // Show goal suggestion dialog
-      function showGoalSuggestionDialog(startingPoint, suggestions) {
-        document.getElementById("goalSuggestionStartingPoint").textContent =
-          startingPoint;
+// Show goal suggestion dialog
+function showGoalSuggestionDialog(startingPoint, suggestions) {
+  document.getElementById("goalSuggestionStartingPoint").textContent =
+    startingPoint;
 
-        const goalList = document.getElementById("goalSuggestionList");
-        goalList.innerHTML = "";
+  const goalList = document.getElementById("goalSuggestionList");
+  goalList.innerHTML = "";
 
-        suggestions.forEach((suggestion, index) => {
-          const goalOption = document.createElement("div");
-          goalOption.className = "radio-option";
-          goalOption.innerHTML = `
+  suggestions.forEach((suggestion, index) => {
+    const goalOption = document.createElement("div");
+    goalOption.className = "radio-option";
+    goalOption.innerHTML = `
             <input type="radio" name="suggestedGoal" id="goal${index}" value="${suggestion.goal}">
             <label for="goal${index}" class="radio-label">
               <strong>${suggestion.goal}</strong>
               <small>${suggestion.description}</small>
             </label>
           `;
-          goalList.appendChild(goalOption);
-        });
+    goalList.appendChild(goalOption);
+  });
 
-        // Add event listeners to radio buttons
-        document
-          .querySelectorAll('input[name="suggestedGoal"]')
-          .forEach((radio) => {
-            radio.addEventListener("change", () => {
-              document.getElementById("useSelectedGoal").disabled = false;
-            });
-          });
+  // Add event listeners to radio buttons
+  document
+    .querySelectorAll('input[name="suggestedGoal"]')
+    .forEach((radio) => {
+      radio.addEventListener("change", () => {
+        document.getElementById("useSelectedGoal").disabled = false;
+      });
+    });
 
-        document.getElementById("goalSuggestionDialog").showModal();
-        document.body.style.overflow = "hidden";
-      }
+  document.getElementById("goalSuggestionDialog").showModal();
+  document.body.style.overflow = "hidden";
+}
 
-      // Starting point suggestion dialog management
-      function closeStartingSuggestionDialog() {
-        document.getElementById("startingSuggestionDialog").close();
-        document.body.style.overflow = "auto";
-      }
+// Starting point suggestion dialog management
+function closeStartingSuggestionDialog() {
+  document.getElementById("startingSuggestionDialog").close();
+  document.body.style.overflow = "auto";
+}
 
-      // Suggest starting points based on destination goal
-      async function suggestStartingPoints(destination) {
-        if (!(await ensureApiKey())) return;
+// Suggest starting points based on destination goal
+async function suggestStartingPoints(destination) {
+  if (!(await ensureApiKey())) return;
 
-        showLoading(true);
-        hideError();
+  showLoading(true);
+  hideError();
 
-        const prompt = `Given the destination goal "${destination}", suggest 5-6 relevant starting points that someone might be coming from to reach this goal.
+  const prompt = `Given the destination goal "${destination}", suggest 5-6 relevant starting points that someone might be coming from to reach this goal.
 
         Return a JSON array of starting point suggestions with this structure:
         [
@@ -244,137 +244,137 @@
         
         Only return valid JSON array, no additional text.`;
 
-        const apiConfig = getApiConfig();
+  const apiConfig = getApiConfig();
 
-        try {
-          const response = await fetch(apiConfig.url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${apiConfig.key}`,
-            },
-            body: JSON.stringify({
-              model: apiConfig.model,
-              messages: [
-                {
-                  role: "user",
-                  content: prompt,
-                },
-              ],
-              temperature: 0.8,
-              max_tokens: 800,
-            }),
-          });
+  try {
+    const response = await fetch(apiConfig.url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiConfig.key}`,
+      },
+      body: JSON.stringify({
+        model: apiConfig.model,
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        temperature: 0.8,
+        max_tokens: 800,
+      }),
+    });
 
-          if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-          }
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
 
-          const data = await response.json();
-          const content = data.choices[0].message.content.trim();
+    const data = await response.json();
+    const content = data.choices[0].message.content.trim();
 
-          let startingSuggestions;
-          try {
-            const jsonString = content
-              .replace(/```json\n?/, "")
-              .replace(/```$/, "");
-            startingSuggestions = JSON.parse(jsonString);
-          } catch (parseError) {
-            throw new Error(
-              `Failed to parse starting point suggestions: ${parseError.message}`
-            );
-          }
+    let startingSuggestions;
+    try {
+      const jsonString = content
+        .replace(/```json\n?/, "")
+        .replace(/```$/, "");
+      startingSuggestions = JSON.parse(jsonString);
+    } catch (parseError) {
+      throw new Error(
+        `Failed to parse starting point suggestions: ${parseError.message}`
+      );
+    }
 
-          showStartingSuggestionDialog(destination, startingSuggestions);
-        } catch (error) {
-          showError(`Failed to suggest starting points: ${error.message}`);
-        } finally {
-          showLoading(false);
-        }
-      }
+    showStartingSuggestionDialog(destination, startingSuggestions);
+  } catch (error) {
+    showError(`Failed to suggest starting points: ${error.message}`);
+  } finally {
+    showLoading(false);
+  }
+}
 
-      // Show starting point suggestion dialog
-      function showStartingSuggestionDialog(destination, suggestions) {
-        document.getElementById("startingSuggestionGoal").textContent =
-          destination;
+// Show starting point suggestion dialog
+function showStartingSuggestionDialog(destination, suggestions) {
+  document.getElementById("startingSuggestionGoal").textContent =
+    destination;
 
-        const startingList = document.getElementById("startingSuggestionList");
-        startingList.innerHTML = "";
+  const startingList = document.getElementById("startingSuggestionList");
+  startingList.innerHTML = "";
 
-        suggestions.forEach((suggestion, index) => {
-          const startingOption = document.createElement("div");
-          startingOption.className = "radio-option";
-          startingOption.innerHTML = `
+  suggestions.forEach((suggestion, index) => {
+    const startingOption = document.createElement("div");
+    startingOption.className = "radio-option";
+    startingOption.innerHTML = `
             <input type="radio" name="suggestedStarting" id="starting${index}" value="${suggestion.starting}">
             <label for="starting${index}" class="radio-label">
               <strong>${suggestion.starting}</strong>
               <small>${suggestion.description}</small>
             </label>
           `;
-          startingList.appendChild(startingOption);
-        });
+    startingList.appendChild(startingOption);
+  });
 
-        // Add event listeners to radio buttons
-        document
-          .querySelectorAll('input[name="suggestedStarting"]')
-          .forEach((radio) => {
-            radio.addEventListener("change", () => {
-              document.getElementById("useSelectedStarting").disabled = false;
-            });
-          });
+  // Add event listeners to radio buttons
+  document
+    .querySelectorAll('input[name="suggestedStarting"]')
+    .forEach((radio) => {
+      radio.addEventListener("change", () => {
+        document.getElementById("useSelectedStarting").disabled = false;
+      });
+    });
 
-        document.getElementById("startingSuggestionDialog").showModal();
-        document.body.style.overflow = "hidden";
-      }
+  document.getElementById("startingSuggestionDialog").showModal();
+  document.body.style.overflow = "hidden";
+}
 
-      // Journey discovery dialog management
-      function closeJourneyDiscoveryDialog() {
-        document.getElementById("journeyDiscoveryDialog").close();
-        document.body.style.overflow = "auto";
-      }
+// Journey discovery dialog management
+function closeJourneyDiscoveryDialog() {
+  document.getElementById("journeyDiscoveryDialog").close();
+  document.body.style.overflow = "auto";
+}
 
-      // Show journey discovery dialog with popular examples
-      function showJourneyDiscoveryDialog() {
-        const popularJourneys = [
-          {
-            starting: "Unfit",
-            destination: "Fit and Healthy",
-            description: "Build fitness habits and improve overall health",
-          },
-          {
-            starting: "Broke",
-            destination: "Financially Stable",
-            description: "Create emergency fund and stable income",
-          },
-          {
-            starting: "Anxious",
-            destination: "Confident",
-            description: "Build self-confidence and reduce anxiety",
-          },
-          {
-            starting: "Beginner",
-            destination: "Learn Programming",
-            description: "Master coding skills from scratch",
-          },
-          {
-            starting: "Lonely",
-            destination: "Strong Social Circle",
-            description: "Build meaningful friendships and connections",
-          },
-          {
-            starting: "Disorganized",
-            destination: "Highly Productive",
-            description: "Master time management and productivity",
-          },
-        ];
+// Show journey discovery dialog with popular examples
+function showJourneyDiscoveryDialog() {
+  const popularJourneys = [
+    {
+      starting: "Unfit",
+      destination: "Fit and Healthy",
+      description: "Build fitness habits and improve overall health",
+    },
+    {
+      starting: "Broke",
+      destination: "Financially Stable",
+      description: "Create emergency fund and stable income",
+    },
+    {
+      starting: "Anxious",
+      destination: "Confident",
+      description: "Build self-confidence and reduce anxiety",
+    },
+    {
+      starting: "Beginner",
+      destination: "Learn Programming",
+      description: "Master coding skills from scratch",
+    },
+    {
+      starting: "Lonely",
+      destination: "Strong Social Circle",
+      description: "Build meaningful friendships and connections",
+    },
+    {
+      starting: "Disorganized",
+      destination: "Highly Productive",
+      description: "Master time management and productivity",
+    },
+  ];
 
-        const journeyList = document.getElementById("journeyDiscoveryList");
-        journeyList.innerHTML = "";
+  const journeyList = document.getElementById("journeyDiscoveryList");
+  journeyList.innerHTML = "";
 
-        popularJourneys.forEach((journey, index) => {
-          const journeyOption = document.createElement("div");
-          journeyOption.className = "radio-option";
-          journeyOption.innerHTML = `
+  popularJourneys.forEach((journey, index) => {
+    const journeyOption = document.createElement("div");
+    journeyOption.className = "radio-option";
+    journeyOption.innerHTML = `
             <input type="radio" name="suggestedJourney" id="journey${index}" 
                    data-starting="${journey.starting}" data-destination="${journey.destination}">
             <label for="journey${index}" class="radio-label">
@@ -382,48 +382,48 @@
               <small>${journey.description}</small>
             </label>
           `;
-          journeyList.appendChild(journeyOption);
-        });
+    journeyList.appendChild(journeyOption);
+  });
 
-        // Add event listeners to radio buttons
-        document
-          .querySelectorAll('input[name="suggestedJourney"]')
-          .forEach((radio) => {
-            radio.addEventListener("change", () => {
-              document.getElementById("useSelectedJourney").disabled = false;
-            });
-          });
+  // Add event listeners to radio buttons
+  document
+    .querySelectorAll('input[name="suggestedJourney"]')
+    .forEach((radio) => {
+      radio.addEventListener("change", () => {
+        document.getElementById("useSelectedJourney").disabled = false;
+      });
+    });
 
-        document.getElementById("journeyDiscoveryDialog").showModal();
-        document.body.style.overflow = "hidden";
-      }
+  document.getElementById("journeyDiscoveryDialog").showModal();
+  document.body.style.overflow = "hidden";
+}
 
-      // Expand existing graph with a new topic
-      async function expandGraphWithTopic(newTopic) {
-        if (!(await ensureApiKey())) return;
+// Expand existing graph with a new topic
+async function expandGraphWithTopic(newTopic) {
+  if (!(await ensureApiKey())) return;
 
-        showLoading(true);
-        hideError();
+  showLoading(true);
+  hideError();
 
-        // Get current diagram context
-        const currentNodes = cy.nodes().map((n) => n.data("label"));
-        const startingPoint = document
-          .getElementById("startingPoint")
-          .value.trim();
-        const destinations = getDestinations();
-        const currentJourney =
-          startingPoint && destinations.length > 0
-            ? `${startingPoint} → ${destinations.join(" → ")}`
-            : "current path";
+  // Get current diagram context
+  const currentNodes = cy.nodes().map((n) => n.data("label"));
+  const startingPoint = document
+    .getElementById("startingPoint")
+    .value.trim();
+  const destinations = getDestinations();
+  const currentJourney =
+    startingPoint && destinations.length > 0
+      ? `${startingPoint} → ${destinations.join(" → ")}`
+      : "current path";
 
-        const basePrompt = `Given an existing journey path about "${currentJourney}", add the topic "${newTopic}" to expand the diagram with relevant connections.`;
+  const basePrompt = `Given an existing journey path about "${currentJourney}", add the topic "${newTopic}" to expand the diagram with relevant connections.`;
 
-        const newsPrompt =
-          currentProvider === "grok" || currentProvider === "grok-fast"
-            ? " Consider recent developments and current events for both topics."
-            : "";
+  const newsPrompt =
+    currentProvider === "grok" || currentProvider === "grok-fast"
+      ? " Consider recent developments and current events for both topics."
+      : "";
 
-        const prompt = `${basePrompt}${newsPrompt}
+  const prompt = `${basePrompt}${newsPrompt}
 
         Current diagram nodes: ${currentNodes.join(", ")}
         New topic to integrate: "${newTopic}"
@@ -450,121 +450,294 @@
         
         Only return valid JSON, no additional text.`;
 
-        const apiConfig = getApiConfig();
+  const apiConfig = getApiConfig();
 
-        try {
-          const response = await fetch(apiConfig.url, {
-            method: "POST",
-            headers: {
-              Authorization: `Bearer ${apiConfig.key}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              model: apiConfig.model,
-              messages: [
-                {
-                  role: "user",
-                  content: prompt,
-                },
-              ],
-              temperature: 0.7,
-              max_tokens: 2000,
-            }),
-          });
+  try {
+    const response = await fetch(apiConfig.url, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiConfig.key}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: apiConfig.model,
+        messages: [
+          {
+            role: "user",
+            content: prompt,
+          },
+        ],
+        temperature: 0.7,
+        max_tokens: 2000,
+      }),
+    });
 
-          if (!response.ok) {
-            throw new Error(`API request failed: ${response.status}`);
-          }
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
 
-          const data = await response.json();
+    const data = await response.json();
 
-          let expansionData;
-          try {
-            const content = data.choices[0].message.content.trim();
+    let expansionData;
+    try {
+      const content = data.choices[0].message.content.trim();
 
-            // Try to extract JSON from the response
-            const jsonMatch = content.match(/\{[\s\S]*\}/);
-            const jsonString = jsonMatch ? jsonMatch[0] : content;
+      // Try to extract JSON from the response
+      const jsonMatch = content.match(/\{[\s\S]*\}/);
+      const jsonString = jsonMatch ? jsonMatch[0] : content;
 
-            expansionData = JSON.parse(jsonString);
-          } catch (parseError) {
-            showError(
-              "Failed to parse AI response for topic expansion. Please try again."
-            );
-            return;
-          }
+      expansionData = JSON.parse(jsonString);
+    } catch (parseError) {
+      showError(
+        "Failed to parse AI response for topic expansion. Please try again."
+      );
+      return;
+    }
 
-          addNodesToExistingDiagram(expansionData, null, null);
+    addNodesToExistingDiagram(expansionData, null, null);
 
-          // Show success message for topic addition
-          showSuccess(`Added "${newTopic}" to your journey path!`);
-        } catch (error) {
-          showError(
-            `Failed to expand diagram with new topic: ${error.message}`
-          );
-        } finally {
-          showLoading(false);
-        }
-      }
+    // Show success message for topic addition
+    showSuccess(`Added "${newTopic}" to your journey path!`);
+  } catch (error) {
+    showError(
+      `Failed to expand diagram with new topic: ${error.message}`
+    );
+  } finally {
+    showLoading(false);
+  }
+}
 
-      // Destination management functions
-      function addDestination() {
-        const destinationsList = document.getElementById("destinationsList");
-        const destinationGroups =
-          destinationsList.querySelectorAll(".destination-group");
+// Destination management functions
+function addDestination() {
+  const destinationsList = document.getElementById("destinationsList");
+  const destinationGroups =
+    destinationsList.querySelectorAll(".destination-group");
 
-        // Show remove button on all existing destinations
-        destinationGroups.forEach((group) => {
-          const removeBtn = group.querySelector(".remove-destination-btn");
-          removeBtn.style.display = "flex";
-        });
+  // Show remove button on all existing destinations
+  destinationGroups.forEach((group) => {
+    const removeBtn = group.querySelector(".remove-destination-btn");
+    removeBtn.style.display = "flex";
+  });
 
-        const newDestinationGroup = document.createElement("div");
-        newDestinationGroup.className = "input-group destination-group";
-        newDestinationGroup.innerHTML = `
+  const newDestinationGroup = document.createElement("div");
+  newDestinationGroup.className = "input-group destination-group";
+  newDestinationGroup.draggable = true;
+  newDestinationGroup.innerHTML = `
+          <div class="drag-handle"></div>
           <div class="input-with-buttons">
             <input type="text" class="destination-input" placeholder="e.g., Next goal" />
             <button class="remove-destination-btn">×</button>
           </div>
         `;
 
-        destinationsList.appendChild(newDestinationGroup);
+  destinationsList.appendChild(newDestinationGroup);
 
-        // Add event listener to the new remove button
-        const removeBtn = newDestinationGroup.querySelector(
-          ".remove-destination-btn"
-        );
-        removeBtn.addEventListener("click", () =>
-          removeDestination(newDestinationGroup)
-        );
+  // Add event listener to the new remove button
+  const removeBtn = newDestinationGroup.querySelector(
+    ".remove-destination-btn"
+  );
+  removeBtn.addEventListener("click", () =>
+    removeDestination(newDestinationGroup)
+  );
 
-        // Focus on the new input
-        const newInput =
-          newDestinationGroup.querySelector(".destination-input");
-        newInput.focus();
-      }
+  // Add drag and drop functionality
+  addDragAndDropListeners(newDestinationGroup);
 
-      function removeDestination(destinationGroup) {
-        destinationGroup.remove();
+  // Focus on the new input
+  const newInput =
+    newDestinationGroup.querySelector(".destination-input");
+  newInput.focus();
+}
 
-        // Check if only one destination remains, hide remove button
-        const destinationsList = document.getElementById("destinationsList");
-        const remainingGroups =
-          destinationsList.querySelectorAll(".destination-group");
+function removeDestination(destinationGroup) {
+  destinationGroup.remove();
 
-        if (remainingGroups.length === 1) {
-          const lastRemoveBtn = remainingGroups[0].querySelector(
-            ".remove-destination-btn"
-          );
-          lastRemoveBtn.style.display = "none";
-        }
-      }
+  // Check if only one destination remains, hide remove button
+  const destinationsList = document.getElementById("destinationsList");
+  const remainingGroups =
+    destinationsList.querySelectorAll(".destination-group");
 
-      function getDestinations() {
-        const destinationInputs =
-          document.querySelectorAll(".destination-input");
-        return Array.from(destinationInputs)
-          .map((input) => input.value.trim())
-          .filter((value) => value !== "");
-      }
+  if (remainingGroups.length === 1) {
+    const lastRemoveBtn = remainingGroups[0].querySelector(
+      ".remove-destination-btn"
+    );
+    lastRemoveBtn.style.display = "none";
+  }
+}
+
+function getDestinations() {
+  const destinationInputs =
+    document.querySelectorAll(".destination-input");
+  return Array.from(destinationInputs)
+    .map((input) => input.value.trim())
+    .filter((value) => value !== "");
+}
+
+// Drag and drop functionality for reordering destinations
+function addDragAndDropListeners(destinationGroup) {
+  destinationGroup.addEventListener('dragstart', handleDragStart);
+  destinationGroup.addEventListener('dragover', handleDragOver);
+  destinationGroup.addEventListener('dragenter', handleDragEnter);
+  destinationGroup.addEventListener('dragleave', handleDragLeave);
+  destinationGroup.addEventListener('drop', handleDrop);
+  destinationGroup.addEventListener('dragend', handleDragEnd);
+
+  // Add touch event listeners for better mobile support
+  destinationGroup.addEventListener('touchstart', handleTouchStart, { passive: false });
+  destinationGroup.addEventListener('touchmove', handleTouchMove, { passive: false });
+  destinationGroup.addEventListener('touchend', handleTouchEnd, { passive: false });
+}
+
+let draggedElement = null;
+let touchStartY = 0;
+let touchStartElement = null;
+let isDragging = false;
+
+function handleDragStart(e) {
+  draggedElement = this;
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/html', this.innerHTML);
+}
+
+function handleDragOver(e) {
+  if (e.preventDefault) {
+    e.preventDefault();
+  }
+  e.dataTransfer.dropEffect = 'move';
+  return false;
+}
+
+function handleDragEnter(e) {
+  if (this !== draggedElement) {
+    this.classList.add('drag-over');
+  }
+}
+
+function handleDragLeave(e) {
+  this.classList.remove('drag-over');
+}
+
+function handleDrop(e) {
+  if (e.stopPropagation) {
+    e.stopPropagation();
+  }
+
+  if (draggedElement !== this) {
+    reorderDestinations(draggedElement, this);
+  }
+
+  this.classList.remove('drag-over');
+  return false;
+}
+
+function handleDragEnd(e) {
+  cleanupDragState();
+}
+
+// Touch event handlers for mobile drag and drop
+function handleTouchStart(e) {
+  // Only handle if touching the drag handle
+  if (!e.target.classList.contains('drag-handle') &&
+    !e.target.closest('.drag-handle')) {
+    return;
+  }
+
+  e.preventDefault();
+  touchStartElement = this;
+  touchStartY = e.touches[0].clientY;
+  isDragging = false;
+
+  // Add a slight delay to differentiate from scrolling
+  setTimeout(() => {
+    if (touchStartElement === this) {
+      this.classList.add('dragging');
+      isDragging = true;
+    }
+  }, 150);
+}
+
+function handleTouchMove(e) {
+  if (!isDragging || !touchStartElement) return;
+
+  e.preventDefault();
+  const touch = e.touches[0];
+  const currentY = touch.clientY;
+
+  // Find element at touch position
+  const elementBelow = document.elementFromPoint(touch.clientX, currentY);
+  const destinationGroup = elementBelow ? elementBelow.closest('.destination-group') : null;
+
+  // Remove previous drag-over states
+  document.querySelectorAll('.destination-group').forEach(dest => {
+    dest.classList.remove('drag-over');
+  });
+
+  // Add drag-over to current target
+  if (destinationGroup && destinationGroup !== touchStartElement) {
+    destinationGroup.classList.add('drag-over');
+  }
+}
+
+function handleTouchEnd(e) {
+  if (!isDragging || !touchStartElement) {
+    cleanupDragState();
+    return;
+  }
+
+  e.preventDefault();
+  const touch = e.changedTouches[0];
+
+  // Find element at touch position
+  const elementBelow = document.elementFromPoint(touch.clientX, touch.clientY);
+  const targetGroup = elementBelow ? elementBelow.closest('.destination-group') : null;
+
+  if (targetGroup && targetGroup !== touchStartElement) {
+    reorderDestinations(touchStartElement, targetGroup);
+  }
+
+  cleanupDragState();
+}
+
+// Shared reordering logic
+function reorderDestinations(draggedElement, targetElement) {
+  const destinationsList = document.getElementById('destinationsList');
+  const allDestinations = [...destinationsList.children];
+  const draggedIndex = allDestinations.indexOf(draggedElement);
+  const targetIndex = allDestinations.indexOf(targetElement);
+
+  if (draggedIndex < targetIndex) {
+    destinationsList.insertBefore(draggedElement, targetElement.nextSibling);
+  } else {
+    destinationsList.insertBefore(draggedElement, targetElement);
+  }
+}
+
+// Clean up drag state
+function cleanupDragState() {
+  const allDestinations = document.querySelectorAll('.destination-group');
+  allDestinations.forEach(dest => {
+    dest.classList.remove('dragging', 'drag-over');
+  });
+  draggedElement = null;
+  touchStartElement = null;
+  isDragging = false;
+}
+
+// Initialize drag and drop for existing destinations
+function initializeDestinationDragAndDrop() {
+  const existingDestinations = document.querySelectorAll('.destination-group');
+  existingDestinations.forEach(dest => {
+    // Add drag handle if not present
+    if (!dest.querySelector('.drag-handle')) {
+      const dragHandle = document.createElement('div');
+      dragHandle.className = 'drag-handle';
+      dest.insertBefore(dragHandle, dest.firstChild);
+    }
+    // Make draggable
+    dest.draggable = true;
+    // Add event listeners
+    addDragAndDropListeners(dest);
+  });
+}
 
