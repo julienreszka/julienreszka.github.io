@@ -438,8 +438,94 @@
         transition: color 0.3s ease;
       }
 
+      /* Destinations container styles */
+      .destinations-container {
+        width: 100%;
+      }
+
+      .destinations-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
+
+      .destinations-header label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--text-primary);
+      }
+
+      .add-btn {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+        background: var(--border-focus);
+        color: white;
+        border: none;
+        border-radius: 1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .add-btn:hover {
+        background: #5a6fd8;
+        transform: translateY(-1px);
+      }
+
+      .destination-group {
+        margin-bottom: 0.5rem;
+      }
+
+      .destination-group:last-child {
+        margin-bottom: 0;
+      }
+
+      .remove-destination-btn {
+        /* min-width: 32px; */
+        /* width: 32px; */
+        /* min-height: 32px; */
+        /* height: 32px; */
+        padding: 0;
+        font-size: 1.2rem;
+        /* background: var(--error-bg); */
+        color: white;
+        /* border: 2px solid var(--error-text); */
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        aspect-ratio: 1;
+      }
+
+      .remove-destination-btn:hover {
+        /* background: var(--error-text); */
+
+        color: var(--error-text);
+        transform: scale(1.1);
+      }
+
       /* Mobile-specific compact styles */
       @media (max-width: 768px) {
+        .destinations-header {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 0.5rem;
+        }
+
+        .add-btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .remove-destination-btn {
+          min-width: 42px;
+          width: 42px;
+          height: 42px;
+          font-size: 1.3rem;
+        }
+
         .legend {
           margin-top: 0.5rem;
           padding: 0.75rem;
@@ -1087,10 +1173,26 @@
         </div>
       </div>
 
-      <div class="input-group">
-        <label for="destination">Destination Goal (where you want to be)</label>
-        <div class="input-with-buttons">
-          <input type="text" id="destination" placeholder="e.g., Fit" />
+      <div class="destinations-container">
+        <div class="destinations-header">
+          <label>Destinations (in order)</label>
+          <button id="addDestinationBtn" class="add-btn">
+            + Add Destination
+          </button>
+        </div>
+        <div id="destinationsList">
+          <div class="input-group destination-group">
+            <div class="input-with-buttons">
+              <input
+                type="text"
+                class="destination-input"
+                placeholder="e.g., Fit"
+              />
+              <button class="remove-destination-btn" style="display: none">
+                ×
+              </button>
+            </div>
+          </div>
         </div>
       </div>
       <button id="generateBtn">🗺️ Find Path</button>
@@ -1724,8 +1826,8 @@
               {
                 selector: 'node[type = "resource"]',
                 style: {
-                  "background-color": "#e74c3c",
-                  "border-color": "#c0392b",
+                  "background-color": "#f39c12",
+                  "border-color": "#e67e22",
                   shape: "hexagon",
                   width: "75px",
                   height: "75px",
@@ -1961,13 +2063,17 @@
       }
 
       // Generate path finder journey using selected AI provider
-      async function generateDiagram(startingPoint, destination) {
+      async function generateDiagram(startingPoint, destinations) {
         if (!(await ensureApiKey())) return;
 
         showLoading(true);
         hideError();
 
-        const basePrompt = `Create a personalized journey path from "${startingPoint}" to "${destination}".`;
+        const destinationText =
+          destinations.length > 1
+            ? `multiple destinations: ${destinations.join(" → ")}`
+            : destinations[0];
+        const basePrompt = `Create a personalized journey path from "${startingPoint}" to ${destinationText}.`;
 
         const newsPrompt =
           currentProvider === "grok" || currentProvider === "grok-fast"
@@ -1975,6 +2081,16 @@
             : "";
 
         const prompt = `${basePrompt}${newsPrompt}
+
+        ${
+          destinations.length > 1
+            ? `This is a multi-destination journey. Create a path that goes through each destination in order: ${destinations
+                .map((dest, i) => `${i + 1}. ${dest}`)
+                .join(
+                  ", "
+                )}. Show clear progression from one destination to the next.`
+            : `Focus on creating a clear path to reach "${destinations[0]}".`
+        }
             
             Return a JSON object with this structure:
             {
@@ -1992,13 +2108,30 @@
             }
 
             Rules:
-            - Create 8-12 nodes representing the journey from "${startingPoint}" to "${destination}"
-            - Node types: "start" (1), "action" (specific steps to take), "milestone" (achievements), "resource" (tools/knowledge needed), "goal" (1)
+            - Create ${
+              destinations.length > 1 ? "12-20" : "8-12"
+            } nodes representing the journey from "${startingPoint}" ${
+          destinations.length > 1
+            ? `through each destination (${destinations.join(", ")})`
+            : `to "${destinations[0]}"`
+        }
+            - ${
+              destinations.length > 1
+                ? `Ensure each destination (${destinations.join(
+                    ", "
+                  )}) is represented as a milestone node`
+                : 'Node types: "start" (1), "action" (specific steps to take), "milestone" (achievements), "resource" (tools/knowledge needed), "goal" (1)'
+            }
             - Connect nodes logically showing progression and dependencies
             - Make steps concrete, actionable, and realistic
             - Consider the person's starting constraints and situation
             - Include realistic timeframes and resource requirements
             - Show both sequential steps and parallel opportunities
+            ${
+              destinations.length > 1
+                ? "- Clearly show the progression from one destination to the next"
+                : ""
+            }
             
             Only return valid JSON, no additional text.`;
 
@@ -2045,7 +2178,7 @@
           }
 
           renderDiagram(diagramData);
-          showJourney(startingPoint, destination);
+          showJourney(startingPoint, destinations);
         } catch (error) {
           showError(`Failed to generate diagram: ${error.message}`);
         } finally {
@@ -2196,11 +2329,25 @@
       async function expandNode(nodeLabel, theme) {
         if (!(await ensureApiKey())) return;
 
+        const expansionTimestamp = Date.now();
+        console.log("🚀 EXPAND NODE START - Label:", JSON.stringify(nodeLabel));
+        console.log("🚀 EXPAND NODE - Theme:", theme);
+        console.log("🚀 EXPAND NODE - Timestamp:", expansionTimestamp);
+
+        // Track this as the most recent expansion request
+        lastExpansionTimestamp = expansionTimestamp;
+        lastRequestedExpansion = nodeLabel;
+        console.log(
+          "🚀 EXPAND NODE - Set as most recent expansion:",
+          JSON.stringify(nodeLabel)
+        );
+
         showLoading(true);
         hideError();
 
         // Get current nodes and edges for context
         const currentNodes = cy.nodes().map((n) => n.data("label"));
+        console.log("🚀 EXPAND NODE - Current nodes:", currentNodes);
         const currentEdges = cy.edges().map((e) => ({
           source: e.source().data("label"),
           target: e.target().data("label"),
@@ -2282,10 +2429,28 @@
             return;
           }
 
+          console.log(
+            "🚀 EXPAND NODE - About to call addNodesToExistingDiagram with nodeLabel:",
+            JSON.stringify(nodeLabel)
+          );
+          console.log(
+            "🚀 EXPAND NODE - Current global focus operation:",
+            JSON.stringify(currentFocusOperation)
+          );
+          console.log("🚀 EXPAND NODE - Last focus time:", lastFocusTime);
+
           // After adding nodes, highlight the expanded node after layout
-          addNodesToExistingDiagram(expansionData, function () {
-            highlightNodeByLabel(nodeLabel);
-          });
+          addNodesToExistingDiagram(
+            expansionData,
+            function () {
+              console.log(
+                "🚀 EXPAND NODE - addNodesToExistingDiagram callback completed for:",
+                JSON.stringify(nodeLabel)
+              );
+              // Node highlighting is now handled in panAndZoomToExpandedNode
+            },
+            nodeLabel
+          );
         } catch (error) {
           showError(`Failed to expand node: ${error.message}`);
         } finally {
@@ -2294,7 +2459,17 @@
       }
 
       // Add new nodes and edges to existing diagram
-      function addNodesToExistingDiagram(data, afterLayoutCallback) {
+      function addNodesToExistingDiagram(
+        data,
+        afterLayoutCallback,
+        expandedNodeLabel
+      ) {
+        console.log(
+          "📦 ADD NODES - Function called with expandedNodeLabel:",
+          JSON.stringify(expandedNodeLabel)
+        );
+        console.log("📦 ADD NODES - Timestamp:", Date.now());
+
         try {
           if (!cy) {
             showError("Graph not initialized. Please refresh the page.");
@@ -2305,6 +2480,14 @@
             showError("Invalid expansion data received from API");
             return;
           }
+
+          console.log(
+            "📦 ADD NODES - Adding",
+            data.newNodes.length,
+            "nodes and",
+            data.newEdges.length,
+            "edges"
+          );
 
           // Create a map of existing node labels to actual IDs for reference
           const existingNodeMap = {};
@@ -2374,18 +2557,423 @@
           const layoutOptions = getLayoutOptions(cy.nodes().length);
 
           const layout = cy.layout(layoutOptions);
-          layout.run();
 
-          // After layout animation, call the callback (e.g., to highlight node)
-          if (typeof afterLayoutCallback === "function") {
-            cy.one("layoutstop", () => {
-              setTimeout(afterLayoutCallback, 50); // slight delay for rendering
-            });
-          }
+          console.log(
+            "📦 ADD NODES - Layout started for expandedNodeLabel:",
+            JSON.stringify(expandedNodeLabel)
+          );
+          console.log(
+            "📦 ADD NODES - Current lastRequestedExpansion at layout start:",
+            JSON.stringify(lastRequestedExpansion)
+          );
+          console.log(
+            "📦 ADD NODES - 🎯 REGISTERING LAYOUT COMPLETION CALLBACK for:",
+            JSON.stringify(expandedNodeLabel)
+          );
+
+          // FAILSAFE: Set a timeout to ensure focus happens even if layout events get lost
+          const failsafeTimeout = setTimeout(() => {
+            console.log(
+              "📦 ADD NODES - 🚨 FAILSAFE TIMEOUT - Checking if focus needed for:",
+              JSON.stringify(expandedNodeLabel)
+            );
+            console.log(
+              "📦 ADD NODES - 🚨 FAILSAFE - Current lastRequestedExpansion:",
+              JSON.stringify(lastRequestedExpansion)
+            );
+            if (expandedNodeLabel === lastRequestedExpansion) {
+              console.log(
+                "📦 ADD NODES - 🚨 FAILSAFE - Layout event missed, forcing focus"
+              );
+              setTimeout(() => {
+                panAndZoomToExpandedNode(expandedNodeLabel);
+              }, 100);
+            }
+          }, 3000); // 3 second failsafe
+
+          // CRITICAL: Attach the event listener BEFORE starting the layout to avoid race condition
+          cy.one("layoutstop", () => {
+            console.log(
+              "📦 ADD NODES - 🎯 LAYOUT COMPLETION TRIGGERED for:",
+              JSON.stringify(expandedNodeLabel)
+            );
+
+            // Clear the failsafe timeout since layout actually completed
+            clearTimeout(failsafeTimeout);
+            console.log(
+              "📦 ADD NODES - ✅ Failsafe timeout cleared for:",
+              JSON.stringify(expandedNodeLabel)
+            );
+            console.log(
+              "📦 ADD NODES - Layout stopped, expandedNodeLabel:",
+              JSON.stringify(expandedNodeLabel)
+            );
+            console.log(
+              "📦 ADD NODES - Layout stopped, typeof expandedNodeLabel:",
+              typeof expandedNodeLabel
+            );
+            console.log(
+              "📦 ADD NODES - Layout stopped, expandedNodeLabel truthy:",
+              !!expandedNodeLabel
+            );
+            console.log(
+              "📦 ADD NODES - Current lastRequestedExpansion:",
+              JSON.stringify(lastRequestedExpansion)
+            );
+            console.log(
+              "📦 ADD NODES - Is this the most recent expansion?",
+              expandedNodeLabel === lastRequestedExpansion
+            );
+
+            // Only focus if this layout completion is for the most recent expansion request
+            console.log("📦 ADD NODES - Checking conditions for focus...");
+            console.log(
+              "📦 ADD NODES - expandedNodeLabel exists:",
+              !!expandedNodeLabel
+            );
+            console.log(
+              "📦 ADD NODES - expandedNodeLabel value:",
+              JSON.stringify(expandedNodeLabel)
+            );
+            console.log(
+              "📦 ADD NODES - lastRequestedExpansion value:",
+              JSON.stringify(lastRequestedExpansion)
+            );
+            console.log(
+              "📦 ADD NODES - Exact match:",
+              expandedNodeLabel === lastRequestedExpansion
+            );
+            console.log(
+              "📦 ADD NODES - String comparison result:",
+              String(expandedNodeLabel) === String(lastRequestedExpansion)
+            );
+
+            if (
+              expandedNodeLabel &&
+              expandedNodeLabel === lastRequestedExpansion
+            ) {
+              const nodeToFocus = expandedNodeLabel; // Capture for closure
+              console.log(
+                "📦 ADD NODES - ✅ This is the most recent expansion, focusing on:",
+                JSON.stringify(nodeToFocus)
+              );
+              console.log(
+                "📦 ADD NODES - Local variable nodeToFocus:",
+                JSON.stringify(nodeToFocus)
+              );
+              console.log(
+                "📦 ADD NODES - Are they equal?",
+                nodeToFocus === expandedNodeLabel
+              );
+
+              // Get all current nodes to verify the target exists
+              const allCurrentNodes = cy.nodes().map((n) => n.data("label"));
+              console.log(
+                "📦 ADD NODES - All nodes after layout:",
+                allCurrentNodes.map((l) => JSON.stringify(l))
+              );
+
+              setTimeout(() => {
+                console.log(
+                  "📦 ADD NODES - 🎯 CALLING panAndZoomToExpandedNode for most recent expansion:",
+                  JSON.stringify(nodeToFocus)
+                );
+                console.log(
+                  "📦 ADD NODES - Double-checking lastRequestedExpansion still matches:",
+                  JSON.stringify(lastRequestedExpansion)
+                );
+                console.log(
+                  "📦 ADD NODES - nodeToFocus === lastRequestedExpansion:",
+                  nodeToFocus === lastRequestedExpansion
+                );
+                panAndZoomToExpandedNode(nodeToFocus);
+                // Call the callback after pan/zoom animation
+                if (typeof afterLayoutCallback === "function") {
+                  setTimeout(afterLayoutCallback, 700); // Reduced timing for better flow
+                }
+              }, 100); // Slightly longer delay to ensure layout is fully complete
+            } else if (expandedNodeLabel) {
+              console.log(
+                "📦 ADD NODES - ❌ Ignoring old expansion layout completion for:",
+                JSON.stringify(expandedNodeLabel)
+              );
+              console.log(
+                "📦 ADD NODES - Most recent expansion is:",
+                JSON.stringify(lastRequestedExpansion)
+              );
+              console.log(
+                "📦 ADD NODES - ❌ CONDITION FAILED - expandedNodeLabel:",
+                JSON.stringify(expandedNodeLabel)
+              );
+              console.log(
+                "📦 ADD NODES - ❌ CONDITION FAILED - lastRequestedExpansion:",
+                JSON.stringify(lastRequestedExpansion)
+              );
+              console.log(
+                "📦 ADD NODES - ❌ CONDITION FAILED - Are they equal?",
+                expandedNodeLabel === lastRequestedExpansion
+              );
+
+              // EMERGENCY FALLBACK: If this is the most recent expansion but condition failed, still focus
+              if (expandedNodeLabel === lastRequestedExpansion) {
+                console.log(
+                  "📦 ADD NODES - 🚨 EMERGENCY FALLBACK: Condition failed but strings match, forcing focus"
+                );
+                setTimeout(() => {
+                  panAndZoomToExpandedNode(expandedNodeLabel);
+                }, 100);
+              }
+
+              // Still call the callback but don't focus
+              if (typeof afterLayoutCallback === "function") {
+                setTimeout(afterLayoutCallback, 50);
+              }
+            } else {
+              console.log(
+                "📦 ADD NODES - No expandedNodeLabel provided, just fitting view"
+              );
+              // Just fit the view and call callback
+              cy.fit();
+              if (typeof afterLayoutCallback === "function") {
+                setTimeout(afterLayoutCallback, 50);
+              }
+            }
+          });
+
+          // NOW start the layout after the event listener is attached
+          console.log(
+            "📦 ADD NODES - 🚀 Starting layout for:",
+            JSON.stringify(expandedNodeLabel)
+          );
+          layout.run();
         } catch (error) {
           showError(`Failed to add new connections: ${error.message}`);
         }
       }
+
+      // Global variable to prevent focus conflicts during rapid expansions
+      let lastFocusTime = 0;
+      let currentFocusOperation = null;
+      let lastExpansionTimestamp = 0;
+      let lastRequestedExpansion = null;
+
+      // Pan and zoom to focus on expanded node and its connections
+      function panAndZoomToExpandedNode(nodeLabel) {
+        if (!cy) return;
+
+        // Prevent multiple rapid focus operations
+        const now = Date.now();
+        if (now - lastFocusTime < 1000) {
+          // Debounce for 1 second
+          console.log(
+            "⚠️ Skipping focus - too soon after last focus operation"
+          );
+          return;
+        }
+
+        // Cancel any ongoing focus operation
+        if (currentFocusOperation) {
+          console.log("⚠️ Cancelling previous focus operation");
+          cy.stop(); // Stop any ongoing animations
+          currentFocusOperation = null;
+        }
+
+        lastFocusTime = now;
+        currentFocusOperation = nodeLabel;
+
+        console.log("=== PAN AND ZOOM DEBUG (ENHANCED) ===");
+        console.log(
+          "Target node label to focus on:",
+          JSON.stringify(nodeLabel)
+        );
+        console.log("Type of nodeLabel:", typeof nodeLabel);
+        console.log("Focus operation timestamp:", now);
+
+        // Get all nodes and their labels for debugging
+        const allNodes = cy.nodes();
+        const allLabels = allNodes.map((n) => n.data("label"));
+        console.log(
+          "All available node labels:",
+          allLabels.map((label) => JSON.stringify(label))
+        );
+
+        // Find the expanded node with exact string matching
+        const expandedNode = allNodes.filter((n) => {
+          const currentLabel = n.data("label");
+          const isMatch = currentLabel === nodeLabel;
+          console.log(
+            `Checking node "${currentLabel}" === "${nodeLabel}": ${isMatch}`
+          );
+          return isMatch;
+        });
+
+        if (!expandedNode || expandedNode.length === 0) {
+          console.log(
+            "❌ Could not find expanded node:",
+            JSON.stringify(nodeLabel)
+          );
+          console.log("Trying case-insensitive search...");
+
+          // Try case-insensitive fallback
+          const expandedNodeFallback = allNodes.filter((n) => {
+            return n.data("label").toLowerCase() === nodeLabel.toLowerCase();
+          });
+
+          if (expandedNodeFallback && expandedNodeFallback.length > 0) {
+            console.log("✅ Found node with case-insensitive match");
+            currentFocusOperation = null;
+            return panAndZoomToExpandedNode(
+              expandedNodeFallback.first().data("label")
+            );
+          }
+
+          console.log("❌ No match found even with case-insensitive search");
+          currentFocusOperation = null;
+          return;
+        }
+
+        const targetNode = expandedNode.first(); // Get the first match
+        console.log(
+          "✅ Found expanded node:",
+          JSON.stringify(targetNode.data("label"))
+        );
+        console.log("Node ID:", targetNode.data("id"));
+
+        // Double-check this is still the node we want to focus on
+        if (currentFocusOperation !== nodeLabel) {
+          console.log("⚠️ Focus operation was superseded, aborting");
+          return;
+        }
+
+        // Get the expanded node's neighbors
+        const connectedNodes = targetNode.neighborhood().nodes();
+        console.log("Connected nodes to expanded node:", connectedNodes.length);
+
+        // Log the newly connected nodes (they should be the ones added during expansion)
+        connectedNodes.forEach((node, idx) => {
+          console.log(
+            `  Connected node ${idx}: "${node.data("label")}" (ID: ${node.data(
+              "id"
+            )})`
+          );
+        });
+
+        // Strategy: Focus on the expanded node plus its immediate connections
+        let focusNodes = targetNode;
+
+        if (connectedNodes.length > 0) {
+          // Include all immediate neighbors since they represent the expansion context
+          focusNodes = targetNode.union(connectedNodes.slice(0, 10)); // Slightly more neighbors for context
+        }
+
+        console.log("Focusing on", focusNodes.length, "nodes total");
+
+        // Calculate tight padding for better focus
+        const basePadding = 100; // Slightly more padding for clarity
+
+        // Reset any existing highlights but preserve original node colors
+        cy.nodes().style({
+          "border-width": "2px",
+          "border-color": "#2980b9",
+        });
+
+        // Restore original node colors based on type
+        cy.nodes().forEach((node) => {
+          const nodeType = node.data("type") || "action";
+          let backgroundColor;
+          switch (nodeType) {
+            case "milestone":
+              backgroundColor = "#9b59b6"; // Purple for milestones
+              break;
+            case "resource":
+              backgroundColor = "#f39c12"; // Orange for resources
+              break;
+            case "action":
+            default:
+              backgroundColor = "#3498db"; // Blue for actions (default)
+              break;
+          }
+          node.style("background-color", backgroundColor);
+        });
+
+        // Highlight the target expanded node with a distinctive border
+        targetNode.style({
+          "border-width": "4px",
+          "border-color": "#f1c40f", // Gold border for the focused node
+          "border-opacity": "1",
+        });
+
+        // Pan and zoom to the focus area with the exact target node
+        cy.animate(
+          {
+            fit: {
+              eles: focusNodes,
+              padding: basePadding,
+            },
+          },
+          {
+            duration: 900, // Slightly slower for smoother movement
+            easing: "ease-out",
+            complete: () => {
+              // Only highlight if this is still the current operation
+              if (currentFocusOperation === nodeLabel) {
+                console.log(
+                  "🎯 Pan/zoom complete - highlighting target node:",
+                  JSON.stringify(nodeLabel)
+                );
+
+                // Highlight ONLY the expanded node with a very distinct style
+                targetNode.animate(
+                  {
+                    style: {
+                      "border-width": 12,
+                      "border-color": "#e74c3c", // Bright red for distinction
+                      "background-color": "#f39c12", // Bright orange for distinction
+                    },
+                  },
+                  {
+                    duration: 600,
+                    complete: () => {
+                      // Return to normal style
+                      if (currentFocusOperation === nodeLabel) {
+                        targetNode.animate(
+                          {
+                            style: {
+                              "border-width": 5,
+                              "border-color": "#2c3e50", // Dark border to stand out
+                              "background-color": "#3498db",
+                            },
+                          },
+                          {
+                            duration: 600,
+                            complete: () => {
+                              // Clear the operation flag when completely done
+                              if (currentFocusOperation === nodeLabel) {
+                                currentFocusOperation = null;
+                                console.log(
+                                  "✅ Focus operation complete for:",
+                                  JSON.stringify(nodeLabel)
+                                );
+                              }
+                            },
+                          }
+                        );
+                      }
+                    },
+                  }
+                );
+              } else {
+                console.log(
+                  "⚠️ Focus operation was superseded during animation"
+                );
+              }
+            },
+          }
+        );
+
+        console.log("=== END PAN AND ZOOM DEBUG (ENHANCED) ===");
+      }
+
       // Highlight a node by its label (temporary effect)
       function highlightNodeByLabel(nodeLabel) {
         if (!cy) return;
@@ -2429,18 +3017,27 @@
           ) {
             // Double-click detected - expand node
             const nodeLabel = node.data("label");
+            console.log(
+              "🖱️ DESKTOP DOUBLE-CLICK - Node clicked:",
+              JSON.stringify(nodeLabel)
+            );
+            console.log("🖱️ DESKTOP DOUBLE-CLICK - Node ID:", node.data("id"));
+            console.log("🖱️ DESKTOP DOUBLE-CLICK - Timestamp:", currentTime);
+
             const startingPoint = document
               .getElementById("startingPoint")
               .value.trim();
-            const destination = document
-              .getElementById("destination")
-              .value.trim();
+            const destinations = getDestinations();
             const currentJourney =
-              startingPoint && destination
-                ? `${startingPoint} → ${destination}`
+              startingPoint && destinations.length > 0
+                ? `${startingPoint} → ${destinations.join(" → ")}`
                 : "current path";
 
-            if (startingPoint && destination) {
+            if (startingPoint && destinations.length > 0) {
+              console.log(
+                "🖱️ DESKTOP DOUBLE-CLICK - Calling expandNode with:",
+                JSON.stringify(nodeLabel)
+              );
               expandNode(nodeLabel, currentJourney);
             } else {
               showError("Please set your starting point and destination first");
@@ -2477,18 +3074,27 @@
         ) {
           // Double-tap detected - expand node
           const nodeLabel = node.data("label");
+          console.log(
+            "📱 MOBILE DOUBLE-TAP - Node tapped:",
+            JSON.stringify(nodeLabel)
+          );
+          console.log("📱 MOBILE DOUBLE-TAP - Node ID:", node.data("id"));
+          console.log("📱 MOBILE DOUBLE-TAP - Timestamp:", currentTime);
+
           const startingPoint = document
             .getElementById("startingPoint")
             .value.trim();
-          const destination = document
-            .getElementById("destination")
-            .value.trim();
+          const destinations = getDestinations();
           const currentJourney =
-            startingPoint && destination
-              ? `${startingPoint} → ${destination}`
+            startingPoint && destinations.length > 0
+              ? `${startingPoint} → ${destinations.join(" → ")}`
               : "current path";
 
-          if (startingPoint && destination) {
+          if (startingPoint && destinations.length > 0) {
+            console.log(
+              "📱 MOBILE DOUBLE-TAP - Calling expandNode with:",
+              JSON.stringify(nodeLabel)
+            );
             expandNode(nodeLabel, currentJourney);
           } else {
             showError("Please set your starting point and destination first");
@@ -2556,10 +3162,10 @@
         const startingPoint = document
           .getElementById("startingPoint")
           .value.trim();
-        const destination = document.getElementById("destination").value.trim();
+        const destinations = getDestinations();
         const currentJourney =
-          startingPoint && destination
-            ? `journey from "${startingPoint}" to "${destination}"`
+          startingPoint && destinations.length > 0
+            ? `journey from "${startingPoint}" to "${destinations.join(" → ")}"`
             : "your path";
 
         // Show loading state
@@ -2633,10 +3239,10 @@
         const startingPoint = document
           .getElementById("startingPoint")
           .value.trim();
-        const destination = document.getElementById("destination").value.trim();
+        const destinations = getDestinations();
         const currentJourney =
-          startingPoint && destination
-            ? `journey from "${startingPoint}" to "${destination}"`
+          startingPoint && destinations.length > 0
+            ? `journey from "${startingPoint}" to "${destinations.join(" → ")}"`
             : "your path";
 
         // Show loading state
@@ -2770,9 +3376,11 @@
         errorDiv.style.display = "none";
       }
 
-      function showJourney(startingPoint, destination) {
+      function showJourney(startingPoint, destinations) {
         // Update modal journey display
-        const journeyText = `${startingPoint} → ${destination}`;
+        const journeyText = Array.isArray(destinations)
+          ? `${startingPoint} → ${destinations.join(" → ")}`
+          : `${startingPoint} → ${destinations}`;
         document.getElementById("modalCurrentJourney").textContent =
           journeyText;
         document.getElementById("modalJourneyDisplay").style.display = "block";
@@ -3123,10 +3731,10 @@
         const startingPoint = document
           .getElementById("startingPoint")
           .value.trim();
-        const destination = document.getElementById("destination").value.trim();
+        const destinations = getDestinations();
         const currentJourney =
-          startingPoint && destination
-            ? `${startingPoint} → ${destination}`
+          startingPoint && destinations.length > 0
+            ? `${startingPoint} → ${destinations.join(" → ")}`
             : "current path";
 
         const basePrompt = `Given an existing journey path about "${currentJourney}", add the topic "${newTopic}" to expand the diagram with relevant connections.`;
@@ -3207,7 +3815,7 @@
             return;
           }
 
-          addNodesToExistingDiagram(expansionData);
+          addNodesToExistingDiagram(expansionData, null, null);
 
           // Show success message for topic addition
           showSuccess(`Added "${newTopic}" to your journey path!`);
@@ -3220,30 +3828,91 @@
         }
       }
 
+      // Destination management functions
+      function addDestination() {
+        const destinationsList = document.getElementById("destinationsList");
+        const destinationGroups =
+          destinationsList.querySelectorAll(".destination-group");
+
+        // Show remove button on all existing destinations
+        destinationGroups.forEach((group) => {
+          const removeBtn = group.querySelector(".remove-destination-btn");
+          removeBtn.style.display = "flex";
+        });
+
+        const newDestinationGroup = document.createElement("div");
+        newDestinationGroup.className = "input-group destination-group";
+        newDestinationGroup.innerHTML = `
+          <div class="input-with-buttons">
+            <input type="text" class="destination-input" placeholder="e.g., Next goal" />
+            <button class="remove-destination-btn">×</button>
+          </div>
+        `;
+
+        destinationsList.appendChild(newDestinationGroup);
+
+        // Add event listener to the new remove button
+        const removeBtn = newDestinationGroup.querySelector(
+          ".remove-destination-btn"
+        );
+        removeBtn.addEventListener("click", () =>
+          removeDestination(newDestinationGroup)
+        );
+
+        // Focus on the new input
+        const newInput =
+          newDestinationGroup.querySelector(".destination-input");
+        newInput.focus();
+      }
+
+      function removeDestination(destinationGroup) {
+        destinationGroup.remove();
+
+        // Check if only one destination remains, hide remove button
+        const destinationsList = document.getElementById("destinationsList");
+        const remainingGroups =
+          destinationsList.querySelectorAll(".destination-group");
+
+        if (remainingGroups.length === 1) {
+          const lastRemoveBtn = remainingGroups[0].querySelector(
+            ".remove-destination-btn"
+          );
+          lastRemoveBtn.style.display = "none";
+        }
+      }
+
+      function getDestinations() {
+        const destinationInputs =
+          document.querySelectorAll(".destination-input");
+        return Array.from(destinationInputs)
+          .map((input) => input.value.trim())
+          .filter((value) => value !== "");
+      }
+
       // Event listeners
       document.getElementById("generateBtn").addEventListener("click", () => {
         const startingPoint = document
           .getElementById("startingPoint")
           .value.trim();
-        const destination = document.getElementById("destination").value.trim();
+        const destinations = getDestinations();
 
-        if (!startingPoint && !destination) {
+        if (!startingPoint && destinations.length === 0) {
           // If both are empty, show journey discovery modal
           showJourneyDiscoveryDialog();
           return;
         }
-        if (!startingPoint && destination) {
-          // If no starting point but has destination, suggest starting points
-          suggestStartingPoints(destination);
+        if (!startingPoint && destinations.length > 0) {
+          // If no starting point but has destinations, suggest starting points
+          suggestStartingPoints(destinations[0]);
           return;
         }
-        if (!destination && startingPoint) {
-          // If no destination but has starting point, suggest goals
+        if (destinations.length === 0 && startingPoint) {
+          // If no destinations but has starting point, suggest goals
           suggestGoals(startingPoint);
           return;
         }
 
-        generateDiagram(startingPoint, destination);
+        generateDiagram(startingPoint, destinations);
       });
 
       document.getElementById("settingsBtn").addEventListener("click", () => {
@@ -3466,10 +4135,10 @@
         const startingPoint = document
           .getElementById("startingPoint")
           .value.trim();
-        const destination = document.getElementById("destination").value.trim();
+        const destinations = getDestinations();
         const currentJourney =
-          startingPoint && destination
-            ? `${startingPoint} → ${destination}`
+          startingPoint && destinations.length > 0
+            ? `${startingPoint} → ${destinations.join(" → ")}`
             : "Unnamed Journey";
 
         return {
@@ -3477,7 +4146,8 @@
           edges,
           journey: currentJourney,
           startingPoint,
-          destination,
+          destinations,
+          destination: destinations[0] || "", // Keep for backwards compatibility
         };
       }
 
@@ -3686,8 +4356,25 @@
             document.getElementById("startingPoint").value =
               decodedData.startingPoint;
           }
-          if (decodedData.destination) {
-            document.getElementById("destination").value =
+          if (decodedData.destinations && decodedData.destinations.length > 0) {
+            // Handle multiple destinations
+            decodedData.destinations.forEach((destination, index) => {
+              if (index === 0) {
+                // Set first destination
+                document.querySelector(".destination-input").value =
+                  destination;
+              } else {
+                // Add additional destinations
+                addDestination();
+                const destinationInputs =
+                  document.querySelectorAll(".destination-input");
+                destinationInputs[destinationInputs.length - 1].value =
+                  destination;
+              }
+            });
+          } else if (decodedData.destination) {
+            // Legacy single destination support
+            document.querySelector(".destination-input").value =
               decodedData.destination;
           }
 
@@ -3734,22 +4421,38 @@
         }, 3000);
       }
 
-      // Add Enter key support for both input fields
+      // Add Enter key support for input fields
       document
         .getElementById("startingPoint")
         .addEventListener("keypress", (e) => {
           if (e.key === "Enter") {
-            document.getElementById("destination").focus();
+            const firstDestinationInput =
+              document.querySelector(".destination-input");
+            if (firstDestinationInput) {
+              firstDestinationInput.focus();
+            }
           }
         });
 
-      document
-        .getElementById("destination")
-        .addEventListener("keypress", (e) => {
-          if (e.key === "Enter") {
+      // Add Enter key support for destination inputs (delegated event)
+      document.addEventListener("keypress", (e) => {
+        if (
+          e.target.classList.contains("destination-input") &&
+          e.key === "Enter"
+        ) {
+          const destinationInputs =
+            document.querySelectorAll(".destination-input");
+          const currentIndex = Array.from(destinationInputs).indexOf(e.target);
+
+          // If this is the last destination input or if it has a value, trigger generation
+          if (
+            currentIndex === destinationInputs.length - 1 ||
+            e.target.value.trim()
+          ) {
             document.getElementById("generateBtn").click();
           }
-        });
+        }
+      });
 
       // Help modal functionality
       document.getElementById("helpBtn").addEventListener("click", () => {
@@ -3757,11 +4460,11 @@
         const startingPoint = document
           .getElementById("startingPoint")
           .value.trim();
-        const destination = document.getElementById("destination").value.trim();
+        const destinations = getDestinations();
 
         // Sync current journey to modal if exists
-        if (startingPoint && destination) {
-          const journeyText = `${startingPoint} → ${destination}`;
+        if (startingPoint && destinations.length > 0) {
+          const journeyText = `${startingPoint} → ${destinations.join(" → ")}`;
           document.getElementById("modalCurrentJourney").textContent =
             journeyText;
           document.getElementById("modalJourneyDisplay").style.display =
@@ -3808,7 +4511,8 @@
             'input[name="suggestedGoal"]:checked'
           );
           if (selectedGoal) {
-            document.getElementById("destination").value = selectedGoal.value;
+            document.querySelector(".destination-input").value =
+              selectedGoal.value;
             closeGoalSuggestionDialog();
 
             // Auto-generate the diagram
@@ -3823,7 +4527,7 @@
         closeGoalSuggestionDialog();
         // Focus on the destination input for custom entry
         setTimeout(() => {
-          document.getElementById("destination").focus();
+          document.querySelector(".destination-input").focus();
         }, 100);
       });
 
@@ -3849,10 +4553,10 @@
             closeStartingSuggestionDialog();
 
             // Auto-generate the diagram
-            const destination = document
-              .getElementById("destination")
-              .value.trim();
-            generateDiagram(selectedStarting.value, destination);
+            const destinations = getDestinations();
+            if (destinations.length > 0) {
+              generateDiagram(selectedStarting.value, destinations);
+            }
           }
         });
 
@@ -3889,11 +4593,11 @@
             const destination = selectedJourney.dataset.destination;
 
             document.getElementById("startingPoint").value = startingPoint;
-            document.getElementById("destination").value = destination;
+            document.querySelector(".destination-input").value = destination;
             closeJourneyDiscoveryDialog();
 
             // Auto-generate the diagram
-            generateDiagram(startingPoint, destination);
+            generateDiagram(startingPoint, [destination]);
           }
         });
 
@@ -3971,6 +4675,11 @@
         // Wait for all libraries to load
         setTimeout(() => {
           initializeCytoscape();
+
+          // Initialize destination management
+          document
+            .getElementById("addDestinationBtn")
+            .addEventListener("click", addDestination);
 
           // Load shared diagram after Cytoscape is initialized
           loadSharedDiagram();
