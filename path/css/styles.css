@@ -92,6 +92,7 @@ body {
   width: 44px;
   height: 44px;
   padding: 0;
+  color: var(--text-color);
   box-shadow: 0 4px 15px var(--shadow-strong);
   font-size: 1.2rem;
 }
@@ -239,6 +240,7 @@ h1 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  color: var(--text-color);
   font-size: 1rem;
   transition: all 0.2s ease;
   box-sizing: border-box;
@@ -361,8 +363,8 @@ button {
     var(--bg-gradient-start),
     var(--bg-gradient-end)
   );
-  color: white;
-  border: none;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
   padding: 0.5rem 1.5rem;
   border-radius: 1.75rem;
   cursor: pointer;
