@@ -1,8 +1,0 @@
-.DS_Store
-*.log
-.npm
-.cache
-.vite
-node_modules/
-.yarn/
-.pnpm-store/
