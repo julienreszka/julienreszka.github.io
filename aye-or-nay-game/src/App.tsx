@@ -8,7 +8,10 @@ import { useTranslation } from 'react-i18next';
 type Player = {
   id: string;
   name: string;
-  penalties: number;
+  rejections: number;
+  drinks: number;
+  secrets: number;
+  reveals: number;
 };
 
 type GamePhase = 'WELCOME' | 'SETUP' | 'TURN_START' | 'ROLLING' | 'REVEAL' | 'VOTING' | 'RESULT';
@@ -80,7 +83,7 @@ export default function App() {
 
   const addPlayer = () => {
     if (newPlayerName.trim()) {
-      setPlayers([...players, { id: crypto.randomUUID(), name: newPlayerName.trim(), penalties: 0 }]);
+      setPlayers([...players, { id: crypto.randomUUID(), name: newPlayerName.trim(), rejections: 0, drinks: 0, secrets: 0, reveals: 0 }]);
       setNewPlayerName('');
     }
   };
@@ -133,7 +136,11 @@ export default function App() {
 
   const forfeitTurn = (type: 'DRINK' | 'SECRET') => {
     const newPlayers = [...players];
-    newPlayers[currentPlayerIndex].penalties += 1;
+    if (type === 'DRINK') {
+      newPlayers[currentPlayerIndex].drinks += 1;
+    } else {
+      newPlayers[currentPlayerIndex].secrets += 1;
+    }
     setPlayers(newPlayers);
     setTurnData(prev => ({ ...prev, forfeitType: type }));
     setPhase('RESULT');
@@ -152,10 +159,16 @@ export default function App() {
   };
 
   const nextTurn = () => {
-    // If penalty, update score (only if not forfeited, as forfeit already applied penalty)
-    if (!turnData.forfeitType && turnData.nays > turnData.ayes) {
-      const newPlayers = [...players];
-      newPlayers[currentPlayerIndex].penalties += 1;
+    const newPlayers = [...players];
+    
+    if (!turnData.forfeitType) {
+      if (turnData.nays > turnData.ayes) {
+        // Rejected by crew
+        newPlayers[currentPlayerIndex].rejections += 1;
+      } else {
+        // Successfully revealed/named
+        newPlayers[currentPlayerIndex].reveals += 1;
+      }
       setPlayers(newPlayers);
     }
 
@@ -349,11 +362,28 @@ export default function App() {
                     <div key={player.id} className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{player.name}</span>
-                        {player.penalties > 0 && (
-                          <span className="text-xs bg-red-900/50 text-red-200 px-2 py-1 rounded-full flex items-center gap-1">
-                            <Skull size={12} /> {player.penalties}
-                          </span>
-                        )}
+                        <div className="flex gap-1">
+                          {player.reveals > 0 && (
+                            <span className="text-xs bg-emerald-900/50 text-emerald-200 px-2 py-1 rounded-full flex items-center gap-1" title="Successful Reveals">
+                              <ThumbsUp size={12} /> {player.reveals}
+                            </span>
+                          )}
+                          {player.rejections > 0 && (
+                            <span className="text-xs bg-red-900/50 text-red-200 px-2 py-1 rounded-full flex items-center gap-1" title="Rejections">
+                              <Skull size={12} /> {player.rejections}
+                            </span>
+                          )}
+                          {player.drinks > 0 && (
+                            <span className="text-xs bg-amber-900/50 text-amber-200 px-2 py-1 rounded-full flex items-center gap-1" title="Drinks">
+                              <Beer size={12} /> {player.drinks}
+                            </span>
+                          )}
+                          {player.secrets > 0 && (
+                            <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded-full flex items-center gap-1" title="Secrets">
+                              <Users size={12} /> {player.secrets}
+                            </span>
+                          )}
+                        </div>
                       </div>
                       <button 
                         onClick={() => removePlayer(player.id)}
@@ -420,11 +450,28 @@ export default function App() {
                       <div key={player.id} className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{player.name}</span>
-                          {player.penalties > 0 && (
-                            <span className="text-xs bg-red-900/50 text-red-200 px-2 py-1 rounded-full flex items-center gap-1">
-                              <Skull size={12} /> {player.penalties}
-                            </span>
-                          )}
+                          <div className="flex gap-1">
+                            {player.reveals > 0 && (
+                              <span className="text-xs bg-emerald-900/50 text-emerald-200 px-2 py-1 rounded-full flex items-center gap-1" title="Successful Reveals">
+                                <ThumbsUp size={12} /> {player.reveals}
+                              </span>
+                            )}
+                            {player.rejections > 0 && (
+                              <span className="text-xs bg-red-900/50 text-red-200 px-2 py-1 rounded-full flex items-center gap-1" title="Rejections">
+                                <Skull size={12} /> {player.rejections}
+                              </span>
+                            )}
+                            {player.drinks > 0 && (
+                              <span className="text-xs bg-amber-900/50 text-amber-200 px-2 py-1 rounded-full flex items-center gap-1" title="Drinks">
+                                <Beer size={12} /> {player.drinks}
+                              </span>
+                            )}
+                            {player.secrets > 0 && (
+                              <span className="text-xs bg-purple-900/50 text-purple-200 px-2 py-1 rounded-full flex items-center gap-1" title="Secrets">
+                                <Users size={12} /> {player.secrets}
+                              </span>
+                            )}
+                          </div>
                         </div>
                         <button 
                           onClick={() => removePlayer(player.id)}
@@ -458,9 +505,27 @@ export default function App() {
               <h3 className="text-2xl text-[#F5F5DC]/60 mb-2 font-display">{t('turn.yourTurn')}</h3>
               <h2 className="text-5xl font-bold text-[#FFD700] mb-2 font-display">{currentPlayer?.name}</h2>
               
-              <div className="flex justify-center items-center gap-2 mb-8 text-[#F5F5DC]/50">
-                <Skull size={16} />
-                <span>{t('turn.penalties')}: {currentPlayer?.penalties}</span>
+              <div className="flex justify-center items-center gap-3 mb-8 text-[#F5F5DC]/50 text-sm">
+                {currentPlayer?.reveals > 0 && (
+                  <span className="flex items-center gap-1">
+                    <ThumbsUp size={14} className="text-emerald-400" /> {currentPlayer.reveals}
+                  </span>
+                )}
+                {currentPlayer?.rejections > 0 && (
+                  <span className="flex items-center gap-1">
+                    <Skull size={14} className="text-red-400" /> {currentPlayer.rejections}
+                  </span>
+                )}
+                {currentPlayer?.drinks > 0 && (
+                  <span className="flex items-center gap-1">
+                    <Beer size={14} className="text-amber-400" /> {currentPlayer.drinks}
+                  </span>
+                )}
+                {currentPlayer?.secrets > 0 && (
+                  <span className="flex items-center gap-1">
+                    <Users size={14} className="text-purple-400" /> {currentPlayer.secrets}
+                  </span>
+                )}
               </div>
 
               <Button onClick={startRoll} className="text-xl px-12 py-6">
