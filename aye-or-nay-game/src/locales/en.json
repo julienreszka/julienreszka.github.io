@@ -1,0 +1,97 @@
+{
+  "welcome": {
+    "title": "Aye or Nay",
+    "subtitle": "Reveal your friends and foes.",
+    "subtitle2": "Discover who stands with you.",
+    "enterButton": "Enter the Tavern",
+    "explainButton": "Explain the Game"
+  },
+  "rules": {
+    "title": "Pirate's Code",
+    "goal": {
+      "title": "The Goal",
+      "description": "Reveal your friends and foes. Discover common allies and enemies within the crew."
+    },
+    "roll": {
+      "title": "The Roll",
+      "description": "Every turn, you flip a coin and roll a dice:",
+      "heads": "Heads (Friend)",
+      "tails": "Tails (Enemy)",
+      "dice": "Dice (1-6) determines the closeness (from Best Friend to Celebrity)"
+    },
+    "reveal": {
+      "title": "The Reveal",
+      "description": "You must name a person fitting the description and explain why.",
+      "note": "If you can't or won't answer, you must Drink or Spill a Secret!"
+    },
+    "vote": {
+      "title": "The Vote",
+      "description": "The crew votes AYE (Agree) or NAY (Disagree).",
+      "consequence": "If NAYS win, you are Rejected! You must Drink or recruit a stranger who agrees with you."
+    },
+    "understand": "I Understand"
+  },
+  "setup": {
+    "title": "Recruit Crew",
+    "placeholder": "Enter name...",
+    "noCrew": "No crew members yet...",
+    "setSail": "Set Sail"
+  },
+  "manageCrew": {
+    "title": "Manage Crew",
+    "button": "Manage Crew",
+    "done": "Done",
+    "noCrew": "No crew members..."
+  },
+  "turn": {
+    "yourTurn": "It's your turn",
+    "penalties": "Penalties",
+    "rollButton": "Roll the Bones",
+    "deciding": "Fate is deciding..."
+  },
+  "reveal": {
+    "oracle": "The Oracle Speaks",
+    "friend": "FRIEND",
+    "enemy": "ENEMY",
+    "prompt": "\"{name}, name a person who fits this description and explain why...\"",
+    "haveName": "I have a Name",
+    "drink": "I'll Drink",
+    "secret": "I'll Share a Secret"
+  },
+  "voting": {
+    "title": "Cast Your Votes",
+    "subtitle": "Do you agree with the choice?",
+    "aye": "AYE",
+    "nay": "NAY",
+    "reveal": "Reveal Verdict"
+  },
+  "result": {
+    "bottoms": "BOTTOMS UP!",
+    "drinkMessage": "You chose the bottle.",
+    "drinkAction": "Drink up!",
+    "spillTitle": "SPILL YOUR GUTS!",
+    "spillMessage": "You chose to share.",
+    "spillAction": "Tell us your secret!",
+    "rejected": "REJECTED!",
+    "rejectedMessage": "The crew disagrees.",
+    "rejectedAction": "Drink or recruit a random stranger who agrees!",
+    "accepted": "ACCEPTED!",
+    "acceptedMessage": "The crew agrees.",
+    "acceptedAction": "Safe... for now.",
+    "ayes": "Ayes",
+    "nays": "Nays",
+    "nextPlayer": "Next Player"
+  },
+  "footer": {
+    "roundInProgress": "Round in progress",
+    "players": "Players"
+  },
+  "degrees": {
+    "1": "Closest (best friend, sibling, daily person)",
+    "2": "Tight circle (core friends/family weekly)",
+    "3": "Regular circle (good friends, work crew)",
+    "4": "Loose associates (gym, neighbours, old classmates)",
+    "5": "Distant network (online, mutuals)",
+    "6": "Public/Celebrity (influencers, famous people)"
+  }
+}

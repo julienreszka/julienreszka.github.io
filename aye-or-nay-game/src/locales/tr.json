@@ -1,0 +1,97 @@
+{
+  "welcome": {
+    "title": "Evet ya da Hayır",
+    "subtitle": "Arkadaşlarını ve düşmanlarını ortaya çıkar.",
+    "subtitle2": "Yanında kimlerin olduğunu keşfet.",
+    "enterButton": "Tavernaya Gir",
+    "explainButton": "Oyunu Açıkla"
+  },
+  "rules": {
+    "title": "Korsan Kuralları",
+    "goal": {
+      "title": "Amaç",
+      "description": "Arkadaşlarını ve düşmanlarını ortaya çıkar. Mürettebat içindeki ortak müttefikleri ve düşmanları keşfet."
+    },
+    "roll": {
+      "title": "Zar Atma",
+      "description": "Her turda bir yazı tura atıp bir zar atıyorsun:",
+      "heads": "Tura (Arkadaş)",
+      "tails": "Yazı (Düşman)",
+      "dice": "Zar (1-6) yakınlığı belirler (En Yakın Arkadaştan Ünlüye)"
+    },
+    "reveal": {
+      "title": "Açıklama",
+      "description": "Bu tanıma uyan bir kişiyi adlandırmalı ve nedenini açıklamalısın.",
+      "note": "Eğer cevap veremez veya vermek istemezsen, İçmeli ya da Bir Sır Paylaşmalısın!"
+    },
+    "vote": {
+      "title": "Oylama",
+      "description": "Mürettebat EVET (Katılıyorum) ya da HAYIR (Katılmıyorum) oylar.",
+      "consequence": "HAYIR'lar kazanırsa, Reddedildin! İçmeli ya da seninle aynı fikirde olan bir yabancı bulmalısın."
+    },
+    "understand": "Anladım"
+  },
+  "setup": {
+    "title": "Mürettebat Topla",
+    "placeholder": "İsim gir...",
+    "noCrew": "Henüz mürettebat yok...",
+    "setSail": "Yelken Aç"
+  },
+  "manageCrew": {
+    "title": "Mürettebatı Yönet",
+    "button": "Mürettebatı Yönet",
+    "done": "Tamam",
+    "noCrew": "Mürettebat yok..."
+  },
+  "turn": {
+    "yourTurn": "Sıra sende",
+    "penalties": "Cezalar",
+    "rollButton": "Zarları At",
+    "deciding": "Kader karar veriyor..."
+  },
+  "reveal": {
+    "oracle": "Kahin Konuşuyor",
+    "friend": "ARKADAŞ",
+    "enemy": "DÜŞMAN",
+    "prompt": "\"{name}, bu tanıma uyan bir kişiyi adlandır ve nedenini açıkla...\"",
+    "haveName": "Bir İsmim Var",
+    "drink": "İçeceğim",
+    "secret": "Bir Sır Paylaşacağım"
+  },
+  "voting": {
+    "title": "Oylarını Kullan",
+    "subtitle": "Bu seçime katılıyor musun?",
+    "aye": "EVET",
+    "nay": "HAYIR",
+    "reveal": "Kararı Göster"
+  },
+  "result": {
+    "bottoms": "DİBİNE KADAR!",
+    "drinkMessage": "Şişeyi seçtin.",
+    "drinkAction": "İç bakalım!",
+    "spillTitle": "SIRRINİ PAYLAŞ!",
+    "spillMessage": "Paylaşmayı seçtin.",
+    "spillAction": "Anlat bakalım sırrını!",
+    "rejected": "REDDEDİLDİN!",
+    "rejectedMessage": "Mürettebat katılmıyor.",
+    "rejectedAction": "İç ya da seninle aynı fikirde olan rastgele bir yabancı bul!",
+    "accepted": "KABUL EDİLDİN!",
+    "acceptedMessage": "Mürettebat katılıyor.",
+    "acceptedAction": "Güvendesin... şimdilik.",
+    "ayes": "Evet",
+    "nays": "Hayır",
+    "nextPlayer": "Sonraki Oyuncu"
+  },
+  "footer": {
+    "roundInProgress": "Tur devam ediyor",
+    "players": "Oyuncular"
+  },
+  "degrees": {
+    "1": "En yakın (en iyi arkadaş, kardeş, her gün gördüğün kişi)",
+    "2": "Yakın çevre (yakın arkadaşlar/aile, haftalık)",
+    "3": "Normal çevre (iyi arkadaşlar, iş arkadaşları)",
+    "4": "Gevşek bağlantılar (spor salonu, komşular, eski sınıf arkadaşları)",
+    "5": "Uzak ağ (çevrimiçi, ortak tanıdıklar)",
+    "6": "Kamu/Ünlü (influencer'lar, ünlü insanlar)"
+  }
+}

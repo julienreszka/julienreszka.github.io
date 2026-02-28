@@ -1,0 +1,97 @@
+{
+  "welcome": {
+    "title": "Oui ou Non",
+    "subtitle": "Révélez vos amis et ennemis.",
+    "subtitle2": "Découvrez qui vous soutient.",
+    "enterButton": "Entrer dans la Taverne",
+    "explainButton": "Expliquer le Jeu"
+  },
+  "rules": {
+    "title": "Code des Pirates",
+    "goal": {
+      "title": "L'Objectif",
+      "description": "Révélez vos amis et ennemis. Découvrez les alliés et ennemis communs au sein de l'équipage."
+    },
+    "roll": {
+      "title": "Le Lancer",
+      "description": "À chaque tour, vous lancez une pièce et un dé :",
+      "heads": "Face (Ami)",
+      "tails": "Pile (Ennemi)",
+      "dice": "Dé (1-6) détermine la proximité (du Meilleur Ami à la Célébrité)"
+    },
+    "reveal": {
+      "title": "La Révélation",
+      "description": "Vous devez nommer une personne correspondant à la description et expliquer pourquoi.",
+      "note": "Si vous ne pouvez pas ou ne voulez pas répondre, vous devez Boire ou Partager un Secret !"
+    },
+    "vote": {
+      "title": "Le Vote",
+      "description": "L'équipage vote OUI (D'accord) ou NON (Pas d'accord).",
+      "consequence": "Si les NON gagnent, vous êtes Rejeté ! Vous devez Boire ou recruter un inconnu qui est d'accord avec vous."
+    },
+    "understand": "J'ai Compris"
+  },
+  "setup": {
+    "title": "Recruter l'Équipage",
+    "placeholder": "Entrez un nom...",
+    "noCrew": "Pas encore de membres d'équipage...",
+    "setSail": "Mettre les Voiles"
+  },
+  "manageCrew": {
+    "title": "Gérer l'Équipage",
+    "button": "Gérer l'Équipage",
+    "done": "Terminé",
+    "noCrew": "Aucun membre d'équipage..."
+  },
+  "turn": {
+    "yourTurn": "C'est ton tour",
+    "penalties": "Pénalités",
+    "rollButton": "Lancer les Dés",
+    "deciding": "Le destin décide..."
+  },
+  "reveal": {
+    "oracle": "L'Oracle Parle",
+    "friend": "AMI",
+    "enemy": "ENNEMI",
+    "prompt": "\"{name}, nomme une personne qui correspond à cette description et explique pourquoi...\"",
+    "haveName": "J'ai un Nom",
+    "drink": "Je vais Boire",
+    "secret": "Je vais Partager un Secret"
+  },
+  "voting": {
+    "title": "Votez",
+    "subtitle": "Êtes-vous d'accord avec ce choix ?",
+    "aye": "OUI",
+    "nay": "NON",
+    "reveal": "Révéler le Verdict"
+  },
+  "result": {
+    "bottoms": "CUL SEC !",
+    "drinkMessage": "Vous avez choisi la bouteille.",
+    "drinkAction": "Buvez !",
+    "spillTitle": "VIDEZ VOTRE SAC !",
+    "spillMessage": "Vous avez choisi de partager.",
+    "spillAction": "Racontez-nous votre secret !",
+    "rejected": "REJETÉ !",
+    "rejectedMessage": "L'équipage n'est pas d'accord.",
+    "rejectedAction": "Buvez ou recrutez un inconnu qui est d'accord !",
+    "accepted": "ACCEPTÉ !",
+    "acceptedMessage": "L'équipage est d'accord.",
+    "acceptedAction": "En sécurité... pour l'instant.",
+    "ayes": "Oui",
+    "nays": "Non",
+    "nextPlayer": "Joueur Suivant"
+  },
+  "footer": {
+    "roundInProgress": "Partie en cours",
+    "players": "Joueurs"
+  },
+  "degrees": {
+    "1": "Le plus proche (meilleur ami, frère/sœur, personne quotidienne)",
+    "2": "Cercle proche (amis proches/famille hebdomadaire)",
+    "3": "Cercle régulier (bons amis, collègues de travail)",
+    "4": "Relations lointaines (salle de sport, voisins, anciens camarades de classe)",
+    "5": "Réseau distant (en ligne, connaissances)",
+    "6": "Public/Célébrité (influenceurs, personnes célèbres)"
+  }
+}
