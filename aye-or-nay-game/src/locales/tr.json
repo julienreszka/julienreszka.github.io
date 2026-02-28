@@ -53,7 +53,7 @@
     "oracle": "Kahin Konuşuyor",
     "friend": "ARKADAŞ",
     "enemy": "DÜŞMAN",
-    "prompt": "\"{name}, bu tanıma uyan bir kişiyi adlandır ve nedenini açıkla...\"",
+    "prompt": "\"{{name}}, bu tanıma uyan bir kişiyi adlandır ve nedenini açıkla...\"",
     "haveName": "Bir İsmim Var",
     "drink": "İçeceğim",
     "secret": "Bir Sır Paylaşacağım"

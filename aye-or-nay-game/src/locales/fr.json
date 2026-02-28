@@ -53,7 +53,7 @@
     "oracle": "L'Oracle Parle",
     "friend": "AMI",
     "enemy": "ENNEMI",
-    "prompt": "\"{name}, nomme une personne qui correspond à cette description et explique pourquoi...\"",
+    "prompt": "\"{{name}}, nomme une personne qui correspond à cette description et explique pourquoi...\"",
     "haveName": "J'ai un Nom",
     "drink": "Je vais Boire",
     "secret": "Je vais Partager un Secret"

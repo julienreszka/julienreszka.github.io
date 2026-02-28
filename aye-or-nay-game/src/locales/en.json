@@ -53,7 +53,7 @@
     "oracle": "The Oracle Speaks",
     "friend": "FRIEND",
     "enemy": "ENEMY",
-    "prompt": "\"{name}, name a person who fits this description and explain why...\"",
+    "prompt": "\"{{name}}, name a person who fits this description and explain why...\"",
     "haveName": "I have a Name",
     "drink": "I'll Drink",
     "secret": "I'll Share a Secret"

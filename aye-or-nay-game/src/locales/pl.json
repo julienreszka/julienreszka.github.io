@@ -53,7 +53,7 @@
     "oracle": "Wyrocznia Mówi",
     "friend": "PRZYJACIEL",
     "enemy": "WRÓG",
-    "prompt": "\"{name}, nazwij osobę pasującą do tego opisu i wyjaśnij dlaczego...\"",
+    "prompt": "\"{{name}}, nazwij osobę pasującą do tego opisu i wyjaśnij dlaczego...\"",
     "haveName": "Mam Imię",
     "drink": "Wypiję",
     "secret": "Zdradzę Sekret"
