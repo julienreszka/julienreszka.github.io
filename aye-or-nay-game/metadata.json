@@ -1,0 +1,5 @@
+{
+  "name": "Aye or Nay",
+  "description": "A social radar game where players reveal friends and foes based on coin flips and dice rolls.",
+  "requestFramePermissions": []
+}

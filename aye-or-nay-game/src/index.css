@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cinzel", serif;
+  --font-sans: "Inter", sans-serif;
+  
+  --color-pirate-gold: #FFD700;
+  --color-pirate-red: #8B0000;
+  --color-pirate-black: #1a1a1a;
+  --color-pirate-wood: #3E2723;
+  --color-pirate-parchment: #F5F5DC;
+}
+
+body {
+  background-color: var(--color-pirate-black);
+  color: var(--color-pirate-parchment);
+  font-family: var(--font-sans);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
