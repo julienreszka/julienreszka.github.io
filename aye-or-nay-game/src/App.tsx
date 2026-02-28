@@ -280,8 +280,16 @@ export default function App() {
                       <p className="mb-2">{t('rules.roll.description')}</p>
                       <ul className="list-disc list-inside space-y-1 ml-4 text-base opacity-80">
                         <li><span className="text-emerald-400 font-bold">{t('rules.roll.heads')}</span> or <span className="text-red-400 font-bold">{t('rules.roll.tails')}</span></li>
-                        <li><span className="font-bold">{t('rules.roll.dice')}</span></li>
+                        <li className="mb-2"><span className="font-bold">{t('rules.roll.dice')}</span></li>
                       </ul>
+                      <ol className="list-decimal list-inside space-y-1 ml-8 text-sm opacity-70">
+                        <li>{t('rules.roll.degrees.1')}</li>
+                        <li>{t('rules.roll.degrees.2')}</li>
+                        <li>{t('rules.roll.degrees.3')}</li>
+                        <li>{t('rules.roll.degrees.4')}</li>
+                        <li>{t('rules.roll.degrees.5')}</li>
+                        <li>{t('rules.roll.degrees.6')}</li>
+                      </ol>
                     </section>
 
                     <section>

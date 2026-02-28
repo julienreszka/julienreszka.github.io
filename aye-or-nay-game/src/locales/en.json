@@ -17,7 +17,15 @@
       "description": "Every turn, you flip a coin and roll a dice:",
       "heads": "Heads (Friend)",
       "tails": "Tails (Enemy)",
-      "dice": "Dice (1-6) determines the closeness (from Best Friend to Celebrity)"
+      "dice": "Dice (1-6) determines the closeness:",
+      "degrees": {
+        "1": "Closest (best friend, sibling, daily person)",
+        "2": "Tight circle (core friends/family weekly)",
+        "3": "Regular circle (good friends, work crew)",
+        "4": "Loose associates (gym, neighbours, old classmates)",
+        "5": "Distant network (online, mutuals)",
+        "6": "Public/Celebrity (influencers, famous people)"
+      }
     },
     "reveal": {
       "title": "The Reveal",

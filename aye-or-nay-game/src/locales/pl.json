@@ -17,7 +17,15 @@
       "description": "W każdej turze rzucasz monetą i kością:",
       "heads": "Orzeł (Przyjaciel)",
       "tails": "Reszka (Wróg)",
-      "dice": "Kostka (1-6) określa bliskość (od Najlepszego Przyjaciela do Celebryty)"
+      "dice": "Kostka (1-6) określa bliskość:",
+      "degrees": {
+        "1": "Najbliżsi (najlepszy przyjaciel, rodzeństwo, codzienna osoba)",
+        "2": "Bliski krąg (bliscy przyjaciele/rodzina, cotygodniowo)",
+        "3": "Regularny krąg (dobrzy znajomi, współpracownicy)",
+        "4": "Luźne znajomości (siłownia, sąsiedzi, dawni koledzy z klasy)",
+        "5": "Odległa sieć (online, wspólni znajomi)",
+        "6": "Publiczność/Celebryci (influencerzy, sławni ludzie)"
+      }
     },
     "reveal": {
       "title": "Ujawnienie",

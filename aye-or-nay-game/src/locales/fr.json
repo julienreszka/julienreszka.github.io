@@ -17,7 +17,15 @@
       "description": "À chaque tour, vous lancez une pièce et un dé :",
       "heads": "Face (Ami)",
       "tails": "Pile (Ennemi)",
-      "dice": "Dé (1-6) détermine la proximité (du Meilleur Ami à la Célébrité)"
+      "dice": "Dé (1-6) détermine la proximité :",
+      "degrees": {
+        "1": "Le plus proche (meilleur ami, frère/sœur, personne quotidienne)",
+        "2": "Cercle proche (amis proches/famille hebdomadaire)",
+        "3": "Cercle régulier (bons amis, collègues de travail)",
+        "4": "Relations lointaines (salle de sport, voisins, anciens camarades de classe)",
+        "5": "Réseau distant (en ligne, connaissances)",
+        "6": "Public/Célébrité (influenceurs, personnes célèbres)"
+      }
     },
     "reveal": {
       "title": "La Révélation",
