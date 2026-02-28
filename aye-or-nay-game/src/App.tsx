@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Skull, Coins, Users, ThumbsUp, ThumbsDown, ArrowRight, RotateCcw, Plus, X, UserPlus, Beer, BookOpen, Languages, Home } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
@@ -73,6 +73,8 @@ export default function App() {
   const [isRulesOpen, setIsRulesOpen] = useState(false);
   const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
+  const playerListRef = useRef<HTMLDivElement>(null);
+
   const currentPlayer = players[currentPlayerIndex];
 
   // Ensure current player index is valid if players are removed
@@ -86,6 +88,12 @@ export default function App() {
     if (newPlayerName.trim()) {
       setPlayers([...players, { id: crypto.randomUUID(), name: newPlayerName.trim(), rejections: 0, drinks: 0, secrets: 0, reveals: 0 }]);
       setNewPlayerName('');
+      // Scroll to bottom after DOM update
+      setTimeout(() => {
+        if (playerListRef.current) {
+          playerListRef.current.scrollTop = playerListRef.current.scrollHeight;
+        }
+      }, 0);
     }
   };
 
@@ -233,11 +241,14 @@ export default function App() {
           </div>
         </div>
 
-        {/* Manage Crew Button */}
+        {/* Game Control Buttons */}
         {phase !== 'WELCOME' && phase !== 'SETUP' && (
           <div className="fixed top-4 right-4 z-40 flex gap-2">
             <Button onClick={confirmReset} variant="ghost" className="px-3 py-2 text-sm" title="Reset Game">
               <Home size={20} />
+            </Button>
+            <Button onClick={() => setIsRulesOpen(true)} variant="ghost" className="px-3 py-2 text-sm" title="Rules">
+              <BookOpen size={20} />
             </Button>
             <Button onClick={() => setIsManagePlayersOpen(true)} variant="secondary" className="px-3 py-2 text-sm">
               <UserPlus size={20} /> <span className="hidden sm:inline">{t('manageCrew.button')}</span>
@@ -290,7 +301,7 @@ export default function App() {
                 className="w-full max-w-2xl max-h-[85vh] overflow-y-auto"
               >
                 <Card>
-                  <div className="flex justify-between items-center mb-6 sticky top-0 bg-[#1a1a1a]/95 backdrop-blur py-2 border-b border-white/10">
+                  <div className="flex justify-between items-center mb-6 sticky top-0 bg-[#1a1a1a] backdrop-blur py-4 px-4 sm:px-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 border-b border-white/10 z-10">
                     <h2 className="text-2xl sm:text-3xl font-display text-[#FFD700]">{t('rules.title')}</h2>
                     <button onClick={() => setIsRulesOpen(false)} className="text-[#F5F5DC]/50 hover:text-white">
                       <X size={24} />
@@ -376,7 +387,7 @@ export default function App() {
                   </Button>
                 </div>
 
-                <div className="space-y-2 mb-8 max-h-60 overflow-y-auto pr-2">
+                <div ref={playerListRef} className="space-y-2 mb-8 max-h-60 overflow-y-auto pr-2">
                   {players.map((player) => (
                     <div key={player.id} className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
                       <div className="flex items-center gap-2">
@@ -421,9 +432,16 @@ export default function App() {
                   <Button 
                     onClick={confirmReset} 
                     variant="ghost" 
-                    className="w-1/3"
+                    className="w-1/4"
                   >
                     <Home size={20} />
+                  </Button>
+                  <Button 
+                    onClick={() => setIsRulesOpen(true)} 
+                    variant="ghost" 
+                    className="w-1/4"
+                  >
+                    <BookOpen size={20} />
                   </Button>
                   <Button 
                     onClick={startGame} 
@@ -473,7 +491,7 @@ export default function App() {
                     </Button>
                   </div>
 
-                  <div className="space-y-2 mb-6 max-h-60 overflow-y-auto pr-2">
+                  <div ref={playerListRef} className="space-y-2 mb-6 max-h-60 overflow-y-auto pr-2">
                     {players.map((player) => (
                       <div key={player.id} className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
                         <div className="flex items-center gap-2">
