@@ -60,10 +60,14 @@ npm run preview
 
 - **Multi-language support** - Instantly switch between English, French, Turkish, and Polish
 - **Responsive design** - Works on desktop, tablet, and mobile
-- **Dynamic scoring** - Track penalties throughout the game
+- **Detailed player statistics** - Track 4 different outcomes for each player:
+  - 👍 **Reveals** - Successfully named someone and crew voted AYE
+  - 💀 **Rejections** - Named someone but crew voted NAY
+  - 🍺 **Drinks** - Chose to drink instead of naming
+  - 👥 **Secrets** - Chose to share a secret instead of naming
 - **Animated UI** - Smooth transitions and engaging animations
-- **Player management** - Add/remove players at any time
-- **Custom rules** - Drink or share secrets as forfeit options
+- **Player management** - Add/remove players at any time during the game
+- **Custom forfeit options** - Choose between drinking or sharing secrets
 
 ## 🛠️ Tech Stack
 
@@ -119,7 +123,17 @@ Name a person who fits the description and explain why.
 
 The crew votes **AYE** (agree) or **NAY** (disagree).
 
-- If **NAYs** win: You're rejected! Drink or recruit a random stranger who agrees with you.
+- If **AYEs** win: You're accepted! ✅ **+1 Reveal**
+- If **NAYs** win: You're rejected! ❌ **+1 Rejection** - Drink or recruit a random stranger who agrees with you.
+
+### Player Statistics
+
+Each player's performance is tracked with color-coded badges:
+
+- 👍 **Reveals** (green) - Successful answers accepted by the crew
+- 💀 **Rejections** (red) - Answers rejected by the crew
+- 🍺 **Drinks** (amber) - Times the player chose to drink instead of answering
+- 👥 **Secrets** (purple) - Times the player chose to share a secret instead of answering
 
 ## 📝 Scripts
 

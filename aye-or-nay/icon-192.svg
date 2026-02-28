@@ -1,0 +1,5 @@
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <rect width="192" height="192" fill="#000000"/>
+  <circle cx="96" cy="96" r="80" fill="#FFD700"/>
+  <text x="96" y="130" font-size="80" text-anchor="middle" fill="#3E2723">⚔️</text>
+</svg>
