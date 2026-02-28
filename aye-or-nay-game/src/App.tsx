@@ -208,8 +208,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?q=80&w=2560&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat bg-fixed text-[#F5F5DC] font-sans selection:bg-[#FFD700] selection:text-[#3E2723]">
-      <div className="min-h-screen bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4">
+    <div className="min-h-svh bg-[url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?q=80&w=2560&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat bg-fixed text-[#F5F5DC] font-sans selection:bg-[#FFD700] selection:text-[#3E2723]">
+      <div className="min-h-svh bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4">
         
         {/* Language Selector */}
         <div className="fixed top-4 left-4 z-40">
@@ -298,7 +298,7 @@ export default function App() {
                 initial={{ scale: 0.9, y: 20 }}
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.9, y: 20 }}
-                className="w-full max-w-2xl max-h-[85vh] overflow-y-auto"
+                className="w-full max-w-2xl max-h-[85svh] overflow-y-auto"
               >
                 <Card>
                   <div className="flex justify-between items-center mb-6 sticky top-0 bg-[#1a1a1a] backdrop-blur py-4 px-4 sm:px-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 border-b border-white/10 z-10">
