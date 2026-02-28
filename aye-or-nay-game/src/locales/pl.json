@@ -101,5 +101,11 @@
     "4": "Luźne znajomości (siłownia, sąsiedzi, dawni koledzy z klasy)",
     "5": "Odległa sieć (online, wspólni znajomi)",
     "6": "Publiczność/Celebryci (influencerzy, sławni ludzie)"
+  },
+  "reset": {
+    "title": "Zresetować grę?",
+    "message": "Czy na pewno chcesz zresetować? Wszyscy gracze i postęp zostaną utracone.",
+    "cancel": "Anuluj",
+    "confirm": "Zresetuj"
   }
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Skull, Coins, Users, ThumbsUp, ThumbsDown, ArrowRight, RotateCcw, Plus, X, UserPlus, Beer, BookOpen, Languages } from 'lucide-react';
+import { Skull, Coins, Users, ThumbsUp, ThumbsDown, ArrowRight, RotateCcw, Plus, X, UserPlus, Beer, BookOpen, Languages, Home } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 // --- Types ---
@@ -32,7 +32,7 @@ type TurnData = {
 // --- Components ---
 
 function Button({ onClick, children, className = '', variant = 'primary', disabled = false }: any) {
-  const baseStyle = "px-6 py-3 rounded-xl font-bold text-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg";
+  const baseStyle = "px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-bold text-base sm:text-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg";
   const variants = {
     primary: "bg-[#FFD700] text-[#3E2723] hover:bg-[#FFC107]",
     secondary: "bg-[#3E2723] text-[#FFD700] border-2 border-[#FFD700] hover:bg-[#2c1b17]",
@@ -54,7 +54,7 @@ function Button({ onClick, children, className = '', variant = 'primary', disabl
 
 function Card({ children, className = '' }: any) {
   return (
-    <div className={`bg-[#1a1a1a]/80 backdrop-blur-sm border border-[#FFD700]/20 rounded-2xl p-6 shadow-2xl ${className}`}>
+    <div className={`bg-[#1a1a1a]/80 backdrop-blur-sm border border-[#FFD700]/20 rounded-2xl p-4 sm:p-6 shadow-2xl ${className}`}>
       {children}
     </div>
   );
@@ -71,6 +71,7 @@ export default function App() {
   const [newPlayerName, setNewPlayerName] = useState('');
   const [isManagePlayersOpen, setIsManagePlayersOpen] = useState(false);
   const [isRulesOpen, setIsRulesOpen] = useState(false);
+  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
 
   const currentPlayer = players[currentPlayerIndex];
 
@@ -177,6 +178,21 @@ export default function App() {
     setPhase('TURN_START');
   };
 
+  const confirmReset = () => {
+    setIsResetConfirmOpen(true);
+  };
+
+  const resetGame = () => {
+    setPhase('WELCOME');
+    setPlayers([]);
+    setCurrentPlayerIndex(0);
+    setTurnData({ coin: null, dice: null, ayes: 0, nays: 0 });
+    setNewPlayerName('');
+    setIsManagePlayersOpen(false);
+    setIsRulesOpen(false);
+    setIsResetConfirmOpen(false);
+  };
+
   // --- Render Phases ---
 
   const changeLanguage = (lang: string) => {
@@ -189,28 +205,28 @@ export default function App() {
         
         {/* Language Selector */}
         <div className="fixed top-4 left-4 z-40">
-          <div className="flex gap-2 bg-black/60 backdrop-blur px-3 py-2 rounded-xl border border-[#FFD700]/20">
+          <div className="flex gap-1 sm:gap-2 bg-black/60 backdrop-blur px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-[#FFD700]/20">
             <button 
               onClick={() => changeLanguage('en')} 
-              className={`px-3 py-1 rounded-lg transition-all ${i18n.language === 'en' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'en' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
             >
               EN
             </button>
             <button 
               onClick={() => changeLanguage('fr')} 
-              className={`px-3 py-1 rounded-lg transition-all ${i18n.language === 'fr' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'fr' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
             >
               FR
             </button>
             <button 
               onClick={() => changeLanguage('tr')} 
-              className={`px-3 py-1 rounded-lg transition-all ${i18n.language === 'tr' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'tr' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
             >
               TR
             </button>
             <button 
               onClick={() => changeLanguage('pl')} 
-              className={`px-3 py-1 rounded-lg transition-all ${i18n.language === 'pl' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'pl' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
             >
               PL
             </button>
@@ -219,7 +235,10 @@ export default function App() {
 
         {/* Manage Crew Button */}
         {phase !== 'WELCOME' && phase !== 'SETUP' && (
-          <div className="fixed top-4 right-4 z-40">
+          <div className="fixed top-4 right-4 z-40 flex gap-2">
+            <Button onClick={confirmReset} variant="ghost" className="px-3 py-2 text-sm" title="Reset Game">
+              <Home size={20} />
+            </Button>
             <Button onClick={() => setIsManagePlayersOpen(true)} variant="secondary" className="px-3 py-2 text-sm">
               <UserPlus size={20} /> <span className="hidden sm:inline">{t('manageCrew.button')}</span>
             </Button>
@@ -237,19 +256,19 @@ export default function App() {
               className="text-center max-w-md w-full"
             >
               <div className="mb-8 flex justify-center">
-                <Skull size={80} className="text-[#FFD700]" />
+                <Skull size={60} className="text-[#FFD700] sm:w-20 sm:h-20" />
               </div>
-              <h1 className="text-6xl font-display font-bold text-[#FFD700] mb-4 drop-shadow-lg tracking-wider">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-[#FFD700] mb-4 drop-shadow-lg tracking-wider">
                 {t('welcome.title')}
               </h1>
-              <p className="text-xl text-[#F5F5DC]/80 mb-8 font-light">
+              <p className="text-lg sm:text-xl text-[#F5F5DC]/80 mb-8 font-light">
                 {t('welcome.subtitle')} <br/> {t('welcome.subtitle2')}
               </p>
               <div className="flex flex-col gap-4">
-                <Button onClick={() => setPhase('SETUP')} className="w-full text-xl py-4">
+                <Button onClick={() => setPhase('SETUP')} className="w-full text-lg sm:text-xl py-3 sm:py-4">
                   {t('welcome.enterButton')}
                 </Button>
-                <Button onClick={() => setIsRulesOpen(true)} variant="ghost" className="w-full text-lg">
+                <Button onClick={() => setIsRulesOpen(true)} variant="ghost" className="w-full text-base sm:text-lg">
                   {t('welcome.explainButton')} <BookOpen size={20} />
                 </Button>
               </div>
@@ -272,22 +291,22 @@ export default function App() {
               >
                 <Card>
                   <div className="flex justify-between items-center mb-6 sticky top-0 bg-[#1a1a1a]/95 backdrop-blur py-2 border-b border-white/10">
-                    <h2 className="text-3xl font-display text-[#FFD700]">{t('rules.title')}</h2>
+                    <h2 className="text-2xl sm:text-3xl font-display text-[#FFD700]">{t('rules.title')}</h2>
                     <button onClick={() => setIsRulesOpen(false)} className="text-[#F5F5DC]/50 hover:text-white">
                       <X size={24} />
                     </button>
                   </div>
                   
-                  <div className="space-y-6 text-[#F5F5DC]/90 text-lg leading-relaxed">
+                  <div className="space-y-6 text-[#F5F5DC]/90 text-base sm:text-lg leading-relaxed">
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <Skull size={20} /> {t('rules.goal.title')}
                       </h3>
                       <p>{t('rules.goal.description')}</p>
                     </section>
 
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <Coins size={20} /> {t('rules.roll.title')}
                       </h3>
                       <p className="mb-2">{t('rules.roll.description')}</p>
@@ -306,7 +325,7 @@ export default function App() {
                     </section>
 
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <Users size={20} /> {t('rules.reveal.title')}
                       </h3>
                       <p>{t('rules.reveal.description')}</p>
@@ -314,7 +333,7 @@ export default function App() {
                     </section>
 
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <ThumbsUp size={20} /> {t('rules.vote.title')}
                       </h3>
                       <p>{t('rules.vote.description')}</p>
@@ -341,7 +360,7 @@ export default function App() {
               className="w-full max-w-md"
             >
               <Card>
-                <h2 className="text-3xl font-display text-[#FFD700] mb-6 text-center">{t('setup.title')}</h2>
+                <h2 className="text-2xl sm:text-3xl font-display text-[#FFD700] mb-6 text-center">{t('setup.title')}</h2>
                 
                 <div className="flex gap-2 mb-6">
                   <input 
@@ -398,13 +417,22 @@ export default function App() {
                   )}
                 </div>
 
-                <Button 
-                  onClick={startGame} 
-                  disabled={players.length < 2} 
-                  className="w-full"
-                >
-                  {t('setup.setSail')} <ArrowRight size={20} />
-                </Button>
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={confirmReset} 
+                    variant="ghost" 
+                    className="w-1/3"
+                  >
+                    <Home size={20} />
+                  </Button>
+                  <Button 
+                    onClick={startGame} 
+                    disabled={players.length < 2} 
+                    className="flex-1"
+                  >
+                    {t('setup.setSail')} <ArrowRight size={20} />
+                  </Button>
+                </div>
               </Card>
             </motion.div>
           )}
@@ -425,7 +453,7 @@ export default function App() {
               >
                 <Card>
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-2xl font-display text-[#FFD700]">{t('manageCrew.title')}</h2>
+                    <h2 className="text-xl sm:text-2xl font-display text-[#FFD700]">{t('manageCrew.title')}</h2>
                     <button onClick={() => setIsManagePlayersOpen(false)} className="text-[#F5F5DC]/50 hover:text-white">
                       <X size={24} />
                     </button>
@@ -494,6 +522,55 @@ export default function App() {
             </motion.div>
           )}
 
+          {/* Reset Confirmation Modal */}
+          {isResetConfirmOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            >
+              <motion.div
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, y: 20 }}
+                className="w-full max-w-md"
+              >
+                <Card>
+                  <div className="flex justify-between items-center mb-6">
+                    <h2 className="text-xl sm:text-2xl font-display text-[#FFD700] flex items-center gap-2">
+                      <Home size={24} /> {t('reset.title')}
+                    </h2>
+                    <button onClick={() => setIsResetConfirmOpen(false)} className="text-[#F5F5DC]/50 hover:text-white">
+                      <X size={24} />
+                    </button>
+                  </div>
+                  
+                  <p className="text-[#F5F5DC]/80 mb-6 text-base sm:text-lg">
+                    {t('reset.message')}
+                  </p>
+                  
+                  <div className="flex gap-3">
+                    <Button 
+                      onClick={() => setIsResetConfirmOpen(false)} 
+                      variant="secondary" 
+                      className="flex-1"
+                    >
+                      {t('reset.cancel')}
+                    </Button>
+                    <Button 
+                      onClick={resetGame} 
+                      variant="danger" 
+                      className="flex-1"
+                    >
+                      {t('reset.confirm')}
+                    </Button>
+                  </div>
+                </Card>
+              </motion.div>
+            </motion.div>
+          )}
+
           {phase === 'TURN_START' && (
             <motion.div 
               key="turn_start"
@@ -502,8 +579,8 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="text-center"
             >
-              <h3 className="text-2xl text-[#F5F5DC]/60 mb-2 font-display">{t('turn.yourTurn')}</h3>
-              <h2 className="text-5xl font-bold text-[#FFD700] mb-2 font-display">{currentPlayer?.name}</h2>
+              <h3 className="text-xl sm:text-2xl text-[#F5F5DC]/60 mb-2 font-display">{t('turn.yourTurn')}</h3>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FFD700] mb-2 font-display">{currentPlayer?.name}</h2>
               
               <div className="flex justify-center items-center gap-3 mb-8 text-[#F5F5DC]/50 text-sm">
                 {currentPlayer?.reveals > 0 && (
@@ -528,7 +605,7 @@ export default function App() {
                 )}
               </div>
 
-              <Button onClick={startRoll} className="text-xl px-12 py-6">
+              <Button onClick={startRoll} className="text-lg sm:text-xl px-8 sm:px-12 py-4 sm:py-6">
                 {t('turn.rollButton')}
               </Button>
             </motion.div>
@@ -542,23 +619,23 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="text-center"
             >
-               <div className="flex justify-center gap-8 mb-12">
+               <div className="flex justify-center gap-4 sm:gap-8 mb-8 sm:mb-12">
                  <motion.div 
                    animate={{ rotateY: [0, 1080] }}
                    transition={{ duration: 2, ease: "easeOut" }}
-                   className="w-32 h-32 rounded-full bg-[#FFD700] flex items-center justify-center shadow-[0_0_30px_rgba(255,215,0,0.3)] border-4 border-[#B8860B]"
+                   className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-[#FFD700] flex items-center justify-center shadow-[0_0_30px_rgba(255,215,0,0.3)] border-4 border-[#B8860B]"
                  >
-                   <Coins size={48} className="text-[#3E2723]" />
+                   <Coins size={36} className="text-[#3E2723] sm:w-12 sm:h-12" />
                  </motion.div>
                  <motion.div 
                    animate={{ rotate: [0, 720], scale: [1, 1.2, 1] }}
                    transition={{ duration: 2, ease: "easeOut" }}
-                   className="w-32 h-32 rounded-2xl bg-[#F5F5DC] flex items-center justify-center shadow-[0_0_30px_rgba(245,245,220,0.2)] text-black font-bold text-4xl border-4 border-[#D2B48C]"
+                   className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-[#F5F5DC] flex items-center justify-center shadow-[0_0_30px_rgba(245,245,220,0.2)] text-black font-bold text-3xl sm:text-4xl border-4 border-[#D2B48C]"
                  >
                    ?
                  </motion.div>
                </div>
-               <h3 className="text-2xl text-[#FFD700] animate-pulse font-display">{t('turn.deciding')}</h3>
+               <h3 className="text-xl sm:text-2xl text-[#FFD700] animate-pulse font-display">{t('turn.deciding')}</h3>
             </motion.div>
           )}
 
@@ -571,7 +648,7 @@ export default function App() {
               className="w-full max-w-lg text-center"
             >
               <div className="mb-8">
-                <h3 className="text-xl text-[#F5F5DC]/60 uppercase tracking-widest mb-4">{t('reveal.oracle')}</h3>
+                <h3 className="text-lg sm:text-xl text-[#F5F5DC]/60 uppercase tracking-widest mb-4">{t('reveal.oracle')}</h3>
                 
                 <div className="flex flex-col gap-6">
                   <Card className="bg-gradient-to-br from-[#3E2723] to-black border-[#FFD700]/30">
@@ -581,14 +658,14 @@ export default function App() {
                       ) : (
                         <ThumbsDown size={32} className="text-[#8B0000]" />
                       )}
-                      <span className={`text-3xl font-bold ${turnData.coin === 'HEAD' ? 'text-emerald-400' : 'text-[#8B0000]'}`}>
+                      <span className={`text-2xl sm:text-3xl font-bold ${turnData.coin === 'HEAD' ? 'text-emerald-400' : 'text-[#8B0000]'}`}>
                         {turnData.coin === 'HEAD' ? t('reveal.friend') : t('reveal.enemy')}
                       </span>
                     </div>
                     <div className="w-full h-px bg-white/10 my-4" />
                     <div className="text-center">
-                      <span className="text-5xl font-bold text-[#FFD700] block mb-2">{turnData.dice}</span>
-                      <p className="text-lg text-[#F5F5DC] leading-relaxed">
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FFD700] block mb-2">{turnData.dice}</span>
+                      <p className="text-base sm:text-lg text-[#F5F5DC] leading-relaxed">
                         {t(`degrees.${turnData.dice}`)}
                       </p>
                     </div>
@@ -596,7 +673,7 @@ export default function App() {
                 </div>
               </div>
 
-              <p className="text-xl mb-8 font-light italic">
+              <p className="text-lg sm:text-xl mb-8 font-light italic">
                 {t('reveal.prompt', { name: currentPlayer?.name })}
               </p>
 
@@ -624,26 +701,26 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="w-full max-w-md text-center"
             >
-              <h2 className="text-3xl font-display text-[#FFD700] mb-2">{t('voting.title')}</h2>
+              <h2 className="text-2xl sm:text-3xl font-display text-[#FFD700] mb-2">{t('voting.title')}</h2>
               <p className="text-[#F5F5DC]/60 mb-8">{t('voting.subtitle')}</p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <button 
                   onClick={() => submitVote('AYE')}
-                  className="bg-emerald-900/50 border-2 border-emerald-500/50 hover:bg-emerald-900 hover:border-emerald-400 text-emerald-100 p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-4 group"
+                  className="bg-emerald-900/50 border-2 border-emerald-500/50 hover:bg-emerald-900 hover:border-emerald-400 text-emerald-100 p-4 sm:p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-2 sm:gap-4 group"
                 >
-                  <ThumbsUp size={48} className="group-hover:scale-110 transition-transform" />
-                  <span className="text-2xl font-bold">{t('voting.aye')}</span>
-                  <span className="text-sm opacity-60">({turnData.ayes})</span>
+                  <ThumbsUp size={36} className="group-hover:scale-110 transition-transform sm:w-12 sm:h-12" />
+                  <span className="text-xl sm:text-2xl font-bold">{t('voting.aye')}</span>
+                  <span className="text-xs sm:text-sm opacity-60">({turnData.ayes})</span>
                 </button>
 
                 <button 
                   onClick={() => submitVote('NAY')}
-                  className="bg-red-900/50 border-2 border-red-500/50 hover:bg-red-900 hover:border-red-400 text-red-100 p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-4 group"
+                  className="bg-red-900/50 border-2 border-red-500/50 hover:bg-red-900 hover:border-red-400 text-red-100 p-4 sm:p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-2 sm:gap-4 group"
                 >
-                  <ThumbsDown size={48} className="group-hover:scale-110 transition-transform" />
-                  <span className="text-2xl font-bold">{t('voting.nay')}</span>
-                  <span className="text-sm opacity-60">({turnData.nays})</span>
+                  <ThumbsDown size={36} className="group-hover:scale-110 transition-transform sm:w-12 sm:h-12" />
+                  <span className="text-xl sm:text-2xl font-bold">{t('voting.nay')}</span>
+                  <span className="text-xs sm:text-sm opacity-60">({turnData.nays})</span>
                 </button>
               </div>
 
@@ -666,18 +743,18 @@ export default function App() {
                    <div className="animate-bounce">
                     {turnData.forfeitType === 'DRINK' ? (
                       <>
-                        <Beer size={80} className="text-[#FFD700] mx-auto mb-4" />
-                        <h2 className="text-5xl font-display font-bold text-[#FFD700] mb-4">{t('result.bottoms')}</h2>
-                        <p className="text-xl text-[#F5F5DC]">
+                        <Beer size={60} className="text-[#FFD700] mx-auto mb-4 sm:w-20 sm:h-20" />
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-[#FFD700] mb-4">{t('result.bottoms')}</h2>
+                        <p className="text-lg sm:text-xl text-[#F5F5DC]">
                           {t('result.drinkMessage')} <br/>
                           <span className="font-bold text-[#FFD700]">{t('result.drinkAction')}</span>
                         </p>
                       </>
                     ) : (
                       <>
-                        <Skull size={80} className="text-purple-400 mx-auto mb-4" />
-                        <h2 className="text-5xl font-display font-bold text-purple-400 mb-4">{t('result.spillTitle')}</h2>
-                        <p className="text-xl text-[#F5F5DC]">
+                        <Skull size={60} className="text-purple-400 mx-auto mb-4 sm:w-20 sm:h-20" />
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-purple-400 mb-4">{t('result.spillTitle')}</h2>
+                        <p className="text-lg sm:text-xl text-[#F5F5DC]">
                           {t('result.spillMessage')} <br/>
                           <span className="font-bold text-[#FFD700]">{t('result.spillAction')}</span>
                         </p>
@@ -686,18 +763,18 @@ export default function App() {
                   </div>
                 ) : turnData.nays > turnData.ayes ? (
                   <div className="animate-bounce">
-                    <Skull size={80} className="text-[#8B0000] mx-auto mb-4" />
-                    <h2 className="text-5xl font-display font-bold text-[#8B0000] mb-4">{t('result.rejected')}</h2>
-                    <p className="text-xl text-[#F5F5DC]">
+                    <Skull size={60} className="text-[#8B0000] mx-auto mb-4 sm:w-20 sm:h-20" />
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-[#8B0000] mb-4">{t('result.rejected')}</h2>
+                    <p className="text-lg sm:text-xl text-[#F5F5DC]">
                       {t('result.rejectedMessage')} <br/>
                       <span className="font-bold text-[#FFD700]">{t('result.rejectedAction')}</span>
                     </p>
                   </div>
                 ) : (
                   <div>
-                    <ThumbsUp size={80} className="text-emerald-500 mx-auto mb-4" />
-                    <h2 className="text-5xl font-display font-bold text-emerald-500 mb-4">{t('result.accepted')}</h2>
-                    <p className="text-xl text-[#F5F5DC]">
+                    <ThumbsUp size={60} className="text-emerald-500 mx-auto mb-4 sm:w-20 sm:h-20" />
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-emerald-500 mb-4">{t('result.accepted')}</h2>
+                    <p className="text-lg sm:text-xl text-[#F5F5DC]">
                       {t('result.acceptedMessage')} <br/>
                       <span className="font-bold text-[#FFD700]">{t('result.acceptedAction')}</span>
                     </p>

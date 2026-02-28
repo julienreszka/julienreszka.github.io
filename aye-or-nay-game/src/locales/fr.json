@@ -101,5 +101,11 @@
     "4": "Relations lointaines (salle de sport, voisins, anciens camarades de classe)",
     "5": "Réseau distant (en ligne, connaissances)",
     "6": "Public/Célébrité (influenceurs, personnes célèbres)"
+  },
+  "reset": {
+    "title": "Réinitialiser le jeu ?",
+    "message": "Êtes-vous sûr de vouloir réinitialiser ? Tous les joueurs et la progression seront perdus.",
+    "cancel": "Annuler",
+    "confirm": "Réinitialiser"
   }
 }

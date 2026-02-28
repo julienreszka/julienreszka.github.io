@@ -101,5 +101,11 @@
     "4": "Loose associates (gym, neighbours, old classmates)",
     "5": "Distant network (online, mutuals)",
     "6": "Public/Celebrity (influencers, famous people)"
+  },
+  "reset": {
+    "title": "Reset Game?",
+    "message": "Are you sure you want to reset? All players and progress will be lost.",
+    "cancel": "Cancel",
+    "confirm": "Reset"
   }
 }

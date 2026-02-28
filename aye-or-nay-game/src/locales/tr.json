@@ -101,5 +101,11 @@
     "4": "Gevşek bağlantılar (spor salonu, komşular, eski sınıf arkadaşları)",
     "5": "Uzak ağ (çevrimiçi, ortak tanıdıklar)",
     "6": "Kamu/Ünlü (influencer'lar, ünlü insanlar)"
+  },
+  "reset": {
+    "title": "Oyunu Sıfırla?",
+    "message": "Sıfırlamak istediğinizden emin misiniz? Tüm oyuncular ve ilerleme kaybolacak.",
+    "cancel": "İptal",
+    "confirm": "Sıfırla"
   }
 }
