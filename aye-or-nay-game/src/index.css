@@ -1,23 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Inter:wght@400;500;600&display=swap");
 @import "tailwindcss";
 
 @theme {
   --font-display: "Cinzel", serif;
   --font-sans: "Inter", sans-serif;
-  
-  --color-pirate-gold: #FFD700;
-  --color-pirate-red: #8B0000;
-  --color-pirate-black: #1a1a1a;
-  --color-pirate-wood: #3E2723;
-  --color-pirate-parchment: #F5F5DC;
+}
+
+:root {
+  /* Dark mode colors (default) */
+  --color-bg-primary: #0a0a0a;
+  --color-bg-secondary: #1a1a1a;
+  --color-bg-card: rgb(26 26 26 / 0.8);
+  --color-text-primary: #f5f5dc;
+  --color-text-secondary: rgb(245 245 220 / 0.6);
+  --color-text-muted: rgb(245 245 220 / 0.3);
+  --color-accent: #ffd700;
+  --color-accent-dark: #3e2723;
+  --color-accent-hover: #ffc107;
+  --color-border: rgb(255 215 0 / 0.2);
+  --color-border-muted: rgb(255 255 255 / 0.1);
+  --color-danger: #8b0000;
+  --color-overlay: rgb(0 0 0 / 0.8);
+  --color-overlay-dark: rgb(0 0 0 / 0.9);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --color-bg-primary: #fef9e7;
+    --color-bg-secondary: #f8f4e6;
+    --color-bg-card: rgb(255 255 255 / 0.95);
+    --color-text-primary: #2c1b17;
+    --color-text-secondary: rgb(44 27 23 / 0.7);
+    --color-text-muted: rgb(44 27 23 / 0.4);
+    --color-accent: #d4a017;
+    --color-accent-dark: #fef9e7;
+    --color-accent-hover: #b8860b;
+    --color-border: rgb(212 160 23 / 0.3);
+    --color-border-muted: rgb(0 0 0 / 0.1);
+    --color-danger: #c41e3a;
+    --color-overlay: rgb(255 255 255 / 0.9);
+    --color-overlay-dark: rgb(255 255 255 / 0.95);
+  }
 }
 
 body {
-  background-color: var(--color-pirate-black);
-  color: var(--color-pirate-parchment);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
   font-family: var(--font-sans);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-display);
 }

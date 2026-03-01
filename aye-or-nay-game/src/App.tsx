@@ -34,11 +34,11 @@ type TurnData = {
 function Button({ onClick, children, className = '', variant = 'primary', disabled = false }: any) {
   const baseStyle = "px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-bold text-base sm:text-lg transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg";
   const variants = {
-    primary: "bg-[#FFD700] text-[#3E2723] hover:bg-[#FFC107]",
-    secondary: "bg-[#3E2723] text-[#FFD700] border-2 border-[#FFD700] hover:bg-[#2c1b17]",
-    danger: "bg-[#8B0000] text-white hover:bg-[#a00000]",
+    primary: "bg-[var(--color-accent)] text-[var(--color-accent-dark)] hover:bg-[var(--color-accent-hover)]",
+    secondary: "bg-[var(--color-accent-dark)] text-[var(--color-accent)] border-2 border-[var(--color-accent)] hover:opacity-90",
+    danger: "bg-[var(--color-danger)] text-white hover:opacity-90",
     success: "bg-emerald-600 text-white hover:bg-emerald-700",
-    ghost: "bg-transparent text-[#F5F5DC] hover:bg-white/10",
+    ghost: "bg-transparent text-[var(--color-text-primary)] hover:bg-[var(--color-border-muted)]",
   };
   
   return (
@@ -54,7 +54,7 @@ function Button({ onClick, children, className = '', variant = 'primary', disabl
 
 function Card({ children, className = '' }: any) {
   return (
-    <div className={`bg-[#1a1a1a]/80 backdrop-blur-sm border border-[#FFD700]/20 rounded-2xl p-4 sm:p-6 shadow-2xl ${className}`}>
+    <div className={`bg-[var(--color-bg-card)] backdrop-blur-sm border border-[var(--color-border)] rounded-2xl p-4 sm:p-6 shadow-2xl ${className}`}>
       {children}
     </div>
   );
@@ -208,33 +208,33 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-svh bg-[url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?q=80&w=2560&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat bg-fixed text-[#F5F5DC] font-sans selection:bg-[#FFD700] selection:text-[#3E2723]">
-      <div className="min-h-svh bg-black/80 backdrop-blur-sm flex flex-col items-center justify-center p-4">
+    <div className="min-h-svh bg-[url('https://images.unsplash.com/photo-1533613220915-609f661a6fe1?q=80&w=2560&auto=format&fit=crop')] bg-cover bg-center bg-no-repeat bg-fixed text-[var(--color-text-primary)] font-sans selection:bg-[var(--color-accent)] selection:text-[var(--color-accent-dark)]">
+      <div className="min-h-svh bg-[var(--color-overlay)] backdrop-blur-sm flex flex-col items-center justify-center p-4">
         
         {/* Language Selector */}
         <div className="fixed top-4 left-4 z-40">
-          <div className="flex gap-1 sm:gap-2 bg-black/60 backdrop-blur px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-[#FFD700]/20">
+          <div className="flex gap-1 sm:gap-2 bg-[var(--color-overlay)] backdrop-blur px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-[var(--color-border)]">
             <button 
               onClick={() => changeLanguage('en')} 
-              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'en' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'en' ? 'bg-[var(--color-accent)] text-[var(--color-accent-dark)] font-bold' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
             >
               EN
             </button>
             <button 
               onClick={() => changeLanguage('fr')} 
-              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'fr' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'fr' ? 'bg-[var(--color-accent)] text-[var(--color-accent-dark)] font-bold' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
             >
               FR
             </button>
             <button 
               onClick={() => changeLanguage('tr')} 
-              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'tr' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'tr' ? 'bg-[var(--color-accent)] text-[var(--color-accent-dark)] font-bold' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
             >
               TR
             </button>
             <button 
               onClick={() => changeLanguage('pl')} 
-              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'pl' ? 'bg-[#FFD700] text-[#3E2723] font-bold' : 'text-[#F5F5DC]/60 hover:text-[#F5F5DC]'}`}
+              className={`px-2 sm:px-3 py-1 text-xs sm:text-sm rounded-md sm:rounded-lg transition-all ${i18n.language === 'pl' ? 'bg-[var(--color-accent)] text-[var(--color-accent-dark)] font-bold' : 'text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]'}`}
             >
               PL
             </button>
@@ -267,12 +267,12 @@ export default function App() {
               className="text-center max-w-md w-full"
             >
               <div className="mb-8 flex justify-center">
-                <Skull size={60} className="text-[#FFD700] sm:w-20 sm:h-20" />
+                <Skull size={60} className="text-[var(--color-accent)] sm:w-20 sm:h-20" />
               </div>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-[#FFD700] mb-4 drop-shadow-lg tracking-wider">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-bold text-[var(--color-accent)] mb-4 drop-shadow-lg tracking-wider">
                 {t('welcome.title')}
               </h1>
-              <p className="text-lg sm:text-xl text-[#F5F5DC]/80 mb-8 font-light">
+              <p className="text-lg sm:text-xl text-[var(--color-text-secondary)] mb-8 font-light">
                 {t('welcome.subtitle')} <br/> {t('welcome.subtitle2')}
               </p>
               <div className="flex flex-col gap-4">
@@ -292,7 +292,7 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-[var(--color-overlay-dark)] backdrop-blur-sm z-50 flex items-center justify-center p-4"
             >
               <motion.div
                 initial={{ scale: 0.9, y: 20 }}
@@ -301,23 +301,23 @@ export default function App() {
                 className="w-full max-w-2xl max-h-[85svh] overflow-y-auto"
               >
                 <Card>
-                  <div className="flex justify-between items-center mb-6 sticky top-0 bg-[#1a1a1a] backdrop-blur py-4 px-4 sm:px-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 border-b border-white/10 z-10">
-                    <h2 className="text-2xl sm:text-3xl font-display text-[#FFD700]">{t('rules.title')}</h2>
-                    <button onClick={() => setIsRulesOpen(false)} className="text-[#F5F5DC]/50 hover:text-white">
+                  <div className="flex justify-between items-center mb-6 sticky top-0 bg-[var(--color-bg-secondary)] backdrop-blur py-4 px-4 sm:px-6 -mx-4 sm:-mx-6 -mt-4 sm:-mt-6 border-b border-[var(--color-border-muted)] z-10">
+                    <h2 className="text-2xl sm:text-3xl font-display text-[var(--color-accent)]">{t('rules.title')}</h2>
+                    <button onClick={() => setIsRulesOpen(false)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]">
                       <X size={24} />
                     </button>
                   </div>
                   
-                  <div className="space-y-6 text-[#F5F5DC]/90 text-base sm:text-lg leading-relaxed">
+                  <div className="space-y-6 text-[var(--color-text-primary)] text-base sm:text-lg leading-relaxed">
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[var(--color-accent)] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <Skull size={20} /> {t('rules.goal.title')}
                       </h3>
                       <p>{t('rules.goal.description')}</p>
                     </section>
 
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[var(--color-accent)] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <Coins size={20} /> {t('rules.roll.title')}
                       </h3>
                       <p className="mb-2">{t('rules.roll.description')}</p>
@@ -336,7 +336,7 @@ export default function App() {
                     </section>
 
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[var(--color-accent)] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <Users size={20} /> {t('rules.reveal.title')}
                       </h3>
                       <p>{t('rules.reveal.description')}</p>
@@ -344,7 +344,7 @@ export default function App() {
                     </section>
 
                     <section>
-                      <h3 className="text-[#FFD700] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
+                      <h3 className="text-[var(--color-accent)] font-bold text-lg sm:text-xl mb-2 flex items-center gap-2">
                         <ThumbsUp size={20} /> {t('rules.vote.title')}
                       </h3>
                       <p>{t('rules.vote.description')}</p>
@@ -352,7 +352,7 @@ export default function App() {
                     </section>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-white/10">
+                  <div className="mt-8 pt-4 border-t border-[var(--color-border-muted)]">
                     <Button onClick={() => setIsRulesOpen(false)} className="w-full">
                       {t('rules.understand')}
                     </Button>
@@ -371,7 +371,7 @@ export default function App() {
               className="w-full max-w-md"
             >
               <Card>
-                <h2 className="text-2xl sm:text-3xl font-display text-[#FFD700] mb-6 text-center">{t('setup.title')}</h2>
+                <h2 className="text-2xl sm:text-3xl font-display text-[var(--color-accent)] mb-6 text-center">{t('setup.title')}</h2>
                 
                 <div className="flex gap-2 mb-6">
                   <input 
@@ -380,7 +380,7 @@ export default function App() {
                     onChange={(e) => setNewPlayerName(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && addPlayer()}
                     placeholder={t('setup.placeholder')}
-                    className="flex-1 bg-black/40 border border-[#FFD700]/30 rounded-xl px-4 py-3 text-[#F5F5DC] placeholder:text-[#F5F5DC]/30 focus:outline-none focus:border-[#FFD700]"
+                    className="flex-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)]"
                   />
                   <Button onClick={addPlayer} variant="secondary" className="px-4">
                     <Plus size={24} />
@@ -389,7 +389,7 @@ export default function App() {
 
                 <div ref={playerListRef} className="space-y-2 mb-8 max-h-60 overflow-y-auto pr-2">
                   {players.map((player) => (
-                    <div key={player.id} className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
+                    <div key={player.id} className="flex justify-between items-center bg-[var(--color-border-muted)] p-3 rounded-lg border border-[var(--color-border-muted)]">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">{player.name}</span>
                         <div className="flex gap-1">
@@ -461,7 +461,7 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-[var(--color-overlay)] backdrop-blur-sm z-50 flex items-center justify-center p-4"
             >
               <motion.div
                 initial={{ scale: 0.9 }}
@@ -471,8 +471,8 @@ export default function App() {
               >
                 <Card>
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl sm:text-2xl font-display text-[#FFD700]">{t('manageCrew.title')}</h2>
-                    <button onClick={() => setIsManagePlayersOpen(false)} className="text-[#F5F5DC]/50 hover:text-white">
+                    <h2 className="text-xl sm:text-2xl font-display text-[var(--color-accent)]">{t('manageCrew.title')}</h2>
+                    <button onClick={() => setIsManagePlayersOpen(false)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]">
                       <X size={24} />
                     </button>
                   </div>
@@ -484,7 +484,7 @@ export default function App() {
                       onChange={(e) => setNewPlayerName(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && addPlayer()}
                       placeholder={t('setup.placeholder')}
-                      className="flex-1 bg-black/40 border border-[#FFD700]/30 rounded-xl px-4 py-3 text-[#F5F5DC] placeholder:text-[#F5F5DC]/30 focus:outline-none focus:border-[#FFD700]"
+                      className="flex-1 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] rounded-xl px-4 py-3 text-[var(--color-text-primary)] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-[var(--color-accent)]"
                     />
                     <Button onClick={addPlayer} variant="secondary" className="px-4">
                       <Plus size={24} />
@@ -493,7 +493,7 @@ export default function App() {
 
                   <div ref={playerListRef} className="space-y-2 mb-6 max-h-60 overflow-y-auto pr-2">
                     {players.map((player) => (
-                      <div key={player.id} className="flex justify-between items-center bg-white/5 p-3 rounded-lg border border-white/5">
+                      <div key={player.id} className="flex justify-between items-center bg-[var(--color-border-muted)] p-3 rounded-lg border border-[var(--color-border-muted)]">
                         <div className="flex items-center gap-2">
                           <span className="font-medium">{player.name}</span>
                           <div className="flex gap-1">
@@ -546,7 +546,7 @@ export default function App() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+              className="fixed inset-0 bg-[var(--color-overlay-dark)] backdrop-blur-sm z-50 flex items-center justify-center p-4"
             >
               <motion.div
                 initial={{ scale: 0.9, y: 20 }}
@@ -556,15 +556,15 @@ export default function App() {
               >
                 <Card>
                   <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl sm:text-2xl font-display text-[#FFD700] flex items-center gap-2">
+                    <h2 className="text-xl sm:text-2xl font-display text-[var(--color-accent)] flex items-center gap-2">
                       <Home size={24} /> {t('reset.title')}
                     </h2>
-                    <button onClick={() => setIsResetConfirmOpen(false)} className="text-[#F5F5DC]/50 hover:text-white">
+                    <button onClick={() => setIsResetConfirmOpen(false)} className="text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]">
                       <X size={24} />
                     </button>
                   </div>
                   
-                  <p className="text-[#F5F5DC]/80 mb-6 text-base sm:text-lg">
+                  <p className="text-[var(--color-text-secondary)] mb-6 text-base sm:text-lg">
                     {t('reset.message')}
                   </p>
                   
@@ -597,10 +597,10 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="text-center"
             >
-              <h3 className="text-xl sm:text-2xl text-[#F5F5DC]/60 mb-2 font-display">{t('turn.yourTurn')}</h3>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FFD700] mb-2 font-display">{currentPlayer?.name}</h2>
+              <h3 className="text-xl sm:text-2xl text-[var(--color-text-secondary)] mb-2 font-display">{t('turn.yourTurn')}</h3>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-accent)] mb-2 font-display">{currentPlayer?.name}</h2>
               
-              <div className="flex justify-center items-center gap-3 mb-8 text-[#F5F5DC]/50 text-sm">
+              <div className="flex justify-center items-center gap-3 mb-8 text-[var(--color-text-muted)] text-sm">
                 {currentPlayer?.reveals > 0 && (
                   <span className="flex items-center gap-1">
                     <ThumbsUp size={14} className="text-emerald-400" /> {currentPlayer.reveals}
@@ -641,9 +641,9 @@ export default function App() {
                  <motion.div 
                    animate={{ rotateY: [0, 1080] }}
                    transition={{ duration: 2, ease: "easeOut" }}
-                   className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-[#FFD700] flex items-center justify-center shadow-[0_0_30px_rgba(255,215,0,0.3)] border-4 border-[#B8860B]"
+                   className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-[var(--color-accent)] flex items-center justify-center shadow-[0_0_30px_rgba(255,215,0,0.3)] border-4 border-[#B8860B]"
                  >
-                   <Coins size={36} className="text-[#3E2723] sm:w-12 sm:h-12" />
+                   <Coins size={36} className="text-[var(--color-accent-dark)] sm:w-12 sm:h-12" />
                  </motion.div>
                  <motion.div 
                    animate={{ rotate: [0, 720], scale: [1, 1.2, 1] }}
@@ -653,7 +653,7 @@ export default function App() {
                    ?
                  </motion.div>
                </div>
-               <h3 className="text-xl sm:text-2xl text-[#FFD700] animate-pulse font-display">{t('turn.deciding')}</h3>
+               <h3 className="text-xl sm:text-2xl text-[var(--color-accent)] animate-pulse font-display">{t('turn.deciding')}</h3>
             </motion.div>
           )}
 
@@ -666,24 +666,24 @@ export default function App() {
               className="w-full max-w-lg text-center"
             >
               <div className="mb-8">
-                <h3 className="text-lg sm:text-xl text-[#F5F5DC]/60 uppercase tracking-widest mb-4">{t('reveal.oracle')}</h3>
+                <h3 className="text-lg sm:text-xl text-[var(--color-text-secondary)] uppercase tracking-widest mb-4">{t('reveal.oracle')}</h3>
                 
                 <div className="flex flex-col gap-6">
-                  <Card className="bg-gradient-to-br from-[#3E2723] to-black border-[#FFD700]/30">
+                  <Card className="bg-gradient-to-br from-[var(--color-accent-dark)] to-[var(--color-bg-primary)] border-[var(--color-border)]">
                     <div className="flex items-center justify-center gap-4 mb-2">
                       {turnData.coin === 'HEAD' ? (
                         <ThumbsUp size={32} className="text-emerald-400" />
                       ) : (
-                        <ThumbsDown size={32} className="text-[#8B0000]" />
+                        <ThumbsDown size={32} className="text-[var(--color-danger)]" />
                       )}
-                      <span className={`text-2xl sm:text-3xl font-bold ${turnData.coin === 'HEAD' ? 'text-emerald-400' : 'text-[#8B0000]'}`}>
+                      <span className={`text-2xl sm:text-3xl font-bold ${turnData.coin === 'HEAD' ? 'text-emerald-400' : 'text-[var(--color-danger)]'}`}>
                         {turnData.coin === 'HEAD' ? t('reveal.friend') : t('reveal.enemy')}
                       </span>
                     </div>
-                    <div className="w-full h-px bg-white/10 my-4" />
+                    <div className="w-full h-px bg-[var(--color-border-muted)] my-4" />
                     <div className="text-center">
-                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#FFD700] block mb-2">{turnData.dice}</span>
-                      <p className="text-base sm:text-lg text-[#F5F5DC] leading-relaxed">
+                      <span className="text-3xl sm:text-4xl md:text-5xl font-bold text-[var(--color-accent)] block mb-2">{turnData.dice}</span>
+                      <p className="text-base sm:text-lg text-[var(--color-text-primary)] leading-relaxed">
                         {t(`degrees.${turnData.dice}`)}
                       </p>
                     </div>
@@ -719,8 +719,8 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="w-full max-w-md text-center"
             >
-              <h2 className="text-2xl sm:text-3xl font-display text-[#FFD700] mb-2">{t('voting.title')}</h2>
-              <p className="text-[#F5F5DC]/60 mb-8">{t('voting.subtitle')}</p>
+              <h2 className="text-2xl sm:text-3xl font-display text-[var(--color-accent)] mb-2">{t('voting.title')}</h2>
+              <p className="text-[var(--color-text-secondary)] mb-8">{t('voting.subtitle')}</p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <button 
@@ -761,47 +761,47 @@ export default function App() {
                    <div className="animate-bounce">
                     {turnData.forfeitType === 'DRINK' ? (
                       <>
-                        <Beer size={60} className="text-[#FFD700] mx-auto mb-4 sm:w-20 sm:h-20" />
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-[#FFD700] mb-4">{t('result.bottoms')}</h2>
-                        <p className="text-lg sm:text-xl text-[#F5F5DC]">
+                        <Beer size={60} className="text-[var(--color-accent)] mx-auto mb-4 sm:w-20 sm:h-20" />
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-[var(--color-accent)] mb-4">{t('result.bottoms')}</h2>
+                        <p className="text-lg sm:text-xl text-[var(--color-text-primary)]">
                           {t('result.drinkMessage')} <br/>
-                          <span className="font-bold text-[#FFD700]">{t('result.drinkAction')}</span>
+                          <span className="font-bold text-[var(--color-accent)]">{t('result.drinkAction')}</span>
                         </p>
                       </>
                     ) : (
                       <>
                         <Skull size={60} className="text-purple-400 mx-auto mb-4 sm:w-20 sm:h-20" />
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-purple-400 mb-4">{t('result.spillTitle')}</h2>
-                        <p className="text-lg sm:text-xl text-[#F5F5DC]">
+                        <p className="text-lg sm:text-xl text-[var(--color-text-primary)]">
                           {t('result.spillMessage')} <br/>
-                          <span className="font-bold text-[#FFD700]">{t('result.spillAction')}</span>
+                          <span className="font-bold text-[var(--color-accent)]">{t('result.spillAction')}</span>
                         </p>
                       </>
                     )}
                   </div>
                 ) : turnData.nays > turnData.ayes ? (
                   <div className="animate-bounce">
-                    <Skull size={60} className="text-[#8B0000] mx-auto mb-4 sm:w-20 sm:h-20" />
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-[#8B0000] mb-4">{t('result.rejected')}</h2>
-                    <p className="text-lg sm:text-xl text-[#F5F5DC]">
+                    <Skull size={60} className="text-[var(--color-danger)] mx-auto mb-4 sm:w-20 sm:h-20" />
+                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-[var(--color-danger)] mb-4">{t('result.rejected')}</h2>
+                    <p className="text-lg sm:text-xl text-[var(--color-text-primary)]">
                       {t('result.rejectedMessage')} <br/>
-                      <span className="font-bold text-[#FFD700]">{t('result.rejectedAction')}</span>
+                      <span className="font-bold text-[var(--color-accent)]">{t('result.rejectedAction')}</span>
                     </p>
                   </div>
                 ) : (
                   <div>
                     <ThumbsUp size={60} className="text-emerald-500 mx-auto mb-4 sm:w-20 sm:h-20" />
                     <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-emerald-500 mb-4">{t('result.accepted')}</h2>
-                    <p className="text-lg sm:text-xl text-[#F5F5DC]">
+                    <p className="text-lg sm:text-xl text-[var(--color-text-primary)]">
                       {t('result.acceptedMessage')} <br/>
-                      <span className="font-bold text-[#FFD700]">{t('result.acceptedAction')}</span>
+                      <span className="font-bold text-[var(--color-accent)]">{t('result.acceptedAction')}</span>
                     </p>
                   </div>
                 )}
               </div>
 
               {!turnData.forfeitType && (
-                <div className="flex justify-center gap-8 text-sm text-[#F5F5DC]/50 mb-8">
+                <div className="flex justify-center gap-8 text-sm text-[var(--color-text-muted)] mb-8">
                   <div>{t('result.ayes')}: {turnData.ayes}</div>
                   <div>{t('result.nays')}: {turnData.nays}</div>
                 </div>
@@ -818,7 +818,7 @@ export default function App() {
         {/* Footer / Status */}
         {phase !== 'WELCOME' && phase !== 'SETUP' && (
           <div className="fixed bottom-4 left-0 right-0 text-center pointer-events-none">
-            <div className="inline-block bg-black/60 backdrop-blur px-4 py-2 rounded-full border border-white/10 text-xs text-[#F5F5DC]/50">
+            <div className="inline-block bg-[var(--color-overlay)] backdrop-blur px-4 py-2 rounded-full border border-[var(--color-border-muted)] text-xs text-[var(--color-text-muted)]">
               {t('footer.roundInProgress')} • {players.length} {t('footer.players')}
             </div>
           </div>
