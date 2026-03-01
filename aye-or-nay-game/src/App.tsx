@@ -725,7 +725,7 @@ export default function App() {
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <button 
                   onClick={() => submitVote('AYE')}
-                  className="bg-emerald-900/50 border-2 border-emerald-500/50 hover:bg-emerald-900 hover:border-emerald-400 text-emerald-100 p-4 sm:p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-2 sm:gap-4 group"
+                  className="bg-[var(--color-vote-aye-bg)] border-2 border-[var(--color-vote-aye-border)] hover:bg-[var(--color-vote-aye-bg-hover)] hover:border-[var(--color-vote-aye-border-hover)] text-[var(--color-vote-aye-text)] p-4 sm:p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-2 sm:gap-4 group"
                 >
                   <ThumbsUp size={36} className="group-hover:scale-110 transition-transform sm:w-12 sm:h-12" />
                   <span className="text-xl sm:text-2xl font-bold">{t('voting.aye')}</span>
@@ -734,7 +734,7 @@ export default function App() {
 
                 <button 
                   onClick={() => submitVote('NAY')}
-                  className="bg-red-900/50 border-2 border-red-500/50 hover:bg-red-900 hover:border-red-400 text-red-100 p-4 sm:p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-2 sm:gap-4 group"
+                  className="bg-[var(--color-vote-nay-bg)] border-2 border-[var(--color-vote-nay-border)] hover:bg-[var(--color-vote-nay-bg-hover)] hover:border-[var(--color-vote-nay-border-hover)] text-[var(--color-vote-nay-text)] p-4 sm:p-8 rounded-2xl transition-all active:scale-95 flex flex-col items-center gap-2 sm:gap-4 group"
                 >
                   <ThumbsDown size={36} className="group-hover:scale-110 transition-transform sm:w-12 sm:h-12" />
                   <span className="text-xl sm:text-2xl font-bold">{t('voting.nay')}</span>

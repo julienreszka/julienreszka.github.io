@@ -22,6 +22,18 @@
   --color-danger: #8b0000;
   --color-overlay: rgb(0 0 0 / 0.8);
   --color-overlay-dark: rgb(0 0 0 / 0.9);
+
+  /* Voting buttons */
+  --color-vote-aye-bg: rgb(6 78 59 / 0.5);
+  --color-vote-aye-border: rgb(16 185 129 / 0.5);
+  --color-vote-aye-text: #d1fae5;
+  --color-vote-aye-bg-hover: rgb(6 78 59 / 1);
+  --color-vote-aye-border-hover: #10b981;
+  --color-vote-nay-bg: rgb(127 29 29 / 0.5);
+  --color-vote-nay-border: rgb(239 68 68 / 0.5);
+  --color-vote-nay-text: #fee2e2;
+  --color-vote-nay-bg-hover: rgb(127 29 29 / 1);
+  --color-vote-nay-border-hover: #ef4444;
 }
 
 @media (prefers-color-scheme: light) {
@@ -40,6 +52,18 @@
     --color-danger: #c41e3a;
     --color-overlay: rgb(255 255 255 / 0.9);
     --color-overlay-dark: rgb(255 255 255 / 0.95);
+
+    /* Voting buttons */
+    --color-vote-aye-bg: rgb(167 243 208 / 0.5);
+    --color-vote-aye-border: rgb(5 150 105 / 0.6);
+    --color-vote-aye-text: #065f46;
+    --color-vote-aye-bg-hover: rgb(167 243 208 / 0.9);
+    --color-vote-aye-border-hover: #059669;
+    --color-vote-nay-bg: rgb(254 202 202 / 0.5);
+    --color-vote-nay-border: rgb(220 38 38 / 0.6);
+    --color-vote-nay-text: #991b1b;
+    --color-vote-nay-bg-hover: rgb(254 202 202 / 0.9);
+    --color-vote-nay-border-hover: #dc2626;
   }
 }
 
