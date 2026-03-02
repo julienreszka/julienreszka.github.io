@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://julienreszka.github.io/character-audit/sitemap.xml
