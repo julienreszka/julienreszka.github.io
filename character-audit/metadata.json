@@ -1,0 +1,5 @@
+{
+  "name": "Character Audit",
+  "description": "An investigative tool that analyzes a person's character based on their public friends, associates, and enemies using AI and Google Search.",
+  "requestFramePermissions": []
+}
