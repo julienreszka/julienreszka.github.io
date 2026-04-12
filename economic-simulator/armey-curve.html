@@ -78,6 +78,68 @@
         font-style: italic;
         font-size: 0.9em;
       }
+
+      .ranking-title {
+        margin-top: 1em;
+      }
+
+      .ranking-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.95em;
+      }
+
+      .ranking-table th,
+      .ranking-table td {
+        padding: 6px 10px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .ranking-header {
+        background: #007bff;
+        color: #fff;
+      }
+
+      .ranking-header small {
+        font-weight: normal;
+      }
+
+      .ranking-row-active {
+        font-weight: bold;
+        background: #e8f0fe;
+      }
+
+      .ranking-note {
+        font-size: 0.8em;
+        color: #666;
+        margin-top: 4px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .help-text {
+          color: #aaa;
+        }
+
+        .ranking-table th,
+        .ranking-table td {
+          border-bottom-color: #444;
+        }
+
+        .ranking-header {
+          background: #1a56c4;
+          color: #f0f0f0;
+        }
+
+        .ranking-row-active {
+          background: #1e2d4a;
+          color: #e0e0e0;
+        }
+
+        .ranking-note {
+          color: #aaa;
+        }
+      }
     </style>
   </head>
 
@@ -325,6 +387,51 @@
           class="results-display"
           aria-live="polite"
         ></div>
+
+        <div id="model-ranking" aria-live="polite">
+          <h3 class="ranking-title">Model Fit Ranking</h3>
+          <table class="ranking-table">
+            <thead>
+              <tr class="ranking-header">
+                <th>#</th>
+                <th>Model</th>
+                <th>R²</th>
+                <th>AIC <small>(lower = better)</small></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Inverse ✓</td>
+                <td>-0.1017</td>
+                <td>57.55</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Exponential</td>
+                <td>-0.8328</td>
+                <td>76.86</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Linear</td>
+                <td>-5.7509</td>
+                <td>121.19</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Quadratic</td>
+                <td>-2251.0430</td>
+                <td>320.72</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class="ranking-note">
+            Metrics computed against real country data once loaded. Parameters
+            for Quadratic/Inverse/Exponential use current β₀ from the form.
+            Linear uses its own defaults. Bold row = currently selected model.
+          </p>
+        </div>
       </section>
 
       <!-- Detailed Explanation -->
@@ -2305,23 +2412,178 @@
         const maxGrowthText =
           typeof maxGrowth === "number" ? maxGrowth.toFixed(2) : "N/A";
 
+        // Compute R² and AIC against actual country data
+        const dataPoints = getCountryDataToShow();
+        let r2Text = "N/A",
+          aicText = "N/A";
+        if (dataPoints.length >= 2) {
+          const predictions = dataPoints.map((c) => {
+            const x = c.spending;
+            if (curveType === "quadratic")
+              return beta0 + beta1 * x + beta2 * x * x;
+            if (curveType === "linear") return beta0 + linearSlope * x;
+            if (curveType === "inverse") return beta0 / (x + 1);
+            if (curveType === "exponential")
+              return beta0 * Math.exp(-expDecay * x);
+          });
+          const actuals = dataPoints.map((c) => c.growth);
+          const meanActual =
+            actuals.reduce((a, b) => a + b, 0) / actuals.length;
+          const ssTot = actuals.reduce((s, y) => s + (y - meanActual) ** 2, 0);
+          const ssRes = actuals.reduce(
+            (s, y, i) => s + (y - predictions[i]) ** 2,
+            0
+          );
+          const r2 = ssTot === 0 ? 0 : 1 - ssRes / ssTot;
+          r2Text = r2.toFixed(4);
+
+          // AIC = n * ln(ssRes/n) + 2k, where k = number of parameters
+          const n = actuals.length;
+          const kMap = { quadratic: 3, linear: 2, inverse: 1, exponential: 2 };
+          const k = kMap[curveType] || 2;
+          const aic = n * Math.log(ssRes / n) + 2 * k;
+          aicText = aic.toFixed(2);
+        }
+
         document.getElementById("optimal-armey").innerHTML = `
                 <strong>Optimal Government Spending:</strong> ${optimalText}% of GDP<br>
                 <strong>Maximum Growth Rate:</strong> ${maxGrowthText}%<br>
-                <em>${
-                  curveType === "quadratic"
-                    ? "This is where government spending maximizes economic growth while minimizing inefficiency."
-                    : curveType === "linear"
-                    ? linearSlope > 0
-                      ? "Linear model: Growth increases continuously with spending."
-                      : linearSlope < 0
-                      ? "Linear model: Growth decreases continuously with spending."
-                      : "Linear model: Growth is constant regardless of spending."
-                    : curveType === "inverse"
-                    ? "Inverse model: Growth declines rapidly at first, then levels off - minimal government is optimal."
-                    : "Exponential decay: Government spending causes exponential decline in growth - zero spending is optimal."
-                }</em>
+                ${
+                  dataPoints.length >= 2
+                    ? `<strong>R²:</strong> ${r2Text} &nbsp;|&nbsp; <strong>AIC:</strong> ${aicText} &nbsp;<em style="font-size:0.85em">(${dataPoints.length} countries; lower AIC = better fit)</em><br>`
+                    : ""
+                }<em>${
+          curveType === "quadratic"
+            ? "This is where government spending maximizes economic growth while minimizing inefficiency."
+            : curveType === "linear"
+            ? linearSlope > 0
+              ? "Linear model: Growth increases continuously with spending."
+              : linearSlope < 0
+              ? "Linear model: Growth decreases continuously with spending."
+              : "Linear model: Growth is constant regardless of spending."
+            : curveType === "inverse"
+            ? "Inverse model: Growth declines rapidly at first, then levels off - minimal government is optimal."
+            : "Exponential decay: Government spending causes exponential decline in growth - zero spending is optimal."
+        }</em>
             `;
+      }
+
+      function computeMetrics(dataPoints, predictFn, k) {
+        if (dataPoints.length < 2) return { r2: null, aic: null };
+        const actuals = dataPoints.map((c) => c.growth);
+        const predictions = dataPoints.map((c) => predictFn(c.spending));
+        const meanActual = actuals.reduce((a, b) => a + b, 0) / actuals.length;
+        const ssTot = actuals.reduce((s, y) => s + (y - meanActual) ** 2, 0);
+        const ssRes = actuals.reduce(
+          (s, y, i) => s + (y - predictions[i]) ** 2,
+          0
+        );
+        const r2 = ssTot === 0 ? 0 : 1 - ssRes / ssTot;
+        const n = actuals.length;
+        const aic = n * Math.log(ssRes / n) + 2 * k;
+        return { r2, aic };
+      }
+
+      function updateModelRankingTable() {
+        const container = document.getElementById("model-ranking");
+        const dataPoints = getCountryDataToShow();
+        if (dataPoints.length < 2) {
+          container.innerHTML = "";
+          return;
+        }
+
+        const beta0q = parseFloat(document.getElementById("beta0-armey").value);
+        const beta1q = parseFloat(document.getElementById("beta1-armey").value);
+        const beta2q = parseFloat(document.getElementById("beta2-armey").value);
+        const beta0l = 16,
+          slopeL =
+            parseFloat(document.getElementById("linear-slope").value) || -0.3;
+        const beta0i = parseFloat(document.getElementById("beta0-armey").value);
+        const beta0e = parseFloat(document.getElementById("beta0-armey").value);
+        const expD =
+          parseFloat(document.getElementById("exp-decay").value) || 0.3;
+
+        const models = [
+          {
+            name: "Quadratic",
+            metrics:
+              !isNaN(beta0q) && !isNaN(beta1q) && !isNaN(beta2q)
+                ? computeMetrics(
+                    dataPoints,
+                    (x) => beta0q + beta1q * x + beta2q * x * x,
+                    3
+                  )
+                : { r2: null, aic: null },
+          },
+          {
+            name: "Linear",
+            metrics:
+              !isNaN(beta0l) && !isNaN(slopeL)
+                ? computeMetrics(dataPoints, (x) => beta0l + slopeL * x, 2)
+                : { r2: null, aic: null },
+          },
+          {
+            name: "Inverse",
+            metrics: !isNaN(beta0i)
+              ? computeMetrics(dataPoints, (x) => beta0i / (x + 1), 1)
+              : { r2: null, aic: null },
+          },
+          {
+            name: "Exponential",
+            metrics:
+              !isNaN(beta0e) && !isNaN(expD)
+                ? computeMetrics(
+                    dataPoints,
+                    (x) => beta0e * Math.exp(-expD * x),
+                    2
+                  )
+                : { r2: null, aic: null },
+          },
+        ];
+
+        // Sort by AIC ascending (lower = better); nulls last
+        models.sort((a, b) => {
+          if (a.metrics.aic === null) return 1;
+          if (b.metrics.aic === null) return -1;
+          return a.metrics.aic - b.metrics.aic;
+        });
+
+        const currentCurve = document.getElementById("curve-type-select").value;
+        const curveNameMap = {
+          quadratic: "Quadratic",
+          linear: "Linear",
+          inverse: "Inverse",
+          exponential: "Exponential",
+        };
+        const activeName = curveNameMap[currentCurve];
+
+        const rows = models
+          .map((m, i) => {
+            const rank = i + 1;
+            const r2Str =
+              m.metrics.r2 !== null ? m.metrics.r2.toFixed(4) : "N/A";
+            const aicStr =
+              m.metrics.aic !== null ? m.metrics.aic.toFixed(2) : "N/A";
+            const isActive = m.name === activeName;
+            const cls = isActive ? ' class="ranking-row-active"' : "";
+            const badge = rank === 1 ? " ✓" : "";
+            return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${aicStr}</td></tr>`;
+          })
+          .join("");
+
+        container.innerHTML = `
+          <h3 class="ranking-title">Model Fit Ranking (${dataPoints.length} countries)</h3>
+          <table class="ranking-table">
+            <thead><tr class="ranking-header">
+              <th>#</th>
+              <th>Model</th>
+              <th>R²</th>
+              <th>AIC <small>(lower = better)</small></th>
+            </tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+          <p class="ranking-note">Parameters for Quadratic/Inverse/Exponential use current β₀ from the form. Linear uses its own defaults. Bold row = currently selected model.</p>
+        `;
       }
 
       function updateArmeySimulation() {
@@ -2356,6 +2618,7 @@
             simulateCurveArmey(beta0, beta1, 0, curveType, 0, 0, expDecay);
           }
         }
+        updateModelRankingTable();
       }
 
       function toggleParameterGroups() {
