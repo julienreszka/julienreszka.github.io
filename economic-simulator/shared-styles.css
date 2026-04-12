@@ -700,6 +700,23 @@ footer h3 {
   .pullquote p {
     color: #aac8ff !important;
   }
+
+  .code-snippet {
+    background: #1e1e1e !important;
+    color: #d4d4d4 !important;
+  }
+}
+
+/* Code snippet blocks (cite + embed) */
+.code-snippet {
+  background: #f4f4f4;
+  color: #1a1a1a;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.85em;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 4px 0 8px;
 }
 
 /* Share quote button */

@@ -276,20 +276,6 @@
           color: #bbb;
         }
 
-        .cite-block {
-          background-color: #1e1e1e !important;
-        }
-
-        .cite-block pre {
-          background-color: #111 !important;
-          color: #ccc !important;
-        }
-
-        .embed-block pre {
-          background-color: #111 !important;
-          color: #ccc !important;
-        }
-
         .anchor-link {
           color: #555 !important;
         }
@@ -2184,11 +2170,11 @@
         <div class="armey-specific cite-block">
           <p style="font-size:0.95em; margin-bottom: 8px">If you reference this analysis or simulator, please cite:</p>
           <h4 style="margin: 12px 0 4px">APA</h4>
-          <pre id="cite-apa" style="background:#f4f4f4; padding: 12px; border-radius:6px; font-size:0.85em; white-space:pre-wrap; word-break:break-word">Reszka, J. (2024). <em>The Armey Curve: Government Spending vs Economic Growth</em> [Interactive simulator]. Retrieved from https://julienreszka.github.io/economic-simulator/armey-curve.html</pre>
+          <pre id="cite-apa" class="code-snippet">Reszka, J. (2024). <em>The Armey Curve: Government Spending vs Economic Growth</em> [Interactive simulator]. Retrieved from https://julienreszka.github.io/economic-simulator/armey-curve.html</pre>
           <button onclick="copyText('cite-apa', this)" style="margin: 4px 0 14px">Copy APA</button>
 
           <h4 style="margin: 12px 0 4px">BibTeX</h4>
-          <pre id="cite-bibtex" style="background:#f4f4f4; padding: 12px; border-radius:6px; font-size:0.85em; white-space:pre-wrap; word-break:break-word">@misc{reszka2024armeycurve,
+          <pre id="cite-bibtex" class="code-snippet">@misc{reszka2024armeycurve,
   author    = {Reszka, Julien},
   title     = {The Armey Curve: Government Spending vs Economic Growth},
   year      = {2024},
@@ -2255,7 +2241,7 @@
         <h2>Embed This Simulator</h2>
         <div class="armey-specific">
           <p style="font-size:0.95em">You can embed the interactive chart on your site. Copy the snippet below:</p>
-          <pre id="embed-snippet" style="background:#f4f4f4; padding:12px; border-radius:6px; font-size:0.85em; white-space:pre-wrap; word-break:break-word">&lt;iframe
+          <pre id="embed-snippet" class="code-snippet">&lt;iframe
   src="https://julienreszka.github.io/economic-simulator/armey-curve.html#armey-section"
   width="100%"
   height="700"
