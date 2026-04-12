@@ -116,6 +116,22 @@
         margin-top: 4px;
       }
 
+      .ranking-glossary {
+        margin-top: 1em;
+        font-size: 0.9em;
+        line-height: 1.6;
+      }
+
+      .ranking-glossary dt {
+        font-weight: bold;
+        margin-top: 0.75em;
+      }
+
+      .ranking-glossary dd {
+        margin-left: 1.2em;
+        color: #444;
+      }
+
       @media (prefers-color-scheme: dark) {
         .help-text {
           color: #aaa;
@@ -138,6 +154,10 @@
 
         .ranking-note {
           color: #aaa;
+        }
+
+        .ranking-glossary dd {
+          color: #bbb;
         }
       }
     </style>
@@ -431,6 +451,31 @@
             for Quadratic/Inverse/Exponential use current β₀ from the form.
             Linear uses its own defaults. Bold row = currently selected model.
           </p>
+          <dl class="ranking-glossary">
+            <dt>R² (R-squared)</dt>
+            <dd>
+              Measures how well the curve explains the variation in growth rates
+              across countries. A perfect fit = 1.0. A score of 0 means the
+              model is no better than just predicting the average growth rate
+              for every country.
+              <strong
+                >Negative values mean the model is actually worse than that
+                baseline</strong
+              >
+              — the curve is a poor predictor on its own. All models here have
+              negative R², which means government spending % alone does not
+              reliably predict growth.
+            </dd>
+            <dt>AIC (Akaike Information Criterion)</dt>
+            <dd>
+              Ranks competing models by balancing how well they fit the data
+              against how many parameters they use (simpler models are
+              rewarded). <strong>Lower AIC = better model.</strong> Unlike R²,
+              AIC is useful for comparing models even when none of them fits
+              well — it tells you which is the <em>least bad</em> option. The
+              Inverse model wins here with AIC 57.55 vs. Quadratic's 320.72.
+            </dd>
+          </dl>
         </div>
       </section>
 
@@ -2583,6 +2628,12 @@
             <tbody>${rows}</tbody>
           </table>
           <p class="ranking-note">Parameters for Quadratic/Inverse/Exponential use current β₀ from the form. Linear uses its own defaults. Bold row = currently selected model.</p>
+          <dl class="ranking-glossary">
+            <dt>R² (R-squared)</dt>
+            <dd>Measures how well the curve explains the variation in growth rates across countries. A perfect fit = 1.0. A score of 0 means the model is no better than just predicting the average growth rate for every country. <strong>Negative values mean the model is actually worse than that baseline</strong> — the curve is a poor predictor on its own. All models here have negative R², which means government spending % alone does not reliably predict growth.</dd>
+            <dt>AIC (Akaike Information Criterion)</dt>
+            <dd>Ranks competing models by balancing how well they fit the data against how many parameters they use (simpler models are rewarded). <strong>Lower AIC = better model.</strong> Unlike R², AIC is useful for comparing models even when none of them fits well — it tells you which is the <em>least bad</em> option. The Inverse model wins here with AIC 57.55 vs. Quadratic's 320.72.</dd>
+          </dl>
         `;
       }
 
