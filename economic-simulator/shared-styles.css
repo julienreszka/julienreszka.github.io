@@ -701,3 +701,32 @@ footer h3 {
     color: #aac8ff !important;
   }
 }
+
+/* Share quote button */
+.share-quote-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 14px;
+  font-size: 0.85em;
+  background: #1565c0;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.share-quote-btn:hover {
+  background: #0d47a1;
+}
+
+@media (prefers-color-scheme: dark) {
+  .share-quote-btn {
+    background: #5c9af5;
+    color: #0a0a0a;
+  }
+
+  .share-quote-btn:hover {
+    background: #82b4f7;
+  }
+}

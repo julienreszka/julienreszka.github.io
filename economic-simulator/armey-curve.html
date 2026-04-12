@@ -275,6 +275,24 @@
         .ranking-glossary dd {
           color: #bbb;
         }
+
+        .cite-block {
+          background-color: #1e1e1e !important;
+        }
+
+        .cite-block pre {
+          background-color: #111 !important;
+          color: #ccc !important;
+        }
+
+        .embed-block pre {
+          background-color: #111 !important;
+          color: #ccc !important;
+        }
+
+        .anchor-link {
+          color: #555 !important;
+        }
       }
     </style>
   </head>
@@ -924,13 +942,20 @@
             genuine harms.
           </p>
 
-          <div class="pullquote">
+      <div class="pullquote" id="selective-brake-quote">
             <p>
               Government spending reliably slows economic activity &mdash; so
               the right use of government is to aim that braking force at the
               parts of the economy we want less of, not the parts that create
               value.
             </p>
+            <button
+              class="share-quote-btn"
+              aria-label="Share this quote on X"
+              onclick="shareQuote()"
+            >
+              Share on X
+            </button>
           </div>
 
           <h3>How the Theory Misled Policymakers</h3>
@@ -2154,6 +2179,26 @@
         </div>
       </section>
 
+      <section id="cite">
+        <h2>Cite This Page</h2>
+        <div class="armey-specific cite-block">
+          <p style="font-size:0.95em; margin-bottom: 8px">If you reference this analysis or simulator, please cite:</p>
+          <h4 style="margin: 12px 0 4px">APA</h4>
+          <pre id="cite-apa" style="background:#f4f4f4; padding: 12px; border-radius:6px; font-size:0.85em; white-space:pre-wrap; word-break:break-word">Reszka, J. (2024). <em>The Armey Curve: Government Spending vs Economic Growth</em> [Interactive simulator]. Retrieved from https://julienreszka.github.io/economic-simulator/armey-curve.html</pre>
+          <button onclick="copyText('cite-apa', this)" style="margin: 4px 0 14px">Copy APA</button>
+
+          <h4 style="margin: 12px 0 4px">BibTeX</h4>
+          <pre id="cite-bibtex" style="background:#f4f4f4; padding: 12px; border-radius:6px; font-size:0.85em; white-space:pre-wrap; word-break:break-word">@misc{reszka2024armeycurve,
+  author    = {Reszka, Julien},
+  title     = {The Armey Curve: Government Spending vs Economic Growth},
+  year      = {2024},
+  url       = {https://julienreszka.github.io/economic-simulator/armey-curve.html},
+  note      = {Interactive simulator. Last modified 2026-04-12}
+}</pre>
+          <button onclick="copyText('cite-bibtex', this)" style="margin: 4px 0 0">Copy BibTeX</button>
+        </div>
+      </section>
+
       <section id="references">
         <div class="armey-specific">
           <ol style="font-size: 0.95em; line-height: 1.8">
@@ -2200,6 +2245,26 @@
               3rd edition. Leipzig.
             </li>
           </ol>
+        </div>
+      </section>
+
+        </div>
+      </section>
+
+      <section id="embed">
+        <h2>Embed This Simulator</h2>
+        <div class="armey-specific">
+          <p style="font-size:0.95em">You can embed the interactive chart on your site. Copy the snippet below:</p>
+          <pre id="embed-snippet" style="background:#f4f4f4; padding:12px; border-radius:6px; font-size:0.85em; white-space:pre-wrap; word-break:break-word">&lt;iframe
+  src="https://julienreszka.github.io/economic-simulator/armey-curve.html#armey-section"
+  width="100%"
+  height="700"
+  frameborder="0"
+  loading="lazy"
+  title="Armey Curve: Government Spending vs Economic Growth"
+&gt;&lt;/iframe&gt;
+&lt;p style="font-size:0.8em"&gt;Source: &lt;a href="https://julienreszka.github.io/economic-simulator/armey-curve.html"&gt;julienreszka.github.io — The Armey Curve&lt;/a&gt;&lt;/p&gt;</pre>
+          <button onclick="copyText('embed-snippet', this)">Copy Embed Code</button>
         </div>
       </section>
 
@@ -2438,6 +2503,53 @@
         </div>
       </section>
     </div>
+
+    <script>
+      // ── Anchor links on headings ──────────────────────────────────────────
+      document.querySelectorAll('h2[id], h3[id]').forEach((heading) => {
+        const a = document.createElement('a');
+        a.href = '#' + heading.id;
+        a.className = 'anchor-link';
+        a.setAttribute('aria-label', 'Link to this section');
+        a.textContent = ' §';
+        a.style.cssText =
+          'text-decoration:none; color:#aaa; font-weight:normal; font-size:0.85em; margin-left:6px; opacity:0; transition:opacity .2s';
+        heading.appendChild(a);
+        heading.addEventListener('mouseenter', () => (a.style.opacity = '1'));
+        heading.addEventListener('mouseleave', () => (a.style.opacity = '0'));
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          history.pushState(null, '', '#' + heading.id);
+          heading.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+
+      // ── Copy-to-clipboard helper ──────────────────────────────────────────
+      function copyText(id, btn) {
+        const text = document.getElementById(id).textContent;
+        navigator.clipboard.writeText(text).then(() => {
+          const orig = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(() => (btn.textContent = orig), 2000);
+        });
+      }
+
+      // ── Share pullquote on X ──────────────────────────────────────────────
+      function shareQuote() {
+        const quote =
+          'Government spending reliably slows economic activity — so the right use of government is to aim that braking force at the parts of the economy we want less of, not the parts that create value.';
+        const url =
+          'https://julienreszka.github.io/economic-simulator/armey-curve.html#selective-brake';
+        window.open(
+          'https://x.com/intent/tweet?text=' +
+            encodeURIComponent('\u201c' + quote + '\u201d') +
+            '&url=' +
+            encodeURIComponent(url),
+          '_blank',
+          'noopener,noreferrer'
+        );
+      }
+    </script>
 
     <script>
       // World Bank API integration
