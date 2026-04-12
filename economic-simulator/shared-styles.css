@@ -494,6 +494,22 @@ footer h3 {
   border: 1px solid #fff8e1;
 }
 
+.pullquote {
+  border-left: 4px solid #1565c0;
+  margin: 28px 0;
+  padding: 16px 24px;
+  background-color: #e8f0fe;
+  border-radius: 0 8px 8px 0;
+}
+
+.pullquote p {
+  margin: 0;
+  font-size: 1.2em;
+  font-style: italic;
+  line-height: 1.6;
+  color: #1a237e;
+}
+
 /* Dark mode styles */
 @media (prefers-color-scheme: dark) {
   body {
@@ -674,5 +690,14 @@ footer h3 {
   .warning-card {
     background-color: #2d2d2d !important;
     border-color: #424242 !important;
+  }
+
+  .pullquote {
+    background-color: #1a2744 !important;
+    border-left-color: #5c9af5 !important;
+  }
+
+  .pullquote p {
+    color: #aac8ff !important;
   }
 }
