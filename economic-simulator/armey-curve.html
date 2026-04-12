@@ -2634,6 +2634,14 @@
           // For exponential decay, optimal is at minimum spending (0%)
           optimal = 0;
           maxGrowth = beta0;
+        } else if (curveType === "power-law") {
+          // For power law, optimal is at minimum spending
+          optimal = 0;
+          maxGrowth = beta0; // approaches infinity as spending→0, but β₀ is the scale
+        } else if (curveType === "log-linear") {
+          // For log-linear, optimal is at minimum spending (0%)
+          optimal = 0;
+          maxGrowth = beta0; // At 0% spending: β₀ - α×ln(1) = β₀
         }
 
         const optimalText =
@@ -2654,6 +2662,10 @@
             if (curveType === "inverse") return beta0 / (x + 1);
             if (curveType === "exponential")
               return beta0 * Math.exp(-expDecay * x);
+            if (curveType === "power-law")
+              return beta0 * Math.pow(Math.max(x, 0.1), -powerLawExponent);
+            if (curveType === "log-linear")
+              return beta0 - logSlope * Math.log(x + 1);
           });
           const actuals = dataPoints.map((c) => c.growth);
           const meanActual =
@@ -2668,7 +2680,14 @@
 
           // AIC = n * ln(ssRes/n) + 2k, where k = number of parameters
           const n = actuals.length;
-          const kMap = { quadratic: 3, linear: 2, inverse: 1, exponential: 2 };
+          const kMap = {
+            quadratic: 3,
+            linear: 2,
+            inverse: 1,
+            exponential: 2,
+            "power-law": 2,
+            "log-linear": 2,
+          };
           const k = kMap[curveType] || 2;
           const aic = n * Math.log(ssRes / n) + 2 * k;
           aicText = aic.toFixed(2);
