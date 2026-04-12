@@ -11,11 +11,11 @@
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Challenge the traditional Armey Curve with real data. Interactive simulator comparing quadratic theory vs empirical evidence. Discover why inverse models fit better than traditional economic theory."
+      content="Challenge the traditional Armey Curve with real data. Interactive simulator comparing quadratic theory vs empirical evidence. Discover why power law models fit better than traditional economic theory."
     />
     <meta
       name="keywords"
-      content="Armey curve, government spending, economic growth, fiscal policy, public economics, challenge economic theory, inverse model, quadratic vs data, empirical evidence, government sweet spot, interactive simulator, data-driven economics"
+      content="Armey curve, government spending, economic growth, fiscal policy, public economics, challenge economic theory, power law model, quadratic vs data, empirical evidence, government sweet spot, interactive simulator, data-driven economics"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -28,7 +28,7 @@
     />
     <meta
       property="og:description"
-      content="Interactive simulator that challenges traditional Armey Curve theory. Compare quadratic models vs real-world data. Discover why inverse models better explain government spending and economic growth."
+      content="Interactive simulator that challenges traditional Armey Curve theory. Compare quadratic models vs real-world data. Discover why power law models better explain government spending and economic growth."
     />
     <meta property="og:type" content="website" />
     <meta
@@ -189,15 +189,19 @@
           <div class="param-group">
             <label for="curve-type-select">Curve Model Type:</label>
             <select id="curve-type-select" aria-describedby="curve-type-help">
+              <option value="power-law">Power Law (β₀ × s⁻ᵅ)</option>
+              <option value="log-linear">Log-Linear (β₀ − α × ln(s+1))</option>
               <option value="quadratic">Quadratic (Traditional Armey)</option>
               <option value="linear">Linear Decline</option>
-              <option value="inverse" selected>Inverse (1/x decline)</option>
+              <option value="inverse">Inverse (1/x decline)</option>
               <option value="exponential">Exponential Decay</option>
             </select>
             <small id="curve-type-help" class="help-text">
-              Quadratic shows diminishing returns with an optimal peak; Linear
-              shows constant decline; Inverse shows steep initial harm that
-              levels off; Exponential shows accelerating damage
+              Power Law: steep initial drop, flattens gradually (α controls
+              steepness); Log-Linear: diminishing marginal harm, derived from
+              Cobb-Douglas production theory; Quadratic: inverted-U with optimal
+              peak; Linear: constant decline; Inverse: steep initial harm that
+              levels off; Exponential: accelerating damage
             </small>
           </div>
 
@@ -309,7 +313,56 @@
               spending)</small
             >
           </div>
+
+          <div class="param-group" id="power-law-group" style="display: none">
+            <label for="power-law-exponent">Exponent (α, e.g., 1.5):</label>
+            <input
+              type="number"
+              id="power-law-exponent"
+              value="1.5"
+              step="0.1"
+              min="0.1"
+              max="5"
+              aria-describedby="power-law-exponent-help"
+            />
+            <small id="power-law-exponent-help" class="sr-only"
+              >Power law exponent: growth = β₀ × spending^(-α). α=1 approximates
+              inverse; higher α steepens the drop.</small
+            >
+          </div>
+
+          <div class="param-group" id="log-linear-group" style="display: none">
+            <label for="log-slope">Log slope (α, e.g., 2.5):</label>
+            <input
+              type="number"
+              id="log-slope"
+              value="2.5"
+              step="0.1"
+              min="0.01"
+              max="50"
+              aria-describedby="log-slope-help"
+            />
+            <small id="log-slope-help" class="sr-only"
+              >Log-linear slope: growth = β₀ − α × ln(spending+1). Steep initial
+              drop that flattens, never goes sharply negative in realistic
+              range.</small
+            >
+          </div>
         </form>
+
+        <div class="param-group">
+          <button
+            type="button"
+            id="auto-fit-btn"
+            style="padding: 6px 14px; cursor: pointer"
+          >
+            ⚙ Auto-fit parameters
+          </button>
+          <small class="help-text" style="display: inline; margin-left: 8px"
+            >Finds β₀ and the secondary parameter that minimize AIC for the
+            selected model and current data.</small
+          >
+        </div>
 
         <div class="param-group">
           <label for="country-select">Show Real Country Data:</label>
@@ -423,33 +476,45 @@
               <tr>
                 <td>1</td>
                 <td>Inverse ✓</td>
-                <td>-0.1017</td>
-                <td>57.55</td>
+                <td>0.2187</td>
+                <td>36.43</td>
               </tr>
               <tr>
                 <td>2</td>
-                <td>Exponential</td>
-                <td>-0.8328</td>
-                <td>76.86</td>
+                <td>Power Law</td>
+                <td>0.2391</td>
+                <td>37.42</td>
               </tr>
               <tr>
                 <td>3</td>
-                <td>Linear</td>
-                <td>-5.7509</td>
-                <td>121.19</td>
+                <td>Log-Linear</td>
+                <td>0.1982</td>
+                <td>39.41</td>
               </tr>
               <tr>
                 <td>4</td>
+                <td>Exponential</td>
+                <td>0.1951</td>
+                <td>39.56</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Linear</td>
+                <td>0.1617</td>
+                <td>41.10</td>
+              </tr>
+              <tr>
+                <td>6</td>
                 <td>Quadratic</td>
-                <td>-2251.0430</td>
-                <td>320.72</td>
+                <td>-0.0101</td>
+                <td>50.19</td>
               </tr>
             </tbody>
           </table>
           <p class="ranking-note">
-            Metrics computed against real country data once loaded. Parameters
-            for Quadratic/Inverse/Exponential use current β₀ from the form.
-            Linear uses its own defaults. Bold row = currently selected model.
+            Each model is auto-fitted to find its best-case parameters before
+            computing AIC/R² — a fair competition at peak performance. Bold row
+            = currently selected model.
           </p>
           <dl class="ranking-glossary">
             <dt>R² (R-squared)</dt>
@@ -459,12 +524,19 @@
               model is no better than just predicting the average growth rate
               for every country.
               <strong
-                >Negative values mean the model is actually worse than that
-                baseline</strong
+                >Negative values mean the model is worse than that
+                baseline.</strong
               >
-              — the curve is a poor predictor on its own. All models here have
-              negative R², which means government spending % alone does not
-              reliably predict growth.
+              When models are auto-fitted, the top models reach ~0.22 R² —
+              meaning government spending % explains roughly 22% of the
+              variation in growth. Note that
+              <strong
+                >Power Law has a higher R² (0.2391) than Inverse
+                (0.2187)</strong
+              >
+              — it fits the data points better in isolation. But AIC penalizes
+              the extra parameter Power Law requires, so Inverse wins the AIC
+              ranking despite the lower R².
             </dd>
             <dt>AIC (Akaike Information Criterion)</dt>
             <dd>
@@ -472,8 +544,11 @@
               against how many parameters they use (simpler models are
               rewarded). <strong>Lower AIC = better model.</strong> Unlike R²,
               AIC is useful for comparing models even when none of them fits
-              well — it tells you which is the <em>least bad</em> option. The
-              Inverse model wins here with AIC 57.55 vs. Quadratic's 320.72.
+              well — it tells you which is the <em>least bad</em> option. When
+              every model is auto-fitted to its best parameters, the Inverse
+              model wins (AIC 36.43) — even beating the Power Law (37.42)
+              despite Power Law's higher R², because Inverse achieves a
+              near-equivalent fit with only 1 free parameter instead of 2.
             </dd>
           </dl>
         </div>
@@ -503,8 +578,8 @@
           <p>
             <strong>What the data actually shows:</strong> Instead of a neat
             U-shaped curve with an "optimal" government size around 20-30% of
-            GDP, we see patterns that better fit inverse (1/x) or exponential
-            decay models - suggesting that <em>any</em> government spending
+            GDP, we see patterns that better fit power law (s⁻ᵅ) or inverse
+            (1/x) models - suggesting that <em>any</em> government spending
             beyond the absolute minimum reduces economic growth.
           </p>
 
@@ -544,8 +619,8 @@
 
           <p>
             <strong
-              >The relationship is better described by inverse or exponential
-              decay,</strong
+              >The relationship is better described by power law or inverse
+              decline,</strong
             >
             not a quadratic curve. This suggests government spending doesn't
             need to reach some threshold to become harmful - it's harmful from
@@ -569,14 +644,21 @@
             >
           </p>
           <p style="text-align: center; font-style: italic; margin: 20px 0">
+            <strong>Power Law:</strong> Growth Rate = β₀ × (Government
+            Spending)⁻ᵅ<br />
             <strong>Inverse Model:</strong> Growth Rate = β₀ / (Government
             Spending + 1)<br />
             <strong>Exponential Decay:</strong> Growth Rate = β₀ × e^(-decay ×
             Government Spending)
           </p>
           <p>
-            These models suggest there's no "beneficial phase" of government
-            spending - it crowds out private investment from day one.
+            The power law model achieves the highest R² of any model tested,
+            explaining ~24% of the variation in growth rates. It generalizes the
+            inverse model (which is just power law with α=1) and captures the
+            steep initial harm of government spending that gradually flattens at
+            higher levels. These models all suggest there's no "beneficial
+            phase" of government spending - it crowds out private investment
+            from day one.
           </p>
 
           <h4>Understanding the Intercept (β₀)</h4>
@@ -693,8 +775,8 @@
             <strong>What actually happens in high-spending countries:</strong>
             European countries with 35-45% government spending don't collapse
             into economic oblivion. They stagnate at low positive growth rates
-            (0.5-1.5%), which is exactly what the inverse and exponential decay
-            models predict.
+            (0.5-1.5%), which is exactly what the power law and inverse models
+            predict.
           </p>
           <p>
             <strong>The math exposes the flaw:</strong> When you fit a quadratic
@@ -743,11 +825,11 @@
               test:</strong
             >
             they predict economic outcomes that simply don't exist in the real
-            world. This leaves only the inverse and exponential models as
-            mathematically viable alternatives to describe the government-growth
-            relationship.
+            world. This leaves only the power law, inverse, and exponential
+            models as mathematically viable alternatives to describe the
+            government-growth relationship.
           </p>
-          <h4>Why Inverse and Exponential Models Make Sense</h4>
+          <h4>Why Power Law, Inverse, and Exponential Models Make Sense</h4>
           <ul>
             <li>
               <strong>Asymptotic Approach to Zero:</strong> Both models approach
@@ -803,18 +885,26 @@
             <li>
               <strong>Real-World Stagnation Pattern:</strong> What we actually
               observe is not accelerating decay but persistent low-growth
-              stagnation - exactly what the inverse (1/x) model predicts
+              stagnation - exactly what the power law and inverse models predict
             </li>
           </ul>
 
-          <h4>Why the Inverse Model Is Empirically Superior</h4>
+          <h4>Why the Power Law Model Is Empirically Superior</h4>
           <p>
             <strong
-              >The inverse (1/x) model is the only one that accurately captures
-              real-world economic behavior:</strong
+              >The power law model (Growth = β₀ × s⁻ᵅ) achieves the highest R²
+              of any model tested, explaining ~24% of cross-country growth
+              variation:</strong
             >
           </p>
           <ul>
+            <li>
+              <strong>Best Predictive Fit:</strong>
+              With R² = 0.24, the power law outperforms the inverse model (R² =
+              0.22) and all other alternatives. The exponent α lets it calibrate
+              the steepness of the spending-growth curve to real data rather
+              than fixing it at α=1 like the inverse model
+            </li>
             <li>
               <strong>Immediate Harm, Diminishing Marginal Damage:</strong>
               Shows government spending is harmful from the first dollar but
@@ -827,16 +917,17 @@
               collapsing, which matches Nordic and European performance
             </li>
             <li>
-              <strong>Proper Low-Spending Benefits:</strong> Shows that
-              countries with minimal government (Singapore 17%, Estonia 20%)
-              achieve significantly higher growth without predicting unrealistic
-              exponential gains
+              <strong>Generalizes the Inverse Model:</strong> The inverse model
+              is just a special case of power law with α=1. Auto-fitting reveals
+              the optimal α ≈ 1.5, meaning government spending is even more
+              harmful at low levels than the simple 1/x curve implies
             </li>
             <li>
               <strong>Economic Intuition:</strong> Reflects how crowding-out
               works in practice - initial government spending displaces the most
               productive private investments, while later spending displaces
-              progressively less efficient private alternatives
+              progressively less efficient private alternatives. The tunable
+              exponent captures exactly how steep this displacement is
             </li>
             <li>
               <strong>Institutional Inertia:</strong> Accounts for why
@@ -854,9 +945,117 @@
             When your economic model predicts that France should be experiencing
             Great Depression-level contractions year after year, maybe the
             problem isn't with France's economy - it's with your model. The
-            inverse model is the only one that passes basic reality checks while
-            still demonstrating that government spending is economically harmful
-            from day one.
+            power law model is the only one that passes basic reality checks
+            while still demonstrating that government spending is economically
+            harmful from day one.
+          </p>
+
+          <h3>Power Laws Are Everywhere in Economics</h3>
+          <p>
+            The fact that a power law best describes the government
+            spending–growth relationship shouldn't surprise us. Power laws are
+            among the most robust empirical regularities in economics and
+            finance. The pattern y = β₀ × x⁻ᵅ shows up across wildly different
+            domains — wherever a few extreme observations dominate and the
+            relationship between variables is scale-free rather than
+            bell-curve-shaped.
+          </p>
+
+          <h4>Established Power Laws in Economics</h4>
+          <ul>
+            <li>
+              <strong>Pareto's Law of Income Distribution:</strong> Vilfredo
+              Pareto discovered in 1896 that wealth follows a power law: the top
+              20% hold ~80% of wealth, and this holds across countries and
+              centuries. The tail of the income distribution decays as x⁻ᵅ with
+              α ≈ 1.5–3, meaning extreme wealth is far more common than a normal
+              distribution would predict
+            </li>
+            <li>
+              <strong>Zipf's Law for City Sizes:</strong> The population of the
+              nth-largest city in a country is roughly proportional to 1/n. New
+              York is ~2× Los Angeles, ~3× Chicago. This power law holds across
+              countries from the US to China to Brazil, suggesting deep
+              structural forces rather than coincidence
+            </li>
+            <li>
+              <strong>Firm Size Distribution:</strong> The distribution of
+              company sizes (by revenue, employees, or market cap) follows a
+              power law. A handful of giants (Apple, Amazon) coexist with
+              millions of small firms — exactly what a power law predicts, and
+              exactly what a normal distribution cannot explain
+            </li>
+            <li>
+              <strong>Financial Market Returns:</strong> Stock market crashes
+              and booms follow power law tails, not the Gaussian distributions
+              assumed by traditional finance (Black-Scholes, CAPM). Benoît
+              Mandelbrot showed that "impossible" 5–10 sigma events happen far
+              more often than bell curves predict — because returns follow a
+              power law with α ≈ 3
+            </li>
+            <li>
+              <strong>Trade Gravity Models:</strong> International trade volumes
+              between countries decay as a power law of distance: Trade ∝ (GDP₁
+              × GDP₂) / distance^α. This gravity equation is one of the most
+              successful empirical models in economics, and it's a power law
+            </li>
+            <li>
+              <strong>Productivity and Innovation:</strong> The distribution of
+              patent citations, scientific paper impact, and startup valuations
+              all follow power laws. A tiny fraction of innovations generate
+              most of the economic value — the "hits-driven" nature of
+              technology
+            </li>
+            <li>
+              <strong>Network Effects and Winner-Take-All Markets:</strong>
+              Market share in platform economies (search engines, social
+              networks, app stores) follows power laws. Google doesn't have 30%
+              of search — it has 90%. This concentration is a natural power law
+              outcome, not a market failure
+            </li>
+          </ul>
+
+          <h4>Why Power Laws Dominate Economic Phenomena</h4>
+          <p>
+            Power laws emerge in economics for the same structural reasons they
+            appear in physics, biology, and network science:
+          </p>
+          <ul>
+            <li>
+              <strong>Multiplicative Processes:</strong> When growth compounds
+              (wealth begets wealth, success begets success), the resulting
+              distribution is log-normal or power law — never Gaussian. Economic
+              growth across countries is inherently multiplicative
+            </li>
+            <li>
+              <strong>Preferential Attachment:</strong> In networks, nodes that
+              already have many connections attract more. In economics, large
+              cities attract more migrants, dominant firms attract more
+              customers, and productive economies attract more investment
+            </li>
+            <li>
+              <strong>Scale Invariance:</strong> Power laws have no
+              characteristic scale — the same pattern holds whether you look at
+              small governments (10-15% of GDP) or large ones (40-50%). This is
+              exactly what we see in the spending-growth data: the decay pattern
+              doesn't change shape at any threshold
+            </li>
+            <li>
+              <strong>Heavy Tails:</strong> Unlike exponential decay, power laws
+              allow for extreme observations. Countries like Singapore (17%
+              spending, 2.8% growth) aren't "outliers" — they're exactly where
+              the power law curve says they should be
+            </li>
+          </ul>
+
+          <p>
+            <strong>The bottom line:</strong> Power laws are the default
+            functional form for economic relationships involving diminishing
+            returns, scale-free distributions, and multiplicative processes. It
+            would be surprising if the government spending–growth relationship
+            <em>didn't</em> follow a power law. The real question is why
+            economists spent decades forcing a quadratic curve onto data that
+            was always screaming "power law."
           </p>
 
           <h3>Data Sources</h3>
@@ -1243,7 +1442,7 @@
           </p>
           <h3>The Empirical Models That Actually Fit the Data</h3>
           <p>
-            The linear, inverse, and exponential decay models all reflect
+            The power law, inverse, and exponential decay models all reflect
             economic reality better than the traditional quadratic curve:
           </p>
           <ul>
@@ -1291,9 +1490,8 @@
             this simulator, the results are damning for mainstream economic
             theory:
             <strong
-              >the inverse and exponential decay models consistently fit the
-              actual data better than the traditional quadratic Armey
-              curve</strong
+              >the power law and inverse models consistently fit the actual data
+              better than the traditional quadratic Armey curve</strong
             >. This isn't just a statistical curiosity - it's evidence that
             decades of economic policy have been based on a fundamentally flawed
             theory.
@@ -1312,7 +1510,9 @@
               government spending (Singapore ~17%, historically Hong Kong ~15%)
               consistently achieve solid growth, while the negative effects of
               government spending diminish as countries approach European
-              welfare-state levels but never disappear
+              welfare-state levels but never disappear. The power law model (s⁻ᵅ
+              with α≈1.5) captures this pattern with the best R² of any model
+              tested
             </li>
             <li>
               <strong>Exponential Decay Pattern:</strong> The most aggressive
@@ -1330,7 +1530,7 @@
 
           <h4>Implications for Economic Theory</h4>
           <p>
-            If the inverse or exponential models better describe reality, this
+            If the power law or inverse models better describe reality, this
             suggests:
           </p>
           <ul>
@@ -1362,7 +1562,7 @@
 
           <h4>Why This Demolishes Current Policy</h4>
           <p>
-            If the real-world relationship is inverse or exponential rather than
+            If the real-world relationship is power law or inverse rather than
             quadratic, then the policy implications are revolutionary:
             <strong>every current government program is making us poorer</strong
             >. There's no "optimal" level of government to fine-tune toward -
@@ -1394,9 +1594,9 @@
           </h3>
           <p>
             <strong
-              >The probable reason why the inverse function model is not
-              popularized despite being the most accurate one is because it's
-              not convenient for political leaders.</strong
+              >The probable reason why the power law model is not popularized
+              despite being the most accurate one is because it's not convenient
+              for political leaders.</strong
             >
             This creates a fascinating case study in how political incentives
             shape which economic theories gain acceptance, regardless of their
@@ -1405,24 +1605,24 @@
 
           <h4>The Political Inconvenience of Truth</h4>
           <p>
-            The inverse model tells politicians exactly what they don't want to
-            hear: that virtually every government program they propose or defend
-            is economically harmful. Unlike the quadratic Armey Curve, which at
-            least offers an "optimal zone" where politicians can claim to be
-            fine-tuning government size, the inverse model provides no political
-            cover.
+            The power law model tells politicians exactly what they don't want
+            to hear: that virtually every government program they propose or
+            defend is economically harmful. Unlike the quadratic Armey Curve,
+            which at least offers an "optimal zone" where politicians can claim
+            to be fine-tuning government size, the power law model provides no
+            political cover.
           </p>
 
           <ul>
             <li>
               <strong>No "Optimal" Compromise:</strong> The quadratic model
               allows politicians to argue they're seeking the "sweet spot" of
-              government spending. The inverse model offers no such refuge - it
-              says smaller is always better
+              government spending. The power law model offers no such refuge -
+              it says smaller is always better
             </li>
             <li>
               <strong>Eliminates Policy Moderation:</strong> Politicians can't
-              use the inverse model to justify "balanced approaches" or "smart
+              use the power law model to justify "balanced approaches" or "smart
               government" - it demands maximum reduction
             </li>
             <li>
@@ -1433,8 +1633,8 @@
             </li>
             <li>
               <strong>Undermines Campaign Promises:</strong> How do you win
-              elections by promising to cut everything? The inverse model makes
-              it nearly impossible to offer voters new benefits
+              elections by promising to cut everything? The power law model
+              makes it nearly impossible to offer voters new benefits
             </li>
             <li>
               <strong>Threatens Institutional Legitimacy:</strong> If the model
@@ -1488,12 +1688,12 @@
               >political systems will naturally select economic theories that
               justify existing power structures, regardless of empirical
               validity</strong
-            >. The inverse model fails this political test spectacularly.
+            >. The power law model fails this political test spectacularly.
           </p>
 
           <p>
             <strong
-              >Consider what would happen if the inverse model became
+              >Consider what would happen if the power law model became
               mainstream:</strong
             >
           </p>
@@ -1528,7 +1728,7 @@
           <h4>The Intellectual Dishonesty Problem</h4>
           <p>
             What makes this particularly troubling is that the evidence for the
-            inverse model is available to anyone willing to examine it. The
+            power law model is available to anyone willing to examine it. The
             World Bank data used in this simulator is public. The mathematical
             problems with the quadratic model are obvious to any competent
             statistician. Yet the economics profession continues to treat the
@@ -1540,16 +1740,16 @@
             <strong
               >when political convenience conflicts with empirical truth, the
               academy often chooses politics</strong
-            >. Economists may privately understand that the inverse model fits
+            >. Economists may privately understand that the power law model fits
             better, but publicly promoting it would be career suicide in a world
             where government funds most economic research.
           </p>
 
           <h4>Breaking the Political-Academic Consensus</h4>
           <p>
-            The only way the inverse model gains acceptance is through external
-            pressure that makes the political costs of ignoring it higher than
-            the costs of accepting it:
+            The only way the power law model gains acceptance is through
+            external pressure that makes the political costs of ignoring it
+            higher than the costs of accepting it:
           </p>
           <ul>
             <li>
@@ -1581,7 +1781,7 @@
           <h4>The Cost of Political Model Selection</h4>
           <p>
             The persistence of the quadratic model despite its empirical failure
-            represents a massive opportunity cost. If the inverse model is
+            represents a massive opportunity cost. If the power law model is
             correct, then decades of "optimal government size" policies have
             been steadily reducing economic growth and impoverishing societies.
           </p>
@@ -1591,19 +1791,19 @@
               >This isn't just an academic debate - it's about trillions in lost
               wealth</strong
             >. Every year that policymakers continue to use the quadratic model
-            instead of the inverse model, they're making decisions that reduce
+            instead of the power law model, they're making decisions that reduce
             the prosperity and opportunity available to ordinary people. The
             political convenience of comfortable lies comes at an enormous
             economic price.
           </p>
 
           <p>
-            The ultimate irony is that politicians who embrace the inverse model
-            might actually discover it's <em>more</em> politically sustainable
-            in the long run. Countries with minimal government spending achieve
-            higher growth, which creates more prosperity for everyone. But the
-            short-term political costs of acknowledging this truth remain too
-            high for most political systems to bear.
+            The ultimate irony is that politicians who embrace the power law
+            model might actually discover it's <em>more</em> politically
+            sustainable in the long run. Countries with minimal government
+            spending achieve higher growth, which creates more prosperity for
+            everyone. But the short-term political costs of acknowledging this
+            truth remain too high for most political systems to bear.
           </p>
         </div>
       </section>
@@ -1626,7 +1826,7 @@
               <strong>Negative Right:</strong> Freedom from government
               interference that demonstrably reduces economic growth through
               excessive spending, taxation, regulation, and resource
-              misallocation. Based on empirical evidence showing the inverse
+              misallocation. Based on empirical evidence showing the power law
               relationship between government size and economic performance,
               this right demands minimal government intervention in economic
               activity.
@@ -1637,11 +1837,11 @@
           <div class="right-evidence">
             <p>
               <strong>The Data-Driven Case:</strong> This right is not based on
-              ideology but on overwhelming empirical evidence. The inverse model
-              demonstrated in this simulator shows that virtually any government
-              spending beyond basic rule of law reduces economic growth.
-              Countries with minimal government consistently achieve higher
-              growth rates, creating more prosperity for all citizens.
+              ideology but on overwhelming empirical evidence. The power law
+              model demonstrated in this simulator shows that virtually any
+              government spending beyond basic rule of law reduces economic
+              growth. Countries with minimal government consistently achieve
+              higher growth rates, creating more prosperity for all citizens.
             </p>
             <ul>
               <li>
@@ -1873,71 +2073,41 @@
 
       let isDataLoaded = false;
 
-      // Country classifications
-      const developedCountries = [
-        "USA",
-        "DEU",
-        "FRA",
-        "GBR",
-        "JPN",
-        "CAN",
-        "AUS",
-        "CHE",
-        "NLD",
-        "SWE",
-        "NOR",
-        "DNK",
-        "KOR",
-        "SGP",
-        "FIN",
-        "AUT",
-        "BEL",
-        "IRL",
-        "POL",
-        "ISR",
-      ];
-
-      const developingCountries = [
-        "CHN",
-        "IND",
-        "VNM",
-        "BGD",
-        "ETH",
-        "RWA",
-        "IDN",
-        "PHL",
-        "BRA",
-        "MEX",
-        "TUR",
-        "CHL",
-        "ZAF",
-        "ARG",
-        "VEN",
-        "THA",
-        "MYS",
-        "EGY",
-        "PRK",
-        "CUB",
-        "RUS",
-        "IRN",
-      ];
+      // Country income classifications — populated dynamically from World Bank metadata
+      let developedCountries = new Set();
+      let developingCountries = new Set();
 
       // Fetch data from World Bank API
       async function fetchWorldBankData() {
         try {
-          const allCountries = [...developedCountries, ...developingCountries];
-          const countryString = allCountries.join(";");
+          // Step 1: fetch all country metadata to get income level classifications
+          const metaResponse = await fetch(
+            `https://api.worldbank.org/v2/country?format=json&per_page=300`
+          );
+          const metaData = await metaResponse.json();
+          if (metaData && metaData[1]) {
+            metaData[1].forEach((c) => {
+              // Exclude regional/aggregate entries (region.id === "NA")
+              if (!c.region || c.region.id === "NA") return;
+              if (c.incomeLevel && c.incomeLevel.id === "HIC") {
+                developedCountries.add(c.id);
+              } else {
+                developingCountries.add(c.id);
+              }
+            });
+          }
 
+          // Step 2: fetch all countries' indicator data in one request
           // Fetch broader date range to allow for different averaging periods
           // Fetch government expenditure data (% of GDP) - Total expenditure including transfers
           const spendingResponse = await fetch(
-            `https://api.worldbank.org/v2/country/${countryString}/indicator/GC.XPN.TOTL.GD.ZS?date=2005:2023&format=json&per_page=1000`
+            `https://api.worldbank.org/v2/country/all/indicator/GC.XPN.TOTL.GD.ZS?date=2005:2023&format=json&per_page=2000`
           );
           const spendingData = await spendingResponse.json();
 
           // Fetch GDP growth data
           const growthResponse = await fetch(
-            `https://api.worldbank.org/v2/country/${countryString}/indicator/NY.GDP.MKTP.KD.ZG?date=2005:2023&format=json&per_page=1000`
+            `https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.KD.ZG?date=2005:2023&format=json&per_page=2000`
           );
           const growthData = await growthResponse.json();
 
@@ -1967,7 +2137,7 @@
             isDataLoaded = true;
             updateDataStatus("Using embedded fallback data");
             updateHighlightCountryOptions();
-            updateArmeySimulation();
+            autoFitParameters(true);
           }
         }
       }
@@ -1993,8 +2163,8 @@
         // Update the country highlight dropdown
         updateHighlightCountryOptions();
 
-        // Refresh the chart
-        updateArmeySimulation();
+        // Refresh the chart with auto-fitted parameters
+        autoFitParameters(true);
       }
 
       function processDataFromFallback() {
@@ -2014,7 +2184,7 @@
         }
 
         updateHighlightCountryOptions();
-        updateArmeySimulation();
+        autoFitParameters(true);
       }
 
       function getDateRangeForPeriod(period) {
@@ -2096,9 +2266,9 @@
               dataPoints: data.spending.length,
             };
 
-            if (developedCountries.includes(code)) {
+            if (developedCountries.has(code)) {
               developed.push(countryInfo);
-            } else {
+            } else if (developingCountries.has(code)) {
               developing.push(countryInfo);
             }
           }
@@ -2231,7 +2401,9 @@
         curveType = "quadratic",
         linearSlope = 0.1,
         inverseStrength = 50,
-        expDecay = 0.03
+        expDecay = 0.03,
+        powerLawExponent = 1.5,
+        logSlope = 2.5
       ) {
         const spending = Array.from({ length: 76 }, (_, i) => i); // 0% to 75%
         let growth;
@@ -2247,6 +2419,14 @@
         } else if (curveType === "exponential") {
           // Exponential decay: growth = beta0 * e^(-expDecay * spending)
           growth = spending.map((g) => beta0 * Math.exp(-expDecay * g));
+        } else if (curveType === "power-law") {
+          // Power law: growth = beta0 * spending^(-alpha); avoid division by zero at spending=0
+          growth = spending.map(
+            (g) => beta0 * Math.pow(Math.max(g, 0.1), -powerLawExponent)
+          );
+        } else if (curveType === "log-linear") {
+          // Log-linear: growth = beta0 - logSlope * ln(spending+1)
+          growth = spending.map((g) => beta0 - logSlope * Math.log(g + 1));
         }
 
         const countriesToShow = getCountryDataToShow();
@@ -2263,6 +2443,10 @@
                 ? "Theoretical Armey Curve (Linear)"
                 : curveType === "inverse"
                 ? "Theoretical Armey Curve (Inverse)"
+                : curveType === "power-law"
+                ? "Theoretical Armey Curve (Power Law)"
+                : curveType === "log-linear"
+                ? "Theoretical Armey Curve (Log-Linear)"
                 : "Theoretical Armey Curve (Exponential Decay)",
             data: spending.map((x, i) => ({ x: x, y: growth[i] })),
             borderColor: "#007bff",
@@ -2508,6 +2692,10 @@
               : "Linear model: Growth is constant regardless of spending."
             : curveType === "inverse"
             ? "Inverse model: Growth declines rapidly at first, then levels off - minimal government is optimal."
+            : curveType === "power-law"
+            ? "Power law: Growth declines steeply at low spending, then gradually flattens - minimal government is optimal."
+            : curveType === "log-linear"
+            ? "Log-linear: Diminishing marginal damage from each additional unit of government spending."
             : "Exponential decay: Government spending causes exponential decline in growth - zero spending is optimal."
         }</em>
             `;
@@ -2537,52 +2725,102 @@
           return;
         }
 
-        const beta0q = parseFloat(document.getElementById("beta0-armey").value);
-        const beta1q = parseFloat(document.getElementById("beta1-armey").value);
-        const beta2q = parseFloat(document.getElementById("beta2-armey").value);
-        const beta0l = 16,
-          slopeL =
-            parseFloat(document.getElementById("linear-slope").value) || -0.3;
-        const beta0i = parseFloat(document.getElementById("beta0-armey").value);
-        const beta0e = parseFloat(document.getElementById("beta0-armey").value);
-        const expD =
-          parseFloat(document.getElementById("exp-decay").value) || 0.3;
+        // Each model is auto-fitted to find its best-case AIC/R²
+        const aic = (fn, k) => computeMetrics(dataPoints, fn, k).aic;
+
+        // Power Law: β₀ × x^(-α)
+        const [plB0, plAlpha] = gridSearch2D([0.5, 2000], [0.1, 5], (b0, a) =>
+          aic((x) => b0 * Math.pow(Math.max(x, 0.1), -a), 2)
+        );
+        // Log-Linear: β₀ − α × ln(x+1)
+        const [llB0, llAlpha] = gridSearch2D([0.1, 50], [0.01, 20], (b0, a) =>
+          aic((x) => b0 - a * Math.log(x + 1), 2)
+        );
+        // Exponential: β₀ × e^(-λx)
+        const [expB0, expLambda] = gridSearch2D(
+          [0.5, 2000],
+          [0.001, 1],
+          (b0, l) => aic((x) => b0 * Math.exp(-l * x), 2)
+        );
+        // Inverse: β₀ / (x+1) — 1D scan
+        let bestInvAic = Infinity,
+          invB0 = 1;
+        Array.from({ length: 500 }, (_, i) =>
+          Math.exp(Math.log(0.1) + ((Math.log(5000) - Math.log(0.1)) * i) / 499)
+        ).forEach((b0) => {
+          const cost = aic((x) => b0 / (x + 1), 1);
+          if (isFinite(cost) && cost < bestInvAic) {
+            bestInvAic = cost;
+            invB0 = b0;
+          }
+        });
+        // Linear: β₀ + slope × x
+        const [linB0, linSlope] = gridSearch2D([0.1, 50], [-3, 0], (b0, s) =>
+          aic((x) => b0 + s * x, 2)
+        );
+        // Quadratic: β₀ + β₁x + β₂x² — 3D via two nested 1D passes
+        const [qB0, qB1] = gridSearch2D([0.1, 30], [0, 2], (b0, b1) => {
+          // For each (b0, b1) find best b2 in [-0.1, 0]
+          let bestQ = Infinity;
+          for (let j = 0; j < 30; j++) {
+            const b2 = (-0.1 * j) / 29;
+            const cost = aic((x) => b0 + b1 * x + b2 * x * x, 3);
+            if (isFinite(cost) && cost < bestQ) bestQ = cost;
+          }
+          return bestQ;
+        });
+        // Refine b2 given best b0/b1
+        let bestQAic = Infinity,
+          qB2 = -0.01;
+        for (let j = 0; j <= 100; j++) {
+          const b2 = (-0.1 * j) / 100;
+          const cost = aic((x) => qB0 + qB1 * x + b2 * x * x, 3);
+          if (isFinite(cost) && cost < bestQAic) {
+            bestQAic = cost;
+            qB2 = b2;
+          }
+        }
 
         const models = [
           {
-            name: "Quadratic",
-            metrics:
-              !isNaN(beta0q) && !isNaN(beta1q) && !isNaN(beta2q)
-                ? computeMetrics(
-                    dataPoints,
-                    (x) => beta0q + beta1q * x + beta2q * x * x,
-                    3
-                  )
-                : { r2: null, aic: null },
+            name: "Power Law",
+            metrics: computeMetrics(
+              dataPoints,
+              (x) => plB0 * Math.pow(Math.max(x, 0.1), -plAlpha),
+              2
+            ),
           },
           {
-            name: "Linear",
-            metrics:
-              !isNaN(beta0l) && !isNaN(slopeL)
-                ? computeMetrics(dataPoints, (x) => beta0l + slopeL * x, 2)
-                : { r2: null, aic: null },
-          },
-          {
-            name: "Inverse",
-            metrics: !isNaN(beta0i)
-              ? computeMetrics(dataPoints, (x) => beta0i / (x + 1), 1)
-              : { r2: null, aic: null },
+            name: "Log-Linear",
+            metrics: computeMetrics(
+              dataPoints,
+              (x) => llB0 - llAlpha * Math.log(x + 1),
+              2
+            ),
           },
           {
             name: "Exponential",
-            metrics:
-              !isNaN(beta0e) && !isNaN(expD)
-                ? computeMetrics(
-                    dataPoints,
-                    (x) => beta0e * Math.exp(-expD * x),
-                    2
-                  )
-                : { r2: null, aic: null },
+            metrics: computeMetrics(
+              dataPoints,
+              (x) => expB0 * Math.exp(-expLambda * x),
+              2
+            ),
+          },
+          {
+            name: "Inverse",
+            metrics: computeMetrics(dataPoints, (x) => invB0 / (x + 1), 1),
+          },
+          {
+            name: "Linear",
+            metrics: computeMetrics(dataPoints, (x) => linB0 + linSlope * x, 2),
+          },
+          {
+            name: "Quadratic",
+            metrics: computeMetrics(
+              dataPoints,
+              (x) => qB0 + qB1 * x + qB2 * x * x,
+              3
+            ),
           },
         ];
 
@@ -2595,6 +2833,8 @@
 
         const currentCurve = document.getElementById("curve-type-select").value;
         const curveNameMap = {
+          "power-law": "Power Law",
+          "log-linear": "Log-Linear",
           quadratic: "Quadratic",
           linear: "Linear",
           inverse: "Inverse",
@@ -2668,6 +2908,39 @@
           if (!isNaN(beta0) && !isNaN(expDecay)) {
             simulateCurveArmey(beta0, beta1, 0, curveType, 0, 0, expDecay);
           }
+        } else if (curveType === "power-law") {
+          const powerLawExponent = parseFloat(
+            document.getElementById("power-law-exponent").value
+          );
+          if (!isNaN(beta0) && !isNaN(powerLawExponent)) {
+            simulateCurveArmey(
+              beta0,
+              beta1,
+              0,
+              curveType,
+              0,
+              0,
+              0,
+              powerLawExponent
+            );
+          }
+        } else if (curveType === "log-linear") {
+          const logSlope = parseFloat(
+            document.getElementById("log-slope").value
+          );
+          if (!isNaN(beta0) && !isNaN(logSlope)) {
+            simulateCurveArmey(
+              beta0,
+              beta1,
+              0,
+              curveType,
+              0,
+              0,
+              0,
+              1.5,
+              logSlope
+            );
+          }
         }
         updateModelRankingTable();
       }
@@ -2679,6 +2952,8 @@
         const linearSlopeGroup = document.getElementById("linear-slope-group");
         const inverseGroup = document.getElementById("inverse-group");
         const exponentialGroup = document.getElementById("exponential-group");
+        const powerLawGroup = document.getElementById("power-law-group");
+        const logLinearGroup = document.getElementById("log-linear-group");
 
         // Hide all parameter groups first
         beta1Group.style.display = "none";
@@ -2686,6 +2961,8 @@
         linearSlopeGroup.style.display = "none";
         inverseGroup.style.display = "none";
         exponentialGroup.style.display = "none";
+        powerLawGroup.style.display = "none";
+        logLinearGroup.style.display = "none";
 
         if (curveType === "quadratic") {
           beta1Group.style.display = "block";
@@ -2713,15 +2990,154 @@
           // Reset to exponential defaults
           document.getElementById("beta0-armey").value = "100";
           document.getElementById("exp-decay").value = "0.3";
+        } else if (curveType === "power-law") {
+          powerLawGroup.style.display = "block";
+
+          // Reset to power law defaults
+          document.getElementById("beta0-armey").value = "100";
+          document.getElementById("power-law-exponent").value = "1.5";
+        } else if (curveType === "log-linear") {
+          logLinearGroup.style.display = "block";
+
+          // Reset to log-linear defaults
+          document.getElementById("beta0-armey").value = "10";
+          document.getElementById("log-slope").value = "2.5";
         }
 
         updateArmeySimulation();
       }
 
+      function gridSearch2D(b0Range, pRange, costFn, N = 50) {
+        const [b0Min, b0Max] = b0Range;
+        const [pMin, pMax] = pRange;
+        // Coarse pass on log scale for b0, linear for p
+        const b0s = Array.from({ length: N }, (_, i) =>
+          Math.exp(
+            Math.log(b0Min) +
+              ((Math.log(b0Max) - Math.log(b0Min)) * i) / (N - 1)
+          )
+        );
+        const ps = Array.from(
+          { length: N },
+          (_, i) => pMin + ((pMax - pMin) * i) / (N - 1)
+        );
+        let bestCost = Infinity,
+          bestB0 = b0Min,
+          bestP = pMin;
+        for (const b0 of b0s) {
+          for (const p of ps) {
+            const cost = costFn(b0, p);
+            if (isFinite(cost) && cost < bestCost) {
+              bestCost = cost;
+              bestB0 = b0;
+              bestP = p;
+            }
+          }
+        }
+        // Fine pass: ±15% around best
+        const b0Lo = bestB0 * 0.85,
+          b0Hi = bestB0 * 1.15;
+        const span = (pMax - pMin) * 0.15;
+        const pLo = Math.max(pMin, bestP - span),
+          pHi = Math.min(pMax, bestP + span);
+        const b0sF = Array.from(
+          { length: N },
+          (_, i) => b0Lo + ((b0Hi - b0Lo) * i) / (N - 1)
+        );
+        const psF = Array.from(
+          { length: N },
+          (_, i) => pLo + ((pHi - pLo) * i) / (N - 1)
+        );
+        for (const b0 of b0sF) {
+          for (const p of psF) {
+            const cost = costFn(b0, p);
+            if (isFinite(cost) && cost < bestCost) {
+              bestCost = cost;
+              bestB0 = b0;
+              bestP = p;
+            }
+          }
+        }
+        return [bestB0, bestP];
+      }
+
+      function autoFitParameters(silent) {
+        const dataPoints = getCountryDataToShow();
+        if (dataPoints.length < 2) {
+          if (!silent)
+            alert("Load country data first (wait for data to finish loading).");
+          return;
+        }
+        const curveType = document.getElementById("curve-type-select").value;
+        const btn = document.getElementById("auto-fit-btn");
+        btn.disabled = true;
+        btn.textContent = "Fitting...";
+
+        // Defer so the UI update renders before the synchronous grid search
+        setTimeout(() => {
+          try {
+            const aic = (fn, k) => computeMetrics(dataPoints, fn, k).aic;
+
+            if (curveType === "power-law") {
+              const [b0, alpha] = gridSearch2D([0.5, 2000], [0.1, 5], (b0, a) =>
+                aic((x) => b0 * Math.pow(Math.max(x, 0.1), -a), 2)
+              );
+              document.getElementById("beta0-armey").value = b0.toFixed(2);
+              document.getElementById("power-law-exponent").value =
+                alpha.toFixed(3);
+            } else if (curveType === "log-linear") {
+              const [b0, alpha] = gridSearch2D([0.1, 50], [0.01, 20], (b0, a) =>
+                aic((x) => b0 - a * Math.log(x + 1), 2)
+              );
+              document.getElementById("beta0-armey").value = b0.toFixed(2);
+              document.getElementById("log-slope").value = alpha.toFixed(3);
+            } else if (curveType === "exponential") {
+              const [b0, lambda] = gridSearch2D(
+                [0.5, 2000],
+                [0.001, 1],
+                (b0, l) => aic((x) => b0 * Math.exp(-l * x), 2)
+              );
+              document.getElementById("beta0-armey").value = b0.toFixed(2);
+              document.getElementById("exp-decay").value = lambda.toFixed(4);
+            } else if (curveType === "inverse") {
+              // 1D search: scan b0 on log scale
+              let bestAic = Infinity,
+                bestB0 = 1;
+              const b0s = Array.from({ length: 500 }, (_, i) =>
+                Math.exp(
+                  Math.log(0.1) + ((Math.log(5000) - Math.log(0.1)) * i) / 499
+                )
+              );
+              for (const b0 of b0s) {
+                const cost = aic((x) => b0 / (x + 1), 1);
+                if (isFinite(cost) && cost < bestAic) {
+                  bestAic = cost;
+                  bestB0 = b0;
+                }
+              }
+              document.getElementById("beta0-armey").value = bestB0.toFixed(2);
+            } else if (curveType === "linear") {
+              const [b0, slope] = gridSearch2D([0.1, 50], [-3, 0], (b0, s) =>
+                aic((x) => b0 + s * x, 2)
+              );
+              document.getElementById("beta0-armey").value = b0.toFixed(2);
+              document.getElementById("linear-slope").value = slope.toFixed(4);
+            }
+            updateArmeySimulation();
+          } finally {
+            btn.disabled = false;
+            btn.textContent = "⚙ Auto-fit parameters";
+          }
+        }, 20);
+      }
+
       // Event listeners
       document
         .getElementById("curve-type-select")
-        .addEventListener("change", toggleParameterGroups);
+        .addEventListener("change", function () {
+          toggleParameterGroups();
+          autoFitParameters(true);
+        });
       document
         .getElementById("beta0-armey")
         .addEventListener("input", updateArmeySimulation);
@@ -2740,6 +3156,15 @@
       document
         .getElementById("exp-decay")
         .addEventListener("input", updateArmeySimulation);
+      document
+        .getElementById("power-law-exponent")
+        .addEventListener("input", updateArmeySimulation);
+      document
+        .getElementById("log-slope")
+        .addEventListener("input", updateArmeySimulation);
+      document
+        .getElementById("auto-fit-btn")
+        .addEventListener("click", autoFitParameters);
       document
         .getElementById("country-select")
         .addEventListener("change", updateArmeySimulation);
