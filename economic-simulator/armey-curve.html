@@ -3424,6 +3424,25 @@
           })
           .join("");
 
+        const r2Values = models.map((m) => m.metrics.r2).filter((v) => v !== null);
+        const bestR2 = r2Values.length ? Math.max(...r2Values) : null;
+        const allNegative = r2Values.length > 0 && r2Values.every((v) => v < 0);
+        const someNegative = r2Values.some((v) => v < 0);
+        let r2Commentary;
+        if (allNegative) {
+          r2Commentary = `<strong>Negative values mean the model is actually worse than that baseline.</strong> All models currently have negative R², meaning government spending % alone does not reliably predict growth with these data and parameters.`;
+        } else if (someNegative) {
+          r2Commentary = `<strong>Negative values mean the model is actually worse than that baseline.</strong> Some models have negative R² — those perform worse than a simple average. The best model here reaches R² = ${bestR2.toFixed(4)}. In cross-country macroeconomics, R² above 0.20 is considered a strong single-variable result — most economic outcomes are shaped by dozens of factors.`;
+        } else {
+          r2Commentary = `The best model here reaches R² = ${bestR2 !== null ? bestR2.toFixed(4) : "N/A"}, meaning it explains ${bestR2 !== null ? Math.round(bestR2 * 100) : "?"}% of the variation in growth rates across countries. In cross-country macroeconomics, R² above 0.20 is considered a strong single-variable result — most economic outcomes are shaped by dozens of factors. <strong>Negative values</strong> (if any appear) would mean a model performs worse than predicting the average for every country.`;
+        }
+
+        const bestAic = models[0];
+        const worstAic = models[models.length - 1];
+        const aicCommentary = bestAic && worstAic && bestAic.metrics.aic !== null && worstAic.metrics.aic !== null
+          ? `The <strong>${bestAic.name}</strong> model wins here with AIC ${bestAic.metrics.aic.toFixed(2)} vs. ${worstAic.name}'s ${worstAic.metrics.aic.toFixed(2)}.`
+          : "";
+
         container.innerHTML = `
           <h3 class="ranking-title">Model Fit Ranking (${dataPoints.length} countries)</h3>
           <table class="ranking-table">
@@ -3438,9 +3457,9 @@
           <p class="ranking-note">Parameters for Quadratic/Inverse/Exponential use current β₀ from the form. Linear uses its own defaults. Bold row = currently selected model.</p>
           <dl class="ranking-glossary">
             <dt>R² (R-squared)</dt>
-            <dd>Measures how well the curve explains the variation in growth rates across countries. A perfect fit = 1.0. A score of 0 means the model is no better than just predicting the average growth rate for every country. <strong>Negative values mean the model is actually worse than that baseline</strong> — the curve is a poor predictor on its own. All models here have negative R², which means government spending % alone does not reliably predict growth.</dd>
+            <dd>Measures how well the curve explains the variation in growth rates across countries. A perfect fit = 1.0. A score of 0 means the model is no better than just predicting the average growth rate for every country. ${r2Commentary}</dd>
             <dt>AIC (Akaike Information Criterion)</dt>
-            <dd>Ranks competing models by balancing how well they fit the data against how many parameters they use (simpler models are rewarded). <strong>Lower AIC = better model.</strong> Unlike R², AIC is useful for comparing models even when none of them fits well — it tells you which is the <em>least bad</em> option. The Inverse model wins here with AIC 57.55 vs. Quadratic's 320.72.</dd>
+            <dd>Ranks competing models by balancing how well they fit the data against how many parameters they use (simpler models are rewarded). <strong>Lower AIC = better model.</strong> Unlike R², AIC is useful for comparing models even when none of them fits well — it tells you which is the <em>least bad</em> option. ${aicCommentary}</dd>
           </dl>
         `;
       }
