@@ -572,7 +572,7 @@
             <option value="7">7 years</option>
             <option value="10">10 years (most reliable)</option>
           </select>
-          <small id="min-years-help" class="help-text">Countries with fewer years of available data are excluded. Higher thresholds improve reliability but reduce coverage — some countries (e.g. France) have no data for this indicator regardless of threshold.</small>
+          <small id="min-years-help" class="help-text">Countries with fewer years of available data are excluded. Higher thresholds improve reliability but reduce coverage.</small>
         </div>
 
         <div class="param-group">
@@ -2709,13 +2709,13 @@
           // Fetch broader date range to allow for different averaging periods
           // Fetch government expenditure data (% of GDP) - Total expenditure including transfers
           const spendingResponse = await fetch(
-            `https://api.worldbank.org/v2/country/all/indicator/GC.XPN.TOTL.GD.ZS?date=2005:2023&format=json&per_page=2000`
+            `https://api.worldbank.org/v2/country/all/indicator/GC.XPN.TOTL.GD.ZS?date=2005:2023&format=json&per_page=10000`
           );
           const spendingData = await spendingResponse.json();
 
           // Fetch GDP growth data
           const growthResponse = await fetch(
-            `https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.KD.ZG?date=2005:2023&format=json&per_page=2000`
+            `https://api.worldbank.org/v2/country/all/indicator/NY.GDP.MKTP.KD.ZG?date=2005:2023&format=json&per_page=10000`
           );
           const growthData = await growthResponse.json();
 
