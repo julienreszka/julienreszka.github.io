@@ -506,6 +506,8 @@
             <option value="all">All Countries</option>
             <option value="developed">Developed Countries</option>
             <option value="developing">Developing Countries</option>
+            <option value="resource">Resource-Dependent Countries</option>
+            <option value="non-resource">Non-Resource Countries</option>
             <option value="none">Hide Country Data</option>
           </select>
           <small id="country-select-help" class="help-text"
@@ -2662,6 +2664,7 @@
       let countryData = {
         developed: [],
         developing: [],
+        resourceDependent: [],
       };
 
       let isDataLoaded = false;
@@ -2842,6 +2845,7 @@
         // Calculate final averages and categorize
         const developed = [];
         const developing = [];
+        const resourceDependent = [];
 
         // Countries excluded due to aid/conflict distortion: their "government
         // spending" as reported by the World Bank includes large foreign military
@@ -2855,6 +2859,39 @@
           "SYR", // Syria — conflict
           "ERI", // Eritrea — data unreliable
           "PRK", // North Korea — no credible data
+        ]);
+
+        // Countries whose growth is heavily driven by natural resource windfalls
+        // (oil, gas, minerals) rather than the government-spending relationship
+        // being modelled. They are kept in the dataset but flagged visually.
+        const resourceDependentCodes = new Set([
+          "AZE", // Azerbaijan — 2005-2008 oil boom (20%+ annual growth)
+          "KWT", // Kuwait — oil
+          "ARE", // UAE — oil/gas
+          "SAU", // Saudi Arabia — oil
+          "QAT", // Qatar — gas
+          "OMN", // Oman — oil
+          "TTO", // Trinidad & Tobago — oil/gas
+          "GNQ", // Equatorial Guinea — oil
+          "GAB", // Gabon — oil
+          "NOR", // Norway — sovereign oil fund distorts fiscal picture
+          "KAZ", // Kazakhstan — oil
+          "TKM", // Turkmenistan — gas
+          "UZB", // Uzbekistan — gas/gold
+          "AGO", // Angola — oil dominant
+          "COG", // Congo Rep. — oil dominant
+          "BHR", // Bahrain — oil/gas
+          "IRQ", // Iraq — oil
+          "LBY", // Libya — oil
+          "VEN", // Venezuela — oil
+          "IRN", // Iran — oil
+          "BOL", // Bolivia — gas
+          "ECU", // Ecuador — oil
+          "PNG", // Papua New Guinea — LNG
+          "MNG", // Mongolia — mining
+          "ZMB", // Zambia — copper
+          "BWA", // Botswana — diamonds
+          "GUY", // Guyana — oil (recent)
         ]);
 
         Object.entries(countryAverages).forEach(([code, data]) => {
@@ -2872,9 +2909,12 @@
               growth: Math.round(avgGrowth * 10) / 10,
               year: dateRange.label,
               dataPoints: data.spending.length,
+              resourceDependent: resourceDependentCodes.has(code),
             };
 
-            if (developedCountries.has(code)) {
+            if (resourceDependentCodes.has(code)) {
+              resourceDependent.push(countryInfo);
+            } else if (developedCountries.has(code)) {
               developed.push(countryInfo);
             } else if (developingCountries.has(code)) {
               developing.push(countryInfo);
@@ -2882,7 +2922,7 @@
           }
         });
 
-        return { developed, developing };
+        return { developed, developing, resourceDependent };
       }
 
       function getFallbackData() {
@@ -2974,6 +3014,7 @@
         const allCountries = [
           ...countryData.developed,
           ...countryData.developing,
+          ...(countryData.resourceDependent || []),
         ];
         allCountries.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -2998,6 +3039,10 @@
         const selection = document.getElementById("country-select").value;
         if (selection === "none") return [];
         if (selection === "all")
+          return [...countryData.developed, ...countryData.developing, ...(countryData.resourceDependent || [])];
+        if (selection === "resource")
+          return countryData.resourceDependent || [];
+        if (selection === "non-resource")
           return [...countryData.developed, ...countryData.developing];
         return countryData[selection] || [];
       }
@@ -3079,7 +3124,7 @@
             (c) => c.name !== highlightCountry
           );
 
-          // Add developed countries (excluding highlighted)
+          // Add developed countries (excluding highlighted and resource-dependent)
           const developedCountries = regularCountries.filter((c) =>
             countryData.developed.includes(c)
           );
@@ -3103,7 +3148,7 @@
             });
           }
 
-          // Add developing countries (excluding highlighted)
+          // Add developing countries (excluding highlighted and resource-dependent)
           const developingCountries = regularCountries.filter((c) =>
             countryData.developing.includes(c)
           );
@@ -3122,6 +3167,32 @@
               borderWidth: 2,
               pointRadius: 6,
               pointHoverRadius: 8,
+              type: "scatter",
+              showLine: false,
+            });
+          }
+
+          // Add resource-dependent countries as a distinct dataset (diamond markers)
+          const resourceCountries = regularCountries.filter((c) =>
+            (countryData.resourceDependent || []).includes(c)
+          );
+          if (resourceCountries.length > 0) {
+            datasets.push({
+              label: "Resource-Dependent Countries ◆",
+              data: resourceCountries.map((c) => ({
+                x: c.spending,
+                y: c.growth,
+                countryName: c.name,
+                year: c.year,
+                dataPoints: c.dataPoints,
+                resourceDependent: true,
+              })),
+              backgroundColor: "rgba(153, 102, 255, 0.75)",
+              borderColor: "#7b2ff7",
+              borderWidth: 2,
+              pointRadius: 7,
+              pointHoverRadius: 9,
+              pointStyle: "rectRot",
               type: "scatter",
               showLine: false,
             });
@@ -3185,7 +3256,7 @@
                   label: function (context) {
                     if (context.dataset.type === "scatter") {
                       const dataPoint = context.dataset.data[context.dataIndex];
-                      return [
+                      const lines = [
                         "Gov Spending: " +
                           context.parsed.x.toFixed(1) +
                           "% of GDP",
@@ -3195,6 +3266,10 @@
                           (dataPoint.dataPoints || "N/A") +
                           " years",
                       ];
+                      if (dataPoint.resourceDependent) {
+                        lines.push("⚠ Resource-dependent economy");
+                      }
+                      return lines;
                     }
                     return "Growth Rate: " + context.parsed.y.toFixed(2) + "%";
                   },
