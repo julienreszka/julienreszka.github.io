@@ -553,6 +553,10 @@
               <input type="checkbox" id="exclude-gdpdistorted" checked style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude GDP-distorted <span style="color:rgba(255,193,7,0.9);">★</span></span>
             </label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+              <input type="checkbox" id="exclude-se-outliers" style="accent-color:rgba(180,100,255,0.9); width:14px; height:14px; cursor:pointer;" />
+              <span>Exclude &plusmn;1 SE outliers <span style="color:rgba(180,100,255,0.9);">&#9632;</span></span>
+            </label>
           </div>
           <small id="country-select-help" class="help-text"
             >Real-world data from
@@ -2775,17 +2779,19 @@
         const currentCurve = document.getElementById('curve-type-select').value;
         const curveNameMap = {
           'power-law': 'Power Law', 'log-linear': 'Log-Linear',
-          quadratic: 'Quadratic', linear: 'Linear',
+          quadratic: 'Quadratic', 'free-quadratic': 'Free Quadratic', linear: 'Linear',
           inverse: 'Inverse', exponential: 'Exponential',
         };
         const activeName = curveNameMap[currentCurve];
         const rows = [
-          ['Rank', 'Model', 'R2', 'AIC', 'Active'],
+          ['Rank', 'Model', 'R2', 'AIC', 'N', 'Coverage_1SE', 'Active'],
           ...sorted.map((m, i) => [
             i + 1,
             m.name,
             m.metrics.r2 !== null ? m.metrics.r2.toFixed(6) : '',
             m.metrics.aic !== null ? m.metrics.aic.toFixed(4) : '',
+            m.metrics.n !== null ? m.metrics.n : '',
+            m.coverage !== null ? m.coverage.toFixed(4) : '',
             m.name === activeName ? 'yes' : 'no',
           ].join(',')),
         ];
@@ -3221,7 +3227,7 @@
         .getContext("2d");
       let chartArmey;
 
-      function getCountryDataToShow() {
+      function getCountryDataToShow(skipSEFilter = false) {
         if (!isDataLoaded) return [];
 
         const selection = document.getElementById("country-select").value;
@@ -3231,6 +3237,7 @@
         const excludeExternal = document.getElementById("exclude-external")?.checked;
         const excludeConflict = document.getElementById("exclude-conflict")?.checked;
         const excludeGdpDistorted = document.getElementById("exclude-gdpdistorted")?.checked;
+        const excludeSE = !skipSEFilter && document.getElementById("exclude-se-outliers")?.checked;
 
         let base;
         if (selection === "all") {
@@ -3250,7 +3257,53 @@
         if (excludeExternal) base = base.filter(c => !c.externallyFunded);
         if (excludeConflict) base = base.filter(c => !c.conflictFragile);
         if (excludeGdpDistorted) base = base.filter(c => !c.gdpDistorted);
+        if (excludeSE) base = base.filter(c => !outlierNames.has(c.name));
         return base;
+      }
+
+      // Module-level set of outlier country names (populated by recomputeOutliers)
+      let outlierNames = new Set();
+
+      function getCurrentPredictFn() {
+        const curveType = document.getElementById("curve-type-select").value;
+        const beta0 = parseFloat(document.getElementById("beta0-armey").value);
+        if (curveType === "power-law") {
+          const alpha = parseFloat(document.getElementById("power-law-exponent").value);
+          return (x) => beta0 * Math.pow(Math.max(x, 0.1), -alpha);
+        } else if (curveType === "log-linear") {
+          const ls = parseFloat(document.getElementById("log-slope").value);
+          return (x) => beta0 - ls * Math.log(x + 1);
+        } else if (curveType === "exponential") {
+          const decay = parseFloat(document.getElementById("exp-decay").value);
+          return (x) => beta0 * Math.exp(-decay * x);
+        } else if (curveType === "inverse") {
+          const a = parseFloat(document.getElementById("inverse-strength").value);
+          return (x) => a + beta0 / Math.max(x, 0.1);
+        } else if (curveType === "linear") {
+          const slope = parseFloat(document.getElementById("linear-slope").value);
+          return (x) => beta0 + slope * x;
+        } else if (curveType === "quadratic") {
+          const b1 = parseFloat(document.getElementById("beta1-armey").value);
+          const b2 = parseFloat(document.getElementById("beta2-armey").value);
+          return (x) => beta0 + b1 * x + b2 * x * x;
+        } else if (curveType === "free-quadratic") {
+          const b1 = parseFloat(document.getElementById("free-quad-b1").value);
+          const b2 = parseFloat(document.getElementById("free-quad-b2").value);
+          return (x) => beta0 + b1 * x + b2 * x * x;
+        }
+        return (x) => beta0 * Math.pow(Math.max(x, 0.1), -1.5); // fallback
+      }
+
+      function recomputeOutliers() {
+        const excludeSE = document.getElementById("exclude-se-outliers")?.checked;
+        if (!excludeSE) { outlierNames = new Set(); return; }
+        const data = getCountryDataToShow(true); // skip SE filter to avoid circularity
+        if (data.length < 3) { outlierNames = new Set(); return; }
+        const predictFn = getCurrentPredictFn();
+        const residuals = data.map(c => c.growth - predictFn(c.spending));
+        const sse = residuals.reduce((s, r) => s + r * r, 0);
+        const se = Math.sqrt(sse / Math.max(data.length - 2, 1));
+        outlierNames = new Set(data.filter((c, i) => Math.abs(residuals[i]) > se).map(c => c.name));
       }
 
       function simulateCurveArmey(
@@ -3842,6 +3895,15 @@
         return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x);
       }
 
+      function computeCoverage(dataPoints, predictFn, k) {
+        const n = dataPoints.length;
+        if (n < 2) return null;
+        const residuals = dataPoints.map(c => c.growth - predictFn(c.spending));
+        const sse = residuals.reduce((s, r) => s + r * r, 0);
+        const se = Math.sqrt(sse / Math.max(n - k, 1));
+        return residuals.filter(r => Math.abs(r) <= se).length / n;
+      }
+
       function updateModelRankingTable() {
         const container = document.getElementById("model-ranking");
         const dataPoints = getCountryDataToShow();
@@ -3914,52 +3976,20 @@
           }
         }
 
-        const models = [
-          {
-            name: "Power Law",
-            metrics: computeMetrics(
-              dataPoints,
-              (x) => plB0 * Math.pow(Math.max(x, 0.1), -plAlpha),
-              2
-            ),
-          },
-          {
-            name: "Log-Linear",
-            metrics: computeMetrics(
-              dataPoints,
-              (x) => llB0 - llAlpha * Math.log(x + 1),
-              2
-            ),
-          },
-          {
-            name: "Exponential",
-            metrics: computeMetrics(
-              dataPoints,
-              (x) => expB0 * Math.exp(-expLambda * x),
-              2
-            ),
-          },
-          {
-            name: "Inverse",
-            metrics: computeMetrics(dataPoints, (x) => invA + invB / Math.max(x, 0.1), 2),
-          },
-          {
-            name: "Linear",
-            metrics: computeMetrics(dataPoints, (x) => linB0 + linSlope * x, 2),
-          },
-          {
-            name: "Quadratic",
-            metrics: computeMetrics(
-              dataPoints,
-              (x) => qB0 + qB1 * x + qB2 * x * x,
-              3
-            ),
-          },
-          {
-            name: "Free Quadratic",
-            metrics: freeQuadMetrics,
-          },
+        const modelDefs = [
+          { name: "Power Law",      predictFn: (x) => plB0 * Math.pow(Math.max(x, 0.1), -plAlpha), k: 2 },
+          { name: "Log-Linear",     predictFn: (x) => llB0 - llAlpha * Math.log(x + 1), k: 2 },
+          { name: "Exponential",    predictFn: (x) => expB0 * Math.exp(-expLambda * x), k: 2 },
+          { name: "Inverse",        predictFn: (x) => invA + invB / Math.max(x, 0.1), k: 2 },
+          { name: "Linear",         predictFn: (x) => linB0 + linSlope * x, k: 2 },
+          { name: "Quadratic",      predictFn: (x) => qB0 + qB1 * x + qB2 * x * x, k: 3 },
+          { name: "Free Quadratic", predictFn: (s) => freeQuadParams[0] + freeQuadParams[1]*s + freeQuadParams[2]*s*s, k: 3 },
         ];
+        const models = modelDefs.map(m => ({
+          name: m.name,
+          metrics: computeMetrics(dataPoints, m.predictFn, m.k),
+          coverage: computeCoverage(dataPoints, m.predictFn, m.k),
+        }));
 
         // Sort by AIC ascending (lower = better); nulls last
         lastRankingModels = models;
@@ -3990,10 +4020,11 @@
               ? (m.metrics.pValue < 0.001 ? "<0.001" : m.metrics.pValue.toFixed(3))
               : "N/A";
             const nStr = m.metrics.n !== null ? m.metrics.n : "N/A";
+            const covStr = m.coverage !== null ? Math.round(m.coverage * 100) + "%" : "N/A";
             const isActive = m.name === activeName;
             const cls = isActive ? ' class="ranking-row-active"' : "";
             const badge = rank === 1 ? " ✓" : "";
-            return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${aicStr}</td><td>${pStr}</td><td>${nStr}</td></tr>`;
+            return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${aicStr}</td><td>${pStr}</td><td>${nStr}</td><td>${covStr}</td></tr>`;
           })
           .join("");
 
@@ -4053,6 +4084,7 @@
               <th>AIC <small>(lower = better)</small></th>
               <th>p-value</th>
               <th>N</th>
+              <th>Coverage <small>(±1 SE)</small></th>
             </tr></thead>
             <tbody>${rows}</tbody>
           </table>
@@ -4066,6 +4098,8 @@
             <dd>The probability of observing a fit this strong (or stronger) by chance alone, assuming government spending has no real effect on growth. <strong>Lower p-value = stronger evidence against the null hypothesis.</strong> A threshold of 0.05 is conventional. The p-value is derived from an F-test: F = (R² / k) / ((1 − R²) / (N − k − 1)), where k is the number of fitted parameters. ${pValueCommentary}</dd>
             <dt>N (Sample size)</dt>
             <dd>The number of countries included in the regression for the current filter and time-period settings. Larger N increases statistical power and makes both R² and p-value estimates more reliable. Excluding resource-dependent or externally-funded countries reduces N and may change all fit metrics — a drop in R² after exclusion means those countries were pulling the curve in a predictable direction. ${nCommentary}</dd>
+            <dt>Coverage (±1 SE)</dt>
+            <dd>The share of countries whose actual growth rate falls within ±1 standard error of the model's prediction. A model with high coverage broadly fits most countries, while a model with low coverage may achieve a good R² by fitting a tight cluster while leaving many countries far from the curve. Unlike R², coverage is not dominated by a few large residuals — it rewards models that are consistently close across the full dataset. A value of ~68% is expected for normally-distributed residuals; values well below that indicate systematic misfits for a subset of countries.</dd>
           </dl>
           <div style="margin-top:10px">
             <button type="button" class="action-btn" onclick="downloadRankingCSV()">⬇ Download model ranking as CSV</button>
@@ -4074,6 +4108,7 @@
       }
 
       function updateArmeySimulation() {
+        recomputeOutliers();
         const curveType = document.getElementById("curve-type-select").value;
         const beta0 = parseFloat(document.getElementById("beta0-armey").value);
         const beta1 = parseFloat(document.getElementById("beta1-armey").value);
@@ -4397,6 +4432,9 @@
         .getElementById("exclude-gdpdistorted")
         .addEventListener("change", updateArmeySimulation);
       document
+        .getElementById("exclude-se-outliers")
+        .addEventListener("change", updateArmeySimulation);
+      document
         .getElementById("highlight-country-select")
         .addEventListener("change", updateArmeySimulation);
       document
@@ -4436,6 +4474,7 @@
         if (document.getElementById('exclude-external').checked) params.set('exext', '1');
         if (document.getElementById('exclude-conflict').checked) params.set('excon', '1');
         if (document.getElementById('exclude-gdpdistorted').checked) params.set('exgdp', '1');
+        if (document.getElementById('exclude-se-outliers').checked) params.set('exse', '1');
         const hl = document.getElementById('highlight-country-select').value;
         if (hl !== 'none') params.set('hl', hl);
         history.replaceState(null, '', '#' + params.toString());
@@ -4454,6 +4493,7 @@
           document.getElementById('exclude-external').checked = params.get('exext') === '1';
           document.getElementById('exclude-conflict').checked = params.get('excon') === '1';
           document.getElementById('exclude-gdpdistorted').checked = params.get('exgdp') === '1';
+          document.getElementById('exclude-se-outliers').checked = params.get('exse') === '1';
         } catch(e) {}
       }
 
