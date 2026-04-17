@@ -517,6 +517,10 @@
               <input type="checkbox" id="exclude-external" checked style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude externally funded <span style="color:rgba(255,140,0,0.9);">▲</span></span>
             </label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+              <input type="checkbox" id="exclude-conflict" checked style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
+              <span>Exclude conflict/fragile states <span style="color:rgba(220,53,69,0.9);">✕</span></span>
+            </label>
           </div>
           <small id="country-select-help" class="help-text"
             >Real-world data from
@@ -2754,7 +2758,8 @@
         const rows = [
           ['Country', 'Income Group', 'Gov Spending (% GDP)', 'Avg GDP Growth (%)', 'Period', 'Years of Data'],
           ...dataPoints.map((c) => {
-            const group = c.externallyFunded ? 'Externally Funded'
+            const group = c.conflictFragile ? 'Conflict/Fragile'
+              : c.externallyFunded ? 'Externally Funded'
               : c.resourceDependent ? 'Resource-Dependent'
               : countryData.developed.includes(c) ? 'Developed'
               : 'Developing';
@@ -2802,6 +2807,7 @@
         developing: [],
         resourceDependent: [],
         externallyFunded: [],
+        conflictFragile: [],
       };
 
       let isDataLoaded = false;
@@ -2985,6 +2991,7 @@
         const developing = [];
         const resourceDependent = [];
         const externallyFunded = [];
+        const conflictFragile = [];
 
         // Countries excluded due to aid/conflict distortion: their "government
         // spending" as reported by the World Bank includes large foreign military
@@ -3043,6 +3050,15 @@
           "TLS", // Timor-Leste — Petroleum Fund withdrawals dominate spending
         ]);
 
+        // Conflict/fragile states: ongoing or recent severe conflict distorts growth figures
+        // independent of fiscal policy (war destruction, sanctions, institutional collapse).
+        const conflictFragileCodes = new Set([
+          "SDN", // Sudan — civil war since 2023, prior coups 2019/2021, sanctions
+          "CAF", // Central African Republic — civil war since 2012, Wagner deployment
+          "UKR", // Ukraine — Donbas 2014, full-scale invasion 2022
+          "MLI", // Mali — Tuareg rebellion, jihadist insurgency, coups 2020 & 2021
+        ]);
+
         Object.entries(countryAverages).forEach(([code, data]) => {
           const minYears = parseInt(document.getElementById("min-years-select")?.value || "3", 10);
           if (excludedCountryCodes.has(code)) return;
@@ -3060,9 +3076,12 @@
               dataPoints: data.spending.length,
               resourceDependent: resourceDependentCodes.has(code),
               externallyFunded: externallyFundedCodes.has(code),
+              conflictFragile: conflictFragileCodes.has(code),
             };
 
-            if (externallyFundedCodes.has(code)) {
+            if (conflictFragileCodes.has(code)) {
+              conflictFragile.push(countryInfo);
+            } else if (externallyFundedCodes.has(code)) {
               externallyFunded.push(countryInfo);
             } else if (resourceDependentCodes.has(code)) {
               resourceDependent.push(countryInfo);
@@ -3074,7 +3093,7 @@
           }
         });
 
-        return { developed, developing, resourceDependent, externallyFunded };
+        return { developed, developing, resourceDependent, externallyFunded, conflictFragile };
       }
 
       function getFallbackData() {
@@ -3108,6 +3127,7 @@
           ...countryData.developing,
           ...(countryData.resourceDependent || []),
           ...(countryData.externallyFunded || []),
+          ...(countryData.conflictFragile || []),
         ];
         allCountries.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -3134,6 +3154,7 @@
 
         const excludeResource = document.getElementById("exclude-resource")?.checked;
         const excludeExternal = document.getElementById("exclude-external")?.checked;
+        const excludeConflict = document.getElementById("exclude-conflict")?.checked;
 
         let base;
         if (selection === "all") {
@@ -3142,6 +3163,7 @@
             ...countryData.developing,
             ...(excludeResource ? [] : (countryData.resourceDependent || [])),
             ...(excludeExternal ? [] : (countryData.externallyFunded || [])),
+            ...(excludeConflict ? [] : (countryData.conflictFragile || [])),
           ];
         } else {
           base = countryData[selection] || [];
@@ -3149,6 +3171,7 @@
 
         if (excludeResource) base = base.filter(c => !c.resourceDependent);
         if (excludeExternal) base = base.filter(c => !c.externallyFunded);
+        if (excludeConflict) base = base.filter(c => !c.conflictFragile);
         return base;
       }
 
@@ -3375,6 +3398,32 @@
             });
           }
 
+          // Add conflict/fragile states as a distinct dataset (cross markers)
+          const conflictCountries = regularCountries.filter((c) =>
+            (countryData.conflictFragile || []).includes(c)
+          );
+          if (conflictCountries.length > 0) {
+            datasets.push({
+              label: "Conflict/Fragile States ✕",
+              data: conflictCountries.map((c) => ({
+                x: c.spending,
+                y: c.growth,
+                countryName: c.name,
+                year: c.year,
+                dataPoints: c.dataPoints,
+                conflictFragile: true,
+              })),
+              backgroundColor: "rgba(220, 53, 69, 0.8)",
+              borderColor: "#a71d2a",
+              borderWidth: 2,
+              pointRadius: 7,
+              pointHoverRadius: 9,
+              pointStyle: "crossRot",
+              type: "scatter",
+              showLine: false,
+            });
+          }
+
           // Add highlighted country as a separate dataset with red styling
           if (highlightedCountryData) {
             datasets.push({
@@ -3457,6 +3506,9 @@
                       }
                       if (dataPoint.externallyFunded) {
                         lines.push("⚠ Spending largely externally funded (aid/compact/sovereign fund)");
+                      }
+                      if (dataPoint.conflictFragile) {
+                        lines.push("⚠ Conflict/fragile state — growth distorted by war or institutional collapse");
                       }
                       if (dataPoint.countryName === 'Ireland') {
                         lines.push("⚠ GDP inflated by multinational profit-shifting (Modified GNI ~40% lower)");
@@ -4196,6 +4248,9 @@
         .getElementById("exclude-external")
         .addEventListener("change", updateArmeySimulation);
       document
+        .getElementById("exclude-conflict")
+        .addEventListener("change", updateArmeySimulation);
+      document
         .getElementById("highlight-country-select")
         .addEventListener("change", updateArmeySimulation);
       document
@@ -4233,6 +4288,7 @@
         params.set('minyears', document.getElementById('min-years-select').value);
         if (document.getElementById('exclude-resource').checked) params.set('exres', '1');
         if (document.getElementById('exclude-external').checked) params.set('exext', '1');
+        if (document.getElementById('exclude-conflict').checked) params.set('excon', '1');
         const hl = document.getElementById('highlight-country-select').value;
         if (hl !== 'none') params.set('hl', hl);
         history.replaceState(null, '', '#' + params.toString());
@@ -4249,6 +4305,7 @@
           if (params.has('minyears')) document.getElementById('min-years-select').value = params.get('minyears');
           document.getElementById('exclude-resource').checked = params.get('exres') === '1';
           document.getElementById('exclude-external').checked = params.get('exext') === '1';
+          document.getElementById('exclude-conflict').checked = params.get('excon') === '1';
         } catch(e) {}
       }
 
