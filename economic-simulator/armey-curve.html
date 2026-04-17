@@ -494,14 +494,6 @@
           >
             ⚙ Auto-fit parameters
           </button>
-          <button
-            type="button"
-            id="download-csv-btn"
-            style="padding: 6px 14px; cursor: pointer; margin-left: 8px"
-            onclick="downloadCSV()"
-          >
-            ⬇ Download data as CSV
-          </button>
           <small class="help-text" style="display: inline; margin-left: 8px"
             >Finds β₀ and the secondary parameter that minimize AIC for the
             selected model and current data.</small
@@ -604,6 +596,18 @@
           class="results-display"
           aria-live="polite"
         ></div>
+
+        <div style="margin: 6px 0 12px">
+          <button
+            type="button"
+            id="download-csv-btn"
+            style="padding: 6px 14px; cursor: pointer"
+            onclick="downloadCSV()"
+          >
+            ⬇ Download data as CSV
+          </button>
+          <small class="help-text" style="display: inline; margin-left: 8px">Downloads the currently visible country data as a CSV file.</small>
+        </div>
 
         <div id="model-ranking" aria-live="polite">
           <h3 class="ranking-title">Model Fit Ranking</h3>
