@@ -32,7 +32,7 @@
     />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-01-01T00:00:00Z" />
-    <meta property="article:modified_time" content="2026-04-12T00:00:00Z" />
+    <meta property="article:modified_time" content="2026-04-17T00:00:00Z" />
     <meta property="article:author" content="Julien Reszka" />
     <meta property="article:section" content="Economics" />
     <meta
@@ -579,6 +579,7 @@
             <option value="5">5 years</option>
             <option value="7">7 years</option>
           </select>
+          <span id="country-count-display" style="margin-left:10px; font-size:0.85em; color:rgba(255,255,255,0.6);"></span>
           <small id="min-years-help" class="help-text">Countries with fewer years of available data are excluded. Higher thresholds improve reliability but reduce coverage.</small>
         </div>
 
@@ -650,6 +651,8 @@
                 <th>Model</th>
                 <th>R²</th>
                 <th>AIC <small>(lower = better)</small></th>
+                <th>p-value</th>
+                <th>N</th>
               </tr>
             </thead>
             <tbody>
@@ -658,36 +661,48 @@
                 <td>Power Law ✓</td>
                 <td>0.2717</td>
                 <td>121.35</td>
+                <td>&lt;0.001</td>
+                <td>128</td>
               </tr>
               <tr>
                 <td>2</td>
                 <td>Log-Linear</td>
                 <td>0.2683</td>
                 <td>121.94</td>
+                <td>&lt;0.001</td>
+                <td>128</td>
               </tr>
               <tr>
                 <td>3</td>
                 <td>Exponential</td>
                 <td>0.2677</td>
                 <td>122.05</td>
+                <td>&lt;0.001</td>
+                <td>128</td>
               </tr>
               <tr>
                 <td>4</td>
                 <td>Inverse</td>
                 <td>0.2180</td>
                 <td>128.46</td>
+                <td>&lt;0.001</td>
+                <td>128</td>
               </tr>
               <tr>
                 <td>5</td>
                 <td>Linear</td>
                 <td>0.2129</td>
                 <td>131.28</td>
+                <td>&lt;0.001</td>
+                <td>128</td>
               </tr>
               <tr>
                 <td>6</td>
                 <td>Quadratic</td>
                 <td>~0.0000</td>
                 <td>163.93</td>
+                <td>~1.000</td>
+                <td>128</td>
               </tr>
             </tbody>
           </table>
@@ -726,6 +741,28 @@
               0.2717). Log-Linear and Exponential are close behind. Quadratic
               (AIC 163.93) performs worst — consistent with the Armey Curve
               theory having no empirical support in this dataset.
+            </dd>
+            <dt>p-value</dt>
+            <dd>
+              The probability of observing a fit this strong (or stronger) by
+              chance alone, assuming government spending has no real effect on
+              growth. <strong>Lower p-value = stronger evidence against the
+              null hypothesis.</strong> A threshold of 0.05 is conventional; all
+              models except Quadratic show p&nbsp;&lt;&nbsp;0.001, meaning there
+              is less than a 1-in-1000 chance the observed relationship is a
+              statistical accident. The p-value is derived from an F-test on the
+              regression: F = (R² / k) / ((1 − R²) / (N − k − 1)), where k is
+              the number of fitted parameters.
+            </dd>
+            <dt>N (Sample size)</dt>
+            <dd>
+              The number of countries included in the regression for the current
+              filter and time-period settings. Larger N increases statistical
+              power and makes both R² and p-value estimates more reliable.
+              Excluding resource-dependent or externally-funded countries reduces
+              N and may change all fit metrics — a drop in R² after exclusion
+              means those countries were pulling the curve in a predictable
+              direction.
             </dd>
           </dl>
         </div>
@@ -3155,8 +3192,37 @@
           "highlight-country-select"
         )?.value;
 
-        const datasets = [
-          {
+        // Compute confidence band from current data points
+        const dataPointsForBand = getCountryDataToShow();
+        let upperBand = null, lowerBand = null;
+        if (dataPointsForBand.length >= 4) {
+          const residuals = dataPointsForBand.map(c => c.growth - growth[Math.round(c.spending)]);
+          const sse = residuals.reduce((s, r) => s + r * r, 0);
+          const se = Math.sqrt(sse / Math.max(dataPointsForBand.length - 2, 1));
+          upperBand = spending.map((x, i) => ({ x, y: growth[i] + se }));
+          lowerBand = spending.map((x, i) => ({ x, y: growth[i] - se }));
+        }
+
+        const datasets = [];
+
+        // Upper confidence band (hidden label)
+        if (upperBand) {
+          datasets.push({
+            label: "+1 SE",
+            data: upperBand,
+            borderColor: "rgba(0,123,255,0.15)",
+            backgroundColor: "rgba(0,123,255,0.08)",
+            borderWidth: 1,
+            borderDash: [4, 4],
+            fill: '+1',
+            tension: 0,
+            type: "line",
+            pointRadius: 0,
+            order: 3,
+          });
+        }
+
+        datasets.push({
             label:
               curveType === "quadratic"
                 ? "Theoretical Armey Curve (Quadratic)"
@@ -3173,12 +3239,29 @@
             borderColor: "#007bff",
             backgroundColor: "rgba(0, 123, 255, 0.1)",
             borderWidth: 3,
-            fill: true,
+            fill: upperBand ? false : true,
             tension: curveType === "quadratic" ? 0.4 : 0,
             type: "line",
             pointRadius: 0,
-          },
-        ];
+            order: 2,
+          });
+
+        // Lower confidence band
+        if (lowerBand) {
+          datasets.push({
+            label: "-1 SE",
+            data: lowerBand,
+            borderColor: "rgba(0,123,255,0.15)",
+            backgroundColor: "rgba(0,123,255,0.08)",
+            borderWidth: 1,
+            borderDash: [4, 4],
+            fill: '-1',
+            tension: 0,
+            type: "line",
+            pointRadius: 0,
+            order: 3,
+          });
+        }
 
         if (countriesToShow.length > 0) {
           // Filter out the highlighted country from regular datasets
@@ -3366,6 +3449,9 @@
                       if (dataPoint.externallyFunded) {
                         lines.push("⚠ Spending largely externally funded (aid/compact/sovereign fund)");
                       }
+                      if (dataPoint.countryName === 'Ireland') {
+                        lines.push("⚠ GDP inflated by multinational profit-shifting (Modified GNI ~40% lower)");
+                      }
                       return lines;
                     }
                     return "Growth Rate: " + context.parsed.y.toFixed(2) + "%";
@@ -3508,7 +3594,7 @@
       }
 
       function computeMetrics(dataPoints, predictFn, k) {
-        if (dataPoints.length < 2) return { r2: null, aic: null };
+        if (dataPoints.length < 2) return { r2: null, aic: null, pValue: null, n: dataPoints.length };
         const actuals = dataPoints.map((c) => c.growth);
         const predictions = dataPoints.map((c) => predictFn(c.spending));
         const meanActual = actuals.reduce((a, b) => a + b, 0) / actuals.length;
@@ -3520,7 +3606,68 @@
         const r2 = ssTot === 0 ? 0 : 1 - ssRes / ssTot;
         const n = actuals.length;
         const aic = n * Math.log(ssRes / n) + 2 * k;
-        return { r2, aic };
+        // F-statistic p-value approximation (1 df numerator vs n-k-1 df denominator)
+        const dfModel = k - 1 || 1;
+        const dfRes = n - k;
+        let pValue = null;
+        if (dfRes > 0 && ssRes > 0 && ssTot > ssRes) {
+          const ssModel = ssTot - ssRes;
+          const fStat = (ssModel / dfModel) / (ssRes / dfRes);
+          // Approximation: p ≈ exp(-0.717 * f - 0.416) for large F (Fisher 1-df heuristic)
+          // Use beta incomplete function approximation via regularized incomplete beta
+          pValue = fStatToP(fStat, dfModel, dfRes);
+        } else if (dfRes > 0 && ssRes >= ssTot) {
+          pValue = 1.0;
+        }
+        return { r2, aic, pValue, n };
+      }
+
+      // Regularized incomplete beta for F p-value (Abramowitz & Stegun approximation)
+      function fStatToP(f, d1, d2) {
+        const x = d2 / (d2 + d1 * f);
+        return incompleteBeta(x, d2 / 2, d1 / 2);
+      }
+
+      function incompleteBeta(x, a, b) {
+        // Continued fraction approximation (Lentz method)
+        if (x <= 0) return 0;
+        if (x >= 1) return 1;
+        const lbeta = lgamma(a + b) - lgamma(a) - lgamma(b);
+        const front = Math.exp(Math.log(x) * a + Math.log(1 - x) * b - lbeta) / a;
+        return front * betaCF(x, a, b);
+      }
+
+      function betaCF(x, a, b) {
+        const MAXIT = 100, EPS = 3e-7;
+        let qab = a + b, qap = a + 1, qam = a - 1;
+        let c = 1, d = 1 - qab * x / qap;
+        if (Math.abs(d) < 1e-30) d = 1e-30;
+        d = 1 / d; let h = d;
+        for (let m = 1; m <= MAXIT; m++) {
+          let m2 = 2 * m;
+          let aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+          d = 1 + aa * d; if (Math.abs(d) < 1e-30) d = 1e-30;
+          c = 1 + aa / c; if (Math.abs(c) < 1e-30) c = 1e-30;
+          d = 1 / d; h *= d * c;
+          aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+          d = 1 + aa * d; if (Math.abs(d) < 1e-30) d = 1e-30;
+          c = 1 + aa / c; if (Math.abs(c) < 1e-30) c = 1e-30;
+          d = 1 / d; const del = d * c; h *= del;
+          if (Math.abs(del - 1) < EPS) break;
+        }
+        return h;
+      }
+
+      function lgamma(z) {
+        // Lanczos approximation
+        const g = 7;
+        const c = [0.99999999999980993,676.5203681218851,-1259.1392167224028,771.32342877765313,-176.61502916214059,12.507343278686905,-0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+        if (z < 0.5) return Math.log(Math.PI / Math.sin(Math.PI * z)) - lgamma(1 - z);
+        z -= 1;
+        let x = c[0];
+        for (let i = 1; i < g + 2; i++) x += c[i] / (z + i);
+        const t = z + g + 0.5;
+        return 0.5 * Math.log(2 * Math.PI) + (z + 0.5) * Math.log(t) - t + Math.log(x);
       }
 
       function updateModelRankingTable() {
@@ -3652,14 +3799,16 @@
         const rows = models
           .map((m, i) => {
             const rank = i + 1;
-            const r2Str =
-              m.metrics.r2 !== null ? m.metrics.r2.toFixed(4) : "N/A";
-            const aicStr =
-              m.metrics.aic !== null ? m.metrics.aic.toFixed(2) : "N/A";
+            const r2Str = m.metrics.r2 !== null ? m.metrics.r2.toFixed(4) : "N/A";
+            const aicStr = m.metrics.aic !== null ? m.metrics.aic.toFixed(2) : "N/A";
+            const pStr = m.metrics.pValue !== null
+              ? (m.metrics.pValue < 0.001 ? "<0.001" : m.metrics.pValue.toFixed(3))
+              : "N/A";
+            const nStr = m.metrics.n !== null ? m.metrics.n : "N/A";
             const isActive = m.name === activeName;
             const cls = isActive ? ' class="ranking-row-active"' : "";
             const badge = rank === 1 ? " ✓" : "";
-            return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${aicStr}</td></tr>`;
+            return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${aicStr}</td><td>${pStr}</td><td>${nStr}</td></tr>`;
           })
           .join("");
 
@@ -3682,6 +3831,33 @@
           ? `The <strong>${bestAic.name}</strong> model wins here with AIC ${bestAic.metrics.aic.toFixed(2)} vs. ${worstAic.name}'s ${worstAic.metrics.aic.toFixed(2)}.`
           : "";
 
+        const significantModels = models.filter(m => m.metrics.pValue !== null && m.metrics.pValue < 0.05);
+        const insignificantModels = models.filter(m => m.metrics.pValue !== null && m.metrics.pValue >= 0.05);
+        let pValueCommentary;
+        if (significantModels.length === models.length) {
+          pValueCommentary = `All ${models.length} models are statistically significant (p&nbsp;&lt;&nbsp;0.05). The best-fitting model (<strong>${bestAic ? bestAic.name : "—"}</strong>) has p&nbsp;=&nbsp;${bestAic && bestAic.metrics.pValue !== null ? (bestAic.metrics.pValue < 0.001 ? "&lt;0.001" : bestAic.metrics.pValue.toFixed(3)) : "N/A"}, meaning the negative spending–growth relationship is extremely unlikely to be a statistical accident.`;
+        } else if (significantModels.length === 0) {
+          pValueCommentary = `No model is statistically significant at the 0.05 threshold with the current data. Try broadening the country selection or adjusting the time period to increase sample size.`;
+        } else {
+          const sigNames = significantModels.map(m => `<strong>${m.name}</strong>`).join(", ");
+          const insigNames = insignificantModels.map(m => m.name).join(", ");
+          pValueCommentary = `${sigNames} ${significantModels.length === 1 ? "is" : "are"} statistically significant (p&nbsp;&lt;&nbsp;0.05); ${insigNames} ${insignificantModels.length === 1 ? "is" : "are"} not. With the current sample, only some models clear the significance threshold.`;
+        }
+
+        const n = dataPoints.length;
+        let nCommentary;
+        if (n >= 80) {
+          nCommentary = `The current sample of <strong>${n} countries</strong> is large enough to give the p-values and R² estimates high reliability. Results are unlikely to shift substantially with small changes to the filters.`;
+        } else if (n >= 30) {
+          nCommentary = `The current sample has <strong>${n} countries</strong>. This is adequate for regression but on the smaller side — p-values and R² are reliable, though confidence intervals would be wide.`;
+        } else {
+          nCommentary = `The current sample has only <strong>${n} countries</strong>. With fewer than 30 observations, statistical estimates become unreliable. Consider broadening country selection, time period, or minimum-years threshold.`;
+        }
+
+        // Update live country count display
+        const countDisplay = document.getElementById('country-count-display');
+        if (countDisplay) countDisplay.textContent = `→ ${dataPoints.length} countries`;
+
         container.innerHTML = `
           <h3 class="ranking-title">Model Fit Ranking (${dataPoints.length} countries)</h3>
           <table class="ranking-table">
@@ -3690,6 +3866,8 @@
               <th>Model</th>
               <th>R²</th>
               <th>AIC <small>(lower = better)</small></th>
+              <th>p-value</th>
+              <th>N</th>
             </tr></thead>
             <tbody>${rows}</tbody>
           </table>
@@ -3699,6 +3877,10 @@
             <dd>Measures how well the curve explains the variation in growth rates across countries. A perfect fit = 1.0. A score of 0 means the model is no better than just predicting the average growth rate for every country. ${r2Commentary}</dd>
             <dt>AIC (Akaike Information Criterion)</dt>
             <dd>Ranks competing models by balancing how well they fit the data against how many parameters they use (simpler models are rewarded). <strong>Lower AIC = better model.</strong> Unlike R², AIC is useful for comparing models even when none of them fits well — it tells you which is the <em>least bad</em> option. ${aicCommentary}</dd>
+            <dt>p-value</dt>
+            <dd>The probability of observing a fit this strong (or stronger) by chance alone, assuming government spending has no real effect on growth. <strong>Lower p-value = stronger evidence against the null hypothesis.</strong> A threshold of 0.05 is conventional. The p-value is derived from an F-test: F = (R² / k) / ((1 − R²) / (N − k − 1)), where k is the number of fitted parameters. ${pValueCommentary}</dd>
+            <dt>N (Sample size)</dt>
+            <dd>The number of countries included in the regression for the current filter and time-period settings. Larger N increases statistical power and makes both R² and p-value estimates more reliable. Excluding resource-dependent or externally-funded countries reduces N and may change all fit metrics — a drop in R² after exclusion means those countries were pulling the curve in a predictable direction. ${nCommentary}</dd>
           </dl>
           <div style="margin-top:10px">
             <button type="button" class="action-btn" onclick="downloadRankingCSV()">⬇ Download model ranking as CSV</button>
@@ -4031,7 +4213,43 @@
           }
         });
 
+      // ── URL hash state ────────────────────────────────────────────────────
+      function encodeHashState() {
+        const params = new URLSearchParams();
+        params.set('model', document.getElementById('curve-type-select').value);
+        params.set('period', document.getElementById('time-period-select').value);
+        params.set('group', document.getElementById('country-select').value);
+        params.set('minyears', document.getElementById('min-years-select').value);
+        if (document.getElementById('exclude-resource').checked) params.set('exres', '1');
+        if (document.getElementById('exclude-external').checked) params.set('exext', '1');
+        const hl = document.getElementById('highlight-country-select').value;
+        if (hl !== 'none') params.set('hl', hl);
+        history.replaceState(null, '', '#' + params.toString());
+      }
+
+      function restoreHashState() {
+        const hash = location.hash.slice(1);
+        if (!hash || hash.startsWith('armey') || hash.startsWith('theory') || hash.startsWith('faq') || hash.startsWith('cite') || hash.startsWith('references') || hash.startsWith('embed') || hash.startsWith('selective')) return;
+        try {
+          const params = new URLSearchParams(hash);
+          if (params.has('model')) document.getElementById('curve-type-select').value = params.get('model');
+          if (params.has('period')) document.getElementById('time-period-select').value = params.get('period');
+          if (params.has('group')) document.getElementById('country-select').value = params.get('group');
+          if (params.has('minyears')) document.getElementById('min-years-select').value = params.get('minyears');
+          document.getElementById('exclude-resource').checked = params.get('exres') === '1';
+          document.getElementById('exclude-external').checked = params.get('exext') === '1';
+        } catch(e) {}
+      }
+
+      // Patch updateArmeySimulation to also encode state
+      const _origUpdate = updateArmeySimulation;
+      updateArmeySimulation = function() {
+        _origUpdate();
+        if (isDataLoaded) encodeHashState();
+      };
+
       // Initial simulation and data loading
+      restoreHashState();
       toggleParameterGroups(); // Show correct parameters for default curve type (inverse)
       updateArmeySimulation(); // Run simulation with default values
 
