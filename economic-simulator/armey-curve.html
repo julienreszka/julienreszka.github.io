@@ -417,19 +417,19 @@
           </div>
 
           <div class="param-group" id="inverse-group" style="display: none">
-            <label for="inverse-strength">Inverse strength (e.g., 50):</label>
+            <label for="inverse-strength">Vertical offset a (e.g., 0):</label>
             <input
               type="number"
               id="inverse-strength"
-              value="50"
-              step="1"
-              min="1"
-              max="200"
+              value="0"
+              step="0.1"
+              min="-20"
+              max="20"
               aria-describedby="inverse-strength-help"
             />
             <small id="inverse-strength-help" class="sr-only"
-              >Controls how fast growth declines with spending: growth =
-              intercept - strength/(spending+1)</small
+              >Vertical offset in the 2-parameter inverse model: growth =
+              b/spending + a</small
             >
           </div>
 
@@ -3225,8 +3225,8 @@
           // Simple linear relationship: growth = beta0 + linearSlope * spending
           growth = spending.map((g) => beta0 + linearSlope * g);
         } else if (curveType === "inverse") {
-          // Inverse relationship: growth starts at beta0 and declines as 1/(spending+1)
-          growth = spending.map((g) => beta0 / (g + 1));
+          // Inverse relationship: growth = b/x + a (2-parameter)
+          growth = spending.map((g) => beta0 / Math.max(g, 0.1) + inverseStrength);
         } else if (curveType === "exponential") {
           // Exponential decay: growth = beta0 * e^(-expDecay * spending)
           growth = spending.map((g) => beta0 * Math.exp(-expDecay * g));
