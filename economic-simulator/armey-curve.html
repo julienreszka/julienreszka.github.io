@@ -2895,9 +2895,9 @@
         ]);
 
         Object.entries(countryAverages).forEach(([code, data]) => {
-          // Require at least 5 years of data for a reliable average
+          // Require at least 3 years of data for a reliable average
           if (excludedCountryCodes.has(code)) return;
-          if (data.spending.length >= 5 && data.growth.length >= 5) {
+          if (data.spending.length >= 3 && data.growth.length >= 3) {
             const avgSpending =
               data.spending.reduce((a, b) => a + b) / data.spending.length;
             const avgGrowth =
