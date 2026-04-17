@@ -564,6 +564,18 @@
         </div>
 
         <div class="param-group">
+          <label for="min-years-select">Minimum Years of Data per Country:</label>
+          <select id="min-years-select" aria-describedby="min-years-help">
+            <option value="1">1 year (maximum coverage)</option>
+            <option value="3" selected>3 years (default)</option>
+            <option value="5">5 years</option>
+            <option value="7">7 years</option>
+            <option value="10">10 years (most reliable)</option>
+          </select>
+          <small id="min-years-help" class="help-text">Countries with fewer years of available data are excluded. Higher thresholds improve reliability but reduce coverage — some countries (e.g. France) have no data for this indicator regardless of threshold.</small>
+        </div>
+
+        <div class="param-group">
           <label for="highlight-country-select"
             >Highlight Specific Country:</label
           >
@@ -2895,9 +2907,9 @@
         ]);
 
         Object.entries(countryAverages).forEach(([code, data]) => {
-          // Require at least 3 years of data for a reliable average
+          const minYears = parseInt(document.getElementById("min-years-select")?.value || "3", 10);
           if (excludedCountryCodes.has(code)) return;
-          if (data.spending.length >= 3 && data.growth.length >= 3) {
+          if (data.spending.length >= minYears && data.growth.length >= minYears) {
             const avgSpending =
               data.spending.reduce((a, b) => a + b) / data.spending.length;
             const avgGrowth =
@@ -3909,6 +3921,17 @@
             processDataFromFallback();
           } else {
             // Use embedded fallback (no time period switching available)
+            updateArmeySimulation();
+          }
+        });
+      document
+        .getElementById("min-years-select")
+        .addEventListener("change", function () {
+          if (window.rawSpendingData && window.rawGrowthData) {
+            processDataForCurrentPeriod();
+          } else if (window.fallbackData) {
+            processDataFromFallback();
+          } else {
             updateArmeySimulation();
           }
         });
