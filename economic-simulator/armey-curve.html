@@ -630,6 +630,17 @@
           <small class="help-text" style="display: inline; margin-left: 8px">Downloads the currently visible country data as a CSV file.</small>
         </div>
 
+        <div style="margin: 6px 0 12px">
+          <button
+            type="button"
+            class="action-btn"
+            onclick="downloadFallbackJSON()"
+          >
+            ⬇ Download fallback-data.json
+          </button>
+          <small class="help-text" style="display: inline; margin-left: 8px">Exports all 4 time periods as a drop-in replacement for <code>fallback-data.json</code>. Requires data to be loaded from the live API.</small>
+        </div>
+
         <div id="model-ranking" aria-live="polite">
           <h3 class="ranking-title">Model Fit Ranking</h3>
           <table class="ranking-table">
@@ -2624,6 +2635,36 @@
           btn.textContent = 'Copied!';
           setTimeout(() => (btn.textContent = orig), 2000);
         });
+      }
+
+      // ── Download fallback-data.json ──────────────────────────────────
+      async function downloadFallbackJSON() {
+        if (!window.rawSpendingData || !window.rawGrowthData) {
+          alert('Live API data is not loaded. Reload the page with internet access so data is fetched from the World Bank API first.');
+          return;
+        }
+        const periods = [
+          { key: 'recent',     start: 2018, end: 2023, label: '2018-2023 (Recent)' },
+          { key: 'decade',     start: 2014, end: 2023, label: '2014-2023 (Decade)' },
+          { key: 'long',       start: 2010, end: 2023, label: '2010-2023 (Long-term)' },
+          { key: 'structural', start: 2005, end: 2023, label: '2005-2023 (Structural)' },
+        ];
+        const result = {};
+        for (const p of periods) {
+          result[p.key] = processWorldBankData(
+            window.rawSpendingData,
+            window.rawGrowthData,
+            { start: p.start, end: p.end, label: p.label }
+          );
+        }
+        const json = JSON.stringify(result, null, 2);
+        const blob = new Blob([json], { type: 'application/json;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'fallback-data.json';
+        a.click();
+        URL.revokeObjectURL(url);
       }
 
       // ── Download model ranking as CSV ──────────────────────────────────────
