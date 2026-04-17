@@ -3814,18 +3814,10 @@
           [0.001, 1],
           (b0, l) => aic((x) => b0 * Math.exp(-l * x), 2)
         );
-        // Inverse: β₀ / (x+1) — 1D scan
-        let bestInvAic = Infinity,
-          invB0 = 1;
-        Array.from({ length: 500 }, (_, i) =>
-          Math.exp(Math.log(0.1) + ((Math.log(5000) - Math.log(0.1)) * i) / 499)
-        ).forEach((b0) => {
-          const cost = aic((x) => b0 / (x + 1), 1);
-          if (isFinite(cost) && cost < bestInvAic) {
-            bestInvAic = cost;
-            invB0 = b0;
-          }
-        });
+        // Inverse: a + b/x — 2-parameter (fair comparison with other models)
+        const [invB, invA] = gridSearch2D([0.1, 5000], [-10, 10], (b, a) =>
+          aic((x) => a + b / Math.max(x, 0.1), 2)
+        );
         // Linear: β₀ + slope × x
         const [linB0, linSlope] = gridSearch2D([0.1, 50], [-3, 0], (b0, s) =>
           aic((x) => b0 + s * x, 2)
@@ -3880,7 +3872,7 @@
           },
           {
             name: "Inverse",
-            metrics: computeMetrics(dataPoints, (x) => invB0 / (x + 1), 1),
+            metrics: computeMetrics(dataPoints, (x) => invA + invB / Math.max(x, 0.1), 2),
           },
           {
             name: "Linear",
@@ -4229,22 +4221,11 @@
               document.getElementById("beta0-armey").value = b0.toFixed(2);
               document.getElementById("exp-decay").value = lambda.toFixed(4);
             } else if (curveType === "inverse") {
-              // 1D search: scan b0 on log scale
-              let bestAic = Infinity,
-                bestB0 = 1;
-              const b0s = Array.from({ length: 500 }, (_, i) =>
-                Math.exp(
-                  Math.log(0.1) + ((Math.log(5000) - Math.log(0.1)) * i) / 499
-                )
+              const [b, a] = gridSearch2D([0.1, 5000], [-10, 10], (b, a) =>
+                aic((x) => a + b / Math.max(x, 0.1), 2)
               );
-              for (const b0 of b0s) {
-                const cost = aic((x) => b0 / (x + 1), 1);
-                if (isFinite(cost) && cost < bestAic) {
-                  bestAic = cost;
-                  bestB0 = b0;
-                }
-              }
-              document.getElementById("beta0-armey").value = bestB0.toFixed(2);
+              document.getElementById("beta0-armey").value = b.toFixed(2);
+              document.getElementById("inverse-strength").value = a.toFixed(3);
             } else if (curveType === "linear") {
               const [b0, slope] = gridSearch2D([0.1, 50], [-3, 0], (b0, s) =>
                 aic((x) => b0 + s * x, 2)
