@@ -538,19 +538,19 @@
           </select>
           <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;">
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-resource" checked style="accent-color:#e07b39; width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-resource" style="accent-color:#e07b39; width:14px; height:14px; cursor:pointer;" />
               <span>Exclude resource-dependent <span style="color:#e07b39;">◆</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-external" checked style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-external" style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude externally funded <span style="color:rgba(255,140,0,0.9);">▲</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-conflict" checked style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-conflict" style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude conflict/fragile states <span style="color:rgba(220,53,69,0.9);">✕</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-gdpdistorted" checked style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-gdpdistorted" style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude GDP-distorted <span style="color:rgba(255,193,7,0.9);">★</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
@@ -3323,7 +3323,7 @@
         const sse = residuals.reduce((s, r) => s + r * r, 0);
         const se = Math.sqrt(sse / Math.max(allData.length - 2, 1));
         const absRes = residuals.map(r => Math.abs(r));
-        const threshold = se;
+        const threshold = 1 * se;
         const outliers = allData.filter((c, i) => absRes[i] > threshold);
         outlierNames = new Set(outliers.map(c => c.name));
         if (listEl) {
@@ -4507,6 +4507,7 @@
         if (document.getElementById('exclude-external').checked) params.set('exext', '1');
         if (document.getElementById('exclude-conflict').checked) params.set('excon', '1');
         if (document.getElementById('exclude-gdpdistorted').checked) params.set('exgdp', '1');
+        if (!document.getElementById('exclude-se-outliers').checked) params.set('exse', '0');
         const hl = document.getElementById('highlight-country-select').value;
         if (hl !== 'none') params.set('hl', hl);
         history.replaceState(null, '', '#' + params.toString());
@@ -4525,7 +4526,7 @@
           document.getElementById('exclude-external').checked = params.get('exext') === '1';
           document.getElementById('exclude-conflict').checked = params.get('excon') === '1';
           document.getElementById('exclude-gdpdistorted').checked = params.get('exgdp') === '1';
-          // MAD toggle is exploratory — never restore from hash
+          if (params.has('exse')) document.getElementById('exclude-se-outliers').checked = params.get('exse') !== '0';
         } catch(e) {}
       }
 

@@ -1,8 +1,8 @@
-Rank,Model,R2,AIC,Active
-1,Power Law,0.422245,53.0668,yes
-2,Inverse,0.419890,53.5265,no
-3,Log-Linear,0.416348,54.2144,no
-4,Exponential,0.410324,55.3747,no
-5,Free Quadratic,0.407958,57.8272,no
-6,Linear,0.387888,59.5944,no
-7,Quadratic,0.247144,84.9807,no
+Rank,Model,R2,AIC,N,Coverage_1SE,Active
+1,Log-Linear,0.536659,-54.8645,94,0.6277,no
+2,Power Law,0.531341,-53.7917,94,0.6064,yes
+3,Exponential,0.531094,-53.7421,94,0.6170,no
+4,Free Quadratic,0.529005,-51.3243,94,0.6277,no
+5,Inverse,0.518784,-51.3061,94,0.5638,no
+6,Linear,0.516550,-50.8709,94,0.7021,no
+7,Quadratic,0.152546,3.8903,94,0.6596,no
