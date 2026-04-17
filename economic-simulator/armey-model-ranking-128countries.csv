@@ -1,7 +1,7 @@
 Rank,Model,R2,AIC,Active
-1,Log-Linear,0.350224,80.6224,no
-2,Linear,0.344386,81.6689,no
-3,Exponential,0.343565,81.8153,no
-4,Power Law,0.341871,82.1168,yes
-5,Inverse,0.307753,86.0302,no
-6,Quadratic,0.226621,102.9969,no
+1,Power Law,0.419203,77.0954,yes
+2,Inverse,0.407809,77.4268,no
+3,Log-Linear,0.415864,77.7833,no
+4,Exponential,0.407778,79.4331,no
+5,Linear,0.393695,82.2532,no
+6,Quadratic,0.276684,105.4287,no
