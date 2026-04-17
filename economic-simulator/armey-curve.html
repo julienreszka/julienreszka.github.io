@@ -328,6 +328,7 @@
               <option value="power-law">Power Law (β₀ × s⁻ᵅ)</option>
               <option value="log-linear">Log-Linear (β₀ − α × ln(s+1))</option>
               <option value="quadratic">Quadratic (Traditional Armey)</option>
+              <option value="free-quadratic">Free Quadratic (Unconstrained)</option>
               <option value="linear">Linear Decline</option>
               <option value="inverse">Inverse (1/x decline)</option>
               <option value="exponential">Exponential Decay</option>
@@ -431,6 +432,33 @@
               >Vertical offset in the 2-parameter inverse model: growth =
               b/spending + a</small
             >
+          </div>
+
+          <div class="param-group" id="free-quadratic-b1-group" style="display: none">
+            <label for="free-quad-b1">Linear coeff β₁ (auto-fitted):</label>
+            <input
+              type="number"
+              id="free-quad-b1"
+              value="-0.24"
+              step="0.01"
+              min="-5"
+              max="5"
+              aria-describedby="free-quad-b1-help"
+            />
+            <small id="free-quad-b1-help" class="sr-only">Linear coefficient in y = β₀ + β₁·s + β₂·s² — auto-fitted, can be any sign</small>
+          </div>
+          <div class="param-group" id="free-quadratic-b2-group" style="display: none">
+            <label for="free-quad-b2">Quadratic coeff β₂ (auto-fitted):</label>
+            <input
+              type="number"
+              id="free-quad-b2"
+              value="0.0025"
+              step="0.0001"
+              min="-0.1"
+              max="0.1"
+              aria-describedby="free-quad-b2-help"
+            />
+            <small id="free-quad-b2-help" class="sr-only">Quadratic coefficient — positive = U-shape, negative = inverted-U</small>
           </div>
 
           <div class="param-group" id="exponential-group" style="display: none">
@@ -1117,6 +1145,18 @@
             so sharply that it predicts economic apocalypse. But Sweden at 35%
             spending doesn't have -8% growth - it has +0.8% growth. The
             quadratic model fails basic reality checks.
+          </p>
+          <p>
+            <strong>Worse: the unconstrained free fit is U-shaped, not inverted-U.</strong>
+            When a quadratic is fitted to the data with no constraints — letting
+            the sign of the curvature be determined by the data itself — the
+            result is a <em>U-shaped</em> curve with a minimum at ~49% spending,
+            not the inverted-U "sweet spot" Armey theory predicts. The data
+            finds growth declining all the way through the observed range, with
+            the theoretical upturn occurring beyond 49% spending where almost
+            no country in the sample exists. This is arguably more damning than
+            a poor R²: the best quadratic the data can produce is the
+            <em>opposite</em> of the Armey curve.
           </p>
 
           <h4>Linear Models Are Equally Flawed</h4>
@@ -3214,7 +3254,9 @@
         inverseStrength = 50,
         expDecay = 0.03,
         powerLawExponent = 1.5,
-        logSlope = 2.5
+        logSlope = 2.5,
+        freeQuadB1 = -0.24,
+        freeQuadB2 = 0.0025
       ) {
         const spending = Array.from({ length: 76 }, (_, i) => i); // 0% to 75%
         let growth;
@@ -3224,6 +3266,9 @@
         } else if (curveType === "linear") {
           // Simple linear relationship: growth = beta0 + linearSlope * spending
           growth = spending.map((g) => beta0 + linearSlope * g);
+        } else if (curveType === "free-quadratic") {
+          // Free quadratic: y = beta0 + freeQuadB1*s + freeQuadB2*s² (unconstrained)
+          growth = spending.map((g) => beta0 + freeQuadB1 * g + freeQuadB2 * g * g);
         } else if (curveType === "inverse") {
           // Inverse relationship: growth = b/x + a (2-parameter)
           growth = spending.map((g) => beta0 / Math.max(g, 0.1) + inverseStrength);
@@ -3822,6 +3867,22 @@
         const [linB0, linSlope] = gridSearch2D([0.1, 50], [-3, 0], (b0, s) =>
           aic((x) => b0 + s * x, 2)
         );
+        // Free Quadratic: unconstrained OLS y = a + b*s + c*s² (closed form)
+        {
+          const dp = dataPoints;
+          const n2 = dp.length;
+          const s1=dp.reduce((a,p)=>a+p.spending,0), s2=dp.reduce((a,p)=>a+p.spending**2,0);
+          const s3=dp.reduce((a,p)=>a+p.spending**3,0), s4=dp.reduce((a,p)=>a+p.spending**4,0);
+          const g0=dp.reduce((a,p)=>a+p.growth,0), g1=dp.reduce((a,p)=>a+p.spending*p.growth,0), g2=dp.reduce((a,p)=>a+p.spending**2*p.growth,0);
+          const A=[[n2,s1,s2],[s1,s2,s3],[s2,s3,s4]], b=[g0,g1,g2];
+          for(let i=0;i<3;i++) for(let j=i+1;j<3;j++){const f=A[j][i]/A[i][i];for(let k=0;k<3;k++)A[j][k]-=f*A[i][k];b[j]-=f*b[i];}
+          const x=[0,0,0];
+          for(let i=2;i>=0;i--){x[i]=(b[i]-A[i].slice(i+1).reduce((a,v,k)=>a+v*x[i+1+k],0))/A[i][i];}
+          const [fqA, fqB1, fqB2] = x;
+          var freeQuadMetrics = computeMetrics(dp, (s) => fqA + fqB1*s + fqB2*s*s, 3);
+          var freeQuadParams = [fqA, fqB1, fqB2];
+        }
+
         // Quadratic: β₀ + β₁x + β₂x² — 3D via two nested 1D passes
         const [qB0, qB1] = gridSearch2D([0.1, 30], [0, 2], (b0, b1) => {
           // For each (b0, b1) find best b2 in [-0.1, 0]
@@ -3886,6 +3947,10 @@
               3
             ),
           },
+          {
+            name: "Free Quadratic",
+            metrics: freeQuadMetrics,
+          },
         ];
 
         // Sort by AIC ascending (lower = better); nulls last
@@ -3901,6 +3966,7 @@
           "power-law": "Power Law",
           "log-linear": "Log-Linear",
           quadratic: "Quadratic",
+          "free-quadratic": "Free Quadratic",
           linear: "Linear",
           inverse: "Inverse",
           exponential: "Exponential",
@@ -4004,7 +4070,7 @@
         const beta0 = parseFloat(document.getElementById("beta0-armey").value);
         const beta1 = parseFloat(document.getElementById("beta1-armey").value);
 
-        let beta2, linearSlope, inverseStrength, expDecay;
+        let beta2, linearSlope, inverseStrength, expDecay, freeQuadB1, freeQuadB2;
 
         if (curveType === "quadratic") {
           beta2 = parseFloat(document.getElementById("beta2-armey").value);
@@ -4017,6 +4083,12 @@
           );
           if (!isNaN(beta0) && !isNaN(linearSlope)) {
             simulateCurveArmey(beta0, beta1, 0, curveType, linearSlope);
+          }
+        } else if (curveType === "free-quadratic") {
+          freeQuadB1 = parseFloat(document.getElementById("free-quad-b1").value);
+          freeQuadB2 = parseFloat(document.getElementById("free-quad-b2").value);
+          if (!isNaN(beta0) && !isNaN(freeQuadB1) && !isNaN(freeQuadB2)) {
+            simulateCurveArmey(beta0, 0, 0, curveType, 0, 0, 0, 0, 0, freeQuadB1, freeQuadB2);
           }
         } else if (curveType === "inverse") {
           inverseStrength = parseFloat(
@@ -4076,6 +4148,8 @@
         const exponentialGroup = document.getElementById("exponential-group");
         const powerLawGroup = document.getElementById("power-law-group");
         const logLinearGroup = document.getElementById("log-linear-group");
+        const freeQuadB1Group = document.getElementById("free-quadratic-b1-group");
+        const freeQuadB2Group = document.getElementById("free-quadratic-b2-group");
 
         // Hide all parameter groups first
         beta1Group.style.display = "none";
@@ -4085,6 +4159,8 @@
         exponentialGroup.style.display = "none";
         powerLawGroup.style.display = "none";
         logLinearGroup.style.display = "none";
+        freeQuadB1Group.style.display = "none";
+        freeQuadB2Group.style.display = "none";
 
         if (curveType === "quadratic") {
           beta1Group.style.display = "block";
@@ -4094,6 +4170,14 @@
           document.getElementById("beta0-armey").value = "2";
           document.getElementById("beta1-armey").value = "0.5";
           document.getElementById("beta2-armey").value = "-0.01";
+        } else if (curveType === "free-quadratic") {
+          freeQuadB1Group.style.display = "block";
+          freeQuadB2Group.style.display = "block";
+
+          // Reset to free quadratic defaults (data-fitted values)
+          document.getElementById("beta0-armey").value = "7.67";
+          document.getElementById("free-quad-b1").value = "-0.24";
+          document.getElementById("free-quad-b2").value = "0.0025";
         } else if (curveType === "linear") {
           linearSlopeGroup.style.display = "block";
 
@@ -4220,6 +4304,20 @@
               );
               document.getElementById("beta0-armey").value = b0.toFixed(2);
               document.getElementById("exp-decay").value = lambda.toFixed(4);
+            } else if (curveType === "free-quadratic") {
+              // Closed-form OLS for free quadratic
+              const dp = dataPoints;
+              const n2 = dp.length;
+              const s1=dp.reduce((a,p)=>a+p.spending,0), s2=dp.reduce((a,p)=>a+p.spending**2,0);
+              const s3=dp.reduce((a,p)=>a+p.spending**3,0), s4=dp.reduce((a,p)=>a+p.spending**4,0);
+              const g0=dp.reduce((a,p)=>a+p.growth,0), g1=dp.reduce((a,p)=>a+p.spending*p.growth,0), g2=dp.reduce((a,p)=>a+p.spending**2*p.growth,0);
+              const A=[[n2,s1,s2],[s1,s2,s3],[s2,s3,s4]], b=[g0,g1,g2];
+              for(let i=0;i<3;i++) for(let j=i+1;j<3;j++){const f=A[j][i]/A[i][i];for(let k=0;k<3;k++)A[j][k]-=f*A[i][k];b[j]-=f*b[i];}
+              const x=[0,0,0];
+              for(let i=2;i>=0;i--){x[i]=(b[i]-A[i].slice(i+1).reduce((a,v,k)=>a+v*x[i+1+k],0))/A[i][i];}
+              document.getElementById("beta0-armey").value = x[0].toFixed(3);
+              document.getElementById("free-quad-b1").value = x[1].toFixed(4);
+              document.getElementById("free-quad-b2").value = x[2].toFixed(5);
             } else if (curveType === "inverse") {
               const [b, a] = gridSearch2D([0.1, 5000], [-10, 10], (b, a) =>
                 aic((x) => a + b / Math.max(x, 0.1), 2)
