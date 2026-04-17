@@ -508,14 +508,14 @@
             <option value="developing">Developing Countries</option>
             <option value="none">Hide Country Data</option>
           </select>
-          <div style="margin-top:8px; display:flex; flex-direction:column; gap:4px;">
-            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
-              <input type="checkbox" id="exclude-resource" />
-              Exclude resource-dependent ◆
+          <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;">
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+              <input type="checkbox" id="exclude-resource" checked style="accent-color:#e07b39; width:14px; height:14px; cursor:pointer;" />
+              <span>Exclude resource-dependent <span style="color:#e07b39;">◆</span></span>
             </label>
-            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
-              <input type="checkbox" id="exclude-external" />
-              Exclude externally funded ▲
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+              <input type="checkbox" id="exclude-external" checked style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
+              <span>Exclude externally funded <span style="color:rgba(255,140,0,0.9);">▲</span></span>
             </label>
           </div>
           <small id="country-select-help" class="help-text"
