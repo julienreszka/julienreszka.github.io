@@ -506,10 +506,18 @@
             <option value="all">All Countries</option>
             <option value="developed">Developed Countries</option>
             <option value="developing">Developing Countries</option>
-            <option value="resource">Resource-Dependent Countries</option>
-            <option value="non-resource">Non-Resource Countries</option>
             <option value="none">Hide Country Data</option>
           </select>
+          <div style="margin-top:8px; display:flex; flex-direction:column; gap:4px;">
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="exclude-resource" />
+              Exclude resource-dependent ◆
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-weight:normal; cursor:pointer;">
+              <input type="checkbox" id="exclude-external" />
+              Exclude externally funded ▲
+            </label>
+          </div>
           <small id="country-select-help" class="help-text"
             >Real-world data from
             <a
@@ -2677,6 +2685,7 @@
         developed: [],
         developing: [],
         resourceDependent: [],
+        externallyFunded: [],
       };
 
       let isDataLoaded = false;
@@ -2858,6 +2867,7 @@
         const developed = [];
         const developing = [];
         const resourceDependent = [];
+        const externallyFunded = [];
 
         // Countries excluded due to aid/conflict distortion: their "government
         // spending" as reported by the World Bank includes large foreign military
@@ -2906,6 +2916,16 @@
           "GUY", // Guyana — oil (recent)
         ]);
 
+        // Countries where government spending is substantially financed by
+        // external transfers (aid compacts, international grants) rather than
+        // domestic taxation — the spending figure does not reflect fiscal policy.
+        const externallyFundedCodes = new Set([
+          "KIR", // Kiribati — fishing license fees + donor grants ~50% of budget
+          "MHL", // Marshall Islands — US Compact of Free Association transfers
+          "FSM", // Micronesia — US Compact of Free Association transfers
+          "TLS", // Timor-Leste — Petroleum Fund withdrawals dominate spending
+        ]);
+
         Object.entries(countryAverages).forEach(([code, data]) => {
           const minYears = parseInt(document.getElementById("min-years-select")?.value || "3", 10);
           if (excludedCountryCodes.has(code)) return;
@@ -2922,9 +2942,12 @@
               year: dateRange.label,
               dataPoints: data.spending.length,
               resourceDependent: resourceDependentCodes.has(code),
+              externallyFunded: externallyFundedCodes.has(code),
             };
 
-            if (resourceDependentCodes.has(code)) {
+            if (externallyFundedCodes.has(code)) {
+              externallyFunded.push(countryInfo);
+            } else if (resourceDependentCodes.has(code)) {
               resourceDependent.push(countryInfo);
             } else if (developedCountries.has(code)) {
               developed.push(countryInfo);
@@ -2934,7 +2957,7 @@
           }
         });
 
-        return { developed, developing, resourceDependent };
+        return { developed, developing, resourceDependent, externallyFunded };
       }
 
       function getFallbackData() {
@@ -3027,6 +3050,7 @@
           ...countryData.developed,
           ...countryData.developing,
           ...(countryData.resourceDependent || []),
+          ...(countryData.externallyFunded || []),
         ];
         allCountries.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -3050,13 +3074,25 @@
 
         const selection = document.getElementById("country-select").value;
         if (selection === "none") return [];
-        if (selection === "all")
-          return [...countryData.developed, ...countryData.developing, ...(countryData.resourceDependent || [])];
-        if (selection === "resource")
-          return countryData.resourceDependent || [];
-        if (selection === "non-resource")
-          return [...countryData.developed, ...countryData.developing];
-        return countryData[selection] || [];
+
+        const excludeResource = document.getElementById("exclude-resource")?.checked;
+        const excludeExternal = document.getElementById("exclude-external")?.checked;
+
+        let base;
+        if (selection === "all") {
+          base = [
+            ...countryData.developed,
+            ...countryData.developing,
+            ...(excludeResource ? [] : (countryData.resourceDependent || [])),
+            ...(excludeExternal ? [] : (countryData.externallyFunded || [])),
+          ];
+        } else {
+          base = countryData[selection] || [];
+        }
+
+        if (excludeResource) base = base.filter(c => !c.resourceDependent);
+        if (excludeExternal) base = base.filter(c => !c.externallyFunded);
+        return base;
       }
 
       function simulateCurveArmey(
@@ -3210,6 +3246,32 @@
             });
           }
 
+          // Add externally funded countries as a distinct dataset (triangle markers)
+          const externalCountries = regularCountries.filter((c) =>
+            (countryData.externallyFunded || []).includes(c)
+          );
+          if (externalCountries.length > 0) {
+            datasets.push({
+              label: "Externally Funded Countries ▲",
+              data: externalCountries.map((c) => ({
+                x: c.spending,
+                y: c.growth,
+                countryName: c.name,
+                year: c.year,
+                dataPoints: c.dataPoints,
+                externallyFunded: true,
+              })),
+              backgroundColor: "rgba(255, 140, 0, 0.8)",
+              borderColor: "#cc6e00",
+              borderWidth: 2,
+              pointRadius: 7,
+              pointHoverRadius: 9,
+              pointStyle: "triangle",
+              type: "scatter",
+              showLine: false,
+            });
+          }
+
           // Add highlighted country as a separate dataset with red styling
           if (highlightedCountryData) {
             datasets.push({
@@ -3280,6 +3342,9 @@
                       ];
                       if (dataPoint.resourceDependent) {
                         lines.push("⚠ Resource-dependent economy");
+                      }
+                      if (dataPoint.externallyFunded) {
+                        lines.push("⚠ Spending largely externally funded (aid/compact/sovereign fund)");
                       }
                       return lines;
                     }
@@ -3906,6 +3971,12 @@
         .addEventListener("click", autoFitParameters);
       document
         .getElementById("country-select")
+        .addEventListener("change", updateArmeySimulation);
+      document
+        .getElementById("exclude-resource")
+        .addEventListener("change", updateArmeySimulation);
+      document
+        .getElementById("exclude-external")
         .addEventListener("change", updateArmeySimulation);
       document
         .getElementById("highlight-country-select")
