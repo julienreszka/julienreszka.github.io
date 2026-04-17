@@ -2641,7 +2641,10 @@
         const rows = [
           ['Country', 'Income Group', 'Gov Spending (% GDP)', 'Avg GDP Growth (%)', 'Period', 'Years of Data'],
           ...dataPoints.map((c) => {
-            const group = countryData.developed.includes(c) ? 'Developed' : 'Developing';
+            const group = c.externallyFunded ? 'Externally Funded'
+              : c.resourceDependent ? 'Resource-Dependent'
+              : countryData.developed.includes(c) ? 'Developed'
+              : 'Developing';
             return [
               `"${c.name}"`,
               group,
