@@ -2629,6 +2629,45 @@
         });
       }
 
+      // ── Download model ranking as CSV ──────────────────────────────────────
+      function downloadRankingCSV() {
+        if (!lastRankingModels.length) {
+          alert('No ranking data available yet.');
+          return;
+        }
+        const sorted = [...lastRankingModels].sort((a, b) => {
+          if (a.metrics.aic === null) return 1;
+          if (b.metrics.aic === null) return -1;
+          return a.metrics.aic - b.metrics.aic;
+        });
+        const dataPoints = getCountryDataToShow();
+        const currentCurve = document.getElementById('curve-type-select').value;
+        const curveNameMap = {
+          'power-law': 'Power Law', 'log-linear': 'Log-Linear',
+          quadratic: 'Quadratic', linear: 'Linear',
+          inverse: 'Inverse', exponential: 'Exponential',
+        };
+        const activeName = curveNameMap[currentCurve];
+        const rows = [
+          ['Rank', 'Model', 'R2', 'AIC', 'Active'],
+          ...sorted.map((m, i) => [
+            i + 1,
+            m.name,
+            m.metrics.r2 !== null ? m.metrics.r2.toFixed(6) : '',
+            m.metrics.aic !== null ? m.metrics.aic.toFixed(4) : '',
+            m.name === activeName ? 'yes' : 'no',
+          ].join(',')),
+        ];
+        const csv = rows.join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `armey-model-ranking-${dataPoints.length}countries.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
       // ── Download country data as CSV ─────────────────────────────────────
       function downloadCSV() {
         const dataPoints = getCountryDataToShow();
@@ -2691,6 +2730,7 @@
       };
 
       let isDataLoaded = false;
+      let lastRankingModels = [];
 
       // Country income classifications — populated dynamically from World Bank metadata
       let developedCountries = new Set();
@@ -3613,6 +3653,7 @@
         ];
 
         // Sort by AIC ascending (lower = better); nulls last
+        lastRankingModels = models;
         models.sort((a, b) => {
           if (a.metrics.aic === null) return 1;
           if (b.metrics.aic === null) return -1;
@@ -3681,6 +3722,9 @@
             <dt>AIC (Akaike Information Criterion)</dt>
             <dd>Ranks competing models by balancing how well they fit the data against how many parameters they use (simpler models are rewarded). <strong>Lower AIC = better model.</strong> Unlike R², AIC is useful for comparing models even when none of them fits well — it tells you which is the <em>least bad</em> option. ${aicCommentary}</dd>
           </dl>
+          <div style="margin-top:10px">
+            <button type="button" class="action-btn" onclick="downloadRankingCSV()">⬇ Download model ranking as CSV</button>
+          </div>
         `;
       }
 
