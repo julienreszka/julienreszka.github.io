@@ -521,6 +521,10 @@
               <input type="checkbox" id="exclude-conflict" checked style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude conflict/fragile states <span style="color:rgba(220,53,69,0.9);">✕</span></span>
             </label>
+            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+              <input type="checkbox" id="exclude-gdpdistorted" checked style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
+              <span>Exclude GDP-distorted <span style="color:rgba(255,193,7,0.9);">★</span></span>
+            </label>
           </div>
           <small id="country-select-help" class="help-text"
             >Real-world data from
@@ -662,51 +666,51 @@
             <tbody>
               <tr>
                 <td>1</td>
-                <td>Power Law ✓</td>
-                <td>0.4192</td>
-                <td>77.10</td>
+                <td>Inverse</td>
+                <td>0.4668</td>
+                <td>34.76</td>
                 <td>&lt;0.001</td>
-                <td>128</td>
+                <td>112</td>
               </tr>
               <tr>
                 <td>2</td>
-                <td>Inverse</td>
-                <td>0.4078</td>
-                <td>77.43</td>
+                <td>Power Law ✓</td>
+                <td>0.4693</td>
+                <td>36.23</td>
                 <td>&lt;0.001</td>
-                <td>128</td>
+                <td>111</td>
               </tr>
               <tr>
                 <td>3</td>
                 <td>Log-Linear</td>
-                <td>0.4159</td>
-                <td>77.78</td>
+                <td>0.4598</td>
+                <td>38.23</td>
                 <td>&lt;0.001</td>
-                <td>128</td>
+                <td>112</td>
               </tr>
               <tr>
                 <td>4</td>
                 <td>Exponential</td>
-                <td>0.4078</td>
-                <td>79.43</td>
+                <td>0.4559</td>
+                <td>39.03</td>
                 <td>&lt;0.001</td>
-                <td>128</td>
+                <td>112</td>
               </tr>
               <tr>
                 <td>5</td>
                 <td>Linear</td>
-                <td>0.3937</td>
-                <td>82.25</td>
+                <td>0.4138</td>
+                <td>47.37</td>
                 <td>&lt;0.001</td>
-                <td>128</td>
+                <td>112</td>
               </tr>
               <tr>
                 <td>6</td>
                 <td>Quadratic</td>
-                <td>0.2767</td>
-                <td>105.43</td>
+                <td>0.2275</td>
+                <td>80.29</td>
                 <td>&lt;0.001</td>
-                <td>128</td>
+                <td>112</td>
               </tr>
             </tbody>
           </table>
@@ -2759,6 +2763,7 @@
           ['Country', 'Income Group', 'Gov Spending (% GDP)', 'Avg GDP Growth (%)', 'Period', 'Years of Data'],
           ...dataPoints.map((c) => {
             const group = c.conflictFragile ? 'Conflict/Fragile'
+              : c.gdpDistorted ? 'GDP-Distorted'
               : c.externallyFunded ? 'Externally Funded'
               : c.resourceDependent ? 'Resource-Dependent'
               : countryData.developed.includes(c) ? 'Developed'
@@ -2808,6 +2813,7 @@
         resourceDependent: [],
         externallyFunded: [],
         conflictFragile: [],
+        gdpDistorted: [],
       };
 
       let isDataLoaded = false;
@@ -2992,6 +2998,7 @@
         const resourceDependent = [];
         const externallyFunded = [];
         const conflictFragile = [];
+        const gdpDistorted = [];
 
         // Countries excluded due to aid/conflict distortion: their "government
         // spending" as reported by the World Bank includes large foreign military
@@ -3039,6 +3046,7 @@
           "ZMB", // Zambia — copper
           "BWA", // Botswana — diamonds
           "GUY", // Guyana — oil (recent)
+          "MDV", // Maldives — ~28% GDP from tourism directly; growth driven by tourist arrivals, not fiscal policy
         ]);
 
         // Countries where government spending is substantially financed by
@@ -3049,6 +3057,17 @@
           "MHL", // Marshall Islands — US Compact of Free Association transfers
           "FSM", // Micronesia — US Compact of Free Association transfers
           "TLS", // Timor-Leste — Petroleum Fund withdrawals dominate spending
+          "PLW", // Palau — US Compact of Free Association transfers dominate budget
+        ]);
+
+        // Countries where GDP is structurally decoupled from domestic fiscal policy due to
+        // MNC profit-shifting or financial hub effects — GDP growth reflects global capital flows
+        // and accounting relocations, not the real domestic economy.
+        const gdpDistortedCodes = new Set([
+          "IRL", // Ireland — MNC profit-shifting inflates GDP (GNI* is ~60% of GDP)
+          "MLT", // Malta — financial services hub, MNC IP holdings distort GDP growth
+          "LUX", // Luxembourg — financial sector ~25% of GDP, fund management distorts growth figures
+          "SMR", // San Marino — microstate, GDP dominated by tourism and financial services, not representative of fiscal policy
         ]);
 
         // Conflict/fragile states: ongoing or recent severe conflict distorts growth figures
@@ -3059,6 +3078,9 @@
           "UKR", // Ukraine — Donbas 2014, full-scale invasion 2022
           "MLI", // Mali — Tuareg rebellion, jihadist insurgency, coups 2020 & 2021
           "MDG", // Madagascar — 2009 coup, international sanctions, persistent political instability suppresses growth independent of spending level
+          "LBN", // Lebanon — 2019 financial collapse, 2020 Beirut explosion, 2024 Israel war, hyperinflation, state dysfunction
+          "ETH", // Ethiopia — Tigray war 2020-2022 collapsed GDP; long-term average masks conflict-driven volatility
+          "GRC", // Greece — 2010-2015 sovereign debt crisis/austerity depression distorts long-term average independent of steady-state fiscal policy
         ]);
 
         Object.entries(countryAverages).forEach(([code, data]) => {
@@ -3079,10 +3101,13 @@
               resourceDependent: resourceDependentCodes.has(code),
               externallyFunded: externallyFundedCodes.has(code),
               conflictFragile: conflictFragileCodes.has(code),
+              gdpDistorted: gdpDistortedCodes.has(code),
             };
 
             if (conflictFragileCodes.has(code)) {
               conflictFragile.push(countryInfo);
+            } else if (gdpDistortedCodes.has(code)) {
+              gdpDistorted.push(countryInfo);
             } else if (externallyFundedCodes.has(code)) {
               externallyFunded.push(countryInfo);
             } else if (resourceDependentCodes.has(code)) {
@@ -3095,7 +3120,7 @@
           }
         });
 
-        return { developed, developing, resourceDependent, externallyFunded, conflictFragile };
+        return { developed, developing, resourceDependent, externallyFunded, conflictFragile, gdpDistorted };
       }
 
       function getFallbackData() {
@@ -3157,6 +3182,7 @@
         const excludeResource = document.getElementById("exclude-resource")?.checked;
         const excludeExternal = document.getElementById("exclude-external")?.checked;
         const excludeConflict = document.getElementById("exclude-conflict")?.checked;
+        const excludeGdpDistorted = document.getElementById("exclude-gdpdistorted")?.checked;
 
         let base;
         if (selection === "all") {
@@ -3166,6 +3192,7 @@
             ...(excludeResource ? [] : (countryData.resourceDependent || [])),
             ...(excludeExternal ? [] : (countryData.externallyFunded || [])),
             ...(excludeConflict ? [] : (countryData.conflictFragile || [])),
+            ...(excludeGdpDistorted ? [] : (countryData.gdpDistorted || [])),
           ];
         } else {
           base = countryData[selection] || [];
@@ -3174,6 +3201,7 @@
         if (excludeResource) base = base.filter(c => !c.resourceDependent);
         if (excludeExternal) base = base.filter(c => !c.externallyFunded);
         if (excludeConflict) base = base.filter(c => !c.conflictFragile);
+        if (excludeGdpDistorted) base = base.filter(c => !c.gdpDistorted);
         return base;
       }
 
@@ -3400,6 +3428,32 @@
             });
           }
 
+          // Add GDP-distorted countries as a distinct dataset (star markers)
+          const gdpDistortedCountries = regularCountries.filter((c) =>
+            (countryData.gdpDistorted || []).includes(c)
+          );
+          if (gdpDistortedCountries.length > 0) {
+            datasets.push({
+              label: "GDP-Distorted Countries ★",
+              data: gdpDistortedCountries.map((c) => ({
+                x: c.spending,
+                y: c.growth,
+                countryName: c.name,
+                year: c.year,
+                dataPoints: c.dataPoints,
+                gdpDistorted: true,
+              })),
+              backgroundColor: "rgba(255, 193, 7, 0.85)",
+              borderColor: "#c79200",
+              borderWidth: 2,
+              pointRadius: 7,
+              pointHoverRadius: 9,
+              pointStyle: "star",
+              type: "scatter",
+              showLine: false,
+            });
+          }
+
           // Add conflict/fragile states as a distinct dataset (cross markers)
           const conflictCountries = regularCountries.filter((c) =>
             (countryData.conflictFragile || []).includes(c)
@@ -3512,8 +3566,8 @@
                       if (dataPoint.conflictFragile) {
                         lines.push("⚠ Conflict/fragile state — growth distorted by war or institutional collapse");
                       }
-                      if (dataPoint.countryName === 'Ireland') {
-                        lines.push("⚠ GDP inflated by multinational profit-shifting (Modified GNI ~40% lower)");
+                      if (dataPoint.gdpDistorted) {
+                        lines.push("⚠ GDP distorted by MNC profit-shifting or financial hub effects — not representative of domestic fiscal policy");
                       }
                       return lines;
                     }
@@ -4253,6 +4307,9 @@
         .getElementById("exclude-conflict")
         .addEventListener("change", updateArmeySimulation);
       document
+        .getElementById("exclude-gdpdistorted")
+        .addEventListener("change", updateArmeySimulation);
+      document
         .getElementById("highlight-country-select")
         .addEventListener("change", updateArmeySimulation);
       document
@@ -4291,6 +4348,7 @@
         if (document.getElementById('exclude-resource').checked) params.set('exres', '1');
         if (document.getElementById('exclude-external').checked) params.set('exext', '1');
         if (document.getElementById('exclude-conflict').checked) params.set('excon', '1');
+        if (document.getElementById('exclude-gdpdistorted').checked) params.set('exgdp', '1');
         const hl = document.getElementById('highlight-country-select').value;
         if (hl !== 'none') params.set('hl', hl);
         history.replaceState(null, '', '#' + params.toString());
@@ -4308,6 +4366,7 @@
           document.getElementById('exclude-resource').checked = params.get('exres') === '1';
           document.getElementById('exclude-external').checked = params.get('exext') === '1';
           document.getElementById('exclude-conflict').checked = params.get('excon') === '1';
+          document.getElementById('exclude-gdpdistorted').checked = params.get('exgdp') === '1';
         } catch(e) {}
       }
 
