@@ -644,39 +644,39 @@
             <tbody>
               <tr>
                 <td>1</td>
-                <td>Inverse ✓</td>
-                <td>0.2187</td>
-                <td>36.43</td>
+                <td>Power Law ✓</td>
+                <td>0.2717</td>
+                <td>121.35</td>
               </tr>
               <tr>
                 <td>2</td>
-                <td>Power Law</td>
-                <td>0.2391</td>
-                <td>37.42</td>
+                <td>Log-Linear</td>
+                <td>0.2683</td>
+                <td>121.94</td>
               </tr>
               <tr>
                 <td>3</td>
-                <td>Log-Linear</td>
-                <td>0.1982</td>
-                <td>39.41</td>
+                <td>Exponential</td>
+                <td>0.2677</td>
+                <td>122.05</td>
               </tr>
               <tr>
                 <td>4</td>
-                <td>Exponential</td>
-                <td>0.1951</td>
-                <td>39.56</td>
+                <td>Inverse</td>
+                <td>0.2180</td>
+                <td>128.46</td>
               </tr>
               <tr>
                 <td>5</td>
                 <td>Linear</td>
-                <td>0.1617</td>
-                <td>41.10</td>
+                <td>0.2129</td>
+                <td>131.28</td>
               </tr>
               <tr>
                 <td>6</td>
                 <td>Quadratic</td>
-                <td>-0.0101</td>
-                <td>50.19</td>
+                <td>~0.0000</td>
+                <td>163.93</td>
               </tr>
             </tbody>
           </table>
@@ -696,16 +696,13 @@
                 >Negative values mean the model is worse than that
                 baseline.</strong
               >
-              When models are auto-fitted, the top models reach ~0.24 R² —
-              meaning government spending % explains roughly 24% of the
+              When models are auto-fitted across 128 countries, the top models reach ~0.27 R² —
+              meaning government spending % explains roughly 27% of the
               variation in growth. Note that
               <strong
-                >Power Law has a higher R² (0.2391) than Inverse
-                (0.2187)</strong
+                >Power Law leads both R² (0.2717) and AIC (121.35)</strong
               >
-              — it fits the data points better in isolation. But AIC penalizes
-              the extra parameter Power Law requires, so Inverse wins the AIC
-              ranking despite the lower R².
+              — it fits the data better and wins the AIC ranking outright, unlike earlier smaller-sample results where Inverse edged it out.
             </dd>
             <dt>AIC (Akaike Information Criterion)</dt>
             <dd>
@@ -713,11 +710,11 @@
               against how many parameters they use (simpler models are
               rewarded). <strong>Lower AIC = better model.</strong> Unlike R²,
               AIC is useful for comparing models even when none of them fits
-              well — it tells you which is the <em>least bad</em> option. When
-              every model is auto-fitted to its best parameters, the Inverse
-              model wins (AIC 36.43) — even beating the Power Law (37.42)
-              despite Power Law's higher R², because Inverse achieves a
-              near-equivalent fit with only 1 free parameter instead of 2.
+              well — it tells you which is the <em>least bad</em> option. With
+              128 countries, Power Law wins both metrics (AIC 121.35, R²
+              0.2717). Log-Linear and Exponential are close behind. Quadratic
+              (AIC 163.93) performs worst — consistent with the Armey Curve
+              theory having no empirical support in this dataset.
             </dd>
           </dl>
         </div>
