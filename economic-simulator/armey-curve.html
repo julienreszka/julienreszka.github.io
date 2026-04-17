@@ -494,6 +494,14 @@
           >
             ⚙ Auto-fit parameters
           </button>
+          <button
+            type="button"
+            id="download-csv-btn"
+            style="padding: 6px 14px; cursor: pointer; margin-left: 8px"
+            onclick="downloadCSV()"
+          >
+            ⬇ Download data as CSV
+          </button>
           <small class="help-text" style="display: inline; margin-left: 8px"
             >Finds β₀ and the secondary parameter that minimize AIC for the
             selected model and current data.</small
@@ -2596,6 +2604,38 @@
         });
       }
 
+      // ── Download country data as CSV ─────────────────────────────────────
+      function downloadCSV() {
+        const dataPoints = getCountryDataToShow();
+        if (!dataPoints.length) {
+          alert('No country data is loaded yet. Wait for data to finish loading or select a country group.');
+          return;
+        }
+        const timePeriod = document.getElementById('time-period-select').value;
+        const rows = [
+          ['Country', 'Income Group', 'Gov Spending (% GDP)', 'Avg GDP Growth (%)', 'Period', 'Years of Data'],
+          ...dataPoints.map((c) => {
+            const group = countryData.developed.includes(c) ? 'Developed' : 'Developing';
+            return [
+              `"${c.name}"`,
+              group,
+              c.spending,
+              c.growth,
+              `"${c.year || timePeriod}"`,
+              c.dataPoints ?? '',
+            ].join(',');
+          }),
+        ];
+        const csv = rows.join('\n');
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `armey-curve-data-${timePeriod}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+      }
+
       // ── Share pullquote on X ──────────────────────────────────────────────
       function shareQuote() {
         const quote =
@@ -2799,9 +2839,24 @@
         const developed = [];
         const developing = [];
 
+        // Countries excluded due to aid/conflict distortion: their "government
+        // spending" as reported by the World Bank includes large foreign military
+        // or humanitarian transfers that bear no relation to the domestic
+        // government-growth relationship being modelled.
+        const excludedCountryCodes = new Set([
+          "AFG", // Afghanistan — foreign military spending dominates
+          "SSD", // South Sudan — conflict / aid flows
+          "SOM", // Somalia — no functional state budget
+          "YEM", // Yemen — civil war distortion
+          "SYR", // Syria — conflict
+          "ERI", // Eritrea — data unreliable
+          "PRK", // North Korea — no credible data
+        ]);
+
         Object.entries(countryAverages).forEach(([code, data]) => {
-          // Require at least 3 years of data for reliable average
-          if (data.spending.length >= 3 && data.growth.length >= 3) {
+          // Require at least 5 years of data for a reliable average
+          if (excludedCountryCodes.has(code)) return;
+          if (data.spending.length >= 5 && data.growth.length >= 5) {
             const avgSpending =
               data.spending.reduce((a, b) => a + b) / data.spending.length;
             const avgGrowth =
