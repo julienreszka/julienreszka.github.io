@@ -3210,11 +3210,11 @@
           datasets.push({
             label: "+1 SE",
             data: upperBand,
-            borderColor: "rgba(0,123,255,0.15)",
-            backgroundColor: "rgba(0,123,255,0.08)",
+            borderColor: "rgba(0,123,255,0.40)",
+            backgroundColor: "rgba(0,123,255,0.18)",
             borderWidth: 1,
             borderDash: [4, 4],
-            fill: '+1',
+            fill: false,
             tension: 0,
             type: "line",
             pointRadius: 0,
@@ -3251,11 +3251,11 @@
           datasets.push({
             label: "-1 SE",
             data: lowerBand,
-            borderColor: "rgba(0,123,255,0.15)",
-            backgroundColor: "rgba(0,123,255,0.08)",
+            borderColor: "rgba(0,123,255,0.40)",
+            backgroundColor: "rgba(0,123,255,0.18)",
             borderWidth: 1,
             borderDash: [4, 4],
-            fill: '-1',
+            fill: 0,
             tension: 0,
             type: "line",
             pointRadius: 0,
@@ -3412,9 +3412,18 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
+              filler: {
+                propagate: false,
+              },
               legend: {
                 display: true,
                 position: "top",
+                labels: {
+                  usePointStyle: true,
+                  pointStyleWidth: 16,
+                  padding: 10,
+                  font: { size: 12 },
+                },
               },
               tooltip: {
                 callbacks: {
@@ -3475,6 +3484,8 @@
                 type: "linear",
                 title: { display: true, text: "GDP Growth Rate (%)" },
                 grid: { color: "rgba(0,0,0,0.1)" },
+                min: -10,
+                max: 20,
               },
             },
           },
