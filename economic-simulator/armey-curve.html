@@ -555,8 +555,9 @@
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-se-outliers" style="accent-color:rgba(180,100,255,0.9); width:14px; height:14px; cursor:pointer;" />
-              <span>Exclude &plusmn;1 SE outliers <span style="color:rgba(180,100,255,0.9);">&#9632;</span></span>
+              <span>Also exclude &plusmn;1 SE model-residual outliers <small style="color:rgba(180,100,255,0.6)">(exploratory)</small> <span style="color:rgba(180,100,255,0.9);">&#9632;</span></span>
             </label>
+            <div id="se-outlier-list" style="display:none; margin-top:4px; padding:6px 8px; background:rgba(180,100,255,0.08); border-left:2px solid rgba(180,100,255,0.5); border-radius:3px; font-size:0.78em; color:rgba(255,255,255,0.6); line-height:1.6;"></div>
           </div>
           <small id="country-select-help" class="help-text"
             >Real-world data from
@@ -693,6 +694,7 @@
                 <th>AIC <small>(lower = better)</small></th>
                 <th>p-value</th>
                 <th>N</th>
+                <th>Coverage <small>(±1 SE)</small></th>
               </tr>
             </thead>
             <tbody>
@@ -703,6 +705,7 @@
                 <td>53.07</td>
                 <td>&lt;0.001</td>
                 <td>113</td>
+                <td>66.4%</td>
               </tr>
               <tr>
                 <td>2</td>
@@ -711,6 +714,7 @@
                 <td>53.53</td>
                 <td>&lt;0.001</td>
                 <td>113</td>
+                <td>64.6%</td>
               </tr>
               <tr>
                 <td>3</td>
@@ -719,6 +723,7 @@
                 <td>54.21</td>
                 <td>&lt;0.001</td>
                 <td>113</td>
+                <td>64.6%</td>
               </tr>
               <tr>
                 <td>4</td>
@@ -727,6 +732,7 @@
                 <td>55.37</td>
                 <td>&lt;0.001</td>
                 <td>113</td>
+                <td>65.5%</td>
               </tr>
               <tr>
                 <td>5</td>
@@ -735,6 +741,7 @@
                 <td>57.83</td>
                 <td>&lt;0.001</td>
                 <td>113</td>
+                <td>63.7%</td>
               </tr>
               <tr>
                 <td>6</td>
@@ -743,6 +750,7 @@
                 <td>59.59</td>
                 <td>&lt;0.001</td>
                 <td>113</td>
+                <td>65.5%</td>
               </tr>
               <tr>
                 <td>7</td>
@@ -751,6 +759,7 @@
                 <td>84.98</td>
                 <td>&lt;0.001</td>
                 <td>113</td>
+                <td>66.4%</td>
               </tr>
             </tbody>
           </table>
@@ -770,13 +779,13 @@
                 >Negative values mean the model is worse than that
                 baseline.</strong
               >
-              When models are auto-fitted across 128 countries, the top models reach ~0.27 R² —
-              meaning government spending % explains roughly 27% of the
+              When models are auto-fitted across 113 countries (resource-dependent, externally-funded, conflict/fragile, and GDP-distorted countries excluded), the top models reach ~0.42 R² —
+              meaning government spending % explains roughly 42% of the
               variation in growth. Note that
               <strong
-                >Power Law leads both R² (0.2717) and AIC (121.35)</strong
+                >Power Law leads both R² (0.4222) and AIC (53.07)</strong
               >
-              — it fits the data better and wins the AIC ranking outright, unlike earlier smaller-sample results where Inverse edged it out.
+              — it fits the data better and wins the AIC ranking outright. Each exclusion category has a specific theoretical justification: resource-dependent economies grow via commodity windfalls unrelated to government size; externally-funded states have aid-distorted budgets; conflict/fragile states have suppressed growth from instability; GDP-distorted economies have artificially inflated or deflated GDP figures.
             </dd>
             <dt>AIC (Akaike Information Criterion)</dt>
             <dd>
@@ -785,9 +794,9 @@
               rewarded). <strong>Lower AIC = better model.</strong> Unlike R²,
               AIC is useful for comparing models even when none of them fits
               well — it tells you which is the <em>least bad</em> option. With
-              128 countries, Power Law wins both metrics (AIC 121.35, R²
-              0.2717). Log-Linear and Exponential are close behind. Quadratic
-              (AIC 163.93) performs worst — consistent with the Armey Curve
+              113 countries (manual exclusions), Power Law wins on AIC (53.07) with Inverse
+              and Log-Linear close behind. Quadratic
+              (AIC 84.98) performs worst — consistent with the Armey Curve
               theory having no empirical support in this dataset.
             </dd>
             <dt>p-value</dt>
@@ -3296,14 +3305,38 @@
 
       function recomputeOutliers() {
         const excludeSE = document.getElementById("exclude-se-outliers")?.checked;
-        if (!excludeSE) { outlierNames = new Set(); return; }
-        const data = getCountryDataToShow(true); // skip SE filter to avoid circularity
-        if (data.length < 3) { outlierNames = new Set(); return; }
+        const listEl = document.getElementById("se-outlier-list");
+        if (!excludeSE) {
+          outlierNames = new Set();
+          if (listEl) { listEl.style.display = "none"; listEl.innerHTML = ""; }
+          return;
+        }
+        const allData = getCountryDataToShow(true); // skip SE filter to avoid circularity
+        if (allData.length < 3) {
+          outlierNames = new Set();
+          if (listEl) { listEl.style.display = "none"; listEl.innerHTML = ""; }
+          return;
+        }
+        // Use the current model's residuals — single pass, no re-iteration
         const predictFn = getCurrentPredictFn();
-        const residuals = data.map(c => c.growth - predictFn(c.spending));
+        const residuals = allData.map(c => c.growth - predictFn(c.spending));
         const sse = residuals.reduce((s, r) => s + r * r, 0);
-        const se = Math.sqrt(sse / Math.max(data.length - 2, 1));
-        outlierNames = new Set(data.filter((c, i) => Math.abs(residuals[i]) > se).map(c => c.name));
+        const se = Math.sqrt(sse / Math.max(allData.length - 2, 1));
+        const absRes = residuals.map(r => Math.abs(r));
+        const threshold = se;
+        const outliers = allData.filter((c, i) => absRes[i] > threshold);
+        outlierNames = new Set(outliers.map(c => c.name));
+        if (listEl) {
+          if (outliers.length === 0) {
+            listEl.style.display = "none";
+            listEl.innerHTML = "";
+          } else {
+            const sortedOutliers = [...outliers].sort((a, b) => a.name.localeCompare(b.name));
+            listEl.innerHTML = `<strong style="color:rgba(180,100,255,0.9)">${outliers.length} excluded:</strong> ` +
+              sortedOutliers.map(c => c.name).join(", ");
+            listEl.style.display = "block";
+          }
+        }
       }
 
       function simulateCurveArmey(
@@ -4474,7 +4507,6 @@
         if (document.getElementById('exclude-external').checked) params.set('exext', '1');
         if (document.getElementById('exclude-conflict').checked) params.set('excon', '1');
         if (document.getElementById('exclude-gdpdistorted').checked) params.set('exgdp', '1');
-        if (document.getElementById('exclude-se-outliers').checked) params.set('exse', '1');
         const hl = document.getElementById('highlight-country-select').value;
         if (hl !== 'none') params.set('hl', hl);
         history.replaceState(null, '', '#' + params.toString());
@@ -4493,7 +4525,7 @@
           document.getElementById('exclude-external').checked = params.get('exext') === '1';
           document.getElementById('exclude-conflict').checked = params.get('excon') === '1';
           document.getElementById('exclude-gdpdistorted').checked = params.get('exgdp') === '1';
-          document.getElementById('exclude-se-outliers').checked = params.get('exse') === '1';
+          // MAD toggle is exploratory — never restore from hash
         } catch(e) {}
       }
 
