@@ -312,12 +312,10 @@
         <strong>Challenging the Armey Curve:</strong> For decades, economists
         have claimed there's an "optimal" level of government spending that
         maximizes economic growth — typically placing that sweet spot at 15–25%
-        of GDP. Cross-country World Bank data across 114 countries tells a
-        different story: a <strong>Power Law model fits with R²&nbsp;=&nbsp;0.587
-        (approx. 95% CI: 0.45–0.69)</strong>, while the traditional Quadratic
-        Armey Curve achieves only R²&nbsp;=&nbsp;0.298 — less than half the
-        explanatory power, and no evidence of the predicted upturn at low
-        spending levels. The relationship is monotonically negative across the
+        of GDP. Cross-country World Bank data across <span id="intro-n">114</span> countries tells a
+        different story: a <strong>Power Law model fits with R²&nbsp;=&nbsp;<span id="intro-r2-pl">0.587</span>
+        (approx. 95% CI: <span id="intro-ci-pl">0.45–0.69</span>)</strong>, while the traditional Quadratic
+        Armey Curve <span id="intro-quad-clause">achieves only R²&nbsp;=&nbsp;0.298 — less than half the explanatory power, and no evidence of the predicted upturn at low spending levels</span>. The relationship is monotonically negative across the
         entire observed range.
       </p>
 
@@ -4228,6 +4226,43 @@
         // Update live country count display
         const countDisplay = document.getElementById('country-count-display');
         if (countDisplay) countDisplay.textContent = `→ ${dataPoints.length} countries`;
+
+        // Update intro paragraph live figures
+        const plModel = models.find(m => m.name === 'Power Law');
+        const quadModel = models.find(m => m.name === 'Quadratic');
+        const introN = document.getElementById('intro-n');
+        const introR2Pl = document.getElementById('intro-r2-pl');
+        const introCiPl = document.getElementById('intro-ci-pl');
+        const introR2Quad = document.getElementById('intro-r2-quad');
+        if (introN) introN.textContent = dataPoints.length;
+        if (introR2Pl && plModel && plModel.metrics.r2 !== null) {
+          introR2Pl.textContent = plModel.metrics.r2.toFixed(3);
+          if (introCiPl && plModel.metrics.n !== null && plModel.metrics.n > 3) {
+            const r = Math.sqrt(plModel.metrics.r2);
+            const z = Math.atanh(r);
+            const se_z = 1 / Math.sqrt(plModel.metrics.n - 3);
+            const lo = Math.max(0, Math.tanh(z - 1.96 * se_z) ** 2);
+            const hi = Math.tanh(z + 1.96 * se_z) ** 2;
+            introCiPl.textContent = `${lo.toFixed(2)}\u2013${hi.toFixed(2)}`;
+          }
+        }
+        const introQuadClause = document.getElementById('intro-quad-clause');
+        if (introQuadClause && quadModel) {
+          const plR2 = (plModel && plModel.metrics.r2) || 0;
+          const quadR2 = Math.max(0, quadModel.metrics.r2 || 0);
+          const quadR2Str = quadR2.toFixed(3);
+          const tail = ', and no evidence of the predicted upturn at low spending levels';
+          if (quadR2 <= 0) {
+            introQuadClause.innerHTML = `achieves only R²&nbsp;=&nbsp;${quadR2Str} — no explanatory power${tail}`;
+          } else if (plR2 > 0 && quadR2 < plR2 / 2) {
+            introQuadClause.innerHTML = `achieves only R²&nbsp;=&nbsp;${quadR2Str} — less than half the explanatory power${tail}`;
+          } else if (plR2 > 0) {
+            const pct = Math.round((1 - quadR2 / plR2) * 100);
+            introQuadClause.innerHTML = `achieves only R²&nbsp;=&nbsp;${quadR2Str} — ${pct}% lower explanatory power${tail}`;
+          } else {
+            introQuadClause.innerHTML = `achieves only R²&nbsp;=&nbsp;${quadR2Str}${tail}`;
+          }
+        }
 
         container.innerHTML = `
           <h3 class="ranking-title">Model Fit Ranking (${dataPoints.length} countries)</h3>
