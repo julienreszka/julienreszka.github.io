@@ -3899,7 +3899,27 @@
           aicText = aic.toFixed(2);
         }
 
+        // Build fitted equation string
+        let equationStr = "";
+        const fmt = v => (v >= 0 ? "+" : "−") + " " + Math.abs(v).toFixed(3);
+        if (curveType === "quadratic") {
+          equationStr = `y = ${beta0.toFixed(3)} ${fmt(beta1)} x ${fmt(beta2)} x²`;
+        } else if (curveType === "free-quadratic") {
+          equationStr = `y = ${freeQuadB1 != null ? `${beta0.toFixed(3)} ${fmt(freeQuadB1)} x ${fmt(freeQuadB2)} x²` : "…"}`;
+        } else if (curveType === "linear") {
+          equationStr = `y = ${beta0.toFixed(3)} ${fmt(linearSlope)} x`;
+        } else if (curveType === "inverse") {
+          equationStr = `y = ${beta0.toFixed(3)} / x`;
+        } else if (curveType === "exponential") {
+          equationStr = `y = ${beta0.toFixed(3)} × e^(−${expDecay.toFixed(4)} x)`;
+        } else if (curveType === "power-law") {
+          equationStr = `y = ${beta0.toFixed(3)} × x^(−${powerLawExponent.toFixed(4)})`;
+        } else if (curveType === "log-linear") {
+          equationStr = `y = ${beta0.toFixed(3)} − ${logSlope.toFixed(3)} × ln(x + 1)`;
+        }
+
         document.getElementById("optimal-armey").innerHTML = `
+                <strong>Fitted equation:</strong> <code>${equationStr}</code><br>
                 <strong>Optimal Government Spending:</strong> ${optimalText}% of GDP<br>
                 <strong>Maximum Growth Rate:</strong> ${maxGrowthText}%<br>
                 ${
