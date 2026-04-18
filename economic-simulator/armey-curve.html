@@ -32,7 +32,7 @@
     />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-01-01T00:00:00Z" />
-    <meta property="article:modified_time" content="2026-04-17T00:00:00Z" />
+    <meta property="article:modified_time" content="2026-04-18T00:00:00Z" />
     <meta property="article:author" content="Julien Reszka" />
     <meta property="article:section" content="Economics" />
     <meta
@@ -87,7 +87,7 @@
               "url": "https://julienreszka.github.io"
             },
             "datePublished": "2024-01-01",
-            "dateModified": "2026-04-12",
+            "dateModified": "2026-04-18",
             "url": "https://julienreszka.github.io/economic-simulator/armey-curve.html",
             "image": "https://julienreszka.github.io/economic-simulator/armey-curve-preview.png",
             "mainEntityOfPage": {
@@ -311,10 +311,14 @@
       <p>
         <strong>Challenging the Armey Curve:</strong> For decades, economists
         have claimed there's an "optimal" level of government spending that
-        maximizes economic growth. But when you look at the real data, this
-        theory falls apart. This interactive simulator lets you compare the
-        traditional Armey curve against what the data actually shows - and the
-        results are surprising.
+        maximizes economic growth — typically placing that sweet spot at 15–25%
+        of GDP. Cross-country World Bank data across 114 countries tells a
+        different story: a <strong>Power Law model fits with R²&nbsp;=&nbsp;0.587
+        (approx. 95% CI: 0.45–0.69)</strong>, while the traditional Quadratic
+        Armey Curve achieves only R²&nbsp;=&nbsp;0.298 — less than half the
+        explanatory power, and no evidence of the predicted upturn at low
+        spending levels. The relationship is monotonically negative across the
+        entire observed range.
       </p>
 
       <!-- Interactive Simulation -->
@@ -766,7 +770,10 @@
           <p class="ranking-note">
             Each model is auto-fitted to find its best-case parameters before
             computing AIC/R² — a fair competition at peak performance. Bold row
-            = currently selected model.
+            = currently selected model. Approximate 95% CI for Power Law
+            R²&nbsp;=&nbsp;0.587 is [0.45,&nbsp;0.69], computed via Fisher&rsquo;s
+            Z transformation on the sample correlation (N&nbsp;=&nbsp;114,
+            manual exclusions applied).
           </p>
           <dl class="ranking-glossary">
             <dt>R² (R-squared)</dt>
@@ -2324,11 +2331,14 @@
             <p>
               Cross-country World Bank data consistently shows a negative
               correlation between government spending as a share of GDP and GDP
-              growth rates. Countries with smaller governments (Singapore ~17%,
-              Hong Kong ~15%) tend to outgrow high-spending peers. The
-              relationship fits a power law better than the traditional
-              quadratic Armey Curve, with an R&sup2; around 0.24 &mdash; strong
-              for a single-variable cross-country regression.
+              growth rates. Countries with smaller governments (Singapore ~15%,
+              Bangladesh ~9%) tend to outgrow high-spending peers. The
+              relationship fits a Power Law better than the traditional
+              Quadratic Armey Curve: R&sup2;&nbsp;=&nbsp;0.587
+              (approx. 95% CI: 0.45&ndash;0.69) vs. 0.298 for Quadratic &mdash;
+              across 114 countries in the 2005&ndash;2023 structural sample.
+              The CI is computed via Fisher&rsquo;s Z transformation on the
+              correlation coefficient.
             </p>
           </details>
           <details>
@@ -2395,6 +2405,27 @@
               counterexample of a country sustaining rapid growth while
               expanding government spending beyond 40% of GDP for more than a
               decade.
+            </p>
+          </details>
+          <details>
+            <summary>What about failed states and countries with very low government spending?</summary>
+            <p>
+              No country in the World Bank panel has government spending below
+              ~8% of GDP. This floor is not random: territories with near-zero
+              formal government either collapse and lose World Bank coverage, or
+              informalize so completely that GDP measurement breaks down. But
+              this absence may itself reflect a measurement and classification
+              problem rather than a hard economic floor. Hernando de Soto
+              documented in <em>The Mystery of Capital</em> that informal
+              economies in low-state territories are large and real but
+              invisible to national accounts. What international institutions
+              classify as &ldquo;state failure&rdquo; often means &ldquo;a
+              territory that permits transactions we have prohibited&rdquo; &mdash;
+              drug markets, unregulated finance, informal labour. Those
+              transactions represent real welfare gains by revealed preference.
+              The data cannot speak to the sub-8% range, and the apparent
+              evidence against very small states may partly reflect measurement
+              choices rather than economic reality.
             </p>
           </details>
           <details>
@@ -2824,16 +2855,29 @@
         };
         const activeName = curveNameMap[currentCurve];
         const rows = [
-          ['Rank', 'Model', 'R2', 'AIC', 'N', 'Coverage_1SE', 'Active'],
-          ...sorted.map((m, i) => [
-            i + 1,
-            m.name,
-            m.metrics.r2 !== null ? m.metrics.r2.toFixed(6) : '',
-            m.metrics.aic !== null ? m.metrics.aic.toFixed(4) : '',
-            m.metrics.n !== null ? m.metrics.n : '',
-            m.coverage !== null ? m.coverage.toFixed(4) : '',
-            m.name === activeName ? 'yes' : 'no',
-          ].join(',')),
+          ['Rank', 'Model', 'R2', 'CI95_lo', 'CI95_hi', 'AIC', 'p_value', 'N', 'Coverage_1SE', 'Active'],
+          ...sorted.map((m, i) => {
+            let ciLo = '', ciHi = '';
+            if (m.metrics.r2 !== null && m.metrics.r2 > 0 && m.metrics.n !== null && m.metrics.n > 3) {
+              const r = Math.sqrt(m.metrics.r2);
+              const z = Math.atanh(r);
+              const se_z = 1 / Math.sqrt(m.metrics.n - 3);
+              ciLo = Math.max(0, Math.tanh(z - 1.96 * se_z) ** 2).toFixed(4);
+              ciHi = (Math.tanh(z + 1.96 * se_z) ** 2).toFixed(4);
+            }
+            return [
+              i + 1,
+              m.name,
+              m.metrics.r2 !== null ? m.metrics.r2.toFixed(6) : '',
+              ciLo,
+              ciHi,
+              m.metrics.aic !== null ? m.metrics.aic.toFixed(4) : '',
+              m.metrics.pValue !== null ? m.metrics.pValue.toExponential(4) : '',
+              m.metrics.n !== null ? m.metrics.n : '',
+              m.coverage !== null ? m.coverage.toFixed(4) : '',
+              m.name === activeName ? 'yes' : 'no',
+            ].join(',');
+          }),
         ];
         const csv = rows.join('\n');
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -4085,10 +4129,20 @@
               : "N/A";
             const nStr = m.metrics.n !== null ? m.metrics.n : "N/A";
             const covStr = m.coverage !== null ? Math.round(m.coverage * 100) + "%" : "N/A";
+            // 95% CI via Fisher Z
+            let ciStr = "N/A";
+            if (m.metrics.r2 !== null && m.metrics.r2 > 0 && m.metrics.n !== null && m.metrics.n > 3) {
+              const r = Math.sqrt(m.metrics.r2);
+              const z = Math.atanh(r);
+              const se_z = 1 / Math.sqrt(m.metrics.n - 3);
+              const lo = Math.max(0, Math.tanh(z - 1.96 * se_z) ** 2);
+              const hi = Math.tanh(z + 1.96 * se_z) ** 2;
+              ciStr = `[${lo.toFixed(2)}, ${hi.toFixed(2)}]`;
+            }
             const isActive = m.name === activeName;
             const cls = isActive ? ' class="ranking-row-active"' : "";
             const badge = rank === 1 ? " ✓" : "";
-            return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${aicStr}</td><td>${pStr}</td><td>${nStr}</td><td>${covStr}</td></tr>`;
+            return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${ciStr}</td><td>${aicStr}</td><td>${pStr}</td><td>${nStr}</td><td>${covStr}</td></tr>`;
           })
           .join("");
 
@@ -4145,6 +4199,7 @@
               <th>#</th>
               <th>Model</th>
               <th>R²</th>
+              <th>95% CI <small>(R²)</small></th>
               <th>AIC <small>(lower = better)</small></th>
               <th>p-value</th>
               <th>N</th>
@@ -4156,6 +4211,8 @@
           <dl class="ranking-glossary">
             <dt>R² (R-squared)</dt>
             <dd>Measures how well the curve explains the variation in growth rates across countries. A perfect fit = 1.0. A score of 0 means the model is no better than just predicting the average growth rate for every country. ${r2Commentary}</dd>
+            <dt>95% CI (Confidence Interval for R²)</dt>
+            <dd>The 95% confidence interval for R², computed via Fisher&rsquo;s Z transformation on the correlation coefficient: r&nbsp;=&nbsp;&radic;R², Z&nbsp;=&nbsp;atanh(r), SE(Z)&nbsp;=&nbsp;1/&radic;(N&minus;3), then back-transformed to R². A wide interval means the sample size is small relative to the noise; a narrow interval means the estimate is precise. Intervals that don&rsquo;t include zero confirm the relationship is unlikely to be a statistical artifact.</dd>
             <dt>AIC (Akaike Information Criterion)</dt>
             <dd>Ranks competing models by balancing how well they fit the data against how many parameters they use (simpler models are rewarded). <strong>Lower AIC = better model.</strong> Unlike R², AIC is useful for comparing models even when none of them fits well — it tells you which is the <em>least bad</em> option. ${aicCommentary}</dd>
             <dt>p-value</dt>
