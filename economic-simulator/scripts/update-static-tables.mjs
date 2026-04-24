@@ -50,7 +50,37 @@ const INTERP = {
   energyUse: "Energy-intensive economies produce more \u2014 reflects industrialisation stage",
   elecKwh: "Modern electricity infrastructure proxy correlated with productive capacity",
   renew: "Renewable energy share \u2014 positive slope reflects energy diversification and long-run efficiency gains",
+  totVol: "Terms-of-trade volatility (SD of annual % changes) \u2014 exogenous external shock exposure; uncorrelated with development cluster, captures commodity-price risk channel",
 };
+
+// ---------------------------------------------------------------------------
+// ToT volatility helper (SD of year-over-year % changes)
+// ---------------------------------------------------------------------------
+function totVolatility(raw, dateStart, dateEnd) {
+  const byCountry = {};
+  for (const item of raw) {
+    if (item.value === null || item.value === undefined) continue;
+    const y = +item.date;
+    if (y < dateStart - 1 || y > dateEnd) continue;
+    const c = item.countryiso3code;
+    if (!c) continue;
+    if (!byCountry[c]) byCountry[c] = {};
+    byCountry[c][y] = item.value;
+  }
+  const out = {};
+  for (const [c, byYear] of Object.entries(byCountry)) {
+    const years = Object.keys(byYear).map(Number).sort((a, b) => a - b);
+    const changes = [];
+    for (let i = 1; i < years.length; i++) {
+      const prev = byYear[years[i - 1]], curr = byYear[years[i]];
+      if (prev > 0 && curr > 0) changes.push((curr - prev) / prev * 100);
+    }
+    if (changes.length < 5) continue;
+    const mu = changes.reduce((s, v) => s + v, 0) / changes.length;
+    out[c] = Math.sqrt(changes.reduce((s, v) => s + (v - mu) ** 2, 0) / changes.length);
+  }
+  return out;
+}
 
 // ---------------------------------------------------------------------------
 // Cache helpers (read-only — run ceiling-r2.mjs first to populate)
@@ -149,6 +179,7 @@ const milRaw = readCache("MS.MIL.XPND.GD.ZS");
 const energyRaw = readCache("EG.USE.PCAP.KG.OE");
 const kwhRaw = readCache("EG.USE.ELEC.KH.PC");
 const renewRaw = readCache("EG.FEC.RNEW.ZS");
+const totRaw   = readCache("TT.PRI.MRCH.XD.WD");
 
 const actualCodes = new Set(meta.filter(c => c.region?.id !== "NA").map(c => c.id));
 
@@ -180,6 +211,7 @@ const milAvg = periodAvg(milRaw);
 const energyAvg = periodAvg(energyRaw);
 const kwhAvg = periodAvg(kwhRaw);
 const renewAvg = periodAvg(renewRaw);
+const totVolMap = totVolatility(totRaw, DATE_START, DATE_END);
 
 // Build dataset
 const countries = {};
@@ -237,6 +269,7 @@ for (const [code, d] of Object.entries(countries)) {
     energyUse: get(energyAvg, code),
     elecKwh: get(kwhAvg, code),
     renew: get(renewAvg, code),
+    totVol: totVolMap[code] ?? null,
   });
 }
 
@@ -282,6 +315,7 @@ const candidates = [
   { label: "Electricity access % population", key: "elec" },
   { label: "Energy use per capita (kg oil eq.)", key: "energyUse" },
   { label: "Electric power consumption (kWh/cap)", key: "elecKwh" },
+  { label: "ToT volatility (SD of annual % changes)", key: "totVol" },
 ];
 
 let stepResiduals = dataPoints.map(c => c.growth - armeyFn(c.spending));

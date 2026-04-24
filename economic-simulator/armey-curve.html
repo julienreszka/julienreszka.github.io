@@ -945,9 +945,9 @@
         <div style="margin-top: 24px;">
           <h3 style="font-size: 1.05em; margin-bottom: 6px;">What else explains growth beyond government spending?</h3>
           <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
-            Greedy stepwise regression across <!-- STEPWISE-N-CANDIDATES -->26<!-- /STEPWISE-N-CANDIDATES --> candidate variables (macro, governance, human capital, finance, structural) added one at a time to the power-law spending baseline.
-            Each row shows the single best remaining variable at that step. The ceiling — stacking all <!-- STEPWISE-N-ENTERED -->17<!-- /STEPWISE-N-ENTERED --> variables that clear the contribution threshold — is R²&nbsp;≈&nbsp;<!-- STEPWISE-CEILING -->0.669<!-- /STEPWISE-CEILING -->.
-            The remaining <!-- STEPWISE-UNEXPLAINED -->~33%<!-- /STEPWISE-UNEXPLAINED --> is not recoverable from standard World Bank data.
+            Greedy stepwise regression across <!-- STEPWISE-N-CANDIDATES -->27<!-- /STEPWISE-N-CANDIDATES --> candidate variables (macro, governance, human capital, finance, structural) added one at a time to the power-law spending baseline.
+            Each row shows the single best remaining variable at that step. The ceiling — stacking all <!-- STEPWISE-N-ENTERED -->17<!-- /STEPWISE-N-ENTERED --> variables that clear the contribution threshold — is R²&nbsp;≈&nbsp;<!-- STEPWISE-CEILING -->0.680<!-- /STEPWISE-CEILING -->.
+            The remaining <!-- STEPWISE-UNEXPLAINED -->~32%<!-- /STEPWISE-UNEXPLAINED --> is not recoverable from standard World Bank data.
             Notably, <strong style="color:rgba(255,255,255,0.8)">all 6 WGI governance indicators dropped out again</strong> — no marginal gain after income, investment, education and population are controlled.
             Military spending, R&amp;D, and remittances all entered — for structural reasons explained in the interpretation column.
           </p>
@@ -1012,124 +1012,124 @@
               </tr>
               <tr>
                 <td style="padding:3px 8px">5</td>
-                <td style="padding:3px 8px">Domestic credit (private) % GDP</td>
-                <td style="padding:3px 8px">+0.0072</td>
-                <td style="padding:3px 8px">0.6005</td>
+                <td style="padding:3px 8px">ToT volatility (SD of annual % changes)</td>
+                <td style="padding:3px 8px">+0.0175</td>
+                <td style="padding:3px 8px">0.6107</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">−0.003</td>
-                <td style="padding:3px 8px">Financial depth — but negative slope suggests over-financialisation drag at high levels</td>
+                <td style="padding:3px 8px">−0.028</td>
+                <td style="padding:3px 8px">Terms-of-trade volatility (SD of annual % changes) — exogenous external shock exposure; uncorrelated with development cluster, captures commodity-price risk channel</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">6</td>
-                <td style="padding:3px 8px">Tertiary enrollment %</td>
-                <td style="padding:3px 8px">+0.0174</td>
-                <td style="padding:3px 8px">0.6179</td>
-                <td style="padding:3px 8px">110</td>
-                <td style="padding:3px 8px">+0.008</td>
-                <td style="padding:3px 8px">Human capital stock — higher education feeds productivity growth</td>
+                <td style="padding:3px 8px">Domestic credit (private) % GDP</td>
+                <td style="padding:3px 8px">+0.0138</td>
+                <td style="padding:3px 8px">0.6245</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">−0.004</td>
+                <td style="padding:3px 8px">Financial depth — but negative slope suggests over-financialisation drag at high levels</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">7</td>
-                <td style="padding:3px 8px">ln(GDP/cap) — convergence</td>
-                <td style="padding:3px 8px">+0.0073</td>
-                <td style="padding:3px 8px">0.6252</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">−0.095</td>
-                <td style="padding:3px 8px">Beta-convergence: poorer countries grow faster conditional on spending</td>
+                <td style="padding:3px 8px">Tertiary enrollment %</td>
+                <td style="padding:3px 8px">+0.0117</td>
+                <td style="padding:3px 8px">0.6363</td>
+                <td style="padding:3px 8px">110</td>
+                <td style="padding:3px 8px">+0.006</td>
+                <td style="padding:3px 8px">Human capital stock — higher education feeds productivity growth</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">8</td>
-                <td style="padding:3px 8px">WGI Regulatory Quality</td>
-                <td style="padding:3px 8px">+0.0087</td>
-                <td style="padding:3px 8px">0.6339</td>
+                <td style="padding:3px 8px">ln(GDP/cap) — convergence</td>
+                <td style="padding:3px 8px">+0.0077</td>
+                <td style="padding:3px 8px">0.6439</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.177</td>
-                <td style="padding:3px 8px">Business-friendly regulation supports productive entry and exit</td>
+                <td style="padding:3px 8px">−0.097</td>
+                <td style="padding:3px 8px">Beta-convergence: poorer countries grow faster conditional on spending</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">9</td>
-                <td style="padding:3px 8px">FDI inflows % GDP</td>
-                <td style="padding:3px 8px">+0.0047</td>
-                <td style="padding:3px 8px">0.6387</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.011</td>
-                <td style="padding:3px 8px">Foreign investment brings capital and technology transfer</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">10</td>
-                <td style="padding:3px 8px">Renewable energy share %</td>
-                <td style="padding:3px 8px">+0.0055</td>
-                <td style="padding:3px 8px">0.6442</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.005</td>
-                <td style="padding:3px 8px">Renewable energy share — positive slope reflects energy diversification and long-run efficiency gains</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">11</td>
-                <td style="padding:3px 8px">Tax revenue % GDP</td>
-                <td style="padding:3px 8px">+0.0039</td>
-                <td style="padding:3px 8px">0.6481</td>
-                <td style="padding:3px 8px">111</td>
-                <td style="padding:3px 8px">+0.018</td>
-                <td style="padding:3px 8px">Fiscal capacity signal; positive slope may capture institutional quality</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">12</td>
-                <td style="padding:3px 8px">WGI Voice &amp; Accountability</td>
-                <td style="padding:3px 8px">+0.0035</td>
-                <td style="padding:3px 8px">0.6516</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">−0.110</td>
-                <td style="padding:3px 8px">Accountability and freedom of expression correlate with durable institutions</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">13</td>
                 <td style="padding:3px 8px">Remittances received % GDP</td>
-                <td style="padding:3px 8px">+0.0050</td>
-                <td style="padding:3px 8px">0.6566</td>
+                <td style="padding:3px 8px">+0.0095</td>
+                <td style="padding:3px 8px">0.6534</td>
                 <td style="padding:3px 8px">112</td>
-                <td style="padding:3px 8px">−0.017</td>
+                <td style="padding:3px 8px">−0.023</td>
                 <td style="padding:3px 8px">Negative slope: remittances flow to slow-growing economies as a safety valve, not a growth engine</td>
               </tr>
               <tr>
-                <td style="padding:3px 8px">14</td>
-                <td style="padding:3px 8px">Trade openness % GDP</td>
+                <td style="padding:3px 8px">10</td>
+                <td style="padding:3px 8px">Tax revenue % GDP</td>
+                <td style="padding:3px 8px">+0.0066</td>
+                <td style="padding:3px 8px">0.6601</td>
+                <td style="padding:3px 8px">111</td>
+                <td style="padding:3px 8px">+0.024</td>
+                <td style="padding:3px 8px">Fiscal capacity signal; positive slope may capture institutional quality</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">11</td>
+                <td style="padding:3px 8px">FDI inflows % GDP</td>
+                <td style="padding:3px 8px">+0.0041</td>
+                <td style="padding:3px 8px">0.6642</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.010</td>
+                <td style="padding:3px 8px">Foreign investment brings capital and technology transfer</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">12</td>
+                <td style="padding:3px 8px">Renewable energy share %</td>
                 <td style="padding:3px 8px">+0.0042</td>
-                <td style="padding:3px 8px">0.6608</td>
-                <td style="padding:3px 8px">105</td>
-                <td style="padding:3px 8px">+0.002</td>
-                <td style="padding:3px 8px">More open economies tend to grow faster</td>
+                <td style="padding:3px 8px">0.6684</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.004</td>
+                <td style="padding:3px 8px">Renewable energy share — positive slope reflects energy diversification and long-run efficiency gains</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">13</td>
+                <td style="padding:3px 8px">Current account balance % GDP</td>
+                <td style="padding:3px 8px">+0.0029</td>
+                <td style="padding:3px 8px">0.6713</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.014</td>
+                <td style="padding:3px 8px">Surplus countries save and invest more domestically</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">14</td>
+                <td style="padding:3px 8px">WGI Voice &amp; Accountability</td>
+                <td style="padding:3px 8px">+0.0017</td>
+                <td style="padding:3px 8px">0.6729</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">−0.077</td>
+                <td style="padding:3px 8px">Accountability and freedom of expression correlate with durable institutions</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">15</td>
-                <td style="padding:3px 8px">WGI Control of Corruption</td>
-                <td style="padding:3px 8px">+0.0041</td>
-                <td style="padding:3px 8px">0.6649</td>
+                <td style="padding:3px 8px">WGI Regulatory Quality</td>
+                <td style="padding:3px 8px">+0.0033</td>
+                <td style="padding:3px 8px">0.6763</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">−0.064</td>
-                <td style="padding:3px 8px">Clean institutions lower transaction costs and attract capital</td>
+                <td style="padding:3px 8px">+0.109</td>
+                <td style="padding:3px 8px">Business-friendly regulation supports productive entry and exit</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">16</td>
-                <td style="padding:3px 8px">Life expectancy</td>
-                <td style="padding:3px 8px">+0.0029</td>
-                <td style="padding:3px 8px">0.6678</td>
+                <td style="padding:3px 8px">WGI Control of Corruption</td>
+                <td style="padding:3px 8px">+0.0020</td>
+                <td style="padding:3px 8px">0.6782</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.012</td>
-                <td style="padding:3px 8px">Healthy workers are more productive</td>
+                <td style="padding:3px 8px">−0.075</td>
+                <td style="padding:3px 8px">Clean institutions lower transaction costs and attract capital</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">17</td>
-                <td style="padding:3px 8px">WGI Political Stability</td>
-                <td style="padding:3px 8px">+0.0014</td>
-                <td style="padding:3px 8px">0.6692</td>
+                <td style="padding:3px 8px">Life expectancy</td>
+                <td style="padding:3px 8px">+0.0017</td>
+                <td style="padding:3px 8px">0.6799</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">−0.077</td>
-                <td style="padding:3px 8px">Political predictability reduces uncertainty and investment horizon</td>
+                <td style="padding:3px 8px">+0.009</td>
+                <td style="padding:3px 8px">Healthy workers are more productive</td>
               </tr>
               <tr style="color:rgba(255,255,255,0.35); font-style:italic;">
                 <td style="padding:3px 8px">—</td>
-                <td style="padding:3px 8px">Current account balance % GDP, Inflation %, WGI Rule of Law, WGI Govt Effectiveness, Secondary school enrollment %, Urban population growth %, Electricity access % population, Energy use per capita (kg oil eq.), Electric power consumption (kWh/cap)</td>
+                <td style="padding:3px 8px">Trade openness % GDP, Inflation %, WGI Rule of Law, WGI Govt Effectiveness, WGI Political Stability, Secondary school enrollment %, Urban population growth %, Electricity access % population, Energy use per capita (kg oil eq.), Electric power consumption (kWh/cap)</td>
                 <td style="padding:3px 8px">&lt;0.003 each</td>
                 <td style="padding:3px 8px">—</td>
                 <td style="padding:3px 8px">—</td>
@@ -1139,7 +1139,7 @@
               <!-- STEPWISE-ROWS-END -->
             </tbody>
           </table>
-          <small style="color:rgba(255,255,255,0.4)">113 countries, 2005–2023, power-law baseline, standard exclusions. Greedy stepwise over <!-- STEPWISE-N-CANDIDATES -->26<!-- /STEPWISE-N-CANDIDATES --> candidate World Bank indicators. Threshold: marginal R² &gt; 0.003. Source: <code>scripts/ceiling-r2.mjs</code>. Updated by <code>scripts/update-static-tables.mjs</code>.</small>
+          <small style="color:rgba(255,255,255,0.4)">113 countries, 2005–2023, power-law baseline, standard exclusions. Greedy stepwise over <!-- STEPWISE-N-CANDIDATES -->27<!-- /STEPWISE-N-CANDIDATES --> candidate World Bank indicators. Threshold: marginal R² &gt; 0.003. Source: <code>scripts/ceiling-r2.mjs</code>. Updated by <code>scripts/update-static-tables.mjs</code>.</small>
         </div>
 
         <div id="residual-income-section" style="margin-top: 24px;">
@@ -1149,8 +1149,8 @@
           </h3>
           <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
             The spending curve above predicts a growth rate for each country. The <strong style="color:rgba(255,255,255,0.85)">residual</strong> is how far off that prediction is (actual − fitted).
-            These charts ask: <em>do R&amp;D, military expenditure, capital formation, population growth, domestic credit, tertiary enrollment, and initial income systematically predict the errors?</em>
-            All seven are controlled jointly via seven-variable OLS. Each chart shows the <strong style="color:rgba(255,255,255,0.85)">partial slope</strong> — the effect of one variable holding the other six at their means.
+            These charts ask: <em>do R&amp;D, military expenditure, capital formation, population growth, domestic credit, tertiary enrollment, initial income, and terms-of-trade volatility systematically predict the errors?</em>
+            All eight are controlled jointly via eight-variable OLS. Each chart shows the <strong style="color:rgba(255,255,255,0.85)">partial slope</strong> — the effect of one variable holding the other seven at their means.
             A <strong style="color:rgba(255,255,255,0.85)">positive capital formation slope</strong> reflects the investment-growth channel.
             A <strong style="color:rgba(255,255,255,0.85)">positive domestic credit slope</strong> would indicate financial depth matters beyond the spending level.
             A <strong style="color:rgba(255,255,255,0.85)">negative income slope</strong> (poorer countries grow faster conditional on spending) is expected textbook beta-convergence.
@@ -1171,6 +1171,10 @@
           <div class="chart-container" role="img" aria-labelledby="residual-popgrow-chart-label" style="margin-top:16px">
             <canvas id="residualPopGrowChart" aria-label="Residuals vs population growth scatter plot"></canvas>
             <div id="residual-popgrow-chart-label" class="sr-only">Scatter plot of Armey model residuals against population growth %</div>
+          </div>
+          <div class="chart-container" role="img" aria-labelledby="residual-totvol-chart-label" style="margin-top:16px">
+            <canvas id="residualTotVolChart" aria-label="Residuals vs terms-of-trade volatility scatter plot"></canvas>
+            <div id="residual-totvol-chart-label" class="sr-only">Scatter plot of Armey model residuals against terms-of-trade volatility (SD of annual % changes)</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-credit-chart-label" style="margin-top:16px">
             <canvas id="residualCreditChart" aria-label="Residuals vs domestic credit scatter plot"></canvas>
@@ -3506,6 +3510,12 @@
           );
           const tertiaryData = await tertiaryResponse.json();
 
+          // Fetch merchandise terms-of-trade index — for Stage 2 ToT volatility control
+          const totResponse = await fetch(
+            `https://api.worldbank.org/v2/country/all/indicator/TT.PRI.MRCH.XD.WD?date=1994:2023&format=json&per_page=20000`
+          );
+          const totData = await totResponse.json();
+
           // Store raw data globally for processing with different time periods
           window.rawSpendingData = spendingData[1];
           window.rawGrowthData = growthData[1];
@@ -3516,6 +3526,7 @@
           window.rawPopGrowData = popGrowData[1];
           window.rawCreditData = creditData[1];
           window.rawTertiaryData = tertiaryData[1];
+          window.rawTotData = totData[1];
 
           // Process with default time period
           processDataForCurrentPeriod();
@@ -3559,7 +3570,8 @@
           window.rawCapFormData,
           window.rawPopGrowData,
           window.rawCreditData,
-          window.rawTertiaryData
+          window.rawTertiaryData,
+          window.rawTotData
         );
 
         // Update country data
@@ -3613,6 +3625,32 @@
         }
       }
 
+      function totVolatility(raw, dateStart, dateEnd) {
+        const byCountry = {};
+        for (const item of raw) {
+          if (item.value === null || item.value === undefined) continue;
+          const y = +item.date;
+          if (y < dateStart - 1 || y > dateEnd) continue;
+          const c = item.countryiso3code;
+          if (!c) continue;
+          if (!byCountry[c]) byCountry[c] = {};
+          byCountry[c][y] = item.value;
+        }
+        const out = {};
+        for (const [c, byYear] of Object.entries(byCountry)) {
+          const years = Object.keys(byYear).map(Number).sort((a, b) => a - b);
+          const changes = [];
+          for (let i = 1; i < years.length; i++) {
+            const prev = byYear[years[i - 1]], curr = byYear[years[i]];
+            if (prev > 0 && curr > 0) changes.push((curr - prev) / prev * 100);
+          }
+          if (changes.length < 5) continue;
+          const mu = changes.reduce((s, v) => s + v, 0) / changes.length;
+          out[c] = Math.sqrt(changes.reduce((s, v) => s + (v - mu) ** 2, 0) / changes.length);
+        }
+        return out;
+      }
+
       function processWorldBankData(
         spendingRaw,
         growthRaw,
@@ -3623,9 +3661,11 @@
         capFormRaw = null,
         popGrowRaw = null,
         creditRaw = null,
-        tertiaryRaw = null
+        tertiaryRaw = null,
+        rawTotData = null
       ) {
         const countryAverages = {};
+        const totVolMap = rawTotData ? totVolatility(rawTotData, dateRange.start, dateRange.end) : {};
 
         // Calculate averages for spending data
         if (spendingRaw) {
@@ -3899,6 +3939,7 @@
               popGrow: (data.popGrow && data.popGrow.length > 0) ? data.popGrow.reduce((a, b) => a + b) / data.popGrow.length : null,
               credit: (data.credit && data.credit.length > 0) ? data.credit.reduce((a, b) => a + b) / data.credit.length : null,
               tertiary: (data.tertiary && data.tertiary.length > 0) ? data.tertiary.reduce((a, b) => a + b) / data.tertiary.length : null,
+              totVol: totVolMap[code] ?? null,
               resourceDependent: resourceDependentCodes.has(code),
               externallyFunded: externallyFundedCodes.has(code),
               conflictFragile: conflictFragileCodes.has(code),
@@ -5147,7 +5188,7 @@
         const section = document.getElementById("residual-income-section");
         const statsEl = document.getElementById("residual-income-stats");
         const dataPoints = getCountryDataToShow();
-        // Stage 2 requires all 7 controls present
+        // Stage 2 requires all 8 controls present
         const withAll = dataPoints.filter(c =>
           c.logGdpPcap !== null && c.logGdpPcap !== undefined &&
           c.rd !== null && c.rd !== undefined &&
@@ -5155,7 +5196,8 @@
           c.capForm !== null && c.capForm !== undefined &&
           c.popGrow !== null && c.popGrow !== undefined &&
           c.credit !== null && c.credit !== undefined &&
-          c.tertiary !== null && c.tertiary !== undefined
+          c.tertiary !== null && c.tertiary !== undefined &&
+          c.totVol !== null && c.totVol !== undefined
         );
 
         if (withAll.length < 5) return;
@@ -5169,12 +5211,13 @@
         const xsPopGrow  = withAll.map(c => c.popGrow);
         const xsCredit   = withAll.map(c => c.credit);
         const xsTertiary = withAll.map(c => c.tertiary);
+        const xsTotVol   = withAll.map(c => c.totVol);
         const n = withAll.length;
 
-        // Seven-variable OLS: residual = a + b1*R&D + b2*Mil + b3*CapForm + b4*PopGrow + b5*Credit + b6*Tertiary + b7*log(GDPpc)
-        const fit = olsK([xsRd, xsMil, xsCapForm, xsPopGrow, xsCredit, xsTertiary, xsInc], residuals);
-        const [bRd, bMil, bCapForm, bPopGrow, bCredit, bTertiary, bIncome] = fit.betas;
-        const { intercept, fitted, means: [mRd, mMil, mCapForm, mPopGrow, mCredit, mTertiary, mInc] } = fit;
+        // Eight-variable OLS: residual = a + b1*R&D + b2*Mil + b3*CapForm + b4*PopGrow + b5*TotVol + b6*Credit + b7*Tertiary + b8*log(GDPpc)
+        const fit = olsK([xsRd, xsMil, xsCapForm, xsPopGrow, xsTotVol, xsCredit, xsTertiary, xsInc], residuals);
+        const [bRd, bMil, bCapForm, bPopGrow, bTotVol, bCredit, bTertiary, bIncome] = fit.betas;
+        const { intercept, fitted, means: [mRd, mMil, mCapForm, mPopGrow, mTotVol, mCredit, mTertiary, mInc] } = fit;
 
         const meanY = residuals.reduce((s, v) => s + v, 0) / n;
         const ssTot = residuals.reduce((s, v) => s + (v - meanY) ** 2, 0);
@@ -5187,8 +5230,8 @@
           betas.forEach((b, i) => { y += b * (i === idx ? x : means[i]); });
           return y;
         };
-        const bs   = [bRd, bMil, bCapForm, bPopGrow, bCredit, bTertiary, bIncome];
-        const ms   = [mRd, mMil, mCapForm, mPopGrow, mCredit, mTertiary, mInc];
+        const bs   = [bRd, bMil, bCapForm, bPopGrow, bTotVol, bCredit, bTertiary, bIncome];
+        const ms   = [mRd, mMil, mCapForm, mPopGrow, mTotVol, mCredit, mTertiary, mInc];
 
         if (section) section.style.display = "block";
 
@@ -5234,13 +5277,23 @@
           ],
         });
         buildResidualScatter({
+          canvasId: "residualTotVolChart",
+          withSubset: withAll, residuals,
+          xValueOf: c => c.totVol,
+          xLabel: "Terms-of-trade volatility (SD of annual % changes)",
+          partialLineFn: (xMin, xMax) => [
+            { x: xMin, y: pv(bs, ms, 4, xMin) },
+            { x: xMax, y: pv(bs, ms, 4, xMax) },
+          ],
+        });
+        buildResidualScatter({
           canvasId: "residualCreditChart",
           withSubset: withAll, residuals,
           xValueOf: c => c.credit,
           xLabel: "Domestic credit to private sector (% GDP, period avg)",
           partialLineFn: (xMin, xMax) => [
-            { x: xMin, y: pv(bs, ms, 4, xMin) },
-            { x: xMax, y: pv(bs, ms, 4, xMax) },
+            { x: xMin, y: pv(bs, ms, 5, xMin) },
+            { x: xMax, y: pv(bs, ms, 5, xMax) },
           ],
         });
         buildResidualScatter({
@@ -5249,8 +5302,8 @@
           xValueOf: c => c.tertiary,
           xLabel: "Tertiary enrollment (%, gross, period avg)",
           partialLineFn: (xMin, xMax) => [
-            { x: xMin, y: pv(bs, ms, 5, xMin) },
-            { x: xMax, y: pv(bs, ms, 5, xMax) },
+            { x: xMin, y: pv(bs, ms, 6, xMin) },
+            { x: xMax, y: pv(bs, ms, 6, xMax) },
           ],
         });
         buildResidualScatter({
@@ -5259,20 +5312,20 @@
           xValueOf: c => c.logGdpPcap,
           xLabel: "ln(GDP per capita, period start)",
           partialLineFn: (xMin, xMax) => [
-            { x: xMin, y: pv(bs, ms, 6, xMin) },
-            { x: xMax, y: pv(bs, ms, 6, xMax) },
+            { x: xMin, y: pv(bs, ms, 7, xMin) },
+            { x: xMax, y: pv(bs, ms, 7, xMax) },
           ],
         });
 
         // Interpretation of income coefficient
         const convergenceNote = bIncome < -0.05
-          ? `A <strong>negative income coefficient (${bIncome.toFixed(3)})</strong> confirms conditional convergence: poorer countries grow faster after controlling for spending and all six Stage 2 variables.`
+          ? `A <strong>negative income coefficient (${bIncome.toFixed(3)})</strong> confirms conditional convergence: poorer countries grow faster after controlling for spending and all seven Stage 2 variables.`
           : bIncome > 0.05
-          ? `A <strong>positive income coefficient (${bIncome.toFixed(3)})</strong> suggests divergence: richer countries still outperform after controlling for all seven Stage 2 variables.`
-          : `The income coefficient (${bIncome.toFixed(3)}) is near zero after controlling for all seven Stage 2 variables.`;
+          ? `A <strong>positive income coefficient (${bIncome.toFixed(3)})</strong> suggests divergence: richer countries still outperform after controlling for all eight Stage 2 variables.`
+          : `The income coefficient (${bIncome.toFixed(3)}) is near zero after controlling for all eight Stage 2 variables.`;
 
         // Per-model Stage 2 tables: one per control variable, all using the
-        // same joint seven-variable OLS for ranking.
+        // same joint eight-variable OLS for ranking.
         const modelStageTables = (() => {
           if (!lastRankingModels.length) return "";
           const rows = lastRankingModels.map(m => {
@@ -5281,7 +5334,7 @@
             const mRes = res.reduce((s, v) => s + v, 0) / n;
             const ssTotRes = res.reduce((s, v) => s + (v - mRes) ** 2, 0);
 
-            const fitM = olsK([xsRd, xsMil, xsCapForm, xsPopGrow, xsCredit, xsTertiary, xsInc], res);
+            const fitM = olsK([xsRd, xsMil, xsCapForm, xsPopGrow, xsTotVol, xsCredit, xsTertiary, xsInc], res);
             const ssResM = res.reduce((s, v, i) => s + (v - fitM.fitted[i]) ** 2, 0);
             const r2jointM = ssTotRes === 0 ? 0 : Math.max(0, 1 - ssResM / ssTotRes);
 
@@ -5293,6 +5346,7 @@
             const r2popGrow  = univariateR2(xsPopGrow,  res, ssTotRes);
             const r2credit   = univariateR2(xsCredit,   res, ssTotRes);
             const r2tertiary = univariateR2(xsTertiary, res, ssTotRes);
+            const r2totVol   = univariateR2(xsTotVol,   res, ssTotRes);
 
             // Combined R² — direct method: R²(actual vs spending_pred + stage2_fitted).
             const subActuals    = withAll.map(c => c.growth);
@@ -5305,7 +5359,7 @@
             const combJoint     = subSsTot === 0 ? 0 : Math.max(0, 1 - combSsRes / subSsTot);
             const aicSub        = subActuals.length * Math.log(subSsRes / subActuals.length) + 2 * (m.k ?? 2);
 
-            return { name: m.name, r2s: r2sSub, r2rd, r2mil, r2capForm, r2popGrow, r2credit, r2tertiary, r2income, combJoint, aicSub };
+            return { name: m.name, r2s: r2sSub, r2rd, r2mil, r2capForm, r2popGrow, r2credit, r2tertiary, r2income, r2totVol, combJoint, aicSub };
           }).filter(Boolean);
 
           const currentName = {
@@ -5331,23 +5385,26 @@
           const tableMil      = mkTable('R²: spending + military (partial)',                'R²(military|spending)',       'r2mil');
           const tableCapForm  = mkTable('R²: spending + capital formation (partial)',       'R²(cap.form|spending)',       'r2capForm');
           const tablePopGrow  = mkTable('R²: spending + population growth (partial)',       'R²(pop.grow|spending)',       'r2popGrow');
+          const tableToTVol   = mkTable('R²: spending + ToT volatility (partial)',          'R²(ToT vol|spending)',        'r2totVol');
           const tableCredit   = mkTable('R²: spending + domestic credit (partial)',         'R²(credit|spending)',         'r2credit');
           const tableTertiary = mkTable('R²: spending + tertiary enrollment (partial)',     'R²(tertiary|spending)',       'r2tertiary');
           const tableIncome   = mkTable('R²: spending + income (partial)',                  'R²(income|spending)',         'r2income');
 
-          return `${tableRd}<br>${tableMil}<br>${tableCapForm}<br>${tablePopGrow}<br>${tableCredit}<br>${tableTertiary}<br>${tableIncome}
-          <small style="color:rgba(255,255,255,0.4)">Combined R² = R²(actual growth vs spending-prediction + joint OLS on all seven controls) on the joint subset. Partial columns show each control's individual contribution. All tables share the same ranking. N=${n} (countries with all seven controls). Bold row = current model.</small>`;
+          return `${tableRd}<br>${tableMil}<br>${tableCapForm}<br>${tablePopGrow}<br>${tableToTVol}<br>${tableCredit}<br>${tableTertiary}<br>${tableIncome}
+          <small style="color:rgba(255,255,255,0.4)">Combined R² = R²(actual growth vs spending-prediction + joint OLS on all eight controls) on the joint subset. Partial columns show each control's individual contribution. All tables share the same ranking. N=${n} (countries with all eight controls). Bold row = current model.</small>`;
         })();
 
         if (statsEl) {
           statsEl.innerHTML = `
             <strong>Stage 2 — Which model fits best?</strong><br>
             ${modelStageTables}
-            <br>Current model: joint R²(7 controls | spending) = <strong>${r2joint.toFixed(3)}</strong> &nbsp;|&nbsp;
+            <br><em style="font-size:0.8em; color:rgba(255,255,255,0.45)">Note: joint R² below is the share of <strong>residual</strong> variance explained by the 8 controls (denominator = residual variance, N≈${n}). It is <strong>not</strong> directly comparable to the cumulative R² in the stepwise table above, which is measured against <strong>total growth</strong> variance on N=113. The directly comparable figure is the "Combined R²" column in each per-model table above.</em><br>
+            Current model: joint R²(8 controls | residual) = <strong>${r2joint.toFixed(3)}</strong> &nbsp;|&nbsp;
             β(R&D) = <strong>${bRd.toFixed(3)}</strong> &nbsp;|&nbsp;
             β(military) = <strong>${bMil.toFixed(3)}</strong> &nbsp;|&nbsp;
             β(capForm) = <strong>${bCapForm.toFixed(3)}</strong> &nbsp;|&nbsp;
             β(popGrow) = <strong>${bPopGrow.toFixed(3)}</strong> &nbsp;|&nbsp;
+            β(ToT vol) = <strong>${bTotVol.toFixed(3)}</strong> &nbsp;|&nbsp;
             β(credit) = <strong>${bCredit.toFixed(3)}</strong> &nbsp;|&nbsp;
             β(tertiary) = <strong>${bTertiary.toFixed(3)}</strong> &nbsp;|&nbsp;
             β(income) = <strong>${bIncome.toFixed(3)}</strong> &nbsp;|&nbsp;
@@ -5361,7 +5418,7 @@
               Inverse Law is monotonically decreasing on the positive real line and has no such peak, so it cannot generate the hump-shaped response the framework requires.
               Use model comparison here as a robustness check, not a decisive test.
             </em><br>
-            <em style="font-size:0.82em; color:rgba(255,255,255,0.5)">Top/bottom 5 countries by absolute residual are labelled. Hover any point for the country name. Each chart's X-axis is one control; the line is the partial slope holding the other six at their means.</em>
+            <em style="font-size:0.82em; color:rgba(255,255,255,0.5)">Top/bottom 5 countries by absolute residual are labelled. Hover any point for the country name. Each chart's X-axis is one control; the line is the partial slope holding the other seven at their means.</em>
           `;
         }
       }
