@@ -106,12 +106,12 @@ const [
   fetchWB("SP.POP.GROW"),              // population growth
   fetchWB("FP.CPI.TOTL.ZG"),           // inflation
   fetchWB("NE.GDI.TOTL.ZS"),           // gross capital formation % GDP
-  fetchWB("RL.EST"),                   // WGI: Rule of Law
-  fetchWB("CC.EST"),                   // WGI: Control of Corruption
-  fetchWB("GE.EST"),                   // WGI: Government Effectiveness
-  fetchWB("PV.EST"),                   // WGI: Political Stability
-  fetchWB("RQ.EST"),                   // WGI: Regulatory Quality
-  fetchWB("VA.EST"),                   // WGI: Voice & Accountability
+  fetchWB("GOV_WGI_RL.EST"),           // WGI: Rule of Law
+  fetchWB("GOV_WGI_CC.EST"),           // WGI: Control of Corruption
+  fetchWB("GOV_WGI_GE.EST"),           // WGI: Government Effectiveness
+  fetchWB("GOV_WGI_PV.EST"),           // WGI: Political Stability
+  fetchWB("GOV_WGI_RQ.EST"),           // WGI: Regulatory Quality
+  fetchWB("GOV_WGI_VA.EST"),           // WGI: Voice & Accountability
   fetchWB("SE.SEC.ENRR"),              // Secondary school enrollment (gross %)
   fetchWB("SP.DYN.LE00.IN"),           // Life expectancy at birth
   fetchWB("SE.TER.ENRR"),              // Tertiary enrollment (gross %)
