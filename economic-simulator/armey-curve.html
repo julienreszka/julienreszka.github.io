@@ -312,10 +312,10 @@
         <strong>Challenging the Armey Curve:</strong> For decades, economists
         have claimed there's an "optimal" level of government spending that
         maximizes economic growth — typically placing that sweet spot at 15–25%
-        of GDP. Cross-country World Bank data across <span id="intro-n">114</span> countries tells a
-        different story: a <strong>Power Law model fits with R²&nbsp;=&nbsp;<span id="intro-r2-pl">0.587</span>
-        (approx. 95% CI: <span id="intro-ci-pl">0.45–0.69</span>)</strong>, while the traditional Quadratic
-        Armey Curve <span id="intro-quad-clause">achieves only R²&nbsp;=&nbsp;0.298 — less than half the explanatory power, and no evidence of the predicted upturn at low spending levels</span>. The relationship is monotonically negative across the
+        of GDP. Cross-country World Bank data across <span id="intro-n">113</span> countries tells a
+        different story: a <strong>Power Law model fits with R²&nbsp;=&nbsp;<span id="intro-r2-pl">0.4219</span>
+        (approx. 95% CI: <span id="intro-ci-pl">0.28–0.56</span>)</strong>, while the traditional Quadratic
+        Armey Curve <span id="intro-quad-clause">achieves only R²&nbsp;=&nbsp;0.3856 — less explanatory power, and no evidence of the predicted upturn at low spending levels</span>. The relationship is monotonically negative across the
         entire observed range.
       </p>
 
@@ -540,19 +540,19 @@
           </select>
           <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;">
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-resource" style="accent-color:#e07b39; width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-resource" checked style="accent-color:#e07b39; width:14px; height:14px; cursor:pointer;" />
               <span>Exclude resource-dependent <span style="color:#e07b39;">◆</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-external" style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-external" checked style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude externally funded <span style="color:rgba(255,140,0,0.9);">▲</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-conflict" style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-conflict" checked style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude conflict/fragile states <span style="color:rgba(220,53,69,0.9);">✕</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
-              <input type="checkbox" id="exclude-gdpdistorted" style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
+              <input type="checkbox" id="exclude-gdpdistorted" checked style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude GDP-distorted <span style="color:rgba(255,193,7,0.9);">★</span></span>
             </label>
             <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
@@ -662,29 +662,6 @@
           aria-live="polite"
         ></div>
 
-        <div style="margin: 6px 0 12px">
-          <button
-            type="button"
-            id="download-csv-btn"
-            class="action-btn"
-            onclick="downloadCSV()"
-          >
-            ⬇ Download data as CSV
-          </button>
-          <small class="help-text" style="display: inline; margin-left: 8px">Downloads the currently visible country data as a CSV file.</small>
-        </div>
-
-        <div style="margin: 6px 0 12px">
-          <button
-            type="button"
-            class="action-btn"
-            onclick="downloadFallbackJSON()"
-          >
-            ⬇ Download fallback-data.json
-          </button>
-          <small class="help-text" style="display: inline; margin-left: 8px">Exports all 4 time periods as a drop-in replacement for <code>fallback-data.json</code>. Requires data to be loaded from the live API.</small>
-        </div>
-
         <div id="model-ranking" aria-live="polite">
           <h3 class="ranking-title">Model Fit Ranking</h3>
           <table class="ranking-table">
@@ -693,6 +670,7 @@
                 <th>#</th>
                 <th>Model</th>
                 <th>R²</th>
+                <th>95% CI (R²)</th>
                 <th>AIC <small>(lower = better)</small></th>
                 <th>p-value</th>
                 <th>N</th>
@@ -703,75 +681,81 @@
               <tr>
                 <td>1</td>
                 <td>Power Law ✓</td>
-                <td>0.5871</td>
-                <td>-12.72</td>
+                <td>0.4219</td>
+                <td>[0.28, 0.56]</td>
+                <td>53.29</td>
                 <td>&lt;0.001</td>
-                <td>114</td>
-                <td>66.7%</td>
+                <td>113</td>
+                <td>69%</td>
               </tr>
               <tr>
                 <td>2</td>
                 <td>Log-Linear</td>
-                <td>0.5851</td>
-                <td>-12.17</td>
+                <td>0.4167</td>
+                <td>[0.27, 0.55]</td>
+                <td>54.31</td>
                 <td>&lt;0.001</td>
-                <td>114</td>
-                <td>64.9%</td>
+                <td>113</td>
+                <td>69%</td>
               </tr>
               <tr>
                 <td>3</td>
-                <td>Inverse</td>
-                <td>0.5815</td>
-                <td>-11.18</td>
+                <td>Free Quadratic</td>
+                <td>0.4083</td>
+                <td>[0.26, 0.54]</td>
+                <td>57.92</td>
                 <td>&lt;0.001</td>
-                <td>114</td>
-                <td>66.7%</td>
+                <td>113</td>
+                <td>69%</td>
               </tr>
               <tr>
                 <td>4</td>
-                <td>Exponential</td>
-                <td>0.5800</td>
-                <td>-10.77</td>
+                <td>Inverse</td>
+                <td>0.4192</td>
+                <td>[0.28, 0.55]</td>
+                <td>53.82</td>
                 <td>&lt;0.001</td>
-                <td>114</td>
-                <td>64.0%</td>
+                <td>113</td>
+                <td>70%</td>
               </tr>
               <tr>
                 <td>5</td>
-                <td>Free Quadratic</td>
-                <td>0.5766</td>
-                <td>-7.87</td>
+                <td>Linear</td>
+                <td>0.3892</td>
+                <td>[0.25, 0.53]</td>
+                <td>59.51</td>
                 <td>&lt;0.001</td>
-                <td>114</td>
-                <td>63.2%</td>
+                <td>113</td>
+                <td>66%</td>
               </tr>
               <tr>
                 <td>6</td>
-                <td>Linear</td>
-                <td>0.5419</td>
-                <td>-0.89</td>
+                <td>Quadratic</td>
+                <td>0.3856</td>
+                <td>[0.24, 0.52]</td>
+                <td>62.17</td>
                 <td>&lt;0.001</td>
-                <td>114</td>
-                <td>64.9%</td>
+                <td>113</td>
+                <td>67%</td>
               </tr>
               <tr>
                 <td>7</td>
-                <td>Quadratic</td>
-                <td>0.2979</td>
-                <td>49.80</td>
+                <td>Exponential</td>
+                <td>0.4106</td>
+                <td>[0.26, 0.54]</td>
+                <td>55.48</td>
                 <td>&lt;0.001</td>
-                <td>114</td>
-                <td>68.4%</td>
+                <td>113</td>
+                <td>69%</td>
               </tr>
             </tbody>
           </table>
           <p class="ranking-note">
             Each model is auto-fitted to find its best-case parameters before
             computing AIC/R² — a fair competition at peak performance. Bold row
-            = currently selected model. Approximate 95% CI for Power Law
-            R²&nbsp;=&nbsp;0.587 is [0.45,&nbsp;0.69], computed via Fisher&rsquo;s
-            Z transformation on the sample correlation (N&nbsp;=&nbsp;114,
-            manual exclusions applied).
+            = currently selected model. 95% CI computed via Fisher&rsquo;s
+            Z transformation on the sample correlation (N&nbsp;=&nbsp;113,
+            standard exclusions applied).
           </p>
           <dl class="ranking-glossary">
             <dt>R² (R-squared)</dt>
@@ -784,13 +768,13 @@
                 >Negative values mean the model is worse than that
                 baseline.</strong
               >
-              When models are auto-fitted across 114 countries (resource-dependent, externally-funded, conflict/fragile, and GDP-distorted countries excluded), the top models reach ~0.59 R² —
-              meaning government spending % explains roughly 59% of the
+              When models are auto-fitted across 113 countries (resource-dependent, externally-funded, conflict/fragile, and GDP-distorted countries excluded), the top models reach R²&nbsp;≈&nbsp;0.42 —
+              meaning government spending % explains roughly 42% of the
               variation in growth. Note that
               <strong
-                >Power Law leads both R² (0.5871) and AIC (-12.72)</strong
+                >Power Law and Inverse are tied on combined R² (0.4913); Power Law edges ahead on AIC (53.29 vs 53.82)</strong
               >
-              — it fits the data better and wins the AIC ranking outright. Each exclusion category has a specific theoretical justification: resource-dependent economies grow via commodity windfalls unrelated to government size; externally-funded states have aid-distorted budgets; conflict/fragile states have suppressed growth from instability; GDP-distorted economies have artificially inflated or deflated GDP figures.
+              — it fits the spending–growth relationship well across diverse economies. Each exclusion category has a specific theoretical justification: resource-dependent economies grow via commodity windfalls unrelated to government size; externally-funded states have aid-distorted budgets; conflict/fragile states have suppressed growth from instability; GDP-distorted economies have artificially inflated or deflated GDP figures.
             </dd>
             <dt>AIC (Akaike Information Criterion)</dt>
             <dd>
@@ -799,10 +783,10 @@
               rewarded). <strong>Lower AIC = better model.</strong> Unlike R²,
               AIC is useful for comparing models even when none of them fits
               well — it tells you which is the <em>least bad</em> option. With
-              114 countries (manual exclusions), Power Law wins on AIC (-12.72) with Log-Linear
-              and Inverse close behind. Quadratic
-              (AIC 49.80) performs worst — consistent with the Armey Curve
-              theory having no empirical support in this dataset.
+              113 countries (standard exclusions), Power Law (AIC 53.29) and Inverse (AIC 53.82) are
+              effectively tied, with Log-Linear (54.31) close behind. Exponential
+              (AIC 55.48) and Quadratic (62.17) trail — the constrained Armey Curve
+              shape finds no empirical support in this dataset.
             </dd>
             <dt>p-value</dt>
             <dd>
@@ -827,6 +811,241 @@
               direction.
             </dd>
           </dl>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <h3 style="font-size: 1.05em; margin-bottom: 6px;">What else explains growth beyond government spending?</h3>
+          <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
+            Greedy stepwise regression across 23 candidate variables (macro, governance, human capital, finance, structural) added one at a time to the power-law spending baseline.
+            Each row shows the single best remaining variable at that step. The ceiling — stacking all 14 variables that clear the contribution threshold — is R²&nbsp;≈&nbsp;0.689.
+            The remaining ~31% is not recoverable from standard World Bank data.
+            Notably, <strong style="color:rgba(255,255,255,0.8)">all 6 WGI governance indicators dropped out again</strong> — no marginal gain after income, investment, education and population are controlled.
+            Military spending, R&amp;D, and remittances all entered — for structural reasons explained in the interpretation column.
+          </p>
+          <table style="width:100%;border-collapse:collapse;font-size:0.85em;">
+            <thead>
+              <tr style="color:rgba(255,255,255,0.5);">
+                <th style="text-align:left;padding:3px 8px">#</th>
+                <th style="text-align:left;padding:3px 8px">Variable</th>
+                <th style="text-align:left;padding:3px 8px">Marginal R²</th>
+                <th style="text-align:left;padding:3px 8px">Cumulative R²</th>
+                <th style="text-align:left;padding:3px 8px">N</th>
+                <th style="text-align:left;padding:3px 8px">Slope</th>
+                <th style="text-align:left;padding:3px 8px">Interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="background:rgba(255,255,255,0.07);font-weight:600">
+                <td style="padding:3px 8px">—</td>
+                <td style="padding:3px 8px">Gov. spending (power law)</td>
+                <td style="padding:3px 8px">—</td>
+                <td style="padding:3px 8px">0.4219</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">—</td>
+                <td style="padding:3px 8px">Baseline</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">1</td>
+                <td style="padding:3px 8px">Initial income (ln GDP per capita)</td>
+                <td style="padding:3px 8px">+0.1121</td>
+                <td style="padding:3px 8px">0.5237</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">−0.38</td>
+                <td style="padding:3px 8px">Beta-convergence: poorer countries grow faster conditional on spending</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">2</td>
+                <td style="padding:3px 8px">Military expenditure (% GDP)</td>
+                <td style="padding:3px 8px">+0.0335</td>
+                <td style="padding:3px 8px">0.5572</td>
+                <td style="padding:3px 8px">98</td>
+                <td style="padding:3px 8px">+0.33</td>
+                <td style="padding:3px 8px">Positive slope: may reflect defense-led investment or reverse causality (richer/faster countries can afford more military)</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">3</td>
+                <td style="padding:3px 8px">Capital formation (% GDP)</td>
+                <td style="padding:3px 8px">+0.0251</td>
+                <td style="padding:3px 8px">0.5823</td>
+                <td style="padding:3px 8px">105</td>
+                <td style="padding:3px 8px">+0.04</td>
+                <td style="padding:3px 8px">Investment rate — countries that invest more grow faster</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">4</td>
+                <td style="padding:3px 8px">FDI inflows (% GDP)</td>
+                <td style="padding:3px 8px">+0.0180</td>
+                <td style="padding:3px 8px">0.6002</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.02</td>
+                <td style="padding:3px 8px">Foreign investment brings capital and technology transfer</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">5</td>
+                <td style="padding:3px 8px">Remittances received (% GDP)</td>
+                <td style="padding:3px 8px">+0.0111</td>
+                <td style="padding:3px 8px">0.6113</td>
+                <td style="padding:3px 8px">112</td>
+                <td style="padding:3px 8px">−0.02</td>
+                <td style="padding:3px 8px">Negative slope: remittances flow to slow-growing economies as a safety valve, not a growth engine</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">6</td>
+                <td style="padding:3px 8px">R&amp;D spending (% GDP)</td>
+                <td style="padding:3px 8px">+0.0162</td>
+                <td style="padding:3px 8px">0.6276</td>
+                <td style="padding:3px 8px">95</td>
+                <td style="padding:3px 8px">−0.16</td>
+                <td style="padding:3px 8px">Negative slope: high-R&amp;D countries are mature economies growing slowly — captures a development-stage effect not fully absorbed by initial income</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">7</td>
+                <td style="padding:3px 8px">Current account balance (% GDP)</td>
+                <td style="padding:3px 8px">+0.0175</td>
+                <td style="padding:3px 8px">0.6451</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.03</td>
+                <td style="padding:3px 8px">Surplus countries save and invest more domestically</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">8</td>
+                <td style="padding:3px 8px">Domestic credit to private sector (% GDP)</td>
+                <td style="padding:3px 8px">+0.0084</td>
+                <td style="padding:3px 8px">0.6535</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">−0.004</td>
+                <td style="padding:3px 8px">Financial depth — but negative slope suggests over-financialisation drag at high levels</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">9</td>
+                <td style="padding:3px 8px">Tertiary enrollment (%)</td>
+                <td style="padding:3px 8px">+0.0123</td>
+                <td style="padding:3px 8px">0.6658</td>
+                <td style="padding:3px 8px">110</td>
+                <td style="padding:3px 8px">+0.007</td>
+                <td style="padding:3px 8px">Human capital stock — higher education feeds productivity growth</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">10</td>
+                <td style="padding:3px 8px">Population growth (%)</td>
+                <td style="padding:3px 8px">+0.0090</td>
+                <td style="padding:3px 8px">0.6747</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.14</td>
+                <td style="padding:3px 8px">More people = more total output (note: total GDP growth, not per-capita)</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">11</td>
+                <td style="padding:3px 8px">Electricity access (% population)</td>
+                <td style="padding:3px 8px">+0.0051</td>
+                <td style="padding:3px 8px">0.6798</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.005</td>
+                <td style="padding:3px 8px">Infrastructure proxy — basic energy access enables productive activity</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">12</td>
+                <td style="padding:3px 8px">Tax revenue (% GDP)</td>
+                <td style="padding:3px 8px">+0.0023</td>
+                <td style="padding:3px 8px">0.6821</td>
+                <td style="padding:3px 8px">111</td>
+                <td style="padding:3px 8px">+0.014</td>
+                <td style="padding:3px 8px">Fiscal capacity — higher tax collection signals stronger state institutions</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">13</td>
+                <td style="padding:3px 8px">Urban population growth (%)</td>
+                <td style="padding:3px 8px">+0.0033</td>
+                <td style="padding:3px 8px">0.6854</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.054</td>
+                <td style="padding:3px 8px">Urbanisation correlates with structural transformation and productivity gains</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">14</td>
+                <td style="padding:3px 8px">Trade openness (% GDP)</td>
+                <td style="padding:3px 8px">+0.0033</td>
+                <td style="padding:3px 8px">0.6887</td>
+                <td style="padding:3px 8px">105</td>
+                <td style="padding:3px 8px">+0.001</td>
+                <td style="padding:3px 8px">More open economies tend to grow faster</td>
+              </tr>
+              <tr style="color:rgba(255,255,255,0.35); font-style:italic;">
+                <td style="padding:3px 8px">—</td>
+                <td style="padding:3px 8px">WGI Governance (×6), Inflation, Secondary enrollment, Life expectancy</td>
+                <td style="padding:3px 8px">&lt;0.003 each</td>
+                <td style="padding:3px 8px">—</td>
+                <td style="padding:3px 8px">—</td>
+                <td style="padding:3px 8px">—</td>
+                <td style="padding:3px 8px">Dropped — no marginal gain after the above variables are controlled</td>
+              </tr>
+            </tbody>
+          </table>
+          <small style="color:rgba(255,255,255,0.4)">113 countries, 2005–2023, power-law baseline, standard exclusions. Greedy stepwise over 23 candidate World Bank indicators. Threshold: marginal R² &gt; 0.003. Source: <code>scripts/ceiling-r2.mjs</code>.</small>
+        </div>
+
+        <div id="residual-income-section" style="margin-top: 24px;">
+          <h3 id="residual-income-heading" style="font-size: 1.05em; margin-bottom: 6px;">
+            Stage 2: Spending + Initial Income
+            <span style="font-weight:normal; font-size:0.85em; color:rgba(255,255,255,0.55);">— AIC-ranked model comparison</span>
+          </h3>
+          <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
+            The spending curve above predicts a growth rate for each country. The <strong style="color:rgba(255,255,255,0.85)">residual</strong> is how far off that prediction is (actual − fitted).
+            This chart asks: <em>does initial income systematically predict the errors?</em>
+            If income explains a large share of the residuals, the spending model is leaving systematic structure on the table.
+            A <strong style="color:rgba(255,255,255,0.85)">negative slope</strong> (poorer countries grow faster conditional on spending) is expected: it is textbook beta-convergence, not a flaw.
+            A <strong style="color:rgba(255,255,255,0.85)">positive slope</strong> would indicate the spending model is confounding spending with development level.
+            The table below ranks all models by <strong style="color:rgba(255,255,255,0.85)">AIC</strong> — the proper model-selection criterion. Unlike combined R², AIC penalises complexity and avoids double-counting when income partly proxies for what the spending curve already captures.
+          </p>
+          <div class="chart-container" role="img" aria-labelledby="residual-chart-label">
+            <canvas id="residualIncomeChart" aria-label="Residuals vs log GDP per capita scatter plot"></canvas>
+            <div id="residual-chart-label" class="sr-only">Scatter plot of Armey model residuals against log GDP per capita</div>
+          </div>
+          <div id="residual-income-stats" aria-live="polite" style="margin-top: 8px; font-size: 0.88em;">
+            <strong>Stage 2 — Best combined fit (spending + income)</strong>
+            <table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:8px">
+              <thead><tr style="color:rgba(255,255,255,0.5)">
+                <th style="text-align:left;padding:2px 6px">#</th>
+                <th style="text-align:left;padding:2px 6px">Model</th>
+                <th style="text-align:left;padding:2px 6px">R²(spending)</th>
+                <th style="text-align:left;padding:2px 6px">R²(+income)</th>
+                <th style="text-align:left;padding:2px 6px">Combined R²</th>
+              </tr></thead>
+              <tbody>
+                <tr style="background:rgba(255,255,255,0.07);font-weight:600"><td style="padding:2px 6px">1</td><td style="padding:2px 6px">Power Law ✓</td><td style="padding:2px 6px">0.422</td><td style="padding:2px 6px">0.120</td><td style="padding:2px 6px">0.491</td></tr>
+                <tr><td style="padding:2px 6px">2</td><td style="padding:2px 6px">Inverse</td><td style="padding:2px 6px">0.419</td><td style="padding:2px 6px">0.124</td><td style="padding:2px 6px">0.491</td></tr>
+                <tr><td style="padding:2px 6px">3</td><td style="padding:2px 6px">Log-Linear</td><td style="padding:2px 6px">0.417</td><td style="padding:2px 6px">0.118</td><td style="padding:2px 6px">0.486</td></tr>
+                <tr><td style="padding:2px 6px">4</td><td style="padding:2px 6px">Exponential</td><td style="padding:2px 6px">0.411</td><td style="padding:2px 6px">0.103</td><td style="padding:2px 6px">0.472</td></tr>
+                <tr><td style="padding:2px 6px">5</td><td style="padding:2px 6px">Free Quadratic</td><td style="padding:2px 6px">0.408</td><td style="padding:2px 6px">0.120</td><td style="padding:2px 6px">0.479</td></tr>
+                <tr><td style="padding:2px 6px">6</td><td style="padding:2px 6px">Linear</td><td style="padding:2px 6px">0.389</td><td style="padding:2px 6px">0.127</td><td style="padding:2px 6px">0.467</td></tr>
+                <tr><td style="padding:2px 6px">7</td><td style="padding:2px 6px">Quadratic</td><td style="padding:2px 6px">0.246</td><td style="padding:2px 6px">0.196</td><td style="padding:2px 6px">0.394</td></tr>
+              </tbody>
+            </table>
+            <small style="color:rgba(255,255,255,0.4)">Combined R² = R²(spending) + (1 − R²(spending)) × R²(income|spending). Bold row = current model. 113 countries, 2005–2023, standard exclusions.</small>
+          </div>
+        </div>
+
+        <div style="margin: 6px 0 12px">
+          <button
+            type="button"
+            id="download-csv-btn"
+            class="action-btn"
+            onclick="downloadCSV()"
+          >
+            ⬇ Download data as CSV
+          </button>
+          <small class="help-text" style="display: inline; margin-left: 8px">Downloads the currently visible country data as a CSV file.</small>
+        </div>
+
+        <div style="margin: 6px 0 12px">
+          <button
+            type="button"
+            class="action-btn"
+            onclick="downloadFallbackJSON()"
+          >
+            ⬇ Download fallback-data.json
+          </button>
+          <small class="help-text" style="display: inline; margin-left: 8px">Exports all 4 time periods as a drop-in replacement for <code>fallback-data.json</code>. Requires data to be loaded from the live API.</small>
         </div>
       </section>
 
@@ -2349,9 +2568,9 @@
               growth rates. Countries with smaller governments (Singapore ~15%,
               Bangladesh ~9%) tend to outgrow high-spending peers. The
               relationship fits a Power Law better than the traditional
-              Quadratic Armey Curve: R&sup2;&nbsp;=&nbsp;0.587
-              (approx. 95% CI: 0.45&ndash;0.69) vs. 0.298 for Quadratic &mdash;
-              across 114 countries in the 2005&ndash;2023 structural sample.
+              Quadratic Armey Curve: R&sup2;&nbsp;=&nbsp;0.4219
+              (approx. 95% CI: 0.28&ndash;0.56) vs. 0.3856 for Quadratic &mdash;
+              across 113 countries in the 2005&ndash;2023 structural sample.
               The CI is computed via Fisher&rsquo;s Z transformation on the
               correlation coefficient.
             </p>
@@ -2958,7 +3177,34 @@
       }
     </script>
 
+    <!-- Canonical model math shared with Node.js scripts — overrides the local gridSearch2D -->
+    <script type="module">
+      import { avg, r2, aic, ols, gridSearch2D } from './model-math.mjs';
+      window.avg = avg;
+      window.r2  = r2;
+      window.aic = aic;
+      window.ols = ols;
+      window.gridSearch2D = gridSearch2D;
+    </script>
+
     <script>
+      // gridSearch2D: inline definition (runs synchronously), then overridden by
+      // model-math.mjs module import above (identical algorithm, same N=80).
+      // Having both ensures it works on file:// (where modules are blocked) and on HTTP.
+      window.gridSearch2D = function gridSearch2D(b0Range, pRange, costFn, N = 80) {
+        const [b0Min, b0Max] = b0Range, [pMin, pMax] = pRange;
+        const b0s = Array.from({length:N}, (_,i) => Math.exp(Math.log(b0Min) + (Math.log(b0Max)-Math.log(b0Min))*i/(N-1)));
+        const ps  = Array.from({length:N}, (_,i) => pMin + (pMax-pMin)*i/(N-1));
+        let bestCost=Infinity, bestB0=b0Min, bestP=pMin;
+        for (const b0 of b0s) for (const p of ps) { const c=costFn(b0,p); if(isFinite(c)&&c<bestCost){bestCost=c;bestB0=b0;bestP=p;} }
+        const b0Lo=bestB0*0.85, b0Hi=bestB0*1.15, span=(pMax-pMin)*0.15;
+        const pLo=Math.max(pMin,bestP-span), pHi=Math.min(pMax,bestP+span);
+        const b0sF=Array.from({length:N},(_,i)=>b0Lo+(b0Hi-b0Lo)*i/(N-1));
+        const psF =Array.from({length:N},(_,i)=>pLo +(pHi-pLo )*i/(N-1));
+        for (const b0 of b0sF) for (const p of psF) { const c=costFn(b0,p); if(isFinite(c)&&c<bestCost){bestCost=c;bestB0=b0;bestP=p;} }
+        return [bestB0, bestP];
+      };
+
       // World Bank API integration
       let countryData = {
         developed: [],
@@ -3010,9 +3256,16 @@
           );
           const growthData = await growthResponse.json();
 
+          // Fetch GDP per capita (constant 2015 USD) — for conditional convergence analysis
+          const gdpPerCapResponse = await fetch(
+            `https://api.worldbank.org/v2/country/all/indicator/NY.GDP.PCAP.KD?date=2005:2023&format=json&per_page=10000`
+          );
+          const gdpPerCapData = await gdpPerCapResponse.json();
+
           // Store raw data globally for processing with different time periods
           window.rawSpendingData = spendingData[1];
           window.rawGrowthData = growthData[1];
+          window.rawGdpPerCapData = gdpPerCapData[1];
 
           // Process with default time period
           processDataForCurrentPeriod();
@@ -3049,7 +3302,8 @@
         const processedData = processWorldBankData(
           window.rawSpendingData,
           window.rawGrowthData,
-          dateRange
+          dateRange,
+          window.rawGdpPerCapData
         );
 
         // Update country data
@@ -3104,7 +3358,8 @@
       function processWorldBankData(
         spendingRaw,
         growthRaw,
-        dateRange = { start: 2014, end: 2023, label: "2014-2023" }
+        dateRange = { start: 2014, end: 2023, label: "2014-2023" },
+        gdpPerCapRaw = null
       ) {
         const countryAverages = {};
 
@@ -3112,16 +3367,18 @@
         if (spendingRaw) {
           spendingRaw.forEach((item) => {
             if (
-              item.value !== null &&
+              item.value &&
               item.date >= dateRange.start &&
               item.date <= dateRange.end
             ) {
               const countryCode = item.countryiso3code;
+              if (!countryCode) return;
               if (!countryAverages[countryCode]) {
                 countryAverages[countryCode] = {
                   name: item.country.value,
                   spending: [],
                   growth: [],
+                  gdpPerCapStart: null,
                 };
               }
               countryAverages[countryCode].spending.push(item.value);
@@ -3133,13 +3390,37 @@
         if (growthRaw) {
           growthRaw.forEach((item) => {
             if (
-              item.value !== null &&
+              item.value &&
               item.date >= dateRange.start &&
               item.date <= dateRange.end
             ) {
               const countryCode = item.countryiso3code;
+              if (!countryCode) return;
               if (countryAverages[countryCode]) {
                 countryAverages[countryCode].growth.push(item.value);
+              }
+            }
+          });
+        }
+
+        // Calculate period-start GDP per capita for initial income (convergence)
+        if (gdpPerCapRaw) {
+          gdpPerCapRaw.forEach((item) => {
+            if (item.value !== null && item.date === dateRange.start) {
+              const countryCode = item.countryiso3code;
+              if (countryAverages[countryCode]) {
+                countryAverages[countryCode].gdpPerCapStart = item.value;
+              }
+            }
+          });
+          // Fallback: if start year missing, use nearest available year within ±2
+          gdpPerCapRaw.forEach((item) => {
+            if (item.value !== null &&
+                item.date >= dateRange.start - 2 &&
+                item.date <= dateRange.start + 2) {
+              const countryCode = item.countryiso3code;
+              if (countryAverages[countryCode] && !countryAverages[countryCode].gdpPerCapStart) {
+                countryAverages[countryCode].gdpPerCapStart = item.value;
               }
             }
           });
@@ -3247,10 +3528,11 @@
 
             const countryInfo = {
               name: data.name,
-              spending: Math.round(avgSpending * 10) / 10,
-              growth: Math.round(avgGrowth * 10) / 10,
+              spending: avgSpending,
+              growth: avgGrowth,
               year: dateRange.label,
               dataPoints: data.spending.length,
+              logGdpPcap: data.gdpPerCapStart ? Math.log(data.gdpPerCapStart) : null,
               resourceDependent: resourceDependentCodes.has(code),
               externallyFunded: externallyFundedCodes.has(code),
               conflictFragile: conflictFragileCodes.has(code),
@@ -4130,6 +4412,7 @@
         ];
         const models = modelDefs.map(m => ({
           name: m.name,
+          predictFn: m.predictFn,
           metrics: computeMetrics(dataPoints, m.predictFn, m.k),
           coverage: computeCoverage(dataPoints, m.predictFn, m.k),
         }));
@@ -4300,6 +4583,230 @@
         `;
       }
 
+      let chartResidual = null;
+
+      function updateResidualChart() {
+        const section = document.getElementById("residual-income-section");
+        const statsEl = document.getElementById("residual-income-stats");
+        const dataPoints = getCountryDataToShow();
+        const withIncome = dataPoints.filter(c => c.logGdpPcap !== null && c.logGdpPcap !== undefined);
+
+        if (withIncome.length < 5) {
+          return;
+        }
+
+        const predictFn = getCurrentPredictFn();
+        const residuals = withIncome.map(c => c.growth - predictFn(c.spending));
+        const xs = withIncome.map(c => c.logGdpPcap);
+
+        // OLS: residual = a + b * log(GDPpc)
+        const n = xs.length;
+        const meanX = xs.reduce((s, v) => s + v, 0) / n;
+        const meanY = residuals.reduce((s, v) => s + v, 0) / n;
+        const sxx = xs.reduce((s, v) => s + (v - meanX) ** 2, 0);
+        const sxy = xs.reduce((s, v, i) => s + (v - meanX) * (residuals[i] - meanY), 0);
+        const slope = sxx === 0 ? 0 : sxy / sxx;
+        const intercept = meanY - slope * meanX;
+
+        const fitted = xs.map(x => intercept + slope * x);
+        const ssTot = residuals.reduce((s, v) => s + (v - meanY) ** 2, 0);
+        const ssRes = residuals.reduce((s, v, i) => s + (v - fitted[i]) ** 2, 0);
+        const r2Income = ssTot === 0 ? 0 : Math.max(0, 1 - ssRes / ssTot);
+
+        if (section) section.style.display = "block";
+
+        // Build per-group scatter datasets (same style as chart 1)
+        const mkGroup = (label, countries, idxMap, bg, border, pointStyle) => ({
+          label,
+          data: countries.map(([c, i]) => ({ x: xs[i], y: residuals[i], countryName: c.name })),
+          backgroundColor: bg,
+          borderColor: border,
+          borderWidth: 1.5,
+          pointRadius: 6,
+          pointHoverRadius: 8,
+          pointStyle,
+          type: "scatter",
+          showLine: false,
+        });
+
+        const indexed = withIncome.map((c, i) => [c, i]);
+        const grpConflict   = indexed.filter(([c]) => c.conflictFragile);
+        const grpGdpDist    = indexed.filter(([c]) => !c.conflictFragile && c.gdpDistorted);
+        const grpExtFunded  = indexed.filter(([c]) => !c.conflictFragile && !c.gdpDistorted && c.externallyFunded);
+        const grpResource   = indexed.filter(([c]) => !c.conflictFragile && !c.gdpDistorted && !c.externallyFunded && c.resourceDependent);
+        const grpDeveloped  = indexed.filter(([c]) => !c.conflictFragile && !c.gdpDistorted && !c.externallyFunded && !c.resourceDependent && countryData.developed.includes(c));
+        const grpDeveloping = indexed.filter(([c]) => !c.conflictFragile && !c.gdpDistorted && !c.externallyFunded && !c.resourceDependent && !countryData.developed.includes(c));
+
+        const scatterDatasets = [];
+        if (grpDeveloped.length)  scatterDatasets.push(mkGroup("Developed",                 grpDeveloped,  null, "rgba(40,167,69,0.8)",    "#28a745",  "circle"));
+        if (grpDeveloping.length) scatterDatasets.push(mkGroup("Developing",                grpDeveloping, null, "rgba(255,193,7,0.8)",    "#ffc107",  "circle"));
+        if (grpResource.length)   scatterDatasets.push(mkGroup("Resource-Dependent ◆",      grpResource,   null, "rgba(153,102,255,0.75)", "#7b2ff7",  "rectRot"));
+        if (grpExtFunded.length)  scatterDatasets.push(mkGroup("Externally Funded ▲",       grpExtFunded,  null, "rgba(255,140,0,0.8)",    "#cc6e00",  "triangle"));
+        if (grpGdpDist.length)    scatterDatasets.push(mkGroup("GDP-Distorted ★",           grpGdpDist,    null, "rgba(255,193,7,0.85)",   "#c79200",  "star"));
+        if (grpConflict.length)   scatterDatasets.push(mkGroup("Conflict/Fragile ✕",        grpConflict,   null, "rgba(220,53,69,0.8)",    "#a71d2a",  "crossRot"));
+
+        // OLS line over the x range
+        const xMin = Math.min(...xs);
+        const xMax = Math.max(...xs);
+        const lineData = [
+          { x: xMin, y: intercept + slope * xMin },
+          { x: xMax, y: intercept + slope * xMax },
+        ];
+
+        const ctx2 = document.getElementById("residualIncomeChart").getContext("2d");
+        if (chartResidual) chartResidual.destroy();
+
+        // Label only top 5 outperformers and top 5 underperformers
+        const labelThreshold = (() => {
+          const abs = withIncome.map((_, i) => Math.abs(residuals[i]));
+          const sorted = [...abs].sort((a, b) => b - a);
+          return sorted[Math.min(9, sorted.length - 1)] ?? 0;
+        })();
+        const labelPlugin = {
+          id: "residualLabels",
+          afterDatasetsDraw(chart) {
+            const ctx = chart.ctx;
+            ctx.save();
+            ctx.font = "10px sans-serif";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
+            chart.data.datasets.forEach((dataset, dsIdx) => {
+              if (!dataset.data[0]?.countryName) return; // skip OLS line
+              const meta = chart.getDatasetMeta(dsIdx);
+              meta.data.forEach((pt, i) => {
+                const d = dataset.data[i];
+                if (Math.abs(d.y) >= labelThreshold) {
+                  const label = d.countryName.replace(/ .*/, "");
+                  ctx.fillStyle = d.y > 0 ? "rgba(100,220,120,0.95)" : "rgba(255,110,110,0.95)";
+                  ctx.fillText(label, pt.x + 6, pt.y);
+                }
+              });
+            });
+            ctx.restore();
+          },
+        };
+
+        chartResidual = new Chart(ctx2, {
+          type: "scatter",
+          plugins: [labelPlugin],
+          data: {
+            datasets: [
+              ...scatterDatasets,
+              {
+                label: "OLS fit",
+                data: lineData,
+                type: "line",
+                borderColor: "rgba(255,99,132,0.9)",
+                borderWidth: 2,
+                pointRadius: 0,
+                fill: false,
+                tension: 0,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+                labels: {
+                  usePointStyle: true,
+                  pointStyleWidth: 14,
+                  padding: 10,
+                  font: { size: 11 },
+                  filter: item => item.text !== "OLS fit",
+                },
+              },
+              tooltip: {
+                callbacks: {
+                  label: ctx => {
+                    const d = ctx.raw;
+                    if (d.countryName) return `${d.countryName}: residual ${d.y >= 0 ? "+" : ""}${d.y.toFixed(2)} pp`;
+                    return `OLS line`;
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                title: { display: true, text: "ln(GDP per capita, period start)" },
+                ticks: { color: "rgba(255,255,255,0.7)" },
+                grid: { color: "rgba(255,255,255,0.1)" },
+              },
+              y: {
+                title: { display: true, text: "Armey residual (pp)" },
+                ticks: { color: "rgba(255,255,255,0.7)" },
+                grid: {
+                  color: ctx => ctx.tick.value === 0 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.1)",
+                  lineWidth: ctx => ctx.tick.value === 0 ? 2 : 1,
+                },
+              },
+            },
+          },
+        });
+
+        // Interpretation
+        const slopeSign = slope < 0 ? "negative" : "positive";
+        const convergenceNote = slope < -0.05
+          ? `A <strong>negative slope (${slope.toFixed(3)})</strong> confirms conditional convergence: controlling for government spending, poorer countries grow faster.`
+          : slope > 0.05
+          ? `A <strong>positive slope (${slope.toFixed(3)})</strong> suggests divergence: richer countries still outperform after controlling for spending.`
+          : `The slope (${slope.toFixed(3)}) is near zero — income level adds little beyond what spending already explains.`;
+
+        // Per-model R²(+income) comparison
+        const modelIncomeRows = (() => {
+          if (!lastRankingModels.length) return "";
+          const wiActuals = withIncome.map(c => c.growth);
+          const wiXs = xs; // already filtered to withIncome
+          const rows = lastRankingModels.map(m => {
+            if (!m.predictFn) return null;
+            const res = withIncome.map(c => c.growth - m.predictFn(c.spending));
+            const meanX2 = wiXs.reduce((s,v)=>s+v,0)/wiXs.length;
+            const meanR = res.reduce((s,v)=>s+v,0)/res.length;
+            const sxx2 = wiXs.reduce((s,v)=>s+(v-meanX2)**2,0);
+            const sxy2 = wiXs.reduce((s,v,i)=>s+(v-meanX2)*(res[i]-meanR),0);
+            const sl2 = sxx2===0?0:sxy2/sxx2;
+            const ic2 = meanR - sl2*meanX2;
+            const fitted2 = wiXs.map(x=>ic2+sl2*x);
+            const ssTot2 = res.reduce((s,v)=>s+(v-meanR)**2,0);
+            const ssRes2 = res.reduce((s,v,i)=>s+(v-fitted2[i])**2,0);
+            const r2i = ssTot2===0?0:Math.max(0,1-ssRes2/ssTot2);
+            const r2s = m.metrics?.r2 ?? null;
+            const aic = m.metrics?.aic ?? null;
+            const combined = r2s !== null ? r2s + (1-r2s)*r2i : null;
+            return { name: m.name, r2s, r2i, combined, aic };
+          }).filter(Boolean);
+          rows.sort((a,b) => (a.aic??Infinity) - (b.aic??Infinity) || (b.combined??-1) - (a.combined??-1));
+          const currentName = {
+            'power-law':'Power Law','log-linear':'Log-Linear','quadratic':'Quadratic',
+            'free-quadratic':'Free Quadratic','linear':'Linear','inverse':'Inverse','exponential':'Exponential'
+          }[document.getElementById('curve-type-select').value];
+          const trs = rows.map((r,i) => {
+            const active = r.name === currentName ? ' style="background:rgba(255,255,255,0.07);font-weight:600"' : '';
+            const best = i===0 ? ' ✓' : '';
+            return `<tr${active}><td style="padding:2px 6px">${i+1}</td><td style="padding:2px 6px">${r.name}${best}</td><td style="padding:2px 6px">${r.r2s!==null?r.r2s.toFixed(3):'—'}</td><td style="padding:2px 6px">${r.r2i.toFixed(3)}</td><td style="padding:2px 6px">${r.combined!==null?r.combined.toFixed(3):'—'}</td></tr>`;
+          }).join('');
+          return `<table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:8px">
+            <thead><tr style="color:rgba(255,255,255,0.5)"><th style="text-align:left;padding:2px 6px">#</th><th style="text-align:left;padding:2px 6px">Model</th><th style="text-align:left;padding:2px 6px">R²(spending)</th><th style="text-align:left;padding:2px 6px">R²(+income)</th><th style="text-align:left;padding:2px 6px">Combined R²</th></tr></thead>
+            <tbody>${trs}</tbody>
+          </table>
+          <small style="color:rgba(255,255,255,0.4)">Combined R² = R²(spending) + (1 − R²(spending)) × R²(income|spending). Bold row = current model.</small>`;
+        })();
+
+        if (statsEl) {
+          statsEl.innerHTML = `
+            <strong>Stage 2 — Which model fits best? (AIC-ranked)</strong><br>
+            ${modelIncomeRows}
+            <br>Current model: R²(income | spending) = <strong>${r2Income.toFixed(3)}</strong> &nbsp;|&nbsp;
+            Slope: <strong>${slope.toFixed(3)}</strong> pp per ln-unit &nbsp;|&nbsp;
+            N = ${n}<br>
+            ${convergenceNote}<br>
+            <em style="font-size:0.82em; color:rgba(255,255,255,0.5)">Top/bottom 5 countries by absolute residual are labelled. Hover any point for the country name.</em>
+          `;
+        }
+      }
+
       function updateArmeySimulation() {
         recomputeOutliers();
         const curveType = document.getElementById("curve-type-select").value;
@@ -4373,6 +4880,7 @@
           }
         }
         updateModelRankingTable();
+        updateResidualChart();
       }
 
       function toggleParameterGroups() {
@@ -4448,59 +4956,9 @@
         updateArmeySimulation();
       }
 
-      function gridSearch2D(b0Range, pRange, costFn, N = 50) {
-        const [b0Min, b0Max] = b0Range;
-        const [pMin, pMax] = pRange;
-        // Coarse pass on log scale for b0, linear for p
-        const b0s = Array.from({ length: N }, (_, i) =>
-          Math.exp(
-            Math.log(b0Min) +
-              ((Math.log(b0Max) - Math.log(b0Min)) * i) / (N - 1)
-          )
-        );
-        const ps = Array.from(
-          { length: N },
-          (_, i) => pMin + ((pMax - pMin) * i) / (N - 1)
-        );
-        let bestCost = Infinity,
-          bestB0 = b0Min,
-          bestP = pMin;
-        for (const b0 of b0s) {
-          for (const p of ps) {
-            const cost = costFn(b0, p);
-            if (isFinite(cost) && cost < bestCost) {
-              bestCost = cost;
-              bestB0 = b0;
-              bestP = p;
-            }
-          }
-        }
-        // Fine pass: ±15% around best
-        const b0Lo = bestB0 * 0.85,
-          b0Hi = bestB0 * 1.15;
-        const span = (pMax - pMin) * 0.15;
-        const pLo = Math.max(pMin, bestP - span),
-          pHi = Math.min(pMax, bestP + span);
-        const b0sF = Array.from(
-          { length: N },
-          (_, i) => b0Lo + ((b0Hi - b0Lo) * i) / (N - 1)
-        );
-        const psF = Array.from(
-          { length: N },
-          (_, i) => pLo + ((pHi - pLo) * i) / (N - 1)
-        );
-        for (const b0 of b0sF) {
-          for (const p of psF) {
-            const cost = costFn(b0, p);
-            if (isFinite(cost) && cost < bestCost) {
-              bestCost = cost;
-              bestB0 = b0;
-              bestP = p;
-            }
-          }
-        }
-        return [bestB0, bestP];
-      }
+      // gridSearch2D is loaded from model-math.mjs (see <script type="module"> above).
+      // It is identical to the function used by the Node.js scripts, ensuring browser
+      // and script R² values always agree.
 
       function autoFitParameters(silent) {
         const dataPoints = getCountryDataToShow();
