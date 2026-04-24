@@ -96,6 +96,7 @@ const [
   fdiRaw, creditRaw,
   urbanRaw, caRaw,
   rdRaw, remitRaw, elecRaw, taxRaw, milRaw,
+  energyUseRaw, elecKwhRaw, renewRaw,
 ] = await Promise.all([
   fetchMeta(),
   fetchWB("GC.XPN.TOTL.GD.ZS"),       // gov spending
@@ -123,6 +124,9 @@ const [
   fetchWB("EG.ELC.ACCS.ZS"),           // Electricity access % population
   fetchWB("GC.TAX.TOTL.GD.ZS"),        // Tax revenue % GDP
   fetchWB("MS.MIL.XPND.GD.ZS"),        // Military expenditure % GDP
+  fetchWB("EG.USE.PCAP.KG.OE"),         // Energy use per capita (kg oil eq.)
+  fetchWB("EG.USE.ELEC.KH.PC"),         // Electric power consumption per capita (kWh)
+  fetchWB("EG.FEC.RNEW.ZS"),            // Renewable energy consumption % total
 ]);
 
 const actualCodes = new Set(meta.filter(c => c.region?.id !== "NA").map(c => c.id));
@@ -152,7 +156,10 @@ const rdAvg     = periodAvg(rdRaw);
 const remitAvg  = periodAvg(remitRaw);
 const elecAvg   = periodAvg(elecRaw);
 const taxAvg    = periodAvg(taxRaw);
-const milAvg    = periodAvg(milRaw);
+const milAvg       = periodAvg(milRaw);
+const energyUseAvg = periodAvg(energyUseRaw);
+const elecKwhAvg   = periodAvg(elecKwhRaw);
+const renewAvg     = periodAvg(renewRaw);
 
 const get = (map, code) => map[code] ? avg(map[code]) : null;
 
@@ -207,9 +214,12 @@ for (const [code, d] of Object.entries(countries)) {
     curAcct:   get(caAvg,     code),
     rd:        get(rdAvg,     code),
     remit:     get(remitAvg,  code),
-    elec:      get(elecAvg,   code),
-    tax:       get(taxAvg,    code),
-    mil:       get(milAvg,    code),
+    elec:      get(elecAvg,      code),
+    tax:       get(taxAvg,       code),
+    mil:       get(milAvg,       code),
+    energyUse: get(energyUseAvg, code),
+    elecKwh:   get(elecKwhAvg,   code),
+    renew:     get(renewAvg,     code),
   });
 }
 
@@ -248,6 +258,9 @@ const candidates = [
   { label: "Electricity access % population",   key: "elec"       },
   { label: "Tax revenue % GDP",                 key: "tax"        },
   { label: "Military expenditure % GDP",        key: "mil"        },
+  { label: "Energy use per capita (kg oil eq.)", key: "energyUse"  },
+  { label: "Electric power consumption (kWh/cap)",key: "elecKwh"   },
+  { label: "Renewable energy share %",           key: "renew"      },
 ];
 
 // Greedy stepwise — add whichever variable reduces residual SS the most
