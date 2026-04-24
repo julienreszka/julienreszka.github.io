@@ -816,9 +816,9 @@
         <div style="margin-top: 24px;">
           <h3 style="font-size: 1.05em; margin-bottom: 6px;">What else explains growth beyond government spending?</h3>
           <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
-            Greedy stepwise regression across 23 candidate variables (macro, governance, human capital, finance, structural) added one at a time to the power-law spending baseline.
-            Each row shows the single best remaining variable at that step. The ceiling — stacking all 14 variables that clear the contribution threshold — is R²&nbsp;≈&nbsp;0.689.
-            The remaining ~31% is not recoverable from standard World Bank data.
+            Greedy stepwise regression across <!-- STEPWISE-N-CANDIDATES -->26<!-- /STEPWISE-N-CANDIDATES --> candidate variables (macro, governance, human capital, finance, structural) added one at a time to the power-law spending baseline.
+            Each row shows the single best remaining variable at that step. The ceiling — stacking all <!-- STEPWISE-N-ENTERED -->13<!-- /STEPWISE-N-ENTERED --> variables that clear the contribution threshold — is R²&nbsp;≈&nbsp;<!-- STEPWISE-CEILING -->0.658<!-- /STEPWISE-CEILING -->.
+            The remaining <!-- STEPWISE-UNEXPLAINED -->~34%<!-- /STEPWISE-UNEXPLAINED --> is not recoverable from standard World Bank data.
             Notably, <strong style="color:rgba(255,255,255,0.8)">all 6 WGI governance indicators dropped out again</strong> — no marginal gain after income, investment, education and population are controlled.
             Military spending, R&amp;D, and remittances all entered — for structural reasons explained in the interpretation column.
           </p>
@@ -844,144 +844,137 @@
                 <td style="padding:3px 8px">—</td>
                 <td style="padding:3px 8px">Baseline</td>
               </tr>
+              <!-- STEPWISE-ROWS-START -->
               <tr>
                 <td style="padding:3px 8px">1</td>
-                <td style="padding:3px 8px">Initial income (ln GDP per capita)</td>
-                <td style="padding:3px 8px">+0.1121</td>
-                <td style="padding:3px 8px">0.5237</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">−0.38</td>
-                <td style="padding:3px 8px">Beta-convergence: poorer countries grow faster conditional on spending</td>
+                <td style="padding:3px 8px">R&amp;D spending % GDP</td>
+                <td style="padding:3px 8px">+0.0728</td>
+                <td style="padding:3px 8px">0.4947</td>
+                <td style="padding:3px 8px">95</td>
+                <td style="padding:3px 8px">−0.435</td>
+                <td style="padding:3px 8px">Negative slope: high-R&amp;D countries are mature economies growing slowly — captures a development-stage effect not fully absorbed by initial income</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">2</td>
-                <td style="padding:3px 8px">Military expenditure (% GDP)</td>
-                <td style="padding:3px 8px">+0.0335</td>
-                <td style="padding:3px 8px">0.5572</td>
+                <td style="padding:3px 8px">Military expenditure % GDP</td>
+                <td style="padding:3px 8px">+0.0522</td>
+                <td style="padding:3px 8px">0.5468</td>
                 <td style="padding:3px 8px">98</td>
-                <td style="padding:3px 8px">+0.33</td>
+                <td style="padding:3px 8px">+0.393</td>
                 <td style="padding:3px 8px">Positive slope: may reflect defense-led investment or reverse causality (richer/faster countries can afford more military)</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">3</td>
-                <td style="padding:3px 8px">Capital formation (% GDP)</td>
-                <td style="padding:3px 8px">+0.0251</td>
-                <td style="padding:3px 8px">0.5823</td>
+                <td style="padding:3px 8px">Capital formation % GDP</td>
+                <td style="padding:3px 8px">+0.0272</td>
+                <td style="padding:3px 8px">0.5740</td>
                 <td style="padding:3px 8px">105</td>
-                <td style="padding:3px 8px">+0.04</td>
+                <td style="padding:3px 8px">+0.049</td>
                 <td style="padding:3px 8px">Investment rate — countries that invest more grow faster</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">4</td>
-                <td style="padding:3px 8px">FDI inflows (% GDP)</td>
-                <td style="padding:3px 8px">+0.0180</td>
-                <td style="padding:3px 8px">0.6002</td>
+                <td style="padding:3px 8px">Population growth %</td>
+                <td style="padding:3px 8px">+0.0192</td>
+                <td style="padding:3px 8px">0.5933</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.02</td>
-                <td style="padding:3px 8px">Foreign investment brings capital and technology transfer</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">5</td>
-                <td style="padding:3px 8px">Remittances received (% GDP)</td>
-                <td style="padding:3px 8px">+0.0111</td>
-                <td style="padding:3px 8px">0.6113</td>
-                <td style="padding:3px 8px">112</td>
-                <td style="padding:3px 8px">−0.02</td>
-                <td style="padding:3px 8px">Negative slope: remittances flow to slow-growing economies as a safety valve, not a growth engine</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">6</td>
-                <td style="padding:3px 8px">R&amp;D spending (% GDP)</td>
-                <td style="padding:3px 8px">+0.0162</td>
-                <td style="padding:3px 8px">0.6276</td>
-                <td style="padding:3px 8px">95</td>
-                <td style="padding:3px 8px">−0.16</td>
-                <td style="padding:3px 8px">Negative slope: high-R&amp;D countries are mature economies growing slowly — captures a development-stage effect not fully absorbed by initial income</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">7</td>
-                <td style="padding:3px 8px">Current account balance (% GDP)</td>
-                <td style="padding:3px 8px">+0.0175</td>
-                <td style="padding:3px 8px">0.6451</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.03</td>
-                <td style="padding:3px 8px">Surplus countries save and invest more domestically</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">8</td>
-                <td style="padding:3px 8px">Domestic credit to private sector (% GDP)</td>
-                <td style="padding:3px 8px">+0.0084</td>
-                <td style="padding:3px 8px">0.6535</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">−0.004</td>
-                <td style="padding:3px 8px">Financial depth — but negative slope suggests over-financialisation drag at high levels</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">9</td>
-                <td style="padding:3px 8px">Tertiary enrollment (%)</td>
-                <td style="padding:3px 8px">+0.0123</td>
-                <td style="padding:3px 8px">0.6658</td>
-                <td style="padding:3px 8px">110</td>
-                <td style="padding:3px 8px">+0.007</td>
-                <td style="padding:3px 8px">Human capital stock — higher education feeds productivity growth</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">10</td>
-                <td style="padding:3px 8px">Population growth (%)</td>
-                <td style="padding:3px 8px">+0.0090</td>
-                <td style="padding:3px 8px">0.6747</td>
-                <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.14</td>
+                <td style="padding:3px 8px">+0.186</td>
                 <td style="padding:3px 8px">More people = more total output (note: total GDP growth, not per-capita)</td>
               </tr>
               <tr>
-                <td style="padding:3px 8px">11</td>
-                <td style="padding:3px 8px">Electricity access (% population)</td>
-                <td style="padding:3px 8px">+0.0051</td>
-                <td style="padding:3px 8px">0.6798</td>
+                <td style="padding:3px 8px">5</td>
+                <td style="padding:3px 8px">Domestic credit (private) % GDP</td>
+                <td style="padding:3px 8px">+0.0072</td>
+                <td style="padding:3px 8px">0.6005</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.005</td>
-                <td style="padding:3px 8px">Infrastructure proxy — basic energy access enables productive activity</td>
+                <td style="padding:3px 8px">−0.003</td>
+                <td style="padding:3px 8px">Financial depth — but negative slope suggests over-financialisation drag at high levels</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">6</td>
+                <td style="padding:3px 8px">Tertiary enrollment %</td>
+                <td style="padding:3px 8px">+0.0174</td>
+                <td style="padding:3px 8px">0.6179</td>
+                <td style="padding:3px 8px">110</td>
+                <td style="padding:3px 8px">+0.008</td>
+                <td style="padding:3px 8px">Human capital stock — higher education feeds productivity growth</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">7</td>
+                <td style="padding:3px 8px">ln(GDP/cap) — convergence</td>
+                <td style="padding:3px 8px">+0.0073</td>
+                <td style="padding:3px 8px">0.6252</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">−0.095</td>
+                <td style="padding:3px 8px">Beta-convergence: poorer countries grow faster conditional on spending</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">8</td>
+                <td style="padding:3px 8px">Tax revenue % GDP</td>
+                <td style="padding:3px 8px">+0.0080</td>
+                <td style="padding:3px 8px">0.6332</td>
+                <td style="padding:3px 8px">111</td>
+                <td style="padding:3px 8px">+0.026</td>
+                <td style="padding:3px 8px">Fiscal capacity signal; positive slope may capture institutional quality</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">9</td>
+                <td style="padding:3px 8px">Remittances received % GDP</td>
+                <td style="padding:3px 8px">+0.0077</td>
+                <td style="padding:3px 8px">0.6409</td>
+                <td style="padding:3px 8px">112</td>
+                <td style="padding:3px 8px">−0.020</td>
+                <td style="padding:3px 8px">Negative slope: remittances flow to slow-growing economies as a safety valve, not a growth engine</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">10</td>
+                <td style="padding:3px 8px">FDI inflows % GDP</td>
+                <td style="padding:3px 8px">+0.0040</td>
+                <td style="padding:3px 8px">0.6449</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.010</td>
+                <td style="padding:3px 8px">Foreign investment brings capital and technology transfer</td>
+              </tr>
+              <tr>
+                <td style="padding:3px 8px">11</td>
+                <td style="padding:3px 8px">Renewable energy share %</td>
+                <td style="padding:3px 8px">+0.0034</td>
+                <td style="padding:3px 8px">0.6482</td>
+                <td style="padding:3px 8px">113</td>
+                <td style="padding:3px 8px">+0.004</td>
+                <td style="padding:3px 8px">Renewable energy share — positive slope reflects energy diversification and long-run efficiency gains</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">12</td>
-                <td style="padding:3px 8px">Tax revenue (% GDP)</td>
-                <td style="padding:3px 8px">+0.0023</td>
-                <td style="padding:3px 8px">0.6821</td>
-                <td style="padding:3px 8px">111</td>
-                <td style="padding:3px 8px">+0.014</td>
-                <td style="padding:3px 8px">Fiscal capacity — higher tax collection signals stronger state institutions</td>
+                <td style="padding:3px 8px">Trade openness % GDP</td>
+                <td style="padding:3px 8px">+0.0058</td>
+                <td style="padding:3px 8px">0.6540</td>
+                <td style="padding:3px 8px">105</td>
+                <td style="padding:3px 8px">+0.002</td>
+                <td style="padding:3px 8px">More open economies tend to grow faster</td>
               </tr>
               <tr>
                 <td style="padding:3px 8px">13</td>
-                <td style="padding:3px 8px">Urban population growth (%)</td>
-                <td style="padding:3px 8px">+0.0033</td>
-                <td style="padding:3px 8px">0.6854</td>
+                <td style="padding:3px 8px">Current account balance % GDP</td>
+                <td style="padding:3px 8px">+0.0044</td>
+                <td style="padding:3px 8px">0.6583</td>
                 <td style="padding:3px 8px">113</td>
-                <td style="padding:3px 8px">+0.054</td>
-                <td style="padding:3px 8px">Urbanisation correlates with structural transformation and productivity gains</td>
-              </tr>
-              <tr>
-                <td style="padding:3px 8px">14</td>
-                <td style="padding:3px 8px">Trade openness (% GDP)</td>
-                <td style="padding:3px 8px">+0.0033</td>
-                <td style="padding:3px 8px">0.6887</td>
-                <td style="padding:3px 8px">105</td>
-                <td style="padding:3px 8px">+0.001</td>
-                <td style="padding:3px 8px">More open economies tend to grow faster</td>
+                <td style="padding:3px 8px">+0.010</td>
+                <td style="padding:3px 8px">Surplus countries save and invest more domestically</td>
               </tr>
               <tr style="color:rgba(255,255,255,0.35); font-style:italic;">
                 <td style="padding:3px 8px">—</td>
-                <td style="padding:3px 8px">WGI Governance (×6), Inflation, Secondary enrollment, Life expectancy</td>
+                <td style="padding:3px 8px">Inflation %, WGI Rule of Law, WGI Control of Corruption, WGI Govt Effectiveness, WGI Political Stability, WGI Regulatory Quality, WGI Voice &amp; Accountability, Secondary school enrollment %, Life expectancy, Urban population growth %, Electricity access % population, Energy use per capita (kg oil eq.), Electric power consumption (kWh/cap)</td>
                 <td style="padding:3px 8px">&lt;0.003 each</td>
                 <td style="padding:3px 8px">—</td>
                 <td style="padding:3px 8px">—</td>
                 <td style="padding:3px 8px">—</td>
                 <td style="padding:3px 8px">Dropped — no marginal gain after the above variables are controlled</td>
               </tr>
+              <!-- STEPWISE-ROWS-END -->
             </tbody>
           </table>
-          <small style="color:rgba(255,255,255,0.4)">113 countries, 2005–2023, power-law baseline, standard exclusions. Greedy stepwise over 23 candidate World Bank indicators. Threshold: marginal R² &gt; 0.003. Source: <code>scripts/ceiling-r2.mjs</code>.</small>
+          <small style="color:rgba(255,255,255,0.4)">113 countries, 2005–2023, power-law baseline, standard exclusions. Greedy stepwise over <!-- STEPWISE-N-CANDIDATES -->26<!-- /STEPWISE-N-CANDIDATES --> candidate World Bank indicators. Threshold: marginal R² &gt; 0.003. Source: <code>scripts/ceiling-r2.mjs</code>. Updated by <code>scripts/update-static-tables.mjs</code>.</small>
         </div>
 
         <div id="residual-income-section" style="margin-top: 24px;">
