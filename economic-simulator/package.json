@@ -10,7 +10,9 @@
   "dependencies": {
     "puppeteer": "^24.15.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "chart.js": "^4.5.1"
+  },
   "keywords": [
     "og-images",
     "social-media",

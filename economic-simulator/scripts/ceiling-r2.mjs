@@ -132,34 +132,34 @@ const [
 const actualCodes = new Set(meta.filter(c => c.region?.id !== "NA").map(c => c.id));
 
 // Period averages for everything except GDP/cap (use start value for convergence)
-const spAvg     = periodAvg(spRaw);
-const grAvg     = periodAvg(grRaw);
-const gdpPcSt   = startVal(gdpPcRaw);
-const tradeAvg  = periodAvg(tradeRaw);
-const popAvg    = periodAvg(popRaw);
-const inflAvg   = periodAvg(inflRaw);
-const capAvg    = periodAvg(capRaw);
-const rlAvg     = periodAvg(rlRaw);
-const ccAvg     = periodAvg(ccRaw);
-const geAvg     = periodAvg(geRaw);
-const pvAvg     = periodAvg(pvRaw);
-const rqAvg     = periodAvg(rqRaw);
-const vaAvg     = periodAvg(vaRaw);
-const secAvg    = periodAvg(secRaw);
-const lifeAvg   = periodAvg(lifeRaw);
-const terAvg    = periodAvg(terRaw);
-const fdiAvg    = periodAvg(fdiRaw);
+const spAvg = periodAvg(spRaw);
+const grAvg = periodAvg(grRaw);
+const gdpPcSt = startVal(gdpPcRaw);
+const tradeAvg = periodAvg(tradeRaw);
+const popAvg = periodAvg(popRaw);
+const inflAvg = periodAvg(inflRaw);
+const capAvg = periodAvg(capRaw);
+const rlAvg = periodAvg(rlRaw);
+const ccAvg = periodAvg(ccRaw);
+const geAvg = periodAvg(geRaw);
+const pvAvg = periodAvg(pvRaw);
+const rqAvg = periodAvg(rqRaw);
+const vaAvg = periodAvg(vaRaw);
+const secAvg = periodAvg(secRaw);
+const lifeAvg = periodAvg(lifeRaw);
+const terAvg = periodAvg(terRaw);
+const fdiAvg = periodAvg(fdiRaw);
 const creditAvg = periodAvg(creditRaw);
-const urbanAvg  = periodAvg(urbanRaw);
-const caAvg     = periodAvg(caRaw);
-const rdAvg     = periodAvg(rdRaw);
-const remitAvg  = periodAvg(remitRaw);
-const elecAvg   = periodAvg(elecRaw);
-const taxAvg    = periodAvg(taxRaw);
-const milAvg       = periodAvg(milRaw);
+const urbanAvg = periodAvg(urbanRaw);
+const caAvg = periodAvg(caRaw);
+const rdAvg = periodAvg(rdRaw);
+const remitAvg = periodAvg(remitRaw);
+const elecAvg = periodAvg(elecRaw);
+const taxAvg = periodAvg(taxRaw);
+const milAvg = periodAvg(milRaw);
 const energyUseAvg = periodAvg(energyUseRaw);
-const elecKwhAvg   = periodAvg(elecKwhRaw);
-const renewAvg     = periodAvg(renewRaw);
+const elecKwhAvg = periodAvg(elecKwhRaw);
+const renewAvg = periodAvg(renewRaw);
 
 const get = (map, code) => map[code] ? avg(map[code]) : null;
 
@@ -188,38 +188,38 @@ for (const [code, d] of Object.entries(countries)) {
   if (EXCLUDED.has(code) || CONFLICT.has(code) || GDP_DIST.has(code) || EXT_FUNDED.has(code) || RESOURCE_DEP.has(code)) continue;
   if (d.sp.length < MIN_YEARS || d.gr.length < MIN_YEARS) continue;
   const spending = avg(d.sp);
-  const growth   = avg(d.gr);
-  const gdpPc    = gdpPcSt[code];
+  const growth = avg(d.gr);
+  const gdpPc = gdpPcSt[code];
   dataPoints.push({
     code,
     spending,
     growth,
-    logGdp:    gdpPc ? Math.log(gdpPc) : null,
-    trade:     get(tradeAvg,  code),
-    pop:       get(popAvg,    code),
-    infl:      get(inflAvg,   code),
-    cap:       get(capAvg,    code),
-    ruleOfLaw: get(rlAvg,     code),
-    corruption:get(ccAvg,     code),
-    govtEff:   get(geAvg,     code),
-    polStab:   get(pvAvg,     code),
-    regQual:   get(rqAvg,     code),
-    voice:     get(vaAvg,     code),
-    secEnroll: get(secAvg,    code),
-    lifeExp:   get(lifeAvg,   code),
-    terEnroll: get(terAvg,    code),
-    fdi:       get(fdiAvg,    code),
-    credit:    get(creditAvg, code),
-    urban:     get(urbanAvg,  code),
-    curAcct:   get(caAvg,     code),
-    rd:        get(rdAvg,     code),
-    remit:     get(remitAvg,  code),
-    elec:      get(elecAvg,      code),
-    tax:       get(taxAvg,       code),
-    mil:       get(milAvg,       code),
+    logGdp: gdpPc ? Math.log(gdpPc) : null,
+    trade: get(tradeAvg, code),
+    pop: get(popAvg, code),
+    infl: get(inflAvg, code),
+    cap: get(capAvg, code),
+    ruleOfLaw: get(rlAvg, code),
+    corruption: get(ccAvg, code),
+    govtEff: get(geAvg, code),
+    polStab: get(pvAvg, code),
+    regQual: get(rqAvg, code),
+    voice: get(vaAvg, code),
+    secEnroll: get(secAvg, code),
+    lifeExp: get(lifeAvg, code),
+    terEnroll: get(terAvg, code),
+    fdi: get(fdiAvg, code),
+    credit: get(creditAvg, code),
+    urban: get(urbanAvg, code),
+    curAcct: get(caAvg, code),
+    rd: get(rdAvg, code),
+    remit: get(remitAvg, code),
+    elec: get(elecAvg, code),
+    tax: get(taxAvg, code),
+    mil: get(milAvg, code),
     energyUse: get(energyUseAvg, code),
-    elecKwh:   get(elecKwhAvg,   code),
-    renew:     get(renewAvg,     code),
+    elecKwh: get(elecKwhAvg, code),
+    renew: get(renewAvg, code),
   });
 }
 
@@ -228,39 +228,39 @@ console.log(`Clean dataset: ${dataPoints.length} countries\n`);
 // Stage 1: power-law spending fit
 const armeyFn = powerLawFit(dataPoints);
 const meanGr = avg(dataPoints.map(c => c.growth));
-const ssTot  = dataPoints.reduce((s, c) => s + (c.growth - meanGr) ** 2, 0);
+const ssTot = dataPoints.reduce((s, c) => s + (c.growth - meanGr) ** 2, 0);
 const ssRes1 = dataPoints.reduce((s, c) => s + (c.growth - armeyFn(c.spending)) ** 2, 0);
-const r2_1   = 1 - ssRes1 / ssTot;
+const r2_1 = 1 - ssRes1 / ssTot;
 console.log(`Stage 1 — Power Law (spending only):  R² = ${r2_1.toFixed(4)}\n`);
 
 // Candidate variables for stepwise
 const candidates = [
-  { label: "ln(GDP/cap) — convergence",       key: "logGdp"     },
-  { label: "Capital formation % GDP",          key: "cap"        },
-  { label: "Population growth %",              key: "pop"        },
-  { label: "Trade openness % GDP",             key: "trade"      },
-  { label: "Inflation %",                      key: "infl"       },
-  { label: "WGI Rule of Law",                  key: "ruleOfLaw"  },
-  { label: "WGI Control of Corruption",        key: "corruption" },
-  { label: "WGI Govt Effectiveness",           key: "govtEff"    },
-  { label: "WGI Political Stability",          key: "polStab"    },
-  { label: "WGI Regulatory Quality",           key: "regQual"    },
-  { label: "WGI Voice & Accountability",       key: "voice"      },
-  { label: "Secondary school enrollment %",    key: "secEnroll"  },
-  { label: "Life expectancy",                  key: "lifeExp"    },
-  { label: "Tertiary enrollment %",            key: "terEnroll"  },
-  { label: "FDI inflows % GDP",               key: "fdi"        },
-  { label: "Domestic credit (private) % GDP", key: "credit"     },
-  { label: "Urban population growth %",        key: "urban"      },
-  { label: "Current account balance % GDP",    key: "curAcct"    },
-  { label: "R&D spending % GDP",                key: "rd"         },
-  { label: "Remittances received % GDP",        key: "remit"      },
-  { label: "Electricity access % population",   key: "elec"       },
-  { label: "Tax revenue % GDP",                 key: "tax"        },
-  { label: "Military expenditure % GDP",        key: "mil"        },
-  { label: "Energy use per capita (kg oil eq.)", key: "energyUse"  },
-  { label: "Electric power consumption (kWh/cap)",key: "elecKwh"   },
-  { label: "Renewable energy share %",           key: "renew"      },
+  { label: "ln(GDP/cap) — convergence", key: "logGdp" },
+  { label: "Capital formation % GDP", key: "cap" },
+  { label: "Population growth %", key: "pop" },
+  { label: "Trade openness % GDP", key: "trade" },
+  { label: "Inflation %", key: "infl" },
+  { label: "WGI Rule of Law", key: "ruleOfLaw" },
+  { label: "WGI Control of Corruption", key: "corruption" },
+  { label: "WGI Govt Effectiveness", key: "govtEff" },
+  { label: "WGI Political Stability", key: "polStab" },
+  { label: "WGI Regulatory Quality", key: "regQual" },
+  { label: "WGI Voice & Accountability", key: "voice" },
+  { label: "Secondary school enrollment %", key: "secEnroll" },
+  { label: "Life expectancy", key: "lifeExp" },
+  { label: "Tertiary enrollment %", key: "terEnroll" },
+  { label: "FDI inflows % GDP", key: "fdi" },
+  { label: "Domestic credit (private) % GDP", key: "credit" },
+  { label: "Urban population growth %", key: "urban" },
+  { label: "Current account balance % GDP", key: "curAcct" },
+  { label: "R&D spending % GDP", key: "rd" },
+  { label: "Remittances received % GDP", key: "remit" },
+  { label: "Electricity access % population", key: "elec" },
+  { label: "Tax revenue % GDP", key: "tax" },
+  { label: "Military expenditure % GDP", key: "mil" },
+  { label: "Energy use per capita (kg oil eq.)", key: "energyUse" },
+  { label: "Electric power consumption (kWh/cap)", key: "elecKwh" },
+  { label: "Renewable energy share %", key: "renew" },
 ];
 
 // Greedy stepwise — add whichever variable reduces residual SS the most

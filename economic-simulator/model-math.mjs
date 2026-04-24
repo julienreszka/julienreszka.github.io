@@ -5,8 +5,8 @@
 
 // ── Date range & quality threshold ────────────────────────────────────────────
 export const DATE_START = 2005;
-export const DATE_END   = 2023;
-export const MIN_YEARS  = 3;
+export const DATE_END = 2023;
+export const MIN_YEARS = 3;
 
 // ── Exclusion sets ─────────────────────────────────────────────────────────────
 // Countries excluded due to aid/conflict distortion
@@ -77,7 +77,7 @@ export function aic(actuals, predictions, k) {
  */
 export function gridSearch2D(b0Range, pRange, costFn, N = 80) {
   const [b0Min, b0Max] = b0Range;
-  const [pMin, pMax]   = pRange;
+  const [pMin, pMax] = pRange;
 
   // Coarse pass: log scale for b0 (handles wide ranges like [0.5, 2000]), linear for p
   const b0s = Array.from({ length: N }, (_, i) =>
@@ -100,7 +100,7 @@ export function gridSearch2D(b0Range, pRange, costFn, N = 80) {
   const span = (pMax - pMin) * 0.15;
   const pLo = Math.max(pMin, bestP - span), pHi = Math.min(pMax, bestP + span);
   const b0sF = Array.from({ length: N }, (_, i) => b0Lo + (b0Hi - b0Lo) * i / (N - 1));
-  const psF  = Array.from({ length: N }, (_, i) => pLo  + (pHi  - pLo)  * i / (N - 1));
+  const psF = Array.from({ length: N }, (_, i) => pLo + (pHi - pLo) * i / (N - 1));
   for (const b0 of b0sF) {
     for (const p of psF) {
       const cost = costFn(b0, p);

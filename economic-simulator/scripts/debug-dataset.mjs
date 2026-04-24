@@ -77,12 +77,12 @@ for (const [code, d] of Object.entries(nodeBuild)) {
 
 // --- Compare ---
 const onlyInBrowser = [...browserCountries].filter(c => !nodeCountries.has(c));
-const onlyInNode   = [...nodeCountries].filter(c => !browserCountries.has(c));
+const onlyInNode = [...nodeCountries].filter(c => !browserCountries.has(c));
 const both = [...browserCountries].filter(c => nodeCountries.has(c));
 
 console.log(`Browser N=${browserCountries.size}  Node N=${nodeCountries.size}  Shared=${both.length}`);
 if (onlyInBrowser.length) console.log(`\nOnly in BROWSER (${onlyInBrowser.length}):`, onlyInBrowser.join(', '));
-if (onlyInNode.length)   console.log(`\nOnly in NODE (${onlyInNode.length}):`, onlyInNode.join(', '));
+if (onlyInNode.length) console.log(`\nOnly in NODE (${onlyInNode.length}):`, onlyInNode.join(', '));
 
 // --- Compute R² for each pipeline ---
 const computeR2 = (codes, dataSource) => {
@@ -90,35 +90,35 @@ const computeR2 = (codes, dataSource) => {
     const d = dataSource[c];
     return { spending: avg(d.spending ?? d.sp), growth: avg(d.growth ?? d.gr) };
   });
-  const cost = fn => pts.length * Math.log(pts.reduce((s, p) => s + (p.growth - fn(p.spending))**2, 0) / pts.length);
+  const cost = fn => pts.length * Math.log(pts.reduce((s, p) => s + (p.growth - fn(p.spending)) ** 2, 0) / pts.length);
   const [b0, alpha] = gridSearch2D([0.5, 2000], [0.1, 5], (b0, a) =>
     cost(x => b0 * Math.pow(Math.max(x, 0.1), -a))
   );
   const fn = x => b0 * Math.pow(Math.max(x, 0.1), -alpha);
   const actuals = pts.map(p => p.growth);
-  const preds   = pts.map(p => fn(p.spending));
+  const preds = pts.map(p => fn(p.spending));
   const mean = avg(actuals);
-  const ssTot = actuals.reduce((s, v) => s + (v - mean)**2, 0);
-  const ssRes = actuals.reduce((s, v, i) => s + (v - preds[i])**2, 0);
+  const ssTot = actuals.reduce((s, v) => s + (v - mean) ** 2, 0);
+  const ssRes = actuals.reduce((s, v, i) => s + (v - preds[i]) ** 2, 0);
   return 1 - ssRes / ssTot;
 };
 
 const r2Browser = computeR2([...browserCountries], countryAverages);
-const r2Node    = computeR2([...nodeCountries],    nodeBuild);
+const r2Node = computeR2([...nodeCountries], nodeBuild);
 console.log(`\nPower Law R²  Browser=${r2Browser.toFixed(4)}  Node=${r2Node.toFixed(4)}`);
 
 // --- Show spending/growth diffs for shared countries ---
 if (both.length > 0) {
   const diffs = both.map(code => {
     const bSp = avg(countryAverages[code].spending), bGr = avg(countryAverages[code].growth);
-    const nSp = avg(nodeBuild[code].sp),            nGr = avg(nodeBuild[code].gr);
+    const nSp = avg(nodeBuild[code].sp), nGr = avg(nodeBuild[code].gr);
     return { code, dSp: Math.abs(bSp - nSp), dGr: Math.abs(bGr - nGr) };
   }).filter(d => d.dSp > 1e-6 || d.dGr > 1e-6).sort((a, b) => (b.dSp + b.dGr) - (a.dSp + a.dGr));
   if (diffs.length) {
     console.log(`\nShared countries with different values (top ${Math.min(diffs.length, 20)}):`);
     for (const d of diffs.slice(0, 20)) {
       const bSp = avg(countryAverages[d.code].spending), bGr = avg(countryAverages[d.code].growth);
-      const nSp = avg(nodeBuild[d.code].sp),             nGr = avg(nodeBuild[d.code].gr);
+      const nSp = avg(nodeBuild[d.code].sp), nGr = avg(nodeBuild[d.code].gr);
       console.log(`  ${d.code}  sp: browser=${bSp.toFixed(3)} node=${nSp.toFixed(3)}  gr: browser=${bGr.toFixed(3)} node=${nGr.toFixed(3)}`);
     }
   } else {

@@ -15,41 +15,41 @@ import {
   avg, ols, gridSearch2D,
 } from "../model-math.mjs";
 
-const __dir  = dirname(fileURLToPath(import.meta.url));
-const CACHE  = join(__dir, "cache");
-const HTML   = resolve(__dir, "..", "armey-curve.html");
+const __dir = dirname(fileURLToPath(import.meta.url));
+const CACHE = join(__dir, "cache");
+const HTML = resolve(__dir, "..", "armey-curve.html");
 
 // ---------------------------------------------------------------------------
 // Interpretation copy for each candidate variable key.
 // Edit here to update the prose in the table without re-running analysis.
 // ---------------------------------------------------------------------------
 const INTERP = {
-  logGdp:    "Beta-convergence: poorer countries grow faster conditional on spending",
-  cap:       "Investment rate — countries that invest more grow faster",
-  pop:       "More people = more total output (note: total GDP growth, not per-capita)",
-  trade:     "More open economies tend to grow faster",
-  infl:      "Inflation drag — high inflation erodes real returns on investment",
+  logGdp: "Beta-convergence: poorer countries grow faster conditional on spending",
+  cap: "Investment rate — countries that invest more grow faster",
+  pop: "More people = more total output (note: total GDP growth, not per-capita)",
+  trade: "More open economies tend to grow faster",
+  infl: "Inflation drag — high inflation erodes real returns on investment",
   ruleOfLaw: "Legal security for contracts and property enables private investment",
-  corruption:"Clean institutions lower transaction costs and attract capital",
-  govtEff:   "State capacity to deliver services and enforce policy",
-  polStab:   "Political predictability reduces uncertainty and investment horizon",
-  regQual:   "Business-friendly regulation supports productive entry and exit",
-  voice:     "Accountability and freedom of expression correlate with durable institutions",
+  corruption: "Clean institutions lower transaction costs and attract capital",
+  govtEff: "State capacity to deliver services and enforce policy",
+  polStab: "Political predictability reduces uncertainty and investment horizon",
+  regQual: "Business-friendly regulation supports productive entry and exit",
+  voice: "Accountability and freedom of expression correlate with durable institutions",
   secEnroll: "Basic human capital pipeline for the labour force",
-  lifeExp:   "Healthy workers are more productive",
+  lifeExp: "Healthy workers are more productive",
   terEnroll: "Human capital stock — higher education feeds productivity growth",
-  fdi:       "Foreign investment brings capital and technology transfer",
-  credit:    "Financial depth — but negative slope suggests over-financialisation drag at high levels",
-  urban:     "Urbanisation correlates with structural transformation and productivity gains",
-  curAcct:   "Surplus countries save and invest more domestically",
-  rd:        "Negative slope: high-R&D countries are mature economies growing slowly \u2014 captures a development-stage effect not fully absorbed by initial income",
-  remit:     "Negative slope: remittances flow to slow-growing economies as a safety valve, not a growth engine",
-  elec:      "Infrastructure proxy \u2014 basic energy access enables productive activity",
-  tax:       "Fiscal capacity signal; positive slope may capture institutional quality",
-  mil:       "Positive slope: may reflect defense-led investment or reverse causality (richer/faster countries can afford more military)",
+  fdi: "Foreign investment brings capital and technology transfer",
+  credit: "Financial depth — but negative slope suggests over-financialisation drag at high levels",
+  urban: "Urbanisation correlates with structural transformation and productivity gains",
+  curAcct: "Surplus countries save and invest more domestically",
+  rd: "Negative slope: high-R&D countries are mature economies growing slowly \u2014 captures a development-stage effect not fully absorbed by initial income",
+  remit: "Negative slope: remittances flow to slow-growing economies as a safety valve, not a growth engine",
+  elec: "Infrastructure proxy \u2014 basic energy access enables productive activity",
+  tax: "Fiscal capacity signal; positive slope may capture institutional quality",
+  mil: "Positive slope: may reflect defense-led investment or reverse causality (richer/faster countries can afford more military)",
   energyUse: "Energy-intensive economies produce more \u2014 reflects industrialisation stage",
-  elecKwh:   "Modern electricity infrastructure proxy correlated with productive capacity",
-  renew:     "Renewable energy share \u2014 positive slope reflects energy diversification and long-run efficiency gains",
+  elecKwh: "Modern electricity infrastructure proxy correlated with productive capacity",
+  renew: "Renewable energy share \u2014 positive slope reflects energy diversification and long-run efficiency gains",
 };
 
 // ---------------------------------------------------------------------------
@@ -120,66 +120,66 @@ const get = (map, code) => map[code] ? avg(map[code]) : null;
 // ---------------------------------------------------------------------------
 console.log("Reading cached World Bank data...");
 
-const meta      = readMeta();
-const spRaw     = readCache("GC.XPN.TOTL.GD.ZS");
-const grRaw     = readCache("NY.GDP.MKTP.KD.ZG");
-const gdpPcRaw  = readCache("NY.GDP.PCAP.KD");
-const tradeRaw  = readCache("NE.TRD.GNFS.ZS");
-const popRaw    = readCache("SP.POP.GROW");
-const inflRaw   = readCache("FP.CPI.TOTL.ZG");
-const capRaw    = readCache("NE.GDI.TOTL.ZS");
-const rlRaw     = readCache("RL.EST");
-const ccRaw     = readCache("CC.EST");
-const geRaw     = readCache("GE.EST");
-const pvRaw     = readCache("PV.EST");
-const rqRaw     = readCache("RQ.EST");
-const vaRaw     = readCache("VA.EST");
-const secRaw    = readCache("SE.SEC.ENRR");
-const lifeRaw   = readCache("SP.DYN.LE00.IN");
-const terRaw    = readCache("SE.TER.ENRR");
-const fdiRaw    = readCache("BX.KLT.DINV.WD.GD.ZS");
+const meta = readMeta();
+const spRaw = readCache("GC.XPN.TOTL.GD.ZS");
+const grRaw = readCache("NY.GDP.MKTP.KD.ZG");
+const gdpPcRaw = readCache("NY.GDP.PCAP.KD");
+const tradeRaw = readCache("NE.TRD.GNFS.ZS");
+const popRaw = readCache("SP.POP.GROW");
+const inflRaw = readCache("FP.CPI.TOTL.ZG");
+const capRaw = readCache("NE.GDI.TOTL.ZS");
+const rlRaw = readCache("RL.EST");
+const ccRaw = readCache("CC.EST");
+const geRaw = readCache("GE.EST");
+const pvRaw = readCache("PV.EST");
+const rqRaw = readCache("RQ.EST");
+const vaRaw = readCache("VA.EST");
+const secRaw = readCache("SE.SEC.ENRR");
+const lifeRaw = readCache("SP.DYN.LE00.IN");
+const terRaw = readCache("SE.TER.ENRR");
+const fdiRaw = readCache("BX.KLT.DINV.WD.GD.ZS");
 const creditRaw = readCache("FS.AST.PRVT.GD.ZS");
-const urbanRaw  = readCache("SP.URB.GROW");
-const caRaw     = readCache("BN.CAB.XOKA.GD.ZS");
-const rdRaw     = readCache("GB.XPD.RSDV.GD.ZS");
-const remitRaw  = readCache("BX.TRF.PWKR.DT.GD.ZS");
-const elecRaw   = readCache("EG.ELC.ACCS.ZS");
-const taxRaw    = readCache("GC.TAX.TOTL.GD.ZS");
-const milRaw    = readCache("MS.MIL.XPND.GD.ZS");
+const urbanRaw = readCache("SP.URB.GROW");
+const caRaw = readCache("BN.CAB.XOKA.GD.ZS");
+const rdRaw = readCache("GB.XPD.RSDV.GD.ZS");
+const remitRaw = readCache("BX.TRF.PWKR.DT.GD.ZS");
+const elecRaw = readCache("EG.ELC.ACCS.ZS");
+const taxRaw = readCache("GC.TAX.TOTL.GD.ZS");
+const milRaw = readCache("MS.MIL.XPND.GD.ZS");
 const energyRaw = readCache("EG.USE.PCAP.KG.OE");
-const kwhRaw    = readCache("EG.USE.ELEC.KH.PC");
-const renewRaw  = readCache("EG.FEC.RNEW.ZS");
+const kwhRaw = readCache("EG.USE.ELEC.KH.PC");
+const renewRaw = readCache("EG.FEC.RNEW.ZS");
 
 const actualCodes = new Set(meta.filter(c => c.region?.id !== "NA").map(c => c.id));
 
-const spAvg      = periodAvg(spRaw);
-const grAvg      = periodAvg(grRaw);
-const gdpPcSt    = startVal(gdpPcRaw);
-const tradeAvg   = periodAvg(tradeRaw);
-const popAvg     = periodAvg(popRaw);
-const inflAvg    = periodAvg(inflRaw);
-const capAvg     = periodAvg(capRaw);
-const rlAvg      = periodAvg(rlRaw);
-const ccAvg      = periodAvg(ccRaw);
-const geAvg      = periodAvg(geRaw);
-const pvAvg      = periodAvg(pvRaw);
-const rqAvg      = periodAvg(rqRaw);
-const vaAvg      = periodAvg(vaRaw);
-const secAvg     = periodAvg(secRaw);
-const lifeAvg    = periodAvg(lifeRaw);
-const terAvg     = periodAvg(terRaw);
-const fdiAvg     = periodAvg(fdiRaw);
-const creditAvg  = periodAvg(creditRaw);
-const urbanAvg   = periodAvg(urbanRaw);
-const caAvg      = periodAvg(caRaw);
-const rdAvg      = periodAvg(rdRaw);
-const remitAvg   = periodAvg(remitRaw);
-const elecAvg    = periodAvg(elecRaw);
-const taxAvg     = periodAvg(taxRaw);
-const milAvg     = periodAvg(milRaw);
-const energyAvg  = periodAvg(energyRaw);
-const kwhAvg     = periodAvg(kwhRaw);
-const renewAvg   = periodAvg(renewRaw);
+const spAvg = periodAvg(spRaw);
+const grAvg = periodAvg(grRaw);
+const gdpPcSt = startVal(gdpPcRaw);
+const tradeAvg = periodAvg(tradeRaw);
+const popAvg = periodAvg(popRaw);
+const inflAvg = periodAvg(inflRaw);
+const capAvg = periodAvg(capRaw);
+const rlAvg = periodAvg(rlRaw);
+const ccAvg = periodAvg(ccRaw);
+const geAvg = periodAvg(geRaw);
+const pvAvg = periodAvg(pvRaw);
+const rqAvg = periodAvg(rqRaw);
+const vaAvg = periodAvg(vaRaw);
+const secAvg = periodAvg(secRaw);
+const lifeAvg = periodAvg(lifeRaw);
+const terAvg = periodAvg(terRaw);
+const fdiAvg = periodAvg(fdiRaw);
+const creditAvg = periodAvg(creditRaw);
+const urbanAvg = periodAvg(urbanRaw);
+const caAvg = periodAvg(caRaw);
+const rdAvg = periodAvg(rdRaw);
+const remitAvg = periodAvg(remitRaw);
+const elecAvg = periodAvg(elecRaw);
+const taxAvg = periodAvg(taxRaw);
+const milAvg = periodAvg(milRaw);
+const energyAvg = periodAvg(energyRaw);
+const kwhAvg = periodAvg(kwhRaw);
+const renewAvg = periodAvg(renewRaw);
 
 // Build dataset
 const countries = {};
@@ -205,38 +205,38 @@ for (const [code, d] of Object.entries(countries)) {
   if (EXCLUDED.has(code) || CONFLICT.has(code) || GDP_DIST.has(code) || EXT_FUNDED.has(code) || RESOURCE_DEP.has(code)) continue;
   if (d.sp.length < MIN_YEARS || d.gr.length < MIN_YEARS) continue;
   const spending = avg(d.sp);
-  const growth   = avg(d.gr);
-  const gdpPc    = gdpPcSt[code];
+  const growth = avg(d.gr);
+  const gdpPc = gdpPcSt[code];
   dataPoints.push({
     code,
     spending,
     growth,
-    logGdp:    gdpPc ? Math.log(gdpPc) : null,
-    trade:     get(tradeAvg,  code),
-    pop:       get(popAvg,    code),
-    infl:      get(inflAvg,   code),
-    cap:       get(capAvg,    code),
-    ruleOfLaw: get(rlAvg,     code),
-    corruption:get(ccAvg,     code),
-    govtEff:   get(geAvg,     code),
-    polStab:   get(pvAvg,     code),
-    regQual:   get(rqAvg,     code),
-    voice:     get(vaAvg,     code),
-    secEnroll: get(secAvg,    code),
-    lifeExp:   get(lifeAvg,   code),
-    terEnroll: get(terAvg,    code),
-    fdi:       get(fdiAvg,    code),
-    credit:    get(creditAvg, code),
-    urban:     get(urbanAvg,  code),
-    curAcct:   get(caAvg,     code),
-    rd:        get(rdAvg,     code),
-    remit:     get(remitAvg,  code),
-    elec:      get(elecAvg,   code),
-    tax:       get(taxAvg,    code),
-    mil:       get(milAvg,    code),
+    logGdp: gdpPc ? Math.log(gdpPc) : null,
+    trade: get(tradeAvg, code),
+    pop: get(popAvg, code),
+    infl: get(inflAvg, code),
+    cap: get(capAvg, code),
+    ruleOfLaw: get(rlAvg, code),
+    corruption: get(ccAvg, code),
+    govtEff: get(geAvg, code),
+    polStab: get(pvAvg, code),
+    regQual: get(rqAvg, code),
+    voice: get(vaAvg, code),
+    secEnroll: get(secAvg, code),
+    lifeExp: get(lifeAvg, code),
+    terEnroll: get(terAvg, code),
+    fdi: get(fdiAvg, code),
+    credit: get(creditAvg, code),
+    urban: get(urbanAvg, code),
+    curAcct: get(caAvg, code),
+    rd: get(rdAvg, code),
+    remit: get(remitAvg, code),
+    elec: get(elecAvg, code),
+    tax: get(taxAvg, code),
+    mil: get(milAvg, code),
     energyUse: get(energyAvg, code),
-    elecKwh:   get(kwhAvg,    code),
-    renew:     get(renewAvg,  code),
+    elecKwh: get(kwhAvg, code),
+    renew: get(renewAvg, code),
   });
 }
 
@@ -246,42 +246,42 @@ console.log(`Clean dataset: ${dataPoints.length} countries`);
 // Stage 1: power-law fit
 // ---------------------------------------------------------------------------
 const armeyFn = powerLawFit(dataPoints);
-const meanGr  = avg(dataPoints.map(c => c.growth));
-const ssTot   = dataPoints.reduce((s, c) => s + (c.growth - meanGr) ** 2, 0);
-const ssRes1  = dataPoints.reduce((s, c) => s + (c.growth - armeyFn(c.spending)) ** 2, 0);
-const r2base  = 1 - ssRes1 / ssTot;
+const meanGr = avg(dataPoints.map(c => c.growth));
+const ssTot = dataPoints.reduce((s, c) => s + (c.growth - meanGr) ** 2, 0);
+const ssRes1 = dataPoints.reduce((s, c) => s + (c.growth - armeyFn(c.spending)) ** 2, 0);
+const r2base = 1 - ssRes1 / ssTot;
 console.log(`Stage 1 power-law R² = ${r2base.toFixed(4)}`);
 
 // ---------------------------------------------------------------------------
 // Greedy stepwise
 // ---------------------------------------------------------------------------
 const candidates = [
-  { label: "R&D spending % GDP",                      key: "rd"         },
-  { label: "Military expenditure % GDP",                  key: "mil"        },
-  { label: "Capital formation % GDP",                     key: "cap"        },
-  { label: "Population growth %",                         key: "pop"        },
-  { label: "Domestic credit (private) % GDP",             key: "credit"     },
-  { label: "Tertiary enrollment %",                       key: "terEnroll"  },
-  { label: "ln(GDP/cap) \u2014 convergence",              key: "logGdp"     },
-  { label: "Tax revenue % GDP",                           key: "tax"        },
-  { label: "Remittances received % GDP",                  key: "remit"      },
-  { label: "FDI inflows % GDP",                           key: "fdi"        },
-  { label: "Renewable energy share %",                    key: "renew"      },
-  { label: "Trade openness % GDP",                        key: "trade"      },
-  { label: "Current account balance % GDP",               key: "curAcct"    },
-  { label: "Inflation %",                                 key: "infl"       },
-  { label: "WGI Rule of Law",                             key: "ruleOfLaw"  },
-  { label: "WGI Control of Corruption",                   key: "corruption" },
-  { label: "WGI Govt Effectiveness",                      key: "govtEff"    },
-  { label: "WGI Political Stability",                     key: "polStab"    },
-  { label: "WGI Regulatory Quality",                      key: "regQual"    },
-  { label: "WGI Voice & Accountability",                  key: "voice"      },
-  { label: "Secondary school enrollment %",               key: "secEnroll"  },
-  { label: "Life expectancy",                             key: "lifeExp"    },
-  { label: "Urban population growth %",                   key: "urban"      },
-  { label: "Electricity access % population",             key: "elec"       },
-  { label: "Energy use per capita (kg oil eq.)",          key: "energyUse"  },
-  { label: "Electric power consumption (kWh/cap)",        key: "elecKwh"    },
+  { label: "R&D spending % GDP", key: "rd" },
+  { label: "Military expenditure % GDP", key: "mil" },
+  { label: "Capital formation % GDP", key: "cap" },
+  { label: "Population growth %", key: "pop" },
+  { label: "Domestic credit (private) % GDP", key: "credit" },
+  { label: "Tertiary enrollment %", key: "terEnroll" },
+  { label: "ln(GDP/cap) \u2014 convergence", key: "logGdp" },
+  { label: "Tax revenue % GDP", key: "tax" },
+  { label: "Remittances received % GDP", key: "remit" },
+  { label: "FDI inflows % GDP", key: "fdi" },
+  { label: "Renewable energy share %", key: "renew" },
+  { label: "Trade openness % GDP", key: "trade" },
+  { label: "Current account balance % GDP", key: "curAcct" },
+  { label: "Inflation %", key: "infl" },
+  { label: "WGI Rule of Law", key: "ruleOfLaw" },
+  { label: "WGI Control of Corruption", key: "corruption" },
+  { label: "WGI Govt Effectiveness", key: "govtEff" },
+  { label: "WGI Political Stability", key: "polStab" },
+  { label: "WGI Regulatory Quality", key: "regQual" },
+  { label: "WGI Voice & Accountability", key: "voice" },
+  { label: "Secondary school enrollment %", key: "secEnroll" },
+  { label: "Life expectancy", key: "lifeExp" },
+  { label: "Urban population growth %", key: "urban" },
+  { label: "Electricity access % population", key: "elec" },
+  { label: "Energy use per capita (kg oil eq.)", key: "energyUse" },
+  { label: "Electric power consumption (kWh/cap)", key: "elecKwh" },
 ];
 
 let stepResiduals = dataPoints.map(c => c.growth - armeyFn(c.spending));
@@ -325,12 +325,12 @@ for (let step = 1; step <= candidates.length; step++) {
 
   entered.push({
     step,
-    label:  chosen.label,
-    key:    chosen.key,
+    label: chosen.label,
+    key: chosen.key,
     margR2,
     cumR2,
-    n:      bestResult.n,
-    slope:  bestResult.slope,
+    n: bestResult.n,
+    slope: bestResult.slope,
   });
 }
 
@@ -397,10 +397,10 @@ html = html.replace(
 );
 
 // Update inline sentinel values
-const ceilingStr  = ceiling.toFixed(3);
+const ceilingStr = ceiling.toFixed(3);
 const unexplained = `~${Math.round((1 - ceiling) * 100)}%`;
 const nCandidates = String(candidates.length);
-const nEntered    = String(entered.length);
+const nEntered = String(entered.length);
 
 html = html.replace(
   /<!-- STEPWISE-CEILING -->[\s\S]*?<!-- \/STEPWISE-CEILING -->/g,
