@@ -1,7 +1,39 @@
-// Compare all curve models: Stage 1 R² and Stage 1+2 combined R² (spending + initial income)
+// Compare all curve models: Stage 1 R² and Stage 1+2 combined R² (spending + R&D + military + initial income)
 // Run with: node scripts/compare-curves.mjs
 
 import { DATE_START, DATE_END, MIN_YEARS, EXCLUDED, RESOURCE_DEP, EXT_FUNDED, GDP_DIST, CONFLICT, avg, r2, aic, ols, gridSearch2D } from '../model-math.mjs';
+
+// Three-variable OLS: y = a + b1*x1 + b2*x2 + b3*x3, via Cramer's rule on the
+// 3×3 normal equations. Returns coefficients, intercept, and fitted values.
+function ols3(x1s, x2s, x3s, ys) {
+  const n = ys.length;
+  const m1 = avg(x1s), m2 = avg(x2s), m3 = avg(x3s), my = avg(ys);
+  const dx1 = x1s.map(v => v - m1), dx2 = x2s.map(v => v - m2), dx3 = x3s.map(v => v - m3), dy = ys.map(v => v - my);
+  const s11 = dx1.reduce((s, v) => s + v * v, 0);
+  const s22 = dx2.reduce((s, v) => s + v * v, 0);
+  const s33 = dx3.reduce((s, v) => s + v * v, 0);
+  const s12 = dx1.reduce((s, v, i) => s + v * dx2[i], 0);
+  const s13 = dx1.reduce((s, v, i) => s + v * dx3[i], 0);
+  const s23 = dx2.reduce((s, v, i) => s + v * dx3[i], 0);
+  const s1y = dx1.reduce((s, v, i) => s + v * dy[i], 0);
+  const s2y = dx2.reduce((s, v, i) => s + v * dy[i], 0);
+  const s3y = dx3.reduce((s, v, i) => s + v * dy[i], 0);
+  const det3 = (a, b, c, d, e, f, g, h, i) => a * (e * i - f * h) - b * (d * i - f * g) + c * (d * h - e * g);
+  const D = det3(s11, s12, s13, s12, s22, s23, s13, s23, s33);
+  if (Math.abs(D) < 1e-15) {
+    const fitted = ys.map(() => my);
+    return { a: my, b1: 0, b2: 0, b3: 0, fitted, r2: 0 };
+  }
+  const D1 = det3(s1y, s12, s13, s2y, s22, s23, s3y, s23, s33);
+  const D2 = det3(s11, s1y, s13, s12, s2y, s23, s13, s3y, s33);
+  const D3 = det3(s11, s12, s1y, s12, s22, s2y, s13, s23, s3y);
+  const b1 = D1 / D, b2 = D2 / D, b3 = D3 / D;
+  const a = my - b1 * m1 - b2 * m2 - b3 * m3;
+  const fitted = x1s.map((v, i) => a + b1 * v + b2 * x2s[i] + b3 * x3s[i]);
+  const ssTot = dy.reduce((s, v) => s + v * v, 0);
+  const ssRes = ys.reduce((s, v, i) => s + (v - fitted[i]) ** 2, 0);
+  return { a, b1, b2, b3, fitted, r2: ssTot === 0 ? 0 : 1 - ssRes / ssTot };
+}
 
 async function fetchWB(indicator) {
   const url = `https://api.worldbank.org/v2/country/all/indicator/${indicator}?date=${DATE_START}:${DATE_END}&format=json&per_page=10000`;
@@ -99,11 +131,13 @@ function fitModels(dataPoints) {
 
 // ── Main ──────────────────────────────────────────────────────────────────────
 console.log("Fetching data...");
-const [meta, spRaw, grRaw, gdpPcRaw] = await Promise.all([
+const [meta, spRaw, grRaw, gdpPcRaw, rdRaw, milRaw] = await Promise.all([
   fetchMeta(),
   fetchWB("GC.XPN.TOTL.GD.ZS"),
   fetchWB("NY.GDP.MKTP.KD.ZG"),
   fetchWB("NY.GDP.PCAP.KD"),
+  fetchWB("GB.XPD.RSDV.GD.ZS"),
+  fetchWB("MS.MIL.XPND.GD.ZS"),
 ]);
 
 const actualCodes = new Set(meta.filter(c => c.region?.id !== "NA").map(c => c.id));
@@ -130,6 +164,24 @@ for (const item of gdpPcRaw) {
     if (countries[code] && !countries[code].gdpPc) countries[code].gdpPc = item.value;
   }
 }
+const rdByCountry = {};
+for (const item of rdRaw) {
+  if (!item.value || !item.countryiso3code) continue;
+  const y = +item.date;
+  if (y < DATE_START || y > DATE_END) continue;
+  const code = item.countryiso3code;
+  if (!rdByCountry[code]) rdByCountry[code] = [];
+  rdByCountry[code].push(item.value);
+}
+const milByCountry = {};
+for (const item of milRaw) {
+  if (!item.value || !item.countryiso3code) continue;
+  const y = +item.date;
+  if (y < DATE_START || y > DATE_END) continue;
+  const code = item.countryiso3code;
+  if (!milByCountry[code]) milByCountry[code] = [];
+  milByCountry[code].push(item.value);
+}
 
 const dataPoints = Object.entries(countries)
   .filter(([code, d]) =>
@@ -138,11 +190,13 @@ const dataPoints = Object.entries(countries)
     !EXT_FUNDED.has(code) && !RESOURCE_DEP.has(code) &&
     d.sp.length >= MIN_YEARS && d.gr.length >= MIN_YEARS
   )
-  .map(([, d]) => ({
+  .map(([code, d]) => ({
     name: d.name,
     spending: avg(d.sp),
     growth: avg(d.gr),
     logGdpPcap: d.gdpPc ? Math.log(d.gdpPc) : null,
+    rd: rdByCountry[code] ? avg(rdByCountry[code]) : null,
+    mil: milByCountry[code] ? avg(milByCountry[code]) : null,
   }));
 
 console.log(`Clean dataset: ${dataPoints.length} countries\n`);
@@ -150,14 +204,18 @@ console.log(`Clean dataset: ${dataPoints.length} countries\n`);
 const models = fitModels(dataPoints);
 const actuals = dataPoints.map(c => c.growth);
 
-// For each model: compute Stage 1 R², then Stage 2 (add income on residuals)
+// For each model: compute Stage 1 R², then Stage 2 (add R&D + military + income on residuals)
 console.log(
-  `${"Model".padEnd(20)} ${"k".padStart(2)}  ${"R²(spending)".padStart(13)}  ${"R²(+income)".padStart(12)}  ${"AIC".padStart(8)}  Params`
+  `${"Model".padEnd(20)} ${"k".padStart(2)}  ${"R²(spending)".padStart(13)}  ${"R²(+rd+mil+inc)".padStart(16)}  ${"AIC".padStart(8)}  Params`
 );
-console.log("-".repeat(100));
+console.log("-".repeat(105));
 
-const withIncome = dataPoints.filter(c => c.logGdpPcap !== null);
-const withIncomeIdx = dataPoints.map((c, i) => c.logGdpPcap !== null ? i : -1).filter(i => i >= 0);
+// Stage 2 requires income, R&D, and military expenditure
+const withAll = dataPoints.filter(c => c.logGdpPcap !== null && c.rd !== null && c.mil !== null);
+const withAllIdx = dataPoints
+  .map((c, i) => (c.logGdpPcap !== null && c.rd !== null && c.mil !== null) ? i : -1)
+  .filter(i => i >= 0);
+console.log(`Stage 2 N (R&D + military + income): ${withAll.length} countries\n`);
 
 const results = [];
 for (const model of models) {
@@ -165,27 +223,28 @@ for (const model of models) {
   const r2s = r2(actuals, preds);
   const aicVal = aic(actuals, preds, model.k);
 
-  // Stage 2: OLS on residuals vs logGdpPcap (only countries with income data)
+  // Stage 2: three-variable OLS on residuals vs R&D + military + income
   const residuals = dataPoints.map((c, i) => c.growth - preds[i]);
-  const incomeResiduals = withIncomeIdx.map(i => residuals[i]);
-  const incomeXs = withIncomeIdx.map(i => dataPoints[i].logGdpPcap);
-  const { slope, intercept } = ols(incomeXs, incomeResiduals);
-  const incomeFitted = incomeXs.map(x => intercept + slope * x);
+  const stage2Residuals = withAllIdx.map(i => residuals[i]);
+  const rdXs = withAllIdx.map(i => dataPoints[i].rd);
+  const milXs = withAllIdx.map(i => dataPoints[i].mil);
+  const incomeXs = withAllIdx.map(i => dataPoints[i].logGdpPcap);
+  const { fitted: stage2Fitted } = ols3(rdXs, milXs, incomeXs, stage2Residuals);
 
-  // Combined predictions for income subset
-  const combinedActuals = withIncomeIdx.map(i => actuals[i]);
-  const combinedPreds = withIncomeIdx.map((idx, k) => preds[idx] + incomeFitted[k]);
+  // Combined predictions on the joint subset
+  const combinedActuals = withAllIdx.map(i => actuals[i]);
+  const combinedPreds = withAllIdx.map((idx, k) => preds[idx] + stage2Fitted[k]);
   const r2combined = r2(combinedActuals, combinedPreds);
 
   results.push({ model, r2s, aicVal, r2combined });
   console.log(
-    `${model.name.padEnd(20)} ${String(model.k).padStart(2)}  ${r2s.toFixed(4).padStart(13)}  ${r2combined.toFixed(4).padStart(12)}  ${aicVal.toFixed(2).padStart(8)}  ${model.params}`
+    `${model.name.padEnd(20)} ${String(model.k).padStart(2)}  ${r2s.toFixed(4).padStart(13)}  ${r2combined.toFixed(4).padStart(16)}  ${aicVal.toFixed(2).padStart(8)}  ${model.params}`
   );
 }
 
 // Sort by combined R²
 results.sort((a, b) => b.r2combined - a.r2combined);
-console.log(`\nRanked by combined R² (spending + income):`);
+console.log(`\nRanked by combined R² (spending + R&D + military + income):`);
 results.forEach((r, i) =>
-  console.log(`  ${i + 1}. ${r.model.name.padEnd(20)} R²(spending)=${r.r2s.toFixed(4)}  R²(+income)=${r.r2combined.toFixed(4)}  AIC=${r.r2s > 0 ? r.aicVal.toFixed(2) : "n/a"}`)
+  console.log(`  ${i + 1}. ${r.model.name.padEnd(20)} R²(spending)=${r.r2s.toFixed(4)}  R²(+rd+mil+inc)=${r.r2combined.toFixed(4)}  AIC=${r.r2s > 0 ? r.aicVal.toFixed(2) : "n/a"}`)
 );
