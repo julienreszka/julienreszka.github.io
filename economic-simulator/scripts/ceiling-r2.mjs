@@ -72,6 +72,32 @@ function startVal(raw) {
   return out;
 }
 
+function totVolatility(raw) {
+  const byCountry = {};
+  for (const item of raw) {
+    if (item.value === null) continue;
+    const y = +item.date;
+    if (y < DATE_START - 1 || y > DATE_END) continue;
+    const c = item.countryiso3code;
+    if (!c) continue;
+    if (!byCountry[c]) byCountry[c] = {};
+    byCountry[c][y] = item.value;
+  }
+  const out = {};
+  for (const [c, byYear] of Object.entries(byCountry)) {
+    const years = Object.keys(byYear).map(Number).sort((a, b) => a - b);
+    const changes = [];
+    for (let i = 1; i < years.length; i++) {
+      const prev = byYear[years[i - 1]], curr = byYear[years[i]];
+      if (prev > 0 && curr > 0) changes.push((curr - prev) / prev * 100);
+    }
+    if (changes.length < 5) continue;
+    const mu = avg(changes);
+    out[c] = Math.sqrt(changes.reduce((s, v) => s + (v - mu) ** 2, 0) / changes.length);
+  }
+  return out;
+}
+
 function powerLawFit(pts) {
   const [b0, alpha] = gridSearch2D([0.5, 2000], [0.1, 5], (b0, a) => {
     const n = pts.length;
@@ -97,6 +123,7 @@ const [
   urbanRaw, caRaw,
   rdRaw, remitRaw, elecRaw, taxRaw, milRaw,
   energyUseRaw, elecKwhRaw, renewRaw,
+  waRaw, totRaw,
 ] = await Promise.all([
   fetchMeta(),
   fetchWB("GC.XPN.TOTL.GD.ZS"),       // gov spending
@@ -127,6 +154,8 @@ const [
   fetchWB("EG.USE.PCAP.KG.OE"),         // Energy use per capita (kg oil eq.)
   fetchWB("EG.USE.ELEC.KH.PC"),         // Electric power consumption per capita (kWh)
   fetchWB("EG.FEC.RNEW.ZS"),            // Renewable energy consumption % total
+  fetchWB("SP.POP.1564.TO.ZS"),         // Working-age population share (% 15-64)
+  fetchWB("TT.PRI.MRCH.XD.WD"),         // Merchandise terms-of-trade index (for volatility)
 ]);
 
 const actualCodes = new Set(meta.filter(c => c.region?.id !== "NA").map(c => c.id));
@@ -160,6 +189,8 @@ const milAvg = periodAvg(milRaw);
 const energyUseAvg = periodAvg(energyUseRaw);
 const elecKwhAvg = periodAvg(elecKwhRaw);
 const renewAvg = periodAvg(renewRaw);
+const waAvg = periodAvg(waRaw);
+const totVol = totVolatility(totRaw);
 
 const get = (map, code) => map[code] ? avg(map[code]) : null;
 
@@ -220,6 +251,8 @@ for (const [code, d] of Object.entries(countries)) {
     energyUse: get(energyUseAvg, code),
     elecKwh: get(elecKwhAvg, code),
     renew: get(renewAvg, code),
+    wa: get(waAvg, code),
+    totVol: totVol[code] ?? null,
   });
 }
 
@@ -261,6 +294,8 @@ const candidates = [
   { label: "Energy use per capita (kg oil eq.)", key: "energyUse" },
   { label: "Electric power consumption (kWh/cap)", key: "elecKwh" },
   { label: "Renewable energy share %", key: "renew" },
+  { label: "Working-age population share %", key: "wa" },
+  { label: "Terms-of-trade volatility (SD)", key: "totVol" },
 ];
 
 // Greedy stepwise — add whichever variable reduces residual SS the most
