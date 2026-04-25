@@ -63,6 +63,12 @@
       href="https://julienreszka.github.io/economic-simulator/armey-curve.html"
     />
 
+    <!-- KaTeX — math rendering for inline and display formulas -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+      onload="renderMathInElement(document.body, {delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+
     <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://cdn.jsdelivr.net" />
     <link rel="preconnect" href="https://api.worldbank.org" />
@@ -418,7 +424,7 @@
             <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">13 / 13 — Synthesis: the empirical paradigm</figcaption>
           </figure>
         </div>
-        <p style="font-size:0.8em; color:rgba(255,255,255,0.4); margin:4px 0 0;">Click a slide or press <kbd style="font-size:0.9em;">F</kbd> to go fullscreen. Scroll horizontally to browse. <a href="The_Fiscal_Power_Law.pdf" download style="color:rgba(255,255,255,0.55);">Download the full PDF</a>.</p>
+        <p style="font-size:0.8em; color:rgba(255,255,255,0.4); margin:4px 0 0;">Click a slide to go fullscreen. Scroll horizontally to browse. <a href="The_Fiscal_Power_Law.pdf" download style="color:rgba(255,255,255,0.55);">Download the full PDF</a>.</p>
       </section>
 
       <!-- Video presentation -->
@@ -1460,6 +1466,823 @@
               law
             </li>
           </ul>
+
+          <h3 id="why-cuts-are-hard">Why High-Spending Countries Struggle to Cut</h3>
+          <p>
+            If smaller government means faster growth, why don't high-spending countries simply cut their way to prosperity? The power law curve itself supplies the most under-appreciated answer: <strong>the marginal gain from cutting is tiny when you are already on the flat part of the curve.</strong>
+          </p>
+          <p>
+            The mathematics are exact. For the power law model $g = \beta_0 \cdot s^{-\alpha}$, the marginal growth gain from cutting spending by a small amount $\Delta s$ at level $s$ is:
+          </p>
+          <p style="text-align:center; font-style:italic; margin:12px 0;">
+            $\Delta g \approx \alpha \cdot \beta_0 \cdot s^{-(\alpha+1)} \cdot \Delta s$
+          </p>
+          <p>
+            The ratio of that gain at a low-spending country ($s_1 = 20\%$) versus a high-spending one ($s_2 = 50\%$) is:
+          </p>
+          <p style="text-align:center; font-style:italic; margin:12px 0;">
+            $\frac{\Delta g(s_1)}{\Delta g(s_2)} = \left(\frac{s_2}{s_1}\right)^{\alpha+1} = \left(\frac{50}{20}\right)^{\alpha+1}$
+          </p>
+          <p>
+            At 20% of GDP, the curve is steep. Cutting from 20% to 15% produces a meaningful jump in predicted growth. At 50% of GDP, the curve has flattened dramatically. Cutting from 50% to 45% produces a barely perceptible improvement. With the empirically fitted exponent α ≈ 0.447, the same five-percentage-point reduction delivers roughly <strong>3.5× less growth dividend</strong> when you start from 50% versus 20% — and the ratio grows with the spending gap. If α were closer to 1.5 (the simulator default), that multiplier would reach ~10×. Either way, the directional logic is the same: the flatter the curve, the harder it is to make reform politically legible.
+          </p>
+          <p>
+            This asymmetry creates a political trap. The costs of cutting are immediate and concentrated — public sector jobs lost, entitlement recipients mobilized, contractors lobbying for reinstatement. The growth benefits are diffuse, delayed, and, crucially, <em>small enough to be statistically invisible</em> in the first few years of data. A government that cuts 5 points of GDP from a 50% baseline cannot credibly promise its population a visible boom; the power law says it will get perhaps 0.2–0.3 additional percentage points of annual growth. That is real wealth compounded over decades, but it is not a headline.
+          </p>
+          <p>
+            Contrast that with the experience of Ireland in the 1980s–90s or Sweden in the early 1990s: both cut from high bases, but their recoveries were amplified by other tailwinds (EU single market access, currency devaluation, rapid catch-up from deep recessions) that made the growth payoff visible and large. The power law contribution was real, but it was packaged with other forces. Without those tailwinds, a country cutting from 55% to 50% in a stable mature economy will see a reform dividend the curve predicts to be almost invisible over a parliamentary term.
+          </p>
+          <p>
+            There is also a <strong>ratchet effect</strong>: spending programmes create constituencies. Each percentage point of GDP spent builds a group of beneficiaries who will resist reversal more fiercely than the diffuse taxpayer will reward it. The political equilibrium drifts rightward along the curve — toward higher spending, lower growth, and ever-smaller marginal returns to cutting — until a fiscal crisis forces discontinuous adjustment. The power law explains not only the economic cost of big government, but the political economy of why large states tend to stay large.
+          </p>
+
+          <div id="cut-gains-table" style="margin-top:16px;">
+            <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
+              <h4 style="font-size:0.95em; margin:0;">Predicted growth gain from a 5-point spending cut — current model &amp; data</h4>
+              <label style="font-size:0.82em; color:rgba(255,255,255,0.5); white-space:nowrap;">
+                Period:
+                <select id="cut-gains-period-select" style="font-size:0.95em; background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:4px; padding:2px 4px; margin-left:4px;">
+                  <option value="recent">2018–2023</option>
+                  <option value="decade">2014–2023</option>
+                  <option value="long">2010–2023</option>
+                  <option value="structural" selected>2005–2023</option>
+                  <option value="extended">1995–2023</option>
+                </select>
+              </label>
+            </div>
+            <p style="font-size:0.82em; color:rgba(255,255,255,0.5); margin:0 0 8px;">Uses current model parameters and the currently displayed country data. Gain = <em>predicted growth at (spending − 5 pp)</em> minus <em>predicted growth at current spending</em>. Load country data and press ⚙ Auto-fit to update.</p>
+            <div id="cut-gains-table-inner" style="overflow-x:auto;">
+              <!-- STATIC-CUT-GAINS-TABLE:START -->
+              <table style="width:100%;border-collapse:collapse;"><thead><tr style="color:rgba(255,255,255,0.5); font-size:0.82em;">
+                <th style="text-align:left;padding:3px 8px">Country</th>
+                <th style="text-align:right;padding:3px 8px">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px">Predicted gain from −5 pp cut</th>
+              </tr></thead><tbody><tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Greece</td>
+                  <td style="padding:2px 8px; text-align:right">50.6%</td>
+                  <td style="padding:2px 8px; text-align:right">-0.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.14 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">France</td>
+                  <td style="padding:2px 8px; text-align:right">47.9%</td>
+                  <td style="padding:2px 8px; text-align:right">1.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.15 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Palau</td>
+                  <td style="padding:2px 8px; text-align:right">47.3%</td>
+                  <td style="padding:2px 8px; text-align:right">-0.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.15 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Austria</td>
+                  <td style="padding:2px 8px; text-align:right">46.4%</td>
+                  <td style="padding:2px 8px; text-align:right">1.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.16 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Slovenia</td>
+                  <td style="padding:2px 8px; text-align:right">45.1%</td>
+                  <td style="padding:2px 8px; text-align:right">2.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.17 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Italy</td>
+                  <td style="padding:2px 8px; text-align:right">43.6%</td>
+                  <td style="padding:2px 8px; text-align:right">0.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.18 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Hungary</td>
+                  <td style="padding:2px 8px; text-align:right">43.2%</td>
+                  <td style="padding:2px 8px; text-align:right">2.00%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.18 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Belgium</td>
+                  <td style="padding:2px 8px; text-align:right">42.3%</td>
+                  <td style="padding:2px 8px; text-align:right">1.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.19 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Portugal</td>
+                  <td style="padding:2px 8px; text-align:right">42.0%</td>
+                  <td style="padding:2px 8px; text-align:right">0.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.19 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Cyprus</td>
+                  <td style="padding:2px 8px; text-align:right">41.0%</td>
+                  <td style="padding:2px 8px; text-align:right">2.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.20 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Lesotho</td>
+                  <td style="padding:2px 8px; text-align:right">40.7%</td>
+                  <td style="padding:2px 8px; text-align:right">1.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.20 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">San Marino</td>
+                  <td style="padding:2px 8px; text-align:right">40.6%</td>
+                  <td style="padding:2px 8px; text-align:right">0.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.20 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">United Kingdom</td>
+                  <td style="padding:2px 8px; text-align:right">40.3%</td>
+                  <td style="padding:2px 8px; text-align:right">1.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.20 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Netherlands</td>
+                  <td style="padding:2px 8px; text-align:right">40.2%</td>
+                  <td style="padding:2px 8px; text-align:right">1.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.20 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Croatia</td>
+                  <td style="padding:2px 8px; text-align:right">39.7%</td>
+                  <td style="padding:2px 8px; text-align:right">1.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.21 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Slovak Republic</td>
+                  <td style="padding:2px 8px; text-align:right">39.0%</td>
+                  <td style="padding:2px 8px; text-align:right">3.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.21 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Ukraine</td>
+                  <td style="padding:2px 8px; text-align:right">39.0%</td>
+                  <td style="padding:2px 8px; text-align:right">-0.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.21 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Finland</td>
+                  <td style="padding:2px 8px; text-align:right">38.3%</td>
+                  <td style="padding:2px 8px; text-align:right">0.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.22 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Luxembourg</td>
+                  <td style="padding:2px 8px; text-align:right">38.2%</td>
+                  <td style="padding:2px 8px; text-align:right">2.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.22 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Malta</td>
+                  <td style="padding:2px 8px; text-align:right">37.6%</td>
+                  <td style="padding:2px 8px; text-align:right">5.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.23 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Denmark</td>
+                  <td style="padding:2px 8px; text-align:right">37.3%</td>
+                  <td style="padding:2px 8px; text-align:right">1.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.23 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Israel</td>
+                  <td style="padding:2px 8px; text-align:right">36.7%</td>
+                  <td style="padding:2px 8px; text-align:right">4.00%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.24 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Serbia</td>
+                  <td style="padding:2px 8px; text-align:right">36.7%</td>
+                  <td style="padding:2px 8px; text-align:right">2.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.24 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Bosnia and Herzegovina</td>
+                  <td style="padding:2px 8px; text-align:right">36.3%</td>
+                  <td style="padding:2px 8px; text-align:right">2.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.24 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Poland</td>
+                  <td style="padding:2px 8px; text-align:right">35.9%</td>
+                  <td style="padding:2px 8px; text-align:right">3.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.25 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Estonia</td>
+                  <td style="padding:2px 8px; text-align:right">35.2%</td>
+                  <td style="padding:2px 8px; text-align:right">2.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.26 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Iceland</td>
+                  <td style="padding:2px 8px; text-align:right">34.9%</td>
+                  <td style="padding:2px 8px; text-align:right">2.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.26 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Lithuania</td>
+                  <td style="padding:2px 8px; text-align:right">34.2%</td>
+                  <td style="padding:2px 8px; text-align:right">3.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.27 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Czechia</td>
+                  <td style="padding:2px 8px; text-align:right">33.9%</td>
+                  <td style="padding:2px 8px; text-align:right">2.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.28 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Bulgaria</td>
+                  <td style="padding:2px 8px; text-align:right">33.5%</td>
+                  <td style="padding:2px 8px; text-align:right">2.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.28 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Romania</td>
+                  <td style="padding:2px 8px; text-align:right">33.5%</td>
+                  <td style="padding:2px 8px; text-align:right">3.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.28 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">New Zealand</td>
+                  <td style="padding:2px 8px; text-align:right">32.9%</td>
+                  <td style="padding:2px 8px; text-align:right">2.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.29 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Namibia</td>
+                  <td style="padding:2px 8px; text-align:right">32.8%</td>
+                  <td style="padding:2px 8px; text-align:right">2.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.29 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Latvia</td>
+                  <td style="padding:2px 8px; text-align:right">32.7%</td>
+                  <td style="padding:2px 8px; text-align:right">2.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.29 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Spain</td>
+                  <td style="padding:2px 8px; text-align:right">32.7%</td>
+                  <td style="padding:2px 8px; text-align:right">1.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.29 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Sweden</td>
+                  <td style="padding:2px 8px; text-align:right">32.7%</td>
+                  <td style="padding:2px 8px; text-align:right">1.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(220,200,80,0.9); font-weight:600">+0.29 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Ireland</td>
+                  <td style="padding:2px 8px; text-align:right">32.3%</td>
+                  <td style="padding:2px 8px; text-align:right">5.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.30 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Tonga</td>
+                  <td style="padding:2px 8px; text-align:right">32.3%</td>
+                  <td style="padding:2px 8px; text-align:right">0.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.30 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Turkiye</td>
+                  <td style="padding:2px 8px; text-align:right">31.3%</td>
+                  <td style="padding:2px 8px; text-align:right">5.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.32 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">South Africa</td>
+                  <td style="padding:2px 8px; text-align:right">31.2%</td>
+                  <td style="padding:2px 8px; text-align:right">1.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.32 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Brazil</td>
+                  <td style="padding:2px 8px; text-align:right">31.0%</td>
+                  <td style="padding:2px 8px; text-align:right">2.10%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.32 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">West Bank and Gaza</td>
+                  <td style="padding:2px 8px; text-align:right">30.5%</td>
+                  <td style="padding:2px 8px; text-align:right">3.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.33 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Uruguay</td>
+                  <td style="padding:2px 8px; text-align:right">30.3%</td>
+                  <td style="padding:2px 8px; text-align:right">3.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.34 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Egypt, Arab Rep.</td>
+                  <td style="padding:2px 8px; text-align:right">30.2%</td>
+                  <td style="padding:2px 8px; text-align:right">4.50%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.34 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Moldova</td>
+                  <td style="padding:2px 8px; text-align:right">30.2%</td>
+                  <td style="padding:2px 8px; text-align:right">3.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.34 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">North Macedonia</td>
+                  <td style="padding:2px 8px; text-align:right">30.0%</td>
+                  <td style="padding:2px 8px; text-align:right">2.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.34 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Belarus</td>
+                  <td style="padding:2px 8px; text-align:right">29.5%</td>
+                  <td style="padding:2px 8px; text-align:right">3.10%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.36 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Colombia</td>
+                  <td style="padding:2px 8px; text-align:right">29.3%</td>
+                  <td style="padding:2px 8px; text-align:right">3.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.36 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Solomon Islands</td>
+                  <td style="padding:2px 8px; text-align:right">29.1%</td>
+                  <td style="padding:2px 8px; text-align:right">3.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.36 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Barbados</td>
+                  <td style="padding:2px 8px; text-align:right">28.9%</td>
+                  <td style="padding:2px 8px; text-align:right">0.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.37 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Germany</td>
+                  <td style="padding:2px 8px; text-align:right">28.9%</td>
+                  <td style="padding:2px 8px; text-align:right">1.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.37 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Seychelles</td>
+                  <td style="padding:2px 8px; text-align:right">28.9%</td>
+                  <td style="padding:2px 8px; text-align:right">4.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.37 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Samoa</td>
+                  <td style="padding:2px 8px; text-align:right">28.8%</td>
+                  <td style="padding:2px 8px; text-align:right">2.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.37 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Jordan</td>
+                  <td style="padding:2px 8px; text-align:right">28.6%</td>
+                  <td style="padding:2px 8px; text-align:right">3.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.38 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Tunisia</td>
+                  <td style="padding:2px 8px; text-align:right">28.3%</td>
+                  <td style="padding:2px 8px; text-align:right">2.10%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.38 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Russian Federation</td>
+                  <td style="padding:2px 8px; text-align:right">27.4%</td>
+                  <td style="padding:2px 8px; text-align:right">2.50%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.41 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Jamaica</td>
+                  <td style="padding:2px 8px; text-align:right">27.4%</td>
+                  <td style="padding:2px 8px; text-align:right">0.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.41 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Australia</td>
+                  <td style="padding:2px 8px; text-align:right">26.6%</td>
+                  <td style="padding:2px 8px; text-align:right">2.70%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.43 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Maldives</td>
+                  <td style="padding:2px 8px; text-align:right">26.5%</td>
+                  <td style="padding:2px 8px; text-align:right">5.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.43 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Costa Rica</td>
+                  <td style="padding:2px 8px; text-align:right">26.4%</td>
+                  <td style="padding:2px 8px; text-align:right">3.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.44 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Fiji</td>
+                  <td style="padding:2px 8px; text-align:right">26.2%</td>
+                  <td style="padding:2px 8px; text-align:right">2.10%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.44 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Georgia</td>
+                  <td style="padding:2px 8px; text-align:right">26.0%</td>
+                  <td style="padding:2px 8px; text-align:right">5.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.45 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Vanuatu</td>
+                  <td style="padding:2px 8px; text-align:right">26.0%</td>
+                  <td style="padding:2px 8px; text-align:right">2.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.45 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Lebanon</td>
+                  <td style="padding:2px 8px; text-align:right">25.6%</td>
+                  <td style="padding:2px 8px; text-align:right">0.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.46 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Kyrgyz Republic</td>
+                  <td style="padding:2px 8px; text-align:right">25.2%</td>
+                  <td style="padding:2px 8px; text-align:right">4.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.48 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Eswatini</td>
+                  <td style="padding:2px 8px; text-align:right">25.0%</td>
+                  <td style="padding:2px 8px; text-align:right">2.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.48 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Morocco</td>
+                  <td style="padding:2px 8px; text-align:right">24.9%</td>
+                  <td style="padding:2px 8px; text-align:right">3.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.49 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">El Salvador</td>
+                  <td style="padding:2px 8px; text-align:right">24.7%</td>
+                  <td style="padding:2px 8px; text-align:right">2.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.49 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">St. Kitts and Nevis</td>
+                  <td style="padding:2px 8px; text-align:right">24.2%</td>
+                  <td style="padding:2px 8px; text-align:right">2.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.51 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">United States</td>
+                  <td style="padding:2px 8px; text-align:right">24.1%</td>
+                  <td style="padding:2px 8px; text-align:right">2.10%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.52 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Albania</td>
+                  <td style="padding:2px 8px; text-align:right">24.1%</td>
+                  <td style="padding:2px 8px; text-align:right">3.50%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.52 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Argentina</td>
+                  <td style="padding:2px 8px; text-align:right">23.6%</td>
+                  <td style="padding:2px 8px; text-align:right">2.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.54 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">St. Vincent and the Grenadines</td>
+                  <td style="padding:2px 8px; text-align:right">23.3%</td>
+                  <td style="padding:2px 8px; text-align:right">1.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.55 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Kenya</td>
+                  <td style="padding:2px 8px; text-align:right">22.7%</td>
+                  <td style="padding:2px 8px; text-align:right">4.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.58 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Honduras</td>
+                  <td style="padding:2px 8px; text-align:right">22.6%</td>
+                  <td style="padding:2px 8px; text-align:right">3.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.58 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Korea, Rep.</td>
+                  <td style="padding:2px 8px; text-align:right">22.4%</td>
+                  <td style="padding:2px 8px; text-align:right">3.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.59 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Armenia</td>
+                  <td style="padding:2px 8px; text-align:right">22.2%</td>
+                  <td style="padding:2px 8px; text-align:right">5.10%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.60 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Mauritius</td>
+                  <td style="padding:2px 8px; text-align:right">22.2%</td>
+                  <td style="padding:2px 8px; text-align:right">3.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.60 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Chile</td>
+                  <td style="padding:2px 8px; text-align:right">21.4%</td>
+                  <td style="padding:2px 8px; text-align:right">3.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.65 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Mozambique</td>
+                  <td style="padding:2px 8px; text-align:right">21.1%</td>
+                  <td style="padding:2px 8px; text-align:right">5.50%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.67 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Cabo Verde</td>
+                  <td style="padding:2px 8px; text-align:right">20.9%</td>
+                  <td style="padding:2px 8px; text-align:right">3.70%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.68 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Mexico</td>
+                  <td style="padding:2px 8px; text-align:right">20.8%</td>
+                  <td style="padding:2px 8px; text-align:right">1.70%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.68 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Senegal</td>
+                  <td style="padding:2px 8px; text-align:right">20.5%</td>
+                  <td style="padding:2px 8px; text-align:right">4.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.70 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Belize</td>
+                  <td style="padding:2px 8px; text-align:right">19.6%</td>
+                  <td style="padding:2px 8px; text-align:right">2.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.77 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Ghana</td>
+                  <td style="padding:2px 8px; text-align:right">19.6%</td>
+                  <td style="padding:2px 8px; text-align:right">5.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.77 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Peru</td>
+                  <td style="padding:2px 8px; text-align:right">19.6%</td>
+                  <td style="padding:2px 8px; text-align:right">4.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.77 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Bhutan</td>
+                  <td style="padding:2px 8px; text-align:right">19.2%</td>
+                  <td style="padding:2px 8px; text-align:right">5.50%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.80 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Thailand</td>
+                  <td style="padding:2px 8px; text-align:right">19.2%</td>
+                  <td style="padding:2px 8px; text-align:right">2.70%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.80 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Rwanda</td>
+                  <td style="padding:2px 8px; text-align:right">18.9%</td>
+                  <td style="padding:2px 8px; text-align:right">7.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.83 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Canada</td>
+                  <td style="padding:2px 8px; text-align:right">18.5%</td>
+                  <td style="padding:2px 8px; text-align:right">1.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.86 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Malaysia</td>
+                  <td style="padding:2px 8px; text-align:right">18.4%</td>
+                  <td style="padding:2px 8px; text-align:right">4.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.87 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Macao SAR, China</td>
+                  <td style="padding:2px 8px; text-align:right">18.1%</td>
+                  <td style="padding:2px 8px; text-align:right">6.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.90 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Japan</td>
+                  <td style="padding:2px 8px; text-align:right">17.5%</td>
+                  <td style="padding:2px 8px; text-align:right">0.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.96 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Burundi</td>
+                  <td style="padding:2px 8px; text-align:right">17.3%</td>
+                  <td style="padding:2px 8px; text-align:right">3.50%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.98 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Sri Lanka</td>
+                  <td style="padding:2px 8px; text-align:right">17.2%</td>
+                  <td style="padding:2px 8px; text-align:right">3.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.99 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">St. Lucia</td>
+                  <td style="padding:2px 8px; text-align:right">17.2%</td>
+                  <td style="padding:2px 8px; text-align:right">1.70%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+0.99 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Bahamas, The</td>
+                  <td style="padding:2px 8px; text-align:right">17.1%</td>
+                  <td style="padding:2px 8px; text-align:right">1.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.01 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Switzerland</td>
+                  <td style="padding:2px 8px; text-align:right">17.1%</td>
+                  <td style="padding:2px 8px; text-align:right">2.00%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.01 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Zimbabwe</td>
+                  <td style="padding:2px 8px; text-align:right">16.6%</td>
+                  <td style="padding:2px 8px; text-align:right">2.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.07 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Nepal</td>
+                  <td style="padding:2px 8px; text-align:right">16.4%</td>
+                  <td style="padding:2px 8px; text-align:right">4.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.09 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Dominican Republic</td>
+                  <td style="padding:2px 8px; text-align:right">16.0%</td>
+                  <td style="padding:2px 8px; text-align:right">5.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.15 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Nicaragua</td>
+                  <td style="padding:2px 8px; text-align:right">15.7%</td>
+                  <td style="padding:2px 8px; text-align:right">3.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.20 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">India</td>
+                  <td style="padding:2px 8px; text-align:right">15.6%</td>
+                  <td style="padding:2px 8px; text-align:right">6.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.21 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Tanzania</td>
+                  <td style="padding:2px 8px; text-align:right">15.0%</td>
+                  <td style="padding:2px 8px; text-align:right">5.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.31 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Panama</td>
+                  <td style="padding:2px 8px; text-align:right">14.9%</td>
+                  <td style="padding:2px 8px; text-align:right">6.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.33 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Philippines</td>
+                  <td style="padding:2px 8px; text-align:right">14.9%</td>
+                  <td style="padding:2px 8px; text-align:right">5.00%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.33 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Paraguay</td>
+                  <td style="padding:2px 8px; text-align:right">14.8%</td>
+                  <td style="padding:2px 8px; text-align:right">3.70%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.35 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Singapore</td>
+                  <td style="padding:2px 8px; text-align:right">14.6%</td>
+                  <td style="padding:2px 8px; text-align:right">4.70%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.39 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Burkina Faso</td>
+                  <td style="padding:2px 8px; text-align:right">14.6%</td>
+                  <td style="padding:2px 8px; text-align:right">5.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.39 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Malawi</td>
+                  <td style="padding:2px 8px; text-align:right">14.4%</td>
+                  <td style="padding:2px 8px; text-align:right">4.50%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.43 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Guinea-Bissau</td>
+                  <td style="padding:2px 8px; text-align:right">14.0%</td>
+                  <td style="padding:2px 8px; text-align:right">4.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.52 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Uganda</td>
+                  <td style="padding:2px 8px; text-align:right">13.5%</td>
+                  <td style="padding:2px 8px; text-align:right">5.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.64 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Guatemala</td>
+                  <td style="padding:2px 8px; text-align:right">13.1%</td>
+                  <td style="padding:2px 8px; text-align:right">3.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.75 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Cote d'Ivoire</td>
+                  <td style="padding:2px 8px; text-align:right">12.7%</td>
+                  <td style="padding:2px 8px; text-align:right">5.10%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.87 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Myanmar</td>
+                  <td style="padding:2px 8px; text-align:right">12.6%</td>
+                  <td style="padding:2px 8px; text-align:right">6.00%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.91 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Lao PDR</td>
+                  <td style="padding:2px 8px; text-align:right">12.4%</td>
+                  <td style="padding:2px 8px; text-align:right">6.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.97 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Togo</td>
+                  <td style="padding:2px 8px; text-align:right">12.4%</td>
+                  <td style="padding:2px 8px; text-align:right">4.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+1.97 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Cameroon</td>
+                  <td style="padding:2px 8px; text-align:right">12.2%</td>
+                  <td style="padding:2px 8px; text-align:right">3.60%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+2.05 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Sudan</td>
+                  <td style="padding:2px 8px; text-align:right">12.1%</td>
+                  <td style="padding:2px 8px; text-align:right">-1.30%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+2.08 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Tajikistan</td>
+                  <td style="padding:2px 8px; text-align:right">11.4%</td>
+                  <td style="padding:2px 8px; text-align:right">7.00%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+2.39 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Central African Republic</td>
+                  <td style="padding:2px 8px; text-align:right">11.2%</td>
+                  <td style="padding:2px 8px; text-align:right">1.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+2.49 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Congo, Dem. Rep.</td>
+                  <td style="padding:2px 8px; text-align:right">10.9%</td>
+                  <td style="padding:2px 8px; text-align:right">5.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+2.65 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Mali</td>
+                  <td style="padding:2px 8px; text-align:right">10.7%</td>
+                  <td style="padding:2px 8px; text-align:right">3.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+2.77 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Ethiopia</td>
+                  <td style="padding:2px 8px; text-align:right">10.0%</td>
+                  <td style="padding:2px 8px; text-align:right">9.20%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+3.26 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Cambodia</td>
+                  <td style="padding:2px 8px; text-align:right">9.7%</td>
+                  <td style="padding:2px 8px; text-align:right">6.90%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+3.51 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Madagascar</td>
+                  <td style="padding:2px 8px; text-align:right">9.7%</td>
+                  <td style="padding:2px 8px; text-align:right">2.80%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+3.51 pp</td>
+                </tr>
+              <tr style="font-size:0.83em;">
+                  <td style="padding:2px 8px">Bangladesh</td>
+                  <td style="padding:2px 8px; text-align:right">8.8%</td>
+                  <td style="padding:2px 8px; text-align:right">6.40%</td>
+                  <td style="padding:2px 8px; text-align:right; color:rgba(100,220,100,0.9); font-weight:600">+4.53 pp</td>
+                </tr></tbody></table><p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">With α = 0.666: ratio of marginal gains at 20% vs 50% = (50/20)<sup>1.666</sup> ≈ <strong>4.6×</strong></p>
+              <!-- STATIC-CUT-GAINS-TABLE:END -->
+            </div>
+          </div>
 
           <h3 id="selective-brake">
             The Selective Brake: What Government Is Actually Good For
@@ -3367,12 +4190,37 @@
 
     <!-- Canonical model math shared with Node.js scripts — overrides the local gridSearch2D -->
     <script type="module">
-      import { avg, r2, aic, ols, gridSearch2D } from './model-math.mjs';
+      import {
+        avg, r2, aic, ols, gridSearch2D, computeCutGains,
+        EXCLUDED, RESOURCE_DEP, EXT_FUNDED, GDP_DIST, CONFLICT, EXCLUDED_NAMES,
+      } from './model-math.mjs';
       window.avg = avg;
       window.r2  = r2;
       window.aic = aic;
       window.ols = ols;
       window.gridSearch2D = gridSearch2D;
+      window.computeCutGains = computeCutGains;
+      // Exclusion sets — single source of truth shared with Node.js scripts
+      window.EXCLUDED        = EXCLUDED;
+      window.EXCLUDED_NAMES  = EXCLUDED_NAMES;
+      window.RESOURCE_DEP    = RESOURCE_DEP;
+      window.EXT_FUNDED      = EXT_FUNDED;
+      window.GDP_DIST        = GDP_DIST;
+      window.CONFLICT        = CONFLICT;
+    </script>
+
+    <!-- Eagerly pre-fetch fallback data so the cut-gains period selector works before Chart.js loads -->
+    <script>
+      fetch('fallback-data.json')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          window.fallbackData = data;
+          // If the main simulator hasn't loaded data yet, seed countryData now
+          if (typeof isDataLoaded !== 'undefined' && !isDataLoaded) {
+            if (typeof processDataFromFallback === 'function') processDataFromFallback();
+          }
+        })
+        .catch(function() { /* silently ignore — full init will retry */ });
     </script>
 
     <!-- Chart.js: loaded lazily when the simulator scrolls into view -->
@@ -3585,6 +4433,9 @@
         // Update the country highlight dropdown
         updateHighlightCountryOptions();
 
+        // Update cut-gains table immediately with current fit params
+        updateCutGainsTable();
+
         // Refresh the chart with auto-fitted parameters
         autoFitParameters(true);
       }
@@ -3606,6 +4457,7 @@
         }
 
         updateHighlightCountryOptions();
+        updateCutGainsTable();
         autoFitParameters(true);
       }
 
@@ -3835,88 +4687,13 @@
         const conflictFragile = [];
         const gdpDistorted = [];
 
-        // Countries excluded due to aid/conflict distortion: their "government
-        // spending" as reported by the World Bank includes large foreign military
-        // or humanitarian transfers that bear no relation to the domestic
-        // government-growth relationship being modelled.
-        const excludedCountryCodes = new Set([
-          "AFG", // Afghanistan — foreign military spending dominates
-          "SSD", // South Sudan — conflict / aid flows
-          "SOM", // Somalia — no functional state budget
-          "YEM", // Yemen — civil war distortion
-          "SYR", // Syria — conflict
-          "ERI", // Eritrea — data unreliable
-          "PRK", // North Korea — no credible data
-          "NRU", // Nauru — 90%+ spending is largely Australian asylum-seeker payments, extreme leverage point
-        ]);
-
-        // Countries whose growth is heavily driven by natural resource windfalls
-        // (oil, gas, minerals) rather than the government-spending relationship
-        // being modelled. They are kept in the dataset but flagged visually.
-        const resourceDependentCodes = new Set([
-          "AZE", // Azerbaijan — 2005-2008 oil boom (20%+ annual growth)
-          "KWT", // Kuwait — oil
-          "ARE", // UAE — oil/gas
-          "SAU", // Saudi Arabia — oil
-          "QAT", // Qatar — gas
-          "OMN", // Oman — oil
-          "TTO", // Trinidad & Tobago — oil/gas
-          "GNQ", // Equatorial Guinea — oil
-          "GAB", // Gabon — oil
-          "NOR", // Norway — sovereign oil fund distorts fiscal picture
-          "KAZ", // Kazakhstan — oil
-          "TKM", // Turkmenistan — gas
-          "UZB", // Uzbekistan — gas/gold
-          "AGO", // Angola — oil dominant
-          "COG", // Congo Rep. — oil dominant
-          "BHR", // Bahrain — oil/gas
-          "IRQ", // Iraq — oil
-          "LBY", // Libya — oil
-          "VEN", // Venezuela — oil
-          "IRN", // Iran — oil
-          "BOL", // Bolivia — gas
-          "ECU", // Ecuador — oil
-          "PNG", // Papua New Guinea — LNG
-          "MNG", // Mongolia — mining
-          "ZMB", // Zambia — copper
-          "BWA", // Botswana — diamonds
-          "GUY", // Guyana — oil (recent)
-          "MDV", // Maldives — ~28% GDP from tourism directly; growth driven by tourist arrivals, not fiscal policy
-        ]);
-
-        // Countries where government spending is substantially financed by
-        // external transfers (aid compacts, international grants) rather than
-        // domestic taxation — the spending figure does not reflect fiscal policy.
-        const externallyFundedCodes = new Set([
-          "KIR", // Kiribati — fishing license fees + donor grants ~50% of budget
-          "MHL", // Marshall Islands — US Compact of Free Association transfers
-          "FSM", // Micronesia — US Compact of Free Association transfers
-          "TLS", // Timor-Leste — Petroleum Fund withdrawals dominate spending
-          "PLW", // Palau — US Compact of Free Association transfers dominate budget
-        ]);
-
-        // Countries where GDP is structurally decoupled from domestic fiscal policy due to
-        // MNC profit-shifting or financial hub effects — GDP growth reflects global capital flows
-        // and accounting relocations, not the real domestic economy.
-        const gdpDistortedCodes = new Set([
-          "IRL", // Ireland — MNC profit-shifting inflates GDP (GNI* is ~60% of GDP)
-          "MLT", // Malta — financial services hub, MNC IP holdings distort GDP growth
-          "LUX", // Luxembourg — financial sector ~25% of GDP, fund management distorts growth figures
-          "SMR", // San Marino — microstate, GDP dominated by tourism and financial services, not representative of fiscal policy
-        ]);
-
-        // Conflict/fragile states: ongoing or recent severe conflict distorts growth figures
-        // independent of fiscal policy (war destruction, sanctions, institutional collapse).
-        const conflictFragileCodes = new Set([
-          "SDN", // Sudan — civil war since 2023, prior coups 2019/2021, sanctions
-          "CAF", // Central African Republic — civil war since 2012, Wagner deployment
-          "UKR", // Ukraine — Donbas 2014, full-scale invasion 2022
-          "MLI", // Mali — Tuareg rebellion, jihadist insurgency, coups 2020 & 2021
-          "MDG", // Madagascar — 2009 coup, international sanctions, persistent political instability suppresses growth independent of spending level
-          "LBN", // Lebanon — 2019 financial collapse, 2020 Beirut explosion, 2024 Israel war, hyperinflation, state dysfunction
-          "ETH", // Ethiopia — Tigray war 2020-2022 collapsed GDP; long-term average masks conflict-driven volatility
-          "GRC", // Greece — 2010-2015 sovereign debt crisis/austerity depression distorts long-term average independent of steady-state fiscal policy
-        ]);
+        // Exclusion sets — single source of truth in model-math.mjs, exposed on window by the module script.
+        // See model-math.mjs for per-country rationale comments.
+        const excludedCountryCodes   = window.EXCLUDED     ?? new Set();
+        const resourceDependentCodes = window.RESOURCE_DEP ?? new Set();
+        const externallyFundedCodes  = window.EXT_FUNDED   ?? new Set();
+        const gdpDistortedCodes      = window.GDP_DIST     ?? new Set();
+        const conflictFragileCodes   = window.CONFLICT     ?? new Set();
 
         Object.entries(countryAverages).forEach(([code, data]) => {
           const minYears = parseInt(document.getElementById("min-years-select")?.value || "3", 10);
@@ -4042,6 +4819,8 @@
           base = countryData[selection] || [];
         }
 
+        const hardExcluded = window.EXCLUDED_NAMES ?? new Set();
+        base = base.filter(c => !hardExcluded.has(c.name));
         if (excludeResource) base = base.filter(c => !c.resourceDependent);
         if (excludeExternal) base = base.filter(c => !c.externallyFunded);
         if (excludeConflict) base = base.filter(c => !c.conflictFragile);
@@ -4423,6 +5202,7 @@
           }
         }
 
+        if (typeof Chart === 'undefined') return; // Chart.js not yet loaded (lazy)
         if (chartArmey) {
           chartArmey.data.datasets = datasets;
           chartArmey.update('none');
@@ -5498,6 +6278,61 @@
         }
         updateModelRankingTable();
         updateResidualChart();
+        updateCutGainsTable();
+      }
+
+      function updateCutGainsTable() {
+        const el = document.getElementById('cut-gains-table-inner');
+        if (!el) return;
+        if (!isDataLoaded) return; // preserve static fallback table until data is ready
+        const dataPoints = getCountryDataToShow();
+        if (!dataPoints || dataPoints.length === 0) {
+          el.innerHTML = '<p style="font-size:0.85em; color:rgba(255,255,255,0.4); font-style:italic;">Load country data to populate this table.</p>';
+          return;
+        }
+        const predictFn = getCurrentPredictFn();
+        const CUT = 5; // percentage points
+        const rows = computeCutGains(dataPoints, predictFn, CUT);
+
+        if (rows.length === 0) {
+          el.innerHTML = '<p style="font-size:0.85em; color:rgba(255,255,255,0.4); font-style:italic;">No countries with spending above 5%.</p>';
+          return;
+        }
+
+        const curveType = document.getElementById('curve-type-select').value;
+        const isPowerLaw = curveType === 'power-law';
+        const alpha = isPowerLaw ? parseFloat(document.getElementById('power-law-exponent').value) : null;
+        const ratio = (alpha !== null && !isNaN(alpha))
+          ? Math.pow(50 / 20, alpha + 1).toFixed(1)
+          : null;
+
+        const ratioNote = ratio
+          ? `<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">With α = ${alpha.toFixed(3)}: ratio of marginal gains at 20% vs 50% = (50/20)<sup>${(alpha+1).toFixed(3)}</sup> ≈ <strong>${ratio}×</strong></p>`
+          : '';
+
+        const timePeriodEl = document.getElementById('time-period-select');
+        const timePeriodLabel = timePeriodEl ? timePeriodEl.options[timePeriodEl.selectedIndex].text.split('(')[0].trim() : '';
+        const timePeriodRange = timePeriodEl ? (timePeriodEl.options[timePeriodEl.selectedIndex].text.match(/\(([^)]+)\)/) || ['',''])[1] : '';
+
+        const thead = `<thead><tr style="color:rgba(255,255,255,0.5); font-size:0.82em;">
+          <th style="text-align:left;padding:3px 8px">Country</th>
+          <th style="text-align:right;padding:3px 8px">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px">Predicted gain from −5 pp cut</th>
+        </tr></thead>`;
+
+        const tbody = rows.map(r => {
+          const gainStr = (r.gain >= 0 ? '+' : '') + r.gain.toFixed(2) + ' pp';
+          const gainColor = r.gain >= 0.3 ? 'rgba(100,220,100,0.9)' : r.gain >= 0.1 ? 'rgba(220,200,80,0.9)' : 'rgba(255,255,255,0.55)';
+          return `<tr style="font-size:0.83em;">
+            <td style="padding:2px 8px">${r.name}</td>
+            <td style="padding:2px 8px; text-align:right">${r.spending.toFixed(1)}%</td>
+            <td style="padding:2px 8px; text-align:right">${r.growth.toFixed(2)}%</td>
+            <td style="padding:2px 8px; text-align:right; color:${gainColor}; font-weight:600">${gainStr}</td>
+          </tr>`;
+        }).join('');
+
+        el.innerHTML = `<table style="width:100%;border-collapse:collapse;">${thead}<tbody>${tbody}</tbody></table>${ratioNote}`;
       }
 
       function toggleParameterGroups() {
@@ -5705,9 +6540,15 @@
       document
         .getElementById("highlight-country-select")
         .addEventListener("change", updateArmeySimulation);
+      // Two-way sync between main period selector and cut-gains period selector
+      document.getElementById('cut-gains-period-select').addEventListener('change', function () {
+        document.getElementById('time-period-select').value = this.value;
+        document.getElementById('time-period-select').dispatchEvent(new Event('change'));
+      });
       document
         .getElementById("time-period-select")
         .addEventListener("change", function () {
+          document.getElementById('cut-gains-period-select').value = this.value;
           if (window.rawSpendingData && window.rawGrowthData) {
             // Use live API data
             processDataForCurrentPeriod();
@@ -5845,7 +6686,6 @@
       // Keyboard navigation
       document.addEventListener('keydown', e => {
         if (lightbox.style.display === 'none') {
-          if (e.key === 'f' || e.key === 'F') openSlideFullscreen(0);
           return;
         }
         if (e.key === 'Escape')      closeLightbox();

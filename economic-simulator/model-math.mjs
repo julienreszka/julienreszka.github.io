@@ -30,6 +30,19 @@ export const GDP_DIST = new Set(["IRL", "MLT", "LUX", "SMR"]);
 // Ongoing or recent severe conflict distorts growth independent of fiscal policy
 export const CONFLICT = new Set(["SDN", "CAF", "UKR", "MLI", "MDG", "LBN", "ETH", "GRC"]);
 
+// World Bank display names for EXCLUDED ISO3 codes — used by scripts that work
+// with pre-processed (name-only) fallback data where ISO3 codes are unavailable.
+export const EXCLUDED_NAMES = new Set([
+  "Afghanistan",               // AFG
+  "South Sudan",               // SSD
+  "Somalia",                   // SOM
+  "Yemen, Rep.",               // YEM
+  "Syrian Arab Republic",      // SYR
+  "Eritrea",                   // ERI
+  "Korea, Dem. People's Rep.", // PRK
+  "Nauru",                     // NRU
+]);
+
 // ── Math utilities ─────────────────────────────────────────────────────────────
 export function avg(arr) {
   return arr.reduce((s, v) => s + v, 0) / arr.length;
@@ -109,4 +122,27 @@ export function gridSearch2D(b0Range, pRange, costFn, N = 80) {
   }
 
   return [bestB0, bestP];
+}
+
+// ── Cut gains ──────────────────────────────────────────────────────────────────
+/**
+ * For each country in dataPoints, compute the predicted growth gain from
+ * cutting government spending by `cutPP` percentage points.
+ *
+ * @param {{ name: string, spending: number, growth: number }[]} dataPoints
+ * @param {(spending: number) => number} predictFn  Current fitted model
+ * @param {number} [cutPP=5]  Size of the hypothetical cut in pp of GDP
+ * @returns {{ name: string, spending: number, growth: number, gain: number }[]}
+ *   Sorted descending by spending, filtered to countries where spending > cutPP.
+ */
+export function computeCutGains(dataPoints, predictFn, cutPP = 5) {
+  return dataPoints
+    .filter(d => d.spending > cutPP)
+    .map(d => ({
+      name: d.name,
+      spending: d.spending,
+      growth: d.growth,
+      gain: predictFn(d.spending - cutPP) - predictFn(d.spending),
+    }))
+    .sort((a, b) => b.spending - a.spending);
 }
