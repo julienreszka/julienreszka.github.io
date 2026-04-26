@@ -1580,9 +1580,9 @@
               <!-- STATIC-CUT-GAINS-TABLE:START -->
               <table style="width:100%;border-collapse:collapse;"><thead><tr class="table-header-muted" style="font-size:0.82em;">
                 <th style="text-align:left;padding:3px 8px">Country</th>
-                <th style="text-align:right;padding:3px 8px">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
-                <th style="text-align:right;padding:3px 8px">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
-                <th style="text-align:right;padding:3px 8px">Predicted gain from −5 pp cut</th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Predicted gain from −5 pp cut</th>
               </tr></thead><tbody><tr style="font-size:0.83em;">
                   <td style="padding:2px 8px">Greece</td>
                   <td style="padding:2px 8px; text-align:right">50.6%</td>
@@ -6381,9 +6381,9 @@
 
         const thead = `<thead><tr class="table-header-muted" style="font-size:0.82em;">
           <th style="text-align:left;padding:3px 8px">Country</th>
-          <th style="text-align:right;padding:3px 8px">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
-          <th style="text-align:right;padding:3px 8px">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
-          <th style="text-align:right;padding:3px 8px">Predicted gain from −5 pp cut</th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Predicted gain from −5 pp cut</th>
         </tr></thead>`;
 
         const tbody = rows.map(r => {
@@ -6391,9 +6391,9 @@
           const gainColor = r.gain >= 0.3 ? 'rgba(100,220,100,0.9)' : r.gain >= 0.1 ? 'rgba(220,200,80,0.9)' : 'rgba(255,255,255,0.55)';
           return `<tr style="font-size:0.83em;">
             <td style="padding:2px 8px">${r.name}</td>
-            <td style="padding:2px 8px; text-align:right">${r.spending.toFixed(1)}%</td>
-            <td style="padding:2px 8px; text-align:right">${r.growth.toFixed(2)}%</td>
-            <td style="padding:2px 8px; text-align:right; color:${gainColor}; font-weight:600">${gainStr}</td>
+            <td style="padding:2px 8px; text-align:right; white-space:nowrap">${r.spending.toFixed(1)}%</td>
+            <td style="padding:2px 8px; text-align:right; white-space:nowrap">${r.growth.toFixed(2)}%</td>
+            <td style="padding:2px 8px; text-align:right; white-space:nowrap; color:${gainColor}; font-weight:600">${gainStr}</td>
           </tr>`;
         }).join('');
 
