@@ -269,9 +269,74 @@
         color: #444;
       }
 
+      .checkbox-label {
+        color: #444;
+      }
+
+      .table-scroll {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .slide-caption {
+        font-size: 0.78em;
+        color: #555;
+        margin-top: 4px;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .slide-caption {
+          color: rgba(255,255,255,0.5);
+        }
+      }
+
+      @media (prefers-color-scheme: light) {
+        /* Inline rgba(255,255,255,…) colors are invisible on white backgrounds.
+           Override all of them inside the dark-designed simulator section. */
+        #armey-section [style*="color:rgba(255,255,255"] {
+          color: #333 !important;
+        }
+      }
+
+      .muted-label {
+        color: #555;
+      }
+      .muted-note {
+        color: #555;
+      }
+      .table-header-muted {
+        color: #555;
+      }
+      .cut-gains-select {
+        background: rgba(0,0,0,0.05);
+        color: inherit;
+        border: 1px solid rgba(0,0,0,0.2);
+      }
+
+      @media (prefers-color-scheme: dark) {
+        .muted-label {
+          color: rgba(255,255,255,0.5);
+        }
+        .muted-note {
+          color: rgba(255,255,255,0.5);
+        }
+        .table-header-muted {
+          color: rgba(255,255,255,0.5);
+        }
+        .cut-gains-select {
+          background: rgba(255,255,255,0.08);
+          color: rgba(255,255,255,0.8);
+          border: 1px solid rgba(255,255,255,0.2);
+        }
+      }
+
       @media (prefers-color-scheme: dark) {
         .help-text {
           color: #aaa;
+        }
+
+        .checkbox-label {
+          color: rgba(255,255,255,0.75);
         }
 
         .ranking-table th,
@@ -349,79 +414,79 @@
             <img src="The_Fiscal_Power_Law/slide-000.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="Challenging the Armey Curve: The Empirical Reality of Government Spending and Economic Growth — based on structural macro-data from 151 countries 2005–2023"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">1 / 13 — Title</figcaption>
+            <figcaption class="slide-caption">1 / 13 — Title</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-001.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="The Accepted Wisdom: An Optimal Size of Government — rising phase 0–20%, sweet spot 20–30%, declining phase 30%+, the theoretical inverted-U Armey Curve"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">2 / 13 — The traditional Armey Curve theory</figcaption>
+            <figcaption class="slide-caption">2 / 13 — The traditional Armey Curve theory</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-002.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="The Mathematical Collapse of the Armey Curve — quadratic model predicts impossible negative growth for Sweden at 35% spending; unconstrained fit produces U-shape with minimum at 49% spending"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">3 / 13 — The mathematical collapse of the quadratic model</figcaption>
+            <figcaption class="slide-caption">3 / 13 — The mathematical collapse of the quadratic model</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-003.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="The New Paradigm: The Power Law of Government Spending — y = 13.27 × x^(−0.4470), monotonically negative, steep initial drop crowding out private investment, flat tail of institutional inertia"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">4 / 13 — The power law: harmful from the first dollar</figcaption>
+            <figcaption class="slide-caption">4 / 13 — The power law: harmful from the first dollar</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-004.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="Model Fit Diagnostics: Power Law R²=0.161 AIC=162.55, Inverse R²=0.110 AIC=171.40, Traditional Quadratic R²=0.000 AIC=191.09 — power law wins on both explanatory power and model efficiency"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">5 / 13 — Model fit diagnostics: why the power law wins</figcaption>
+            <figcaption class="slide-caption">5 / 13 — Model fit diagnostics: why the power law wins</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-005.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="Power Laws Are the Architecture of Economics — Pareto wealth distribution, Zipf's law for cities, trade gravity models, and the government-growth curve all share the same scale-free mathematical structure"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">6 / 13 — Why power laws govern economic processes</figcaption>
+            <figcaption class="slide-caption">6 / 13 — Why power laws govern economic processes</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-006.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="The Endogeneity Challenge: Does Wealth Buy Big Government? Wagner's Law reversed by Singapore at 17%; time-lagged analysis shows initial spending predicts subsequent 10-year growth; instrumental variables confirm negative effect"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">7 / 13 — Endogeneity and causality</figcaption>
+            <figcaption class="slide-caption">7 / 13 — Endogeneity and causality</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-007.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="Natural Experiments in Fiscal Policy — Ireland cut spending from 53% to 36% and surged to 6–8% growth; Sweden cut from 67% to 55% and flipped from −1.4% to +4.7%; France expanded from 43% to 57% and decelerated to 1% growth"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">8 / 13 — Natural experiments: cut &amp; boom vs expand &amp; stagnate</figcaption>
+            <figcaption class="slide-caption">8 / 13 — Natural experiments: cut &amp; boom vs expand &amp; stagnate</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-008.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="The Nordic Paradox Explained: Wealth vs Growth — Denmark and Sweden are wealthy because they industrialised under lean government before the 1970s; today Denmark grows 1.0% and Finland 0.9%, exactly where the power law predicts for 50%+ spending"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">9 / 13 — The Nordic paradox: wealthy despite spending, not because of it</figcaption>
+            <figcaption class="slide-caption">9 / 13 — The Nordic paradox: wealthy despite spending, not because of it</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-009.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="Drivers of Growth Beyond Government Size — institutional quality, demographics, catch-up potential, macro stability, economic structure, natural resources explain deviations from the power law curve"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">10 / 13 — Drivers of growth beyond government size</figcaption>
+            <figcaption class="slide-caption">10 / 13 — Drivers of growth beyond government size</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-010.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="The Selective Brake Framework — government spending as a precision caliper not an indiscriminate drag; targeted applications: carbon pricing, capital requirements, fishing quotas"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">11 / 13 — The selective brake: target harms, not the whole economy</figcaption>
+            <figcaption class="slide-caption">11 / 13 — The selective brake: target harms, not the whole economy</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-011.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="Institutionalizing the Right to Economic Growth — constitutional spending caps below 25% GDP, market-preserving institutions with tax competition, transparency mechanisms and citizen standing to challenge growth-reducing policies"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">12 / 13 — Institutionalising the right to economic growth</figcaption>
+            <figcaption class="slide-caption">12 / 13 — Institutionalising the right to economic growth</figcaption>
           </figure>
           <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
             <img src="The_Fiscal_Power_Law/slide-012.jpg" loading="lazy" decoding="async" width="1720" height="960"
                  alt="Synthesis: A New View of Fiscal Policy — Armey Paradigm inverted-U vs Empirical Paradigm power law; goal of government as selective brake on negative externalities while minimising aggregate size"
                  style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption style="font-size:0.78em; color:rgba(255,255,255,0.5); margin-top:4px;">13 / 13 — Synthesis: the empirical paradigm</figcaption>
+            <figcaption class="slide-caption">13 / 13 — Synthesis: the empirical paradigm</figcaption>
           </figure>
         </div>
         <p style="font-size:0.8em; color:rgba(255,255,255,0.4); margin:4px 0 0;">Click a slide to go fullscreen. Scroll horizontally to browse. <a href="The_Fiscal_Power_Law.pdf" download style="color:rgba(255,255,255,0.55);">Download the full PDF</a>.</p>
@@ -671,23 +736,23 @@
             <option value="none">Hide Country Data</option>
           </select>
           <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;">
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+            <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-resource" checked style="accent-color:#e07b39; width:14px; height:14px; cursor:pointer;" />
               <span>Exclude resource-dependent <span style="color:#e07b39;">◆</span></span>
             </label>
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+            <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-external" checked style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude externally funded <span style="color:rgba(255,140,0,0.9);">▲</span></span>
             </label>
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+            <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-conflict" checked style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude conflict/fragile states <span style="color:rgba(220,53,69,0.9);">✕</span></span>
             </label>
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+            <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-gdpdistorted" checked style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Exclude GDP-distorted <span style="color:rgba(255,193,7,0.9);">★</span></span>
             </label>
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.85em; color:rgba(255,255,255,0.75); cursor:pointer; user-select:none;">
+            <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-se-outliers" style="accent-color:rgba(180,100,255,0.9); width:14px; height:14px; cursor:pointer;" />
               <span>Also exclude &plusmn;1 SE model-residual outliers <small style="color:rgba(180,100,255,0.6)">(exploratory)</small> <span style="color:rgba(180,100,255,0.9);">&#9632;</span></span>
             </label>
@@ -799,7 +864,7 @@
 
         <div id="model-ranking" aria-live="polite">
           <h3 class="ranking-title">Model Fit Ranking</h3>
-          <table class="ranking-table">
+          <div class="table-scroll"><table class="ranking-table">
             <thead>
               <tr class="ranking-header">
                 <th>#</th>
@@ -884,7 +949,7 @@
                 <td>69%</td>
               </tr>
             </tbody>
-          </table>
+          </table></div>
           <p class="ranking-note">
             Each model is auto-fitted to find its best-case parameters before
             computing AIC/R² — a fair competition at peak performance. Bold row
@@ -957,15 +1022,15 @@
             Notably, <strong style="color:rgba(255,255,255,0.8)">all 6 WGI governance indicators dropped out again</strong> — no marginal gain after income, investment, education and population are controlled.
             Military spending, R&amp;D, and remittances all entered — for structural reasons explained in the interpretation column.
           </p>
-          <table style="width:100%;border-collapse:collapse;font-size:0.85em;">
+          <div class="table-scroll"><table style="width:100%;border-collapse:collapse;font-size:0.85em;">
             <thead>
               <tr style="color:rgba(255,255,255,0.5);">
-                <th style="text-align:left;padding:3px 8px">#</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">#</th>
                 <th style="text-align:left;padding:3px 8px">Variable</th>
-                <th style="text-align:left;padding:3px 8px">Marginal R²</th>
-                <th style="text-align:left;padding:3px 8px">Cumulative R²</th>
-                <th style="text-align:left;padding:3px 8px">N</th>
-                <th style="text-align:left;padding:3px 8px">Slope</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">Marginal R²</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">Cumul. R²</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">N</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">Slope</th>
                 <th style="text-align:left;padding:3px 8px">Interpretation</th>
               </tr>
             </thead>
@@ -1144,7 +1209,7 @@
               </tr>
               <!-- STEPWISE-ROWS-END -->
             </tbody>
-          </table>
+          </table></div>
           <small style="color:rgba(255,255,255,0.4)">113 countries, 2005–2023, power-law baseline, standard exclusions. Greedy stepwise over <!-- STEPWISE-N-CANDIDATES -->27<!-- /STEPWISE-N-CANDIDATES --> candidate World Bank indicators. Threshold: marginal R² &gt; 0.003. Source: <code>scripts/ceiling-r2.mjs</code>. Updated by <code>scripts/update-static-tables.mjs</code>.</small>
         </div>
 
@@ -1197,7 +1262,7 @@
           </div>
           <div id="residual-income-stats" aria-live="polite" style="margin-top: 8px; font-size: 0.88em;">
             <strong>Stage 2 — Best combined fit (spending + R&amp;D + military + income)</strong>
-            <table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:8px">
+            <div class="table-scroll"><table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:8px">
               <thead><tr style="color:rgba(255,255,255,0.5)">
                 <th style="text-align:left;padding:2px 6px">#</th>
                 <th style="text-align:left;padding:2px 6px">Model</th>
@@ -1213,7 +1278,7 @@
                 <tr><td style="padding:2px 6px">6</td><td style="padding:2px 6px">Linear</td><td style="padding:2px 6px">0.389</td><td style="padding:2px 6px">0.590</td></tr>
                 <tr><td style="padding:2px 6px">7</td><td style="padding:2px 6px">Quadratic</td><td style="padding:2px 6px">0.386</td><td style="padding:2px 6px">0.567</td></tr>
               </tbody>
-            </table>
+            </table></div>
             <small style="color:rgba(255,255,255,0.4)">Combined R² = R²(spending+R&amp;D+military+income+capital formation+population growth) evaluated on the joint subset with all five controls. Bold row = current model. 2005–2023, standard exclusions.</small>
           </div>
         </div>
@@ -1499,9 +1564,9 @@
           <div id="cut-gains-table" style="margin-top:16px;">
             <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
               <h4 style="font-size:0.95em; margin:0;">Predicted growth gain from a 5-point spending cut — current model &amp; data</h4>
-              <label style="font-size:0.82em; color:rgba(255,255,255,0.5); white-space:nowrap;">
+              <label class="muted-label" style="font-size:0.82em; white-space:nowrap;">
                 Period:
-                <select id="cut-gains-period-select" style="font-size:0.95em; background:rgba(255,255,255,0.08); color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.2); border-radius:4px; padding:2px 4px; margin-left:4px;">
+                <select id="cut-gains-period-select" class="cut-gains-select" style="font-size:0.95em; border-radius:4px; padding:2px 4px; margin-left:4px;">
                   <option value="recent">2018–2023</option>
                   <option value="decade">2014–2023</option>
                   <option value="long">2010–2023</option>
@@ -1510,10 +1575,10 @@
                 </select>
               </label>
             </div>
-            <p style="font-size:0.82em; color:rgba(255,255,255,0.5); margin:0 0 8px;">Uses current model parameters and the currently displayed country data. Gain = <em>predicted growth at (spending − 5 pp)</em> minus <em>predicted growth at current spending</em>. Load country data and press ⚙ Auto-fit to update.</p>
+            <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;">Uses current model parameters and the currently displayed country data. Gain = <em>predicted growth at (spending − 5 pp)</em> minus <em>predicted growth at current spending</em>. Load country data and press ⚙ Auto-fit to update.</p>
             <div id="cut-gains-table-inner" style="overflow-x:auto;">
               <!-- STATIC-CUT-GAINS-TABLE:START -->
-              <table style="width:100%;border-collapse:collapse;"><thead><tr style="color:rgba(255,255,255,0.5); font-size:0.82em;">
+              <table style="width:100%;border-collapse:collapse;"><thead><tr class="table-header-muted" style="font-size:0.82em;">
                 <th style="text-align:left;padding:3px 8px">Country</th>
                 <th style="text-align:right;padding:3px 8px">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
                 <th style="text-align:right;padding:3px 8px">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
@@ -5737,7 +5802,7 @@
 
         container.innerHTML = `
           <h3 class="ranking-title">Model Fit Ranking (${dataPoints.length} countries)</h3>
-          <table class="ranking-table">
+          <div class="table-scroll"><table class="ranking-table">
             <thead><tr class="ranking-header">
               <th>#</th>
               <th>Model</th>
@@ -5749,7 +5814,7 @@
               <th>Coverage <small>(±1 SE)</small></th>
             </tr></thead>
             <tbody>${rows}</tbody>
-          </table>
+          </table></div>
           <p class="ranking-note">Parameters for Quadratic/Inverse/Exponential use current β₀ from the form. Linear uses its own defaults. Bold row = currently selected model.</p>
           <dl class="ranking-glossary">
             <dt>R² (R-squared)</dt>
@@ -6158,10 +6223,10 @@
           const commonThead = `<thead><tr style="color:rgba(255,255,255,0.5)"><th ${thStyle}>#</th><th ${thStyle}>Model</th><th ${thStyle}>R²(spending)</th><th ${thStyle}>CONTROL</th><th ${thStyle}>Combined R²</th><th ${thStyle}>AIC</th></tr></thead>`;
           const mkTable = (title, controlLabel, valKey) => `
             <strong style="font-size:0.9em">${title}</strong>
-            <table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:4px">
+            <div class="table-scroll"><table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:4px">
               ${commonThead.replace('CONTROL', controlLabel)}
               <tbody>${byJoint.map((r, i) => mkRow(r, i, valKey)).join('')}</tbody>
-            </table>`;
+            </table></div>`;
           const tableRd       = mkTable('R²: spending + R&amp;D (partial)',                'R²(R&amp;D|spending)',        'r2rd');
           const tableMil      = mkTable('R²: spending + military (partial)',                'R²(military|spending)',       'r2mil');
           const tableCapForm  = mkTable('R²: spending + capital formation (partial)',       'R²(cap.form|spending)',       'r2capForm');
@@ -6307,14 +6372,14 @@
           : null;
 
         const ratioNote = ratio
-          ? `<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">With α = ${alpha.toFixed(3)}: ratio of marginal gains at 20% vs 50% = (50/20)<sup>${(alpha+1).toFixed(3)}</sup> ≈ <strong>${ratio}×</strong></p>`
+          ? `<p class="muted-note" style="font-size:0.78em; margin:4px 0 0;">With α = ${alpha.toFixed(3)}: ratio of marginal gains at 20% vs 50% = (50/20)<sup>${(alpha+1).toFixed(3)}</sup> ≈ <strong>${ratio}×</strong></p>`
           : '';
 
         const timePeriodEl = document.getElementById('time-period-select');
         const timePeriodLabel = timePeriodEl ? timePeriodEl.options[timePeriodEl.selectedIndex].text.split('(')[0].trim() : '';
         const timePeriodRange = timePeriodEl ? (timePeriodEl.options[timePeriodEl.selectedIndex].text.match(/\(([^)]+)\)/) || ['',''])[1] : '';
 
-        const thead = `<thead><tr style="color:rgba(255,255,255,0.5); font-size:0.82em;">
+        const thead = `<thead><tr class="table-header-muted" style="font-size:0.82em;">
           <th style="text-align:left;padding:3px 8px">Country</th>
           <th style="text-align:right;padding:3px 8px">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
           <th style="text-align:right;padding:3px 8px">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
@@ -6695,6 +6760,14 @@
 
       // Close on backdrop click
       lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+      // Touch swipe for mobile navigation
+      let _lbTouchStartX = 0;
+      lightbox.addEventListener('touchstart', e => { _lbTouchStartX = e.changedTouches[0].clientX; }, { passive: true });
+      lightbox.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - _lbTouchStartX;
+        if (Math.abs(dx) > 40) { dx < 0 ? lightboxNext() : lightboxPrev(); }
+      }, { passive: true });
     </script>
   </body>
 </html>
