@@ -2431,6 +2431,181 @@
             </button>
           </div>
 
+          <h3 id="inclusive-wealth-criterion">A Single Objective Test: The Inclusive Wealth Criterion</h3>
+          <p>
+            If government should brake some activities and not others, we need
+            a non-arbitrary way to decide which. "Things I dislike" is not a
+            criterion. "Things that fail a cost&ndash;benefit test" is closer,
+            but GDP-based cost&ndash;benefit can be gamed by transfers,
+            depletion, and coercion &mdash; the very pathologies a brake should
+            target. We need a metric that <em>cannot</em> be inflated by the
+            activity it is meant to evaluate.
+          </p>
+          <p>
+            The cleanest formulation comes from the
+            <strong>inclusive wealth</strong> tradition (Dasgupta, Arrow, M&auml;ler,
+            Weitzman). Define a country's wealth as the present value of every
+            productive capital stock &mdash; produced, human, natural,
+            knowledge, institutional &mdash; each weighted by its shadow price:
+          </p>
+          <p style="text-align:center; font-size:1.05em">
+            $$\frac{dW}{dt} = \sum_k p_k \frac{dK_k}{dt}$$
+          </p>
+          <p>
+            Long-term growth, honestly measured, is
+            <span style="white-space:nowrap">$dW/dt > 0$</span>. An activity is
+            objectively brake-worthy if and only if it reduces this quantity
+            <em>for parties who did not consent to bear its cost</em>:
+          </p>
+          <p style="text-align:center; font-size:1.05em">
+            $$\text{Brake}(a) \iff \mathbb{E}\!\left[\sum_k p_k\,\Delta K_k^{(a)}\right] < 0 \quad \text{for non-consenting parties}$$
+          </p>
+          <p>
+            This single inequality subsumes the standard candidates for "what
+            government should slow down":
+          </p>
+          <div class="table-scroll">
+            <table class="ranking-table" style="margin: 12px 0">
+              <thead>
+                <tr>
+                  <th>Activity type</th>
+                  <th>Which $K_k$ shrinks</th>
+                  <th>How consent fails</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Negative externalities</strong><br />
+                    <em>pollution, congestion, systemic risk</em>
+                  </td>
+                  <td>clean air, infrastructure, financial stability</td>
+                  <td>third parties never agreed to bear the cost</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Resource depletion</strong><br />
+                    <em>extraction beyond regeneration</em>
+                  </td>
+                  <td>$K_{\text{natural}}$, no offsetting investment</td>
+                  <td>future generations not at the table (Hartwick violated)</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Rent-seeking</strong><br />
+                    <em>lobbying, regulatory capture, patent trolling</em>
+                  </td>
+                  <td>$K_{\text{institutional}}$ erodes; $\sum p_k \Delta K_k \approx 0$</td>
+                  <td>captured process, not voluntary exchange</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Fraud, coercion, monopoly by force</strong>
+                  </td>
+                  <td>varies (institutional, produced, human)</td>
+                  <td>consent absent by definition</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Compulsory unfunded intergenerational transfers</strong><br />
+                    <em>PAYG pensions financed by tomorrow's workers</em>
+                  </td>
+                  <td>young cohort's claim on $\sum_k K_k$</td>
+                  <td>unborn cannot negotiate the contract</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Information asymmetry exploitation</strong><br />
+                    <em>predatory lending, deceptive marketing</em>
+                  </td>
+                  <td>$K_{\text{human}}$, $K_{\text{produced}}$ of victim</td>
+                  <td>nominal consent, not informed consent</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Conversely, the criterion <em>refuses</em> to condemn activities
+            that are merely unfashionable, inefficient, or disliked by
+            incumbents. Consumption choices of competent adults that affect
+            only themselves leave $\sum_k p_k \Delta K_k$ unchanged for
+            non-consenting parties. The criterion is silent &mdash; which is
+            exactly what an objective rule should do where no objective harm
+            exists.
+          </p>
+
+          <h4>Why this is genuinely objective (within limits)</h4>
+          <ul>
+            <li>
+              <strong>Sign objectivity is robust.</strong> Even when shadow
+              prices $p_k$ are uncertain, the <em>direction</em> of $\Delta W$
+              is often unambiguous: a polluting subsidised monopoly reduces
+              nearly every $K_k$ at once.
+            </li>
+            <li>
+              <strong>It does not require value judgements about
+              lifestyles.</strong> It only checks the accounting.
+            </li>
+            <li>
+              <strong>It is partially measurable.</strong> The
+              <a href="https://www.worldbank.org/en/publication/changing-wealth-of-nations" target="_blank" rel="noopener">World Bank's Changing Wealth of Nations</a>
+              covers ~150 countries with produced, human, natural, and
+              net-foreign-asset capital. The
+              <a href="https://wedocs.unep.org/handle/20.500.11822/43131" target="_blank" rel="noopener">UN Inclusive Wealth Report 2023</a>
+              covers 163 countries. The
+              <a href="https://data.worldbank.org/indicator/NY.ADJ.SVNG.GN.ZS" target="_blank" rel="noopener">Adjusted Net Savings</a>
+              series provides the annual flow counterpart for ~140 countries.
+            </li>
+          </ul>
+
+          <h4>Where objectivity leaks &mdash; honestly</h4>
+          <ul>
+            <li>
+              Shadow prices for institutional and natural capital are
+              estimated, not observed. Existing accounts cover produced, human,
+              and natural capital well; <strong>institutional capital is not
+              yet integrated</strong> into any official wealth account.
+            </li>
+            <li>
+              The discount rate $\rho$ involves an ethical choice (Stern vs.
+              Nordhaus).
+            </li>
+            <li>
+              Consent boundaries for the unborn and the unaware require a
+              convention.
+            </li>
+            <li>
+              The consent filter itself is a theoretical refinement, not part
+              of any published wealth account.
+            </li>
+          </ul>
+          <p>
+            But these are <em>calibration</em> disputes, not <em>criterion</em>
+            disputes. Two honest analysts using inclusive wealth will disagree
+            on magnitudes by perhaps a factor of 2&ndash;3. Two analysts using
+            "what's good for society" can disagree by infinity.
+          </p>
+
+          <h4>The policy rule that follows</h4>
+          <p style="border-left:4px solid #007bff; padding-left:1em; font-style:italic">
+            Government spending should be aimed at activities where
+            $\sum_k p_k \Delta K_k < 0$ for non-consenting parties &mdash;
+            activities that shrink the inclusive capital base &mdash; and
+            withdrawn from activities where it is positive.
+            <br /><strong>Don't tax production; tax depletion.</strong>
+          </p>
+          <p>
+            This is also why the data pattern documented above (more government
+            spending &rarr; slower growth) is <em>expected</em> under the
+            criterion: most government spending in modern economies funds
+            transfers and current consumption, which appears as
+            $\Delta K \leq 0$ across the inclusive-wealth ledger. The countries
+            that beat the curve &mdash; Singapore, Switzerland, Norway with its
+            sovereign wealth fund &mdash; are precisely those that explicitly
+            reinvest government revenue back into $K_k$ rather than
+            consuming it.
+          </p>
+
           <h3>How the Theory Misled Policymakers</h3>
           <p>
             The Armey Curve theory emerged in the 1980s from observations that
