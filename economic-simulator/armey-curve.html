@@ -2443,10 +2443,16 @@
           </p>
           <p>
             The cleanest formulation comes from the
-            <strong>inclusive wealth</strong> tradition (Dasgupta, Arrow, M&auml;ler,
-            Weitzman). Define a country's wealth as the present value of every
-            productive capital stock &mdash; produced, human, natural,
-            knowledge, institutional &mdash; each weighted by its shadow price:
+            <strong>inclusive wealth</strong> tradition &mdash; a synthesis of
+            Pigou (1920) on externalities, Coase (1960) on when consent solves
+            the problem itself, Hartwick (1977) on the depletion rule, Buchanan
+            (1962) on consent as the political-philosophical foundation, and
+            Arrow, Dasgupta, M&auml;ler, Weitzman et al. (2004,
+            <em>"Are We Consuming Too Much?"</em>) who pulled it all into a
+            single accounting framework. Define a country's wealth as the
+            present value of every productive capital stock &mdash; produced,
+            human, natural, knowledge, institutional &mdash; each weighted by
+            its shadow price:
           </p>
           <p style="text-align:center; font-size:1.05em">
             $$\frac{dW}{dt} = \sum_k p_k \frac{dK_k}{dt}$$
@@ -2534,6 +2540,111 @@
             exists.
           </p>
 
+          <h4>The whole criterion in one 2&times;2</h4>
+          <p>
+            Two binary questions decide the verdict for any activity: is
+            consent present, and does inclusive wealth grow or shrink?
+          </p>
+          <div class="table-scroll">
+            <table class="ranking-table" style="margin: 12px 0; max-width: 700px">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Consent &check; (all parties agreed)</th>
+                  <th>Consent &cross; (third parties bear cost)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>$\Delta W > 0$</strong></td>
+                  <td>Encourage / leave alone &mdash; voluntary value creation</td>
+                  <td>Rare; investigate why anyone is harmed by net-positive activity</td>
+                </tr>
+                <tr>
+                  <td><strong>$\Delta W < 0$</strong></td>
+                  <td>Leave alone &mdash; their loss, their choice (e.g. risky hobby)</td>
+                  <td><strong>BRAKE</strong> &mdash; this is the only quadrant where government has objective standing</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Three of the four quadrants tell government to do nothing. Only the
+            bottom-right justifies a brake. That is a much narrower licence
+            than "whatever the median voter wants" &mdash; and a much wider one
+            than "government should never act."
+          </p>
+
+          <h4>Worked example: applying the test to two policies</h4>
+          <p>
+            The criterion is only useful if it produces unambiguous verdicts on
+            real cases. Two contrasting examples:
+          </p>
+          <p>
+            <strong>A coal subsidy.</strong>
+            $\Delta K_{\text{natural}} < 0$ (emissions, depleted reserves);
+            $\Delta K_{\text{human}} < 0$ (respiratory damage in downwind
+            populations, who never agreed); $\Delta K_{\text{produced}} > 0$
+            (cheaper electricity, short-term); $\Delta K_{\text{institutional}} < 0$
+            (the lobbying apparatus that sustains the subsidy itself erodes
+            rule-of-law neutrality). Net: $\sum_k p_k \Delta K_k < 0$ for
+            non-consenting parties. <strong>Verdict: brake.</strong>
+          </p>
+          <p>
+            <strong>A grant for basic-science research.</strong>
+            $\Delta K_{\text{knowledge}} > 0$ (results enter the public domain
+            with positive spillovers); $\Delta K_{\text{human}} > 0$ (trained
+            researchers); no consent failure (taxpayers fund it through a
+            constitutionally bounded process, beneficiaries are diffuse and
+            non-rivalrous). Net: $\sum_k p_k \Delta K_k > 0$ across the board.
+            <strong>Verdict: don't brake.</strong>
+          </p>
+          <p>
+            Notice what the test did <em>not</em> require: a vote, a moral
+            intuition, or an opinion about energy policy. It only required
+            tallying the capital effects and checking the consent column.
+          </p>
+
+          <h4>The hard cases (where the criterion is genuinely ambiguous)</h4>
+          <p>
+            An honest framework names the cases it doesn't cleanly resolve.
+            Four worth flagging:
+          </p>
+          <ul>
+            <li>
+              <strong>Public-goods underprovision.</strong> Defense, basic
+              research, contagious-disease surveillance: there is no activity
+              to brake, only one to <em>start</em>. The criterion tells
+              government what to slow, not what to provide. A complementary
+              rule (Samuelson on public goods) is needed for the production
+              side.
+            </li>
+            <li>
+              <strong>Voluntary risky behaviour with social spillovers.</strong>
+              Smoking, motorcycling without a helmet, recreational drugs.
+              Consent is partial: the user agreed, the emergency-room budget
+              didn't. The criterion says brake the externality portion (e.g.
+              insurance pricing) <em>not</em> the activity itself.
+            </li>
+            <li>
+              <strong>High-variance frontier activity.</strong> Gain-of-function
+              research, untested geoengineering, novel financial instruments.
+              The expectation operator $\mathbb{E}$ matters: tail risk to
+              non-consenting parties can dominate even when the central
+              estimate of $\Delta W$ is positive. The criterion supports
+              precaution proportional to the size of the unconsented tail.
+            </li>
+            <li>
+              <strong>Effects on the unborn.</strong> Every long-horizon
+              decision technically lacks consent from people who don't yet
+              exist. The criterion has to draw a line &mdash; usually by
+              treating the unborn as represented by the discount rate $\rho$
+              and by an obligation to leave $W$ non-decreasing (Hartwick).
+              This is a convention, not a derivation, and people of good faith
+              disagree about $\rho$.
+            </li>
+          </ul>
+
           <h4>Why this is genuinely objective (within limits)</h4>
           <ul>
             <li>
@@ -2595,6 +2706,29 @@
             <br /><strong>Don't tax production; tax depletion.</strong>
           </p>
           <p>
+            Translated into a tax base, the criterion picks out a small,
+            specific list of things to charge for &mdash; and a much larger
+            list of things to leave alone. <strong>What it would tax:</strong>
+          </p>
+          <ul>
+            <li>Carbon, methane, particulates, congestion (classical Pigouvian)</li>
+            <li>Resource extraction above the regeneration rate (severance / depletion)</li>
+            <li>Land value &mdash; Henry George's tax on unearned location rent, which captures wealth without distorting production</li>
+            <li>Financial leverage above systemic-risk thresholds</li>
+            <li>Unfunded pension liabilities &mdash; force amortization rather than rollover</li>
+            <li>Monopoly rents that rest on regulatory capture rather than productivity</li>
+          </ul>
+          <p>
+            <strong>What it would not tax:</strong> labour income, corporate
+            profits earned competitively, capital gains on productive
+            investment, consumption of competent adults. Almost every
+            public-finance economist from George to Mirrlees to Friedman has
+            recommended some version of this base &mdash; "tax bads, not
+            goods." That it remains politically marginal despite near-consensus
+            in the academic literature is itself a data point about which
+            constituencies the existing tax system serves.
+          </p>
+          <p>
             This is also why the data pattern documented above (more government
             spending &rarr; slower growth) is <em>expected</em> under the
             criterion: most government spending in modern economies funds
@@ -2604,6 +2738,46 @@
             sovereign wealth fund &mdash; are precisely those that explicitly
             reinvest government revenue back into $K_k$ rather than
             consuming it.
+          </p>
+
+          <h4>What would falsify this</h4>
+          <p>
+            A criterion that cannot be wrong is not a criterion. The inclusive
+            wealth test makes a specific empirical prediction: countries that
+            tax depletion and protect inclusive wealth should, over decades,
+            grow $W$ faster than countries that tax production and consume the
+            capital base &mdash; even when conventional GDP growth diverges
+            from $W$ growth in the short run.
+          </p>
+          <p>
+            <strong>What would refute the criterion:</strong>
+          </p>
+          <ul>
+            <li>
+              If countries with depletion-style tax bases (Norway's sovereign
+              fund, Chilean copper royalties, Singaporean land-value capture,
+              British Columbia's carbon tax) systematically showed <em>worse</em>
+              long-run inclusive-wealth growth than peers that tax labour and
+              capital, the criterion fails.
+            </li>
+            <li>
+              If the consent filter consistently flagged activities that
+              independent welfare measures (life expectancy, revealed-preference
+              migration, subjective well-being) showed to be net-positive for
+              the affected parties, the consent term is mis-specified.
+            </li>
+            <li>
+              If shadow-price uncertainty turned out to flip the <em>sign</em>
+              of $\Delta W$ (not just its magnitude) for most policy-relevant
+              activities, the criterion would lose its claim to sign objectivity.
+            </li>
+          </ul>
+          <p>
+            Current evidence runs the other way &mdash; the listed countries
+            outperform on inclusive wealth per capita in the World Bank CWON
+            data &mdash; but the prediction is testable, and the dataset is
+            public. That distinguishes this framework from the slogans it
+            replaces.
           </p>
 
           <h3>How the Theory Misled Policymakers</h3>
