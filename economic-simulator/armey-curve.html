@@ -400,6 +400,64 @@
         .iwc-eq-caption { color: #aab1b8; }
       }
 
+      /* Plain-English gloss block placed after a formula. */
+      .iwc-gloss {
+        background: #f1f5f9;
+        border-left: 3px solid #64748b;
+        padding: 10px 14px;
+        margin: 8px auto 18px;
+        max-width: 720px;
+        font-size: 0.95em;
+        border-radius: 0 6px 6px 0;
+      }
+      .iwc-gloss strong { color: #334155; }
+
+      /* Collapsible JavaScript translation. */
+      .iwc-code {
+        margin: 10px auto 22px;
+        max-width: 720px;
+        background: #0f172a;
+        color: #e2e8f0;
+        border-radius: 8px;
+        border: 1px solid #1e293b;
+      }
+      .iwc-code summary {
+        cursor: pointer;
+        padding: 10px 14px;
+        font-weight: 600;
+        color: #cbd5e1;
+        list-style: none;
+      }
+      .iwc-code summary::-webkit-details-marker { display: none; }
+      .iwc-code summary::before {
+        content: "▸ ";
+        display: inline-block;
+        transition: transform 0.15s ease;
+      }
+      .iwc-code[open] summary::before { content: "▾ "; }
+      .iwc-code pre {
+        margin: 0;
+        padding: 12px 14px 16px;
+        overflow-x: auto;
+        font-size: 0.85em;
+        line-height: 1.5;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        white-space: pre;
+      }
+      .iwc-code code { background: transparent; color: inherit; padding: 0; }
+      @media (max-width: 600px) {
+        .iwc-code pre { font-size: 0.78em; padding: 10px; }
+        .iwc-gloss { font-size: 0.9em; padding: 9px 12px; }
+      }
+      @media (prefers-color-scheme: dark) {
+        .iwc-gloss {
+          background: #1e2832;
+          border-left-color: #64748b;
+          color: #cbd5e1;
+        }
+        .iwc-gloss strong { color: #e2e8f0; }
+      }
+
       /* Inclusive Wealth Criterion decision flowchart.
          Vertical spine pattern: the "continue" path runs straight down
          (Q1 -> Q2 -> Q3 -> BRAKE); each "leave alone" exit branches
@@ -2673,6 +2731,14 @@
           <p style="text-align:center; font-size:1.05em">
             $$\frac{dW}{dt} = \sum_k p_k \frac{dK_k}{dt}$$
           </p>
+          <p class="iwc-gloss">
+            <strong>In plain English:</strong> the rate at which a country's
+            wealth grows ($dW/dt$) equals the sum, across every kind of capital
+            $k$ (produced, human, natural, knowledge, institutional), of how
+            fast that capital is changing ($dK_k/dt$) multiplied by what that
+            capital is worth at the margin ($p_k$, its <em>shadow price</em>).
+            "$\sum_k$" just means "add up over every kind of capital."
+          </p>
           <p>
             Long-term growth, honestly measured, is
             <span style="white-space:nowrap">$dW/dt > 0$</span>. An activity is
@@ -2683,6 +2749,47 @@
             $$\text{Brake}(a) \iff \mathbb{E}\!\left[\sum_k p_k\,\Delta K_k^{(a)}\right] < 0$$
           </p>
           <p class="iwc-eq-caption">(over parties who did not consent)</p>
+          <p class="iwc-gloss">
+            <strong>In plain English:</strong> apply the brake to activity $a$
+            <em>if and only if</em> ("$\iff$") its <em>expected</em>
+            ("$\mathbb{E}$") effect on total wealth, summed over every kind of
+            capital, is negative &mdash; counting only the people who didn't
+            agree to bear its cost. $\Delta K_k^{(a)}$ means "the change in
+            capital of type $k$ caused by activity $a$."
+          </p>
+          <details class="iwc-code">
+            <summary>Same rule, in JavaScript</summary>
+<pre><code>// Should government brake activity `a`?
+// Returns true iff non-consenters lose wealth on net.
+function shouldBrake(a) {
+  const capitalKinds = [
+    "produced",      // factories, infrastructure, durable goods
+    "human",         // health, skills, life expectancy
+    "natural",       // air, water, soil, biodiversity, reserves
+    "knowledge",     // R&amp;D stock, know-how, useful information
+    "institutional", // rule of law, trust, contract enforcement
+  ];
+
+  // Step 1: who is affected without having consented?
+  const nonConsenters = a.affectedParties.filter(p => !p.consented);
+  if (nonConsenters.length === 0) return false; // Q1: leave alone
+
+  // Step 2: expected sum of (shadow price * change in capital),
+  // averaged over uncertain outcomes, over non-consenting parties.
+  const expectedDeltaW = expectation(() =&gt;
+    sum(nonConsenters, p =&gt;
+      sum(capitalKinds, k =&gt; shadowPrice(k, p) * deltaK(a, k, p))
+    )
+  );
+  if (expectedDeltaW &gt;= 0) return false; // Q2: leave alone
+
+  // Step 3: would the brake itself cost more than the damage?
+  const brakeCost = deadweightLoss(a) + enforcementCost(a) + captureRisk(a);
+  if (brakeCost &gt; -expectedDeltaW) return false; // Q3: cure worse than disease
+
+  return true; // all three filters passed -> BRAKE
+}</code></pre>
+          </details>
           <p>
             This single inequality subsumes the standard candidates for "what
             government should slow down":
