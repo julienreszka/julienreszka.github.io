@@ -400,16 +400,16 @@
         .iwc-eq-caption { color: #aab1b8; }
       }
 
-      /* Inclusive Wealth Criterion decision flowchart
-         Mobile-first: everything stacks in a single column.
-         At >= 1024px, branches lay out side-by-side as a tree. */
+      /* Inclusive Wealth Criterion decision flowchart.
+         Vertical spine pattern: the "continue" path runs straight down
+         (Q1 -> Q2 -> Q3 -> BRAKE); each "leave alone" exit branches
+         sideways via a short horizontal connector. Works at all widths. */
       .iwc-flow {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 0;
         margin: 28px 0;
-        padding: 16px 10px;
+        padding: 18px 10px;
         background: #fafbfc;
         border: 1px solid #e3e8ee;
         border-radius: 12px;
@@ -421,9 +421,6 @@
         text-align: center;
         font-size: 0.92rem;
         line-height: 1.35;
-        min-width: 0;
-        max-width: 100%;
-        width: min(320px, 100%);
         border: 1.5px solid transparent;
         word-wrap: break-word;
         overflow-wrap: break-word;
@@ -432,10 +429,12 @@
         background: #eef2f7;
         border-color: #cfd8e3;
         font-weight: 600;
+        width: min(280px, 100%);
       }
       .iwc-flow .iwc-decision {
         background: #fff8e1;
         border-color: #f4d35e;
+        width: 100%;
       }
       .iwc-flow .iwc-decision .iwc-q {
         font-weight: 700;
@@ -449,71 +448,111 @@
         border-color: #90caf9;
         color: #0d47a1;
         font-weight: 600;
+        font-size: 0.82rem;
+        padding: 8px 10px;
+        flex: 0 1 auto;
       }
       .iwc-flow .iwc-brake {
         background: #ffcdd2;
         border-color: #e57373;
         color: #b71c1c;
         font-weight: 700;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.06em;
+        font-size: 1.05rem;
+        padding: 12px 22px;
+        width: min(220px, 100%);
       }
       .iwc-flow .iwc-arrow {
         width: 0;
         height: 0;
-        margin: 6px 0;
+        margin: 4px 0;
         border-left: 7px solid transparent;
         border-right: 7px solid transparent;
         border-top: 9px solid #90a4ae;
       }
-      /* Default (mobile): branches stack vertically. */
-      .iwc-flow .iwc-branch {
+
+      /* A "step" = decision diamond on the left, side-exit on the right.
+         The decision takes most of the width; the leave-alone exit is
+         a small pill connected by a horizontal line. */
+      .iwc-flow .iwc-step {
         display: flex;
-        flex-direction: column;
         align-items: center;
-        gap: 0;
+        gap: 6px;
         width: 100%;
+        max-width: 560px;
       }
-      .iwc-flow .iwc-leg {
+      .iwc-flow .iwc-step-main {
+        flex: 1 1 auto;
+        min-width: 0;
         display: flex;
-        flex-direction: column;
+        justify-content: center;
+      }
+      .iwc-flow .iwc-exit {
+        display: flex;
         align-items: center;
-        width: 100%;
-        padding-top: 10px;
-        margin-top: 10px;
-        border-top: 1px dashed #cfd8e3;
+        gap: 4px;
+        flex: 0 0 auto;
+        max-width: 45%;
       }
-      .iwc-flow .iwc-leg:first-child {
-        border-top: none;
-        margin-top: 0;
-        padding-top: 0;
-      }
-      .iwc-flow .iwc-label {
-        display: inline-block;
-        padding: 2px 10px;
-        margin-bottom: 2px;
+      .iwc-flow .iwc-exit-label {
+        font-size: 0.72rem;
+        font-weight: 600;
+        color: #455a64;
         background: #fff;
         border: 1px solid #cfd8e3;
         border-radius: 999px;
-        font-size: 0.8rem;
+        padding: 1px 7px;
+        white-space: nowrap;
+      }
+      .iwc-flow .iwc-exit-line {
+        flex: 0 0 auto;
+        width: 14px;
+        height: 2px;
+        background: #90a4ae;
+        position: relative;
+      }
+      .iwc-flow .iwc-exit-line::after {
+        content: "";
+        position: absolute;
+        right: -1px;
+        top: 50%;
+        transform: translateY(-50%);
+        border-top: 5px solid transparent;
+        border-bottom: 5px solid transparent;
+        border-left: 6px solid #90a4ae;
+      }
+
+      /* Spine label (Yes / <0 / No) sits next to the down-arrow between steps. */
+      .iwc-flow .iwc-spine {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
+        margin: 2px 0;
+      }
+      .iwc-flow .iwc-spine-label {
+        display: inline-block;
+        padding: 1px 8px;
+        background: #fff;
+        border: 1px solid #cfd8e3;
+        border-radius: 999px;
+        font-size: 0.75rem;
         font-weight: 600;
         color: #455a64;
       }
-      /* Wide screens: render as a side-by-side tree. */
-      @media (min-width: 1024px) {
-        .iwc-flow .iwc-branch {
-          flex-direction: row;
-          align-items: flex-start;
-          justify-content: center;
-          gap: 24px;
-        }
-        .iwc-flow .iwc-leg {
-          flex: 1 1 0;
-          width: auto;
-          padding-top: 0;
-          margin-top: 0;
-          border-top: none;
-        }
+
+      /* Very narrow: shrink exit pill so it never crowds the diamond. */
+      @media (max-width: 420px) {
+        .iwc-flow { padding: 14px 6px; }
+        .iwc-flow .iwc-step { gap: 4px; }
+        .iwc-flow .iwc-exit { max-width: 38%; gap: 3px; }
+        .iwc-flow .iwc-exit-line { width: 8px; }
+        .iwc-flow .iwc-leave { font-size: 0.74rem; padding: 6px 8px; }
+        .iwc-flow .iwc-decision { font-size: 0.86rem; padding: 8px 10px; }
+        .iwc-flow .iwc-decision .iwc-q { font-size: 0.72rem; }
+        .iwc-flow .iwc-exit-label { font-size: 0.66rem; padding: 1px 5px; }
       }
+
       @media (prefers-color-scheme: dark) {
         .iwc-flow {
           background: #1a1d20;
@@ -541,12 +580,14 @@
           color: #ffcdd2;
         }
         .iwc-flow .iwc-arrow { border-top-color: #607d8b; }
-        .iwc-flow .iwc-label {
+        .iwc-flow .iwc-exit-label,
+        .iwc-flow .iwc-spine-label {
           background: #262a2e;
           border-color: #3a4148;
           color: #cfd8dc;
         }
-        .iwc-flow .iwc-leg { border-top-color: #3a4148; }
+        .iwc-flow .iwc-exit-line { background: #607d8b; }
+        .iwc-flow .iwc-exit-line::after { border-left-color: #607d8b; }
       }
     </style>
   </head>
@@ -2765,52 +2806,61 @@
             <div class="iwc-node iwc-start">Activity under consideration</div>
             <div class="iwc-arrow" aria-hidden="true"></div>
 
-            <div class="iwc-node iwc-decision">
-              <div class="iwc-q">Q1</div>
-              <div>Anyone affected who didn't consent?</div>
-            </div>
-            <div class="iwc-branch">
-              <div class="iwc-leg iwc-leg-left">
-                <div class="iwc-label">No</div>
-                <div class="iwc-arrow" aria-hidden="true"></div>
+            <div class="iwc-step">
+              <div class="iwc-step-main">
+                <div class="iwc-node iwc-decision">
+                  <div class="iwc-q">Q1</div>
+                  <div>Anyone affected who didn't consent?</div>
+                </div>
+              </div>
+              <div class="iwc-exit" aria-label="No: leave alone">
+                <span class="iwc-exit-label">No</span>
+                <span class="iwc-exit-line" aria-hidden="true"></span>
                 <div class="iwc-node iwc-leave">Leave alone</div>
               </div>
-              <div class="iwc-leg iwc-leg-right">
-                <div class="iwc-label">Yes</div>
-                <div class="iwc-arrow" aria-hidden="true"></div>
+            </div>
+            <div class="iwc-spine">
+              <span class="iwc-spine-label">Yes</span>
+              <div class="iwc-arrow" aria-hidden="true"></div>
+            </div>
+
+            <div class="iwc-step">
+              <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
                   <div class="iwc-q">Q2</div>
                   <div>$\sum_k p_k\,\Delta K_k$ over non-consenters</div>
                 </div>
-                <div class="iwc-branch">
-                  <div class="iwc-leg iwc-leg-left">
-                    <div class="iwc-label">$\geq 0$</div>
-                    <div class="iwc-arrow" aria-hidden="true"></div>
-                    <div class="iwc-node iwc-leave">Leave alone</div>
-                  </div>
-                  <div class="iwc-leg iwc-leg-right">
-                    <div class="iwc-label">$< 0$</div>
-                    <div class="iwc-arrow" aria-hidden="true"></div>
-                    <div class="iwc-node iwc-decision">
-                      <div class="iwc-q">Q3</div>
-                      <div>Brake cost (deadweight, enforcement, capture) exceeds Q2 damage?</div>
-                    </div>
-                    <div class="iwc-branch">
-                      <div class="iwc-leg iwc-leg-left">
-                        <div class="iwc-label">Yes</div>
-                        <div class="iwc-arrow" aria-hidden="true"></div>
-                        <div class="iwc-node iwc-leave">Leave alone</div>
-                      </div>
-                      <div class="iwc-leg iwc-leg-right">
-                        <div class="iwc-label">No</div>
-                        <div class="iwc-arrow" aria-hidden="true"></div>
-                        <div class="iwc-node iwc-brake">BRAKE</div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              </div>
+              <div class="iwc-exit" aria-label="Greater than or equal to zero: leave alone">
+                <span class="iwc-exit-label">$\geq 0$</span>
+                <span class="iwc-exit-line" aria-hidden="true"></span>
+                <div class="iwc-node iwc-leave">Leave alone</div>
               </div>
             </div>
+            <div class="iwc-spine">
+              <span class="iwc-spine-label">$< 0$</span>
+              <div class="iwc-arrow" aria-hidden="true"></div>
+            </div>
+
+            <div class="iwc-step">
+              <div class="iwc-step-main">
+                <div class="iwc-node iwc-decision">
+                  <div class="iwc-q">Q3</div>
+                  <div>Brake cost (deadweight, enforcement, capture) exceeds Q2 damage?</div>
+                </div>
+              </div>
+              <div class="iwc-exit" aria-label="Yes: leave alone">
+                <span class="iwc-exit-label">Yes</span>
+                <span class="iwc-exit-line" aria-hidden="true"></span>
+                <div class="iwc-node iwc-leave">Leave alone</div>
+              </div>
+            </div>
+            <div class="iwc-spine">
+              <span class="iwc-spine-label">No</span>
+              <div class="iwc-arrow" aria-hidden="true"></div>
+            </div>
+
+            <div class="iwc-node iwc-brake">BRAKE</div>
           </div>
 
           <p>
