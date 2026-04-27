@@ -1848,16 +1848,22 @@
             If smaller government means faster growth, why don't high-spending countries simply cut their way to prosperity? The power law curve itself supplies the most under-appreciated answer: <strong>the marginal gain from cutting is tiny when you are already on the flat part of the curve.</strong>
           </p>
           <p>
-            The mathematics are exact. For the power law model $g = \beta_0 \cdot s^{-\alpha}$, the marginal growth gain from cutting spending by a small amount $\Delta s$ at level $s$ is:
+            The mathematics are exact. For the power law model $g = \beta_0 \cdot s^{-\alpha}$ <span class="math-note">(growth = scale&nbsp;&times;&nbsp;spending<sup>−exponent</sup>)</span>, the marginal growth gain from cutting spending by a small amount $\Delta s$ <span class="math-note">(a tiny change in spending)</span> at level $s$ is:
           </p>
           <p style="text-align:center; font-style:italic; margin:12px 0;">
             $\Delta g \approx \alpha \cdot \beta_0 \cdot s^{-(\alpha+1)} \cdot \Delta s$
+          </p>
+          <p class="iwc-gloss" style="margin-top:-6px">
+            <strong>In plain English:</strong> the growth boost from cutting spending equals the exponent ($\alpha$) times the baseline scale ($\beta_0$) times how flat the curve is at that spending level ($s^{-(\alpha+1)}$) times the size of the cut ($\Delta s$). At high spending the $s^{-(\alpha+1)}$ term is tiny, so the boost is tiny.
           </p>
           <p>
             The ratio of that gain at a low-spending country ($s_1 = 20\%$) versus a high-spending one ($s_2 = 50\%$) is:
           </p>
           <p style="text-align:center; font-style:italic; margin:12px 0;">
             $\frac{\Delta g(s_1)}{\Delta g(s_2)} = \left(\frac{s_2}{s_1}\right)^{\alpha+1} = \left(\frac{50}{20}\right)^{\alpha+1}$
+          </p>
+          <p class="iwc-gloss" style="margin-top:-6px">
+            <strong>In plain English:</strong> the ratio of how much a cut helps at 20% spending versus 50% spending equals $(50/20)$ raised to the power of $(\alpha+1)$. With $\alpha \approx 0.45$, that is $2.5^{1.45} \approx 3.5$ &mdash; meaning the same cut is about 3.5&times; more valuable if you start from a lean government.
           </p>
           <p>
             At 20% of GDP, the curve is steep. Cutting from 20% to 15% produces a meaningful jump in predicted growth. At 50% of GDP, the curve has flattened dramatically. Cutting from 50% to 45% produces a barely perceptible improvement. With the empirically fitted exponent α ≈ 0.447, the same five-percentage-point reduction delivers roughly <strong>3.5× less growth dividend</strong> when you start from 50% versus 20% — and the ratio grows with the spending gap. If α were closer to 1.5 (the simulator default), that multiplier would reach ~10×. Either way, the directional logic is the same: the flatter the curve, the harder it is to make reform politically legible.
