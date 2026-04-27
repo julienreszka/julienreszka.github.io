@@ -374,29 +374,33 @@
         }
       }
 
-      /* Inclusive Wealth Criterion decision flowchart */
+      /* Inclusive Wealth Criterion decision flowchart
+         Mobile-first: everything stacks in a single column.
+         At >= 1024px, branches lay out side-by-side as a tree. */
       .iwc-flow {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 0;
         margin: 28px 0;
-        padding: 20px 8px;
+        padding: 16px 10px;
         background: #fafbfc;
         border: 1px solid #e3e8ee;
         border-radius: 12px;
-        overflow-x: auto;
       }
       .iwc-flow .iwc-node {
         box-sizing: border-box;
         padding: 10px 14px;
         border-radius: 10px;
         text-align: center;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         line-height: 1.35;
-        min-width: 180px;
-        max-width: 320px;
+        min-width: 0;
+        max-width: 100%;
+        width: min(320px, 100%);
         border: 1.5px solid transparent;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
       }
       .iwc-flow .iwc-start {
         background: #eef2f7;
@@ -435,20 +439,27 @@
         border-right: 7px solid transparent;
         border-top: 9px solid #90a4ae;
       }
+      /* Default (mobile): branches stack vertically. */
       .iwc-flow .iwc-branch {
         display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 24px;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
         width: 100%;
       }
       .iwc-flow .iwc-leg {
         display: flex;
         flex-direction: column;
         align-items: center;
-        flex: 1 1 0;
-        min-width: 0;
+        width: 100%;
+        padding-top: 10px;
+        margin-top: 10px;
+        border-top: 1px dashed #cfd8e3;
+      }
+      .iwc-flow .iwc-leg:first-child {
+        border-top: none;
+        margin-top: 0;
+        padding-top: 0;
       }
       .iwc-flow .iwc-label {
         display: inline-block;
@@ -461,31 +472,20 @@
         font-weight: 600;
         color: #455a64;
       }
-      /* Mobile: collapse branches to a single column.
-         Each leg becomes a stacked sub-block with its label visible. */
-      @media (max-width: 720px) {
+      /* Wide screens: render as a side-by-side tree. */
+      @media (min-width: 1024px) {
         .iwc-flow .iwc-branch {
-          flex-direction: column;
-          gap: 0;
-          align-items: center;
-          width: 100%;
+          flex-direction: row;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 24px;
         }
         .iwc-flow .iwc-leg {
-          width: 100%;
-          padding: 8px 0 0;
-          border-top: 1px dashed #cfd8e3;
-          margin-top: 8px;
-        }
-        .iwc-flow .iwc-leg:first-child {
-          border-top: none;
-          margin-top: 0;
+          flex: 1 1 0;
+          width: auto;
           padding-top: 0;
-        }
-        .iwc-flow .iwc-node {
-          font-size: 0.9rem;
-          min-width: 0;
-          max-width: 100%;
-          width: min(280px, 100%);
+          margin-top: 0;
+          border-top: none;
         }
       }
       @media (prefers-color-scheme: dark) {
