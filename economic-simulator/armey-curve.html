@@ -11,11 +11,11 @@
     <!-- SEO Meta Tags -->
     <meta
       name="description"
-      content="Challenge the traditional Armey Curve with real data. Interactive simulator comparing quadratic theory vs empirical evidence. Discover why power law models fit better than traditional economic theory."
+      content="Cross-country data shows government spending monotonically slows growth. So if government is structurally a brake, the right question isn't 'how much' but 'on what'. The Inclusive Wealth Criterion: brake an activity only when it shrinks inclusive wealth AND some affected party never consented. Interactive simulator + 11-section essay."
     />
     <meta
       name="keywords"
-      content="Armey curve, government spending, economic growth, fiscal policy, public economics, challenge economic theory, power law model, quadratic vs data, empirical evidence, government sweet spot, interactive simulator, data-driven economics"
+      content="Armey curve, government spending, economic growth, fiscal policy, public economics, power law model, inclusive wealth, selective brake, Pigou, Coase, Dasgupta Review, Buchanan Tullock, externalities, consent, objective criterion, interactive simulator"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -24,15 +24,15 @@
     <!-- Open Graph -->
     <meta
       property="og:title"
-      content="Government Sweet Spot: Challenge Traditional Armey Curve Theory with Data"
+      content="Government is a Brake. Aim it by Inclusive Wealth, not Taste."
     />
     <meta
       property="og:description"
-      content="Interactive simulator that challenges traditional Armey Curve theory. Compare quadratic models vs real-world data. Discover why power law models better explain government spending and economic growth."
+      content="Empirical: government spending monotonically slows growth (power law beats quadratic, R² 0.42 vs 0.39, n=113). Reframe: if it's a brake, aim it. Rule: brake an activity only when it shrinks inclusive wealth AND some affected party never consented — three of four quadrants tell government to do nothing."
     />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-01-01T00:00:00Z" />
-    <meta property="article:modified_time" content="2026-04-18T00:00:00Z" />
+    <meta property="article:modified_time" content="2026-04-27T00:00:00Z" />
     <meta property="article:author" content="Julien Reszka" />
     <meta property="article:section" content="Economics" />
     <meta
@@ -49,11 +49,11 @@
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="Government Sweet Spot: Challenge Economic Theory with Data"
+      content="Government is a Brake. Aim it by Inclusive Wealth, not Taste."
     />
     <meta
       name="twitter:description"
-      content="Cross-country data challenges the Armey Curve: power law models fit better than the quadratic theory. Government spending reliably slows growth — so the right use of government is as a selective brake on harmful activity, not a provider of goods."
+      content="Cross-country data: gov spending monotonically slows growth. So if it's a brake, aim it — brake activities only when they shrink inclusive wealth AND lack consent. Three of four quadrants: leave alone."
     />
     <meta name="twitter:creator" content="@julienreszka" />
 
@@ -525,6 +525,82 @@
         table.iwc-2x2 td.iwc-q-leave     { background: #1a2c44; color: #90caf9; }
         table.iwc-2x2 td.iwc-q-unusual   { background: #3a3220; color: #f4d35e; }
         table.iwc-2x2 td.iwc-q-brake     { background: #4a1c1c; color: #ef9a9a; }
+      }
+
+      /* Inclusive wealth pedigree: 3 rows x 2 nodes, connected by arrows.
+         Compact horizontal flow on desktop, stacks vertically on narrow. */
+      .iwc-pedigree {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 6px;
+        margin: 18px 0;
+        padding: 16px;
+        background: #fafbfc;
+        border: 1px solid #e3e8ee;
+        border-radius: 12px;
+      }
+      .iwc-pedigree .iwc-ped-row {
+        display: flex;
+        align-items: stretch;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .iwc-pedigree .iwc-ped-node {
+        flex: 1 1 240px;
+        max-width: 320px;
+        padding: 10px 14px;
+        background: #fff;
+        border: 1px solid #cfd8e3;
+        border-radius: 8px;
+        text-align: center;
+      }
+      .iwc-pedigree .iwc-ped-node-final {
+        background: #fff8e1;
+        border-color: #f4d35e;
+      }
+      .iwc-pedigree .iwc-ped-year {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: #64748b;
+        margin-bottom: 2px;
+      }
+      .iwc-pedigree .iwc-ped-name {
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #1e293b;
+        margin-bottom: 4px;
+      }
+      .iwc-pedigree .iwc-ped-tag {
+        font-size: 0.82rem;
+        color: #64748b;
+        font-style: italic;
+      }
+      .iwc-pedigree .iwc-ped-arrow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #90a4ae;
+        font-weight: 700;
+      }
+      .iwc-pedigree .iwc-ped-arrow-down {
+        margin: 2px 0;
+      }
+      @media (prefers-color-scheme: dark) {
+        .iwc-pedigree { background: #16191c; border-color: #2a2f33; }
+        .iwc-pedigree .iwc-ped-node { background: #1e2832; border-color: #334155; }
+        .iwc-pedigree .iwc-ped-node-final { background: #3a2f00; border-color: #8a6d00; }
+        .iwc-pedigree .iwc-ped-year { color: #94a3b8; }
+        .iwc-pedigree .iwc-ped-name { color: #e2e8f0; }
+        .iwc-pedigree .iwc-ped-tag { color: #94a3b8; }
+        .iwc-pedigree .iwc-ped-arrow { color: #607d8b; }
+      }
+      @media (max-width: 600px) {
+        .iwc-pedigree .iwc-ped-row { flex-direction: column; }
+        .iwc-pedigree .iwc-ped-row .iwc-ped-arrow { transform: rotate(90deg); margin: 2px 0; }
       }
 
       /* Inclusive Wealth Criterion decision flowchart.
@@ -2861,24 +2937,68 @@
           <h4>The formula behind the 2&times;2</h4>
           <p>
             The cleanest formulation comes from the
-            <strong>inclusive wealth</strong> tradition &mdash; a synthesis of
-            <a href="https://archive.org/details/in.ernet.dli.2015.6160" target="_blank" rel="noopener">Pigou (1920)</a> on externalities,
-            <a href="https://www.jstor.org/stable/724810" target="_blank" rel="noopener">Coase (1960)</a> on when consent solves
-            the problem itself,
-            <a href="https://www.jstor.org/stable/2296370" target="_blank" rel="noopener">Solow (1974)</a> and
-            <a href="https://www.jstor.org/stable/2296369" target="_blank" rel="noopener">Dasgupta &amp; Heal (1974)</a> on optimal use of exhaustible resources,
-            <a href="https://econpapers.repec.org/article/aeaaecrev/v_3a67_3ay_3a1977_3ai_3a5_3ap_3a972-74.htm" target="_blank" rel="noopener">Hartwick (1977)</a> on the depletion rule that came out of that program,
-            <a href="https://oll.libertyfund.org/title/buchanan-the-calculus-of-consent-logical-foundations-of-constitutional-democracy" target="_blank" rel="noopener">Buchanan &amp; Tullock (1962)</a> on consent as the political-philosophical foundation,
-            <a href="https://www.aeaweb.org/articles?id=10.1257/0895330042162377" target="_blank" rel="noopener">Arrow, Dasgupta, M&auml;ler et al. (2004,
-            <em>"Are We Consuming Too Much?"</em>)</a> who pulled it all into a
-            single accounting framework, and
-            <a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta (2021, <em>The Economics of Biodiversity</em>)</a>
-            who restated the program in its most recent authoritative form.
-            The shadow-price wealth formula below follows
-            <a href="https://www.jstor.org/stable/1886092" target="_blank" rel="noopener">Weitzman (1976)</a>;
-            the consent-filtered brake criterion is an original synthesis &mdash;
+            <strong>inclusive wealth</strong> tradition. The pedigree:
+          </p>
+          <div class="iwc-pedigree" aria-label="Inclusive wealth pedigree">
+            <div class="iwc-ped-row">
+              <div class="iwc-ped-node">
+                <div class="iwc-ped-year">1920 / 1960</div>
+                <div class="iwc-ped-name">Pigou &middot; Coase</div>
+                <div class="iwc-ped-tag">externalities &amp; consent</div>
+              </div>
+              <div class="iwc-ped-arrow">&rarr;</div>
+              <div class="iwc-ped-node">
+                <div class="iwc-ped-year">1962</div>
+                <div class="iwc-ped-name">Buchanan &amp; Tullock</div>
+                <div class="iwc-ped-tag">consent as political foundation</div>
+              </div>
+            </div>
+            <div class="iwc-ped-arrow iwc-ped-arrow-down">&darr;</div>
+            <div class="iwc-ped-row">
+              <div class="iwc-ped-node">
+                <div class="iwc-ped-year">1974 / 1976</div>
+                <div class="iwc-ped-name">Solow &middot; Dasgupta &amp; Heal &middot; Weitzman</div>
+                <div class="iwc-ped-tag">shadow-price wealth accounting</div>
+              </div>
+              <div class="iwc-ped-arrow">&rarr;</div>
+              <div class="iwc-ped-node">
+                <div class="iwc-ped-year">1977</div>
+                <div class="iwc-ped-name">Hartwick</div>
+                <div class="iwc-ped-tag">depletion / reinvestment rule</div>
+              </div>
+            </div>
+            <div class="iwc-ped-arrow iwc-ped-arrow-down">&darr;</div>
+            <div class="iwc-ped-row">
+              <div class="iwc-ped-node">
+                <div class="iwc-ped-year">2004</div>
+                <div class="iwc-ped-name">Arrow, Dasgupta, M&auml;ler et al.</div>
+                <div class="iwc-ped-tag">unified inclusive-wealth framework</div>
+              </div>
+              <div class="iwc-ped-arrow">&rarr;</div>
+              <div class="iwc-ped-node iwc-ped-node-final">
+                <div class="iwc-ped-year">2021</div>
+                <div class="iwc-ped-name">Dasgupta Review</div>
+                <div class="iwc-ped-tag">authoritative restatement</div>
+              </div>
+            </div>
+          </div>
+          <p style="font-size: 0.88em; color: #94a3b8;">
+            Sources, in order:
+            <a href="https://archive.org/details/in.ernet.dli.2015.6160" target="_blank" rel="noopener">Pigou (1920)</a>,
+            <a href="https://www.jstor.org/stable/724810" target="_blank" rel="noopener">Coase (1960)</a>,
+            <a href="https://oll.libertyfund.org/title/buchanan-the-calculus-of-consent-logical-foundations-of-constitutional-democracy" target="_blank" rel="noopener">Buchanan &amp; Tullock (1962)</a>,
+            <a href="https://www.jstor.org/stable/2296370" target="_blank" rel="noopener">Solow (1974)</a>,
+            <a href="https://www.jstor.org/stable/2296369" target="_blank" rel="noopener">Dasgupta &amp; Heal (1974)</a>,
+            <a href="https://www.jstor.org/stable/1886092" target="_blank" rel="noopener">Weitzman (1976)</a>,
+            <a href="https://econpapers.repec.org/article/aeaaecrev/v_3a67_3ay_3a1977_3ai_3a5_3ap_3a972-74.htm" target="_blank" rel="noopener">Hartwick (1977)</a>,
+            <a href="https://www.aeaweb.org/articles?id=10.1257/0895330042162377" target="_blank" rel="noopener">Arrow, Dasgupta, M&auml;ler et al. (2004)</a>,
+            <a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta (2021)</a>.
+            The shadow-price wealth formula below follows Weitzman; the
+            consent-filtered brake criterion is an original synthesis &mdash;
             each ingredient has a published source, but the unified rule is not
             stated in any single paper.
+          </p>
+          <p>
             Define a country's wealth as the
             present value of every productive capital stock &mdash; produced,
             human, natural, knowledge, institutional &mdash; each weighted by
@@ -2913,8 +3033,8 @@
             agree to bear its cost. $\Delta K_k^{(a)}$ means "the change in
             capital of type $k$ caused by activity $a$."
           </p>
-          <details class="iwc-code">
-            <summary>Same rule, in JavaScript</summary>
+          <details class="iwc-code" open>
+            <summary>The same rule, in JavaScript (primary statement)</summary>
 <pre><code>// Should government brake activity `a`?
 // Returns true iff non-consenters lose wealth on net.
 function shouldBrake(a) {
