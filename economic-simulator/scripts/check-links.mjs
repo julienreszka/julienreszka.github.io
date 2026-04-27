@@ -152,7 +152,7 @@ const broken = results.filter((r) => !r.ok);
 const soft = results.filter((r) => r.soft);
 console.log(
   `\nSummary: ${results.length - broken.length}/${results.length} OK ` +
-    `(${soft.length} soft/bot-blocked), ${broken.length} broken`,
+  `(${soft.length} soft/bot-blocked), ${broken.length} broken`,
 );
 if (broken.length) {
   console.log("\nBroken links:");
