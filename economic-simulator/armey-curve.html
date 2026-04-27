@@ -3032,6 +3032,22 @@ function shouldBrake(a) {
             cure costs more than the disease (Q3 fail mode 2). The criterion
             therefore licences action only when all three filters are passed.
           </p>
+          <p>
+            Q3 is the most qualitative of the three and worth flagging as
+            such. Deadweight loss has a textbook estimator (Harberger
+            triangles), enforcement cost has a budget line, but
+            <em>capture risk</em> &mdash; the probability that the brake
+            instrument gets bent toward the very interest it was meant to
+            constrain &mdash; is genuinely hard to put a number on. The
+            literature on regulatory capture
+            (<a href="https://doi.org/10.2307/3003160" target="_blank" rel="noopener">Stigler 1971</a>;
+            <a href="https://doi.org/10.1093/oxrep/grj013" target="_blank" rel="noopener">Dal B&oacute; 2006</a>)
+            describes the mechanism but offers no consensus formula. In
+            practice Q3 acts as a circuit-breaker: if a sector has a strong
+            track record of capturing its regulator, raise the burden of
+            proof for new brakes there; otherwise treat the deadweight and
+            enforcement components as the binding part of the test.
+          </p>
 
           <h4>Worked example: applying the test to two policies</h4>
           <p>
@@ -3061,6 +3077,48 @@ function shouldBrake(a) {
             Notice what the test did <em>not</em> require: a vote, a moral
             intuition, or an opinion about energy policy. It only required
             tallying the capital effects and checking the consent column.
+          </p>
+
+          <h4>What &quot;consent&quot; actually means here</h4>
+          <p>
+            &quot;Did the affected parties consent?&quot; is the criterion's
+            most easily abused step, because for any sufficiently broad
+            externality the answer is trivially &quot;no, the air-breathing
+            public never signed a form.&quot; The filter only does real work
+            when it distinguishes <em>structural</em> consent failure from
+            rhetorical complaint:
+          </p>
+          <ul>
+            <li>
+              <strong>Genuine consent failure</strong> (Q1 = yes): the harmed
+              party is identifiable, was not represented in the decision, and
+              transaction costs make voluntary bargaining infeasible &mdash;
+              the classical Coasean failure mode. Pollution downwind, systemic
+              risk shifted to the deposit-insurance fund, fraud against
+              counterparties.
+            </li>
+            <li>
+              <strong>Constructive consent</strong> (Q1 = no): the cost is
+              borne under a constitutionally bounded process the party
+              participated in (taxes voted by their representatives), or the
+              party freely entered an arrangement that priced the risk in
+              (insurance pool, professional code of conduct). Disagreeing with
+              the outcome of a procedurally legitimate vote is not, by itself,
+              a Q1 failure.
+            </li>
+            <li>
+              <strong>Rhetorical &quot;non-consent&quot;</strong>: any feeling
+              of being taxed, regulated, or out-voted dressed up as a missing
+              signature. The criterion deliberately rejects this; otherwise
+              every loser of any election would license a brake.
+            </li>
+          </ul>
+          <p>
+            The Coase (1960) reading carries through: when transaction costs
+            are low and parties are identifiable, consent can be reached
+            privately and Q1 fails &mdash; the criterion stays silent.
+            Pigouvian intervention is only licensed when bargaining is
+            structurally impossible, not merely unattractive.
           </p>
 
           <h4>The hard cases (where the criterion is genuinely ambiguous)</h4>
@@ -3119,7 +3177,10 @@ function shouldBrake(a) {
               <strong>It is partially measurable.</strong> The
               <a href="https://www.worldbank.org/en/publication/changing-wealth-of-nations" target="_blank" rel="noopener">World Bank's Changing Wealth of Nations</a>
               covers ~150 countries with produced, human, natural, and
-              net-foreign-asset capital. The
+              net-foreign-asset capital and finds that many resource-dependent
+              economies have shrinking per-capita wealth even while their
+              GDP per capita rises &mdash; the exact gap GDP-only accounting
+              hides. The
               <a href="https://wedocs.unep.org/handle/20.500.11822/43131" target="_blank" rel="noopener">UN Inclusive Wealth Report 2023</a>
               covers 163 countries. The
               <a href="https://data.worldbank.org/indicator/NY.ADJ.SVNG.GN.ZS" target="_blank" rel="noopener">Adjusted Net Savings</a>
@@ -3136,6 +3197,18 @@ function shouldBrake(a) {
               yet integrated</strong> into any official wealth account.
             </li>
             <li>
+              <strong>Shadow prices are partly endogenous to the policy under
+              evaluation.</strong> $p_k$ depends on the policy environment
+              &mdash; a carbon tax changes the shadow price of
+              $K_{\text{natural}}$, which is the very price you'd want to use
+              to score the carbon tax. Honest practice picks a baseline
+              (no-policy or counterfactual-status-quo prices), reports a range,
+              and relies on sign-robustness rather than precise magnitudes.
+              See Dasgupta &amp; M&auml;ler
+              (<a href="https://doi.org/10.1017/S1355770X00000061" target="_blank" rel="noopener">2000</a>)
+              for the formal treatment.
+            </li>
+            <li>
               The discount rate $\rho$ involves an ethical choice
               (<a href="https://www.aeaweb.org/articles?id=10.1257/aer.98.2.1" target="_blank" rel="noopener">Stern 2008</a> vs.
               <a href="https://www.aeaweb.org/articles?id=10.1257/jel.45.3.686" target="_blank" rel="noopener">Nordhaus 2007</a>).
@@ -3147,6 +3220,15 @@ function shouldBrake(a) {
             <li>
               The consent filter itself is a theoretical refinement, not part
               of any published wealth account.
+            </li>
+            <li>
+              <strong>The criterion is silent on distribution within the
+              consenting set.</strong> Two policies with identical $\Delta W$
+              can have very different fairness profiles, and the test will
+              rank them as equivalent. Inclusive wealth answers &quot;is the
+              pie growing for those who didn't consent to bear costs?&quot;,
+              not &quot;is the pie sliced fairly among those who did.&quot;
+              That second question needs a different tool.
             </li>
           </ul>
           <p>
