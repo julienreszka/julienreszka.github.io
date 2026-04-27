@@ -419,23 +419,23 @@
         background: #0f172a;
         color: #e2e8f0;
         border-radius: 8px;
-        border: 1px solid #1e293b;
+        border: 1px solid #334155;
       }
       .iwc-code summary {
         cursor: pointer;
         padding: 10px 14px;
-        font-weight: 600;
-        color: #cbd5e1;
+        font-weight: 700;
+        font-size: 0.95em;
+        color: #f1f5f9;
+        background: #1e293b;
+        border-radius: 8px;
         list-style: none;
+        user-select: none;
       }
-      .iwc-code summary::-webkit-details-marker { display: none; }
-      .iwc-code summary::before {
-        content: "▸ ";
-        display: inline-block;
-        transition: transform 0.15s ease;
-      }
-      .iwc-code[open] summary::before { content: "▾ "; }
-      .iwc-code pre {
+      .iwc-code[open] summary {
+        border-radius: 8px 8px 0 0;
+        border-bottom: 1px solid #334155;
+      }      .iwc-code pre {
         margin: 0;
         padding: 12px 14px 16px;
         overflow-x: auto;
