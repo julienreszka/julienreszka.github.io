@@ -493,6 +493,40 @@
         .iwc-gloss strong { color: #e2e8f0; }
       }
 
+      /* IWC 2×2 verdict table. The four quadrants get distinct colors so the
+         reader can see at a glance: green = encourage, blue = leave alone,
+         amber = unusual, red = brake. */
+      table.iwc-2x2 { border-collapse: collapse; width: 100%; max-width: 720px; margin: 12px 0; font-size: 0.95em; }
+      table.iwc-2x2 th, table.iwc-2x2 td {
+        border: 1px solid #cfd8e3;
+        padding: 10px 12px;
+        vertical-align: top;
+        line-height: 1.4;
+      }
+      table.iwc-2x2 thead th {
+        background: #eef2f7;
+        font-weight: 600;
+        text-align: left;
+      }
+      table.iwc-2x2 tbody th, table.iwc-2x2 tbody td:first-child {
+        background: #f5f7fa;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+      table.iwc-2x2 td.iwc-q-encourage { background: #e8f5e9; color: #1b5e20; }
+      table.iwc-2x2 td.iwc-q-leave     { background: #e3f2fd; color: #0d47a1; }
+      table.iwc-2x2 td.iwc-q-unusual   { background: #fff8e1; color: #8a6d00; }
+      table.iwc-2x2 td.iwc-q-brake     { background: #ffcdd2; color: #b71c1c; font-weight: 700; }
+      @media (prefers-color-scheme: dark) {
+        table.iwc-2x2 th, table.iwc-2x2 td { border-color: #334155; }
+        table.iwc-2x2 thead th { background: #1e2832; color: #e2e8f0; }
+        table.iwc-2x2 tbody td:first-child { background: #1a2330; color: #e2e8f0; }
+        table.iwc-2x2 td.iwc-q-encourage { background: #1f3a25; color: #a5d6a7; }
+        table.iwc-2x2 td.iwc-q-leave     { background: #1a2c44; color: #90caf9; }
+        table.iwc-2x2 td.iwc-q-unusual   { background: #3a3220; color: #f4d35e; }
+        table.iwc-2x2 td.iwc-q-brake     { background: #4a1c1c; color: #ef9a9a; }
+      }
+
       /* Inclusive Wealth Criterion decision flowchart.
          Vertical spine pattern: the "continue" path runs straight down
          (Q1 -> Q2 -> Q3 -> BRAKE); each "leave alone" exit branches
@@ -2747,6 +2781,18 @@
           </div>
 
           <h3 id="inclusive-wealth-criterion">A Single Objective Test: The Inclusive Wealth Criterion</h3>
+          <p class="iwc-gloss" style="margin-bottom: 18px;">
+            <strong>A note on the simulator above.</strong> The simulator scores
+            spending levels by their fit to <em>GDP growth</em>. The criterion
+            developed below argues GDP is the wrong target &mdash; it can be
+            inflated by depletion, transfers, and coercion. The two answer
+            different questions: the simulator asks <em>how much</em>
+            government spending maximises measured growth; the criterion asks
+            <em>where</em> that spending should be aimed and which private
+            activities deserve a brake. Both can be right at once: the
+            empirical curve disciplines size, the criterion disciplines
+            target.
+          </p>
           <p>
             If government should brake some activities and not others, we need
             a non-arbitrary way to decide which. "Things I dislike" is not a
@@ -2764,7 +2810,7 @@
             grow or shrink?
           </p>
           <div class="table-scroll">
-            <table class="ranking-table" style="margin: 12px 0; max-width: 700px">
+            <table class="iwc-2x2">
               <thead>
                 <tr>
                   <th></th>
@@ -2775,13 +2821,13 @@
               <tbody>
                 <tr>
                   <td><strong>$\Delta W > 0$</strong><br><span class="math-note">wealth grows</span></td>
-                  <td>Encourage / leave alone &mdash; voluntary value creation</td>
-                  <td>Rare; investigate why anyone is harmed by net-positive activity</td>
+                  <td class="iwc-q-encourage">Encourage / leave alone &mdash; voluntary value creation</td>
+                  <td class="iwc-q-unusual">Rare; investigate why anyone is harmed by net-positive activity</td>
                 </tr>
                 <tr>
                   <td><strong>$\Delta W < 0$</strong><br><span class="math-note">wealth shrinks</span></td>
-                  <td>Leave alone &mdash; their loss, their choice (e.g. risky hobby)</td>
-                  <td><strong>BRAKE</strong> &mdash; the only quadrant where government has objective standing</td>
+                  <td class="iwc-q-leave">Leave alone &mdash; their loss, their choice (e.g. risky hobby)</td>
+                  <td class="iwc-q-brake">BRAKE &mdash; the only quadrant where government has objective standing</td>
                 </tr>
               </tbody>
             </table>

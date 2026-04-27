@@ -21,9 +21,13 @@ if (!file) {
 
 const html = await readFile(file, "utf8");
 
+// Strip <link> tags before extracting hrefs. <link rel="preconnect|dns-prefetch|...">
+// hrefs are DNS hints, not navigable URLs, and the bare domain root often 404s.
+const navHtml = html.replace(/<link\b[^>]*>/gi, "");
+
 const re = /href\s*=\s*"(https?:\/\/[^"#]+)(#[^"]*)?"/gi;
 const seen = new Map();
-for (const m of html.matchAll(re)) {
+for (const m of navHtml.matchAll(re)) {
   seen.set(m[1], (seen.get(m[1]) ?? 0) + 1);
 }
 const urls = [...seen.keys()].sort();
