@@ -416,25 +416,50 @@
       .iwc-code {
         margin: 10px auto 22px;
         max-width: 720px;
-        background: #0f172a;
-        color: #e2e8f0;
+        background: #f8fafc;
+        color: #1e293b;
         border-radius: 8px;
-        border: 1px solid #334155;
+        border: 1px solid #cbd5e1;
       }
       .iwc-code summary {
         cursor: pointer;
         padding: 10px 14px;
         font-weight: 700;
         font-size: 0.95em;
-        color: #f1f5f9;
-        background: #1e293b;
+        color: #1e293b;
+        background: #e2e8f0;
         border-radius: 8px;
         list-style: none;
         user-select: none;
       }
       .iwc-code[open] summary {
         border-radius: 8px 8px 0 0;
-        border-bottom: 1px solid #334155;
+        border-bottom: 1px solid #cbd5e1;
+      }
+      .iwc-code summary::-webkit-details-marker { display: none; }
+      .iwc-code pre {
+        margin: 0;
+        padding: 12px 14px 16px;
+        overflow-x: auto;
+        font-size: 0.85em;
+        line-height: 1.5;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        white-space: pre;
+        color: #1e293b;
+      }
+      .iwc-code code { background: transparent; color: inherit; padding: 0; }
+      @media (prefers-color-scheme: dark) {
+        .iwc-code {
+          background: #0f172a;
+          color: #e2e8f0;
+          border-color: #334155;
+        }
+        .iwc-code summary {
+          background: #1e293b;
+          color: #f1f5f9;
+        }
+        .iwc-code[open] summary { border-bottom-color: #334155; }
+        .iwc-code pre { color: #e2e8f0; }
       }      .iwc-code pre {
         margin: 0;
         padding: 12px 14px 16px;
@@ -444,7 +469,6 @@
         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
         white-space: pre;
       }
-      .iwc-code code { background: transparent; color: inherit; padding: 0; }
       @media (max-width: 600px) {
         .iwc-code pre { font-size: 0.78em; padding: 10px; }
         .iwc-gloss { font-size: 0.9em; padding: 9px 12px; }
