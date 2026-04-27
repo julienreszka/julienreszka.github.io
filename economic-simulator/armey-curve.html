@@ -412,6 +412,17 @@
       }
       .iwc-gloss strong { color: #334155; }
 
+      /* Small inline plain-English note that follows a formula. */
+      .math-note {
+        font-size: 0.78em;
+        color: #64748b;
+        font-style: italic;
+        white-space: nowrap;
+      }
+      @media (prefers-color-scheme: dark) {
+        .math-note { color: #94a3b8; }
+      }
+
       /* Collapsible JavaScript translation. */
       .iwc-code {
         margin: 10px auto 22px;
@@ -2849,7 +2860,7 @@ function shouldBrake(a) {
                     <strong>Rent-seeking</strong><br />
                     <em>lobbying, regulatory capture, patent trolling</em>
                   </td>
-                  <td>$K_{\text{institutional}}$ erodes; $\sum p_k \Delta K_k \approx 0$</td>
+                  <td>$K_{\text{institutional}}$ erodes; $\sum p_k \Delta K_k \approx 0$ <span class="math-note">(wealth effect ≈ zero)</span></td>
                   <td>captured process, not voluntary exchange</td>
                 </tr>
                 <tr>
@@ -2864,7 +2875,7 @@ function shouldBrake(a) {
                     <strong>Compulsory unfunded intergenerational transfers</strong><br />
                     <em>PAYG pensions financed by tomorrow's workers</em>
                   </td>
-                  <td>young cohort's claim on $\sum_k K_k$</td>
+                  <td>young cohort's claim on $\sum_k K_k$ <span class="math-note">(total capital stock)</span></td>
                   <td>unborn cannot negotiate the contract</td>
                 </tr>
                 <tr>
@@ -2882,7 +2893,7 @@ function shouldBrake(a) {
             Conversely, the criterion <em>refuses</em> to condemn activities
             that are merely unfashionable, inefficient, or disliked by
             incumbents. Consumption choices of competent adults that affect
-            only themselves leave $\sum_k p_k \Delta K_k$ unchanged for
+            only themselves leave $\sum_k p_k \Delta K_k$ <span class="math-note">(weighted capital change)</span> unchanged for
             non-consenting parties. The criterion is silent &mdash; which is
             exactly what an objective rule should do where no objective harm
             exists.
@@ -2960,6 +2971,7 @@ function shouldBrake(a) {
                 <div class="iwc-node iwc-decision">
                   <div class="iwc-q">Q2</div>
                   <div>$\sum_k p_k\,\Delta K_k$ over non-consenters</div>
+                  <div class="math-note" style="margin-top:3px">(sum of price × capital-change, across all capital types)</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Greater than or equal to zero: leave alone">
@@ -3015,7 +3027,7 @@ function shouldBrake(a) {
             populations, who never agreed); $\Delta K_{\text{produced}} > 0$
             (cheaper electricity, short-term); $\Delta K_{\text{institutional}} < 0$
             (the lobbying apparatus that sustains the subsidy itself erodes
-            rule-of-law neutrality). Net: $\sum_k p_k \Delta K_k < 0$ for
+            rule-of-law neutrality). Net: $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(weighted wealth loss)</span> for
             non-consenting parties. <strong>Verdict: brake.</strong>
           </p>
           <p>
@@ -3024,7 +3036,7 @@ function shouldBrake(a) {
             with positive spillovers); $\Delta K_{\text{human}} > 0$ (trained
             researchers); no consent failure (taxpayers fund it through a
             constitutionally bounded process, beneficiaries are diffuse and
-            non-rivalrous). Net: $\sum_k p_k \Delta K_k > 0$ across the board.
+            non-rivalrous). Net: $\sum_k p_k \Delta K_k > 0$ <span class="math-note">(weighted wealth gain)</span> across the board.
             <strong>Verdict: don't brake.</strong>
           </p>
           <p>
