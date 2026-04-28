@@ -166,12 +166,18 @@ function insertNavigation() {
   // Insert navigation before closing body tag
   document.body.insertAdjacentHTML('beforeend', navigationHTML);
 
-  // Wait for Chart.js to be available, then create charts
-  setTimeout(createNavigationPreviews, 100);
+  // Ensure Chart.js is available, then create charts
+  if (typeof Chart !== 'undefined') {
+    createNavigationPreviews();
+  } else {
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js';
+    s.onload = createNavigationPreviews;
+    document.head.appendChild(s);
+  }
 }
 
 function createNavigationPreviews() {
-  // Only create charts if Chart.js is available
   if (typeof Chart === 'undefined') {
     console.warn('Chart.js not loaded, navigation charts will not display');
     return;
