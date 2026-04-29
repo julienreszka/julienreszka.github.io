@@ -179,7 +179,7 @@ const milRaw = readCache("MS.MIL.XPND.GD.ZS");
 const energyRaw = readCache("EG.USE.PCAP.KG.OE");
 const kwhRaw = readCache("EG.USE.ELEC.KH.PC");
 const renewRaw = readCache("EG.FEC.RNEW.ZS");
-const totRaw   = readCache("TT.PRI.MRCH.XD.WD");
+const totRaw = readCache("TT.PRI.MRCH.XD.WD");
 
 const actualCodes = new Set(meta.filter(c => c.region?.id !== "NA").map(c => c.id));
 

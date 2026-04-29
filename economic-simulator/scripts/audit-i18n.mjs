@@ -262,7 +262,7 @@ const JSONLD_VALUE_RE = /"(?:name|text|headline|description|itemName)"\s*:\s*"([
 
 // ── Accumulator for multi-line block elements ─────────────────────────────────
 // We track open tags and accumulate text until the matching close tag.
-const blockTags = ["p", "h1","h2","h3","h4","h5","h6","li","th","td","label","summary","button","figcaption","blockquote","aside","div"];
+const blockTags = ["p", "h1", "h2", "h3", "h4", "h5", "h6", "li", "th", "td", "label", "summary", "button", "figcaption", "blockquote", "aside", "div"];
 const blockOpenRe = new RegExp(`^\\s*<(${blockTags.join("|")})(\\s[^>]*)?>\\s*$`, "i");
 const blockCloseRe = new RegExp(`^\\s*</(${blockTags.join("|")})>\\s*$`, "i");
 
@@ -277,10 +277,10 @@ function flushBlock() {
   const text = full.replace(/<[^>]+>/g, " ").replace(/&[a-z]+;|&#\d+;/g, " ").replace(/\s+/g, " ").trim();
   if (!isBoringText(text)) {
     const catMap = {
-      p: "body-text", h1:"heading", h2:"heading", h3:"heading", h4:"heading",
-      h5:"heading", h6:"heading", li:"list-item", th:"table-cell", td:"table-cell",
-      label:"label", summary:"summary", button:"button", figcaption:"body-text",
-      blockquote:"body-text", aside:"body-text", div:"body-text",
+      p: "body-text", h1: "heading", h2: "heading", h3: "heading", h4: "heading",
+      h5: "heading", h6: "heading", li: "list-item", th: "table-cell", td: "table-cell",
+      label: "label", summary: "summary", button: "button", figcaption: "body-text",
+      blockquote: "body-text", aside: "body-text", div: "body-text",
     };
     add(blockStart, catMap[blockTag] || "body-text", text);
   }
@@ -392,7 +392,7 @@ deduped.sort((a, b) => {
 
 // ── Summary counts ────────────────────────────────────────────────────────────
 const hardcoded = deduped.filter((r) => r.status === "hardcoded");
-const managed   = deduped.filter((r) => r.status === "managed");
+const managed = deduped.filter((r) => r.status === "managed");
 
 const byCategory = {};
 for (const r of hardcoded) {

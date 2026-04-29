@@ -22,15 +22,15 @@ const fr = loadJson("armey-curve.fr.json");
 
 // ── Table column header keys ────────────────────────────────────────────────
 const tableColKeys = {
-  "table.col.model":          ["Model",           "Modèle"],
-  "table.col.r2":             ["R²",              "R²"],
-  "table.col.ci-r2":         ["95% CI (R²)",     "IC 95 % (R²)"],
-  "table.col.pvalue":         ["p-value",         "valeur p"],
-  "table.col.variable":       ["Variable",        "Variable"],
-  "table.col.marginal-r2":   ["Marginal R²",     "R² marginal"],
-  "table.col.cumul-r2":      ["Cumul. R²",       "R² cumulé"],
-  "table.col.slope":          ["Slope",           "Pente"],
-  "table.col.interpretation": ["Interpretation",  "Interprétation"],
+  "table.col.model": ["Model", "Modèle"],
+  "table.col.r2": ["R²", "R²"],
+  "table.col.ci-r2": ["95% CI (R²)", "IC 95 % (R²)"],
+  "table.col.pvalue": ["p-value", "valeur p"],
+  "table.col.variable": ["Variable", "Variable"],
+  "table.col.marginal-r2": ["Marginal R²", "R² marginal"],
+  "table.col.cumul-r2": ["Cumul. R²", "R² cumulé"],
+  "table.col.slope": ["Slope", "Pente"],
+  "table.col.interpretation": ["Interpretation", "Interprétation"],
 };
 
 for (const [key, [enVal, frVal]] of Object.entries(tableColKeys)) {

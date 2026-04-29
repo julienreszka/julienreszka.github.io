@@ -38,8 +38,8 @@ if (!lang) {
 }
 
 const localePath = resolve(root, `armey-curve.${lang}.json`);
-const htmlPath   = resolve(root, "armey-curve.html");
-const outPath    = resolve(root, `armey-curve.${lang}.html`);
+const htmlPath = resolve(root, "armey-curve.html");
+const outPath = resolve(root, `armey-curve.${lang}.html`);
 
 let locale;
 try {
