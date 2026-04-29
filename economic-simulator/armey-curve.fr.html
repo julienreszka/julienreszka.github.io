@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="meta.title">Point d’équilibre des dépenses publiques : remettre en cause la courbe d’Armey | Simulateur économique interactif</title>
+    <title data-i18n="meta.title">Les gros États tuent-ils la croissance ? La courbe d’Armey testée sur 151 pays</title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
       data-i18n-content="meta.description"
-      content="Les données internationales montrent que les dépenses publiques freinent monotonement la croissance. Si l’État est structurellement un frein, la bonne question n’est pas « combien » mais « sur quoi ». Le critère de richesse inclusive : freiner une activité uniquement quand elle réduit la richesse inclusive ET qu’une partie affectée n’a jamais consenti. Simulateur interactif + essai en 11 sections."
+      content="J’ai testé la courbe d’Armey sur 151 pays. Les dépenses publiques freinent monotonement la croissance (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Si l’État est structurellement un frein, la bonne question n’est pas « combien » mais « sur quoi ». Le critère de richesse inclusive : freiner une activité uniquement quand elle réduit la richesse inclusive ET qu’une partie affectée n’a jamais consenti. Simulateur interactif + essai en 11 sections."
     />
     <meta
       name="keywords"
@@ -23,12 +23,12 @@
     <meta
       property="og:title"
       data-i18n-content="meta.og.title"
-      content="L’État est un frein. Visez-le par la richesse inclusive, pas par le goût."
+      content="Les gros États tuent-ils la croissance ? La courbe d’Armey testée sur 151 pays"
     />
     <meta
       property="og:description"
       data-i18n-content="meta.og.description"
-      content="Empirique : les dépenses publiques freinent monotonement la croissance (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Recadrage : si c’est un frein, visez-le. Règle : freinez une activité uniquement quand elle réduit la richesse inclusive ET qu’une partie affectée n’a jamais consenti — trois quadrants sur quatre disent à l’État de ne rien faire."
+      content="Les dépenses publiques freinent monotonement la croissance sur 151 pays (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Si c’est un frein, visez-le — freinez uniquement quand l’activité réduit la richesse inclusive ET sans consentement. Trois quadrants sur quatre disent à l’État de ne rien faire."
     />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-01-01T00:00:00Z" />
@@ -46,12 +46,12 @@
     <meta
       name="twitter:title"
       data-i18n-content="meta.twitter.title"
-      content="L’État est un frein. Visez-le par la richesse inclusive, pas par le goût."
+      content="Les gros États tuent-ils la croissance ? La courbe d’Armey testée sur 151 pays"
     />
     <meta
       name="twitter:description"
       data-i18n-content="meta.twitter.description"
-      content="Données internationales : les dépenses publiques freinent monotonement la croissance. Si c’est un frein, visez-le — freinez uniquement quand elles réduisent la richesse inclusive ET sans consentement. Trois quadrants sur quatre : ne rien faire."
+      content="J’ai testé la courbe d’Armey sur 151 pays. Les dépenses freinent monotonement la croissance — mais la vraie réponse n’est pas « moins », c’est « visez ». Freinez uniquement quand la richesse inclusive recule ET sans consentement. Trois quadrants sur quatre : ne rien faire."
     />
     <meta name="twitter:creator" content="@julienreszka" />
 
@@ -907,7 +907,7 @@
       </nav>
       <!-- BREADCRUMB:END -->
 
-      <h1 data-i18n="heading.main">La courbe d’Armey : dépenses publiques et croissance économique</h1>
+      <h1 data-i18n="heading.main">Les gros États tuent-ils la croissance ? La courbe d’Armey testée sur 151 pays</h1>
       <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; font-size:0.82em; color:#94a3b8; margin: -6px 0 14px;">
         <span title="Temps de lecture estimé à ~220 mots/min" data-i18n-title="aria.reading-time" data-i18n="label.reading-time">📖 ~28 min de lecture</span>
         <span style="opacity:0.6">&middot;</span>
@@ -918,17 +918,24 @@
 
       <!-- i18n:prose.intro-paragraph:start -->
       <p>
-        <strong>Remise en question de la courbe d'Armey :</strong> Pendant des décennies,
-        les économistes ont affirmé qu'il existe un niveau « optimal » de dépenses
-        publiques maximisant la croissance économique — plaçant généralement ce point
-        idéal à 15–25 % du PIB. Les données de la Banque mondiale couvrant
-        <span id="intro-n">113</span> pays racontent une histoire différente : un
-        <strong>modèle en loi de puissance s'ajuste avec un R²&nbsp;=&nbsp;<span id="intro-r2-pl">0.4219</span>
-        (IC 95 % approx. : <span id="intro-ci-pl">0.28–0.56</span>)</strong>, tandis que
-        la courbe d'Armey quadratique traditionnelle
-        <span id="intro-quad-clause">n'atteint qu'un R²&nbsp;=&nbsp;0.3856 — moins de pouvoir explicatif,
-        et aucune preuve du retournement prédit à de faibles niveaux de dépenses</span>.
-        La relation est monotonement négative sur l'ensemble de la plage observée.
+        <strong>Ce que cette page vous apporte :</strong> une réponse directe à la question
+        de savoir si vos impôts achètent de la croissance ou la freinent silencieusement, un
+        <a href="#armey-simulator" style="color:#90caf9;">simulateur interactif</a>
+        qui estime combien de croissance supplémentaire une baisse de 5 points de dépenses
+        pourrait livrer dans <em>votre</em> pays, et une règle claire pour décider quand
+        l'État doit réellement intervenir &mdash; sans diplôme d'économie.
+      </p>
+      <p>
+        En bref : la courbe d'Armey &mdash; l'idée classique selon laquelle il existerait
+        un « point idéal » de dépenses publiques autour de 15&ndash;25 % du PIB &mdash; ne
+        tient pas. Les données de la Banque mondiale couvrant <span id="intro-n">113</span>
+        pays montrent un <strong>modèle en loi de puissance avec R²&nbsp;=&nbsp;<span id="intro-r2-pl">0.4219</span>
+        (IC 95 % approx. : <span id="intro-ci-pl">0.28&ndash;0.56</span>)</strong>, tandis que
+        la courbe d'Armey quadratique traditionnelle <span id="intro-quad-clause">n'atteint
+        qu'un R²&nbsp;=&nbsp;0.3856 &mdash; moins de pouvoir explicatif, et aucune preuve du
+        retournement prédit à de faibles niveaux de dépenses</span>. La relation est
+        monotonement négative sur l'ensemble de la plage observée &mdash; chaque point
+        supplémentaire de dépenses coûte, en moyenne, de la croissance.
       </p>
 <!-- /i18n:prose.intro-paragraph:end -->
 
