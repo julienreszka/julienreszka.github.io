@@ -863,7 +863,9 @@
         "js.tooltip.power-law": "Power law: Growth declines steeply at low spending, then gradually flattens - minimal government is optimal.",
         "js.tooltip.exponential": "Exponential decay: Government spending causes exponential decline in growth - zero spending is optimal.",
         "js.tooltip.log-linear": "Log-linear: Diminishing marginal damage from each additional unit of government spending.",
-        "js.share.quote": "Government spending reliably slows economic activity \u2014 so the right use of government is to aim that braking force at the parts of the economy we want less of."
+        "js.share.quote": "Government spending reliably slows economic activity \u2014 so the right use of government is to aim that braking force at the parts of the economy we want less of.",
+        "js.already-there": "already there",
+        "js.impossible": "impossible"
       };
     </script>
     <!-- I18N-JS-END -->
@@ -2796,7 +2798,31 @@
               <!-- STATIC-CUT-GAINS-TABLE:END -->
             </div>
           </div>
-          <!-- CUT-GAINS-CONTROLS:END -->\n\n          <h3 id="selective-brake" data-i18n="heading.selective-brake">
+          <!-- CUT-GAINS-CONTROLS:END -->
+
+          <!-- TARGET-GROWTH-TABLE:START -->
+          <div id="target-growth-table-section" style="margin-top:24px;">
+            <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
+              <h4 style="font-size:0.95em; margin:0;" data-i18n="heading.target-growth-table">Spending cut needed to reach a target growth rate — current model</h4>
+              <label class="muted-label" style="font-size:0.82em; white-space:nowrap;">
+                Target:
+                <select id="target-growth-select" class="cut-gains-select" style="font-size:0.95em; border-radius:4px; padding:2px 4px; margin-left:4px;">
+                  <option value="2">2% growth</option>
+                  <option value="3" selected>3% growth</option>
+                  <option value="4">4% growth</option>
+                  <option value="5">5% growth</option>
+                  <option value="6">6% growth</option>
+                </select>
+              </label>
+            </div>
+            <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;" data-i18n="prose.target-growth-note">Inverts the current model: finds the spending level predicted to reach the target growth rate, then computes the required cut per country. Countries already below that spending level are shown as "already there".</p>
+            <div id="target-growth-table-inner" style="overflow-x:auto;">
+              <p style="font-size:0.85em; color:rgba(255,255,255,0.4); font-style:italic;">Load country data to populate this table.</p>
+            </div>
+          </div>
+          <!-- TARGET-GROWTH-TABLE:END -->
+
+          <h3 id="selective-brake" data-i18n="heading.selective-brake">
             The Selective Brake: What Government Is Actually Good For
           </h3>
           <!-- i18n:prose.selective-brake-body:start -->
@@ -5738,6 +5764,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
         // Update cut-gains table immediately with current fit params
         updateCutGainsTable();
+        updateTargetGrowthTable();
 
         // Refresh the chart with auto-fitted parameters
         autoFitParameters(true);
@@ -5761,6 +5788,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
         updateHighlightCountryOptions();
         updateCutGainsTable();
+        updateTargetGrowthTable();
         autoFitParameters(true);
       }
 
@@ -7588,6 +7616,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         updateModelRankingTable();
         updateResidualChart();
         updateCutGainsTable();
+        updateTargetGrowthTable();
       }
 
       function updateCutGainsTable() {
@@ -7642,6 +7671,82 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         }).join('');
 
         el.innerHTML = `<table style="width:100%;border-collapse:collapse;">${thead}<tbody>${tbody}</tbody></table>${ratioNote}`;
+      }
+
+      function updateTargetGrowthTable() {
+        const el = document.getElementById('target-growth-table-inner');
+        if (!el) return;
+        if (!isDataLoaded) return;
+        const dataPoints = getCountryDataToShow();
+        if (!dataPoints || dataPoints.length === 0) {
+          el.innerHTML = '<p style="font-size:0.85em; color:rgba(255,255,255,0.4); font-style:italic;">Load country data to populate this table.</p>';
+          return;
+        }
+        const predictFn = getCurrentPredictFn();
+        const targetEl = document.getElementById('target-growth-select');
+        const target = targetEl ? parseFloat(targetEl.value) : 3;
+
+        // Model inversion via binary search: find spending s* such that predictFn(s*) ≈ target
+        function invertModel(targetGrowth) {
+          const maxGrowth = predictFn(0.1); // growth at near-zero spending
+          if (targetGrowth > maxGrowth) return null; // unachievable even at minimal spending
+          const minGrowth = predictFn(99);
+          if (targetGrowth < minGrowth) return null; // model predicts below target even at 99%
+          let lo = 0.1, hi = 99;
+          for (let i = 0; i < 60; i++) {
+            const mid = (lo + hi) / 2;
+            if (predictFn(mid) > targetGrowth) lo = mid; else hi = mid;
+          }
+          return (lo + hi) / 2;
+        }
+
+        const targetSpending = invertModel(target);
+
+        const timePeriodEl = document.getElementById('time-period-select');
+        const timePeriodRange = timePeriodEl
+          ? (timePeriodEl.options[timePeriodEl.selectedIndex].text.match(/\(([^)]+)\)/) || ['',''])[1]
+          : '';
+
+        const thead = `<thead><tr class="table-header-muted" style="font-size:0.82em;">
+          <th style="text-align:left;padding:3px 8px">Country</th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Required cut to reach ${target}%</th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Target spending %</th>
+        </tr></thead>`;
+
+        const rows = dataPoints
+          .filter(d => d.spending > 1)
+          .map(d => {
+            const requiredCut = targetSpending !== null ? d.spending - targetSpending : null;
+            return { name: d.name, spending: d.spending, growth: d.growth, requiredCut, targetSpending };
+          })
+          .sort((a, b) => b.spending - a.spending);
+
+        const tbody = rows.map(r => {
+          let cutStr, cutColor, targetStr;
+          if (r.requiredCut === null) {
+            cutStr = (window.i18n||{})['js.impossible']||'impossible'; cutColor = 'rgba(255,100,100,0.8)'; targetStr = '—';
+          } else if (r.requiredCut <= 0) {
+            cutStr = (window.i18n||{})['js.already-there']||'already there'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = r.targetSpending.toFixed(1) + '%';
+          } else {
+            const color = r.requiredCut >= 20 ? 'rgba(255,100,80,0.9)' : r.requiredCut >= 10 ? 'rgba(255,165,80,0.9)' : r.requiredCut >= 5 ? 'rgba(220,200,80,0.9)' : 'rgba(100,220,100,0.9)';
+            cutStr = '−' + r.requiredCut.toFixed(1) + ' pp'; cutColor = color; targetStr = r.targetSpending.toFixed(1) + '%';
+          }
+          return `<tr style="font-size:0.83em;">
+            <td style="padding:2px 8px">${r.name}</td>
+            <td style="padding:2px 8px; text-align:right; white-space:nowrap">${r.spending.toFixed(1)}%</td>
+            <td style="padding:2px 8px; text-align:right; white-space:nowrap">${r.growth.toFixed(2)}%</td>
+            <td style="padding:2px 8px; text-align:right; white-space:nowrap; color:${cutColor}; font-weight:600">${cutStr}</td>
+            <td style="padding:2px 8px; text-align:right; white-space:nowrap; opacity:0.7">${targetStr}</td>
+          </tr>`;
+        }).join('');
+
+        const impossibleNote = targetSpending === null
+          ? '<p style="font-size:0.78em; color:rgba(255,120,80,0.8); margin:4px 0 0;">The current model cannot predict ' + target + '% growth for any spending level.</p>'
+          : '<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">Model-implied target spending: <strong>' + targetSpending.toFixed(1) + '%</strong> of GDP</p>';
+
+        el.innerHTML = `<table style="width:100%;border-collapse:collapse;">${thead}<tbody>${tbody}</tbody></table>${impossibleNote}`;
       }
 
       function toggleParameterGroups() {
@@ -7854,6 +7959,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         document.getElementById('time-period-select').value = this.value;
         document.getElementById('time-period-select').dispatchEvent(new Event('change'));
       });
+      document.getElementById('target-growth-select').addEventListener('change', updateTargetGrowthTable);
       document
         .getElementById("time-period-select")
         .addEventListener("change", function () {
