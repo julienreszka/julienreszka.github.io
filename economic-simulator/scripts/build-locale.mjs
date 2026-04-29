@@ -52,8 +52,8 @@ try {
 let html = readFileSync(htmlPath, "utf8");
 
 // ── 0. Replace window.i18n block between I18N-JS-START / I18N-JS-END ─────────
-// Collect all js.* keys from the locale JSON and emit a new script block.
-const jsKeys = Object.entries(locale).filter(([k]) => k.startsWith("js."));
+// Collect all js.* and glossary.* keys from the locale JSON and emit a new script block.
+const jsKeys = Object.entries(locale).filter(([k]) => k.startsWith("js.") || k.startsWith("glossary."));
 if (jsKeys.length > 0) {
   const obj = Object.fromEntries(jsKeys);
   const json = JSON.stringify(obj, null, 8)
