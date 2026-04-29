@@ -107,8 +107,8 @@ const tbody = rows.map(r => {
   } else {
     const color = r.requiredCut >= 20 ? 'rgba(255,100,80,0.9)'
       : r.requiredCut >= 10 ? 'rgba(255,165,80,0.9)'
-      : r.requiredCut >= 5  ? 'rgba(220,200,80,0.9)'
-      : 'rgba(100,220,100,0.9)';
+        : r.requiredCut >= 5 ? 'rgba(220,200,80,0.9)'
+          : 'rgba(100,220,100,0.9)';
     cutStr = '\u2212' + r.requiredCut.toFixed(1) + ' pp';
     cutColor = color;
     targetStr = r.targetSpending.toFixed(1) + '%';
@@ -131,10 +131,10 @@ const htmlPath = join(root, 'armey-curve.html');
 const html = readFileSync(htmlPath, 'utf8');
 
 const START_MARKER = '<!-- STATIC-TARGET-GROWTH-TABLE:START -->';
-const END_MARKER   = '<!-- STATIC-TARGET-GROWTH-TABLE:END -->';
+const END_MARKER = '<!-- STATIC-TARGET-GROWTH-TABLE:END -->';
 
 const startIdx = html.indexOf(START_MARKER);
-const endIdx   = html.indexOf(END_MARKER);
+const endIdx = html.indexOf(END_MARKER);
 
 if (startIdx === -1 || endIdx === -1) {
   console.error('Markers not found in armey-curve.html');
@@ -146,7 +146,7 @@ const lineStart = html.lastIndexOf('\n', startIdx) + 1;
 const indent = html.slice(lineStart, startIdx);
 
 const before = html.slice(0, startIdx + START_MARKER.length);
-const after  = html.slice(endIdx);
+const after = html.slice(endIdx);
 
 const indentedTable = tableHTML
   .split('\n')

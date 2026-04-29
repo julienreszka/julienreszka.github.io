@@ -78,7 +78,7 @@ function classifyRow(d, target, useResidual) {
   // Priority order matches armey-curve.html updateTargetGrowthTable tbody loop
   if (d.growth >= target) return { label: 'no cut needed', targetSpending: countryTargetSpending, requiredCut };
   if (requiredCut === null) return { label: 'impossible', targetSpending: null, requiredCut: null };
-  if (requiredCut <= 0)    return { label: 'already there', targetSpending: countryTargetSpending, requiredCut };
+  if (requiredCut <= 0) return { label: 'already there', targetSpending: countryTargetSpending, requiredCut };
   return { label: 'cut', targetSpending: countryTargetSpending, requiredCut };
 }
 
@@ -166,7 +166,7 @@ function classifyWithMockInvert(d, target, mockInvertResult) {
   const requiredCut = mockInvertResult !== null ? d.spending - mockInvertResult : null;
   if (d.growth >= target) return 'no cut needed';
   if (requiredCut === null) return 'impossible';
-  if (requiredCut <= 0)    return 'already there';
+  if (requiredCut <= 0) return 'already there';
   return 'cut';
 }
 assert(classifyWithMockInvert({ spending: 35.9, growth: 3.8 }, 3, null) === 'no cut needed',
@@ -233,7 +233,7 @@ console.log('\n7. Baseline adjustment math');
 // For a country at exactly the model prediction (residual=0), unadjusted and adjusted are identical
 const onCurve = { name: 'OnCurve', spending: 35, growth: predictFn(35) };
 const r_unAdj = classifyRow(onCurve, 3, false);
-const r_adj   = classifyRow(onCurve, 3, true);
+const r_adj = classifyRow(onCurve, 3, true);
 assert(r_unAdj.label === r_adj.label,
   'zero-residual country: adjusted and unadjusted give same label');
 if (r_unAdj.targetSpending !== null && r_adj.targetSpending !== null) {

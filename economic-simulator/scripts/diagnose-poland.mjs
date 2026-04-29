@@ -67,12 +67,12 @@ for (const target of [3, 4, 5]) {
   const cut_raw = ts_raw !== null ? poland.spending - ts_raw : null;
   const label_adj = poland.growth >= target ? 'no cut needed'
     : ts_adj === null ? 'impossible'
-    : cut_adj <= 0 ? 'already there'
-    : `−${cut_adj.toFixed(1)} pp → ${ts_adj.toFixed(1)}%`;
+      : cut_adj <= 0 ? 'already there'
+        : `−${cut_adj.toFixed(1)} pp → ${ts_adj.toFixed(1)}%`;
   const label_raw = poland.growth >= target ? 'no cut needed'
     : ts_raw === null ? 'impossible'
-    : cut_raw <= 0 ? 'already there'
-    : `−${cut_raw.toFixed(1)} pp → ${ts_raw.toFixed(1)}%`;
+      : cut_raw <= 0 ? 'already there'
+        : `−${cut_raw.toFixed(1)} pp → ${ts_raw.toFixed(1)}%`;
   console.log(`\nTarget ${target}%:`);
   console.log(`  predictFn(${poland.spending.toFixed(1)}) = ${pred.toFixed(3)}%,  residual = ${residual.toFixed(3)} pp`);
   console.log(`  Toggle OFF: ${label_raw}`);
