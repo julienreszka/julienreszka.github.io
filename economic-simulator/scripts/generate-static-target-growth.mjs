@@ -93,11 +93,11 @@ console.log(`Table rows: ${rows.length} countries`);
 
 // ── Build table HTML ──────────────────────────────────────────────────────────
 const thead = `<thead><tr class="table-header-muted" style="font-size:0.82em;">
-  <th style="text-align:left;padding:3px 8px">Country</th>
-  <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
-  <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
-  <th style="text-align:right;padding:3px 8px;white-space:nowrap">Required cut to reach ${TARGET}%</th>
-  <th style="text-align:right;padding:3px 8px;white-space:nowrap">Target spending %</th>
+  <th style="text-align:left;padding:3px 8px" data-i18n="table.cutgains.country">Country</th>
+  <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
+  <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-growth">Avg. growth %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
+  <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.required-cut-3">Required cut to reach ${TARGET}%</th>
+  <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.target-spending">Target spending %</th>
 </tr></thead>`;
 
 const tbody = rows.map(r => {

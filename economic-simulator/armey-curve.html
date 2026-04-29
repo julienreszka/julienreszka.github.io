@@ -2855,11 +2855,11 @@
             <div id="target-growth-table-inner" style="overflow-x:auto;">
               <!-- STATIC-TARGET-GROWTH-TABLE:START -->
               <table style="width:100%;border-collapse:collapse;"><thead><tr class="table-header-muted" style="font-size:0.82em;">
-                <th style="text-align:left;padding:3px 8px">Country</th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Required cut to reach 3%</th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Target spending %</th>
+                <th style="text-align:left;padding:3px 8px" data-i18n="table.cutgains.country">Country</th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-growth">Avg. growth %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.required-cut-3">Required cut to reach 3%</th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.target-spending">Target spending %</th>
               </tr></thead><tbody><tr style="font-size:0.83em;">
                   <td style="padding:2px 8px">Greece</td>
                   <td style="padding:2px 8px; text-align:right; white-space:nowrap">50.6%</td>
@@ -8591,10 +8591,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         const timePeriodLabel = timePeriodEl ? timePeriodEl.options[timePeriodEl.selectedIndex].text.split('(')[0].trim() : '';
         const timePeriodRange = timePeriodEl ? (timePeriodEl.options[timePeriodEl.selectedIndex].text.match(/\(([^)]+)\)/) || ['',''])[1] : '';
 
+        const _i18nCG = window.i18n || {};
         const thead = `<thead><tr class="table-header-muted" style="font-size:0.82em;">
-          <th style="text-align:left;padding:3px 8px">Country</th>
-          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
-          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:left;padding:3px 8px">${_i18nCG['table.cutgains.country'] || 'Country'}</th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_i18nCG['table.col.avg-spending'] || 'Avg. spending %'}<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_i18nCG['table.col.avg-growth'] || 'Avg. growth %'}<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
           <th style="text-align:right;padding:3px 8px;white-space:nowrap">Predicted gain from −5 pp cut</th>
         </tr></thead>`;
 
@@ -8651,12 +8652,15 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           ? (timePeriodEl.options[timePeriodEl.selectedIndex].text.match(/\(([^)]+)\)/) || ['',''])[1]
           : '';
 
+        const _i18nTG = window.i18n || {};
+        const _reqCutLabel = (_i18nTG['table.col.required-cut'] || 'Required cut to reach {target}%').replace('{target}', target);
+        const _targetLabel = useResidual ? (_i18nTG['table.col.adj-target-spending'] || 'Adj. target spending %') : (_i18nTG['table.col.target-spending'] || 'Target spending %');
         const thead = `<thead><tr class="table-header-muted" style="font-size:0.82em;">
-          <th style="text-align:left;padding:3px 8px">Country</th>
-          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
-          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
-          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Required cut to reach ${target}%</th>
-          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${useResidual ? 'Adj. target spending %' : 'Target spending %'}</th>
+          <th style="text-align:left;padding:3px 8px">${_i18nTG['table.cutgains.country'] || 'Country'}</th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_i18nTG['table.col.avg-spending'] || 'Avg. spending %'}<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_i18nTG['table.col.avg-growth'] || 'Avg. growth %'}<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_reqCutLabel}</th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_targetLabel}</th>
         </tr></thead>`;
 
         const rows = dataPoints
