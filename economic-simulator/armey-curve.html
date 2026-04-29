@@ -186,6 +186,38 @@
                   "@type": "Answer",
                   "text": "Before World War II, Western European governments spent roughly 10–15% of GDP and annual per-capita growth ran at ~2–3% — consistent with where the power law curve projects at those spending levels. The post-war expansion of the welfare state shifted every major Western economy rightward along the curve into the low-growth zone. Where high-spending economies have sustained rapid growth, compositional factors — high investment shares, catch-up convergence, or off-budget financing — tend to account for the exception."
                 }
+              },
+              {
+                "@type": "Question",
+                "name": "If government spending always slows growth, what should government actually do?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "The empirical curve answers 'how much' but not 'on what'. The article proposes a two-condition rule: government should brake an activity only when (1) it shrinks inclusive wealth — the present value of all productive capital stocks, produced, human, natural, knowledge, and institutional — and (2) some affected party never consented to bear the cost. Activities that satisfy both conditions are genuine negative externalities: pollution, resource depletion beyond regeneration rates, systemic financial risk. Activities that fail either condition — consensual transactions, wealth-creating innovation, or lifestyle choices that harm only the chooser — fall outside the criterion's scope."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Why use inclusive wealth rather than GDP as the criterion for intervention?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "GDP can be inflated by the very pathologies a brake should target. Extracting an oil field boosts GDP while depleting natural capital; transfer payments cycle through GDP without creating wealth; coerced transactions register as economic activity. Inclusive wealth — the shadow-price sum of all productive capital stocks — cannot be gamed the same way: depleting natural capital without reinvesting elsewhere shrinks it by construction. The framework follows the Dasgupta Review (2021) and the Arrow-Dasgupta-Mäler (2004) unified wealth accounting tradition."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What does the 2×2 quadrant diagram show?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Two binary questions — did all affected parties consent? does inclusive wealth grow or shrink? — produce four quadrants. Three of the four tell government to do nothing: (1) consensual and wealth-growing: encourage or leave alone; (2) consensual and wealth-shrinking: leave alone, it is their loss and their choice; (3) non-consensual and wealth-growing: rare, investigate but do not reflexively brake. Only the fourth quadrant — non-consensual and wealth-shrinking — gives government objective standing to act. This is a much narrower licence than 'whatever the median voter wants' and a much wider one than 'government should never act'."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Does the criterion add a third condition beyond wealth and consent?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Even when both conditions are met — wealth shrinks, consent absent — government should still refrain if the brake itself costs more than the damage it prevents. The third filter sums deadweight loss (the Harberger triangle), enforcement cost, and expected regulatory capture risk, and compares that total to the magnitude of the wealth loss. If brakeCost > |ΔW|, the cure is worse than the disease. This is the standard public-choice corrective: Pigou taxes and Coasian bargaining only dominate unregulated markets when transaction and governance costs are low enough."
+                }
               }
             ]
           }
@@ -4729,11 +4761,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               <strong>10–15% of GDP</strong> and annual per-capita growth ran
               at <strong>~2–3%</strong> — consistent with where the power law
               curve projects at those spending levels. The post-war expansion
-              of the welfare state shifted every country rightward along the
-              curve into the low-growth zone. There is no historical
-              counterexample of a country sustaining rapid growth while
-              expanding government spending beyond 40% of GDP for more than a
-              decade.
+              of the welfare state shifted every major Western economy rightward
+              along the curve into the low-growth zone. Where high-spending
+              economies have sustained rapid growth, compositional factors —
+              high investment shares, catch-up convergence, or off-budget
+              financing — tend to account for the exception.
             </p>
           </details>
           <details>
@@ -4769,6 +4801,66 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               state intervention &mdash; are what cross-country regressions
               primarily capture. Targeted programs within a lean overall budget
               are different from broad high-spending welfare states.
+            </p>
+          </details>
+          <details>
+            <summary>If government spending always slows growth, what should government actually do?</summary>
+            <p>
+              The empirical curve answers <em>how much</em> but not <em>on what</em>.
+              The article proposes a two-condition rule: government should brake an
+              activity only when (1) it shrinks <strong>inclusive wealth</strong> — the
+              present value of all productive capital stocks: produced, human, natural,
+              knowledge, and institutional — and (2) some affected party
+              <strong>never consented</strong> to bear the cost. Activities that satisfy
+              both conditions are genuine negative externalities: pollution, resource
+              depletion beyond regeneration rates, systemic financial risk. Activities
+              that fail either condition — consensual transactions, wealth-creating
+              innovation, or lifestyle choices that harm only the chooser — fall outside
+              the criterion's scope.
+            </p>
+          </details>
+          <details>
+            <summary>Why use inclusive wealth rather than GDP as the criterion for intervention?</summary>
+            <p>
+              GDP can be inflated by the very pathologies a brake should target.
+              Extracting an oil field boosts GDP while depleting natural capital;
+              transfer payments cycle through GDP without creating wealth; coerced
+              transactions register as economic activity. Inclusive wealth — the
+              shadow-price sum of all productive capital stocks — cannot be gamed the
+              same way: depleting natural capital without reinvesting elsewhere shrinks
+              it by construction. The framework follows the
+              <a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta Review (2021)</a>
+              and the
+              <a href="https://www.aeaweb.org/articles?id=10.1257/0895330042162377" target="_blank" rel="noopener">Arrow, Dasgupta &amp; Mäler (2004)</a>
+              unified wealth accounting tradition.
+            </p>
+          </details>
+          <details>
+            <summary>What does the 2×2 quadrant diagram show?</summary>
+            <p>
+              Two binary questions — did all affected parties consent? does inclusive
+              wealth grow or shrink? — produce four quadrants. Three of the four tell
+              government to do nothing: consensual and wealth-growing (encourage or leave
+              alone); consensual and wealth-shrinking (leave alone — their loss, their
+              choice); non-consensual and wealth-growing (rare; investigate but do not
+              reflexively brake). Only the fourth quadrant — non-consensual and
+              wealth-shrinking — gives government objective standing to act. This is a
+              much narrower licence than "whatever the median voter wants" and a much
+              wider one than "government should never act."
+            </p>
+          </details>
+          <details>
+            <summary>Is there a third condition beyond wealth and consent?</summary>
+            <p>
+              Yes. Even when both conditions are met — wealth shrinks, consent absent —
+              government should still refrain if the brake itself costs more than the
+              damage it prevents. The third filter sums deadweight loss (the Harberger
+              triangle), enforcement cost, and expected regulatory capture risk, and
+              compares that total to the magnitude of the wealth loss. If
+              <code>brakeCost &gt; |ΔW|</code>, the cure is worse than the disease.
+              This is the standard public-choice corrective: Pigou taxes and Coasian
+              bargaining only dominate unregulated markets when transaction and
+              governance costs are low enough to make them feasible.
             </p>
           </details>
         </div>
