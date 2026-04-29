@@ -4316,13 +4316,31 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             les parties non-consentantes. <strong>Verdict : freiner.</strong>
         </p>
           <p data-i18n="prose.worked-example-grant-p">
-          <strong>Une subvention pour la recherche fondamentale.</strong>
-            $\Delta K_{\text{connaissance}} > 0$ (les résultats entrent dans le domaine public
-            avec des externalités positives) ; $\Delta K_{\text{humain}} > 0$ (chercheurs
-            formés) ; aucun échec du consentement (les contribuables le financent via un
-            processus constitutionnellement limité, les bénéficiaires sont diffus et
-            non-rivaux). Net : $\sum_k p_k \Delta K_k > 0$ <span class="math-note">(gain de richesse pondéré)</span> dans l'ensemble.
-            <strong>Verdict : ne pas freiner.</strong>
+          
+            <strong>Une subvention à la recherche fondamentale.</strong> Le
+            cas est plus difficile que la subvention au charbon et mérite
+            l'honnêteté. $\Delta K_{\text{savoir}} > 0$ (les résultats
+            entrent dans le domaine public avec des effets de débordement
+            positifs) ; $\Delta K_{\text{humain}} > 0$ (chercheurs
+            formés) ; mais $\Delta K_{\text{produit}} < 0$ pour les
+            contribuables, qui financent la subvention par des transferts
+            contraints sans avoir été consultés ligne par ligne. C'est un
+            coût Q1 réel &mdash; le critère ne le neutralise pas parce que
+            la dotation a été votée. Le verdict dépend donc de Q2 :
+            l'espérance de $\sum_k p_k \Delta K_k$ sur les parties non
+            consentantes est-elle positive nette ? Pour la recherche
+            fondamentale, dont les retombées sont larges et non rivales, le
+            gain de connaissance qui revient ensuite <em>aux mêmes
+            contribuables</em> (médicaments moins chers, meilleurs matériaux,
+            méthodes du domaine public) excède typiquement le coût fiscal par
+            tête &mdash; l'<em>activité</em> franchit donc Q2 et le critère
+            renonce à la freiner. <strong>Verdict : ne pas freiner
+            l'activité, mais le mécanisme de financement reste un coût réel
+            que l'activité doit rembourser sous forme de retombées.</strong>
+            Les subventions étroitement captées dont les retombées ne
+            profitent qu'au bénéficiaire (subventions sectorielles
+            spécifiques, infrastructures de ville-entreprise) ne remboursent
+            pas et échoueraient à Q2.
         </p>
           <p data-i18n="prose.worked-example-notice-p">
           Remarquez ce que le test n'a pas exigé : un vote, une intuition morale
@@ -4362,27 +4380,44 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             la plainte rhétorique :
         </p>
           <ul data-i18n="list.consent-types">
+            
             <li>
-              <strong>Échec réel du consentement</strong> (Q1 = oui) : la partie lésée
-              est identifiable, n'était pas représentée dans la décision, et
-              les coûts de transaction rendent la négociation volontaire infaisable &mdash;
-              le mode d'échec coasien classique. Pollution sous le vent, risque systémique
-              transféré au fonds d'assurance des dépôts, fraude contre des contreparties.
+              <strong>Échec de consentement avéré</strong> (Q1 = oui) : la
+              partie lésée est identifiable, n'a pas volontairement accepté
+              de supporter le coût en question, et les coûts de transaction
+              rendent la négociation individuelle impraticable. Trois familles
+              de cas : les externalités classiques (pollution sous le vent,
+              risque systémique transféré au fonds de garantie des dépôts), la
+              fraude envers une contrepartie, et les
+              <strong>transferts contraints</strong> &mdash; impôts,
+              conscription, expropriation &mdash; où la partie qui contribue
+              n'a jamais volontairement consenti à l'usage particulier de ses
+              ressources. La représentation agrège des préférences sur des
+              candidats ; elle ne transmet pas le consentement individuel sur
+              chaque mesure que l'organe élu adopte ensuite. Le critère traite
+              le financement contraint comme un coût Q1 réel, pas comme une
+              note de bas de page procédurale.
             </li>
             <li>
-              <strong>Consentement constructif</strong> (Q1 = non) : le coût est
-              supporté dans le cadre d'un processus constitutionnellement limité auquel
-              la partie a participé (impôts votés par ses représentants), ou la
-              partie a librement conclu un arrangement qui a intégré le risque
-              (pool d'assurance, code de conduite professionnel). Ne pas être d'accord avec
-              le résultat d'un vote procéduralement légitime n'est pas, en soi,
-              un échec Q1.
+              <strong>Consentement constructif</strong> (Q1 = non) : la
+              partie est librement entrée dans un arrangement qui intègre le
+              coût &mdash; un pool d'assurance dont les primes financent les
+              indemnisations, un code de déontologie accepté à l'entrée dans
+              une profession, un club dont les cotisations financent le
+              local, un contrat privé dont les termes ont été négociés. Le
+              trait déterminant est le caractère volontaire au moment de
+              l'adhésion : une personne qui peut refuser l'arrangement et s'en
+              aller a consenti à ses coûts.
             </li>
             <li>
-              <strong>&quot;Non-consentement&quot; rhétorique</strong> : tout sentiment
-              d'être taxé, réglementé ou mis en minorité présenté comme une signature
-              manquante. Le critère rejette délibérément cela ; sinon
-              tout perdant d'une élection pourrait déclencher un frein.
+              <strong>« Non-consentement » rhétorique</strong> : perdre un
+              vote sur une règle d'application générale qui n'impose aucun
+              coût contraint au plaignant, ou préférer un autre résultat
+              politique habillé en signature manquante. Le critère rejette
+              délibérément ces cas &mdash; sinon chaque perdant d'élection
+              aurait licence à freiner. La question pertinente est de savoir
+              si un coût réel est porté sans accord volontaire, pas de savoir
+              si le plaignant approuve le résultat.
             </li>
           </ul>
           <p data-i18n="prose.consent-coase-p">La lecture de Coase (1960) se prolonge : lorsque les coûts de transaction
@@ -4588,6 +4623,103 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             &mdash; mais la prédiction est testable, et l'ensemble de données est
             public. Cela distingue ce cadre des slogans qu'il
             remplace.</p>
+
+          <h4 id="legitimacy-of-regimes" data-i18n="heading.legitimacy-of-regimes">Des actions aux régimes : État légitime ou illégitime</h4>
+          <!-- i18n:prose.legitimacy-section:start -->
+
+          <p>
+            Le critère rend un verdict par <em>action</em>. Le porter au niveau
+            d'un gouvernement entier est immédiat : la légitimité d'un régime
+            est la part de ses actes coercitifs qui passent les trois filtres.
+            Un État qui freine la pollution, la fraude, l'épuisement des
+            ressources et le risque systémique utilise son instrument sur le
+            quadrant que le critère autorise. Un État qui freine les échanges
+            consentis, le travail productif ou la consommation paisible entre
+            adultes compétents utilise le même instrument contre le mauvais
+            quadrant &mdash; pied sur la pédale de frein là où il devrait être
+            relâché.
+          </p>
+          <div class="table-scroll">
+            <table class="ranking-table" style="margin: 12px 0">
+              <thead>
+                <tr>
+                  <th>Frein légitime (critère satisfait)</th>
+                  <th>Frein illégitime (critère violé)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Responsabilité pour pollution et émissions en aval</td>
+                  <td>Licences obligatoires pour métiers à faible risque (fleuristes, tresseuses, décorateurs)</td>
+                </tr>
+                <tr>
+                  <td>Règles de capital et de levier pour les banques systémiquement risquées</td>
+                  <td>Contrôles des capitaux sur des investisseurs transfrontaliers consentants</td>
+                </tr>
+                <tr>
+                  <td>Lutte contre la fraude, exécution des contrats, droit anti-coercition</td>
+                  <td>Tarifs et quotas qui protègent les acteurs domestiques de la concurrence étrangère</td>
+                </tr>
+                <tr>
+                  <td>Quotas d'extraction au-delà du taux de régénération</td>
+                  <td>Interdictions des choix de consommation d'adultes compétents qui ne concernent qu'eux-mêmes</td>
+                </tr>
+                <tr>
+                  <td>Prélèvement sur les engagements intergénérationnels non financés</td>
+                  <td>Taxes sur le revenu du travail ou sur le capital gagné en concurrence</td>
+                </tr>
+                <tr>
+                  <td>Lutte antitrust contre les monopoles bâtis par la force ou la capture</td>
+                  <td>Subventions et préférences d'achat public pour les entreprises politiquement connectées</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            C'est pour cela que le ratio de dépenses publiques sur PIB n'est
+            pas le <em>seul</em> bon indicateur. Un État à 40 % du PIB composé
+            majoritairement de freins légitimes &mdash; tarification
+            pigouvienne, lutte contre la fraude, redevances d'épuisement
+            &mdash; cause moins de dégâts à la richesse inclusive qu'un État à
+            20 % du PIB qui dépense son budget à capter des rentes et à
+            ralentir l'activité productive. La courbe empirique de cet article
+            reste valable, parce que la majorité des dépenses publiques dans
+            le panel de la Banque mondiale correspondent à des transferts et
+            de la consommation courante plutôt qu'à un freinage ciblé
+            &mdash; c'est cette réalité agrégée que les données capturent.
+            Mais le critère est la dimension que le ratio ne peut voir.
+            <strong>La taille discipline le budget ; le critère discipline
+            l'usage.</strong>
+          </p>
+          <p>
+            Deux clarifications pour rester honnête. <strong>Premièrement</strong>,
+            le cadre ne produit délibérément pas de classement de pays. Il
+            n'existe pas de jeu de données propre pour la « part de l'action
+            étatique qui passe l'IWC », et tout indice de ce type
+            réintroduirait les préférences de l'évaluateur précisément là où
+            le critère est censé les évacuer. Les Worldwide Governance
+            Indicators &mdash; le proxy existant le plus proche &mdash;
+            sortent de la régression une fois contrôlés revenu, investissement
+            et capital humain, ce qui est cohérent avec l'idée qu'ils sont des
+            mélanges bruyants de légitimité et d'autres choses plutôt qu'une
+            mesure propre de l'une ou de l'autre.
+            <strong>Deuxièmement</strong>, la légitimité ici est une propriété
+            des <em>actions</em>, pas du type de régime. Une démocratie peut
+            échouer au critère sur une politique donnée (une subvention
+            inefficace votée par une majorité valide) ; une autocratie peut le
+            satisfaire sur une politique donnée (la capture de la valeur
+            foncière à Singapour). Le 2&times;2 est le test, pas le scrutin.
+          </p>
+          <p>
+            L'usage prévu est donc diagnostique, pas dénonciateur : prenez
+            n'importe quelle politique de votre juridiction, faites-la passer
+            par les trois filtres (consentement, $\Delta W$, coût du frein),
+            et décidez vous-même dans quelle colonne elle se range. Le critère
+            ne vous dit pas pour qui voter. Il vous dit lesquelles des choses
+            qu'on vous propose relèvent de leur licence objective d'agir.
+          </p>
+          
+<!-- /i18n:prose.legitimacy-section:end -->
 
           <!-- THEORY-MISLED:START -->
           <!-- i18n:prose.theory-misled:start -->

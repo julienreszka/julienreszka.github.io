@@ -4272,13 +4272,27 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             non-consenting parties. <strong>Verdict: brake.</strong>
           </p>
           <p data-i18n="prose.worked-example-grant-p">
-            <strong>A grant for basic-science research.</strong>
-            $\Delta K_{\text{knowledge}} > 0$ (results enter the public domain
-            with positive spillovers); $\Delta K_{\text{human}} > 0$ (trained
-            researchers); no consent failure (taxpayers fund it through a
-            constitutionally bounded process, beneficiaries are diffuse and
-            non-rivalrous). Net: $\sum_k p_k \Delta K_k > 0$ <span class="math-note">(weighted wealth gain)</span> across the board.
-            <strong>Verdict: don't brake.</strong>
+            <strong>A grant for basic-science research.</strong> The case is
+            harder than a coal subsidy and worth the honesty.
+            $\Delta K_{\text{knowledge}} > 0$ (results enter the public
+            domain with positive spillovers); $\Delta K_{\text{human}} > 0$
+            (trained researchers); but
+            $\Delta K_{\text{produced}} < 0$ for taxpayers, who fund the
+            grant through coerced transfers and were not asked line-by-line.
+            That is a real Q1 cost &mdash; the criterion does not waive it
+            because the appropriation passed a vote. The verdict therefore
+            turns on Q2: is the expected $\sum_k p_k \Delta K_k$ over
+            non-consenting parties positive on net? For basic research with
+            broad, non-rivalrous spillovers, the knowledge gain that
+            eventually accrues <em>back</em> to the same taxpayers
+            (cheaper medicine, better materials, public-domain methods)
+            typically exceeds the per-capita tax cost &mdash; so the
+            <em>activity</em> clears Q2 and the criterion declines to brake
+            it. <strong>Verdict: don't brake the activity, but the
+            funding mechanism remains a real cost the activity has to pay
+            back in spillover terms.</strong> Narrowly captured grants that
+            spill over only to the recipient (industry-specific subsidies,
+            company-town infrastructure) do not pay back and would fail Q2.
           </p>
           <p data-i18n="prose.worked-example-notice-p">
             Notice what the test did <em>not</em> require: a vote, a moral
@@ -4320,26 +4334,39 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <ul data-i18n="list.consent-types">
             <li>
               <strong>Genuine consent failure</strong> (Q1 = yes): the harmed
-              party is identifiable, was not represented in the decision, and
-              transaction costs make voluntary bargaining infeasible &mdash;
-              the classical Coasean failure mode. Pollution downwind, systemic
-              risk shifted to the deposit-insurance fund, fraud against
-              counterparties.
+              party is identifiable, did not voluntarily agree to bear the
+              specific cost in question, and transaction costs make
+              individual bargaining infeasible. Three families of case:
+              classical externalities (pollution downwind, systemic risk
+              shifted to the deposit-insurance fund), fraud against
+              counterparties, and <strong>coerced transfers</strong> &mdash;
+              taxation, conscription, eminent domain &mdash; where the
+              contributing party never voluntarily agreed to the particular
+              use of their resources. Representation aggregates preferences
+              over candidates; it does not transmit individual consent over
+              each line item the elected body subsequently enacts. The
+              criterion treats coerced funding as a real Q1 cost, not a
+              procedural footnote.
             </li>
             <li>
-              <strong>Constructive consent</strong> (Q1 = no): the cost is
-              borne under a constitutionally bounded process the party
-              participated in (taxes voted by their representatives), or the
-              party freely entered an arrangement that priced the risk in
-              (insurance pool, professional code of conduct). Disagreeing with
-              the outcome of a procedurally legitimate vote is not, by itself,
-              a Q1 failure.
+              <strong>Constructive consent</strong> (Q1 = no): the party
+              freely entered an arrangement that priced the cost in &mdash;
+              an insurance pool whose premiums fund payouts, a professional
+              code of conduct accepted on entry to the profession, a club
+              whose dues fund the clubhouse, a private contract whose terms
+              were negotiated. The defining feature is voluntariness at the
+              point of joining: a person who can decline the arrangement and
+              walk away has consented to its costs.
             </li>
             <li>
-              <strong>Rhetorical &quot;non-consent&quot;</strong>: any feeling
-              of being taxed, regulated, or out-voted dressed up as a missing
-              signature. The criterion deliberately rejects this; otherwise
-              every loser of any election would license a brake.
+              <strong>Rhetorical &quot;non-consent&quot;</strong>: losing a
+              vote on a generally applicable rule that imposes no coerced
+              cost on the complainant, or preferring a different policy
+              outcome dressed up as a missing signature. The criterion
+              deliberately rejects this &mdash; otherwise every electoral
+              loser would license a brake. The relevant question is whether
+              a real cost is borne without voluntary agreement, not whether
+              the complainant approves of the outcome.
             </li>
           </ul>
           <p data-i18n="prose.consent-coase-p">
@@ -4553,6 +4580,97 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             public. That distinguishes this framework from the slogans it
             replaces.
           </p>
+
+          <h4 id="legitimacy-of-regimes" data-i18n="heading.legitimacy-of-regimes">From actions to regimes: legitimate vs. illegitimate government</h4>
+          <!-- i18n:prose.legitimacy-section:start -->
+          <p>
+            The criterion gives a verdict per <em>action</em>. Lifting it to
+            whole governments is straightforward: a regime's legitimacy is the
+            share of its coercive acts that pass the three filters. A
+            government that brakes pollution, fraud, depletion, and systemic
+            risk is using its instrument on the quadrant the criterion
+            licenses. A government that brakes consenting trade, productive
+            labour, or peaceful consumption between competent adults is using
+            the same instrument against the wrong quadrant &mdash; foot on the
+            brake pedal where it should be off it.
+          </p>
+          <div class="table-scroll">
+            <table class="ranking-table" style="margin: 12px 0">
+              <thead>
+                <tr>
+                  <th>Legitimate brake (criterion satisfied)</th>
+                  <th>Illegitimate brake (criterion violated)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Liability for downstream pollution and emissions</td>
+                  <td>Occupational licensing of low-risk trades (florists, hair-braiders, interior designers)</td>
+                </tr>
+                <tr>
+                  <td>Capital and leverage rules on systemically risky banks</td>
+                  <td>Capital controls on consenting cross-border investors</td>
+                </tr>
+                <tr>
+                  <td>Anti-fraud, contract enforcement, anti-coercion law</td>
+                  <td>Tariffs and quotas that shield domestic incumbents from foreign competition</td>
+                </tr>
+                <tr>
+                  <td>Quotas on extraction above the regeneration rate</td>
+                  <td>Prohibitions on competent adults' consumption choices that affect only themselves</td>
+                </tr>
+                <tr>
+                  <td>Charge on unfunded intergenerational liabilities</td>
+                  <td>Taxes on labour income or competitively earned capital</td>
+                </tr>
+                <tr>
+                  <td>Antitrust against monopoly built by force or capture</td>
+                  <td>Subsidies and procurement preferences for politically connected firms</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            This is why total spending as a share of GDP is the wrong
+            <em>sole</em> metric. A 40%-of-GDP state composed mostly of
+            legitimate brakes &mdash; Pigouvian pricing, fraud enforcement,
+            depletion charges &mdash; does less inclusive-wealth damage than a
+            20%-of-GDP state that spends its budget capturing rents and
+            slowing productive activity. The empirical curve in this article
+            still applies, because most government spending in the World Bank
+            panel is transfers and current consumption rather than targeted
+            braking &mdash; that is the cross-country reality the data
+            captures. But the criterion is the dimension the spending ratio
+            cannot see. <strong>Size disciplines the budget; the criterion
+            disciplines the use.</strong>
+          </p>
+          <p>
+            Two clarifications keep this honest. <strong>First</strong>, the
+            framework deliberately does not produce a country ranking. There
+            is no clean dataset for "share of state action that passes the
+            IWC," and any such index would smuggle the rater's preferences
+            back into the very place the criterion is meant to remove them.
+            The Worldwide Governance Indicators &mdash; the closest existing
+            proxy &mdash; drop out of the regression once income, investment,
+            and human capital are controlled, which is consistent with their
+            being noisy mixtures of legitimacy and other things rather than a
+            clean measure of either.
+            <strong>Second</strong>, legitimacy here is a property of
+            <em>actions</em>, not of regime type. A democracy can fail the
+            criterion on any given policy (an inefficient subsidy passed by a
+            valid majority); an autocracy can pass it on any given policy
+            (Singapore's land-value capture). The 2&times;2 is the test, not
+            the ballot.
+          </p>
+          <p>
+            The intended use is therefore diagnostic, not denunciatory: pick
+            any policy in your jurisdiction, run it through the three filters
+            (consent, $\Delta W$, brake-cost), and decide for yourself which
+            column it belongs in. The criterion does not tell you who to vote
+            for. It tells you which of the things they propose are within
+            their objective licence to do.
+          </p>
+          <!-- /i18n:prose.legitimacy-section:end -->
 
           <!-- THEORY-MISLED:START -->
           <!-- i18n:prose.theory-misled:start -->
