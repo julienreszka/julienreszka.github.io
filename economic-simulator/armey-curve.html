@@ -123,6 +123,7 @@
           {
             "@type": "FAQPage",
             "mainEntity": [
+<!-- FAQ-JSONLD-START -->
               {
                 "@type": "Question",
                 "name": "What is the Armey Curve?",
@@ -189,6 +190,14 @@
               },
               {
                 "@type": "Question",
+                "name": "What about failed states and countries with very low government spending?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No country in the World Bank panel has government spending below ~8% of GDP. Territories with near-zero formal government either collapse and lose World Bank coverage, or informalize so completely that GDP measurement breaks down. The data cannot speak to the sub-8% range, and what institutions classify as 'state failure' often means 'a territory that permits transactions we have prohibited' — those transactions represent real welfare gains by revealed preference."
+                }
+              },
+              {
+                "@type": "Question",
                 "name": "If government spending always slows growth, what should government actually do?",
                 "acceptedAnswer": {
                   "@type": "Answer",
@@ -219,6 +228,7 @@
                   "text": "Yes. Even when both conditions are met — wealth shrinks, consent absent — government should still refrain if the brake itself costs more than the damage it prevents. The third filter sums deadweight loss (the Harberger triangle), enforcement cost, and expected regulatory capture risk, and compares that total to the magnitude of the wealth loss. If brakeCost > |ΔW|, the cure is worse than the disease. This is the standard public-choice corrective: Pigou taxes and Coasian bargaining only dominate unregulated markets when transaction and governance costs are low enough."
                 }
               }
+<!-- FAQ-JSONLD-END -->
             ]
           }
         ]
@@ -4674,195 +4684,196 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       <section id="faq">
         <h2>Frequently Asked Questions</h2>
         <div class="armey-specific">
+<!-- FAQ-DETAILS-START -->
           <details>
             <summary>What is the Armey Curve?</summary>
-            <p>
-              The Armey Curve is a theoretical relationship between government
-              spending as a share of GDP and economic growth. It proposes an
-              inverted-U shape with an optimal government size around
-              20&ndash;30% of GDP. Cross-country data challenges this: a power
-              law (monotonically decreasing) relationship fits the evidence
-              consistently better.
-            </p>
+          <p>
+                        The Armey Curve is a theoretical relationship between government
+                        spending as a share of GDP and economic growth. It proposes an
+                        inverted-U shape with an optimal government size around
+                        20&ndash;30% of GDP. Cross-country data challenges this: a power
+                        law (monotonically decreasing) relationship fits the evidence
+                        consistently better.
+                      </p>
           </details>
           <details>
-            <summary>
-              Does more government spending reduce economic growth?
-            </summary>
-            <p>
-              Cross-country World Bank data consistently shows a negative
-              correlation between government spending as a share of GDP and GDP
-              growth rates. Countries with smaller governments (Singapore ~15%,
-              Bangladesh ~9%) tend to outgrow high-spending peers. The
-              relationship fits a Power Law better than the traditional
-              Quadratic Armey Curve: R&sup2;&nbsp;=&nbsp;0.4219
-              (approx. 95% CI: 0.28&ndash;0.56) vs. 0.3856 for Quadratic &mdash;
-              across 113 countries in the 2005&ndash;2023 structural sample.
-              The CI is computed via Fisher&rsquo;s Z transformation on the
-              correlation coefficient.
-            </p>
+            <summary>Does more government spending reduce economic growth?</summary>
+          <p>
+                        Cross-country World Bank data consistently shows a negative
+                        correlation between government spending as a share of GDP and GDP
+                        growth rates. Countries with smaller governments (Singapore ~15%,
+                        Bangladesh ~9%) tend to outgrow high-spending peers. The
+                        relationship fits a Power Law better than the traditional
+                        Quadratic Armey Curve: R&sup2;&nbsp;=&nbsp;0.4219
+                        (approx. 95% CI: 0.28&ndash;0.56) vs. 0.3856 for Quadratic &mdash;
+                        across 113 countries in the 2005&ndash;2023 structural sample.
+                        The CI is computed via Fisher&rsquo;s Z transformation on the
+                        correlation coefficient.
+                      </p>
           </details>
           <details>
             <summary>What is the optimal size of government?</summary>
-            <p>
-              The data does not support a precise optimal size. Unlike the
-              quadratic Armey Curve which implies a sweet spot, power law models
-              suggest growth is highest at the lowest feasible spending levels.
-              Countries below 25% of GDP consistently outgrow higher-spending
-              peers, but a precise constitutional cap cannot be derived from a
-              single cross-country regression.
-            </p>
+          <p>
+                        The data does not support a precise optimal size. Unlike the
+                        quadratic Armey Curve which implies a sweet spot, power law models
+                        suggest growth is highest at the lowest feasible spending levels.
+                        Countries below 25% of GDP consistently outgrow higher-spending
+                        peers, but a precise constitutional cap cannot be derived from a
+                        single cross-country regression.
+                      </p>
           </details>
           <details>
             <summary>What should government actually be used for?</summary>
-            <p>
-              If government spending reliably slows economic activity, its most
-              defensible use is as a selective brake on harmful activity &mdash;
-              pollution, overfishing, systemic financial risk &mdash; where
-              private actors impose costs on others. A government focused on
-              correcting negative externalities through liability rules or
-              narrow targeted regulations can improve welfare while remaining
-              small in budget terms.
-            </p>
+          <p>
+                        If government spending reliably slows economic activity, its most
+                        defensible use is as a selective brake on harmful activity &mdash;
+                        pollution, overfishing, systemic financial risk &mdash; where
+                        private actors impose costs on others. A government focused on
+                        correcting negative externalities through liability rules or
+                        narrow targeted regulations can improve welfare while remaining
+                        small in budget terms.
+                      </p>
           </details>
           <details>
-            <summary>But aren&rsquo;t the Nordic countries rich with big governments?</summary>
-            <p>
-              Yes &mdash; but their <em>growth rates</em> are not high. Denmark
-              averaged ~1.0% and Finland ~0.9% GDP growth in the 2005&ndash;2019
-              period: exactly where the power law model places high-spending
-              countries. Their wealth is a legacy of industrialisation built
-              when their governments were smaller. Sweden is the clearest case:
-              it cut spending from 67% to ~49% of GDP between 1993 and 2007 and
-              had its strongest growth decades immediately after. Wealth (a stock)
-              persists long after the conditions that created it change; growth
-              rates (a flow) respond more quickly. The Nordic countries are rich
-              <em>despite</em> their current spending levels, not because of them.
-            </p>
+            <summary>But aren't the Nordic countries rich with big governments?</summary>
+          <p>
+                        Yes &mdash; but their <em>growth rates</em> are not high. Denmark
+                        averaged ~1.0% and Finland ~0.9% GDP growth in the 2005&ndash;2019
+                        period: exactly where the power law model places high-spending
+                        countries. Their wealth is a legacy of industrialisation built
+                        when their governments were smaller. Sweden is the clearest case:
+                        it cut spending from 67% to ~49% of GDP between 1993 and 2007 and
+                        had its strongest growth decades immediately after. Wealth (a stock)
+                        persists long after the conditions that created it change; growth
+                        rates (a flow) respond more quickly. The Nordic countries are rich
+                        <em>despite</em> their current spending levels, not because of them.
+                      </p>
           </details>
           <details>
-            <summary>
-              Why don&rsquo;t economists promote the power law model?
-            </summary>
-            <p>
-              A public-choice dynamic is likely at work: when governments fund
-              most economic research and policy positions, institutional
-              incentives favour frameworks compatible with continued government
-              involvement. As James Buchanan argued, economists respond to
-              incentives like everyone else &mdash; theory tends to lag evidence
-              when political convenience and funding structures favour a
-              particular conclusion.
-            </p>
+            <summary>Why don't economists promote the power law model?</summary>
+          <p>
+                        A public-choice dynamic is likely at work: when governments fund
+                        most economic research and policy positions, institutional
+                        incentives favour frameworks compatible with continued government
+                        involvement. As James Buchanan argued, economists respond to
+                        incentives like everyone else &mdash; theory tends to lag evidence
+                        when political convenience and funding structures favour a
+                        particular conclusion.
+                      </p>
+          </details>
+          <details>
+            <summary>Does the data contradict the East Asian growth model?</summary>
+          <p>
+                        Not necessarily. South Korea and Taiwan achieved 7&ndash;9% growth
+                        with moderate spending (~18&ndash;20% GDP) alongside significant
+                        industrial policy. Their experience shows that total spending
+                        level and institutional quality &mdash; not the absence of all
+                        state intervention &mdash; are what cross-country regressions
+                        primarily capture. Targeted programs within a lean overall budget
+                        are different from broad high-spending welfare states.
+                      </p>
           </details>
           <details>
             <summary>What does pre-WWII history show about government spending and growth?</summary>
-            <p>
-              Before World War II, Western European governments spent roughly
-              <strong>10–15% of GDP</strong> and annual per-capita growth ran
-              at <strong>~2–3%</strong> — consistent with where the power law
-              curve projects at those spending levels. The post-war expansion
-              of the welfare state shifted every major Western economy rightward
-              along the curve into the low-growth zone. Where high-spending
-              economies have sustained rapid growth, compositional factors —
-              high investment shares, catch-up convergence, or off-budget
-              financing — tend to account for the exception.
-            </p>
+          <p>
+                        Before World War II, Western European governments spent roughly
+                        <strong>10&ndash;15% of GDP</strong> and annual per-capita growth
+                        ran at <strong>~2&ndash;3%</strong> &mdash; consistent with where
+                        the power law curve projects at those spending levels. The
+                        post-war expansion of the welfare state shifted every major
+                        Western economy rightward along the curve into the low-growth
+                        zone. Where high-spending economies have sustained rapid growth,
+                        compositional factors &mdash; high investment shares, catch-up
+                        convergence, or off-budget financing &mdash; tend to account for
+                        the exception.
+                      </p>
           </details>
           <details>
             <summary>What about failed states and countries with very low government spending?</summary>
-            <p>
-              No country in the World Bank panel has government spending below
-              ~8% of GDP. This floor is not random: territories with near-zero
-              formal government either collapse and lose World Bank coverage, or
-              informalize so completely that GDP measurement breaks down. But
-              this absence may itself reflect a measurement and classification
-              problem rather than a hard economic floor. Hernando de Soto
-              documented in <em>The Mystery of Capital</em> that informal
-              economies in low-state territories are large and real but
-              invisible to national accounts. What international institutions
-              classify as &ldquo;state failure&rdquo; often means &ldquo;a
-              territory that permits transactions we have prohibited&rdquo; &mdash;
-              drug markets, unregulated finance, informal labour. Those
-              transactions represent real welfare gains by revealed preference.
-              The data cannot speak to the sub-8% range, and the apparent
-              evidence against very small states may partly reflect measurement
-              choices rather than economic reality.
-            </p>
-          </details>
-          <details>
-            <summary>
-              Does the data contradict the East Asian growth model?
-            </summary>
-            <p>
-              Not necessarily. South Korea and Taiwan achieved 7&ndash;9% growth
-              with moderate spending (~18&ndash;20% GDP) alongside significant
-              industrial policy. Their experience shows that total spending
-              level and institutional quality &mdash; not the absence of all
-              state intervention &mdash; are what cross-country regressions
-              primarily capture. Targeted programs within a lean overall budget
-              are different from broad high-spending welfare states.
-            </p>
+          <p>
+                        No country in the World Bank panel has government spending below
+                        ~8% of GDP. This floor is not random: territories with near-zero
+                        formal government either collapse and lose World Bank coverage, or
+                        informalize so completely that GDP measurement breaks down. But
+                        this absence may itself reflect a measurement and classification
+                        problem rather than a hard economic floor. Hernando de Soto
+                        documented in <em>The Mystery of Capital</em> that informal
+                        economies in low-state territories are large and real but
+                        invisible to national accounts. What international institutions
+                        classify as &ldquo;state failure&rdquo; often means &ldquo;a
+                        territory that permits transactions we have prohibited&rdquo; &mdash;
+                        drug markets, unregulated finance, informal labour. Those
+                        transactions represent real welfare gains by revealed preference.
+                        The data cannot speak to the sub-8% range, and the apparent
+                        evidence against very small states may partly reflect measurement
+                        choices rather than economic reality.
+                      </p>
           </details>
           <details>
             <summary>If government spending always slows growth, what should government actually do?</summary>
-            <p>
-              The empirical curve answers <em>how much</em> but not <em>on what</em>.
-              The article proposes a two-condition rule: government should brake an
-              activity only when (1) it shrinks <strong>inclusive wealth</strong> — the
-              present value of all productive capital stocks: produced, human, natural,
-              knowledge, and institutional — and (2) some affected party
-              <strong>never consented</strong> to bear the cost. Activities that satisfy
-              both conditions are genuine negative externalities: pollution, resource
-              depletion beyond regeneration rates, systemic financial risk. Activities
-              that fail either condition — consensual transactions, wealth-creating
-              innovation, or lifestyle choices that harm only the chooser — fall outside
-              the criterion's scope.
-            </p>
+          <p>
+                        The empirical curve answers <em>how much</em> but not <em>on what</em>.
+                        The article proposes a two-condition rule: government should brake an
+                        activity only when (1) it shrinks <strong>inclusive wealth</strong> &mdash;
+                        the present value of all productive capital stocks: produced, human,
+                        natural, knowledge, and institutional &mdash; and (2) some affected party
+                        <strong>never consented</strong> to bear the cost. Activities that satisfy
+                        both conditions are genuine negative externalities: pollution, resource
+                        depletion beyond regeneration rates, systemic financial risk. Activities
+                        that fail either condition &mdash; consensual transactions, wealth-creating
+                        innovation, or lifestyle choices that harm only the chooser &mdash; fall
+                        outside the criterion&rsquo;s scope.
+                      </p>
           </details>
           <details>
             <summary>Why use inclusive wealth rather than GDP as the criterion for intervention?</summary>
-            <p>
-              GDP can be inflated by the very pathologies a brake should target.
-              Extracting an oil field boosts GDP while depleting natural capital;
-              transfer payments cycle through GDP without creating wealth; coerced
-              transactions register as economic activity. Inclusive wealth — the
-              shadow-price sum of all productive capital stocks — cannot be gamed the
-              same way: depleting natural capital without reinvesting elsewhere shrinks
-              it by construction. The framework follows the
-              <a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta Review (2021)</a>
-              and the
-              <a href="https://www.aeaweb.org/articles?id=10.1257/0895330042162377" target="_blank" rel="noopener">Arrow, Dasgupta &amp; Mäler (2004)</a>
-              unified wealth accounting tradition.
-            </p>
+          <p>
+                        GDP can be inflated by the very pathologies a brake should target.
+                        Extracting an oil field boosts GDP while depleting natural capital;
+                        transfer payments cycle through GDP without creating wealth; coerced
+                        transactions register as economic activity. Inclusive wealth &mdash;
+                        the shadow-price sum of all productive capital stocks &mdash; cannot
+                        be gamed the same way: depleting natural capital without reinvesting
+                        elsewhere shrinks it by construction. The framework follows the
+                        <a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta Review (2021)</a>
+                        and the
+                        <a href="https://www.aeaweb.org/articles?id=10.1257/0895330042162377" target="_blank" rel="noopener">Arrow, Dasgupta &amp; M&auml;ler (2004)</a>
+                        unified wealth accounting tradition.
+                      </p>
           </details>
           <details>
             <summary>What does the 2×2 quadrant diagram show?</summary>
-            <p>
-              Two binary questions — did all affected parties consent? does inclusive
-              wealth grow or shrink? — produce four quadrants. Three of the four tell
-              government to do nothing: consensual and wealth-growing (encourage or leave
-              alone); consensual and wealth-shrinking (leave alone — their loss, their
-              choice); non-consensual and wealth-growing (rare; investigate but do not
-              reflexively brake). Only the fourth quadrant — non-consensual and
-              wealth-shrinking — gives government objective standing to act. This is a
-              much narrower licence than "whatever the median voter wants" and a much
-              wider one than "government should never act."
-            </p>
+          <p>
+                        Two binary questions &mdash; did all affected parties consent? does
+                        inclusive wealth grow or shrink? &mdash; produce four quadrants.
+                        Three of the four tell government to do nothing: consensual and
+                        wealth-growing (encourage or leave alone); consensual and
+                        wealth-shrinking (leave alone &mdash; their loss, their choice);
+                        non-consensual and wealth-growing (rare; investigate but do not
+                        reflexively brake). Only the fourth quadrant &mdash; non-consensual
+                        and wealth-shrinking &mdash; gives government objective standing to
+                        act. This is a much narrower licence than &ldquo;whatever the median
+                        voter wants&rdquo; and a much wider one than &ldquo;government should
+                        never act.&rdquo;
+                      </p>
           </details>
           <details>
-            <summary>Is there a third condition beyond wealth and consent?</summary>
-            <p>
-              Yes. Even when both conditions are met — wealth shrinks, consent absent —
-              government should still refrain if the brake itself costs more than the
-              damage it prevents. The third filter sums deadweight loss (the Harberger
-              triangle), enforcement cost, and expected regulatory capture risk, and
-              compares that total to the magnitude of the wealth loss. If
-              <code>brakeCost &gt; |ΔW|</code>, the cure is worse than the disease.
-              This is the standard public-choice corrective: Pigou taxes and Coasian
-              bargaining only dominate unregulated markets when transaction and
-              governance costs are low enough to make them feasible.
-            </p>
+            <summary>Does the criterion add a third condition beyond wealth and consent?</summary>
+          <p>
+                        Yes. Even when both conditions are met &mdash; wealth shrinks,
+                        consent absent &mdash; government should still refrain if the
+                        brake itself costs more than the damage it prevents. The third
+                        filter sums deadweight loss (the Harberger triangle), enforcement
+                        cost, and expected regulatory capture risk, and compares that
+                        total to the magnitude of the wealth loss. If
+                        <code>brakeCost &gt; |&Delta;W|</code>, the cure is worse than
+                        the disease. This is the standard public-choice corrective: Pigou
+                        taxes and Coasian bargaining only dominate unregulated markets
+                        when transaction and governance costs are low enough to make them
+                        feasible.
+                      </p>
           </details>
+<!-- FAQ-DETAILS-END -->
         </div>
       </section>
 
