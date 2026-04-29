@@ -67,9 +67,9 @@ const ratioNote = `<p style="font-size:0.78em; color:rgba(255,255,255,0.45); mar
 
 // ── Build table HTML ──────────────────────────────────────────────────────────
 const thead = `<thead><tr style="color:rgba(255,255,255,0.5); font-size:0.82em;">
-  <th style="text-align:left;padding:3px 8px">Country</th>
-  <th style="text-align:right;padding:3px 8px">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
-  <th style="text-align:right;padding:3px 8px">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
+  <th style="text-align:left;padding:3px 8px" data-i18n="table.cutgains.country">Country</th>
+  <th style="text-align:right;padding:3px 8px"><span data-i18n="table.cutgains.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
+  <th style="text-align:right;padding:3px 8px"><span data-i18n="table.cutgains.avg-growth">Avg. growth %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
   <th style="text-align:right;padding:3px 8px">Predicted gain from −${CUT_PP} pp cut</th>
 </tr></thead>`;
 

@@ -396,12 +396,12 @@ const stepRows = entered.map(e => {
   const interp = escHtml(INTERP[e.key] ?? "");
   return `              <tr>
                 <td style="padding:3px 8px">${e.step}</td>
-                <td style="padding:3px 8px">${escHtml(e.label)}</td>
+                <td style="padding:3px 8px" data-i18n="table.var.${e.key}">${escHtml(e.label)}</td>
                 <td style="padding:3px 8px">${fmtMargR2(e.margR2)}</td>
                 <td style="padding:3px 8px">${fmtCumR2(e.cumR2)}</td>
                 <td style="padding:3px 8px">${e.n}</td>
                 <td style="padding:3px 8px">${fmtSlope(e.slope)}</td>
-                <td style="padding:3px 8px">${interp}</td>
+                <td style="padding:3px 8px" data-i18n="table.interp.${e.key}">${interp}</td>
               </tr>`;
 }).join("\n");
 
@@ -414,7 +414,7 @@ const droppedRow = `              <tr style="color:rgba(255,255,255,0.35); font-
                 <td style="padding:3px 8px">\u2014</td>
                 <td style="padding:3px 8px">\u2014</td>
                 <td style="padding:3px 8px">\u2014</td>
-                <td style="padding:3px 8px">Dropped \u2014 no marginal gain after the above variables are controlled</td>
+                <td style="padding:3px 8px" data-i18n="table.stepwise.dropped-note">Dropped \u2014 no marginal gain after the above variables are controlled</td>
               </tr>`;
 
 const newRows = `${stepRows}\n${droppedRow}`;
