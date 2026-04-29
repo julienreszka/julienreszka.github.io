@@ -31,7 +31,7 @@ function writeJson(name, data) {
 /** Extract the inner content between <!-- i18n:key:start --> … <!-- /i18n:key:end --> */
 function extractBlock(html, key) {
   const startTag = `<!-- i18n:${key}:start -->`;
-  const endTag   = `<!-- /i18n:${key}:end -->`;
+  const endTag = `<!-- /i18n:${key}:end -->`;
   const s = html.indexOf(startTag);
   const e = html.indexOf(endTag);
   if (s === -1 || e === -1) throw new Error(`Block not found for key: ${key}`);
@@ -45,8 +45,8 @@ function extractBlock(html, key) {
 // ── read source files ──────────────────────────────────────────────────────
 
 const html = readFileSync(join(dir, 'armey-curve.html'), 'utf8');
-const en   = readJson('armey-curve.en.json');
-const fr   = readJson('armey-curve.fr.json');
+const en = readJson('armey-curve.en.json');
+const fr = readJson('armey-curve.fr.json');
 
 const BLOCKS = [
   'prose.power-laws-everywhere',

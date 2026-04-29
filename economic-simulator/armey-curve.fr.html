@@ -4200,24 +4200,25 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <div class="iwc-flow" role="img"
                aria-label="Organigramme de décision pour l’application du frein"
                data-i18n-aria-label="aria.iwc-flowchart">
-            <div class="iwc-node iwc-start">Activity under consideration</div>
+            <!-- i18n:prose.iwc-flowchart:start -->
+            <div class="iwc-node iwc-start">Activité à l'examen</div>
             <div class="iwc-arrow" aria-hidden="true"></div>
 
             <div class="iwc-step">
               <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
                   <div class="iwc-q">Q1</div>
-                  <div>Anyone affected who didn't consent?</div>
+                  <div>Des personnes affectées sans avoir consenti&nbsp;?</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Non : laisser faire" data-i18n-aria-label="aria.iwc-exit-no">
-                <span class="iwc-exit-label">No</span>
+                <span class="iwc-exit-label">Non</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Leave alone</div>
+                <div class="iwc-node iwc-leave">Laisser faire</div>
               </div>
             </div>
             <div class="iwc-spine">
-              <span class="iwc-spine-label">Yes</span>
+              <span class="iwc-spine-label">Oui</span>
               <div class="iwc-arrow" aria-hidden="true"></div>
             </div>
 
@@ -4225,18 +4226,18 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
                   <div class="iwc-q">Q2</div>
-                  <div>$\sum_k p_k\,\Delta K_k$ over non-consenters</div>
-                  <div class="math-note" style="margin-top:3px">(sum of price × capital-change, across all capital types)</div>
+                  <div>$\sum_k p_k\,\Delta K_k$ pour les non-consentants</div>
+                  <div class="math-note" style="margin-top:3px">(somme de prix × variation du capital, par type de capital)</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Supérieur ou égal à zéro : laisser faire" data-i18n-aria-label="aria.iwc-exit-zero">
                 <span class="iwc-exit-label">$\geq 0$</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Leave alone</div>
+                <div class="iwc-node iwc-leave">Laisser faire</div>
               </div>
             </div>
             <div class="iwc-spine">
-              <span class="iwc-spine-label">$< 0$</span>
+              <span class="iwc-spine-label">$&lt; 0$</span>
               <div class="iwc-arrow" aria-hidden="true"></div>
             </div>
 
@@ -4244,21 +4245,22 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
                   <div class="iwc-q">Q3</div>
-                  <div>Brake cost (deadweight, enforcement, capture) exceeds Q2 damage?</div>
+                  <div>Le coût du frein (perte sèche, application, capture) dépasse-t-il le dommage de Q2&nbsp;?</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Oui : laisser faire" data-i18n-aria-label="aria.iwc-exit-yes">
-                <span class="iwc-exit-label">Yes</span>
+                <span class="iwc-exit-label">Oui</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Leave alone</div>
+                <div class="iwc-node iwc-leave">Laisser faire</div>
               </div>
             </div>
             <div class="iwc-spine">
-              <span class="iwc-spine-label">No</span>
+              <span class="iwc-spine-label">Non</span>
               <div class="iwc-arrow" aria-hidden="true"></div>
             </div>
 
-            <div class="iwc-node iwc-brake">BRAKE</div>
+            <div class="iwc-node iwc-brake">FREIN</div>
+<!-- /i18n:prose.iwc-flowchart:end -->
           </div>
           <!-- IWC-FLOWCHART-END -->
 
