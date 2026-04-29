@@ -2873,14 +2873,14 @@
             </div>
             <label style="display:inline-flex; align-items:center; gap:8px; margin-bottom:8px; cursor:pointer; user-select:none;">
               <span style="position:relative; display:inline-block; width:34px; height:18px; flex-shrink:0;">
-                <input type="checkbox" id="target-growth-adjust" style="opacity:0; width:0; height:0; position:absolute;">
-                <span id="target-growth-adjust-track" style="position:absolute; inset:0; border-radius:9px; background:rgba(255,255,255,0.12); border:1px solid rgba(255,255,255,0.2); transition:background 0.2s;"></span>
-                <span id="target-growth-adjust-thumb" style="position:absolute; top:2px; left:2px; width:12px; height:12px; border-radius:50%; background:#94a3b8; transition:transform 0.2s, background 0.2s;"></span>
+                <input type="checkbox" id="target-growth-adjust" checked style="opacity:0; width:0; height:0; position:absolute;">
+                <span id="target-growth-adjust-track" style="position:absolute; inset:0; border-radius:9px; background:rgba(144,202,249,0.35); border:1px solid #90caf9; transition:background 0.2s;"></span>
+                <span id="target-growth-adjust-thumb" style="position:absolute; top:2px; left:2px; width:12px; height:12px; border-radius:50%; background:#90caf9; transform:translateX(16px); transition:transform 0.2s, background 0.2s;"></span>
               </span>
               <span class="muted-label" style="font-size:0.82em;" data-i18n="label.adjust-for-baseline">Ajuster selon la base nationale</span>
             </label>
             <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;" data-i18n="prose.target-growth-note">Inverse le modèle actuel : trouve le niveau de dépenses prédit pour atteindre l'objectif de croissance, puis calcule la réduction nécessaire par pays. Les pays déjà en dessous de ce niveau sont indiqués comme "déjà là".</p>
-            <p class="muted-note" id="target-growth-adjust-note" style="font-size:0.82em; margin:-4px 0 8px; display:none;" data-i18n="prose.target-growth-adjust-note">Ajustement de référence : le résidu de chaque pays (réel − prédit au niveau de dépenses actuel) est ajouté au modèle. L'inversion tient ainsi compte de la surperformance ou sous-performance structurelle.</p>
+            <p class="muted-note" id="target-growth-adjust-note" style="font-size:0.82em; margin:-4px 0 8px;" data-i18n="prose.target-growth-adjust-note">Ajustement de référence : le résidu de chaque pays (réel − prédit au niveau de dépenses actuel) est ajouté au modèle. L'inversion tient ainsi compte de la surperformance ou sous-performance structurelle.</p>
             <div id="target-growth-table-inner" style="overflow-x:auto;">
               <!-- STATIC-TARGET-GROWTH-TABLE:START -->
               <table style="width:100%;border-collapse:collapse;"><thead><tr class="table-header-muted" style="font-size:0.82em;">
