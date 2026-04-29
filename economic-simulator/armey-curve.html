@@ -4215,8 +4215,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
             <div class="iwc-node iwc-brake">BRAKE</div>
           </div>
+          <!-- IWC-FLOWCHART-END -->
 
-          <p>
+          <p data-i18n="prose.iwc-q3-implicit">
             Q3 is the step the section so far has implicit. It matters because
             many real-world activities fail Q1 and Q2 yet would still be made
             <em>worse</em> by intervention &mdash; either because the brake
@@ -4224,7 +4225,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             cure costs more than the disease (Q3 fail mode 2). The criterion
             therefore licences action only when all three filters are passed.
           </p>
-          <p>
+          <p data-i18n="prose.iwc-q3-qualitative">
             Q3 is the most qualitative of the three and worth flagging as
             such. Deadweight loss has a textbook estimator (Harberger
             triangles), enforcement cost has a budget line, but
@@ -4240,7 +4241,6 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             proof for new brakes there; otherwise treat the deadweight and
             enforcement components as the binding part of the test.
           </p>
-          <!-- IWC-FLOWCHART-END -->
 
           <h4 data-i18n="heading.worked-example">Worked example: applying the test to two policies</h4>
           <p data-i18n="prose.worked-example-intro-p">

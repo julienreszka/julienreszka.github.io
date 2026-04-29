@@ -4261,32 +4261,34 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
             <div class="iwc-node iwc-brake">BRAKE</div>
           </div>
-
-          <p>
-            Q3 is the step the section so far has implicit. It matters because
-            many real-world activities fail Q1 and Q2 yet would still be made
-            <em>worse</em> by intervention &mdash; either because the brake
-            mechanism itself is captureable (Q3 fail mode 1) or because the
-            cure costs more than the disease (Q3 fail mode 2). The criterion
-            therefore licences action only when all three filters are passed.
-          </p>
-          <p>
-            Q3 is the most qualitative of the three and worth flagging as
-            such. Deadweight loss has a textbook estimator (Harberger
-            triangles), enforcement cost has a budget line, but
-            <em>capture risk</em> &mdash; the probability that the brake
-            instrument gets bent toward the very interest it was meant to
-            constrain &mdash; is genuinely hard to put a number on. The
-            literature on regulatory capture
-            (<a href="https://doi.org/10.2307/3003160" target="_blank" rel="noopener">Stigler 1971</a>;
-            <a href="https://doi.org/10.1093/oxrep/grj013" target="_blank" rel="noopener">Dal B&oacute; 2006</a>)
-            describes the mechanism but offers no consensus formula. In
-            practice Q3 acts as a circuit-breaker: if a sector has a strong
-            track record of capturing its regulator, raise the burden of
-            proof for new brakes there; otherwise treat the deadweight and
-            enforcement components as the binding part of the test.
-          </p>
           <!-- IWC-FLOWCHART-END -->
+
+          <p data-i18n="prose.iwc-q3-implicit">
+          Q3 est l’étape que la section a jusqu’ici laissée implicite. Elle importe
+            parce que de nombreuses activités échouent à Q1 et Q2 mais seraient
+            tout de même <em>aggravées</em> par une intervention &mdash; soit parce que
+            le mécanisme de frein lui-même est susceptible d’être capturé (mode
+            d’échec Q3 n° 1), soit parce que le remède coûte plus que le mal
+            (mode d’échec Q3 n° 2). Le critère n’autorise donc l’action que
+            lorsque les trois filtres sont validés.
+        </p>
+          <p data-i18n="prose.iwc-q3-qualitative">
+          Q3 est le plus qualitatif des trois, et il vaut la peine de le
+            souligner. La perte sèche dispose d’un estimateur classique (les
+            triangles de Harberger), le coût d’exécution a une ligne budgétaire,
+            mais le <em>risque de capture</em> &mdash; la probabilité que l’instrument
+            de frein soit détourné au profit de l’intérêt même qu’il était censé
+            contraindre &mdash; est réellement difficile à chiffrer. La littérature
+            sur la capture réglementaire
+            (<a href="https://doi.org/10.2307/3003160" target="_blank" rel="noopener">Stigler 1971</a> ;
+            <a href="https://doi.org/10.1093/oxrep/grj013" target="_blank" rel="noopener">Dal B&oacute; 2006</a>)
+            décrit le mécanisme mais n’offre pas de formule consensuelle. En
+            pratique, Q3 fonctionne comme un disjoncteur : si un secteur a de
+            solides antécédents de capture de son régulateur, relevez le seuil de
+            preuve pour les nouveaux freins dans ce secteur ; sinon, traitez les
+            composantes de perte sèche et de coût d’exécution comme la partie
+            contraignante du test.
+        </p>
 
           <h4 data-i18n="heading.worked-example">Exemple concret : appliquer le test à deux politiques</h4>
           <p data-i18n="prose.worked-example-intro-p">Le critère n'est utile que s'il produit des verdicts non ambigus sur
