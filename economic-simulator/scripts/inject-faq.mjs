@@ -40,7 +40,7 @@ function buildJsonLd() {
 
 // ── 2. Build visible <details> block ─────────────────────────────────────────
 function buildDetails() {
-  return FAQ.map((f) => {
+  return FAQ.map((f, i) => {
     const answerHtml = f.html
       ? f.html
       : `<p>${f.jsonA.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</p>`;
@@ -52,9 +52,11 @@ function buildDetails() {
       .trimEnd();
     return (
       `          <details>\n` +
-      `            <summary>${f.q.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</summary>\n` +
+      `            <summary data-i18n="faq.${i}.q">${f.q.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</summary>\n` +
+      `          <!-- i18n:faq.${i}.html:start -->\n` +
       indented +
-      `\n          </details>`
+      `\n          <!-- /i18n:faq.${i}.html:end -->\n` +
+      `          </details>`
     );
   }).join("\n");
 }
