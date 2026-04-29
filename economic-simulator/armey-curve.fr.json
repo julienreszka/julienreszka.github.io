@@ -94,6 +94,8 @@
   "js.group.developed": "Pays d\u00e9velopp\u00e9s",
   "js.group.developing": "Pays en d\u00e9veloppement",
 
+  "summary.iwc-code": "La m\u00eame r\u00e8gle, en JavaScript (instruction principale)",
+
   "table.cutgains.country": "Pays",
   "table.cutgains.avg-spending": "D\u00e9penses moy. %",
   "table.cutgains.avg-growth": "Croissance moy. %",

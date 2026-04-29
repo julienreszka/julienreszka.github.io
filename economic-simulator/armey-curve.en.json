@@ -94,6 +94,8 @@
   "js.group.developed": "Developed Countries",
   "js.group.developing": "Developing Countries",
 
+  "summary.iwc-code": "The same rule, in JavaScript (primary statement)",
+
   "table.cutgains.country": "Country",
   "table.cutgains.avg-spending": "Avg. spending %",
   "table.cutgains.avg-growth": "Avg. growth %",

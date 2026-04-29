@@ -61,6 +61,25 @@ html = html.replace(
   }
 );
 
+// ── 2b. data-i18n-title="key" → replace title="..." on same tag ─────────────
+html = html.replace(
+  /(<[^>]+\s)data-i18n-title="([^"]+)"([^>]*title=")([^"]*?)(")/g,
+  (match, before, key, mid, _old, after) => {
+    const val = locale[key];
+    if (val === undefined) return match;
+    return `${before}data-i18n-title="${key}"${mid}${val}${after}`;
+  }
+);
+// Handle title-before-data-i18n-title order
+html = html.replace(
+  /(<[^>]+\s)(title=")([^"]*?)(")([^>]*\s)data-i18n-title="([^"]+)"([^>]*>)/g,
+  (match, before, attrOpen, _old, attrClose, mid, key, rest) => {
+    const val = locale[key];
+    if (val === undefined) return match;
+    return `${before}${attrOpen}${val}${attrClose}${mid}data-i18n-title="${key}"${rest}`;
+  }
+);
+
 // ── 2. data-i18n-aria-label="key" → replace aria-label="..." on same tag ────
 html = html.replace(
   /(<[^>]+\s)data-i18n-aria-label="([^"]+)"([^>]*aria-label=")([^"]*?)(")/g,

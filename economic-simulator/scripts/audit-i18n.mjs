@@ -45,8 +45,15 @@ for (const [open, close] of MANAGED_REGIONS) {
 }
 
 // Also mark any element with data-i18n or data-i18n-content as managed
+// For multi-line attrs (e.g. data-i18n-aria-label on one line, aria-label on
+// the next), mark ±2 surrounding lines as managed too.
 for (let i = 0; i < lines.length; i++) {
-  if (/data-i18n/.test(lines[i])) managedLines.add(i);
+  if (/data-i18n/.test(lines[i])) {
+    managedLines.add(i);
+    managedLines.add(i - 1);
+    managedLines.add(i + 1);
+    managedLines.add(i + 2);
+  }
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -88,13 +95,34 @@ function buildScriptRanges() {
   return ranges;
 }
 
+/** Track <pre> blocks — content is display-only, not a live DOM attr */
+function buildPreRanges() {
+  const ranges = [];
+  let inPre = false;
+  let startLine = -1;
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    if (!inPre && /<pre[\s>]/.test(l)) { inPre = true; startLine = i; }
+    if (inPre && /<\/pre>/.test(l)) { ranges.push({ start: startLine, end: i }); inPre = false; }
+  }
+  return ranges;
+}
+
 const scriptRanges = buildScriptRanges();
+const preRanges = buildPreRanges();
 
 function lineScriptInfo(lineIdx) {
   for (const r of scriptRanges) {
     if (lineIdx >= r.start && lineIdx <= r.end) return r;
   }
   return null;
+}
+
+function lineInPre(lineIdx) {
+  for (const r of preRanges) {
+    if (lineIdx >= r.start && lineIdx <= r.end) return true;
+  }
+  return false;
 }
 
 // ── Results collector ─────────────────────────────────────────────────────────
@@ -239,14 +267,16 @@ for (let i = 0; i < lines.length; i++) {
     if (m) add(i, cat, m[1]);
   }
 
-  // aria-label / title attrs
-  let am;
-  const attrLine = l;
-  ATTR_PATTERN.lastIndex = 0;
-  while ((am = ATTR_PATTERN.exec(attrLine)) !== null) {
-    // Skip href="#..." title patterns
-    if (/^#/.test(am[1])) continue;
-    add(i, "aria-attr", am[1]);
+  // aria-label / title attrs (skip <pre> blocks — content is escaped display text)
+  if (!lineInPre(i)) {
+    let am;
+    const attrLine = l;
+    ATTR_PATTERN.lastIndex = 0;
+    while ((am = ATTR_PATTERN.exec(attrLine)) !== null) {
+      // Skip href="#..." title patterns
+      if (/^#/.test(am[1])) continue;
+      add(i, "aria-attr", am[1]);
+    }
   }
 
   // Single-line block elements

@@ -837,7 +837,7 @@
 
       <h1 data-i18n="heading.main">La courbe d’Armey : dépenses publiques et croissance économique</h1>
       <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; font-size:0.82em; color:#94a3b8; margin: -6px 0 14px;">
-        <span title="Estimated reading time at ~220 words/min">&#x1F4D6; ~28 min read</span>
+        <span title="Temps de lecture estimé à ~220 mots/min" data-i18n-title="aria.reading-time">&#x1F4D6; ~28 min read</span>
         <span style="opacity:0.6">&middot;</span>
         <span>Last updated <time datetime="2026-04-27">2026-04-27</time></span>
         <span style="opacity:0.6">&middot;</span>
@@ -855,7 +855,7 @@
         entire observed range.
       </p>
 
-      <aside aria-label="Argument in three moves" style="margin: 18px 0 24px; padding: 16px 20px; background: rgba(255,255,255,0.04); border-left: 3px solid #f4d35e; border-radius: 6px; font-size: 0.96em; line-height: 1.55;">
+      <aside aria-label="L’argument en trois temps" data-i18n-aria-label="aria.argument" style="margin: 18px 0 24px; padding: 16px 20px; background: rgba(255,255,255,0.04); border-left: 3px solid #f4d35e; border-radius: 6px; font-size: 0.96em; line-height: 1.55;">
         <div style="font-size: 0.72em; font-weight: 700; letter-spacing: 0.12em; color: #f4d35e; margin-bottom: 8px;">THE ARGUMENT IN THREE MOVES</div>
         <ol style="margin: 0; padding-left: 22px;">
           <li style="margin-bottom: 6px;"><strong>Government slows aggregate economic activity.</strong> The
@@ -1578,35 +1578,35 @@
             The table below ranks all models by <strong style="color:rgba(255,255,255,0.85)">combined R²</strong> on the joint subset.
           </p>
           <div class="chart-container" role="img" aria-labelledby="residual-rd-chart-label">
-            <canvas id="residualRdChart" aria-label="Residuals vs R&D spending scatter plot"></canvas>
+            <canvas id="residualRdChart" data-i18n-aria-label="aria.chart.residual-rd" aria-label="Nuage de points : résidus vs dépenses en R&D"></canvas>
             <div id="residual-rd-chart-label" class="sr-only">Scatter plot of Armey model residuals against R&D spending % GDP</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-mil-chart-label" style="margin-top:16px">
-            <canvas id="residualMilChart" aria-label="Residuals vs military expenditure scatter plot"></canvas>
+            <canvas id="residualMilChart" data-i18n-aria-label="aria.chart.residual-mil" aria-label="Nuage de points : résidus vs dépenses militaires"></canvas>
             <div id="residual-mil-chart-label" class="sr-only">Scatter plot of Armey model residuals against military expenditure % GDP</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-capform-chart-label" style="margin-top:16px">
-            <canvas id="residualCapFormChart" aria-label="Residuals vs gross capital formation scatter plot"></canvas>
+            <canvas id="residualCapFormChart" data-i18n-aria-label="aria.chart.residual-capform" aria-label="Nuage de points : résidus vs formation brute de capital"></canvas>
             <div id="residual-capform-chart-label" class="sr-only">Scatter plot of Armey model residuals against gross capital formation % GDP</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-popgrow-chart-label" style="margin-top:16px">
-            <canvas id="residualPopGrowChart" aria-label="Residuals vs population growth scatter plot"></canvas>
+            <canvas id="residualPopGrowChart" data-i18n-aria-label="aria.chart.residual-popgrow" aria-label="Nuage de points : résidus vs croissance démographique"></canvas>
             <div id="residual-popgrow-chart-label" class="sr-only">Scatter plot of Armey model residuals against population growth %</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-totvol-chart-label" style="margin-top:16px">
-            <canvas id="residualTotVolChart" aria-label="Residuals vs terms-of-trade volatility scatter plot"></canvas>
+            <canvas id="residualTotVolChart" data-i18n-aria-label="aria.chart.residual-totvol" aria-label="Nuage de points : résidus vs volatilité des termes de l’échange"></canvas>
             <div id="residual-totvol-chart-label" class="sr-only">Scatter plot of Armey model residuals against terms-of-trade volatility (SD of annual % changes)</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-credit-chart-label" style="margin-top:16px">
-            <canvas id="residualCreditChart" aria-label="Residuals vs domestic credit scatter plot"></canvas>
+            <canvas id="residualCreditChart" data-i18n-aria-label="aria.chart.residual-credit" aria-label="Nuage de points : résidus vs crédit intérieur"></canvas>
             <div id="residual-credit-chart-label" class="sr-only">Scatter plot of Armey model residuals against domestic credit to private sector % GDP</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-tertiary-chart-label" style="margin-top:16px">
-            <canvas id="residualTertiaryChart" aria-label="Residuals vs tertiary enrollment scatter plot"></canvas>
+            <canvas id="residualTertiaryChart" data-i18n-aria-label="aria.chart.residual-tertiary" aria-label="Nuage de points : résidus vs inscription dans l’enseignement supérieur"></canvas>
             <div id="residual-tertiary-chart-label" class="sr-only">Scatter plot of Armey model residuals against tertiary enrollment rate %</div>
           </div>
           <div class="chart-container" role="img" aria-labelledby="residual-chart-label" style="margin-top:16px">
-            <canvas id="residualIncomeChart" aria-label="Residuals vs log GDP per capita scatter plot"></canvas>
+            <canvas id="residualIncomeChart" data-i18n-aria-label="aria.chart.residual-income" aria-label="Nuage de points : résidus vs log du PIB par habitant"></canvas>
             <div id="residual-chart-label" class="sr-only">Scatter plot of Armey model residuals against log GDP per capita</div>
           </div>
           <div id="residual-income-stats" aria-live="polite" style="margin-top: 8px; font-size: 0.88em;">
@@ -2782,7 +2782,8 @@
             </p>
             <button
               class="share-quote-btn"
-              aria-label="Share this quote on X"
+              aria-label="Partager cette citation sur X"
+              data-i18n-aria-label="aria.share-quote"
               onclick="shareQuote()"
             >
               Share on X
@@ -2856,7 +2857,7 @@
             The cleanest formulation comes from the
             <strong>inclusive wealth</strong> tradition. The pedigree:
           </p>
-          <div class="iwc-pedigree" aria-label="Inclusive wealth pedigree">
+          <div class="iwc-pedigree" aria-label="Filiation de la richesse inclusive" data-i18n-aria-label="aria.iwc-pedigree">
             <div class="iwc-ped-row">
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">1920 / 1960</div>
@@ -2951,7 +2952,7 @@
             capital of type $k$ caused by activity $a$."
           </p>
           <details class="iwc-code" open>
-            <summary>The same rule, in JavaScript (primary statement)</summary>
+            <summary data-i18n="summary.iwc-code">La même règle, en JavaScript (instruction principale)</summary>
 <pre><code>// Capital kinds — module-level constant, not per-call state.
 const CAPITAL_KINDS = [
   "produced",      // factories, infrastructure, durable goods
@@ -3092,7 +3093,8 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <div class="iwc-flow" role="img"
-               aria-label="Decision flowchart for whether to brake an activity">
+               aria-label="Organigramme de décision pour l’application du frein"
+               data-i18n-aria-label="aria.iwc-flowchart">
             <div class="iwc-node iwc-start">Activity under consideration</div>
             <div class="iwc-arrow" aria-hidden="true"></div>
 
@@ -3103,7 +3105,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                   <div>Anyone affected who didn't consent?</div>
                 </div>
               </div>
-              <div class="iwc-exit" aria-label="No: leave alone">
+              <div class="iwc-exit" aria-label="Non : laisser faire" data-i18n-aria-label="aria.iwc-exit-no">
                 <span class="iwc-exit-label">No</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
                 <div class="iwc-node iwc-leave">Leave alone</div>
@@ -3122,7 +3124,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                   <div class="math-note" style="margin-top:3px">(sum of price × capital-change, across all capital types)</div>
                 </div>
               </div>
-              <div class="iwc-exit" aria-label="Greater than or equal to zero: leave alone">
+              <div class="iwc-exit" aria-label="Supérieur ou égal à zéro : laisser faire" data-i18n-aria-label="aria.iwc-exit-zero">
                 <span class="iwc-exit-label">$\geq 0$</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
                 <div class="iwc-node iwc-leave">Leave alone</div>
@@ -3140,7 +3142,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                   <div>Brake cost (deadweight, enforcement, capture) exceeds Q2 damage?</div>
                 </div>
               </div>
-              <div class="iwc-exit" aria-label="Yes: leave alone">
+              <div class="iwc-exit" aria-label="Oui : laisser faire" data-i18n-aria-label="aria.iwc-exit-yes">
                 <span class="iwc-exit-label">Yes</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
                 <div class="iwc-node iwc-leave">Leave alone</div>
