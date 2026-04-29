@@ -1254,8 +1254,7 @@
 
         <div class="param-group">
           <label for="highlight-country-select"
-            data-i18n="label.highlight-country">Highlight Specific Country:</label
-          >
+            data-i18n="label.highlight-country">Mettre en évidence un pays spécifique :</label>
           <select
             id="highlight-country-select"
             aria-describedby="highlight-country-help"
@@ -2106,11 +2105,11 @@
             </p>
             <div id="cut-gains-table-inner" style="overflow-x:auto;">
               <!-- STATIC-CUT-GAINS-TABLE:START -->
-              <table style="width:100%;border-collapse:collapse;"><thead><tr class="table-header-muted" style="font-size:0.82em;">
-                <th style="text-align:left;padding:3px 8px">Country</th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">Predicted gain from −5 pp cut</th>
+              <table style="width:100%;border-collapse:collapse;"><thead><tr style="color:rgba(255,255,255,0.5); font-size:0.82em;">
+                <th style="text-align:left;padding:3px 8px" data-i18n="table.cutgains.country">Pays</th>
+                <th style="text-align:right;padding:3px 8px"><span data-i18n="table.cutgains.avg-spending">Dépenses moy. %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px"><span data-i18n="table.cutgains.avg-growth">Croissance moy. %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">2005–2023</span></th>
+                <th style="text-align:right;padding:3px 8px" data-i18n="table.cutgains.predicted-gain">Gain prédit pour une coupe de −5 pp</th>
               </tr></thead><tbody><tr style="font-size:0.83em;">
                   <td style="padding:2px 8px">Greece</td>
                   <td style="padding:2px 8px; text-align:right">50.6%</td>
@@ -6050,7 +6049,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         <!-- EMBED:START -->
         <h2 data-i18n="heading.embed">Intégrer ce simulateur</h2>
         <div class="armey-specific">
-          <p style="font-size:0.95em">You can embed the interactive chart on your site. Copy the snippet below:</p>
+          <p style="font-size:0.95em" data-i18n="prose.embed-intro">Vous pouvez intégrer le graphique interactif sur votre site. Copiez l’extrait ci-dessous :</p>
           <pre id="embed-snippet" class="code-snippet">&lt;iframe
   src="https://julienreszka.github.io/economic-simulator/armey-curve.html#armey-section"
   width="100%"
