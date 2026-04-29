@@ -44,6 +44,11 @@ for (const [open, close] of MANAGED_REGIONS) {
   }
 }
 
+// Also mark any element with data-i18n or data-i18n-content as managed
+for (let i = 0; i < lines.length; i++) {
+  if (/data-i18n/.test(lines[i])) managedLines.add(i);
+}
+
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function excerpt(str) {
   return str.replace(/\s+/g, " ").trim().slice(0, 120).replace(/"/g, '""');
@@ -52,8 +57,9 @@ function excerpt(str) {
 function isBoringText(str) {
   const t = str.replace(/\s+/g, " ").trim();
   if (t.length < 2) return true;
-  // Pure numbers / punctuation / symbols
-  if (/^[\d\s.,;:!?()\-–—·×§%°€$#@&*/+<>=\[\]{}|^~`'"\\]+$/.test(t)) return true;
+  // Pure numbers / punctuation / symbols (including HTML-entity numbers like &lt;0.001)
+  const stripped = t.replace(/&[a-z]+;|&#\d+;/g, "0");
+  if (/^[\d\s.,;:!?()\-–—·×§%°€$#@&*/+<>=\[\]{}|^~`'"\\]+$/.test(stripped)) return true;
   // URLs
   if (/^https?:\/\//.test(t)) return true;
   // KaTeX / math tokens only
@@ -120,14 +126,21 @@ function add(lineIdx, category, text) {
 // For multi-line elements we use a stateful accumulator below.
 
 // --- Meta tags ---
+// Only capture properties that have human-readable translatable content.
+// Exclude: og:type, og:image, og:url, article:*, twitter:card, twitter:creator,
+//          robots, theme-color, viewport — these are schema/technical values.
 const META_PATTERNS = [
   { re: /<title>([^<]+)<\/title>/, cat: "meta" },
   { re: /<meta\s[^>]*name=["']description["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
   { re: /<meta\s[^>]*content=["']([^"']+)["'][^>]*name=["']description["']/, cat: "meta" },
-  { re: /<meta\s[^>]*property=["']og:[^"']*["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
-  { re: /<meta\s[^>]*content=["']([^"']+)["'][^>]*property=["']og:/, cat: "meta" },
-  { re: /<meta\s[^>]*name=["']twitter:[^"']*["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
-  { re: /<meta\s[^>]*content=["']([^"']+)["'][^>]*name=["']twitter:/, cat: "meta" },
+  { re: /<meta\s[^>]*property=["']og:title["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
+  { re: /<meta\s[^>]*content=["']([^"']+)["'][^>]*property=["']og:title["']/, cat: "meta" },
+  { re: /<meta\s[^>]*property=["']og:description["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
+  { re: /<meta\s[^>]*content=["']([^"']+)["'][^>]*property=["']og:description["']/, cat: "meta" },
+  { re: /<meta\s[^>]*name=["']twitter:title["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
+  { re: /<meta\s[^>]*content=["']([^"']+)["'][^>]*name=["']twitter:title["']/, cat: "meta" },
+  { re: /<meta\s[^>]*name=["']twitter:description["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
+  { re: /<meta\s[^>]*content=["']([^"']+)["'][^>]*name=["']twitter:description["']/, cat: "meta" },
   { re: /<meta\s[^>]*name=["']keywords["'][^>]*content=["']([^"']+)["']/, cat: "meta" },
 ];
 
@@ -246,7 +259,15 @@ for (let i = 0; i < lines.length; i++) {
   else if ((sm = TABLE_CELL_RE.exec(l))) add(i, "table-cell", sm[1]);
   else if ((sm = LI_RE.exec(l))) add(i, "list-item", sm[1]);
   else if ((sm = SUMMARY_RE.exec(l))) add(i, "summary", sm[1]);
-  else if ((sm = NAV_A_RE.exec(l))) add(i, "nav", sm[1]);
+  // nav / <a> links — only flag if text looks like UI copy, not:
+  //   • academic citations: "Author (Year)" / "Author Year" / "Author & Author (Year)"
+  //   • very short inline anchor text (< 8 chars) embedded within prose
+  else if ((sm = NAV_A_RE.exec(l))) {
+    const t = sm[1].replace(/&[a-z]+;/g, " ").trim();
+    const isCitation = /^[A-ZÀÂÄÈÉÊËÎÏÔÙÛÜŸ]/.test(t) && /\d{4}/.test(t);
+    const isTooShort = t.length < 8;
+    if (!isCitation && !isTooShort) add(i, "nav", sm[1]);
+  }
 
   // Multi-line block accumulator
   if (!blockTag) {

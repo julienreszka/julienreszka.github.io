@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-i18n="meta.title">
-      Government Sweet Spot: Challenging the Armey Curve | Interactive Economic
-      Simulator
-    </title>
+    <title data-i18n="meta.title">Point d’équilibre des dépenses publiques : remettre en cause la courbe d’Armey | Simulateur économique interactif</title>
 
     <!-- SEO Meta Tags -->
     <meta
       name="description"
       data-i18n-content="meta.description"
-      content="Cross-country data shows government spending monotonically slows growth. So if government is structurally a brake, the right question isn't 'how much' but 'on what'. The Inclusive Wealth Criterion: brake an activity only when it shrinks inclusive wealth AND some affected party never consented. Interactive simulator + 11-section essay."
+      content="Les données internationales montrent que les dépenses publiques freinent monotonement la croissance. Si l’État est structurellement un frein, la bonne question n’est pas « combien » mais « sur quoi ». Le critère de richesse inclusive : freiner une activité uniquement quand elle réduit la richesse inclusive ET qu’une partie affectée n’a jamais consenti. Simulateur interactif + essai en 11 sections."
     />
     <meta
       name="keywords"
@@ -26,12 +23,12 @@
     <meta
       property="og:title"
       data-i18n-content="meta.og.title"
-      content="Government is a Brake. Aim it by Inclusive Wealth, not Taste."
+      content="L’État est un frein. Visez-le par la richesse inclusive, pas par le goût."
     />
     <meta
       property="og:description"
       data-i18n-content="meta.og.description"
-      content="Empirical: government spending monotonically slows growth (power law beats quadratic, R² 0.42 vs 0.39, n=113). Reframe: if it's a brake, aim it. Rule: brake an activity only when it shrinks inclusive wealth AND some affected party never consented — three of four quadrants tell government to do nothing."
+      content="Empirique : les dépenses publiques freinent monotonement la croissance (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Recadrage : si c’est un frein, visez-le. Règle : freinez une activité uniquement quand elle réduit la richesse inclusive ET qu’une partie affectée n’a jamais consenti — trois quadrants sur quatre disent à l’État de ne rien faire."
     />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-01-01T00:00:00Z" />
@@ -40,7 +37,7 @@
     <meta property="article:section" content="Economics" />
     <meta
       property="og:url"
-      content="https://julienreszka.github.io/economic-simulator/armey-curve.html"
+      content="https://julienreszka.github.io/economic-simulator/armey-curve.fr.html"
     />
     <meta property="og:site_name" content="Economic Curves Simulator" />
 
@@ -49,12 +46,12 @@
     <meta
       name="twitter:title"
       data-i18n-content="meta.twitter.title"
-      content="Government is a Brake. Aim it by Inclusive Wealth, not Taste."
+      content="L’État est un frein. Visez-le par la richesse inclusive, pas par le goût."
     />
     <meta
       name="twitter:description"
       data-i18n-content="meta.twitter.description"
-      content="Cross-country data: gov spending monotonically slows growth. So if it's a brake, aim it — brake activities only when they shrink inclusive wealth AND lack consent. Three of four quadrants: leave alone."
+      content="Données internationales : les dépenses publiques freinent monotonement la croissance. Si c’est un frein, visez-le — freinez uniquement quand elles réduisent la richesse inclusive ET sans consentement. Trois quadrants sur quatre : ne rien faire."
     />
     <meta name="twitter:creator" content="@julienreszka" />
 
@@ -834,17 +831,17 @@
   <body>
     <div id="container">
       <!-- Navigation Breadcrumb -->
-      <nav class="nav-breadcrumb" aria-label="Breadcrumb" data-i18n-aria-label="aria.breadcrumb">
-        <a href="index.html" data-i18n="nav.back">← Back to All Curves</a>
+      <nav class="nav-breadcrumb" aria-label="Fil d’Ariane" data-i18n-aria-label="aria.breadcrumb">
+        <a href="index.html" data-i18n="nav.back">← Retour à toutes les courbes</a>
       </nav>
 
-      <h1 data-i18n="heading.main">The Armey Curve: Government Spending vs Economic Growth</h1>
+      <h1 data-i18n="heading.main">La courbe d’Armey : dépenses publiques et croissance économique</h1>
       <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; font-size:0.82em; color:#94a3b8; margin: -6px 0 14px;">
         <span title="Estimated reading time at ~220 words/min">&#x1F4D6; ~28 min read</span>
         <span style="opacity:0.6">&middot;</span>
         <span>Last updated <time datetime="2026-04-27">2026-04-27</time></span>
         <span style="opacity:0.6">&middot;</span>
-        <a href="#inclusive-wealth-criterion" style="color:#90caf9; text-decoration:none;" data-i18n="nav.jump-criterion">Jump to the criterion &rarr;</a>
+        <a href="#inclusive-wealth-criterion" style="color:#90caf9; text-decoration:none;" data-i18n="nav.jump-criterion">Aller au critère →</a>
       </div>
 
       <p>
@@ -879,19 +876,19 @@
 
       <!-- Interactive Simulation -->
       <section id="armey-section">
-        <h2 id="armey-simulator" data-i18n="heading.simulator">Interactive Armey Curve Simulator</h2>
+        <h2 id="armey-simulator" data-i18n="heading.simulator">Simulateur interactif de la courbe d’Armey</h2>
 
         <form id="paramsFormArmey">
           <div class="param-group">
-            <label for="curve-type-select" data-i18n="label.curve-type">Curve Model Type:</label>
+            <label for="curve-type-select" data-i18n="label.curve-type">Type de modèle de courbe :</label>
             <select id="curve-type-select" aria-describedby="curve-type-help">
-              <option value="power-law" data-i18n="option.power-law">Power Law (β₀ × s⁻ᵅ)</option>
-              <option value="log-linear" data-i18n="option.log-linear">Log-Linear (β₀ − α × ln(s+1))</option>
-              <option value="quadratic" data-i18n="option.quadratic">Quadratic (Traditional Armey)</option>
-              <option value="free-quadratic" data-i18n="option.free-quadratic">Free Quadratic (Unconstrained)</option>
-              <option value="linear" data-i18n="option.linear">Linear Decline</option>
-              <option value="inverse" data-i18n="option.inverse">Inverse (1/x decline)</option>
-              <option value="exponential" data-i18n="option.exponential">Exponential Decay</option>
+              <option value="power-law" data-i18n="option.power-law">Loi de puissance (β₀ × s⁻ᵅ)</option>
+              <option value="log-linear" data-i18n="option.log-linear">Log-linéaire (β₀ − α × ln(s+1))</option>
+              <option value="quadratic" data-i18n="option.quadratic">Quadratique (courbe d’Armey traditionnelle)</option>
+              <option value="free-quadratic" data-i18n="option.free-quadratic">Quadratique libre (non contraint)</option>
+              <option value="linear" data-i18n="option.linear">Déclin linéaire</option>
+              <option value="inverse" data-i18n="option.inverse">Inverse (déclin en 1/x)</option>
+              <option value="exponential" data-i18n="option.exponential">Décroissance exponentielle</option>
             </select>
             <small id="curve-type-help" class="help-text">
               Power Law: steep initial drop, flattens gradually (α controls
@@ -961,7 +958,7 @@
             id="linear-slope-group"
             style="display: none"
           >
-            <label for="linear-slope" data-i18n="label.linear-slope">Linear slope (e.g., -0.3):</label>
+            <label for="linear-slope" data-i18n="label.linear-slope">Pente linéaire (ex. : -0,3) :</label>
             <input
               type="number"
               id="linear-slope"
@@ -978,7 +975,7 @@
           </div>
 
           <div class="param-group" id="inverse-group" style="display: none">
-            <label for="inverse-strength" data-i18n="label.inverse-offset">Vertical offset a (e.g., 0):</label>
+            <label for="inverse-strength" data-i18n="label.inverse-offset">Décalage vertical a (ex. : 0) :</label>
             <input
               type="number"
               id="inverse-strength"
@@ -995,7 +992,7 @@
           </div>
 
           <div class="param-group" id="free-quadratic-b1-group" style="display: none">
-            <label for="free-quad-b1" data-i18n="label.fq-b1">Linear coeff β₁ (auto-fitted):</label>
+            <label for="free-quad-b1" data-i18n="label.fq-b1">Coeff. linéaire β₁ (ajustement auto) :</label>
             <input
               type="number"
               id="free-quad-b1"
@@ -1008,7 +1005,7 @@
             <small id="free-quad-b1-help" class="sr-only">Linear coefficient in y = β₀ + β₁·s + β₂·s² — auto-fitted, can be any sign</small>
           </div>
           <div class="param-group" id="free-quadratic-b2-group" style="display: none">
-            <label for="free-quad-b2" data-i18n="label.fq-b2">Quadratic coeff β₂ (auto-fitted):</label>
+            <label for="free-quad-b2" data-i18n="label.fq-b2">Coeff. quadratique β₂ (ajustement auto) :</label>
             <input
               type="number"
               id="free-quad-b2"
@@ -1022,7 +1019,7 @@
           </div>
 
           <div class="param-group" id="exponential-group" style="display: none">
-            <label for="exp-decay" data-i18n="label.exp-decay">Decay rate (e.g., 0.3):</label>
+            <label for="exp-decay" data-i18n="label.exp-decay">Taux de décroissance (ex. : 0,3) :</label>
             <input
               type="number"
               id="exp-decay"
@@ -1039,7 +1036,7 @@
           </div>
 
           <div class="param-group" id="power-law-group" style="display: none">
-            <label for="power-law-exponent" data-i18n="label.pl-exponent">Exponent (α, e.g., 1.5):</label>
+            <label for="power-law-exponent" data-i18n="label.pl-exponent">Exposant (α, ex. : 1,5) :</label>
             <input
               type="number"
               id="power-law-exponent"
@@ -1056,7 +1053,7 @@
           </div>
 
           <div class="param-group" id="log-linear-group" style="display: none">
-            <label for="log-slope" data-i18n="label.log-slope">Log slope (α, e.g., 2.5):</label>
+            <label for="log-slope" data-i18n="label.log-slope">Pente logarithmique (α, ex. : 2,5) :</label>
             <input
               type="number"
               id="log-slope"
@@ -1089,12 +1086,12 @@
         </div>
 
         <div class="param-group">
-          <label for="country-select" data-i18n="label.country-data">Show Real Country Data:</label>
+          <label for="country-select" data-i18n="label.country-data">Afficher les données réelles par pays :</label>
           <select id="country-select" aria-describedby="country-select-help">
-            <option value="all" data-i18n="option.country-all">All Countries</option>
-            <option value="developed" data-i18n="option.country-developed">Developed Countries</option>
-            <option value="developing" data-i18n="option.country-developing">Developing Countries</option>
-            <option value="none" data-i18n="option.country-none">Hide Country Data</option>
+            <option value="all" data-i18n="option.country-all">Tous les pays</option>
+            <option value="developed" data-i18n="option.country-developed">Pays développés</option>
+            <option value="developing" data-i18n="option.country-developing">Pays en développement</option>
+            <option value="none" data-i18n="option.country-none">Masquer les données par pays</option>
           </select>
           <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;">
             <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
@@ -1144,23 +1141,13 @@
         </div>
 
         <div class="param-group">
-          <label for="time-period-select" data-i18n="label.time-period">Time Period for Averaging:</label>
+          <label for="time-period-select" data-i18n="label.time-period">Période de calcul de la moyenne :</label>
           <select id="time-period-select" aria-describedby="time-period-help">
-            <option value="recent" data-i18n="option.period-recent">
-              Recent (2018-2023) - Post-crisis stability
-            </option>
-            <option value="decade" data-i18n="option.period-decade">
-              Decade (2014-2023) - Full business cycle
-            </option>
-            <option value="long" data-i18n="option.period-long">
-              Long-term (2010-2023) - Including financial crisis
-            </option>
-            <option value="structural" selected data-i18n="option.period-structural">
-              Structural (2005-2023) - Long-term trends
-            </option>
-            <option value="extended" data-i18n="option.period-extended">
-              Extended (1995-2023) - Maximum coverage
-            </option>
+            <option value="recent" data-i18n="option.period-recent">Récent (2018-2023) - Stabilité post-crise</option>
+            <option value="decade" data-i18n="option.period-decade">Décennie (2014-2023) - Cycle économique complet</option>
+            <option value="long" data-i18n="option.period-long">Long terme (2010-2023) - Crise financière incluse</option>
+            <option value="structural" selected data-i18n="option.period-structural">Structurel (2005-2023) - Tendances de long terme</option>
+            <option value="extended" data-i18n="option.period-extended">Étendu (1995-2023) - Couverture maximale</option>
           </select>
           <small id="time-period-help" class="help-text"
             >Longer periods smooth volatility but may include outdated
@@ -1176,12 +1163,12 @@
         </div>
 
         <div class="param-group">
-          <label for="min-years-select" data-i18n="label.min-years">Minimum Years of Data per Country:</label>
+          <label for="min-years-select" data-i18n="label.min-years">Nombre minimum d’années de données par pays :</label>
           <select id="min-years-select" aria-describedby="min-years-help">
-            <option value="1" data-i18n="option.min-years-1">1 year (maximum coverage)</option>
-            <option value="3" selected data-i18n="option.min-years-3">3 years (default)</option>
-            <option value="5" data-i18n="option.min-years-5">5 years</option>
-            <option value="7" data-i18n="option.min-years-7">7 years</option>
+            <option value="1" data-i18n="option.min-years-1">1 an (couverture maximale)</option>
+            <option value="3" selected data-i18n="option.min-years-3">3 ans (par défaut)</option>
+            <option value="5" data-i18n="option.min-years-5">5 ans</option>
+            <option value="7" data-i18n="option.min-years-7">7 ans</option>
           </select>
           <span id="country-count-display" style="margin-left:10px; font-size:0.85em; color:rgba(255,255,255,0.6);"></span>
           <small id="min-years-help" class="help-text">Countries with fewer years of available data are excluded. Higher thresholds improve reliability but reduce coverage.</small>
@@ -1195,7 +1182,7 @@
             id="highlight-country-select"
             aria-describedby="highlight-country-help"
           >
-            <option value="none" data-i18n="option.highlight-none">No country highlighted</option>
+            <option value="none" data-i18n="option.highlight-none">Aucun pays mis en évidence</option>
           </select>
           <small id="highlight-country-help" class="help-text"
             >Select a country to highlight with a red dot</small
@@ -1210,7 +1197,7 @@
           <canvas
             id="growthChartArmey"
             data-i18n-aria-label="aria.chart.main"
-            aria-label="Interactive Armey Curve showing relationship between government spending and economic growth"
+            aria-label="Courbe d’Armey interactive montrant la relation entre les dépenses publiques et la croissance économique"
           ></canvas>
           <div id="armey-chart-label" class="sr-only">
             Chart displaying the Armey Curve with government spending on x-axis
@@ -4688,7 +4675,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       </section>
 
       <section id="faq">
-        <h2 data-i18n="heading.faq">Frequently Asked Questions</h2>
+        <h2 data-i18n="heading.faq">Questions fréquemment posées</h2>
         <div class="armey-specific">
 <!-- FAQ-DETAILS-START -->
           <details>
@@ -4889,7 +4876,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <p style="font-size:0.95em; margin-bottom: 8px">If you reference this analysis or simulator, please cite:</p>
           <h4 style="margin: 12px 0 4px">APA</h4>
           <pre id="cite-apa" class="code-snippet">Reszka, J. (2024). <em>The Armey Curve: Government Spending vs Economic Growth</em> [Interactive simulator]. Retrieved from https://julienreszka.github.io/economic-simulator/armey-curve.html</pre>
-          <button onclick="copyText('cite-apa', this)" style="margin: 4px 0 14px" data-i18n="button.copy-apa">Copy APA</button>
+          <button onclick="copyText('cite-apa', this)" style="margin: 4px 0 14px" data-i18n="button.copy-apa">Copier APA</button>
 
           <h4 style="margin: 12px 0 4px">BibTeX</h4>
           <pre id="cite-bibtex" class="code-snippet">@misc{reszka2024armeycurve,
@@ -4899,7 +4886,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
   url       = {https://julienreszka.github.io/economic-simulator/armey-curve.html},
   note      = {Interactive simulator. Last modified 2026-04-12}
 }</pre>
-          <button onclick="copyText('cite-bibtex', this)" style="margin: 4px 0 0" data-i18n="button.copy-bibtex">Copy BibTeX</button>
+          <button onclick="copyText('cite-bibtex', this)" style="margin: 4px 0 0" data-i18n="button.copy-bibtex">Copier BibTeX</button>
         </div>
       </section>
 
@@ -4973,7 +4960,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
   title="Armey Curve: Government Spending vs Economic Growth"
 &gt;&lt;/iframe&gt;
 &lt;p style="font-size:0.8em"&gt;Source: &lt;a href="https://julienreszka.github.io/economic-simulator/armey-curve.html"&gt;julienreszka.github.io — The Armey Curve&lt;/a&gt;&lt;/p&gt;</pre>
-          <button onclick="copyText('embed-snippet', this)" data-i18n="button.copy-embed">Copy Embed Code</button>
+          <button onclick="copyText('embed-snippet', this)" data-i18n="button.copy-embed">Copier le code d’intégration</button>
         </div>
       </section>
 
