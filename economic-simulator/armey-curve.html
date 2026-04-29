@@ -865,7 +865,8 @@
         "js.tooltip.log-linear": "Log-linear: Diminishing marginal damage from each additional unit of government spending.",
         "js.share.quote": "Government spending reliably slows economic activity \u2014 so the right use of government is to aim that braking force at the parts of the economy we want less of.",
         "js.already-there": "already there",
-        "js.impossible": "impossible"
+        "js.impossible": "impossible",
+        "js.no-cut-needed": "no cut needed"
       };
     </script>
     <!-- I18N-JS-END -->
@@ -8645,9 +8646,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
         const tbody = rows.map(r => {
           let cutStr, cutColor, targetStr;
-          if (r.requiredCut === null) {
+          if (r.growth >= target) {
+            cutStr = (window.i18n||{})['js.no-cut-needed']||'no cut needed'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = '—';
+          } else if (r.requiredCut === null) {
             cutStr = (window.i18n||{})['js.impossible']||'impossible'; cutColor = 'rgba(255,100,100,0.8)'; targetStr = '—';
-          } else if (r.requiredCut <= 0 || r.growth >= target) {
+          } else if (r.requiredCut <= 0) {
             cutStr = (window.i18n||{})['js.already-there']||'already there'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = r.targetSpending !== null ? r.targetSpending.toFixed(1) + '%' : '—';
           } else {
             const color = r.requiredCut >= 20 ? 'rgba(255,100,80,0.9)' : r.requiredCut >= 10 ? 'rgba(255,165,80,0.9)' : r.requiredCut >= 5 ? 'rgba(220,200,80,0.9)' : 'rgba(100,220,100,0.9)';

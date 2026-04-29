@@ -58,6 +58,7 @@
   "label.adjust-for-baseline": "Adjust for country baseline",
   "js.already-there": "already there",
   "js.impossible": "impossible",
+  "js.no-cut-needed": "no cut needed",
   "option.power-law": "Power Law (β₀ × s⁻ᵅ)",
   "option.log-linear": "Log-Linear (β₀ − α × ln(s+1))",
   "option.quadratic": "Quadratic (Traditional Armey)",

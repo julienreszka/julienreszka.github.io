@@ -58,6 +58,7 @@
   "label.adjust-for-baseline": "Ajuster selon la base nationale",
   "js.already-there": "déjà là",
   "js.impossible": "impossible",
+  "js.no-cut-needed": "aucune coupe nécessaire",
   "option.power-law": "Loi de puissance (β₀ × s⁻ᵅ)",
   "option.log-linear": "Log-linéaire (β₀ − α × ln(s+1))",
   "option.quadratic": "Quadratique (courbe d’Armey traditionnelle)",

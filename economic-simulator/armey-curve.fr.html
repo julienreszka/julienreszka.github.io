@@ -833,6 +833,7 @@
       window.i18n = {
               "js.already-there": "déjà là",
               "js.impossible": "impossible",
+              "js.no-cut-needed": "aucune coupe nécessaire",
               "js.alert.no-data": "Les données de l’API en direct ne sont pas chargées. Rechargez la page avec une connexion internet pour récupérer les données depuis l’API de la Banque mondiale.",
               "js.alert.no-ranking": "Aucune donnée de classement disponible pour l’instant.",
               "js.alert.no-country-data": "Aucune donnée pays chargée. Attendez la fin du chargement ou sélectionnez un groupe de pays.",
@@ -8682,9 +8683,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
         const tbody = rows.map(r => {
           let cutStr, cutColor, targetStr;
-          if (r.requiredCut === null) {
+          if (r.growth >= target) {
+            cutStr = (window.i18n||{})['js.no-cut-needed']||'no cut needed'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = '—';
+          } else if (r.requiredCut === null) {
             cutStr = (window.i18n||{})['js.impossible']||'impossible'; cutColor = 'rgba(255,100,100,0.8)'; targetStr = '—';
-          } else if (r.requiredCut <= 0 || r.growth >= target) {
+          } else if (r.requiredCut <= 0) {
             cutStr = (window.i18n||{})['js.already-there']||'already there'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = r.targetSpending !== null ? r.targetSpending.toFixed(1) + '%' : '—';
           } else {
             const color = r.requiredCut >= 20 ? 'rgba(255,100,80,0.9)' : r.requiredCut >= 10 ? 'rgba(255,165,80,0.9)' : r.requiredCut >= 5 ? 'rgba(220,200,80,0.9)' : 'rgba(100,220,100,0.9)';
