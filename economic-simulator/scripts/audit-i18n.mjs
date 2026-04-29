@@ -12,6 +12,7 @@
 //                 summary | nav
 //   status      — managed | hardcoded
 //   excerpt     — first 120 chars of the string (whitespace collapsed)
+//   context     — ±2 surrounding lines from the source file (whitespace collapsed)
 
 import { readFileSync, writeFileSync } from "fs";
 import { resolve, dirname } from "path";
@@ -91,12 +92,26 @@ function lineScriptInfo(lineIdx) {
 }
 
 // ── Results collector ─────────────────────────────────────────────────────────
-const rows = []; // {line, category, status, excerpt}
+const rows = []; // {line, category, status, text, ctx}
+
+/** Return ±2 lines around lineIdx, stripped and collapsed, max 160 chars. */
+function surroundingContext(lineIdx) {
+  const start = Math.max(0, lineIdx - 2);
+  const end = Math.min(lines.length - 1, lineIdx + 2);
+  return lines
+    .slice(start, end + 1)
+    .map((l) => l.trim())
+    .join(" ▸ ")
+    .replace(/"/g, "'")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 200);
+}
 
 function add(lineIdx, category, text) {
   if (isBoringText(text)) return;
   const status = managedLines.has(lineIdx) ? "managed" : "hardcoded";
-  rows.push({ line: lineIdx + 1, category, status, text: excerpt(text) });
+  rows.push({ line: lineIdx + 1, category, status, text: excerpt(text), ctx: surroundingContext(lineIdx) });
 }
 
 // ── Main scan — line by line ──────────────────────────────────────────────────
@@ -269,9 +284,9 @@ for (const r of hardcoded) {
 }
 
 // ── Write CSV ─────────────────────────────────────────────────────────────────
-const header = "line,category,status,excerpt";
+const header = "line,category,status,excerpt,context";
 const csvRows = deduped.map(
-  (r) => `${r.line},${r.category},${r.status},"${r.text}"`
+  (r) => `${r.line},${r.category},${r.status},"${r.text}","${r.ctx}"`
 );
 const csv = [header, ...csvRows].join("\n") + "\n";
 
