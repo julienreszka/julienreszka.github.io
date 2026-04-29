@@ -1599,20 +1599,20 @@
         </div>
 
         <div id="residual-income-section" style="margin-top: 24px;">
-          <h3 id="residual-income-heading" style="font-size: 1.05em; margin-bottom: 6px;">
-            Stage 2: Spending + R&amp;D + Military + Capital Formation + Population Growth + Domestic Credit + Tertiary Enrollment + Initial Income
-            <span style="font-weight:normal; font-size:0.85em; color:rgba(255,255,255,0.55);">— combined-R² ranked model comparison</span>
-          </h3>
-          <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
-            The spending curve above predicts a growth rate for each country. The <strong style="color:rgba(255,255,255,0.85)">residual</strong> is how far off that prediction is (actual − fitted).
-            These charts ask: <em>do R&amp;D, military expenditure, capital formation, population growth, domestic credit, tertiary enrollment, initial income, and terms-of-trade volatility systematically predict the errors?</em>
-            All eight are controlled jointly via eight-variable OLS. Each chart shows the <strong style="color:rgba(255,255,255,0.85)">partial slope</strong> — the effect of one variable holding the other seven at their means.
-            A <strong style="color:rgba(255,255,255,0.85)">positive capital formation slope</strong> reflects the investment-growth channel.
-            A <strong style="color:rgba(255,255,255,0.85)">positive domestic credit slope</strong> would indicate financial depth matters beyond the spending level.
-            A <strong style="color:rgba(255,255,255,0.85)">negative income slope</strong> (poorer countries grow faster conditional on spending) is expected textbook beta-convergence.
-            Note: military expenditure, R&amp;D, and tertiary enrollment are all <em>components</em> of total government spending (the Stage 1 x-axis). Their Stage 2 coefficients should be read as <strong style="color:rgba(255,255,255,0.85)">composition effects</strong> — among countries with the same total spending share, how does allocating more of it toward military (vs. other uses) correlate with growth? This is a guns-vs-butter trade-off coefficient, not an additive one.
-            The table below ranks all models by <strong style="color:rgba(255,255,255,0.85)">combined R²</strong> on the joint subset.
-          </p>
+          <h3 id="residual-income-heading" style="font-size: 1.05em; margin-bottom: 6px;" data-i18n="heading.stage2-section">
+          Étape 2 : Dépenses + R&D + Militaire + Formation de capital + Croissance démographique + Crédit intérieur + Inscription tertiaire + Revenu initial
+            <span style="font-weight:normal; font-size:0.85em; color:rgba(255,255,255,0.55);">— comparaison de modèles classés par R² combiné</span>
+        </h3>
+          <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;" data-i18n="prose.residual-explanation">
+          La courbe des dépenses ci-dessus prédit un taux de croissance pour chaque pays. Le <strong style="color:rgba(255,255,255,0.85)">résidu</strong> mesure l'écart entre cette prédiction et la réalité (valeur réelle − valeur ajustée).
+            Ces graphiques posent la question : <em>la R&amp;D, les dépenses militaires, la formation de capital, la croissance démographique, le crédit intérieur, l'inscription en enseignement supérieur, le revenu initial et la volatilité des termes de l'échange prédisent-ils systématiquement ces erreurs ?</em>
+            Les huit variables sont contrôlées conjointement par une régression MCO à huit variables. Chaque graphique montre la <strong style="color:rgba(255,255,255,0.85)">pente partielle</strong> — l'effet d'une variable en maintenant les sept autres à leurs moyennes.
+            Une <strong style="color:rgba(255,255,255,0.85)">pente positive de formation de capital</strong> reflète le canal investissement-croissance.
+            Une <strong style="color:rgba(255,255,255,0.85)">pente positive de crédit intérieur</strong> indiquerait que la profondeur financière compte au-delà du niveau de dépenses.
+            Une <strong style="color:rgba(255,255,255,0.85)">pente négative du revenu</strong> (les pays plus pauvres croissent plus vite conditionnellement aux dépenses) correspond à la convergence bêta classique des manuels.
+            Remarque : les dépenses militaires, la R&amp;D et l'inscription en enseignement supérieur sont des <em>composantes</em> des dépenses publiques totales (l'axe x de l'étape 1). Leurs coefficients de l'étape 2 doivent être interprétés comme des <strong style="color:rgba(255,255,255,0.85)">effets de composition</strong> — parmi les pays ayant la même part de dépenses totales, comment l'allocation d'une plus grande part aux dépenses militaires (par rapport à d'autres usages) se corrèle-t-elle avec la croissance ? Il s'agit d'un coefficient de compromis canons-vs-beurre, pas d'un coefficient additif.
+            Le tableau ci-dessous classe tous les modèles par <strong style="color:rgba(255,255,255,0.85)">R² combiné</strong> sur le sous-ensemble commun.
+        </p>
           <div class="chart-container" role="img" aria-labelledby="residual-rd-chart-label">
             <canvas id="residualRdChart" data-i18n-aria-label="aria.chart.residual-rd" aria-label="Nuage de points : résidus vs dépenses en R&D"></canvas>
             <div id="residual-rd-chart-label" class="sr-only">Scatter plot of Armey model residuals against R&D spending % GDP</div>
@@ -1645,8 +1645,8 @@
             <canvas id="residualIncomeChart" data-i18n-aria-label="aria.chart.residual-income" aria-label="Nuage de points : résidus vs log du PIB par habitant"></canvas>
             <div id="residual-chart-label" class="sr-only">Scatter plot of Armey model residuals against log GDP per capita</div>
           </div>
+          <!-- RESIDUAL-INCOME-STATS:START -->
           <div id="residual-income-stats" aria-live="polite" style="margin-top: 8px; font-size: 0.88em;">
-            <!-- RESIDUAL-INCOME-STATS:START -->
             <strong>Stage 2 — Best combined fit (spending + R&amp;D + military + income)</strong>
             <div class="table-scroll"><table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:8px">
               <thead><tr style="color:rgba(255,255,255,0.5)">
@@ -1670,6 +1670,7 @@
           </div>
         </div>
 
+        <!-- DOWNLOAD-CSV:START -->
         <div style="margin: 6px 0 12px">
           <button
             type="button"
@@ -1681,7 +1682,9 @@
           </button>
           <small class="help-text" style="display: inline; margin-left: 8px">Downloads the currently visible country data as a CSV file.</small>
         </div>
+        <!-- DOWNLOAD-CSV:END -->
 
+        <!-- DOWNLOAD-FALLBACK:START -->
         <div style="margin: 6px 0 12px">
           <button
             type="button"
@@ -1692,6 +1695,7 @@
           </button>
           <small class="help-text" style="display: inline; margin-left: 8px">Exports all 4 time periods as a drop-in replacement for <code>fallback-data.json</code>. Requires data to be loaded from the live API.</small>
         </div>
+        <!-- DOWNLOAD-FALLBACK:END -->
       </section>
 
       <!-- Detailed Explanation -->
@@ -1699,265 +1703,347 @@
         <h2 data-i18n="heading.theory-vs-reality">La théorie de la courbe d'Armey face à la réalité</h2>
 
         <div style="margin-top: 15px; line-height: 1.6">
+<!-- i18n:prose.theory-intro:start -->
           <p>
-            <strong>The theory seemed reasonable:</strong> The Armey Curve
-            suggested an inverted U-shaped relationship between government
-            spending and economic growth. Named after economist Richard Armey,
-            this curve claimed there exists an optimal level of government
-            spending that maximizes economic growth.
+            <strong>La théorie semblait raisonnable :</strong> la courbe d'Armey
+            proposait une relation en U inversé entre les dépenses publiques
+            et la croissance économique. Attribuée à l'économiste Richard Armey,
+            cette courbe affirmait qu'il existe un niveau optimal de dépenses
+            publiques qui maximise la croissance économique.
           </p>
 
           <p>
-            <strong>But here's the problem:</strong> When you actually look at
-            real-world data from dozens of countries over multiple decades, the
-            theory doesn't hold up. Countries with lower government spending
-            consistently achieve higher growth rates, while high-spending
-            countries cluster in the low-growth zone.
+            <strong>Mais voici le problème :</strong> lorsqu'on examine
+            réellement les données de dizaines de pays sur plusieurs décennies,
+            la théorie ne tient pas. Les pays à faibles dépenses publiques
+            obtiennent systématiquement une croissance plus élevée, tandis que
+            les pays à dépenses élevées se regroupent dans la zone de faible
+            croissance.
           </p>
 
           <p>
-            <strong>What the data actually shows:</strong> Instead of a neat
-            U-shaped curve with an "optimal" government size around 20-30% of
-            GDP, we see patterns that better fit power law (s⁻ᵅ) or inverse
-            (1/x) models - suggesting that <em>any</em> government spending
-            beyond the absolute minimum reduces economic growth.
+            <strong>Ce que montrent réellement les données :</strong> au lieu d'une
+            belle courbe en U avec une taille gouvernementale « optimale » autour de
+            20-30 % du PIB, on observe des modèles qui correspondent mieux à une
+            loi de puissance (s⁻ᵅ) ou à des modèles inverses (1/x) — suggérant
+            que <em>toute</em> dépense publique au-delà du minimum absolu
+            réduit la croissance économique.
           </p>
+<!-- /i18n:prose.theory-intro:end -->
 
           <h3 data-i18n="heading.traditional-theory-claimed">Ce que prétendait la théorie traditionnelle</h3>
-          <p>The Armey Curve theory proposed three distinct phases:</p>
+<!-- i18n:prose.traditional-theory-list:start -->
+          <p>La courbe d'Armey proposait trois phases distinctes :</p>
           <ul>
             <li>
-              <strong>Rising Phase (0-20%):</strong> Government spending
-              supposedly provides essential infrastructure, legal framework, and
-              public goods that enhance productivity and growth
+              <strong>Phase ascendante (0-20 %) :</strong> les dépenses publiques
+              fourniraient prétendument les infrastructures essentielles, le cadre
+              juridique et les biens publics qui améliorent la productivité et la
+              croissance
             </li>
             <li>
-              <strong>Peak (20-30%):</strong> The mythical "optimal" government
-              size where growth is supposedly maximized
+              <strong>Pic (20-30 %) :</strong> la taille gouvernementale
+              « optimale » mythique où la croissance serait soi-disant maximisée
             </li>
             <li>
-              <strong>Declining Phase (30%+):</strong> Excessive spending
-              creates inefficiencies, crowds out private investment, and reduces
-              growth through higher taxes and regulatory burden
+              <strong>Phase déclinante (30 %+) :</strong> les dépenses excessives
+              créent des inefficacités, évincent l'investissement privé et
+              réduisent la croissance par des impôts plus élevés et une charge
+              réglementaire accrue
             </li>
           </ul>
+<!-- /i18n:prose.traditional-theory-list:end -->
 
           <h3 data-i18n="heading.data-actually-shows">Ce que montrent réellement les données</h3>
+<!-- i18n:prose.data-actually-shows-body:start -->
           <p>
-            <strong>There is no "rising phase."</strong> Countries with minimal
-            government spending (Singapore ~17%, historically Hong Kong ~15%)
-            consistently achieve solid growth. Meanwhile, countries that spend
-            30-45% of GDP (most of Europe) cluster in the low-growth zone
-            (0.5-1.5%).
+            <strong>Il n'y a pas de « phase ascendante ».</strong> Les pays à
+            dépenses publiques minimales (Singapour ~17 %, Hong Kong historiquement
+            ~15 %) obtiennent systématiquement une croissance solide. Pendant ce
+            temps, les pays qui dépensent 30-45 % du PIB (la plupart des pays
+            européens) se regroupent dans la zone de faible croissance (0,5-1,5 %).
           </p>
 
           <p>
-            <strong>There is no clear "optimal" zone.</strong> The data doesn't
-            show clustering around 20-30% spending. Instead, we see a consistent
-            negative relationship: lower spending = higher growth.
+            <strong>Il n'y a pas de zone « optimale » claire.</strong> Les données
+            ne montrent pas de regroupement autour de 20-30 % de dépenses. Au
+            contraire, on observe une relation négative constante : dépenses
+            inférieures = croissance plus élevée.
           </p>
 
           <p>
             <strong
-              >The relationship is better described by power law or inverse
-              decline,</strong
+              >La relation est mieux décrite par une loi de puissance ou un
+              déclin inverse,</strong
             >
-            not a quadratic curve. The data shows government spending is
-            harmful to GDP growth from the first dollar — but that's precisely
-            the point. The defensible use of government is as a deliberate
-            brake on economic activity we don't want: pollution, overfishing,
-            systemic financial risk. Slowing the economy is the feature, not
-            the bug, in those applications.
+            et non par une courbe quadratique. Les données montrent que les
+            dépenses publiques nuisent à la croissance du PIB dès le premier
+            dollar — mais c'est précisément là l'enjeu. L'utilisation défendable
+            de l'État est comme un frein délibéré aux activités économiques
+            indésirables : pollution, surpêche, risque financier systémique.
+            Ralentir l'économie est la fonctionnalité, pas le bug, dans ces
+            applications.
           </p>
+<!-- /i18n:prose.data-actually-shows-body:end -->
 
           <h3 id="historical-arc" data-i18n="heading.historical-arc">L'arc historique confirme la tendance</h3>
+<!-- i18n:prose.historical-arc-body:start -->
           <p>
-            The simulator window (2005–2023) captures only a narrow slice of
-            history in which all major economies already operate above 25% of
-            GDP. But the pre-WWII record is instructive: in 1913, government
-            spending averaged roughly <strong>10–15% of GDP</strong> across
-            Western Europe, and annual per-capita growth ran at
-            <strong>~2–3%</strong> — consistent with where the power law curve
-            projects at those spending levels. The post-war expansion of the
-            state shifted every major Western economy rightward along the curve
-            into the low-growth zone. Where high-spending economies have
-            sustained rapid growth, compositional factors — high investment
-            shares, catch-up convergence, or off-budget financing — tend to
-            account for the exception.
+            La fenêtre du simulateur (2005–2023) ne capture qu'une tranche
+            étroite de l'histoire dans laquelle toutes les grandes économies
+            opèrent déjà au-dessus de 25 % du PIB. Mais le bilan d'avant-guerre
+            est instructif : en 1913, les dépenses publiques représentaient en
+            moyenne environ <strong>10–15 % du PIB</strong> en Europe occidentale,
+            et la croissance annuelle par habitant atteignait <strong>~2–3 %</strong>
+            — cohérent avec ce que la courbe de loi de puissance projette à ces
+            niveaux de dépenses. L'expansion d'après-guerre de l'État a déplacé
+            chaque grande économie occidentale vers la droite sur la courbe, dans
+            la zone de faible croissance. Là où les économies à dépenses élevées
+            ont soutenu une croissance rapide, des facteurs de composition —
+            parts d'investissement élevées, convergence de rattrapage ou
+            financement hors budget — tendent à expliquer l'exception.
           </p>
+<!-- /i18n:prose.historical-arc-body:end -->
 
           <h3 data-i18n="heading.theory-vs-empirical-reality">Théorie traditionnelle face à la réalité empirique</h3>
-          <p><strong>The traditional quadratic theory claimed:</strong></p>
+<!-- i18n:prose.theory-vs-empirical-body:start -->
+          <p><strong>La théorie quadratique traditionnelle affirmait :</strong></p>
           <p style="text-align: center; font-style: italic; margin: 20px 0">
-            Growth Rate = β₀ + β₁ × Government Spending + β₂ × (Government
-            Spending)²
+            Taux de croissance = β₀ + β₁ × Dépenses publiques + β₂ × (Dépenses
+            publiques)²
           </p>
           <p>
-            Where β₀ represents baseline growth, β₁ captures supposed initial
-            positive effects, and β₂ (negative) represents diminishing returns.
+            Où β₀ représente la croissance de base, β₁ capture les effets
+            initiaux positifs supposés, et β₂ (négatif) représente les
+            rendements décroissants.
           </p>
 
           <p>
             <strong
-              >But the data actually fits these patterns much better:</strong
+              >Mais les données correspondent bien mieux à ces modèles :</strong
             >
           </p>
           <p style="text-align: center; font-style: italic; margin: 20px 0">
-            <strong>Power Law:</strong> Growth Rate = β₀ × (Government
-            Spending)⁻ᵅ<br />
-            <strong>Inverse Model:</strong> Growth Rate = β₀ / (Government
-            Spending + 1)<br />
-            <strong>Exponential Decay:</strong> Growth Rate = β₀ × e^(-decay ×
-            Government Spending)
+            <strong>Loi de puissance :</strong> Taux de croissance = β₀ × (Dépenses
+            publiques)⁻ᵅ<br />
+            <strong>Modèle inverse :</strong> Taux de croissance = β₀ / (Dépenses
+            publiques + 1)<br />
+            <strong>Décroissance exponentielle :</strong> Taux de croissance = β₀ × e^(-déclin ×
+            Dépenses publiques)
           </p>
           <p>
-            The power law model achieves the highest R² of any model tested,
-            explaining ~42% of the variation in growth rates among the 113
-            countries that pass the standard quality filters (excluding
-            resource-dependent, externally-funded, conflict-fragile, and
-            GDP-distorted economies). Without those filters the figure is ~24%,
-            because the excluded groups add noise without adding signal. In
-            cross-country macroeconomics, 42% is an exceptionally strong result
-            for a single explanatory variable. For comparison, Robert Barro's
-            <a href="#ref-barro">landmark 1991 growth study</a> — one of the
-            most cited papers in economics — achieved R² ≈ 0.35–0.50 using
-            <em>ten or more</em> variables simultaneously. Most single-variable
-            growth regressions explain only 5–15% of variation. Government
-            spending alone explaining 42% (or even 24% on the full unfiltered
-            sample) means it is, by a wide margin, the single most important
-            measurable determinant of cross-country growth differences.
+            Le modèle en loi de puissance obtient le R² le plus élevé de tous les
+            modèles testés, expliquant ~42 % de la variation des taux de croissance
+            parmi les 113 pays qui satisfont les filtres de qualité standard (excluant
+            les économies dépendantes des ressources, financées de l'extérieur,
+            touchées par des conflits et à PIB distordu). Sans ces filtres, le
+            chiffre est ~24 %, car les groupes exclus ajoutent du bruit sans ajouter
+            de signal. En macroéconomie comparée, 42 % est un résultat
+            exceptionnellement fort pour une seule variable explicative. À titre
+            de comparaison, la <a href="#ref-barro">célèbre étude de croissance de
+            Robert Barro en 1991</a> — l'un des articles les plus cités en économie
+            — a atteint R² ≈ 0,35–0,50 en utilisant <em>dix variables ou plus</em>
+            simultanément. La plupart des régressions de croissance à une seule
+            variable n'expliquent que 5 à 15 % de la variation. Les dépenses
+            publiques seules expliquant 42 % (ou même 24 % sur l'échantillon complet
+            non filtré) en font, de loin, le principal déterminant mesurable des
+            différences de croissance entre pays.
           </p>
           <p>
-            The power law generalizes the inverse model (which is just power law
-            with α=1) and captures the steep initial harm of government spending
-            that gradually flattens at higher levels. These models all suggest
-            there's no "beneficial phase" of government spending - it crowds out
-            private investment from day one.
+            La loi de puissance généralise le modèle inverse (qui n'est qu'une loi
+            de puissance avec α=1) et capture le fort effet négatif initial des
+            dépenses publiques qui s'atténue progressivement aux niveaux élevés. Ces
+            modèles suggèrent tous qu'il n'y a pas de « phase bénéfique » des
+            dépenses publiques — elles évincent l'investissement privé dès le
+            premier dollar.
           </p>
+<!-- /i18n:prose.theory-vs-empirical-body:end -->
 
           <h4 data-i18n="heading.understanding-intercept">Comprendre l'ordonnée à l'origine (β₀)</h4>
+<!-- i18n:prose.intercept-explained:start -->
           <p>
-            The intercept represents the natural economic growth rate in the
-            absence of government intervention. This baseline reflects:
+            L'intercepte représente le taux de croissance économique naturel en
+            l'absence d'intervention gouvernementale. Cette base reflète :
           </p>
           <ul>
             <li>
-              <strong>Entrepreneurial Innovation:</strong> Natural human
-              creativity and problem-solving driving new products and services
+              <strong>Innovation entrepreneuriale :</strong> la créativité et la
+              résolution de problèmes humaines naturelles qui génèrent de nouveaux
+              produits et services
             </li>
             <li>
-              <strong>Voluntary Exchange:</strong> Wealth creation through
-              mutually beneficial trade
+              <strong>Échange volontaire :</strong> la création de richesse par
+              le commerce mutuellement bénéfique
             </li>
             <li>
-              <strong>Capital Accumulation:</strong> Private savings and
-              investment in productive assets
+              <strong>Accumulation de capital :</strong> épargne privée et
+              investissement dans des actifs productifs
             </li>
             <li>
-              <strong>Knowledge Spillovers:</strong> Information sharing and
-              learning between economic actors
+              <strong>Externalités de connaissance :</strong> partage
+              d'informations et apprentissage entre acteurs économiques
             </li>
             <li>
-              <strong>Competition:</strong> Market pressure driving efficiency
-              improvements
+              <strong>Concurrence :</strong> pression du marché stimulant les
+              améliorations d'efficacité
             </li>
             <li>
-              <strong>Specialization:</strong> Gains from division of labor and
-              comparative advantage
+              <strong>Spécialisation :</strong> gains de la division du travail
+              et de l'avantage comparatif
             </li>
           </ul>
           <p>
-            Historical evidence suggests this baseline ranges from 2-4% annually
-            in developed economies, representing the economy's natural tendency
-            toward improvement when people are free to innovate, trade, and
-            invest.
+            Les preuves historiques suggèrent que cette base oscille entre 2 et
+            4 % par an dans les économies développées, représentant la tendance
+            naturelle de l'économie à s'améliorer lorsque les personnes sont
+            libres d'innover, d'échanger et d'investir.
           </p>
+<!-- /i18n:prose.intercept-explained:end -->
 
           <h3 data-i18n="heading.real-world-implications">Implications concrètes pour les politiques publiques</h3>
+          <!-- i18n:prose.real-world-implications-body:start -->
           <p>
-            If the data is right and the traditional theory is wrong, the policy
-            implications are dramatic:
+            Si les données sont correctes et la théorie traditionnelle erronée, les
+            implications politiques sont considérables :
           </p>
           <ul>
             <li>
-              <strong>No "Optimal Size" to Target:</strong> There's no sweet
-              spot to fine-tune toward - just minimize government and maximize
-              growth
+              <strong>Pas de « taille optimale » à cibler :</strong> il n'y a pas
+              de point idéal à affiner — il suffit de minimiser l'État et de
+              maximiser la croissance
             </li>
             <li>
-              <strong>Every Program Has a Cost:</strong> Each government
-              program, no matter how well-intentioned, reduces overall economic
-              growth
+              <strong>Chaque programme a un coût :</strong> chaque programme
+              gouvernemental, quelle que soit sa bonne intention, réduit la
+              croissance économique globale
             </li>
             <li>
-              <strong>Composition Matters, But Level Dominates:</strong> This
-              data treats all spending identically — it cannot distinguish
-              productive from wasteful programs. But the cross-country pattern
-              holds at the aggregate level: countries with smaller governments
-              consistently outgrow those with larger ones, suggesting the total
-              level is the primary driver
+              <strong>La composition importe, mais le niveau prime :</strong> ces
+              données traitent toutes les dépenses de manière identique — elles ne
+              peuvent pas distinguer les programmes productifs des programmes
+              inutiles. Mais le schéma comparatif tient au niveau agrégé : les pays
+              à gouvernement plus petit surpassent systématiquement ceux à
+              gouvernement plus grand, ce qui suggère que le niveau total est le
+              facteur déterminant
             </li>
             <li>
-              <strong>The Public Goods Question:</strong> Standard economic
-              theory identifies a narrow category of goods (defense, basic rule
-              of law, core infrastructure) where market provision may be
-              insufficient. This data cannot resolve those debates — it only
-              shows that countries with very low aggregate spending still
-              achieve strong growth, suggesting private and market alternatives
-              can substitute for more services than conventional theory predicts
+              <strong>La question des biens publics :</strong> la théorie économique
+              standard identifie une catégorie étroite de biens (défense, règle de
+              droit de base, infrastructures essentielles) où la fourniture par le
+              marché peut être insuffisante. Ces données ne peuvent pas résoudre ces
+              débats — elles montrent seulement que les pays à dépenses agrégées très
+              faibles obtiennent quand même une croissance forte, suggérant que des
+              alternatives privées et marchandes peuvent remplacer plus de services
+              que la théorie conventionnelle ne le prédit
             </li>
             <li>
-              <strong>Government as a Selective Brake:</strong> If government
-              spending reliably slows economic activity, the implication is not
-              only to minimize it — but to aim it deliberately at the parts of
-              the economy we want to slow down. River pollution, overfishing,
-              antibiotic overuse, and systemic financial risk are all cases
-              where unchecked private activity grows at society's expense. A
-              government that acts as a targeted brake on these harms can
-              improve welfare while keeping aggregate spending — and its drag on
-              growth — small
+              <strong>L'État comme frein sélectif :</strong> si les dépenses
+              publiques ralentissent de manière fiable l'activité économique,
+              l'implication n'est pas seulement de les minimiser — mais de les
+              diriger délibérément vers les parties de l'économie que l'on veut
+              ralentir. La pollution des rivières, la surpêche, le surdosage en
+              antibiotiques et le risque financier systémique sont tous des cas où
+              une activité privée non contrôlée croît aux dépens de la société. Un
+              gouvernement qui agit comme un frein ciblé sur ces nuisances peut
+              améliorer le bien-être tout en maintenant les dépenses agrégées —
+              et leur frein à la croissance — à un niveau faible
             </li>
             <li>
-              <strong>Maximum Reduction Strategy:</strong> The best policy is to
-              cut government to the absolute minimum needed for basic rule of
-              law
+              <strong>Stratégie de réduction maximale :</strong> la meilleure
+              politique est de réduire l'État au minimum absolu nécessaire pour
+              l'état de droit de base
             </li>
           </ul>
+<!-- /i18n:prose.real-world-implications-body:end -->
 
           <h3 id="why-cuts-are-hard" data-i18n="heading.why-cuts-are-hard">Pourquoi les pays à fortes dépenses peinent à les réduire</h3>
+          <!-- i18n:prose.why-cuts-are-hard-body:start -->
           <p>
-            If smaller government means faster growth, why don't high-spending countries simply cut their way to prosperity? The power law curve itself supplies the most under-appreciated answer: <strong>the marginal gain from cutting is tiny when you are already on the flat part of the curve.</strong>
+            Si un gouvernement plus petit signifie une croissance plus rapide, pourquoi les
+            pays à dépenses élevées ne réduisent-ils pas simplement leurs dépenses pour
+            atteindre la prospérité ? La courbe en loi de puissance elle-même fournit la
+            réponse la plus sous-estimée : <strong>le gain marginal de la réduction est infime
+            quand on se trouve déjà sur la partie plate de la courbe.</strong>
           </p>
           <p>
-            The mathematics are exact. For the power law model $g = \beta_0 \cdot s^{-\alpha}$ <span class="math-note">(growth = scale&nbsp;&times;&nbsp;spending<sup>−exponent</sup>)</span>, the marginal growth gain from cutting spending by a small amount $\Delta s$ <span class="math-note">(a tiny change in spending)</span> at level $s$ is:
+            Les mathématiques sont précises. Pour le modèle en loi de puissance
+            $g = \beta_0 \cdot s^{-\alpha}$ <span class="math-note">(croissance = échelle&nbsp;×&nbsp;dépenses<sup>−exposant</sup>)</span>,
+            le gain marginal de croissance obtenu en réduisant les dépenses d'un petit montant
+            $\Delta s$ <span class="math-note">(une petite variation des dépenses)</span> au
+            niveau $s$ est :
           </p>
           <p style="text-align:center; font-style:italic; margin:12px 0;">
             $\Delta g \approx \alpha \cdot \beta_0 \cdot s^{-(\alpha+1)} \cdot \Delta s$
           </p>
           <p class="iwc-gloss" style="margin-top:-6px">
-            <strong>In plain English:</strong> the growth boost from cutting spending equals the exponent ($\alpha$) times the baseline scale ($\beta_0$) times how flat the curve is at that spending level ($s^{-(\alpha+1)}$) times the size of the cut ($\Delta s$). At high spending the $s^{-(\alpha+1)}$ term is tiny, so the boost is tiny.
+            <strong>En clair :</strong> la hausse de croissance obtenue par une réduction des
+            dépenses est égale à l'exposant ($\alpha$) multiplié par l'échelle de base
+            ($\beta_0$) multiplié par la platitude de la courbe à ce niveau de dépenses
+            ($s^{-(\alpha+1)}$) multiplié par l'ampleur de la réduction ($\Delta s$). À des
+            dépenses élevées, le terme $s^{-(\alpha+1)}$ est minuscule, donc le gain est
+            minuscule.
           </p>
           <p>
-            The ratio of that gain at a low-spending country ($s_1 = 20\%$) versus a high-spending one ($s_2 = 50\%$) is:
+            Le rapport de ce gain pour un pays à dépenses faibles ($s_1 = 20\%$) par rapport
+            à un pays à dépenses élevées ($s_2 = 50\%$) est :
           </p>
           <p style="text-align:center; font-style:italic; margin:12px 0;">
             $\frac{\Delta g(s_1)}{\Delta g(s_2)} = \left(\frac{s_2}{s_1}\right)^{\alpha+1} = \left(\frac{50}{20}\right)^{\alpha+1}$
           </p>
           <p class="iwc-gloss" style="margin-top:-6px">
-            <strong>In plain English:</strong> the ratio of how much a cut helps at 20% spending versus 50% spending equals $(50/20)$ raised to the power of $(\alpha+1)$. With $\alpha \approx 0.45$, that is $2.5^{1.45} \approx 3.5$ &mdash; meaning the same cut is about 3.5&times; more valuable if you start from a lean government.
+            <strong>En clair :</strong> le rapport indiquant dans quelle mesure une réduction
+            aide à 20 % de dépenses par rapport à 50 % est égal à $(50/20)$ élevé à la
+            puissance de $(\alpha+1)$. Avec $\alpha \approx 0,45$, cela donne
+            $2,5^{1,45} \approx 3,5$ &mdash; ce qui signifie que la même réduction vaut
+            environ 3,5&times; plus si vous partez d'un gouvernement plus restreint.
           </p>
           <p>
-            At 20% of GDP, the curve is steep. Cutting from 20% to 15% produces a meaningful jump in predicted growth. At 50% of GDP, the curve has flattened dramatically. Cutting from 50% to 45% produces a barely perceptible improvement. With the empirically fitted exponent α ≈ 0.447, the same five-percentage-point reduction delivers roughly <strong>3.5× less growth dividend</strong> when you start from 50% versus 20% — and the ratio grows with the spending gap. If α were closer to 1.5 (the simulator default), that multiplier would reach ~10×. Either way, the directional logic is the same: the flatter the curve, the harder it is to make reform politically legible.
+            À 20 % du PIB, la courbe est pentue. Réduire de 20 % à 15 % produit un saut
+            significatif de la croissance prédite. À 50 % du PIB, la courbe s'est
+            considérablement aplatie. Réduire de 50 % à 45 % produit une amélioration à
+            peine perceptible. Avec l'exposant ajusté empiriquement α ≈ 0,447, la même
+            réduction de cinq points de pourcentage produit environ
+            <strong>3,5× moins de dividende de croissance</strong> si l'on part de 50 % que
+            de 20 % — et le ratio s'accroît avec l'écart de dépenses. Si α était plus proche
+            de 1,5 (la valeur par défaut du simulateur), ce multiplicateur atteindrait ~10×.
+            Dans tous les cas, la logique directionnelle est la même : plus la courbe est
+            plate, plus il est difficile de rendre la réforme politiquement visible.
           </p>
           <p>
-            This asymmetry creates a political trap. The costs of cutting are immediate and concentrated — public sector jobs lost, entitlement recipients mobilized, contractors lobbying for reinstatement. The growth benefits are diffuse, delayed, and, crucially, <em>small enough to be statistically invisible</em> in the first few years of data. A government that cuts 5 points of GDP from a 50% baseline cannot credibly promise its population a visible boom; the power law says it will get perhaps 0.2–0.3 additional percentage points of annual growth. That is real wealth compounded over decades, but it is not a headline.
+            Cette asymétrie crée un piège politique. Les coûts des réductions sont immédiats
+            et concentrés — emplois perdus dans le secteur public, bénéficiaires des
+            prestations mobilisés, entreprises sous contrat qui font du lobbying pour leur
+            réintégration. Les bénéfices en termes de croissance sont diffus, différés et,
+            surtout, <em>trop faibles pour être statistiquement visibles</em> au cours des
+            premières années de données. Un gouvernement qui réduit de 5 points de PIB à
+            partir d'une base de 50 % ne peut pas crédiblement promettre à sa population un
+            boom visible ; la loi de puissance indique qu'il obtiendra peut-être 0,2–0,3
+            point de pourcentage supplémentaire de croissance annuelle. C'est une richesse
+            réelle composée sur des décennies, mais ce n'est pas un titre de presse.
           </p>
           <p>
-            Contrast that with the experience of Ireland in the 1980s–90s or Sweden in the early 1990s: both cut from high bases, but their recoveries were amplified by other tailwinds (EU single market access, currency devaluation, rapid catch-up from deep recessions) that made the growth payoff visible and large. The power law contribution was real, but it was packaged with other forces. Without those tailwinds, a country cutting from 55% to 50% in a stable mature economy will see a reform dividend the curve predicts to be almost invisible over a parliamentary term.
+            Contrastez cela avec l'expérience de l'Irlande dans les années 1980–90 ou de la
+            Suède au début des années 1990 : les deux ont réduit à partir de bases élevées,
+            mais leurs reprises ont été amplifiées par d'autres vents favorables (accès au
+            marché unique européen, dévaluation monétaire, rattrapage rapide après de
+            profondes récessions) qui ont rendu le gain de croissance visible et important.
+            La contribution de la loi de puissance était réelle, mais elle était combinée à
+            d'autres forces. Sans ces vents favorables, un pays réduisant de 55 % à 50 %
+            dans une économie mature et stable verra un dividende de réforme que la courbe
+            prédit comme étant quasi invisible sur un mandat parlementaire.
           </p>
           <p>
-            There is also a <strong>ratchet effect</strong>: spending programmes create constituencies. Each percentage point of GDP spent builds a group of beneficiaries who will resist reversal more fiercely than the diffuse taxpayer will reward it. The political equilibrium drifts rightward along the curve — toward higher spending, lower growth, and ever-smaller marginal returns to cutting — until a fiscal crisis forces discontinuous adjustment. The power law explains not only the economic cost of big government, but the political economy of why large states tend to stay large.
+            Il y a aussi un <strong>effet de cliquet</strong> : les programmes de dépenses
+            créent des groupes de pression. Chaque point de pourcentage du PIB dépensé
+            construit un groupe de bénéficiaires qui résisteront au retour en arrière plus
+            farouchement que le contribuable diffus ne le récompensera. L'équilibre politique
+            dérive vers la droite sur la courbe — vers des dépenses plus élevées, une
+            croissance plus faible et des rendements marginaux toujours plus faibles à la
+            réduction — jusqu'à ce qu'une crise fiscale force un ajustement discontinu. La
+            loi de puissance explique non seulement le coût économique d'un grand État, mais
+            l'économie politique expliquant pourquoi les grands États tendent à rester grands.
           </p>
+<!-- /i18n:prose.why-cuts-are-hard-body:end -->
 
           <div id="cut-gains-table" style="margin-top:16px;">
             <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
@@ -1973,7 +2059,7 @@
                 </select>
               </label>
             </div>
-            <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;">Uses current model parameters and the currently displayed country data. Gain = <em>predicted growth at (spending − 5 pp)</em> minus <em>predicted growth at current spending</em>. Load country data and press ⚙ Auto-fit to update.</p>
+            <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;" data-i18n="prose.cut-gains-note">Uses current model parameters and the currently displayed country data. Gain = <em>predicted growth at (spending − 5 pp)</em> minus <em>predicted growth at current spending</em>. Load country data and press ⚙ Auto-fit to update.</p>
             <div id="cut-gains-table-inner" style="overflow-x:auto;">
               <!-- STATIC-CUT-GAINS-TABLE:START -->
               <table style="width:100%;border-collapse:collapse;"><thead><tr class="table-header-muted" style="font-size:0.82em;">
@@ -2748,74 +2834,72 @@
           </div>
 
           <h3 id="selective-brake" data-i18n="heading.selective-brake">Le frein sélectif : à quoi sert vraiment l'État</h3>
+          <!-- i18n:prose.selective-brake-body:start -->
           <p>
-            The data in this simulator shows that government spending reliably
-            slows economic activity. The conventional policy response is to
-            minimize it. But there is a more precise implication:
-            <strong
-              >if government is a brake, use it on the parts of the economy you
-              want to slow down.</strong
-            >
+            Les données de ce simulateur montrent que les dépenses publiques
+            ralentissent systématiquement l'activité économique. La réponse
+            conventionnelle est de les minimiser. Mais il y a une implication plus
+            précise : <strong>si le gouvernement est un frein, utilisez-le sur les
+            parties de l'économie que vous voulez ralentir.</strong>
           </p>
           <p>
-            The immediate objection is that this is not what actually happens.
-            Most government spending is not a targeted instrument aimed at
-            pollution or systemic risk — it is broad wages, transfers,
-            subsidies, and procurement that slow the whole economy at once. A
-            carbon tax that raises the cost of emissions is a brake applied to
-            one specific activity. A ministry that grows its headcount, a
-            pension system that expands its eligibility, a procurement rule that
-            reserves contracts for incumbents — these apply the same braking
-            force to productive and unproductive activity alike. The aggregate
-            data captures this reality: the countries with large governments are
-            not primarily running large externality-correction programs. They are
-            running large redistribution and public employment programs, and the
-            drag on growth reflects that indiscriminate scope.
-            <strong>The selective brake is a theoretical possibility that
-            real-world fiscal expansion rarely achieves.</strong>
+            L'objection immédiate est que ce n'est pas ce qui se passe réellement.
+            La plupart des dépenses publiques ne sont pas un instrument ciblé visant
+            la pollution ou le risque systémique — ce sont de larges salaires,
+            transferts, subventions et marchés publics qui ralentissent toute
+            l'économie à la fois. Une taxe carbone qui augmente le coût des émissions
+            est un frein appliqué à une activité spécifique. Un ministère qui accroît
+            ses effectifs, un système de retraite qui élargit son éligibilité, une
+            règle de marchés publics qui réserve les contrats aux titulaires —
+            ceux-ci appliquent la même force de freinage aux activités productives et
+            non productives. Les données agrégées reflètent cette réalité : les pays
+            avec de grands gouvernements ne gèrent pas principalement de grands
+            programmes de correction des externalités. Ils gèrent de grands programmes
+            de redistribution et d'emploi public, et le frein à la croissance reflète
+            cette portée indiscriminée.
+            <strong>Le frein sélectif est une possibilité théorique que
+            l'expansion fiscale réelle atteint rarement.</strong>
           </p>
           <p>
-            Many harmful economic activities are fast precisely because their
-            costs are externalized. A factory grows by dumping into a river. A
-            fishing fleet expands by depleting a commons. A bank profits by
-            taking on systemic risk that others will absorb. These activities
-            are not growing because they are productive — they are growing
-            because the people driving them don't bear the full cost. Left
-            alone, they will outcompete cleaner, more careful alternatives and
-            drag down the overall quality of the economy.
+            De nombreuses activités économiques nocives sont rapides précisément
+            parce que leurs coûts sont externalisés. Une usine se développe en
+            déversant dans une rivière. Une flotte de pêche s'agrandit en épuisant
+            une ressource commune. Une banque s'enrichit en assumant un risque
+            systémique que d'autres absorbent. Ces activités ne se développent pas
+            parce qu'elles sont productives — elles se développent parce que les
+            personnes qui les dirigent ne supportent pas l'intégralité des coûts.
+            Laissées à elles-mêmes, elles supplantent des alternatives plus propres
+            et plus prudentes et dégradent la qualité globale de l'économie.
           </p>
           <p>
-            This is exactly where government's braking force belongs. A
-            liability rule that makes polluters pay, a quota that limits
-            overfishing, a capital requirement that forces banks to internalize
-            their own risk — these interventions slow down the harmful activity
-            without requiring large budgets or broad redistribution. The
-            government is not producing anything; it is correcting the price
-            signal so the market slows down the right things.
+            C'est précisément là où la force de freinage du gouvernement appartient.
+            Une règle de responsabilité qui oblige les pollueurs à payer, un quota
+            qui limite la surpêche, une exigence de fonds propres qui oblige les
+            banques à internaliser leurs propres risques — ces interventions
+            ralentissent l'activité nocive sans nécessiter de grands budgets ou une
+            large redistribution. Le gouvernement ne produit rien ; il corrige le
+            signal de prix pour que le marché ralentisse les bonnes choses.
           </p>
           <p>
-            The corollary is equally important:
-            <strong
-              >government should not be used to slow down productive
-              activity.</strong
-            >
-            Licensing barriers that limit entry into competitive professions,
-            procurement rules that protect incumbent suppliers, tariffs that
-            insulate domestic industries from competition — these apply the
-            brake where it destroys rather than creates value. The data captures
-            this aggregate: the countries that use government broadly slow their
-            entire economy. The countries that keep government narrow preserve
-            the growth engine while, in principle, still being able to target
-            genuine harms.
+            Le corollaire est tout aussi important :
+            <strong>le gouvernement ne devrait pas être utilisé pour ralentir
+            l'activité productive.</strong>
+            Les barrières à l'entrée dans les professions compétitives, les règles de
+            marchés publics qui protègent les fournisseurs en place, les tarifs
+            douaniers qui isolent les industries nationales de la concurrence — ceux-ci
+            appliquent le frein là où il détruit plutôt que crée de la valeur. Les
+            données capturent cet agrégat : les pays qui utilisent largement le
+            gouvernement ralentissent toute leur économie. Les pays qui maintiennent
+            un gouvernement limité préservent le moteur de croissance tout en étant
+            capables, en principe, de cibler les véritables nuisances.
           </p>
+<!-- /i18n:prose.selective-brake-body:end -->
 
       <div class="pullquote" id="selective-brake-quote">
-            <p>
-              Government spending reliably slows economic activity &mdash; so
-              the right use of government is to aim that braking force at the
-              parts of the economy we want less of, not the parts that create
-              value.
-            </p>
+            <p data-i18n="prose.selective-brake-quote">Les dépenses publiques ralentissent systématiquement l'activité économique &mdash; donc
+              la bonne utilisation du gouvernement est de diriger cette force de freinage vers
+              les parties de l'économie dont nous voulons moins, pas celles qui créent
+              de la valeur.</p>
             <button
               class="share-quote-btn"
               aria-label="Partager cette citation sur X"
@@ -2827,27 +2911,32 @@
           </div>
 
           <h3 id="inclusive-wealth-criterion" data-i18n="heading.inclusive-wealth-criterion">Un test objectif unique : le critère de richesse inclusive</h3>
+          <!-- i18n:prose.iwc-section-intro:start -->
           <p class="iwc-gloss" style="margin-bottom: 18px;">
-            <strong>A note on the simulator above.</strong> The simulator scores
-            spending levels by their fit to <em>GDP growth</em>. The criterion
-            developed below argues GDP is the wrong target &mdash; it can be
-            inflated by depletion, transfers, and coercion. The two answer
-            different questions: the simulator asks <em>how much</em>
-            government spending maximises measured growth; the criterion asks
-            <em>where</em> that spending should be aimed and which private
-            activities deserve a brake. Both can be right at once: the
-            empirical curve disciplines size, the criterion disciplines
-            target.
+            <strong>Une note sur le simulateur ci-dessus.</strong> Le simulateur
+            évalue les niveaux de dépenses selon leur adéquation à la
+            <em>croissance du PIB</em>. Le critère développé ci-dessous soutient
+            que le PIB est la mauvaise cible &mdash; il peut être gonflé par
+            l'épuisement des ressources, les transferts et la coercition. Les deux
+            répondent à des questions différentes : le simulateur demande
+            <em>combien</em> de dépenses publiques maximisent la croissance
+            mesurée ; le critère demande <em>où</em> ces dépenses devraient être
+            dirigées et quelles activités privées méritent un frein. Les deux
+            peuvent être corrects simultanément : la courbe empirique discipline
+            la taille, le critère discipline la cible.
           </p>
           <p>
-            If government should brake some activities and not others, we need
-            a non-arbitrary way to decide which. "Things I dislike" is not a
-            criterion. "Things that fail a cost&ndash;benefit test" is closer,
-            but GDP-based cost&ndash;benefit can be gamed by transfers,
-            depletion, and coercion &mdash; the very pathologies a brake should
-            target. We need a metric that <em>cannot</em> be inflated by the
-            activity it is meant to evaluate.
+            Si le gouvernement doit freiner certaines activités et pas d'autres,
+            nous avons besoin d'un moyen non arbitraire de décider lesquelles. « Ce
+            que je n'aime pas » n'est pas un critère. « Ce qui échoue à un test
+            coût&ndash;bénéfice » est plus proche, mais le
+            coût&ndash;bénéfice basé sur le PIB peut être manipulé par les
+            transferts, l'épuisement des ressources et la coercition &mdash; les
+            pathologies mêmes qu'un frein devrait cibler. Nous avons besoin d'une
+            métrique qui <em>ne peut pas</em> être gonflée par l'activité qu'elle
+            est censée évaluer.
           </p>
+<!-- /i18n:prose.iwc-section-intro:end -->
 
           <h4 data-i18n="heading.whole-rule-2x2">La règle complète en un tableau 2×2</h4>
           <p>
@@ -2880,47 +2969,50 @@
             </table>
           </div>
 <!-- /i18n:prose.iwc-2x2-table:end -->
+          <!-- i18n:prose.iwc-formula-body:start -->
           <p>
-            Three of the four quadrants tell government to do nothing. Only the
-            bottom-right justifies a brake. That is a much narrower licence
-            than "whatever the median voter wants" &mdash; and a much wider one
-            than "government should never act." The rest of this section
-            defines $\Delta W$ precisely, makes &quot;consent&quot; non-trivial,
-            and adds a third question (Q3) the 2&times;2 can't capture: is the
-            brake itself worse than the damage?
+            Trois des quatre quadrants indiquent au gouvernement de ne rien faire.
+            Seul le coin inférieur droit justifie un frein. C'est une licence
+            beaucoup plus étroite que « ce que veut l'électeur médian » &mdash;
+            et beaucoup plus large que « le gouvernement ne devrait jamais agir ».
+            Le reste de cette section définit $\Delta W$ précisément, rend
+            &quot;le consentement&quot; non trivial, et ajoute une troisième
+            question (Q3) que le 2&times;2 ne peut pas capturer : le frein
+            lui-même est-il pire que le dommage ?
           </p>
 
           <h4 data-i18n="heading.formula-2x2">La formule derrière le tableau 2×2</h4>
           <p>
-            The cleanest formulation comes from the
-            <strong>inclusive wealth</strong> tradition. The pedigree:
+            La formulation la plus claire vient de la tradition de la
+            <strong>richesse inclusive</strong>. La généalogie :
           </p>
+          <!-- IWC-PEDIGREE-START -->
           <div class="iwc-pedigree" aria-label="Filiation de la richesse inclusive" data-i18n-aria-label="aria.iwc-pedigree">
             <div class="iwc-ped-row">
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">1920 / 1960</div>
                 <div class="iwc-ped-name">Pigou &middot; Coase</div>
-                <div class="iwc-ped-tag">externalities &amp; consent</div>
+                <div class="iwc-ped-tag">externalités &amp; consentement</div>
               </div>
               <div class="iwc-ped-arrow">&rarr;</div>
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">1962</div>
                 <div class="iwc-ped-name">Buchanan &amp; Tullock</div>
-                <div class="iwc-ped-tag">consent as political foundation</div>
+                <div class="iwc-ped-tag">le consentement comme fondement politique</div>
               </div>
             </div>
             <div class="iwc-ped-arrow iwc-ped-arrow-down">&darr;</div>
             <div class="iwc-ped-row">
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">1974 / 1976</div>
-                <div class="iwc-ped-name">Solow &middot; Dasgupta &amp; Heal &middot; Weitzman</div>
-                <div class="iwc-ped-tag">shadow-price wealth accounting</div>
+                <div class="iwc-ped-name">Solow &middot; Dasgupta &middot; Heal &middot; Weitzman</div>
+                <div class="iwc-ped-tag">comptabilité de richesse par prix fictifs</div>
               </div>
               <div class="iwc-ped-arrow">&rarr;</div>
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">1977</div>
                 <div class="iwc-ped-name">Hartwick</div>
-                <div class="iwc-ped-tag">depletion / reinvestment rule</div>
+                <div class="iwc-ped-tag">règle d'épuisement / réinvestissement</div>
               </div>
             </div>
             <div class="iwc-ped-arrow iwc-ped-arrow-down">&darr;</div>
@@ -2928,18 +3020,18 @@
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">2004</div>
                 <div class="iwc-ped-name">Arrow, Dasgupta, M&auml;ler et al.</div>
-                <div class="iwc-ped-tag">unified inclusive-wealth framework</div>
+                <div class="iwc-ped-tag">cadre unifié de richesse inclusive</div>
               </div>
               <div class="iwc-ped-arrow">&rarr;</div>
               <div class="iwc-ped-node iwc-ped-node-final">
                 <div class="iwc-ped-year">2021</div>
-                <div class="iwc-ped-name">Dasgupta Review</div>
-                <div class="iwc-ped-tag">authoritative restatement</div>
+                <div class="iwc-ped-name">Rapport Dasgupta</div>
+                <div class="iwc-ped-tag">reformulation de référence</div>
               </div>
             </div>
           </div>
           <p style="font-size: 0.88em; color: #94a3b8;">
-            Sources, in order:
+            Sources, dans l'ordre :
             <a href="https://archive.org/details/in.ernet.dli.2015.6160" target="_blank" rel="noopener">Pigou (1920)</a>,
             <a href="https://www.jstor.org/stable/724810" target="_blank" rel="noopener">Coase (1960)</a>,
             <a href="https://oll.libertyfund.org/title/buchanan-the-calculus-of-consent-logical-foundations-of-constitutional-democracy" target="_blank" rel="noopener">Buchanan &amp; Tullock (1962)</a>,
@@ -2949,46 +3041,47 @@
             <a href="https://econpapers.repec.org/article/aeaaecrev/v_3a67_3ay_3a1977_3ai_3a5_3ap_3a972-74.htm" target="_blank" rel="noopener">Hartwick (1977)</a>,
             <a href="https://www.aeaweb.org/articles?id=10.1257/0895330042162377" target="_blank" rel="noopener">Arrow, Dasgupta, M&auml;ler et al. (2004)</a>,
             <a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta (2021)</a>.
-            The shadow-price wealth formula below follows Weitzman; the
-            consent-filtered brake criterion is an original synthesis &mdash;
-            each ingredient has a published source, but the unified rule is not
-            stated in any single paper.
+            La formule de richesse par prix fictifs ci-dessous suit Weitzman ; le
+            critère de frein filtré par le consentement est une synthèse originale &mdash;
+            chaque ingrédient a une source publiée, mais la règle unifiée n'est pas
+            énoncée dans un seul article.
           </p>
+          <!-- IWC-PEDIGREE-END -->
           <p>
-            Define a country's wealth as the
-            present value of every productive capital stock &mdash; produced,
-            human, natural, knowledge, institutional &mdash; each weighted by
-            its shadow price:
+            Définissez la richesse d'un pays comme la valeur actuelle de chaque
+            stock de capital productif &mdash; produit, humain, naturel, savoir,
+            institutionnel &mdash; chacun pondéré par son prix fictif :
           </p>
           <p style="text-align:center; font-size:1.05em">
             $$\frac{dW}{dt} = \sum_k p_k \frac{dK_k}{dt}$$
           </p>
           <p class="iwc-gloss">
-            <strong>In plain English:</strong> the rate at which a country's
-            wealth grows ($dW/dt$) equals the sum, across every kind of capital
-            $k$ (produced, human, natural, knowledge, institutional), of how
-            fast that capital is changing ($dK_k/dt$) multiplied by what that
-            capital is worth at the margin ($p_k$, its <em>shadow price</em>).
-            "$\sum_k$" just means "add up over every kind of capital."
+            <strong>En clair :</strong> le taux auquel la richesse d'un pays croît
+            ($dW/dt$) est égal à la somme, sur chaque type de capital $k$
+            (produit, humain, naturel, savoir, institutionnel), de la vitesse à
+            laquelle ce capital change ($dK_k/dt$) multiplié par ce que vaut ce
+            capital à la marge ($p_k$, son <em>prix fictif</em>).
+            « $\sum_k$ » signifie simplement « additionner sur chaque type de capital ».
           </p>
           <p>
-            Long-term growth, honestly measured, is
-            <span style="white-space:nowrap">$dW/dt > 0$</span>. An activity is
-            objectively brake-worthy if and only if it reduces this quantity
-            <em>for parties who did not consent to bear its cost</em>:
+            La croissance à long terme, honnêtement mesurée, est
+            <span style="white-space:nowrap">$dW/dt > 0$</span>. Une activité est
+            objectivement freinable si et seulement si elle réduit cette quantité
+            <em>pour les parties qui n'ont pas consenti à en supporter le coût</em> :
           </p>
           <p class="iwc-eq">
             $$\text{Brake}(a) \iff \mathbb{E}\!\left[\sum_k p_k\,\Delta K_k^{(a)}\right] < 0$$
           </p>
-          <p class="iwc-eq-caption">(over parties who did not consent)</p>
+          <p class="iwc-eq-caption">(sur les parties qui n'ont pas consenti)</p>
           <p class="iwc-gloss">
-            <strong>In plain English:</strong> apply the brake to activity $a$
-            <em>if and only if</em> ("$\iff$") its <em>expected</em>
-            ("$\mathbb{E}$") effect on total wealth, summed over every kind of
-            capital, is negative &mdash; counting only the people who didn't
-            agree to bear its cost. $\Delta K_k^{(a)}$ means "the change in
-            capital of type $k$ caused by activity $a$."
+            <strong>En clair :</strong> appliquez le frein à l'activité $a$
+            <em>si et seulement si</em> (« $\iff$ ») son effet <em>espéré</em>
+            (« $\mathbb{E}$ ») sur la richesse totale, sommé sur chaque type de
+            capital, est négatif &mdash; en comptant uniquement les personnes qui
+            n'ont pas accepté d'en supporter le coût. $\Delta K_k^{(a)}$ signifie
+            « la variation du capital de type $k$ causée par l'activité $a$ ».
           </p>
+<!-- /i18n:prose.iwc-formula-body:end -->
           <details class="iwc-code" open>
             <summary data-i18n="summary.iwc-code">La même règle, en JavaScript (instruction principale)</summary>
 <pre><code>// Capital kinds — module-level constant, not per-call state.

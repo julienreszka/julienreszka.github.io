@@ -37,6 +37,9 @@ const MANAGED_REGIONS = [
   ["<!-- MODEL-RANKING-TBODY:START -->", "<!-- MODEL-RANKING-TBODY:END -->"],
   ["<!-- STEPWISE-BASELINE:START -->", "<!-- STEPWISE-BASELINE:END -->"],
   ["<!-- RESIDUAL-INCOME-STATS:START -->", "<!-- RESIDUAL-INCOME-STATS:END -->"],
+  ["<!-- DOWNLOAD-CSV:START -->", "<!-- DOWNLOAD-CSV:END -->"],
+  ["<!-- DOWNLOAD-FALLBACK:START -->", "<!-- DOWNLOAD-FALLBACK:END -->"],
+  ["<!-- IWC-PEDIGREE-START -->", "<!-- IWC-PEDIGREE-END -->"],
   // Anchor-comment i18n blocks — prose sections wrapped for locale build
   ["<!-- i18n:", "<!-- /i18n:"],
 ];

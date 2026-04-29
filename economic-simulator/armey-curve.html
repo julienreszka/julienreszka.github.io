@@ -1612,11 +1612,11 @@
         </div>
 
         <div id="residual-income-section" style="margin-top: 24px;">
-          <h3 id="residual-income-heading" style="font-size: 1.05em; margin-bottom: 6px;">
+          <h3 id="residual-income-heading" style="font-size: 1.05em; margin-bottom: 6px;" data-i18n="heading.stage2-section">
             Stage 2: Spending + R&amp;D + Military + Capital Formation + Population Growth + Domestic Credit + Tertiary Enrollment + Initial Income
             <span style="font-weight:normal; font-size:0.85em; color:rgba(255,255,255,0.55);">— combined-R² ranked model comparison</span>
           </h3>
-          <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
+          <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;" data-i18n="prose.residual-explanation">
             The spending curve above predicts a growth rate for each country. The <strong style="color:rgba(255,255,255,0.85)">residual</strong> is how far off that prediction is (actual − fitted).
             These charts ask: <em>do R&amp;D, military expenditure, capital formation, population growth, domestic credit, tertiary enrollment, initial income, and terms-of-trade volatility systematically predict the errors?</em>
             All eight are controlled jointly via eight-variable OLS. Each chart shows the <strong style="color:rgba(255,255,255,0.85)">partial slope</strong> — the effect of one variable holding the other seven at their means.
@@ -1658,8 +1658,8 @@
             <canvas id="residualIncomeChart" data-i18n-aria-label="aria.chart.residual-income" aria-label="Residuals vs log GDP per capita scatter plot"></canvas>
             <div id="residual-chart-label" class="sr-only">Scatter plot of Armey model residuals against log GDP per capita</div>
           </div>
+          <!-- RESIDUAL-INCOME-STATS:START -->
           <div id="residual-income-stats" aria-live="polite" style="margin-top: 8px; font-size: 0.88em;">
-            <!-- RESIDUAL-INCOME-STATS:START -->
             <strong>Stage 2 — Best combined fit (spending + R&amp;D + military + income)</strong>
             <div class="table-scroll"><table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:8px">
               <thead><tr style="color:rgba(255,255,255,0.5)">
@@ -1683,6 +1683,7 @@
           </div>
         </div>
 
+        <!-- DOWNLOAD-CSV:START -->
         <div style="margin: 6px 0 12px">
           <button
             type="button"
@@ -1694,7 +1695,9 @@
           </button>
           <small class="help-text" style="display: inline; margin-left: 8px">Downloads the currently visible country data as a CSV file.</small>
         </div>
+        <!-- DOWNLOAD-CSV:END -->
 
+        <!-- DOWNLOAD-FALLBACK:START -->
         <div style="margin: 6px 0 12px">
           <button
             type="button"
@@ -1705,6 +1708,7 @@
           </button>
           <small class="help-text" style="display: inline; margin-left: 8px">Exports all 4 time periods as a drop-in replacement for <code>fallback-data.json</code>. Requires data to be loaded from the live API.</small>
         </div>
+        <!-- DOWNLOAD-FALLBACK:END -->
       </section>
 
       <!-- Detailed Explanation -->
@@ -1712,6 +1716,7 @@
         <h2 data-i18n="heading.theory-vs-reality">The Armey Curve Theory vs. Reality</h2>
 
         <div style="margin-top: 15px; line-height: 1.6">
+<!-- i18n:prose.theory-intro:start -->
           <p>
             <strong>The theory seemed reasonable:</strong> The Armey Curve
             suggested an inverted U-shaped relationship between government
@@ -1735,8 +1740,10 @@
             (1/x) models - suggesting that <em>any</em> government spending
             beyond the absolute minimum reduces economic growth.
           </p>
+          <!-- /i18n:prose.theory-intro:end -->
 
           <h3 data-i18n="heading.traditional-theory-claimed">What the Traditional Theory Claimed</h3>
+<!-- i18n:prose.traditional-theory-list:start -->
           <p>The Armey Curve theory proposed three distinct phases:</p>
           <ul>
             <li>
@@ -1754,8 +1761,10 @@
               growth through higher taxes and regulatory burden
             </li>
           </ul>
+          <!-- /i18n:prose.traditional-theory-list:end -->
 
           <h3 data-i18n="heading.data-actually-shows">What the Data Actually Shows</h3>
+<!-- i18n:prose.data-actually-shows-body:start -->
           <p>
             <strong>There is no "rising phase."</strong> Countries with minimal
             government spending (Singapore ~17%, historically Hong Kong ~15%)
@@ -1782,8 +1791,10 @@
             systemic financial risk. Slowing the economy is the feature, not
             the bug, in those applications.
           </p>
+          <!-- /i18n:prose.data-actually-shows-body:end -->
 
           <h3 id="historical-arc" data-i18n="heading.historical-arc">The Historical Arc Confirms the Pattern</h3>
+<!-- i18n:prose.historical-arc-body:start -->
           <p>
             The simulator window (2005–2023) captures only a narrow slice of
             history in which all major economies already operate above 25% of
@@ -1798,8 +1809,10 @@
             shares, catch-up convergence, or off-budget financing — tend to
             account for the exception.
           </p>
+          <!-- /i18n:prose.historical-arc-body:end -->
 
           <h3 data-i18n="heading.theory-vs-empirical-reality">Traditional Theory vs. Empirical Reality</h3>
+<!-- i18n:prose.theory-vs-empirical-body:start -->
           <p><strong>The traditional quadratic theory claimed:</strong></p>
           <p style="text-align: center; font-style: italic; margin: 20px 0">
             Growth Rate = β₀ + β₁ × Government Spending + β₂ × (Government
@@ -1847,8 +1860,10 @@
             there's no "beneficial phase" of government spending - it crowds out
             private investment from day one.
           </p>
+          <!-- /i18n:prose.theory-vs-empirical-body:end -->
 
           <h4 data-i18n="heading.understanding-intercept">Understanding the Intercept (β₀)</h4>
+<!-- i18n:prose.intercept-explained:start -->
           <p>
             The intercept represents the natural economic growth rate in the
             absence of government intervention. This baseline reflects:
@@ -1885,8 +1900,10 @@
             toward improvement when people are free to innovate, trade, and
             invest.
           </p>
+          <!-- /i18n:prose.intercept-explained:end -->
 
           <h3 data-i18n="heading.real-world-implications">Real-World Policy Implications</h3>
+          <!-- i18n:prose.real-world-implications-body:start -->
           <p>
             If the data is right and the traditional theory is wrong, the policy
             implications are dramatic:
@@ -1936,8 +1953,10 @@
               law
             </li>
           </ul>
+          <!-- /i18n:prose.real-world-implications-body:end -->
 
           <h3 id="why-cuts-are-hard" data-i18n="heading.why-cuts-are-hard">Why High-Spending Countries Struggle to Cut</h3>
+          <!-- i18n:prose.why-cuts-are-hard-body:start -->
           <p>
             If smaller government means faster growth, why don't high-spending countries simply cut their way to prosperity? The power law curve itself supplies the most under-appreciated answer: <strong>the marginal gain from cutting is tiny when you are already on the flat part of the curve.</strong>
           </p>
@@ -1971,6 +1990,7 @@
           <p>
             There is also a <strong>ratchet effect</strong>: spending programmes create constituencies. Each percentage point of GDP spent builds a group of beneficiaries who will resist reversal more fiercely than the diffuse taxpayer will reward it. The political equilibrium drifts rightward along the curve — toward higher spending, lower growth, and ever-smaller marginal returns to cutting — until a fiscal crisis forces discontinuous adjustment. The power law explains not only the economic cost of big government, but the political economy of why large states tend to stay large.
           </p>
+          <!-- /i18n:prose.why-cuts-are-hard-body:end -->
 
           <div id="cut-gains-table" style="margin-top:16px;">
             <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
@@ -1986,7 +2006,7 @@
                 </select>
               </label>
             </div>
-            <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;">Uses current model parameters and the currently displayed country data. Gain = <em>predicted growth at (spending − 5 pp)</em> minus <em>predicted growth at current spending</em>. Load country data and press ⚙ Auto-fit to update.</p>
+            <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;" data-i18n="prose.cut-gains-note">Uses current model parameters and the currently displayed country data. Gain = <em>predicted growth at (spending − 5 pp)</em> minus <em>predicted growth at current spending</em>. Load country data and press ⚙ Auto-fit to update.</p>
             <div id="cut-gains-table-inner" style="overflow-x:auto;">
               <!-- STATIC-CUT-GAINS-TABLE:START -->
               <table style="width:100%;border-collapse:collapse;"><thead><tr class="table-header-muted" style="font-size:0.82em;">
@@ -2763,6 +2783,7 @@
           <h3 id="selective-brake" data-i18n="heading.selective-brake">
             The Selective Brake: What Government Is Actually Good For
           </h3>
+          <!-- i18n:prose.selective-brake-body:start -->
           <p>
             The data in this simulator shows that government spending reliably
             slows economic activity. The conventional policy response is to
@@ -2823,9 +2844,10 @@
             the growth engine while, in principle, still being able to target
             genuine harms.
           </p>
+          <!-- /i18n:prose.selective-brake-body:end -->
 
       <div class="pullquote" id="selective-brake-quote">
-            <p>
+            <p data-i18n="prose.selective-brake-quote">
               Government spending reliably slows economic activity &mdash; so
               the right use of government is to aim that braking force at the
               parts of the economy we want less of, not the parts that create
@@ -2842,6 +2864,7 @@
           </div>
 
           <h3 id="inclusive-wealth-criterion" data-i18n="heading.inclusive-wealth-criterion">A Single Objective Test: The Inclusive Wealth Criterion</h3>
+          <!-- i18n:prose.iwc-section-intro:start -->
           <p class="iwc-gloss" style="margin-bottom: 18px;">
             <strong>A note on the simulator above.</strong> The simulator scores
             spending levels by their fit to <em>GDP growth</em>. The criterion
@@ -2863,6 +2886,7 @@
             target. We need a metric that <em>cannot</em> be inflated by the
             activity it is meant to evaluate.
           </p>
+          <!-- /i18n:prose.iwc-section-intro:end -->
 
           <h4 data-i18n="heading.whole-rule-2x2">The whole rule, in one 2&times;2</h4>
           <p>
@@ -2895,6 +2919,7 @@
             </table>
           </div>
           <!-- /i18n:prose.iwc-2x2-table:end -->
+          <!-- i18n:prose.iwc-formula-body:start -->
           <p>
             Three of the four quadrants tell government to do nothing. Only the
             bottom-right justifies a brake. That is a much narrower licence
@@ -2910,6 +2935,7 @@
             The cleanest formulation comes from the
             <strong>inclusive wealth</strong> tradition. The pedigree:
           </p>
+          <!-- IWC-PEDIGREE-START -->
           <div class="iwc-pedigree" aria-label="Inclusive wealth pedigree" data-i18n-aria-label="aria.iwc-pedigree">
             <div class="iwc-ped-row">
               <div class="iwc-ped-node">
@@ -2969,6 +2995,7 @@
             each ingredient has a published source, but the unified rule is not
             stated in any single paper.
           </p>
+          <!-- IWC-PEDIGREE-END -->
           <p>
             Define a country's wealth as the
             present value of every productive capital stock &mdash; produced,
@@ -3004,6 +3031,7 @@
             agree to bear its cost. $\Delta K_k^{(a)}$ means "the change in
             capital of type $k$ caused by activity $a$."
           </p>
+          <!-- /i18n:prose.iwc-formula-body:end -->
           <details class="iwc-code" open>
             <summary data-i18n="summary.iwc-code">The same rule, in JavaScript (primary statement)</summary>
 <pre><code>// Capital kinds — module-level constant, not per-call state.
