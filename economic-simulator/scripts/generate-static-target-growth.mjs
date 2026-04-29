@@ -80,12 +80,15 @@ const PERIOD_LABELS = {
 };
 const periodRange = PERIOD_LABELS[PERIOD] ?? PERIOD;
 
-// ── Compute rows ──────────────────────────────────────────────────────────────
+// ── Compute rows (residual-adjusted, matching default toggle-ON behaviour) ───
 const rows = dataPoints
   .filter(d => d.spending > 1)
   .map(d => {
-    const requiredCut = d.spending - globalTargetSpending;
-    return { name: d.name, spending: d.spending, growth: d.growth, requiredCut, targetSpending: globalTargetSpending };
+    const residual = d.growth - predictFn(d.spending);
+    const adjustedTarget = TARGET - residual;
+    const countryTargetSpending = invertModel(adjustedTarget);
+    const requiredCut = countryTargetSpending !== null ? d.spending - countryTargetSpending : null;
+    return { name: d.name, spending: d.spending, growth: d.growth, requiredCut, targetSpending: countryTargetSpending };
   })
   .sort((a, b) => b.spending - a.spending);
 
@@ -97,13 +100,17 @@ const thead = `<thead><tr class="table-header-muted" style="font-size:0.82em;">
   <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
   <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-growth">Avg. growth %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
   <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.required-cut-3">Required cut to reach ${TARGET}%</th>
-  <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.target-spending">Target spending %</th>
+  <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.adj-target-spending">Adj. target spending %</th>
 </tr></thead>`;
 
 const tbody = rows.map(r => {
   let cutStr, cutColor, targetStr;
-  if (r.requiredCut <= 0 || r.growth >= TARGET) {
-    cutStr = 'already there'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = r.targetSpending.toFixed(1) + '%';
+  if (r.growth >= TARGET) {
+    cutStr = 'no cut needed'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = '\u2014';
+  } else if (r.requiredCut === null) {
+    cutStr = 'impossible'; cutColor = 'rgba(255,100,100,0.8)'; targetStr = '\u2014';
+  } else if (r.requiredCut <= 0) {
+    cutStr = 'no cut needed'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = r.targetSpending.toFixed(1) + '%';
   } else {
     const color = r.requiredCut >= 20 ? 'rgba(255,100,80,0.9)'
       : r.requiredCut >= 10 ? 'rgba(255,165,80,0.9)'
@@ -122,7 +129,7 @@ const tbody = rows.map(r => {
   </tr>`;
 }).join('\n');
 
-const footNote = `<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">Model-implied target spending: <strong>${globalTargetSpending.toFixed(1)}%</strong> of GDP (power law, ${periodRange})</p>`;
+const footNote = `<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">Residual-adjusted: target spending is country-specific, accounting for structural over/underperformance. Global model baseline: <strong>${globalTargetSpending.toFixed(1)}%</strong> of GDP (power law, ${periodRange})</p>`;
 
 const tableHTML = `<table style="width:100%;border-collapse:collapse;">${thead}<tbody>${tbody}</tbody></table>${footNote}`;
 
