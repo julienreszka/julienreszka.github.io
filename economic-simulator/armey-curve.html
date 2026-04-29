@@ -39,10 +39,6 @@
       property="og:url"
       content="https://julienreszka.github.io/economic-simulator/armey-curve.html"
     />
-    <meta
-      property="og:image"
-      content="https://julienreszka.github.io/economic-simulator/The_Fiscal_Power_Law/slide-000.jpg"
-    />
     <meta property="og:site_name" content="Economic Curves Simulator" />
 
     <!-- Twitter Card -->
@@ -280,17 +276,6 @@
         -webkit-overflow-scrolling: touch;
       }
 
-      .slide-caption {
-        font-size: 0.78em;
-        color: #555;
-        margin-top: 4px;
-      }
-
-      @media (prefers-color-scheme: dark) {
-        .slide-caption {
-          color: rgba(255,255,255,0.5);
-        }
-      }
 
       @media (prefers-color-scheme: light) {
         /* Inline rgba(255,255,255,…) colors are invisible on white backgrounds.
@@ -368,10 +353,6 @@
           color: #555 !important;
         }
 
-        #slide-deck img,
-        #lightbox-img {
-          filter: invert(1) hue-rotate(180deg);
-        }
       }
 
       /* Tame KaTeX display-math overflow on narrow screens. */
@@ -846,127 +827,8 @@
         </ol>
       </aside>
 
-      <!-- Slide deck + PDF download -->
-      <section id="slide-deck" style="margin: 24px 0;">
-        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:12px;">
-          <h2 style="margin:0; font-size:1.1em;">The Fiscal Power Law — Slide Deck</h2>
-          <div style="display:flex; gap:8px; align-items:center;">
-            <button onclick="openSlideFullscreen(0)"
-                    style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.1); color:#fff; padding:6px 14px; border-radius:6px; border:1px solid rgba(255,255,255,0.2); font-size:0.87em; font-weight:600; cursor:pointer;">
-              ⛶ Fullscreen
-            </button>
-            <a href="The_Fiscal_Power_Law.pdf" download
-               style="display:inline-flex; align-items:center; gap:6px; background:#1a6fdb; color:#fff; padding:6px 14px; border-radius:6px; text-decoration:none; font-size:0.87em; font-weight:600;">
-              ⬇ Download PDF
-            </a>
-          </div>
-        </div>
-        <div id="slide-strip" style="display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:12px; padding-bottom:8px; -webkit-overflow-scrolling:touch;">
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-000.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="Challenging the Armey Curve: The Empirical Reality of Government Spending and Economic Growth — based on structural macro-data from 151 countries 2005–2023"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">1 / 13 — Title</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-001.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="The Accepted Wisdom: An Optimal Size of Government — rising phase 0–20%, sweet spot 20–30%, declining phase 30%+, the theoretical inverted-U Armey Curve"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">2 / 13 — The traditional Armey Curve theory</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-002.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="The Mathematical Collapse of the Armey Curve — quadratic model predicts impossible negative growth for Sweden at 35% spending; unconstrained fit produces U-shape with minimum at 49% spending"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">3 / 13 — The mathematical collapse of the quadratic model</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-003.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="The New Paradigm: The Power Law of Government Spending — y = 13.27 × x^(−0.4470), monotonically negative, steep initial drop crowding out private investment, flat tail of institutional inertia"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">4 / 13 — The power law: harmful from the first dollar</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-004.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="Model Fit Diagnostics: Power Law R²=0.161 AIC=162.55, Inverse R²=0.110 AIC=171.40, Traditional Quadratic R²=0.000 AIC=191.09 — power law wins on both explanatory power and model efficiency"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">5 / 13 — Model fit diagnostics: why the power law wins</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-005.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="Power Laws Are the Architecture of Economics — Pareto wealth distribution, Zipf's law for cities, trade gravity models, and the government-growth curve all share the same scale-free mathematical structure"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">6 / 13 — Why power laws govern economic processes</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-006.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="The Endogeneity Challenge: Does Wealth Buy Big Government? Wagner's Law reversed by Singapore at 17%; time-lagged analysis shows initial spending predicts subsequent 10-year growth; instrumental variables confirm negative effect"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">7 / 13 — Endogeneity and causality</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-007.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="Natural Experiments in Fiscal Policy — Ireland cut spending from 53% to 36% and surged to 6–8% growth; Sweden cut from 67% to 55% and flipped from −1.4% to +4.7%; France expanded from 43% to 57% and decelerated to 1% growth"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">8 / 13 — Natural experiments: cut &amp; boom vs expand &amp; stagnate</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-008.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="The Nordic Paradox Explained: Wealth vs Growth — Denmark and Sweden are wealthy because they industrialised under lean government before the 1970s; today Denmark grows 1.0% and Finland 0.9%, exactly where the power law predicts for 50%+ spending"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">9 / 13 — The Nordic paradox: wealthy despite spending, not because of it</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-009.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="Drivers of Growth Beyond Government Size — institutional quality, demographics, catch-up potential, macro stability, economic structure, natural resources explain deviations from the power law curve"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">10 / 13 — Drivers of growth beyond government size</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-010.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="The Selective Brake Framework — government spending as a precision caliper not an indiscriminate drag; targeted applications: carbon pricing, capital requirements, fishing quotas"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">11 / 13 — The selective brake: target harms, not the whole economy</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-011.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="Institutionalizing the Right to Economic Growth — constitutional spending caps below 25% GDP, market-preserving institutions with tax competition, transparency mechanisms and citizen standing to challenge growth-reducing policies"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">12 / 13 — Institutionalising the right to economic growth</figcaption>
-          </figure>
-          <figure style="flex:0 0 auto; width:min(95vw,860px); margin:0; scroll-snap-align:start;">
-            <img src="The_Fiscal_Power_Law/slide-012.jpg" loading="lazy" decoding="async" width="1720" height="960"
-                 alt="Synthesis: A New View of Fiscal Policy — Armey Paradigm inverted-U vs Empirical Paradigm power law; goal of government as selective brake on negative externalities while minimising aggregate size"
-                 style="width:100%; height:auto; border-radius:6px; display:block;">
-            <figcaption class="slide-caption">13 / 13 — Synthesis: the empirical paradigm</figcaption>
-          </figure>
-        </div>
-        <p style="font-size:0.8em; color:rgba(255,255,255,0.4); margin:4px 0 0;">Click a slide to go fullscreen. Scroll horizontally to browse. <a href="The_Fiscal_Power_Law.pdf" download style="color:rgba(255,255,255,0.55);">Download the full PDF</a>.</p>
-      </section>
+      <!-- Slide deck removed (figures contain outdated statistics) -->
 
-      <!-- Video presentation -->
-      <section id="video-presentation" style="margin: 24px 0;">
-        <h2 style="font-size:1.1em; margin:0 0 12px;">Video Presentation</h2>
-        <video controls preload="metadata" style="width:100%; border-radius:8px; display:block; background:#000;"
-               aria-label="The Myth of the Macroeconomic Sweet Spot: Why the Armey Curve Fails">
-          <source src="The_Myth_of_the_Macroeconomic__Sweet_Spot__Why_the_Armey_Curve__web.mp4" type="video/mp4">
-          Your browser does not support the video element.
-        </video>
-      </section>
-
-      <!-- Slide lightbox -->
-      <div id="slide-lightbox" role="dialog" aria-modal="true" aria-label="Slide fullscreen viewer"
-           style="display:none; position:fixed; inset:0; z-index:9999; background:#000; flex-direction:column; align-items:stretch; justify-content:center;">
-        <button onclick="closeLightbox()" aria-label="Close"
-                style="position:absolute; top:16px; right:20px; background:none; border:none; color:#fff; font-size:2rem; cursor:pointer; line-height:1; z-index:1;">&times;</button>
-        <button onclick="lightboxPrev()" aria-label="Previous slide"
-                style="position:absolute; left:12px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.15); border:none; color:#fff; font-size:2rem; cursor:pointer; border-radius:50%; width:48px; height:48px; display:flex; align-items:center; justify-content:center; z-index:1;">‹</button>
-        <button onclick="lightboxNext()" aria-label="Next slide"
-                style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:rgba(255,255,255,0.15); border:none; color:#fff; font-size:2rem; cursor:pointer; border-radius:50%; width:48px; height:48px; display:flex; align-items:center; justify-content:center; z-index:1;">›</button>
-        <img id="lightbox-img" src="" alt=""
-             style="flex:1; min-height:0; width:100%; object-fit:contain; border-radius:4px;">
-        <p id="lightbox-caption" style="flex:0 0 auto; color:rgba(255,255,255,0.6); font-size:0.85em; margin:8px 0; text-align:center;"></p>
-      </div>
 
       <!-- Interactive Simulation -->
       <section id="armey-section">
@@ -7867,68 +7729,6 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
     <script>
       // ── Slide lightbox ──────────────────────────────────────────────────
-      const SLIDES = Array.from(document.querySelectorAll('#slide-strip figure'));
-      const lightbox = document.getElementById('slide-lightbox');
-      const lbImg    = document.getElementById('lightbox-img');
-      const lbCap    = document.getElementById('lightbox-caption');
-      let lbIndex = 0;
-
-      // Make every figure in the strip clickable
-      SLIDES.forEach((fig, i) => {
-        fig.style.cursor = 'pointer';
-        fig.addEventListener('click', () => openSlideFullscreen(i));
-      });
-
-      function openSlideFullscreen(i) {
-        lbIndex = i;
-        _renderLightbox();
-        lightbox.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-        lightbox.focus();
-        // Request browser fullscreen on the lightbox element if supported
-        if (lightbox.requestFullscreen) lightbox.requestFullscreen().catch(() => {});
-        else if (lightbox.webkitRequestFullscreen) lightbox.webkitRequestFullscreen();
-      }
-
-      function closeLightbox() {
-        lightbox.style.display = 'none';
-        document.body.style.overflow = '';
-        if (document.exitFullscreen && document.fullscreenElement) document.exitFullscreen();
-        else if (document.webkitExitFullscreen && document.webkitFullscreenElement) document.webkitExitFullscreen();
-      }
-
-      function lightboxPrev() { lbIndex = (lbIndex - 1 + SLIDES.length) % SLIDES.length; _renderLightbox(); }
-      function lightboxNext() { lbIndex = (lbIndex + 1) % SLIDES.length; _renderLightbox(); }
-
-      function _renderLightbox() {
-        const fig = SLIDES[lbIndex];
-        const img = fig.querySelector('img');
-        const cap = fig.querySelector('figcaption');
-        lbImg.src = img.src;
-        lbImg.alt = img.alt;
-        lbCap.textContent = cap ? cap.textContent : '';
-      }
-
-      // Keyboard navigation
-      document.addEventListener('keydown', e => {
-        if (lightbox.style.display === 'none') {
-          return;
-        }
-        if (e.key === 'Escape')      closeLightbox();
-        else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') lightboxNext();
-        else if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   lightboxPrev();
-      });
-
-      // Close on backdrop click
-      lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
-
-      // Touch swipe for mobile navigation
-      let _lbTouchStartX = 0;
-      lightbox.addEventListener('touchstart', e => { _lbTouchStartX = e.changedTouches[0].clientX; }, { passive: true });
-      lightbox.addEventListener('touchend', e => {
-        const dx = e.changedTouches[0].clientX - _lbTouchStartX;
-        if (Math.abs(dx) > 40) { dx < 0 ? lightboxNext() : lightboxPrev(); }
-      }, { passive: true });
     </script>
   </body>
 </html>
