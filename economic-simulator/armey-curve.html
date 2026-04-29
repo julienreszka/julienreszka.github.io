@@ -829,6 +829,42 @@
         .iwc-flow .iwc-exit-line::after { border-left-color: #607d8b; }
       }
     </style>
+    <!-- I18N-JS-START -->
+    <script>
+      window.i18n = {
+        "js.alert.no-data": "Live API data is not loaded. Reload the page with internet access so data is fetched from the World Bank API first.",
+        "js.alert.no-ranking": "No ranking data available yet.",
+        "js.alert.no-country-data": "No country data is loaded yet. Wait for data to finish loading or select a country group.",
+        "js.alert.load-first": "Load country data first (wait for data to finish loading).",
+        "js.status.loading-api": "Loading data from World Bank API...",
+        "js.status.fallback": "Using embedded fallback data",
+        "js.label.link-to-section": "Link to this section",
+        "js.chart.ols-fit": "OLS fit",
+        "js.chart.ols-line": "OLS line",
+        "js.country.bahamas": "Bahamas, The",
+        "js.group.developed": "Developed Countries",
+        "js.group.developing": "Developing Countries",
+        "js.curve.power-law": "Power Law",
+        "js.curve.log-linear": "Log-Linear",
+        "js.curve.quadratic": "Quadratic",
+        "js.curve.free-quadratic": "Free Quadratic",
+        "js.curve.linear": "Linear",
+        "js.curve.inverse": "Inverse",
+        "js.curve.exponential": "Exponential",
+        "js.csv.income-group": "Income Group",
+        "js.csv.externally-funded": "Externally Funded",
+        "js.tooltip.quadratic-optimal": "This is where government spending maximizes economic growth while minimizing inefficiency.",
+        "js.tooltip.linear-positive": "Linear model: Growth increases continuously with spending.",
+        "js.tooltip.linear-negative": "Linear model: Growth decreases continuously with spending.",
+        "js.tooltip.linear-flat": "Linear model: Growth is constant regardless of spending.",
+        "js.tooltip.inverse": "Inverse model: Growth declines rapidly at first, then levels off - minimal government is optimal.",
+        "js.tooltip.power-law": "Power law: Growth declines steeply at low spending, then gradually flattens - minimal government is optimal.",
+        "js.tooltip.exponential": "Exponential decay: Government spending causes exponential decline in growth - zero spending is optimal.",
+        "js.tooltip.log-linear": "Log-linear: Diminishing marginal damage from each additional unit of government spending.",
+        "js.share.quote": "Government spending reliably slows economic activity \u2014 so the right use of government is to aim that braking force at the parts of the economy we want less of."
+      };
+    </script>
+    <!-- I18N-JS-END -->
   </head>
 
   <body>
@@ -1099,23 +1135,23 @@
           <div style="margin-top:10px; display:flex; gap:16px; flex-wrap:wrap;">
             <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-resource" checked style="accent-color:#e07b39; width:14px; height:14px; cursor:pointer;" />
-              <span>Exclude resource-dependent <span style="color:#e07b39;">◆</span></span>
+              <span><span data-i18n="label.exclude-resource">Exclude resource-dependent</span> <span style="color:#e07b39;">◆</span></span>
             </label>
             <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-external" checked style="accent-color:rgba(255,140,0,0.9); width:14px; height:14px; cursor:pointer;" />
-              <span>Exclude externally funded <span style="color:rgba(255,140,0,0.9);">▲</span></span>
+              <span><span data-i18n="label.exclude-external">Exclude externally funded</span> <span style="color:rgba(255,140,0,0.9);">▲</span></span>
             </label>
             <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-conflict" checked style="accent-color:rgba(220,53,69,0.9); width:14px; height:14px; cursor:pointer;" />
-              <span>Exclude conflict/fragile states <span style="color:rgba(220,53,69,0.9);">✕</span></span>
+              <span><span data-i18n="label.exclude-conflict">Exclude conflict/fragile states</span> <span style="color:rgba(220,53,69,0.9);">✕</span></span>
             </label>
             <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-gdpdistorted" checked style="accent-color:rgba(255,193,7,0.9); width:14px; height:14px; cursor:pointer;" />
-              <span>Exclude GDP-distorted <span style="color:rgba(255,193,7,0.9);">★</span></span>
+              <span><span data-i18n="label.exclude-gdpdistorted">Exclude GDP-distorted</span> <span style="color:rgba(255,193,7,0.9);">★</span></span>
             </label>
             <label class="checkbox-label" style="display:flex; align-items:center; gap:6px; font-size:0.85em; cursor:pointer; user-select:none;">
               <input type="checkbox" id="exclude-se-outliers" style="accent-color:rgba(180,100,255,0.9); width:14px; height:14px; cursor:pointer;" />
-              <span>Also exclude &plusmn;1 SE model-residual outliers <small style="color:rgba(180,100,255,0.6)">(exploratory)</small> <span style="color:rgba(180,100,255,0.9);">&#9632;</span></span>
+              <span><span data-i18n="label.exclude-se-outliers">Also exclude &plusmn;1 SE model-residual outliers</span> <small style="color:rgba(180,100,255,0.6)">(exploratory)</small> <span style="color:rgba(180,100,255,0.9);">&#9632;</span></span>
             </label>
             <div id="se-outlier-list" style="display:none; margin-top:4px; padding:6px 8px; background:rgba(180,100,255,0.08); border-left:2px solid rgba(180,100,255,0.5); border-radius:3px; font-size:0.78em; color:rgba(255,255,255,0.6); line-height:1.6;"></div>
           </div>
@@ -5221,7 +5257,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         const a = document.createElement('a');
         a.href = '#' + heading.id;
         a.className = 'anchor-link';
-        a.setAttribute('aria-label', 'Link to this section');
+        a.setAttribute('aria-label', (window.i18n||{})['js.label.link-to-section'] || 'Link to this section');
         a.textContent = ' §';
         a.style.cssText =
           'text-decoration:none; color:#aaa; font-weight:normal; font-size:0.85em; margin-left:6px; opacity:0; transition:opacity .2s';
@@ -5248,7 +5284,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       // ── Download fallback-data.json ──────────────────────────────────
       async function downloadFallbackJSON() {
         if (!window.rawSpendingData || !window.rawGrowthData) {
-          alert('Live API data is not loaded. Reload the page with internet access so data is fetched from the World Bank API first.');
+          alert((window.i18n||{})['js.alert.no-data'] || 'Live API data is not loaded. Reload the page with internet access so data is fetched from the World Bank API first.');
           return;
         }
         const periods = [
@@ -5279,7 +5315,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       // ── Download model ranking as CSV ──────────────────────────────────────
       function downloadRankingCSV() {
         if (!lastRankingModels.length) {
-          alert('No ranking data available yet.');
+          alert((window.i18n||{})['js.alert.no-ranking'] || 'No ranking data available yet.');
           return;
         }
         const sorted = [...lastRankingModels].sort((a, b) => {
@@ -5289,10 +5325,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         });
         const dataPoints = getCountryDataToShow();
         const currentCurve = document.getElementById('curve-type-select').value;
+        const i18n = window.i18n || {};
         const curveNameMap = {
-          'power-law': 'Power Law', 'log-linear': 'Log-Linear',
-          quadratic: 'Quadratic', 'free-quadratic': 'Free Quadratic', linear: 'Linear',
-          inverse: 'Inverse', exponential: 'Exponential',
+          'power-law': i18n['js.curve.power-law'] || 'Power Law', 'log-linear': i18n['js.curve.log-linear'] || 'Log-Linear',
+          quadratic: i18n['js.curve.quadratic'] || 'Quadratic', 'free-quadratic': i18n['js.curve.free-quadratic'] || 'Free Quadratic', linear: i18n['js.curve.linear'] || 'Linear',
+          inverse: i18n['js.curve.inverse'] || 'Inverse', exponential: i18n['js.curve.exponential'] || 'Exponential',
         };
         const activeName = curveNameMap[currentCurve];
         const rows = [
@@ -5316,7 +5353,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               m.metrics.pValue !== null ? m.metrics.pValue.toExponential(4) : '',
               m.metrics.n !== null ? m.metrics.n : '',
               m.coverage !== null ? m.coverage.toFixed(4) : '',
-              m.name === activeName ? 'yes' : 'no',
+              m.key === currentCurve ? 'yes' : 'no',
             ].join(',');
           }),
         ];
@@ -5334,16 +5371,16 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       function downloadCSV() {
         const dataPoints = getCountryDataToShow();
         if (!dataPoints.length) {
-          alert('No country data is loaded yet. Wait for data to finish loading or select a country group.');
+          alert((window.i18n||{})['js.alert.no-country-data'] || 'No country data is loaded yet. Wait for data to finish loading or select a country group.');
           return;
         }
         const timePeriod = document.getElementById('time-period-select').value;
         const rows = [
-          ['Country', 'Income Group', 'Gov Spending (% GDP)', 'Avg GDP Growth (%)', 'Period', 'Years of Data'],
+          ['Country', (window.i18n||{})['js.csv.income-group'] || 'Income Group', 'Gov Spending (% GDP)', 'Avg GDP Growth (%)', 'Period', 'Years of Data'],
           ...dataPoints.map((c) => {
             const group = c.conflictFragile ? 'Conflict/Fragile'
               : c.gdpDistorted ? 'GDP-Distorted'
-              : c.externallyFunded ? 'Externally Funded'
+              : c.externallyFunded ? ((window.i18n||{})['js.csv.externally-funded'] || 'Externally Funded')
               : c.resourceDependent ? 'Resource-Dependent'
               : countryData.developed.includes(c) ? 'Developed'
               : 'Developing';
@@ -5370,7 +5407,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       // ── Share pullquote on X ──────────────────────────────────────────────
       function shareQuote() {
         const quote =
-          'Government spending reliably slows economic activity — so the right use of government is to aim that braking force at the parts of the economy we want less of, not the parts that create value.';
+          (window.i18n||{})['js.share.quote'] || 'Government spending reliably slows economic activity — so the right use of government is to aim that braking force at the parts of the economy we want less of, not the parts that create value.';
         const url =
           'https://julienreszka.github.io/economic-simulator/armey-curve.html#selective-brake';
         window.open(
@@ -5598,7 +5635,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             // Final fallback to embedded data
             countryData = getFallbackData();
             isDataLoaded = true;
-            updateDataStatus("Using embedded fallback data");
+            updateDataStatus((window.i18n||{})['js.status.fallback'] || "Using embedded fallback data");
             updateHighlightCountryOptions();
             autoFitParameters(true);
           }
@@ -5654,7 +5691,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           // If specific period not available, use embedded fallback
           countryData = getFallbackData();
           isDataLoaded = true;
-          updateDataStatus("Using embedded fallback data");
+          updateDataStatus((window.i18n||{})['js.status.fallback'] || "Using embedded fallback data");
         }
 
         updateHighlightCountryOptions();
@@ -6233,7 +6270,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           );
           if (developedCountries.length > 0) {
             datasets.push({
-              label: "Developed Countries",
+              label: (window.i18n||{})['js.group.developed'] || "Developed Countries",
               data: developedCountries.map((c) => ({
                 x: c.spending,
                 y: c.growth,
@@ -6257,7 +6294,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           );
           if (developingCountries.length > 0) {
             datasets.push({
-              label: "Developing Countries",
+              label: (window.i18n||{})['js.group.developing'] || "Developing Countries",
               data: developingCountries.map((c) => ({
                 x: c.spending,
                 y: c.growth,
@@ -6307,7 +6344,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           );
           if (externalCountries.length > 0) {
             datasets.push({
-              label: "Externally Funded Countries ▲",
+              label: ((window.i18n||{})['js.csv.externally-funded'] || 'Externally Funded') + ' Countries ▲',
               data: externalCountries.map((c) => ({
                 x: c.spending,
                 y: c.growth,
@@ -6614,20 +6651,20 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                     : ""
                 }<em>${
           curveType === "quadratic"
-            ? "This is where government spending maximizes economic growth while minimizing inefficiency."
+            ? (window.i18n||{})['js.tooltip.quadratic-optimal'] || "This is where government spending maximizes economic growth while minimizing inefficiency."
             : curveType === "linear"
             ? linearSlope > 0
-              ? "Linear model: Growth increases continuously with spending."
+              ? (window.i18n||{})['js.tooltip.linear-positive'] || "Linear model: Growth increases continuously with spending."
               : linearSlope < 0
-              ? "Linear model: Growth decreases continuously with spending."
-              : "Linear model: Growth is constant regardless of spending."
+              ? (window.i18n||{})['js.tooltip.linear-negative'] || "Linear model: Growth decreases continuously with spending."
+              : (window.i18n||{})['js.tooltip.linear-flat'] || "Linear model: Growth is constant regardless of spending."
             : curveType === "inverse"
-            ? "Inverse model: Growth declines rapidly at first, then levels off - minimal government is optimal."
+            ? (window.i18n||{})['js.tooltip.inverse'] || "Inverse model: Growth declines rapidly at first, then levels off - minimal government is optimal."
             : curveType === "power-law"
-            ? "Power law: Growth declines steeply at low spending, then gradually flattens - minimal government is optimal."
+            ? (window.i18n||{})['js.tooltip.power-law'] || "Power law: Growth declines steeply at low spending, then gradually flattens - minimal government is optimal."
             : curveType === "log-linear"
-            ? "Log-linear: Diminishing marginal damage from each additional unit of government spending."
-            : "Exponential decay: Government spending causes exponential decline in growth - zero spending is optimal."
+            ? (window.i18n||{})['js.tooltip.log-linear'] || "Log-linear: Diminishing marginal damage from each additional unit of government spending."
+            : (window.i18n||{})['js.tooltip.exponential'] || "Exponential decay: Government spending causes exponential decline in growth - zero spending is optimal."
         }</em>
             `;
       }
@@ -6791,16 +6828,30 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         }
 
         const modelDefs = [
-          { name: "Power Law",      predictFn: (x) => plB0 * Math.pow(Math.max(x, 0.1), -plAlpha), k: 2 },
-          { name: "Log-Linear",     predictFn: (x) => llB0 - llAlpha * Math.log(x + 1), k: 2 },
-          { name: "Exponential",    predictFn: (x) => expB0 * Math.exp(-expLambda * x), k: 2 },
-          { name: "Inverse",        predictFn: (x) => invA + invB / Math.max(x, 0.1), k: 2 },
-          { name: "Linear",         predictFn: (x) => linB0 + linSlope * x, k: 2 },
-          { name: "Quadratic",      predictFn: (x) => qB0 + qB1 * x + qB2 * x * x, k: 3 },
-          { name: "Free Quadratic", predictFn: (s) => freeQuadParams[0] + freeQuadParams[1]*s + freeQuadParams[2]*s*s, k: 3 },
+          { key: "power-law",      predictFn: (x) => plB0 * Math.pow(Math.max(x, 0.1), -plAlpha), k: 2 },
+          { key: "log-linear",     predictFn: (x) => llB0 - llAlpha * Math.log(x + 1), k: 2 },
+          { key: "exponential",    predictFn: (x) => expB0 * Math.exp(-expLambda * x), k: 2 },
+          { key: "inverse",        predictFn: (x) => invA + invB / Math.max(x, 0.1), k: 2 },
+          { key: "linear",         predictFn: (x) => linB0 + linSlope * x, k: 2 },
+          { key: "quadratic",      predictFn: (x) => qB0 + qB1 * x + qB2 * x * x, k: 3 },
+          { key: "free-quadratic", predictFn: (s) => freeQuadParams[0] + freeQuadParams[1]*s + freeQuadParams[2]*s*s, k: 3 },
         ];
+
+        const currentCurve = document.getElementById("curve-type-select").value;
+        const i18n = window.i18n || {};
+        const curveNameMap = {
+          "power-law":      i18n['js.curve.power-law']      || "Power Law",
+          "log-linear":     i18n['js.curve.log-linear']     || "Log-Linear",
+          "quadratic":      i18n['js.curve.quadratic']      || "Quadratic",
+          "free-quadratic": i18n['js.curve.free-quadratic'] || "Free Quadratic",
+          "linear":         i18n['js.curve.linear']         || "Linear",
+          "inverse":        i18n['js.curve.inverse']        || "Inverse",
+          "exponential":    i18n['js.curve.exponential']    || "Exponential",
+        };
+
         const models = modelDefs.map(m => ({
-          name: m.name,
+          key: m.key,
+          name: curveNameMap[m.key] || m.key,
           predictFn: m.predictFn,
           metrics: computeMetrics(dataPoints, m.predictFn, m.k),
           coverage: computeCoverage(dataPoints, m.predictFn, m.k),
@@ -6814,17 +6865,8 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           return a.metrics.aic - b.metrics.aic;
         });
 
-        const currentCurve = document.getElementById("curve-type-select").value;
-        const curveNameMap = {
-          "power-law": "Power Law",
-          "log-linear": "Log-Linear",
-          quadratic: "Quadratic",
-          "free-quadratic": "Free Quadratic",
-          linear: "Linear",
-          inverse: "Inverse",
-          exponential: "Exponential",
-        };
-        const activeName = curveNameMap[currentCurve];
+        const activeKey = currentCurve;
+        const activeName = curveNameMap[activeKey];
 
         const rows = models
           .map((m, i) => {
@@ -6846,7 +6888,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               const hi = Math.tanh(z + 1.96 * se_z) ** 2;
               ciStr = `[${lo.toFixed(2)}, ${hi.toFixed(2)}]`;
             }
-            const isActive = m.name === activeName;
+            const isActive = m.key === activeKey;
             const cls = isActive ? ' class="ranking-row-active"' : "";
             const badge = rank === 1 ? " ✓" : "";
             return `<tr${cls}><td>${rank}</td><td>${m.name}${badge}</td><td>${r2Str}</td><td>${ciStr}</td><td>${aicStr}</td><td>${pStr}</td><td>${nStr}</td><td>${covStr}</td></tr>`;
@@ -6900,8 +6942,8 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         if (countDisplay) countDisplay.textContent = `→ ${dataPoints.length} countries`;
 
         // Update intro paragraph live figures
-        const plModel = models.find(m => m.name === 'Power Law');
-        const quadModel = models.find(m => m.name === 'Quadratic');
+        const plModel = models.find(m => m.key === 'power-law');
+        const quadModel = models.find(m => m.key === 'quadratic');
         const introN = document.getElementById('intro-n');
         const introR2Pl = document.getElementById('intro-r2-pl');
         const introCiPl = document.getElementById('intro-ci-pl');
@@ -7117,19 +7159,19 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           data: {
             datasets: [
               ...datasets,
-              { label: "OLS fit", data: lineData, type: "line", borderColor: "rgba(255,99,132,0.9)", borderWidth: 2, pointRadius: 0, fill: false, tension: 0 },
+              { label: (window.i18n||{})['js.chart.ols-fit'] || "OLS fit", data: lineData, type: "line", borderColor: "rgba(255,99,132,0.9)", borderWidth: 2, pointRadius: 0, fill: false, tension: 0 },
             ],
           },
           options: {
             responsive: true,
             plugins: {
-              legend: { display: true, position: "top", labels: { usePointStyle: true, pointStyleWidth: 14, padding: 10, font: { size: 11 }, filter: item => item.text !== "OLS fit" } },
+              legend: { display: true, position: "top", labels: { usePointStyle: true, pointStyleWidth: 14, padding: 10, font: { size: 11 }, filter: item => item.text !== ((window.i18n||{})['js.chart.ols-fit'] || "OLS fit") } },
               tooltip: {
                 callbacks: {
                   label: c => {
                     const d = c.raw;
                     if (d.countryName) return `${d.countryName}: residual ${d.y >= 0 ? "+" : ""}${d.y.toFixed(2)} pp`;
-                    return "OLS line";
+                    return (window.i18n||{})['js.chart.ols-line'] || "OLS line";
                   },
                 },
               },
@@ -7344,9 +7386,10 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             return { name: m.name, r2s: r2sSub, r2rd, r2mil, r2capForm, r2popGrow, r2credit, r2tertiary, r2income, r2totVol, combJoint, aicSub };
           }).filter(Boolean);
 
+          const _i18n = window.i18n || {};
           const currentName = {
-            'power-law':'Power Law','log-linear':'Log-Linear','quadratic':'Quadratic',
-            'free-quadratic':'Free Quadratic','linear':'Linear','inverse':'Inverse','exponential':'Exponential'
+            'power-law': _i18n['js.curve.power-law'] || 'Power Law', 'log-linear': _i18n['js.curve.log-linear'] || 'Log-Linear', 'quadratic': _i18n['js.curve.quadratic'] || 'Quadratic',
+            'free-quadratic': _i18n['js.curve.free-quadratic'] || 'Free Quadratic', 'linear': _i18n['js.curve.linear'] || 'Linear', 'inverse': _i18n['js.curve.inverse'] || 'Inverse', 'exponential': _i18n['js.curve.exponential'] || 'Exponential'
           }[document.getElementById('curve-type-select').value];
 
           const mkRow = (r, i, valKey) => {
@@ -7617,7 +7660,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         const dataPoints = getCountryDataToShow();
         if (dataPoints.length < 2) {
           if (!silent)
-            alert("Load country data first (wait for data to finish loading).");
+            alert((window.i18n||{})['js.alert.load-first'] || "Load country data first (wait for data to finish loading).");
           return;
         }
         const curveType = document.getElementById("curve-type-select").value;
@@ -7819,7 +7862,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         restoreHashState();
         toggleParameterGroups();
         updateArmeySimulation();
-        updateDataStatus("Loading data from World Bank API...");
+        updateDataStatus((window.i18n||{})['js.status.loading-api'] || "Loading data from World Bank API...");
         fetchWorldBankData();
       }
       window._initSimulator = _initSimulator;

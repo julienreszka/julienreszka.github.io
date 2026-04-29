@@ -51,6 +51,23 @@ try {
 
 let html = readFileSync(htmlPath, "utf8");
 
+// ── 0. Replace window.i18n block between I18N-JS-START / I18N-JS-END ─────────
+// Collect all js.* keys from the locale JSON and emit a new script block.
+const jsKeys = Object.entries(locale).filter(([k]) => k.startsWith("js."));
+if (jsKeys.length > 0) {
+  const obj = Object.fromEntries(jsKeys);
+  const json = JSON.stringify(obj, null, 8)
+    .split("\n")
+    .map((line, i) => (i === 0 ? line : "      " + line))
+    .join("\n");
+  const newBlock =
+    `<!-- I18N-JS-START -->\n    <script>\n      window.i18n = ${json};\n    </script>\n    <!-- I18N-JS-END -->`;
+  html = html.replace(
+    /<!-- I18N-JS-START -->[\s\S]*?<!-- I18N-JS-END -->/,
+    newBlock
+  );
+}
+
 // ── 1. data-i18n-content="key" → replace content="..." on same line/tag ─────
 html = html.replace(
   /(<[^>]+\s)data-i18n-content="([^"]+)"([^>]*content=")([^"]*?)(")/g,

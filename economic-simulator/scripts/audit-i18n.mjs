@@ -54,6 +54,14 @@ for (let i = 0; i < lines.length; i++) {
     managedLines.add(i + 1);
     managedLines.add(i + 2);
   }
+  // Lines using (window.i18n||{})['key'] || 'fallback' or i18n['key'] (including _i18n) are managed.
+  if (/window\.i18n/.test(lines[i]) || /i18n\[/.test(lines[i])) {
+    managedLines.add(i);
+  }
+  // Embedded fallback data constants are pure data, not UI strings.
+  if (/const allPeriodData\s*=/.test(lines[i])) {
+    managedLines.add(i);
+  }
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -108,8 +116,19 @@ function buildPreRanges() {
   return ranges;
 }
 
+/** Track the I18N-JS-START / I18N-JS-END block — these are locale definitions, not hardcoded strings */
+function buildI18nDefRange() {
+  let start = -1, end = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (/I18N-JS-START/.test(lines[i])) start = i;
+    if (/I18N-JS-END/.test(lines[i])) { end = i; break; }
+  }
+  return start >= 0 && end >= 0 ? { start, end } : null;
+}
+
 const scriptRanges = buildScriptRanges();
 const preRanges = buildPreRanges();
+const i18nDefRange = buildI18nDefRange();
 
 function lineScriptInfo(lineIdx) {
   for (const r of scriptRanges) {
@@ -235,11 +254,17 @@ for (let i = 0; i < lines.length; i++) {
   const l = lines[i];
   const scriptInfo = lineScriptInfo(i);
 
-  // ── Inside a JS script block (not ld+json) ────────────────────────────────
+  // ── Inside JS script block (not ld+json) ────────────────────────────────
   if (scriptInfo && !scriptInfo.isLdJson) {
+    // Skip the window.i18n definition block — those strings are locale definitions, not hardcoded
+    if (i18nDefRange && i >= i18nDefRange.start && i <= i18nDefRange.end) {
+      continue;
+    }
     let m;
+    // Strip // single-line comments before matching so apostrophes in comments aren't matched
+    const codeOnly = l.replace(/\/\/.*$/, '');
     JS_STRING_RE.lastIndex = 0;
-    while ((m = JS_STRING_RE.exec(l)) !== null) {
+    while ((m = JS_STRING_RE.exec(codeOnly)) !== null) {
       // Only flag strings that contain a space — user-visible prose, not identifiers
       if (!/ /.test(m[1])) continue;
       // Skip inline CSS strings
