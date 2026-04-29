@@ -18,7 +18,7 @@ function writeJson(name, data) {
 }
 function extractBlock(html, key) {
   const startTag = `<!-- i18n:${key}:start -->`;
-  const endTag   = `<!-- /i18n:${key}:end -->`;
+  const endTag = `<!-- /i18n:${key}:end -->`;
   const s = html.indexOf(startTag);
   const e = html.indexOf(endTag);
   if (s === -1 || e === -1) throw new Error(`Block not found: ${key}`);
@@ -28,8 +28,8 @@ function extractBlock(html, key) {
 }
 
 const html = readFileSync(join(dir, 'armey-curve.html'), 'utf8');
-const en   = readJson('armey-curve.en.json');
-const fr   = readJson('armey-curve.fr.json');
+const en = readJson('armey-curve.en.json');
+const fr = readJson('armey-curve.fr.json');
 
 en['prose.iwc-flowchart'] = extractBlock(html, 'prose.iwc-flowchart');
 
