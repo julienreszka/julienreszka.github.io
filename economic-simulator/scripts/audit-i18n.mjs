@@ -55,6 +55,7 @@ const MANAGED_REGIONS = [
   ["<!-- ARGUMENT-ASIDE:START -->", "<!-- ARGUMENT-ASIDE:END -->"],
   ["<!-- CUT-GAINS-CONTROLS:START -->", "<!-- CUT-GAINS-CONTROLS:END -->"],
   ["<!-- TARGET-GROWTH-TABLE:START -->", "<!-- TARGET-GROWTH-TABLE:END -->"],
+  ["<!-- STATIC-TARGET-GROWTH-TABLE:START -->", "<!-- STATIC-TARGET-GROWTH-TABLE:END -->"],
   ["<!-- ARTICLE-JSONLD:START -->", "<!-- ARTICLE-JSONLD:END -->"],
   // Anchor-comment i18n blocks — prose sections wrapped for locale build
   ["<!-- i18n:", "<!-- /i18n:"],
