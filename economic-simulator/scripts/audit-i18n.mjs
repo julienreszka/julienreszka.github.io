@@ -31,6 +31,14 @@ const MANAGED_REGIONS = [
   ["<!-- FAQ-JSONLD-START -->", "<!-- FAQ-JSONLD-END -->"],
   ["<!-- FAQ-DETAILS-START -->", "<!-- FAQ-DETAILS-END -->"],
   ["<!-- IWC-CODE-START -->", "<!-- IWC-CODE-END -->"],
+  // Static data tables — contain numeric data and country names, not UI strings
+  ["<!-- STATIC-CUT-GAINS-TABLE:START -->", "<!-- STATIC-CUT-GAINS-TABLE:END -->"],
+  ["<!-- STEPWISE-ROWS-START -->", "<!-- STEPWISE-ROWS-END -->"],
+  ["<!-- MODEL-RANKING-TBODY:START -->", "<!-- MODEL-RANKING-TBODY:END -->"],
+  ["<!-- STEPWISE-BASELINE:START -->", "<!-- STEPWISE-BASELINE:END -->"],
+  ["<!-- RESIDUAL-INCOME-STATS:START -->", "<!-- RESIDUAL-INCOME-STATS:END -->"],
+  // Anchor-comment i18n blocks — prose sections wrapped for locale build
+  ["<!-- i18n:", "<!-- /i18n:"],
 ];
 
 // Build a Set of line indices that are inside managed regions
@@ -75,8 +83,9 @@ function isBoringText(str) {
   // Pure numbers / punctuation / symbols (including HTML-entity numbers like &lt;0.001)
   const stripped = t.replace(/&[a-z]+;|&#\d+;/g, "0");
   if (/^[\d\s.,;:!?()\-–—·×§%°€$#@&*/+<>=\[\]{}|^~`'"\\]+$/.test(stripped)) return true;
-  // URLs
+  // URLs and DOI identifiers
   if (/^https?:\/\//.test(t)) return true;
+  if (/^doi:10\./.test(t)) return true;
   // KaTeX / math tokens only
   if (/^[\$\\{}_^]+/.test(t) && t.length < 8) return true;
   return false;

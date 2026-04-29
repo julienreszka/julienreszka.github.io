@@ -1253,19 +1253,18 @@
             <thead>
               <tr class="ranking-header">
                 <th>#</th>
-                <th>Model</th>
-                <th>R²</th>
-                <th>95% CI (R²)</th>
+                <th data-i18n="table.col.model">Modèle</th>
+                <th data-i18n="table.col.r2">R²</th>
+                <th data-i18n="table.col.ci-r2">IC 95 % (R²)</th>
                 <th>AIC <small>(lower = better)</small></th>
-                <th>p-value</th>
+                <th data-i18n="table.col.pvalue">valeur p</th>
                 <th>N</th>
                 <th>Coverage <small>(±1 SE)</small></th>
               </tr>
             </thead>
             <tbody>
+              <!-- MODEL-RANKING-TBODY:START -->
               <tr>
-                <td>1</td>
-                <td>Power Law ✓</td>
                 <td>0.4219</td>
                 <td>[0.28, 0.56]</td>
                 <td>53.29</td>
@@ -1333,9 +1332,8 @@
                 <td>113</td>
                 <td>69%</td>
               </tr>
+              <!-- MODEL-RANKING-TBODY:END -->
             </tbody>
-          </table></div>
-          <p class="ranking-note">
             Each model is auto-fitted to find its best-case parameters before
             computing AIC/R² — a fair competition at peak performance. Bold row
             = currently selected model. 95% CI computed via Fisher&rsquo;s
@@ -1411,15 +1409,16 @@
             <thead>
               <tr style="color:rgba(255,255,255,0.5);">
                 <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">#</th>
-                <th style="text-align:left;padding:3px 8px">Variable</th>
-                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">Marginal R²</th>
-                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">Cumul. R²</th>
+                <th style="text-align:left;padding:3px 8px" data-i18n="table.col.variable">Variable</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%" data-i18n="table.col.marginal-r2">R² marginal</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%" data-i18n="table.col.cumul-r2">R² cumulé</th>
                 <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">N</th>
-                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%">Slope</th>
-                <th style="text-align:left;padding:3px 8px">Interpretation</th>
+                <th style="text-align:left;padding:3px 8px;white-space:nowrap;width:1%" data-i18n="table.col.slope">Pente</th>
+                <th style="text-align:left;padding:3px 8px" data-i18n="table.col.interpretation">Interprétation</th>
               </tr>
             </thead>
             <tbody>
+              <!-- STEPWISE-BASELINE:START -->
               <tr style="background:rgba(255,255,255,0.07);font-weight:600">
                 <td style="padding:3px 8px">—</td>
                 <td style="padding:3px 8px">Gov. spending (power law)</td>
@@ -1429,6 +1428,7 @@
                 <td style="padding:3px 8px">—</td>
                 <td style="padding:3px 8px">Baseline</td>
               </tr>
+              <!-- STEPWISE-BASELINE:END -->
               <!-- STEPWISE-ROWS-START -->
               <tr>
                 <td style="padding:3px 8px">1</td>
@@ -1646,6 +1646,7 @@
             <div id="residual-chart-label" class="sr-only">Scatter plot of Armey model residuals against log GDP per capita</div>
           </div>
           <div id="residual-income-stats" aria-live="polite" style="margin-top: 8px; font-size: 0.88em;">
+            <!-- RESIDUAL-INCOME-STATS:START -->
             <strong>Stage 2 — Best combined fit (spending + R&amp;D + military + income)</strong>
             <div class="table-scroll"><table style="width:100%;border-collapse:collapse;font-size:0.82em;margin-top:8px">
               <thead><tr style="color:rgba(255,255,255,0.5)">
@@ -1665,6 +1666,7 @@
               </tbody>
             </table></div>
             <small style="color:rgba(255,255,255,0.4)">Combined R² = R²(spending+R&amp;D+military+income+capital formation+population growth) evaluated on the joint subset with all five controls. Bold row = current model. 2005–2023, standard exclusions.</small>
+            <!-- RESIDUAL-INCOME-STATS:END -->
           </div>
         </div>
 
@@ -2853,29 +2855,31 @@
             decide every case: was consent present, and does inclusive wealth
             grow or shrink?
           </p>
+          <!-- i18n:prose.iwc-2x2-table:start -->
           <div class="table-scroll">
             <table class="iwc-2x2">
               <thead>
                 <tr>
                   <th></th>
-                  <th>Consent &check; (all parties agreed)</th>
-                  <th>Consent &cross; (third parties bear cost)</th>
+                  <th>Consentement ✓ (toutes les parties ont accepté)</th>
+                  <th>Consentement ✗ (des tiers supportent le coût)</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>$\Delta W > 0$</strong><br><span class="math-note">wealth grows</span></td>
-                  <td class="iwc-q-encourage">Encourage / leave alone &mdash; voluntary value creation</td>
-                  <td class="iwc-q-unusual">Rare; investigate why anyone is harmed by net-positive activity</td>
+                  <td><strong>$\Delta W > 0$</strong><br><span class="math-note">la richesse augmente</span></td>
+                  <td class="iwc-q-encourage">Encourager / laisser faire — création de valeur volontaire</td>
+                  <td class="iwc-q-unusual">Rare ; investiguer pourquoi quelqu'un est lésé par une activité à bilan positif</td>
                 </tr>
                 <tr>
-                  <td><strong>$\Delta W < 0$</strong><br><span class="math-note">wealth shrinks</span></td>
-                  <td class="iwc-q-leave">Leave alone &mdash; their loss, their choice (e.g. risky hobby)</td>
-                  <td class="iwc-q-brake">BRAKE &mdash; the only quadrant where government has objective standing</td>
+                  <td><strong>$\Delta W < 0$</strong><br><span class="math-note">la richesse diminue</span></td>
+                  <td class="iwc-q-leave">Laisser faire — leur perte, leur choix (ex. hobby risqué)</td>
+                  <td class="iwc-q-brake">FREINER — le seul quadrant où le gouvernement a une légitimité objective</td>
                 </tr>
               </tbody>
             </table>
           </div>
+<!-- /i18n:prose.iwc-2x2-table:end -->
           <p>
             Three of the four quadrants tell government to do nothing. Only the
             bottom-right justifies a brake. That is a much narrower licence
@@ -3047,66 +3051,68 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             This single inequality subsumes the standard candidates for "what
             government should slow down":
           </p>
-          <div class="table-scroll">
+          <!-- i18n:prose.iwc-table:start -->
+              <div class="table-scroll">
             <table class="ranking-table" style="margin: 12px 0">
               <thead>
                 <tr>
-                  <th>Activity type</th>
-                  <th>Which $K_k$ shrinks</th>
-                  <th>How consent fails</th>
+                  <th>Type d'activité</th>
+                  <th>Quel $K_k$ diminue</th>
+                  <th>Comment le consentement fait défaut</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>
-                    <strong>Negative externalities</strong><br />
-                    <em>pollution, congestion, systemic risk</em>
+                    <strong>Externalités négatives</strong><br />
+                    <em>pollution, congestion, risque systémique</em>
                   </td>
-                  <td>clean air, infrastructure, financial stability</td>
-                  <td>third parties never agreed to bear the cost</td>
+                  <td>air pur, infrastructures, stabilité financière</td>
+                  <td>les tiers n'ont jamais accepté de supporter le coût</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Resource depletion</strong><br />
-                    <em>extraction beyond regeneration</em>
+                    <strong>Épuisement des ressources</strong><br />
+                    <em>extraction au-delà de la régénération</em>
                   </td>
-                  <td>$K_{\text{natural}}$, no offsetting investment</td>
-                  <td>future generations not at the table (Hartwick violated)</td>
+                  <td>$K_{\text{natural}}$, sans investissement compensatoire</td>
+                  <td>les générations futures absentes de la table (règle de Hartwick violée)</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Rent-seeking</strong><br />
-                    <em>lobbying, regulatory capture, patent trolling</em>
+                    <strong>Recherche de rente</strong><br />
+                    <em>lobbying, capture réglementaire, piratage de brevets</em>
                   </td>
-                  <td>$K_{\text{institutional}}$ erodes; $\sum p_k \Delta K_k < 0$ once that erosion is priced in <span class="math-note">(produced-capital gains are more than offset by institutional losses)</span></td>
-                  <td>captured process, not voluntary exchange</td>
+                  <td>$K_{\text{institutional}}$ s'érode ; $\sum p_k \Delta K_k < 0$ une fois cette érosion valorisée <span class="math-note">(les gains en capital produit sont plus que compensés par les pertes institutionnelles)</span></td>
+                  <td>processus capturé, pas d'échange volontaire</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Fraud, coercion, monopoly by force</strong>
+                    <strong>Fraude, coercition, monopole par la force</strong>
                   </td>
-                  <td>varies (institutional, produced, human)</td>
-                  <td>consent absent by definition</td>
+                  <td>variable (institutionnel, produit, humain)</td>
+                  <td>consentement absent par définition</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Compulsory unfunded intergenerational transfers</strong><br />
-                    <em>PAYG pensions financed by tomorrow's workers</em>
+                    <strong>Transferts intergénérationnels obligatoires non financés</strong><br />
+                    <em>retraites par répartition financées par les travailleurs de demain</em>
                   </td>
-                  <td>young cohort's claim on $\sum_k K_k$ <span class="math-note">(total capital stock)</span></td>
-                  <td>unborn cannot negotiate the contract</td>
+                  <td>la créance de la jeune cohorte sur $\sum_k K_k$ <span class="math-note">(stock total de capital)</span></td>
+                  <td>les non-nés ne peuvent pas négocier le contrat</td>
                 </tr>
                 <tr>
                   <td>
-                    <strong>Information asymmetry exploitation</strong><br />
-                    <em>predatory lending, deceptive marketing</em>
+                    <strong>Exploitation de l'asymétrie d'information</strong><br />
+                    <em>prêts prédateurs, marketing trompeur</em>
                   </td>
-                  <td>$K_{\text{human}}$ <span class="math-note">(human capital)</span>, $K_{\text{produced}}$ <span class="math-note">(produced capital)</span> of victim</td>
-                  <td>nominal consent, not informed consent</td>
+                  <td>$K_{\text{human}}$ <span class="math-note">(capital humain)</span>, $K_{\text{produced}}$ <span class="math-note">(capital produit)</span> de la victime</td>
+                  <td>consentement nominal, pas éclairé</td>
                 </tr>
               </tbody>
             </table>
           </div>
+<!-- /i18n:prose.iwc-table:end -->
           <p>
             Conversely, the criterion <em>refuses</em> to condemn activities
             that are merely unfashionable, inefficient, or disliked by

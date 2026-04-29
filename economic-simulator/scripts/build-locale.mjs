@@ -68,6 +68,20 @@ if (jsKeys.length > 0) {
   );
 }
 
+// ── 0c. Replace <!-- i18n:key:start --> ... <!-- /i18n:key:end --> blocks ─────
+// These wrap entire HTML sections; the locale value replaces the inner content.
+html = html.replace(
+  /<!-- i18n:([a-z][a-z0-9.-]*):start -->([\s\S]*?)<!-- \/i18n:\1:end -->/g,
+  (match, key, _oldContent) => {
+    const val = locale[key];
+    if (val === undefined) return match;
+    // Detect the indentation used by the opening comment
+    const indentMatch = match.match(/^([ \t]*)<!--/);
+    const indent = indentMatch ? indentMatch[1] : "          ";
+    return `<!-- i18n:${key}:start -->\n${val}\n${indent}<!-- /i18n:${key}:end -->`;
+  }
+);
+
 // ── 1. data-i18n-content="key" → replace content="..." on same line/tag ─────
 html = html.replace(
   /(<[^>]+\s)data-i18n-content="([^"]+)"([^>]*content=")([^"]*?)(")/g,
