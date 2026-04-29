@@ -209,6 +209,8 @@ details > div {
   margin-bottom: 30px;
   padding: 10px 0;
   border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
 }
 
 .nav-breadcrumb a {
@@ -235,6 +237,14 @@ details > div {
 .nav-breadcrumb span {
   color: #6c757d;
   margin: 0 5px;
+}
+
+.locale-select {
+  margin-left: auto;
+  width: auto;
+  padding: 6px 32px 6px 12px;
+  font-size: 0.85em;
+  color: #90caf9;
 }
 
 .page-navigation {
