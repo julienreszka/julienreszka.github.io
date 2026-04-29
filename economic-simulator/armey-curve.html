@@ -75,6 +75,7 @@
     <link rel="preconnect" href="https://api.worldbank.org" />
 
     <!-- JSON-LD Structured Data -->
+    <!-- ARTICLE-JSONLD:START -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -239,6 +240,7 @@
         ]
       }
     </script>
+    <!-- ARTICLE-JSONLD:END -->
 
     <!-- Shared Styles -->
     <link rel="stylesheet" href="shared-styles.css" />
@@ -868,11 +870,13 @@
   </head>
 
   <body>
+    <!-- BREADCRUMB:START -->
     <div id="container">
       <!-- Navigation Breadcrumb -->
       <nav class="nav-breadcrumb" aria-label="Breadcrumb" data-i18n-aria-label="aria.breadcrumb">
         <a href="index.html" data-i18n="nav.back">← Back to All Curves</a>
       </nav>
+      <!-- BREADCRUMB:END -->
 
       <h1 data-i18n="heading.main">The Armey Curve: Government Spending vs Economic Growth</h1>
       <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; font-size:0.82em; color:#94a3b8; margin: -6px 0 14px;">
@@ -883,6 +887,7 @@
         <a href="#inclusive-wealth-criterion" style="color:#90caf9; text-decoration:none;" data-i18n="nav.jump-criterion">Jump to the criterion &rarr;</a>
       </div>
 
+      <!-- i18n:prose.intro-paragraph:start -->
       <p>
         <strong>Challenging the Armey Curve:</strong> For decades, economists
         have claimed there's an "optimal" level of government spending that
@@ -893,8 +898,10 @@
         Armey Curve <span id="intro-quad-clause">achieves only R²&nbsp;=&nbsp;0.3856 — less explanatory power, and no evidence of the predicted upturn at low spending levels</span>. The relationship is monotonically negative across the
         entire observed range.
       </p>
+      <!-- /i18n:prose.intro-paragraph:end -->
 
       <aside aria-label="Argument in three moves" data-i18n-aria-label="aria.argument" style="margin: 18px 0 24px; padding: 16px 20px; background: rgba(255,255,255,0.04); border-left: 3px solid #f4d35e; border-radius: 6px; font-size: 0.96em; line-height: 1.55;">
+        <!-- ARGUMENT-ASIDE:START -->
         <div style="font-size: 0.72em; font-weight: 700; letter-spacing: 0.12em; color: #f4d35e; margin-bottom: 8px;">THE ARGUMENT IN THREE MOVES</div>
         <ol style="margin: 0; padding-left: 22px;">
           <li style="margin-bottom: 6px;"><strong>Government slows aggregate economic activity.</strong> The
@@ -908,6 +915,7 @@
             shrinks inclusive wealth <em>and</em> some affected party never
             consented. Three of four quadrants tell government to do nothing.</li>
         </ol>
+        <!-- ARGUMENT-ASIDE:END -->
       </aside>
 
       <!-- Slide deck removed (figures contain outdated statistics) -->
@@ -916,7 +924,7 @@
       <!-- Interactive Simulation -->
       <section id="armey-section">
         <h2 id="armey-simulator" data-i18n="heading.simulator">Interactive Armey Curve Simulator</h2>
-
+        <!-- SIMULATOR-CONTROLS:START -->
         <form id="paramsFormArmey">
           <div class="param-group">
             <label for="curve-type-select" data-i18n="label.curve-type">Curve Model Type:</label>
@@ -1248,11 +1256,12 @@
             data-i18n-aria-label="aria.chart.main"
             aria-label="Interactive Armey Curve showing relationship between government spending and economic growth"
           ></canvas>
-          <div id="armey-chart-label" class="sr-only">
+          <div id="armey-chart-label" class="sr-only" data-i18n="aria.chart-label">
             Chart displaying the Armey Curve with government spending on x-axis
             and GDP growth rate on y-axis
           </div>
         </div>
+        <!-- SIMULATOR-CONTROLS:END -->
 
         <div
           id="optimal-armey"
@@ -1992,6 +2001,7 @@
           </p>
           <!-- /i18n:prose.why-cuts-are-hard-body:end -->
 
+          <!-- CUT-GAINS-CONTROLS:START -->
           <div id="cut-gains-table" style="margin-top:16px;">
             <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
               <h4 style="font-size:0.95em; margin:0;" data-i18n="heading.predicted-growth-gain">Predicted growth gain from a 5-point spending cut — current model &amp; data</h4>
@@ -2779,8 +2789,7 @@
               <!-- STATIC-CUT-GAINS-TABLE:END -->
             </div>
           </div>
-
-          <h3 id="selective-brake" data-i18n="heading.selective-brake">
+          <!-- CUT-GAINS-CONTROLS:END -->\n\n          <h3 id="selective-brake" data-i18n="heading.selective-brake">
             The Selective Brake: What Government Is Actually Good For
           </h3>
           <!-- i18n:prose.selective-brake-body:start -->
@@ -3090,7 +3099,7 @@ assert(shouldBrake(activity(false, +10, 0, 0, 0)) === false, "Q2: non-consenter 
 assert(shouldBrake(activity(false, -5, 3, 2, 1)) === false, "Q3: brake costs 6 &gt; damage 5 → leave alone");
 assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed → BRAKE");</code></pre>
           </details>
-          <p>
+          <p data-i18n="prose.iwc-subsumes-p">
             This single inequality subsumes the standard candidates for "what
             government should slow down":
           </p>
@@ -3156,7 +3165,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </table>
           </div>
           <!-- /i18n:prose.iwc-table:end -->
-          <p>
+          <p data-i18n="prose.iwc-converse-p">
             Conversely, the criterion <em>refuses</em> to condemn activities
             that are merely unfashionable, inefficient, or disliked by
             incumbents. Consumption choices of competent adults that affect
@@ -3175,6 +3184,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             and capture risk. The full test is three sequential checks:
           </p>
 
+          <!-- IWC-FLOWCHART-START -->
           <div class="iwc-flow" role="img"
                aria-label="Decision flowchart for whether to brake an activity"
                data-i18n-aria-label="aria.iwc-flowchart">
@@ -3263,13 +3273,14 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             proof for new brakes there; otherwise treat the deadweight and
             enforcement components as the binding part of the test.
           </p>
+          <!-- IWC-FLOWCHART-END -->
 
           <h4 data-i18n="heading.worked-example">Worked example: applying the test to two policies</h4>
-          <p>
+          <p data-i18n="prose.worked-example-intro-p">
             The criterion is only useful if it produces unambiguous verdicts on
             real cases. Two contrasting examples:
           </p>
-          <p>
+          <p data-i18n="prose.worked-example-coal-p">
             <strong>A coal subsidy.</strong>
             $\Delta K_{\text{natural}} < 0$ (emissions, depleted reserves);
             $\Delta K_{\text{human}} < 0$ (respiratory damage in downwind
@@ -3279,7 +3290,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             rule-of-law neutrality). Net: $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(weighted wealth loss)</span> for
             non-consenting parties. <strong>Verdict: brake.</strong>
           </p>
-          <p>
+          <p data-i18n="prose.worked-example-grant-p">
             <strong>A grant for basic-science research.</strong>
             $\Delta K_{\text{knowledge}} > 0$ (results enter the public domain
             with positive spillovers); $\Delta K_{\text{human}} > 0$ (trained
@@ -3288,13 +3299,13 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             non-rivalrous). Net: $\sum_k p_k \Delta K_k > 0$ <span class="math-note">(weighted wealth gain)</span> across the board.
             <strong>Verdict: don't brake.</strong>
           </p>
-          <p>
+          <p data-i18n="prose.worked-example-notice-p">
             Notice what the test did <em>not</em> require: a vote, a moral
             intuition, or an opinion about energy policy. It only required
             tallying the capital effects and checking the consent column.
           </p>
 
-          <p>
+          <p data-i18n="prose.dasgupta-reference-p">
             <strong>One empirical reference point: the planet, 1992&ndash;2014.</strong>
             The Dasgupta Review's Headline Message 2 reports that over this
             period global per-capita produced capital roughly doubled while
@@ -3317,7 +3328,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <h4 data-i18n="heading.what-consent-means">What &quot;consent&quot; actually means here</h4>
-          <p>
+          <p data-i18n="prose.consent-intro-p">
             &quot;Did the affected parties consent?&quot; is the criterion's
             most easily abused step, because for any sufficiently broad
             externality the answer is trivially &quot;no, the air-breathing
@@ -3325,7 +3336,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             when it distinguishes <em>structural</em> consent failure from
             rhetorical complaint:
           </p>
-          <ul>
+          <ul data-i18n="list.consent-types">
             <li>
               <strong>Genuine consent failure</strong> (Q1 = yes): the harmed
               party is identifiable, was not represented in the decision, and
@@ -3350,7 +3361,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               every loser of any election would license a brake.
             </li>
           </ul>
-          <p>
+          <p data-i18n="prose.consent-coase-p">
             The Coase (1960) reading carries through: when transaction costs
             are low and parties are identifiable, consent can be reached
             privately and Q1 fails &mdash; the criterion stays silent.
@@ -3359,11 +3370,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <h4 data-i18n="heading.hard-cases">The hard cases (where the criterion is genuinely ambiguous)</h4>
-          <p>
+          <p data-i18n="prose.hard-cases-intro-p">
             An honest framework names the cases it doesn't cleanly resolve.
             Four worth flagging:
           </p>
-          <ul>
+          <ul data-i18n="list.hard-cases">
             <li>
               <strong>Public-goods underprovision.</strong> Defense, basic
               research, contagious-disease surveillance: there is no activity
@@ -3399,7 +3410,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </ul>
 
           <h4 data-i18n="heading.genuinely-objective">Why this is genuinely objective (within limits)</h4>
-          <ul>
+          <ul data-i18n="list.genuinely-objective">
             <li>
               <strong>Sign objectivity is robust.</strong> Even when shadow
               prices $p_k$ are uncertain, the <em>direction</em> of $\Delta W$
@@ -3426,7 +3437,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </ul>
 
           <h4 data-i18n="heading.objectivity-leaks">Where objectivity leaks &mdash; honestly</h4>
-          <ul>
+          <ul data-i18n="list.objectivity-leaks">
             <li>
               Shadow prices for institutional and natural capital are
               estimated, not observed. Existing accounts cover produced, human,
@@ -3468,7 +3479,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               That second question needs a different tool.
             </li>
           </ul>
-          <p>
+          <p data-i18n="prose.objectivity-leaks-conclusion-p">
             But these are <em>calibration</em> disputes, not <em>criterion</em>
             disputes. Two honest analysts using inclusive wealth can disagree
             on magnitudes substantially &mdash; the Stern&ndash;Nordhaus split
@@ -3480,19 +3491,19 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <h4 data-i18n="heading.policy-rule">The policy rule that follows</h4>
-          <p style="border-left:4px solid #007bff; padding-left:1em; font-style:italic">
+          <p data-i18n="prose.policy-rule-quote-p" style="border-left:4px solid #007bff; padding-left:1em; font-style:italic">
             Government spending should be aimed at activities where
             $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(weighted capital shrinks)</span> for non-consenting parties &mdash;
             activities that shrink the inclusive capital base &mdash; and
             withdrawn from activities where it is positive.
             <br /><strong>Don't tax production; tax depletion.</strong>
           </p>
-          <p>
+          <p data-i18n="prose.policy-rule-intro-p">
             Translated into a tax base, the criterion picks out a small,
             specific list of things to charge for &mdash; and a much larger
             list of things to leave alone. <strong>What it would tax:</strong>
           </p>
-          <ul>
+          <ul data-i18n="list.what-to-tax">
             <li>Carbon, methane, particulates, congestion (classical Pigouvian)</li>
             <li>Resource extraction above the regeneration rate (severance / depletion)</li>
             <li>Land value &mdash; Henry George's tax on unearned location rent, which captures wealth without distorting production</li>
@@ -3500,7 +3511,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             <li>Unfunded pension liabilities &mdash; force amortization rather than rollover</li>
             <li>Monopoly rents that rest on regulatory capture rather than productivity</li>
           </ul>
-          <p>
+          <p data-i18n="prose.what-not-to-tax-p">
             <strong>What it would not tax:</strong> labour income, corporate
             profits earned competitively, capital gains on productive
             investment, consumption of competent adults. Almost every
@@ -3510,7 +3521,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             in the academic literature is itself a data point about which
             constituencies the existing tax system serves.
           </p>
-          <p>
+          <p data-i18n="prose.policy-rule-conclusion-p">
             This is also why the data pattern documented above (more government
             spending &rarr; slower growth) is <em>expected</em> under the
             criterion: most government spending in modern economies funds
@@ -3523,7 +3534,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <h4 data-i18n="heading.what-falsifies-this">What would falsify this</h4>
-          <p>
+          <p data-i18n="prose.what-falsifies-intro-p">
             A criterion that cannot be wrong is not a criterion. The inclusive
             wealth test makes a specific empirical prediction: countries that
             tax depletion and protect inclusive wealth should, over decades,
@@ -3531,10 +3542,10 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             capital base &mdash; even when conventional GDP growth diverges
             from $W$ growth in the short run.
           </p>
-          <p>
+          <p data-i18n="prose.what-falsifies-refute-p">
             <strong>What would refute the criterion:</strong>
           </p>
-          <ul>
+          <ul data-i18n="list.what-falsifies">
             <li>
               If countries with depletion-style tax bases (Norway's sovereign
               fund, Chilean copper royalties, Singaporean land-value capture,
@@ -3554,7 +3565,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               activities, the criterion would lose its claim to sign objectivity.
             </li>
           </ul>
-          <p>
+          <p data-i18n="prose.what-falsifies-conclusion-p">
             Current evidence runs the other way &mdash; the listed countries
             outperform on inclusive wealth per capita in the World Bank CWON
             data &mdash; but the prediction is testable, and the dataset is
@@ -3562,6 +3573,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             replaces.
           </p>
 
+          <!-- THEORY-MISLED:START -->
           <h3 data-i18n="heading.theory-misled-policymakers">How the Theory Misled Policymakers</h3>
           <p>
             The Armey Curve theory emerged in the 1980s from observations that
@@ -3801,7 +3813,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             failure while still consistently showing a negative
             spending–growth relationship.
           </p>
+          <!-- THEORY-MISLED:END -->
 
+          <!-- POWER-LAWS-EVERYWHERE:START -->
           <h3 data-i18n="heading.power-laws-everywhere">Power Laws Are Everywhere in Economics</h3>
           <p>
             The fact that a power law best describes the government
@@ -3909,7 +3923,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             economists spent decades forcing a quadratic curve onto data that
             was always screaming "power law."
           </p>
+          <!-- POWER-LAWS-EVERYWHERE:END -->
 
+          <!-- DATA-SOURCES:START -->
           <h3 data-i18n="heading.data-sources">Data Sources</h3>
           <p>
             The real-world country data displayed in this simulator comes from
@@ -3959,7 +3975,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               for your own analysis.</em
             >
           </p>
+          <!-- DATA-SOURCES:END -->
 
+          <!-- CORRELATION-CAUSATION:START -->
           <h3 data-i18n="heading.correlation-causation">But Does Correlation Mean Causation?</h3>
           <p>
             <strong
@@ -4281,7 +4299,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             potential, and compared to peers with lower spending?" On that
             question, the data gives a consistent answer.
           </p>
+          <!-- CORRELATION-CAUSATION:END -->
 
+          <!-- SCATTER-EXPLANATION:START -->
           <h3 data-i18n="heading.scatter-explanation">
             Why There's Still Scatter Even Though Government Size Matters Most
           </h3>
@@ -4587,7 +4607,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             relevance even accounting for the endogeneity caveats discussed
             above.
           </p>
+          <!-- SCATTER-EXPLANATION:END -->
 
+          <!-- QUADRATIC-POLITICAL:START -->
           <h3 data-i18n="heading.quadratic-persisted">Why the Quadratic Model Persisted</h3>
           <p>
             The traditional Armey Curve survived longer than its empirical
@@ -4756,6 +4778,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             trajectory is a separate question from whether the underlying
             economics are correct.
           </p>
+          <!-- QUADRATIC-POLITICAL:END -->
         </div>
       </section>
 
@@ -4976,6 +4999,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       </section>
 
       <section id="references">
+        <!-- REFERENCES:START -->
         <div class="armey-specific">
           <ol style="font-size: 0.95em; line-height: 1.8">
             <li id="ref-barro">
@@ -5027,12 +5051,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ol>
         </div>
+        <!-- REFERENCES:END -->
       </section>
-
-        </div>
-      </section>
-
-      <section id="embed">
+        <!-- EMBED:START -->
         <h2 data-i18n="heading.embed">Embed This Simulator</h2>
         <div class="armey-specific">
           <p style="font-size:0.95em">You can embed the interactive chart on your site. Copy the snippet below:</p>
@@ -5047,9 +5068,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 &lt;p style="font-size:0.8em"&gt;Source: &lt;a href="https://julienreszka.github.io/economic-simulator/armey-curve.html"&gt;julienreszka.github.io — The Armey Curve&lt;/a&gt;&lt;/p&gt;</pre>
           <button onclick="copyText('embed-snippet', this)" data-i18n="button.copy-embed">Copy Embed Code</button>
         </div>
+        <!-- EMBED:END -->
       </section>
 
       <!-- Natural Right Section -->
+      <!-- NATURAL-RIGHTS:START -->
       <section class="natural-rights-section">
         <h2 data-i18n="heading.right-to-growth">The Right to Economic Growth</h2>
 
@@ -5283,6 +5306,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </div>
         </div>
       </section>
+      <!-- NATURAL-RIGHTS:END -->
     </div>
 
     <script>

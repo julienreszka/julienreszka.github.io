@@ -161,7 +161,7 @@ html = html.replace(I18N_ATTR_RE, (match, openTag, tagName, _attrs1, key, _attrs
 
 // Multi-line variant: text on lines after the opening tag
 // Pattern: opening tag ends with >, then newline(s) + whitespace + text + newline(s) + whitespace + close tag
-const I18N_MULTILINE_RE = /(<(title|h[1-6]|a|label|option|button|span|p|li|td|th|summary)(\s[^>]*)?\sdata-i18n="([^"]+)"(\s[^>]*)?>)\n([\s\S]*?)(<\/\2>)/gi;
+const I18N_MULTILINE_RE = /(<(title|h[1-6]|a|label|option|button|span|p|li|td|th|summary|ul|ol|div)(\s[^>]*)?\sdata-i18n="([^"]+)"(\s[^>]*)?>)\n([\s\S]*?)(<\/\2>)/gi;
 
 html = html.replace(I18N_MULTILINE_RE, (match, openTag, tagName, _attrs1, key, _attrs2, _oldText, closeTag) => {
   const val = locale[key];

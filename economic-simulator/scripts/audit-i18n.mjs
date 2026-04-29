@@ -40,6 +40,21 @@ const MANAGED_REGIONS = [
   ["<!-- DOWNLOAD-CSV:START -->", "<!-- DOWNLOAD-CSV:END -->"],
   ["<!-- DOWNLOAD-FALLBACK:START -->", "<!-- DOWNLOAD-FALLBACK:END -->"],
   ["<!-- IWC-PEDIGREE-START -->", "<!-- IWC-PEDIGREE-END -->"],
+  ["<!-- SIMULATOR-CONTROLS:START -->", "<!-- SIMULATOR-CONTROLS:END -->"],
+  ["<!-- IWC-FLOWCHART-START -->", "<!-- IWC-FLOWCHART-END -->"],
+  ["<!-- THEORY-MISLED:START -->", "<!-- THEORY-MISLED:END -->"],
+  ["<!-- POWER-LAWS-EVERYWHERE:START -->", "<!-- POWER-LAWS-EVERYWHERE:END -->"],
+  ["<!-- DATA-SOURCES:START -->", "<!-- DATA-SOURCES:END -->"],
+  ["<!-- CORRELATION-CAUSATION:START -->", "<!-- CORRELATION-CAUSATION:END -->"],
+  ["<!-- SCATTER-EXPLANATION:START -->", "<!-- SCATTER-EXPLANATION:END -->"],
+  ["<!-- QUADRATIC-POLITICAL:START -->", "<!-- QUADRATIC-POLITICAL:END -->"],
+  ["<!-- REFERENCES:START -->", "<!-- REFERENCES:END -->"],
+  ["<!-- EMBED:START -->", "<!-- EMBED:END -->"],
+  ["<!-- NATURAL-RIGHTS:START -->", "<!-- NATURAL-RIGHTS:END -->"],
+  ["<!-- BREADCRUMB:START -->", "<!-- BREADCRUMB:END -->"],
+  ["<!-- ARGUMENT-ASIDE:START -->", "<!-- ARGUMENT-ASIDE:END -->"],
+  ["<!-- CUT-GAINS-CONTROLS:START -->", "<!-- CUT-GAINS-CONTROLS:END -->"],
+  ["<!-- ARTICLE-JSONLD:START -->", "<!-- ARTICLE-JSONLD:END -->"],
   // Anchor-comment i18n blocks — prose sections wrapped for locale build
   ["<!-- i18n:", "<!-- /i18n:"],
 ];
@@ -58,12 +73,25 @@ for (const [open, close] of MANAGED_REGIONS) {
 // Also mark any element with data-i18n or data-i18n-content as managed
 // For multi-line attrs (e.g. data-i18n-aria-label on one line, aria-label on
 // the next), mark ±2 surrounding lines as managed too.
+// For container elements (ul, ol, div, p) with data-i18n, mark ALL lines
+// until the matching close tag as managed (the build replaces the full content).
+const CONTAINER_TAGS_RE = /^<(ul|ol|div|p)[\s>]/;
 for (let i = 0; i < lines.length; i++) {
   if (/data-i18n/.test(lines[i])) {
     managedLines.add(i);
     managedLines.add(i - 1);
     managedLines.add(i + 1);
     managedLines.add(i + 2);
+    // For container elements with data-i18n, mark all content as managed
+    const tagMatch = lines[i].trimStart().match(/^<(ul|ol|div|p)[\s>]/);
+    if (tagMatch) {
+      const closeTag = `</${tagMatch[1]}>`;
+      for (let j = i + 1; j < lines.length; j++) {
+        managedLines.add(j);
+        if (lines[j].includes(closeTag)) break;
+        if (j - i > 200) break; // safety limit
+      }
+    }
   }
   // Lines using (window.i18n||{})['key'] || 'fallback' or i18n['key'] (including _i18n) are managed.
   if (/window\.i18n/.test(lines[i]) || /i18n\[/.test(lines[i])) {

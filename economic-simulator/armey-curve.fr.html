@@ -72,6 +72,7 @@
     <link rel="preconnect" href="https://api.worldbank.org" />
 
     <!-- JSON-LD Structured Data -->
+    <!-- ARTICLE-JSONLD:START -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -236,6 +237,7 @@
         ]
       }
     </script>
+    <!-- ARTICLE-JSONLD:END -->
 
     <!-- Shared Styles -->
     <link rel="stylesheet" href="shared-styles.css" />
@@ -865,11 +867,13 @@
   </head>
 
   <body>
+    <!-- BREADCRUMB:START -->
     <div id="container">
       <!-- Navigation Breadcrumb -->
       <nav class="nav-breadcrumb" aria-label="Fil d’Ariane" data-i18n-aria-label="aria.breadcrumb">
         <a href="index.html" data-i18n="nav.back">← Retour à toutes les courbes</a>
       </nav>
+      <!-- BREADCRUMB:END -->
 
       <h1 data-i18n="heading.main">La courbe d’Armey : dépenses publiques et croissance économique</h1>
       <div style="display:flex; flex-wrap:wrap; gap:14px; align-items:center; font-size:0.82em; color:#94a3b8; margin: -6px 0 14px;">
@@ -880,18 +884,24 @@
         <a href="#inclusive-wealth-criterion" style="color:#90caf9; text-decoration:none;" data-i18n="nav.jump-criterion">Aller au critère →</a>
       </div>
 
+      <!-- i18n:prose.intro-paragraph:start -->
       <p>
-        <strong>Challenging the Armey Curve:</strong> For decades, economists
-        have claimed there's an "optimal" level of government spending that
-        maximizes economic growth — typically placing that sweet spot at 15–25%
-        of GDP. Cross-country World Bank data across <span id="intro-n">113</span> countries tells a
-        different story: a <strong>Power Law model fits with R²&nbsp;=&nbsp;<span id="intro-r2-pl">0.4219</span>
-        (approx. 95% CI: <span id="intro-ci-pl">0.28–0.56</span>)</strong>, while the traditional Quadratic
-        Armey Curve <span id="intro-quad-clause">achieves only R²&nbsp;=&nbsp;0.3856 — less explanatory power, and no evidence of the predicted upturn at low spending levels</span>. The relationship is monotonically negative across the
-        entire observed range.
+        <strong>Remise en question de la courbe d'Armey :</strong> Pendant des décennies,
+        les économistes ont affirmé qu'il existe un niveau « optimal » de dépenses
+        publiques maximisant la croissance économique — plaçant généralement ce point
+        idéal à 15–25 % du PIB. Les données de la Banque mondiale couvrant
+        <span id="intro-n">113</span> pays racontent une histoire différente : un
+        <strong>modèle en loi de puissance s'ajuste avec un R²&nbsp;=&nbsp;<span id="intro-r2-pl">0.4219</span>
+        (IC 95 % approx. : <span id="intro-ci-pl">0.28–0.56</span>)</strong>, tandis que
+        la courbe d'Armey quadratique traditionnelle
+        <span id="intro-quad-clause">n'atteint qu'un R²&nbsp;=&nbsp;0.3856 — moins de pouvoir explicatif,
+        et aucune preuve du retournement prédit à de faibles niveaux de dépenses</span>.
+        La relation est monotonement négative sur l'ensemble de la plage observée.
       </p>
+<!-- /i18n:prose.intro-paragraph:end -->
 
       <aside aria-label="L’argument en trois temps" data-i18n-aria-label="aria.argument" style="margin: 18px 0 24px; padding: 16px 20px; background: rgba(255,255,255,0.04); border-left: 3px solid #f4d35e; border-radius: 6px; font-size: 0.96em; line-height: 1.55;">
+        <!-- ARGUMENT-ASIDE:START -->
         <div style="font-size: 0.72em; font-weight: 700; letter-spacing: 0.12em; color: #f4d35e; margin-bottom: 8px;">THE ARGUMENT IN THREE MOVES</div>
         <ol style="margin: 0; padding-left: 22px;">
           <li style="margin-bottom: 6px;"><strong>Government slows aggregate economic activity.</strong> The
@@ -905,6 +915,7 @@
             shrinks inclusive wealth <em>and</em> some affected party never
             consented. Three of four quadrants tell government to do nothing.</li>
         </ol>
+        <!-- ARGUMENT-ASIDE:END -->
       </aside>
 
       <!-- Slide deck removed (figures contain outdated statistics) -->
@@ -913,7 +924,7 @@
       <!-- Interactive Simulation -->
       <section id="armey-section">
         <h2 id="armey-simulator" data-i18n="heading.simulator">Simulateur interactif de la courbe d’Armey</h2>
-
+        <!-- SIMULATOR-CONTROLS:START -->
         <form id="paramsFormArmey">
           <div class="param-group">
             <label for="curve-type-select" data-i18n="label.curve-type">Type de modèle de courbe :</label>
@@ -1235,11 +1246,11 @@
             data-i18n-aria-label="aria.chart.main"
             aria-label="Courbe d’Armey interactive montrant la relation entre les dépenses publiques et la croissance économique"
           ></canvas>
-          <div id="armey-chart-label" class="sr-only">
-            Chart displaying the Armey Curve with government spending on x-axis
-            and GDP growth rate on y-axis
-          </div>
+          <div id="armey-chart-label" class="sr-only" data-i18n="aria.chart-label">
+          Graphique affichant la courbe d'Armey avec les dépenses publiques en abscisse et le taux de croissance du PIB en ordonnée
         </div>
+        </div>
+        <!-- SIMULATOR-CONTROLS:END -->
 
         <div
           id="optimal-armey"
@@ -2045,6 +2056,7 @@
           </p>
 <!-- /i18n:prose.why-cuts-are-hard-body:end -->
 
+          <!-- CUT-GAINS-CONTROLS:START -->
           <div id="cut-gains-table" style="margin-top:16px;">
             <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
               <h4 style="font-size:0.95em; margin:0;" data-i18n="heading.predicted-growth-gain">Gain de croissance prédit pour une réduction de 5 points de dépenses — modèle et données actuels</h4>
@@ -2832,8 +2844,7 @@
               <!-- STATIC-CUT-GAINS-TABLE:END -->
             </div>
           </div>
-
-          <h3 id="selective-brake" data-i18n="heading.selective-brake">Le frein sélectif : à quoi sert vraiment l'État</h3>
+          <!-- CUT-GAINS-CONTROLS:END -->\n\n          <h3 id="selective-brake" data-i18n="heading.selective-brake">Le frein sélectif : à quoi sert vraiment l'État</h3>
           <!-- i18n:prose.selective-brake-body:start -->
           <p>
             Les données de ce simulateur montrent que les dépenses publiques
@@ -3140,10 +3151,8 @@ assert(shouldBrake(activity(false, +10, 0, 0, 0)) === false, "Q2: non-consenter 
 assert(shouldBrake(activity(false, -5, 3, 2, 1)) === false, "Q3: brake costs 6 &gt; damage 5 → leave alone");
 assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed → BRAKE");</code></pre>
           </details>
-          <p>
-            This single inequality subsumes the standard candidates for "what
-            government should slow down":
-          </p>
+          <p data-i18n="prose.iwc-subsumes-p">Cette inégalité unique subsume les candidats standard pour « ce que
+            le gouvernement devrait freiner » :</p>
           <!-- i18n:prose.iwc-table:start -->
               <div class="table-scroll">
             <table class="ranking-table" style="margin: 12px 0">
@@ -3206,15 +3215,15 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </table>
           </div>
 <!-- /i18n:prose.iwc-table:end -->
-          <p>
-            Conversely, the criterion <em>refuses</em> to condemn activities
-            that are merely unfashionable, inefficient, or disliked by
-            incumbents. Consumption choices of competent adults that affect
-            only themselves leave $\sum_k p_k \Delta K_k$ <span class="math-note">(weighted capital change)</span> unchanged for
-            non-consenting parties. The criterion is silent &mdash; which is
-            exactly what an objective rule should do where no objective harm
-            exists.
-          </p>
+          <p data-i18n="prose.iwc-converse-p">
+          À l'inverse, le critère <em>refuse</em> de condamner les activités
+            qui sont simplement démodées, inefficaces ou mal aimées par les
+            acteurs en place. Les choix de consommation d'adultes compétents
+            qui n'affectent qu'eux-mêmes laissent $\sum_k p_k \Delta K_k$ <span class="math-note">(variation de capital pondérée)</span> inchangé pour
+            les tiers non-consentants. Le critère est muet &mdash; ce qui est
+            exactement ce qu'une règle objective devrait faire là où aucun préjudice
+            objectif n'existe.
+        </p>
 
           <h4 data-i18n="heading.decision-in-sequence">La décision étape par étape</h4>
           <p>
@@ -3225,6 +3234,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             and capture risk. The full test is three sequential checks:
           </p>
 
+          <!-- IWC-FLOWCHART-START -->
           <div class="iwc-flow" role="img"
                aria-label="Organigramme de décision pour l’application du frein"
                data-i18n-aria-label="aria.iwc-flowchart">
@@ -3313,305 +3323,296 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             proof for new brakes there; otherwise treat the deadweight and
             enforcement components as the binding part of the test.
           </p>
+          <!-- IWC-FLOWCHART-END -->
 
           <h4 data-i18n="heading.worked-example">Exemple concret : appliquer le test à deux politiques</h4>
-          <p>
-            The criterion is only useful if it produces unambiguous verdicts on
-            real cases. Two contrasting examples:
-          </p>
-          <p>
-            <strong>A coal subsidy.</strong>
-            $\Delta K_{\text{natural}} < 0$ (emissions, depleted reserves);
-            $\Delta K_{\text{human}} < 0$ (respiratory damage in downwind
-            populations, who never agreed); $\Delta K_{\text{produced}} > 0$
-            (cheaper electricity, short-term); $\Delta K_{\text{institutional}} < 0$
-            (the lobbying apparatus that sustains the subsidy itself erodes
-            rule-of-law neutrality). Net: $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(weighted wealth loss)</span> for
-            non-consenting parties. <strong>Verdict: brake.</strong>
-          </p>
-          <p>
-            <strong>A grant for basic-science research.</strong>
-            $\Delta K_{\text{knowledge}} > 0$ (results enter the public domain
-            with positive spillovers); $\Delta K_{\text{human}} > 0$ (trained
-            researchers); no consent failure (taxpayers fund it through a
-            constitutionally bounded process, beneficiaries are diffuse and
-            non-rivalrous). Net: $\sum_k p_k \Delta K_k > 0$ <span class="math-note">(weighted wealth gain)</span> across the board.
-            <strong>Verdict: don't brake.</strong>
-          </p>
-          <p>
-            Notice what the test did <em>not</em> require: a vote, a moral
-            intuition, or an opinion about energy policy. It only required
-            tallying the capital effects and checking the consent column.
-          </p>
+          <p data-i18n="prose.worked-example-intro-p">Le critère n'est utile que s'il produit des verdicts non ambigus sur
+            des cas réels. Deux exemples contrastés :</p>
+          <p data-i18n="prose.worked-example-coal-p">
+          <strong>Une subvention au charbon.</strong>
+            $\Delta K_{\text{naturel}} < 0$ (émissions, réserves épuisées) ;
+            $\Delta K_{\text{humain}} < 0$ (dommages respiratoires pour les
+            populations sous le vent, qui n'ont jamais consenti) ; $\Delta K_{\text{produit}} > 0$
+            (électricité moins chère, à court terme) ; $\Delta K_{\text{institutionnel}} < 0$
+            (l'appareil de lobbying qui maintient la subvention érode lui-même
+            la neutralité de l'état de droit). Net : $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(perte de richesse pondérée)</span> pour
+            les parties non-consentantes. <strong>Verdict : freiner.</strong>
+        </p>
+          <p data-i18n="prose.worked-example-grant-p">
+          <strong>Une subvention pour la recherche fondamentale.</strong>
+            $\Delta K_{\text{connaissance}} > 0$ (les résultats entrent dans le domaine public
+            avec des externalités positives) ; $\Delta K_{\text{humain}} > 0$ (chercheurs
+            formés) ; aucun échec du consentement (les contribuables le financent via un
+            processus constitutionnellement limité, les bénéficiaires sont diffus et
+            non-rivaux). Net : $\sum_k p_k \Delta K_k > 0$ <span class="math-note">(gain de richesse pondéré)</span> dans l'ensemble.
+            <strong>Verdict : ne pas freiner.</strong>
+        </p>
+          <p data-i18n="prose.worked-example-notice-p">
+          Remarquez ce que le test n'a pas exigé : un vote, une intuition morale
+            ou une opinion sur la politique énergétique. Il a seulement requis
+            de comptabiliser les effets sur le capital et de vérifier la colonne du consentement.
+        </p>
 
-          <p>
-            <strong>One empirical reference point: the planet, 1992&ndash;2014.</strong>
-            The Dasgupta Review's Headline Message 2 reports that over this
-            period global per-capita produced capital roughly doubled while
-            per-capita natural capital fell by roughly 40%
-            (<a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta 2021</a>;
-            corroborated by the World Bank's
-            <a href="https://www.worldbank.org/en/publication/changing-wealth-of-nations" target="_blank" rel="noopener"><em>Changing Wealth of Nations</em> 2021</a>).
-            Run those through the IWC lens: $\Delta K_{\text{produced}} > 0$,
-            but $\Delta K_{\text{natural}} \ll 0$ for parties
-            &mdash; future generations, downstream ecosystems &mdash; who never
-            consented to that trade. Whether
-            $\sum_k p_k\,\Delta K_k$ was net-positive or net-negative overall
-            depends on shadow prices, which is exactly what the Review argues
-            we have been omitting from standard GDP accounting. The criterion
-            doesn't pretend to settle those shadow-price disputes; it forces
-            them into the open. A growth statistic that aggregates
-            +100% produced capital with &minus;40% natural capital into a single
-            cheerful headline number is not measuring wealth &mdash; it is
-            measuring one column of a ledger while pretending the others don't exist.
-          </p>
+          <p data-i18n="prose.dasgupta-reference-p">
+          <strong>Un point de référence empirique : la planète, 1992&ndash;2014.</strong>
+            Le Message principal 2 du Rapport Dasgupta indique que sur cette
+            période, le capital produit mondial par habitant a environ doublé tandis que
+            le capital naturel par habitant a chuté d'environ 40 %
+            (<a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta 2021</a> ;
+            corroboré par la
+            <a href="https://www.worldbank.org/en/publication/changing-wealth-of-nations" target="_blank" rel="noopener"><em>Changing Wealth of Nations</em> 2021 de la Banque mondiale</a>).
+            Passés au crible IWC : $\Delta K_{\text{produit}} > 0$,
+            mais $\Delta K_{\text{naturel}} \ll 0$ pour les parties
+            &mdash; générations futures, écosystèmes en aval &mdash; qui n'ont
+            jamais consenti à cet échange. Que
+            $\sum_k p_k\,\Delta K_k$ soit globalement positif ou négatif
+            dépend des prix d'ombre, ce qui est exactement ce que le Rapport Dasgupta affirme
+            avoir omis de la comptabilité PIB standard. Le critère
+            ne prétend pas régler ces disputes de prix d'ombre ; il les
+            force au grand jour. Une statistique de croissance qui agrège
+            +100 % de capital produit avec &minus;40 % de capital naturel en un seul
+            nombre satisfaisant n'est pas en train de mesurer la richesse &mdash; il
+            mesure une colonne d'un grand livre en faisant semblant que les autres n'existent pas.
+        </p>
 
           <h4 data-i18n="heading.what-consent-means">Ce que signifie réellement le « consentement » ici</h4>
-          <p>
-            &quot;Did the affected parties consent?&quot; is the criterion's
-            most easily abused step, because for any sufficiently broad
-            externality the answer is trivially &quot;no, the air-breathing
-            public never signed a form.&quot; The filter only does real work
-            when it distinguishes <em>structural</em> consent failure from
-            rhetorical complaint:
-          </p>
-          <ul>
+          <p data-i18n="prose.consent-intro-p">
+          &quot;Les parties affectées ont-elles consenti ?&quot; est l'étape du critère
+            la plus facilement abusée, car pour toute externalité suffisamment large
+            la réponse est trivialement &quot;non, le public qui respire l'air
+            n'a jamais signé de formulaire.&quot; Le filtre ne fait vraiment son travail
+            que lorsqu'il distingue l'échec <em>structurel</em> du consentement de
+            la plainte rhétorique :
+        </p>
+          <ul data-i18n="list.consent-types">
             <li>
-              <strong>Genuine consent failure</strong> (Q1 = yes): the harmed
-              party is identifiable, was not represented in the decision, and
-              transaction costs make voluntary bargaining infeasible &mdash;
-              the classical Coasean failure mode. Pollution downwind, systemic
-              risk shifted to the deposit-insurance fund, fraud against
-              counterparties.
+              <strong>Échec réel du consentement</strong> (Q1 = oui) : la partie lésée
+              est identifiable, n'était pas représentée dans la décision, et
+              les coûts de transaction rendent la négociation volontaire infaisable &mdash;
+              le mode d'échec coasien classique. Pollution sous le vent, risque systémique
+              transféré au fonds d'assurance des dépôts, fraude contre des contreparties.
             </li>
             <li>
-              <strong>Constructive consent</strong> (Q1 = no): the cost is
-              borne under a constitutionally bounded process the party
-              participated in (taxes voted by their representatives), or the
-              party freely entered an arrangement that priced the risk in
-              (insurance pool, professional code of conduct). Disagreeing with
-              the outcome of a procedurally legitimate vote is not, by itself,
-              a Q1 failure.
+              <strong>Consentement constructif</strong> (Q1 = non) : le coût est
+              supporté dans le cadre d'un processus constitutionnellement limité auquel
+              la partie a participé (impôts votés par ses représentants), ou la
+              partie a librement conclu un arrangement qui a intégré le risque
+              (pool d'assurance, code de conduite professionnel). Ne pas être d'accord avec
+              le résultat d'un vote procéduralement légitime n'est pas, en soi,
+              un échec Q1.
             </li>
             <li>
-              <strong>Rhetorical &quot;non-consent&quot;</strong>: any feeling
-              of being taxed, regulated, or out-voted dressed up as a missing
-              signature. The criterion deliberately rejects this; otherwise
-              every loser of any election would license a brake.
+              <strong>&quot;Non-consentement&quot; rhétorique</strong> : tout sentiment
+              d'être taxé, réglementé ou mis en minorité présenté comme une signature
+              manquante. Le critère rejette délibérément cela ; sinon
+              tout perdant d'une élection pourrait déclencher un frein.
             </li>
           </ul>
-          <p>
-            The Coase (1960) reading carries through: when transaction costs
-            are low and parties are identifiable, consent can be reached
-            privately and Q1 fails &mdash; the criterion stays silent.
-            Pigouvian intervention is only licensed when bargaining is
-            structurally impossible, not merely unattractive.
-          </p>
+          <p data-i18n="prose.consent-coase-p">La lecture de Coase (1960) se prolonge : lorsque les coûts de transaction
+            sont faibles et que les parties sont identifiables, le consentement peut être atteint
+            en privé et Q1 échoue &mdash; le critère reste silencieux.
+            L'intervention pigouvienne n'est autorisée que lorsque la négociation est
+            structurellement impossible, pas simplement peu attrayante.</p>
 
           <h4 data-i18n="heading.hard-cases">Les cas difficiles (où le critère est vraiment ambigu)</h4>
-          <p>
-            An honest framework names the cases it doesn't cleanly resolve.
-            Four worth flagging:
-          </p>
-          <ul>
+          <p data-i18n="prose.hard-cases-intro-p">Un cadre honnête nomme les cas qu'il ne résout pas clairement.
+            Quatre valent la peine d'être signalés :</p>
+          <ul data-i18n="list.hard-cases">
             <li>
-              <strong>Public-goods underprovision.</strong> Defense, basic
-              research, contagious-disease surveillance: there is no activity
-              to brake, only one to <em>start</em>. The criterion tells
-              government what to slow, not what to provide. A complementary
-              rule (Samuelson on public goods) is needed for the production
-              side.
+              <strong>Sous-provision de biens publics.</strong> Défense, recherche
+              fondamentale, surveillance des maladies contagieuses : il n'y a pas d'activité
+              à freiner, seulement une à <em>démarrer</em>. Le critère dit
+              au gouvernement quoi ralentir, pas quoi fournir. Une règle complémentaire
+              (Samuelson sur les biens publics) est nécessaire pour le côté production.
             </li>
             <li>
-              <strong>Voluntary risky behaviour with social spillovers.</strong>
-              Smoking, motorcycling without a helmet, recreational drugs.
-              Consent is partial: the user agreed, the emergency-room budget
-              didn't. The criterion says brake the externality portion (e.g.
-              insurance pricing) <em>not</em> the activity itself.
+              <strong>Comportement risqué volontaire avec externalités sociales.</strong>
+              Tabac, moto sans casque, drogues récréatives.
+              Le consentement est partiel : l'utilisateur a accepté, le budget des urgences
+              n'a pas consenti. Le critère dit de freiner la partie externalité (par exemple
+              la tarification de l'assurance) <em>pas</em> l'activité elle-même.
             </li>
             <li>
-              <strong>High-variance frontier activity.</strong> Gain-of-function
-              research, untested geoengineering, novel financial instruments.
-              The expectation operator $\mathbb{E}$ matters: tail risk to
-              non-consenting parties can dominate even when the central
-              estimate of $\Delta W$ is positive. The criterion supports
-              precaution proportional to the size of the unconsented tail.
+              <strong>Activité frontière à haute variance.</strong> Recherche gain-de-fonction,
+              géo-ingénierie non testée, nouveaux instruments financiers.
+              L'opérateur d'espérance $\mathbb{E}$ est important : le risque de queue pour
+              les parties non-consentantes peut dominer même lorsque l'estimation centrale
+              de $\Delta W$ est positive. Le critère soutient
+              une précaution proportionnelle à la taille de la queue non-consentie.
             </li>
             <li>
-              <strong>Effects on the unborn.</strong> Every long-horizon
-              decision technically lacks consent from people who don't yet
-              exist. The criterion has to draw a line &mdash; usually by
-              treating the unborn as represented by the discount rate $\rho$
-              and by an obligation to leave $W$ non-decreasing (Hartwick).
-              This is a convention, not a derivation, and people of good faith
-              disagree about $\rho$.
+              <strong>Effets sur les personnes à naître.</strong> Toute décision à long terme
+              manque techniquement du consentement de personnes qui n'existent pas encore.
+              Le critère doit tracer une ligne &mdash; généralement en
+              traitant les personnes à naître comme représentées par le taux d'actualisation $\rho$
+              et par une obligation de laisser $W$ non-décroissant (Hartwick).
+              C'est une convention, pas une dérivation, et des gens de bonne foi
+              sont en désaccord sur $\rho$.
             </li>
           </ul>
 
           <h4 data-i18n="heading.genuinely-objective">Pourquoi ceci est véritablement objectif (dans certaines limites)</h4>
-          <ul>
+          <ul data-i18n="list.genuinely-objective">
             <li>
-              <strong>Sign objectivity is robust.</strong> Even when shadow
-              prices $p_k$ are uncertain, the <em>direction</em> of $\Delta W$
-              is often unambiguous: a polluting subsidised monopoly reduces
-              nearly every $K_k$ at once.
+              <strong>L'objectivité du signe est robuste.</strong> Même quand les prix
+              d'ombre $p_k$ sont incertains, la <em>direction</em> de $\Delta W$
+              est souvent non ambiguë : un monopole polluant subventionné réduit
+              presque chaque $K_k$ à la fois.
             </li>
             <li>
-              <strong>It does not require value judgements about
-              lifestyles.</strong> It only checks the accounting.
+              <strong>Il ne nécessite pas de jugements de valeur sur
+              les modes de vie.</strong> Il vérifie seulement la comptabilité.
             </li>
             <li>
-              <strong>It is partially measurable.</strong> The
-              <a href="https://www.worldbank.org/en/publication/changing-wealth-of-nations" target="_blank" rel="noopener">World Bank's Changing Wealth of Nations</a>
-              covers ~150 countries with produced, human, natural, and
-              net-foreign-asset capital and finds that many resource-dependent
-              economies have shrinking per-capita wealth even while their
-              GDP per capita rises &mdash; the exact gap GDP-only accounting
-              hides. The
-              <a href="https://wedocs.unep.org/handle/20.500.11822/43131" target="_blank" rel="noopener">UN Inclusive Wealth Report 2023</a>
-              covers 163 countries. The
-              <a href="https://data.worldbank.org/indicator/NY.ADJ.SVNG.GN.ZS" target="_blank" rel="noopener">Adjusted Net Savings</a>
-              series provides the annual flow counterpart for ~140 countries.
+              <strong>Il est partiellement mesurable.</strong> Le
+              <a href="https://www.worldbank.org/en/publication/changing-wealth-of-nations" target="_blank" rel="noopener">Changing Wealth of Nations de la Banque mondiale</a>
+              couvre ~150 pays avec le capital produit, humain, naturel et
+              les actifs étrangers nets et constate que de nombreuses économies dépendantes
+              des ressources ont une richesse par habitant déclinante même si leur
+              PIB par habitant augmente &mdash; l'écart exact que la comptabilité uniquement PIB
+              masque. Le
+              <a href="https://wedocs.unep.org/handle/20.500.11822/43131" target="_blank" rel="noopener">Rapport sur la richesse inclusive 2023 de l'ONU</a>
+              couvre 163 pays. La série
+              <a href="https://data.worldbank.org/indicator/NY.ADJ.SVNG.GN.ZS" target="_blank" rel="noopener">Épargne nette ajustée</a>
+              fournit le flux annuel correspondant pour ~140 pays.
             </li>
           </ul>
 
           <h4 data-i18n="heading.objectivity-leaks">Là où l'objectivité s'effrite — en toute honnêteté</h4>
-          <ul>
+          <ul data-i18n="list.objectivity-leaks">
             <li>
-              Shadow prices for institutional and natural capital are
-              estimated, not observed. Existing accounts cover produced, human,
-              and natural capital well; <strong>institutional capital is not
-              yet integrated</strong> into any official wealth account.
+              Les prix d'ombre pour le capital institutionnel et naturel sont
+              estimés, pas observés. Les comptes existants couvrent bien le capital produit, humain
+              et naturel ; <strong>le capital institutionnel n'est pas
+              encore intégré</strong> dans aucun compte de richesse officiel.
             </li>
             <li>
-              <strong>Shadow prices are partly endogenous to the policy under
-              evaluation.</strong> $p_k$ depends on the policy environment
-              &mdash; a carbon tax changes the shadow price of
-              $K_{\text{natural}}$, which is the very price you'd want to use
-              to score the carbon tax. Honest practice picks a baseline
-              (no-policy or counterfactual-status-quo prices), reports a range,
-              and relies on sign-robustness rather than precise magnitudes.
-              See Dasgupta &amp; M&auml;ler
+              <strong>Les prix d'ombre sont partiellement endogènes à la politique
+              évaluée.</strong> $p_k$ dépend de l'environnement politique
+              &mdash; une taxe carbone change le prix d'ombre de
+              $K_{\text{naturel}}$, qui est précisément le prix qu'on voudrait utiliser
+              pour évaluer la taxe carbone. La pratique honnête choisit une référence
+              (prix sans politique ou du statu quo contrefactuel), rapporte une plage,
+              et s'appuie sur la robustesse du signe plutôt que sur des magnitudes précises.
+              Voir Dasgupta &amp; M&auml;ler
               (<a href="https://doi.org/10.1017/S1355770X00000061" target="_blank" rel="noopener">2000</a>)
-              for the formal treatment.
+              pour le traitement formel.
             </li>
             <li>
-              The discount rate $\rho$ involves an ethical choice
+              Le taux d'actualisation $\rho$ implique un choix éthique
               (<a href="https://www.aeaweb.org/articles?id=10.1257/aer.98.2.1" target="_blank" rel="noopener">Stern 2008</a> vs.
               <a href="https://www.aeaweb.org/articles?id=10.1257/jel.45.3.686" target="_blank" rel="noopener">Nordhaus 2007</a>).
             </li>
             <li>
-              Consent boundaries for the unborn and the unaware require a
+              Les limites du consentement pour les personnes à naître et les inconscientes nécessitent une
               convention.
             </li>
             <li>
-              The consent filter itself is a theoretical refinement, not part
-              of any published wealth account.
+              Le filtre du consentement lui-même est un raffinement théorique, pas partie
+              d'aucun compte de richesse publié.
             </li>
             <li>
-              <strong>The criterion is silent on distribution within the
-              consenting set.</strong> Two policies with identical $\Delta W$
-              can have very different fairness profiles, and the test will
-              rank them as equivalent. Inclusive wealth answers &quot;is the
-              pie growing for those who didn't consent to bear costs?&quot;,
-              not &quot;is the pie sliced fairly among those who did.&quot;
-              That second question needs a different tool.
+              <strong>Le critère est muet sur la distribution au sein de
+              l'ensemble consentant.</strong> Deux politiques avec $\Delta W$ identique
+              peuvent avoir des profils d'équité très différents, et le test les
+              classera comme équivalentes. La richesse inclusive répond à &quot;le
+              gâteau grossit-il pour ceux qui n'ont pas consenti à supporter des coûts ?&quot;,
+              pas &quot;le gâteau est-il découpé équitablement entre ceux qui l'ont fait.&quot;
+              Cette deuxième question nécessite un outil différent.
             </li>
           </ul>
-          <p>
-            But these are <em>calibration</em> disputes, not <em>criterion</em>
-            disputes. Two honest analysts using inclusive wealth can disagree
-            on magnitudes substantially &mdash; the Stern&ndash;Nordhaus split
-            on the social cost of carbon spans roughly an order of magnitude
-            &mdash; but they will agree on the <em>sign</em> of $\Delta W$ for
-            most cases, which is what the brake test actually requires. Two
-            analysts using "what's good for society" can disagree by infinity
-            and on the sign too.
-          </p>
+          <p data-i18n="prose.objectivity-leaks-conclusion-p">
+          Mais ce sont des disputes de <em>calibration</em>, pas de <em>critère</em>.
+            Deux analystes honnêtes utilisant la richesse inclusive peuvent être en désaccord
+            sur les magnitudes de manière substantielle &mdash; le fossé Stern&ndash;Nordhaus
+            sur le coût social du carbone couvre environ un ordre de magnitude
+            &mdash; mais ils seront d'accord sur le <em>signe</em> de $\Delta W$ pour
+            la plupart des cas, ce qui est ce que le test de frein requiert réellement. Deux
+            analystes utilisant « ce qui est bon pour la société » peuvent être en désaccord à l'infini
+            et sur le signe aussi.
+        </p>
 
           <h4 data-i18n="heading.policy-rule">La règle de politique publique qui en découle</h4>
-          <p style="border-left:4px solid #007bff; padding-left:1em; font-style:italic">
-            Government spending should be aimed at activities where
-            $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(weighted capital shrinks)</span> for non-consenting parties &mdash;
-            activities that shrink the inclusive capital base &mdash; and
-            withdrawn from activities where it is positive.
-            <br /><strong>Don't tax production; tax depletion.</strong>
-          </p>
-          <p>
-            Translated into a tax base, the criterion picks out a small,
-            specific list of things to charge for &mdash; and a much larger
-            list of things to leave alone. <strong>What it would tax:</strong>
-          </p>
-          <ul>
-            <li>Carbon, methane, particulates, congestion (classical Pigouvian)</li>
-            <li>Resource extraction above the regeneration rate (severance / depletion)</li>
-            <li>Land value &mdash; Henry George's tax on unearned location rent, which captures wealth without distorting production</li>
-            <li>Financial leverage above systemic-risk thresholds</li>
-            <li>Unfunded pension liabilities &mdash; force amortization rather than rollover</li>
-            <li>Monopoly rents that rest on regulatory capture rather than productivity</li>
-          </ul>
-          <p>
-            <strong>What it would not tax:</strong> labour income, corporate
-            profits earned competitively, capital gains on productive
-            investment, consumption of competent adults. Almost every
-            public-finance economist from George to Mirrlees to Friedman has
-            recommended some version of this base &mdash; "tax bads, not
-            goods." That it remains politically marginal despite near-consensus
-            in the academic literature is itself a data point about which
-            constituencies the existing tax system serves.
-          </p>
-          <p>
-            This is also why the data pattern documented above (more government
-            spending &rarr; slower growth) is <em>expected</em> under the
-            criterion: most government spending in modern economies funds
-            transfers and current consumption, which appears as
-            $\Delta K \leq 0$ <span class="math-note">(capital change is zero or negative)</span> across the inclusive-wealth ledger. The countries
-            that beat the curve &mdash; Singapore, Switzerland, Norway with its
-            sovereign wealth fund &mdash; are precisely those that explicitly
-            reinvest government revenue back into $K_k$ <span class="math-note">(each type of capital)</span> rather than
-            consuming it.
-          </p>
+          <p data-i18n="prose.policy-rule-quote-p" style="border-left:4px solid #007bff; padding-left:1em; font-style:italic">
+          Les dépenses publiques devraient être ciblées sur les activités où
+            $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(le capital pondéré diminue)</span> pour les parties non-consentantes &mdash;
+            les activités qui réduisent la base de capital inclusive &mdash; et
+            retirées des activités où il est positif.
+            <br /><strong>Ne pas taxer la production ; taxer l'épuisement.</strong>
+        </p>
+          <p data-i18n="prose.policy-rule-intro-p">
+          Traduit en une base fiscale, le critère identifie une liste petite
+            et spécifique de choses à taxer &mdash; et une liste bien plus large
+            de choses à laisser tranquilles. <strong>Ce qu'il taxerait :</strong>
+        </p>
+          <ul data-i18n="list.what-to-tax">
+          <li>Carbone, méthane, particules, congestion (pigouvien classique)</li>
+            <li>Extraction de ressources au-dessus du taux de régénération (prélèvement / épuisement)</li>
+            <li>Valeur foncière &mdash; la taxe de Henry George sur les rentes de localisation non méritées, qui capte la richesse sans distordre la production</li>
+            <li>Levier financier au-dessus des seuils de risque systémique</li>
+            <li>Engagements de retraite non financés &mdash; forcer l'amortissement plutôt que le roulement</li>
+            <li>Rentes de monopole qui reposent sur la capture réglementaire plutôt que sur la productivité</li>
+        </ul>
+          <p data-i18n="prose.what-not-to-tax-p">
+          <strong>Ce qu'il ne taxerait pas :</strong> les revenus du travail, les bénéfices
+            d'entreprise gagnés compétitivement, les plus-values sur l'investissement productif,
+            la consommation d'adultes compétents. Presque tous
+            les économistes des finances publiques de George à Mirrlees à Friedman ont
+            recommandé une version de cette base &mdash; « taxer les maux, pas
+            les biens. » Le fait qu'elle reste politiquement marginale malgré un quasi-consensus
+            dans la littérature académique est en soi un point de données sur les
+            circonscriptions que le système fiscal existant sert.
+        </p>
+          <p data-i18n="prose.policy-rule-conclusion-p">
+          C'est aussi pourquoi le schéma de données documenté ci-dessus (plus de dépenses publiques
+            &rarr; croissance plus lente) est <em>attendu</em> sous
+            le critère : la plupart des dépenses publiques dans les économies modernes finance
+            les transferts et la consommation courante, ce qui apparaît comme
+            $\Delta K \leq 0$ <span class="math-note">(la variation du capital est nulle ou négative)</span> dans le grand livre de la richesse inclusive. Les pays
+            qui battent la courbe &mdash; Singapour, la Suisse, la Norvège avec son
+            fonds souverain &mdash; sont précisément ceux qui réinvestissent explicitement
+            les recettes publiques dans $K_k$ <span class="math-note">(chaque type de capital)</span> plutôt que de
+            les consommer.
+        </p>
 
           <h4 data-i18n="heading.what-falsifies-this">Ce qui infirmerait cette théorie</h4>
-          <p>
-            A criterion that cannot be wrong is not a criterion. The inclusive
-            wealth test makes a specific empirical prediction: countries that
-            tax depletion and protect inclusive wealth should, over decades,
-            grow $W$ faster than countries that tax production and consume the
-            capital base &mdash; even when conventional GDP growth diverges
-            from $W$ growth in the short run.
-          </p>
-          <p>
-            <strong>What would refute the criterion:</strong>
-          </p>
-          <ul>
+          <p data-i18n="prose.what-falsifies-intro-p">Un critère qui ne peut pas avoir tort n'est pas un critère. Le test de
+            richesse inclusive fait une prédiction empirique spécifique : les pays qui
+            taxent l'épuisement et protègent la richesse inclusive devraient, sur des décennies,
+            faire croître $W$ plus vite que les pays qui taxent la production et consomment la
+            base de capital &mdash; même quand la croissance du PIB conventionnel diverge
+            de la croissance de $W$ à court terme.</p>
+          <p data-i18n="prose.what-falsifies-refute-p">
+          <strong>Ce qui réfuterait le critère :</strong>
+        </p>
+          <ul data-i18n="list.what-falsifies">
             <li>
-              If countries with depletion-style tax bases (Norway's sovereign
-              fund, Chilean copper royalties, Singaporean land-value capture,
-              British Columbia's carbon tax) systematically showed <em>worse</em>
-              long-run inclusive-wealth growth than peers that tax labour and
-              capital, the criterion fails.
+              Si les pays avec des bases fiscales de type épuisement (le fonds souverain
+              de Norvège, les redevances sur le cuivre chilien, la capture de la valeur foncière
+              singapourienne, la taxe carbone de la Colombie-Britannique) montraient systématiquement
+              une croissance de richesse inclusive à long terme <em>pire</em> que les pairs qui taxent
+              le travail et le capital, le critère échoue.
             </li>
             <li>
-              If the consent filter consistently flagged activities that
-              independent welfare measures (life expectancy, revealed-preference
-              migration, subjective well-being) showed to be net-positive for
-              the affected parties, the consent term is mis-specified.
+              Si le filtre du consentement signalait systématiquement des activités que
+              les mesures de bien-être indépendantes (espérance de vie, migration par les préférences révélées,
+              bien-être subjectif) montraient être nettes-positives pour
+              les parties affectées, le terme de consentement est mal spécifié.
             </li>
             <li>
-              If shadow-price uncertainty turned out to flip the <em>sign</em>
-              of $\Delta W$ <span class="math-note">(change in total wealth)</span> (not just its magnitude) for most policy-relevant
-              activities, the criterion would lose its claim to sign objectivity.
+              Si l'incertitude des prix d'ombre s'avérait inverser le <em>signe</em>
+              de $\Delta W$ <span class="math-note">(variation de la richesse totale)</span> (pas seulement sa magnitude) pour la plupart des
+              activités pertinentes pour les politiques, le critère perdrait sa revendication
+              à l'objectivité du signe.
             </li>
           </ul>
-          <p>
-            Current evidence runs the other way &mdash; the listed countries
-            outperform on inclusive wealth per capita in the World Bank CWON
-            data &mdash; but the prediction is testable, and the dataset is
-            public. That distinguishes this framework from the slogans it
-            replaces.
-          </p>
+          <p data-i18n="prose.what-falsifies-conclusion-p">L'evidence actuelle va dans l'autre sens &mdash; les pays listés
+            surperforment sur la richesse inclusive par habitant dans les données CWON de la Banque mondiale
+            &mdash; mais la prédiction est testable, et l'ensemble de données est
+            public. Cela distingue ce cadre des slogans qu'il
+            remplace.</p>
 
+          <!-- THEORY-MISLED:START -->
           <h3 data-i18n="heading.theory-misled-policymakers">Comment la théorie a égaré les décideurs</h3>
           <p>
             The Armey Curve theory emerged in the 1980s from observations that
@@ -3851,7 +3852,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             failure while still consistently showing a negative
             spending–growth relationship.
           </p>
+          <!-- THEORY-MISLED:END -->
 
+          <!-- POWER-LAWS-EVERYWHERE:START -->
           <h3 data-i18n="heading.power-laws-everywhere">Les lois de puissance sont omniprésentes en économie</h3>
           <p>
             The fact that a power law best describes the government
@@ -3959,7 +3962,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             economists spent decades forcing a quadratic curve onto data that
             was always screaming "power law."
           </p>
+          <!-- POWER-LAWS-EVERYWHERE:END -->
 
+          <!-- DATA-SOURCES:START -->
           <h3 data-i18n="heading.data-sources">Sources de données</h3>
           <p>
             The real-world country data displayed in this simulator comes from
@@ -4009,7 +4014,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               for your own analysis.</em
             >
           </p>
+          <!-- DATA-SOURCES:END -->
 
+          <!-- CORRELATION-CAUSATION:START -->
           <h3 data-i18n="heading.correlation-causation">Mais la corrélation implique-t-elle la causalité ?</h3>
           <p>
             <strong
@@ -4331,7 +4338,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             potential, and compared to peers with lower spending?" On that
             question, the data gives a consistent answer.
           </p>
+          <!-- CORRELATION-CAUSATION:END -->
 
+          <!-- SCATTER-EXPLANATION:START -->
           <h3 data-i18n="heading.scatter-explanation">Pourquoi il reste de la dispersion même si la taille de l'État est le facteur principal</h3>
           <p>
             Even though the cross-country data consistently suggests a negative
@@ -4635,7 +4644,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             relevance even accounting for the endogeneity caveats discussed
             above.
           </p>
+          <!-- SCATTER-EXPLANATION:END -->
 
+          <!-- QUADRATIC-POLITICAL:START -->
           <h3 data-i18n="heading.quadratic-persisted">Pourquoi le modèle quadratique a persisté</h3>
           <p>
             The traditional Armey Curve survived longer than its empirical
@@ -4804,6 +4815,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             trajectory is a separate question from whether the underlying
             economics are correct.
           </p>
+          <!-- QUADRATIC-POLITICAL:END -->
         </div>
       </section>
 
@@ -5024,6 +5036,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       </section>
 
       <section id="references">
+        <!-- REFERENCES:START -->
         <div class="armey-specific">
           <ol style="font-size: 0.95em; line-height: 1.8">
             <li id="ref-barro">
@@ -5075,12 +5088,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ol>
         </div>
+        <!-- REFERENCES:END -->
       </section>
-
-        </div>
-      </section>
-
-      <section id="embed">
+        <!-- EMBED:START -->
         <h2 data-i18n="heading.embed">Intégrer ce simulateur</h2>
         <div class="armey-specific">
           <p style="font-size:0.95em">You can embed the interactive chart on your site. Copy the snippet below:</p>
@@ -5095,9 +5105,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 &lt;p style="font-size:0.8em"&gt;Source: &lt;a href="https://julienreszka.github.io/economic-simulator/armey-curve.html"&gt;julienreszka.github.io — The Armey Curve&lt;/a&gt;&lt;/p&gt;</pre>
           <button onclick="copyText('embed-snippet', this)" data-i18n="button.copy-embed">Copier le code d’intégration</button>
         </div>
+        <!-- EMBED:END -->
       </section>
 
       <!-- Natural Right Section -->
+      <!-- NATURAL-RIGHTS:START -->
       <section class="natural-rights-section">
         <h2 data-i18n="heading.right-to-growth">Le droit à la croissance économique</h2>
 
@@ -5331,6 +5343,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </div>
         </div>
       </section>
+      <!-- NATURAL-RIGHTS:END -->
     </div>
 
     <script>
