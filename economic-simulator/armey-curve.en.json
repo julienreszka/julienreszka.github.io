@@ -54,6 +54,8 @@
   "label.last-updated": "Last updated",
   "heading.target-growth-table": "Spending cut needed to reach a target growth rate — current model",
   "prose.target-growth-note": "Inverts the current model: finds the spending level predicted to reach the target growth rate, then computes the required cut per country. Countries already below that spending level are shown as \"already there\".",
+  "prose.target-growth-adjust-note": "Baseline-adjusted: each country's residual (actual − predicted at current spending) is added to the model. The inversion then accounts for structural over/underperformance.",
+  "label.adjust-for-baseline": "Adjust for country baseline",
   "js.already-there": "already there",
   "js.impossible": "impossible",
   "option.power-law": "Power Law (β₀ × s⁻ᵅ)",

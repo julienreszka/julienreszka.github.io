@@ -2814,8 +2814,13 @@
                   <option value="6">6% growth</option>
                 </select>
               </label>
+              <label class="muted-label" style="font-size:0.82em; white-space:nowrap; display:flex; align-items:center; gap:5px;">
+                <input type="checkbox" id="target-growth-adjust" style="accent-color:#90caf9;">
+                <span data-i18n="label.adjust-for-baseline">Adjust for country baseline</span>
+              </label>
             </div>
             <p class="muted-note" style="font-size:0.82em; margin:0 0 8px;" data-i18n="prose.target-growth-note">Inverts the current model: finds the spending level predicted to reach the target growth rate, then computes the required cut per country. Countries already below that spending level are shown as "already there".</p>
+            <p class="muted-note" id="target-growth-adjust-note" style="font-size:0.82em; margin:-4px 0 8px; display:none;" data-i18n="prose.target-growth-adjust-note">Baseline-adjusted: each country's residual (actual − predicted at current spending) is added to the model. The inversion then accounts for structural over/underperformance.</p>
             <div id="target-growth-table-inner" style="overflow-x:auto;">
               <p style="font-size:0.85em; color:rgba(255,255,255,0.4); font-style:italic;">Load country data to populate this table.</p>
             </div>
@@ -7685,22 +7690,27 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         const predictFn = getCurrentPredictFn();
         const targetEl = document.getElementById('target-growth-select');
         const target = targetEl ? parseFloat(targetEl.value) : 3;
+        const adjustEl = document.getElementById('target-growth-adjust');
+        const useResidual = adjustEl ? adjustEl.checked : false;
+        const adjustNoteEl = document.getElementById('target-growth-adjust-note');
+        if (adjustNoteEl) adjustNoteEl.style.display = useResidual ? '' : 'none';
 
-        // Model inversion via binary search: find spending s* such that predictFn(s*) ≈ target
-        function invertModel(targetGrowth) {
-          const maxGrowth = predictFn(0.1); // growth at near-zero spending
-          if (targetGrowth > maxGrowth) return null; // unachievable even at minimal spending
+        // Model inversion via binary search: find spending s* such that predictFn(s*) ≈ effectiveTarget
+        function invertModel(effectiveTarget) {
+          const maxGrowth = predictFn(0.1);
+          if (effectiveTarget > maxGrowth) return null;
           const minGrowth = predictFn(99);
-          if (targetGrowth < minGrowth) return null; // model predicts below target even at 99%
+          if (effectiveTarget < minGrowth) return null;
           let lo = 0.1, hi = 99;
           for (let i = 0; i < 60; i++) {
             const mid = (lo + hi) / 2;
-            if (predictFn(mid) > targetGrowth) lo = mid; else hi = mid;
+            if (predictFn(mid) > effectiveTarget) lo = mid; else hi = mid;
           }
           return (lo + hi) / 2;
         }
 
-        const targetSpending = invertModel(target);
+        // Global target spending (used when residual adjustment is off)
+        const globalTargetSpending = invertModel(target);
 
         const timePeriodEl = document.getElementById('time-period-select');
         const timePeriodRange = timePeriodEl
@@ -7712,14 +7722,24 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. spending %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
           <th style="text-align:right;padding:3px 8px;white-space:nowrap">Avg. growth %<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${timePeriodRange}</span></th>
           <th style="text-align:right;padding:3px 8px;white-space:nowrap">Required cut to reach ${target}%</th>
-          <th style="text-align:right;padding:3px 8px;white-space:nowrap">Target spending %</th>
+          <th style="text-align:right;padding:3px 8px;white-space:nowrap">${useResidual ? 'Adj. target spending %' : 'Target spending %'}</th>
         </tr></thead>`;
 
         const rows = dataPoints
           .filter(d => d.spending > 1)
           .map(d => {
-            const requiredCut = targetSpending !== null ? d.spending - targetSpending : null;
-            return { name: d.name, spending: d.spending, growth: d.growth, requiredCut, targetSpending };
+            let countryTargetSpending, requiredCut;
+            if (useResidual) {
+              // Country-adjusted: invert model(s*) = target - residual
+              const residual = d.growth - predictFn(d.spending);
+              const adjustedTarget = target - residual;
+              countryTargetSpending = invertModel(adjustedTarget);
+              requiredCut = countryTargetSpending !== null ? d.spending - countryTargetSpending : null;
+            } else {
+              countryTargetSpending = globalTargetSpending;
+              requiredCut = countryTargetSpending !== null ? d.spending - countryTargetSpending : null;
+            }
+            return { name: d.name, spending: d.spending, growth: d.growth, requiredCut, targetSpending: countryTargetSpending };
           })
           .sort((a, b) => b.spending - a.spending);
 
@@ -7728,10 +7748,10 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           if (r.requiredCut === null) {
             cutStr = (window.i18n||{})['js.impossible']||'impossible'; cutColor = 'rgba(255,100,100,0.8)'; targetStr = '—';
           } else if (r.requiredCut <= 0 || r.growth >= target) {
-            cutStr = (window.i18n||{})['js.already-there']||'already there'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = r.targetSpending.toFixed(1) + '%';
+            cutStr = (window.i18n||{})['js.already-there']||'already there'; cutColor = 'rgba(100,220,100,0.9)'; targetStr = r.targetSpending !== null ? r.targetSpending.toFixed(1) + '%' : '—';
           } else {
             const color = r.requiredCut >= 20 ? 'rgba(255,100,80,0.9)' : r.requiredCut >= 10 ? 'rgba(255,165,80,0.9)' : r.requiredCut >= 5 ? 'rgba(220,200,80,0.9)' : 'rgba(100,220,100,0.9)';
-            cutStr = '−' + r.requiredCut.toFixed(1) + ' pp'; cutColor = color; targetStr = r.targetSpending.toFixed(1) + '%';
+            cutStr = '−' + r.requiredCut.toFixed(1) + ' pp'; cutColor = color; targetStr = r.targetSpending !== null ? r.targetSpending.toFixed(1) + '%' : '—';
           }
           return `<tr style="font-size:0.83em;">
             <td style="padding:2px 8px">${r.name}</td>
@@ -7742,9 +7762,11 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </tr>`;
         }).join('');
 
-        const impossibleNote = targetSpending === null
+        const impossibleNote = !useResidual && globalTargetSpending === null
           ? '<p style="font-size:0.78em; color:rgba(255,120,80,0.8); margin:4px 0 0;">The current model cannot predict ' + target + '% growth for any spending level.</p>'
-          : '<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">Model-implied target spending: <strong>' + targetSpending.toFixed(1) + '%</strong> of GDP</p>';
+          : !useResidual
+            ? '<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">Model-implied target spending: <strong>' + globalTargetSpending.toFixed(1) + '%</strong> of GDP</p>'
+            : '<p style="font-size:0.78em; color:rgba(255,255,255,0.45); margin:4px 0 0;">Each country\'s target spending is adjusted by its own model residual.</p>';
 
         el.innerHTML = `<table style="width:100%;border-collapse:collapse;">${thead}<tbody>${tbody}</tbody></table>${impossibleNote}`;
       }
@@ -7960,6 +7982,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         document.getElementById('time-period-select').dispatchEvent(new Event('change'));
       });
       document.getElementById('target-growth-select').addEventListener('change', updateTargetGrowthTable);
+      document.getElementById('target-growth-adjust').addEventListener('change', updateTargetGrowthTable);
       document
         .getElementById("time-period-select")
         .addEventListener("change", function () {

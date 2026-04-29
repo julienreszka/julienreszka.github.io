@@ -54,6 +54,8 @@
   "label.last-updated": "Mis à jour le",
   "heading.target-growth-table": "Réduction de dépenses nécessaire pour atteindre un objectif de croissance — modèle actuel",
   "prose.target-growth-note": "Inverse le modèle actuel : trouve le niveau de dépenses prédit pour atteindre l'objectif de croissance, puis calcule la réduction nécessaire par pays. Les pays déjà en dessous de ce niveau sont indiqués comme \"déjà là\".",
+  "prose.target-growth-adjust-note": "Ajustement de référence : le résidu de chaque pays (réel − prédit au niveau de dépenses actuel) est ajouté au modèle. L'inversion tient ainsi compte de la surperformance ou sous-performance structurelle.",
+  "label.adjust-for-baseline": "Ajuster selon la base nationale",
   "js.already-there": "déjà là",
   "js.impossible": "impossible",
   "option.power-law": "Loi de puissance (β₀ × s⁻ᵅ)",
