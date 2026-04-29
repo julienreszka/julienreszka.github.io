@@ -50,6 +50,8 @@
   "label.exclude-conflict": "Exclure les états fragiles/en conflit",
   "label.exclude-gdpdistorted": "Exclure les PIB biaisés",
   "label.exclude-se-outliers": "Exclure aussi les aberrants ±1 ET du modèle",
+  "label.reading-time": "📖 ~28 min de lecture",
+  "label.last-updated": "Mis à jour le",
   "option.power-law": "Loi de puissance (β₀ × s⁻ᵅ)",
   "option.log-linear": "Log-linéaire (β₀ − α × ln(s+1))",
   "option.quadratic": "Quadratique (courbe d’Armey traditionnelle)",

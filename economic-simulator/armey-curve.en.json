@@ -50,6 +50,8 @@
   "label.exclude-conflict": "Exclude conflict/fragile states",
   "label.exclude-gdpdistorted": "Exclude GDP-distorted",
   "label.exclude-se-outliers": "Also exclude ±1 SE model-residual outliers",
+  "label.reading-time": "\uD83D\uDCD6 ~28 min read",
+  "label.last-updated": "Last updated",
   "option.power-law": "Power Law (β₀ × s⁻ᵅ)",
   "option.log-linear": "Log-Linear (β₀ − α × ln(s+1))",
   "option.quadratic": "Quadratic (Traditional Armey)",
