@@ -43,6 +43,36 @@ export const EXCLUDED_NAMES = new Set([
   "Nauru",                     // NRU
 ]);
 
+// Display-name equivalents for exclusion sets that pre-date the conflictFragile /
+// gdpDistorted / externallyFunded fields in older fallback-data.json snapshots.
+// Used in getCountryDataToShow() as a belt-and-suspenders filter so that stale
+// fallback data (which lacks boolean flags on these countries) is still filtered.
+export const CONFLICT_NAMES = new Set([
+  "Sudan",                     // SDN
+  "Central African Republic",  // CAF
+  "Ukraine",                   // UKR
+  "Mali",                      // MLI
+  "Madagascar",                // MDG
+  "Lebanon",                   // LBN
+  "Ethiopia",                  // ETH
+  "Greece",                    // GRC
+]);
+
+export const GDP_DIST_NAMES = new Set([
+  "Ireland",                   // IRL
+  "Malta",                     // MLT
+  "Luxembourg",                // LUX
+  "San Marino",                // SMR
+]);
+
+export const EXT_FUNDED_NAMES = new Set([
+  "Kiribati",                  // KIR
+  "Marshall Islands",          // MHL
+  "Micronesia, Fed. Sts.",     // FSM
+  "Timor-Leste",               // TLS
+  "Palau",                     // PLW
+]);
+
 // ── Math utilities ─────────────────────────────────────────────────────────────
 export function avg(arr) {
   return arr.reduce((s, v) => s + v, 0) / arr.length;

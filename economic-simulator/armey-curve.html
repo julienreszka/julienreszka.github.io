@@ -5404,6 +5404,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       import {
         avg, r2, aic, ols, gridSearch2D, computeCutGains,
         EXCLUDED, RESOURCE_DEP, EXT_FUNDED, GDP_DIST, CONFLICT, EXCLUDED_NAMES,
+        CONFLICT_NAMES, GDP_DIST_NAMES, EXT_FUNDED_NAMES,
       } from './model-math.mjs';
       window.avg = avg;
       window.r2  = r2;
@@ -5418,6 +5419,10 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       window.EXT_FUNDED      = EXT_FUNDED;
       window.GDP_DIST        = GDP_DIST;
       window.CONFLICT        = CONFLICT;
+      // Name-based equivalents — belt-and-suspenders for stale fallback-data.json
+      window.CONFLICT_NAMES   = CONFLICT_NAMES;
+      window.GDP_DIST_NAMES   = GDP_DIST_NAMES;
+      window.EXT_FUNDED_NAMES = EXT_FUNDED_NAMES;
     </script>
 
     <!-- Eagerly pre-fetch fallback data so the cut-gains period selector works before Chart.js loads -->
@@ -6033,9 +6038,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
         const hardExcluded = window.EXCLUDED_NAMES ?? new Set();
         base = base.filter(c => !hardExcluded.has(c.name));
         if (excludeResource) base = base.filter(c => !c.resourceDependent);
-        if (excludeExternal) base = base.filter(c => !c.externallyFunded);
-        if (excludeConflict) base = base.filter(c => !c.conflictFragile);
-        if (excludeGdpDistorted) base = base.filter(c => !c.gdpDistorted);
+        if (excludeExternal) base = base.filter(c => !c.externallyFunded && !(window.EXT_FUNDED_NAMES ?? new Set()).has(c.name));
+        if (excludeConflict) base = base.filter(c => !c.conflictFragile  && !(window.CONFLICT_NAMES   ?? new Set()).has(c.name));
+        if (excludeGdpDistorted) base = base.filter(c => !c.gdpDistorted && !(window.GDP_DIST_NAMES   ?? new Set()).has(c.name));
         if (excludeSE) base = base.filter(c => !outlierNames.has(c.name));
         return base;
       }
