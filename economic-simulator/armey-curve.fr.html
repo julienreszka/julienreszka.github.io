@@ -1248,7 +1248,7 @@
         ></div>
 
         <div id="model-ranking" aria-live="polite">
-          <h3 class="ranking-title">Model Fit Ranking</h3>
+          <h3 class="ranking-title" data-i18n="heading.model-fit-ranking">Classement par qualité d'ajustement</h3>
           <div class="table-scroll"><table class="ranking-table">
             <thead>
               <tr class="ranking-header">
@@ -1399,7 +1399,7 @@
         </div>
 
         <div style="margin-top: 24px;">
-          <h3 style="font-size: 1.05em; margin-bottom: 6px;">What else explains growth beyond government spending?</h3>
+          <h3 style="font-size: 1.05em; margin-bottom: 6px;" data-i18n="heading.what-else-explains-growth">Qu'est-ce qui explique la croissance au-delà des dépenses publiques ?</h3>
           <p style="font-size:0.85em; color:rgba(255,255,255,0.6); margin:0 0 8px;">
             Greedy stepwise regression across <!-- STEPWISE-N-CANDIDATES -->27<!-- /STEPWISE-N-CANDIDATES --> candidate variables (macro, governance, human capital, finance, structural) added one at a time to the power-law spending baseline.
             Each row shows the single best remaining variable at that step. The ceiling — stacking all <!-- STEPWISE-N-ENTERED -->17<!-- /STEPWISE-N-ENTERED --> variables that clear the contribution threshold — is R²&nbsp;≈&nbsp;<!-- STEPWISE-CEILING -->0.680<!-- /STEPWISE-CEILING -->.
@@ -1694,7 +1694,7 @@
 
       <!-- Detailed Explanation -->
       <section id="theory-vs-reality">
-        <h2>The Armey Curve Theory vs. Reality</h2>
+        <h2 data-i18n="heading.theory-vs-reality">La théorie de la courbe d'Armey face à la réalité</h2>
 
         <div style="margin-top: 15px; line-height: 1.6">
           <p>
@@ -1721,7 +1721,7 @@
             beyond the absolute minimum reduces economic growth.
           </p>
 
-          <h3>What the Traditional Theory Claimed</h3>
+          <h3 data-i18n="heading.traditional-theory-claimed">Ce que prétendait la théorie traditionnelle</h3>
           <p>The Armey Curve theory proposed three distinct phases:</p>
           <ul>
             <li>
@@ -1740,7 +1740,7 @@
             </li>
           </ul>
 
-          <h3>What the Data Actually Shows</h3>
+          <h3 data-i18n="heading.data-actually-shows">Ce que montrent réellement les données</h3>
           <p>
             <strong>There is no "rising phase."</strong> Countries with minimal
             government spending (Singapore ~17%, historically Hong Kong ~15%)
@@ -1768,7 +1768,7 @@
             the bug, in those applications.
           </p>
 
-          <h3 id="historical-arc">The Historical Arc Confirms the Pattern</h3>
+          <h3 id="historical-arc" data-i18n="heading.historical-arc">L'arc historique confirme la tendance</h3>
           <p>
             The simulator window (2005–2023) captures only a narrow slice of
             history in which all major economies already operate above 25% of
@@ -1784,7 +1784,7 @@
             account for the exception.
           </p>
 
-          <h3>Traditional Theory vs. Empirical Reality</h3>
+          <h3 data-i18n="heading.theory-vs-empirical-reality">Théorie traditionnelle face à la réalité empirique</h3>
           <p><strong>The traditional quadratic theory claimed:</strong></p>
           <p style="text-align: center; font-style: italic; margin: 20px 0">
             Growth Rate = β₀ + β₁ × Government Spending + β₂ × (Government
@@ -1833,7 +1833,7 @@
             private investment from day one.
           </p>
 
-          <h4>Understanding the Intercept (β₀)</h4>
+          <h4 data-i18n="heading.understanding-intercept">Comprendre l'ordonnée à l'origine (β₀)</h4>
           <p>
             The intercept represents the natural economic growth rate in the
             absence of government intervention. This baseline reflects:
@@ -1871,7 +1871,7 @@
             invest.
           </p>
 
-          <h3>Real-World Policy Implications</h3>
+          <h3 data-i18n="heading.real-world-implications">Implications concrètes pour les politiques publiques</h3>
           <p>
             If the data is right and the traditional theory is wrong, the policy
             implications are dramatic:
@@ -1922,7 +1922,7 @@
             </li>
           </ul>
 
-          <h3 id="why-cuts-are-hard">Why High-Spending Countries Struggle to Cut</h3>
+          <h3 id="why-cuts-are-hard" data-i18n="heading.why-cuts-are-hard">Pourquoi les pays à fortes dépenses peinent à les réduire</h3>
           <p>
             If smaller government means faster growth, why don't high-spending countries simply cut their way to prosperity? The power law curve itself supplies the most under-appreciated answer: <strong>the marginal gain from cutting is tiny when you are already on the flat part of the curve.</strong>
           </p>
@@ -1959,7 +1959,7 @@
 
           <div id="cut-gains-table" style="margin-top:16px;">
             <div style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px;">
-              <h4 style="font-size:0.95em; margin:0;">Predicted growth gain from a 5-point spending cut — current model &amp; data</h4>
+              <h4 style="font-size:0.95em; margin:0;" data-i18n="heading.predicted-growth-gain">Gain de croissance prédit pour une réduction de 5 points de dépenses — modèle et données actuels</h4>
               <label class="muted-label" style="font-size:0.82em; white-space:nowrap;">
                 Period:
                 <select id="cut-gains-period-select" class="cut-gains-select" style="font-size:0.95em; border-radius:4px; padding:2px 4px; margin-left:4px;">
@@ -2745,9 +2745,7 @@
             </div>
           </div>
 
-          <h3 id="selective-brake">
-            The Selective Brake: What Government Is Actually Good For
-          </h3>
+          <h3 id="selective-brake" data-i18n="heading.selective-brake">Le frein sélectif : à quoi sert vraiment l'État</h3>
           <p>
             The data in this simulator shows that government spending reliably
             slows economic activity. The conventional policy response is to
@@ -2826,7 +2824,7 @@
             </button>
           </div>
 
-          <h3 id="inclusive-wealth-criterion">A Single Objective Test: The Inclusive Wealth Criterion</h3>
+          <h3 id="inclusive-wealth-criterion" data-i18n="heading.inclusive-wealth-criterion">Un test objectif unique : le critère de richesse inclusive</h3>
           <p class="iwc-gloss" style="margin-bottom: 18px;">
             <strong>A note on the simulator above.</strong> The simulator scores
             spending levels by their fit to <em>GDP growth</em>. The criterion
@@ -2849,7 +2847,7 @@
             activity it is meant to evaluate.
           </p>
 
-          <h4>The whole rule, in one 2&times;2</h4>
+          <h4 data-i18n="heading.whole-rule-2x2">La règle complète en un tableau 2×2</h4>
           <p>
             Before the formula, the verdict it produces. Two binary questions
             decide every case: was consent present, and does inclusive wealth
@@ -2888,7 +2886,7 @@
             brake itself worse than the damage?
           </p>
 
-          <h4>The formula behind the 2&times;2</h4>
+          <h4 data-i18n="heading.formula-2x2">La formule derrière le tableau 2×2</h4>
           <p>
             The cleanest formulation comes from the
             <strong>inclusive wealth</strong> tradition. The pedigree:
@@ -3119,7 +3117,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             exists.
           </p>
 
-          <h4>The decision in sequence</h4>
+          <h4 data-i18n="heading.decision-in-sequence">La décision étape par étape</h4>
           <p>
             The 2&times;2 collapses the verdict to two binary questions, but it
             omits a third that any honest framework must include: <em>does the
@@ -3217,7 +3215,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             enforcement components as the binding part of the test.
           </p>
 
-          <h4>Worked example: applying the test to two policies</h4>
+          <h4 data-i18n="heading.worked-example">Exemple concret : appliquer le test à deux politiques</h4>
           <p>
             The criterion is only useful if it produces unambiguous verdicts on
             real cases. Two contrasting examples:
@@ -3269,7 +3267,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             measuring one column of a ledger while pretending the others don't exist.
           </p>
 
-          <h4>What &quot;consent&quot; actually means here</h4>
+          <h4 data-i18n="heading.what-consent-means">Ce que signifie réellement le « consentement » ici</h4>
           <p>
             &quot;Did the affected parties consent?&quot; is the criterion's
             most easily abused step, because for any sufficiently broad
@@ -3311,7 +3309,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             structurally impossible, not merely unattractive.
           </p>
 
-          <h4>The hard cases (where the criterion is genuinely ambiguous)</h4>
+          <h4 data-i18n="heading.hard-cases">Les cas difficiles (où le critère est vraiment ambigu)</h4>
           <p>
             An honest framework names the cases it doesn't cleanly resolve.
             Four worth flagging:
@@ -3351,7 +3349,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>Why this is genuinely objective (within limits)</h4>
+          <h4 data-i18n="heading.genuinely-objective">Pourquoi ceci est véritablement objectif (dans certaines limites)</h4>
           <ul>
             <li>
               <strong>Sign objectivity is robust.</strong> Even when shadow
@@ -3378,7 +3376,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>Where objectivity leaks &mdash; honestly</h4>
+          <h4 data-i18n="heading.objectivity-leaks">Là où l'objectivité s'effrite — en toute honnêteté</h4>
           <ul>
             <li>
               Shadow prices for institutional and natural capital are
@@ -3432,7 +3430,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             and on the sign too.
           </p>
 
-          <h4>The policy rule that follows</h4>
+          <h4 data-i18n="heading.policy-rule">La règle de politique publique qui en découle</h4>
           <p style="border-left:4px solid #007bff; padding-left:1em; font-style:italic">
             Government spending should be aimed at activities where
             $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(weighted capital shrinks)</span> for non-consenting parties &mdash;
@@ -3475,7 +3473,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             consuming it.
           </p>
 
-          <h4>What would falsify this</h4>
+          <h4 data-i18n="heading.what-falsifies-this">Ce qui infirmerait cette théorie</h4>
           <p>
             A criterion that cannot be wrong is not a criterion. The inclusive
             wealth test makes a specific empirical prediction: countries that
@@ -3515,7 +3513,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             replaces.
           </p>
 
-          <h3>How the Theory Misled Policymakers</h3>
+          <h3 data-i18n="heading.theory-misled-policymakers">Comment la théorie a égaré les décideurs</h3>
           <p>
             The Armey Curve theory emerged in the 1980s from observations that
             both very small governments (lacking basic institutions) and very
@@ -3546,7 +3544,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             size. In reality, they were just reducing economic growth.
           </p>
 
-          <h3>Why the Quadratic Model Produces Nonsensical Results</h3>
+          <h3 data-i18n="heading.quadratic-nonsensical">Pourquoi le modèle quadratique produit des résultats absurdes</h3>
           <p>
             <strong>The quadratic Armey curve is fundamentally broken</strong>
             because it predicts impossible negative growth rates at high
@@ -3582,7 +3580,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             <em>opposite</em> of the Armey curve.
           </p>
 
-          <h4>Linear Models Are Equally Flawed</h4>
+          <h4 data-i18n="heading.linear-flawed">Les modèles linéaires sont tout aussi défaillants</h4>
           <p>
             <strong
               >The linear decline model suffers from the exact same mathematical
@@ -3625,7 +3623,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             models as mathematically viable alternatives to describe the
             government-growth relationship.
           </p>
-          <h4>Why Power Law, Inverse, and Exponential Models Make Sense</h4>
+          <h4 data-i18n="heading.power-law-makes-sense">Pourquoi les modèles en loi de puissance, inverse et exponentiel sont pertinents</h4>
           <ul>
             <li>
               <strong>Asymptotic Approach to Zero:</strong> Both models approach
@@ -3648,7 +3646,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>But Even Exponential Decay Goes Too Far</h4>
+          <h4 data-i18n="heading.exponential-too-far">Mais même la décroissance exponentielle va trop loin</h4>
           <p>
             <strong
               >While exponential decay avoids the quadratic model's absurd
@@ -3685,7 +3683,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>Why the Power Law Model Is Empirically Superior</h4>
+          <h4 data-i18n="heading.power-law-superior">Pourquoi le modèle en loi de puissance est empiriquement supérieur</h4>
           <p>
             <strong
               >The power law model (Growth = β₀ × s⁻ᵅ) achieves the highest R²
@@ -3755,7 +3753,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             spending–growth relationship.
           </p>
 
-          <h3>Power Laws Are Everywhere in Economics</h3>
+          <h3 data-i18n="heading.power-laws-everywhere">Les lois de puissance sont omniprésentes en économie</h3>
           <p>
             The fact that a power law best describes the government
             spending–growth relationship shouldn't surprise us. Power laws are
@@ -3766,7 +3764,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             bell-curve-shaped.
           </p>
 
-          <h4>Established Power Laws in Economics</h4>
+          <h4 data-i18n="heading.established-power-laws">Lois de puissance établies en économie</h4>
           <ul>
             <li>
               <strong>Pareto's Law of Income Distribution:</strong> Vilfredo
@@ -3820,7 +3818,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>Why Power Laws Dominate Economic Phenomena</h4>
+          <h4 data-i18n="heading.why-power-laws-dominate">Pourquoi les lois de puissance dominent les phénomènes économiques</h4>
           <p>
             Power laws emerge in economics for the same structural reasons they
             appear in physics, biology, and network science:
@@ -3863,7 +3861,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             was always screaming "power law."
           </p>
 
-          <h3>Data Sources</h3>
+          <h3 data-i18n="heading.data-sources">Sources de données</h3>
           <p>
             The real-world country data displayed in this simulator comes from
             the World Bank's comprehensive database:
@@ -3913,7 +3911,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             >
           </p>
 
-          <h3>But Does Correlation Mean Causation?</h3>
+          <h3 data-i18n="heading.correlation-causation">Mais la corrélation implique-t-elle la causalité ?</h3>
           <p>
             <strong
               >The strongest objection to this analysis is reverse
@@ -3927,7 +3925,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             serious econometric concerns that deserve honest engagement.
           </p>
 
-          <h4>The Endogeneity Problem</h4>
+          <h4 data-i18n="heading.endogeneity">Le problème d'endogénéité</h4>
           <p>
             Cross-country correlations alone cannot prove causation. Three
             specific threats to causal inference exist here:
@@ -3950,7 +3948,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>Why the Causal Direction Still Holds</h4>
+          <h4 data-i18n="heading.causal-direction">Pourquoi la direction causale reste valide</h4>
           <p>
             Despite these valid concerns, multiple lines of evidence suggest the
             dominant causal arrow runs from government spending to growth, not
@@ -3992,7 +3990,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>The Natural Experiments: Countries That Changed Course</h4>
+          <h4 data-i18n="heading.natural-experiments">Les expériences naturelles : des pays qui ont changé de cap</h4>
           <p>
             The most compelling evidence comes from countries that dramatically
             changed their spending levels, creating quasi-natural experiments
@@ -4000,7 +3998,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <div class="info-card">
-            <h5>Countries That Cut Spending and Boomed:</h5>
+            <h5 data-i18n="heading.countries-cut-boomed">Pays ayant réduit leurs dépenses et connu une forte croissance :</h5>
             <ul>
               <li>
                 <strong>Ireland (1987–2000):</strong> Government spending fell
@@ -4053,7 +4051,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </div>
 
           <div class="warning-card">
-            <h5>Countries That Expanded Spending and Stagnated:</h5>
+            <h5 data-i18n="heading.countries-expanded-stagnated">Pays ayant augmenté leurs dépenses et stagné :</h5>
             <ul>
               <li>
                 <strong>France (1980–present):</strong> Government spending rose
@@ -4092,7 +4090,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             precede growth recoveries.
           </p>
 
-          <h4>Remaining Limitations</h4>
+          <h4 data-i18n="heading.remaining-limitations">Limites restantes</h4>
           <p>
             In the interest of intellectual honesty, this analysis has real
             limitations that readers should weigh:
@@ -4178,7 +4176,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             provide.
           </p>
 
-          <h3 id="nordic-question">The Nordic Question: Rich Despite High Spending, or Rich Before High Spending?</h3>
+          <h3 id="nordic-question" data-i18n="heading.nordic-question">La question nordique : riches malgré des dépenses élevées, ou riches avant des dépenses élevées ?</h3>
           <p>
             The most common objection to the power law model is the Nordic
             countries. Denmark, Sweden, and Finland spend 49–53% of GDP on
@@ -4195,7 +4193,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <div class="info-card">
-            <h5>Nordic growth rates vs. their spending (avg. 2005–2019):</h5>
+            <h5 data-i18n="heading.nordic-growth-rates">Taux de croissance nordiques vs leurs dépenses (moy. 2005–2019) :</h5>
             <ul>
               <li><strong>Denmark</strong> — ~51% spending, ~1.0% avg growth</li>
               <li><strong>Finland</strong> — ~53% spending, ~0.9% avg growth</li>
@@ -4235,9 +4233,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             question, the data gives a consistent answer.
           </p>
 
-          <h3>
-            Why There's Still Scatter Even Though Government Size Matters Most
-          </h3>
+          <h3 data-i18n="heading.scatter-explanation">Pourquoi il reste de la dispersion même si la taille de l'État est le facteur principal</h3>
           <p>
             Even though the cross-country data consistently suggests a negative
             relationship between government size and growth, you'll notice
@@ -4252,9 +4248,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             low-spending countries aren't growing even faster.
           </p>
 
-          <h4>Key Growth Factors Beyond Government Size</h4>
+          <h4 data-i18n="heading.key-growth-factors">Autres facteurs clés de croissance au-delà de la taille de l'État</h4>
 
-          <h5>1. Institutional Quality</h5>
+          <h5 data-i18n="heading.factor-institutional-quality">1. Qualité institutionnelle</h5>
           <ul>
             <li>
               <strong>Rule of Law:</strong> Strong property rights and contract
@@ -4281,7 +4277,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             >
           </p>
 
-          <h5>2. Development Stage and Catch-Up Potential</h5>
+          <h5 data-i18n="heading.factor-development-stage">2. Stade de développement et potentiel de rattrapage</h5>
           <ul>
             <li>
               <strong>Convergence Effect:</strong> Developing countries can grow
@@ -4304,7 +4300,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             >
           </p>
 
-          <h5>3. Demographics and Human Capital</h5>
+          <h5 data-i18n="heading.factor-demographics">3. Démographie et capital humain</h5>
           <ul>
             <li>
               <strong>Age Structure:</strong> Young, working-age populations
@@ -4327,7 +4323,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             >
           </p>
 
-          <h5>4. Economic Structure and Openness</h5>
+          <h5 data-i18n="heading.factor-economic-structure">4. Structure économique et ouverture</h5>
           <ul>
             <li>
               <strong>Trade Integration:</strong> Access to global markets and
@@ -4354,7 +4350,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             >
           </p>
 
-          <h5>5. Innovation and Technology</h5>
+          <h5 data-i18n="heading.factor-innovation">5. Innovation et technologie</h5>
           <ul>
             <li>
               <strong>R&D Investment:</strong> Both public and private research
@@ -4374,7 +4370,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h5>6. Macroeconomic Stability</h5>
+          <h5 data-i18n="heading.factor-macrostability">6. Stabilité macroéconomique</h5>
           <ul>
             <li>
               <strong>Inflation Control:</strong> Price stability enables
@@ -4394,7 +4390,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h5>7. Natural Resources and Geography</h5>
+          <h5 data-i18n="heading.factor-resources-geography">7. Ressources naturelles et géographie</h5>
           <ul>
             <li>
               <strong>Resource Endowments:</strong> Can be a blessing or curse
@@ -4417,10 +4413,10 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             >
           </p>
 
-          <h4>Understanding the Outliers</h4>
+          <h4 data-i18n="heading.understanding-outliers">Comprendre les valeurs aberrantes</h4>
 
           <div class="info-card">
-            <h5>High Growth with Low Spending:</h5>
+            <h5 data-i18n="heading.high-growth-low-spending">Forte croissance avec de faibles dépenses :</h5>
             <ul>
               <li>
                 <strong>Ethiopia (8.5% spending, 6.5% growth):</strong> Catch-up
@@ -4468,7 +4464,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </div>
 
           <div class="warning-card">
-            <h5>Low Growth Despite Moderate Spending:</h5>
+            <h5 data-i18n="heading.low-growth-moderate-spending">Faible croissance malgré des dépenses modérées :</h5>
             <ul>
               <li>
                 <strong>Japan (19.7% spending, 0.2% growth):</strong> Aging
@@ -4485,7 +4481,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </ul>
           </div>
 
-          <h4>Policy Implications</h4>
+          <h4 data-i18n="heading.policy-implications">Implications pour les politiques publiques</h4>
           <p>
             The scatter in the data teaches us that
             <strong
@@ -4541,7 +4537,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             above.
           </p>
 
-          <h3>Why the Quadratic Model Persisted</h3>
+          <h3 data-i18n="heading.quadratic-persisted">Pourquoi le modèle quadratique a persisté</h3>
           <p>
             The traditional Armey Curve survived longer than its empirical
             record warrants. Part of the explanation is that it offered
@@ -4574,7 +4570,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             uses, the cross-country pattern points in the same direction.
           </p>
 
-          <h3>The Political Economy of Model Selection</h3>
+          <h3 data-i18n="heading.political-economy">L'économie politique du choix de modèle</h3>
           <p>
             One reason the power law model has not entered mainstream policy
             discourse may be that its implications are more uncomfortable than
@@ -4585,7 +4581,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             development, testing, and citation than those that are not.
           </p>
 
-          <h4>What Makes the Power Law Politically Awkward</h4>
+          <h4 data-i18n="heading.power-law-awkward">Ce qui rend la loi de puissance politiquement gênante</h4>
           <p>
             The quadratic model offers politicians a navigable message: find the
             sweet spot, fine-tune from there. The power law offers a less
@@ -4617,7 +4613,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>Why the Quadratic Model Remained Useful</h4>
+          <h4 data-i18n="heading.quadratic-remained-useful">Pourquoi le modèle quadratique est resté utile</h4>
           <p>
             The traditional Armey Curve remained in circulation not necessarily
             because researchers found it more convincing, but because it was a
@@ -4626,7 +4622,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           </p>
 
           <div class="info-card">
-            <h5>Properties that sustained the quadratic model:</h5>
+            <h5 data-i18n="heading.quadratic-properties">Propriétés qui ont maintenu le modèle quadratique :</h5>
             <ul>
               <li>
                 <strong>Descriptive flexibility:</strong> Spending levels of
@@ -4650,7 +4646,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </ul>
           </div>
 
-          <h4>Institutional Inertia and Paradigm Change</h4>
+          <h4 data-i18n="heading.institutional-inertia">Inertie institutionnelle et changement de paradigme</h4>
           <p>
             This pattern is not unique to the Armey Curve. Economic paradigms
             tend to persist until the empirical anomalies they accumulate become
@@ -4681,7 +4677,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </li>
           </ul>
 
-          <h4>The Opportunity Cost of Model Choice</h4>
+          <h4 data-i18n="heading.opportunity-cost">Le coût d'opportunité du choix de modèle</h4>
           <p>
             If the power law model describes the data better, then policies
             calibrated to a quadratic framework have likely underdelivered on
@@ -4909,10 +4905,10 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       </section>
 
       <section id="cite">
-        <h2>Cite This Page</h2>
+        <h2 data-i18n="heading.cite-this-page">Citer cette page</h2>
         <div class="armey-specific cite-block">
           <p style="font-size:0.95em; margin-bottom: 8px">If you reference this analysis or simulator, please cite:</p>
-          <h4 style="margin: 12px 0 4px">APA</h4>
+          <h4 style="margin: 12px 0 4px" data-i18n="heading.apa">APA</h4>
           <pre id="cite-apa" class="code-snippet">Reszka, J. (2024). <em>The Armey Curve: Government Spending vs Economic Growth</em> [Interactive simulator]. Retrieved from https://julienreszka.github.io/economic-simulator/armey-curve.html</pre>
           <button onclick="copyText('cite-apa', this)" style="margin: 4px 0 14px" data-i18n="button.copy-apa">Copier APA</button>
 
@@ -4986,7 +4982,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
       </section>
 
       <section id="embed">
-        <h2>Embed This Simulator</h2>
+        <h2 data-i18n="heading.embed">Intégrer ce simulateur</h2>
         <div class="armey-specific">
           <p style="font-size:0.95em">You can embed the interactive chart on your site. Copy the snippet below:</p>
           <pre id="embed-snippet" class="code-snippet">&lt;iframe
@@ -5004,7 +5000,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 
       <!-- Natural Right Section -->
       <section class="natural-rights-section">
-        <h2>The Right to Economic Growth</h2>
+        <h2 data-i18n="heading.right-to-growth">Le droit à la croissance économique</h2>
 
         <div class="right-card armey-specific">
           <div class="right-principle">
@@ -5027,7 +5023,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </p>
           </div>
 
-          <h4>Empirical Foundation</h4>
+          <h4 data-i18n="heading.empirical-foundation">Fondement empirique</h4>
           <div class="right-evidence">
             <p>
               <strong>The Data-Driven Case:</strong> This right is grounded in
@@ -5060,9 +5056,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </ul>
           </div>
 
-          <h4>Essential Institutional Protections</h4>
+          <h4 data-i18n="heading.institutional-protections">Protections institutionnelles essentielles</h4>
           <div class="right-positive">
-            <h4>Constitutional and Legal Frameworks:</h4>
+            <h4 data-i18n="heading.constitutional-frameworks">Cadres constitutionnels et juridiques :</h4>
             <ul>
               <li>
                 <strong>Constitutional Spending Caps:</strong> Hard limits on
@@ -5092,7 +5088,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               </li>
             </ul>
 
-            <h4>Market-Preserving Institutions:</h4>
+            <h4 data-i18n="heading.market-preserving">Institutions préservant le marché :</h4>
             <ul>
               <li>
                 <strong>Independent Central Banking:</strong> Monetary policy
@@ -5119,7 +5115,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               </li>
             </ul>
 
-            <h4>Transparency and Accountability Mechanisms:</h4>
+            <h4 data-i18n="heading.transparency-accountability">Mécanismes de transparence et de responsabilité :</h4>
             <ul>
               <li>
                 <strong>Growth Impact Reports:</strong> Annual public assessment
@@ -5145,9 +5141,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </ul>
           </div>
 
-          <h4>Current Threats to Economic Growth Rights</h4>
+          <h4 data-i18n="heading.current-threats">Menaces actuelles contre le droit à la croissance économique</h4>
           <div class="right-enemies">
-            <h4>Systemic Institutional Threats:</h4>
+            <h4 data-i18n="heading.systemic-threats">Menaces institutionnelles systémiques :</h4>
             <ul>
               <li>
                 <strong>Fiscal Illusion:</strong> Political systems that hide
@@ -5170,7 +5166,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               </li>
             </ul>
 
-            <h4>Direct Growth-Destroying Policies:</h4>
+            <h4 data-i18n="heading.growth-destroying-policies">Politiques directement destructrices de croissance :</h4>
             <ul>
               <li>
                 <strong>Debt Monetization:</strong> Central bank financing of
@@ -5209,7 +5205,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             </ul>
           </div>
 
-          <h4>Protecting Growth Rights in Practice</h4>
+          <h4 data-i18n="heading.protecting-growth-rights">Protéger le droit à la croissance dans la pratique</h4>
           <div class="right-implementation">
             <p>
               <strong>Individual Action:</strong> Citizens can protect their
