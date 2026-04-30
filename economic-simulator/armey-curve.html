@@ -4070,9 +4070,23 @@ function certaintyEquivalentPrice(p) {
 }
 
 function shouldBrake(a) {
+  // Precondition: all external parties' shadow prices must have been
+  // independently cross-referenced — against financial disclosures, credit
+  // markets, insurance premiums, and comparable-transaction prices — before
+  // this function is called. Self-declared conflicts of interest are
+  // insufficient. If any external party is explicitly marked unvetted
+  // (priceVetted: false), the result is undefined and we throw rather than
+  // silently returning a value that cannot be trusted.
+  const externalParties = a.affectedParties.filter(p =&gt; p.external);
+  const unvettedParty = externalParties.find(p =&gt; p.priceVetted === false);
+  if (unvettedParty) throw new Error(
+    `shouldBrake: shadow prices for party "${unvettedParty.id}" have not been ` +
+    `independently vetted. Cross-reference against financial disclosures, credit ` +
+    `markets, insurance premiums, and comparable transactions is required before ` +
+    `the brake criterion can be applied.`
+  );
   // Q1: sum ΔW over external parties only, using certainty-equivalent prices.
   // If no one is external, or external parties break even or gain, leave alone.
-  const externalParties = a.affectedParties.filter(p =&gt; p.external);
   const deltaW_ext = externalParties.reduce((total, p) =&gt;
     total + CAPITAL_KINDS.reduce((s, k) =&gt;
       s + certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 1) * (a.capitalDeltas?.[k]?.[p.id] ?? 0), 0), 0);
@@ -4089,9 +4103,10 @@ function shouldBrake(a) {
 function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 
 // Factory: one party affected only via "natural" capital (shadow price = 1).
+// priceVetted defaults to true — existing assertions test Q1/Q2 logic only.
 function activity(external, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
   return {
-    affectedParties: [{ id: "p", external, shadowPrices: { natural: 1 } }],
+    affectedParties: [{ id: "p", external, priceVetted: true, shadowPrices: { natural: 1 } }],
     capitalDeltas: { natural: { p: naturalDelta } },
     deadweightLoss, enforcementCost, captureRisk,
   };
@@ -4107,12 +4122,25 @@ assert(shouldBrake(activity(true, -10, 1, 1, 1)) === true, "both filters passed 
 // burden of proof, and any research that shrinks sd lowers it again.
 assert(shouldBrake({
   affectedParties: [{
-    id: "p", external: true,
+    id: "p", external: true, priceVetted: true,
     shadowPrices: { natural: { mean: 1, sd: 1, irreversible: true } }
   }],
   capitalDeltas: { natural: { p: -10 } },
   deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
-}) === false, "uncertainty: irreversible + sd≥mean → p*=0 → leave alone (research lowers sd)");</code></pre> tags below.
+}) === false, "uncertainty: irreversible + sd≥mean → p*=0 → leave alone (research lowers sd)");
+
+// Unvetted prices: shouldBrake must throw rather than return a value.
+// Self-declared conflicts are insufficient; independent cross-referencing
+// is a validity precondition, not a quality improvement.
+let threw = false;
+try {
+  shouldBrake({
+    affectedParties: [{ id: "industry", external: true, priceVetted: false, shadowPrices: { natural: 1 } }],
+    capitalDeltas: { natural: { industry: -10 } },
+    deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+  });
+} catch { threw = true; }
+assert(threw, "unvetted prices: shouldBrake must throw, not silently return a value");</code></pre> tags below.
             -->
 <pre><code>// Capital kinds — module-level constant, not per-call state.
 const CAPITAL_KINDS = [
