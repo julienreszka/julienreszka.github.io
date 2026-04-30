@@ -135,6 +135,55 @@ function requiredInsuranceCoverage(a) {
   return Math.max(0, -externalLoss);
 }
 
+// ── Coordination floor: where the externality lives vs. who is braking ───────
+//
+// The criterion's natural unit is the externality's footprint, but our
+// institutions are geographic. coordinationFloor(a) reads the spatial
+// structure already encoded in affectedParties to answer: what fraction of
+// external loss falls on parties OUTSIDE the deciding jurisdiction?
+//
+// Three regimes fall out of the same number:
+//   floor ≈ 0   Case 1 — externality footprint ⊆ jurisdiction. Local courts
+//               and a unilateral insurance regime are fully sufficient.
+//   0 < f < 1   Case 2 — externality crosses borders via trade flows.
+//               Border adjustments (CBAM-style) or reciprocal liability
+//               recognition carry the brake to where the demand originates.
+//   floor → 1   Case 3 — externality is global (CO₂, ozone, antibiotic
+//               resistance, novel pathogens). No single country can brake
+//               unilaterally without leakage proportional to the floor.
+//               Coordination (climate clubs, treaty trusts, MFN reciprocity)
+//               is constitutive of the brake, not an enhancement.
+//
+// floor is also the leakage rate of unilateral action: 1 − floor of the
+// nominal damage is captured by acting alone; the rest escapes. This is
+// not a flaw in the criterion; it is information the criterion produces.
+//
+// a.decidingJurisdiction is the jurisdiction whose institutions are
+// applying the brake. Each affected party may carry a `jurisdiction` field.
+// Parties with no jurisdiction declared are treated as being inside the
+// deciding one (the conservative default — counts toward sufficient
+// coverage rather than toward leakage).
+function coordinationFloor(a) {
+  const j = a.decidingJurisdiction;
+  if (!j) return 0; // no jurisdiction declared → cannot compute leakage
+
+  const externalParties = a.affectedParties.filter(p => p.external);
+  let totalLoss = 0;
+  let outsideLoss = 0;
+  for (const p of externalParties) {
+    const partyLoss = CAPITAL_KINDS.reduce((s, k) => {
+      const ce = certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 1);
+      const dK = a.capitalDeltas?.[k]?.[p.id] ?? 0;
+      return s + Math.min(0, ce * dK);
+    }, 0);
+    if (partyLoss >= 0) continue; // gains do not enter leakage analysis
+    totalLoss += -partyLoss;
+    const outside = p.jurisdiction !== undefined && p.jurisdiction !== j;
+    if (outside) outsideLoss += -partyLoss;
+  }
+  return totalLoss === 0 ? 0 : outsideLoss / totalLoss;
+}
+
 // ── Assertions (truth-table style; throw on failure) ─────────────────────────
 function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 
@@ -204,3 +253,68 @@ assert(requiredInsuranceCoverage(activity(true,  +5, 0, 0, 0)) === 0,
        "insurance: external gain → no coverage required");
 assert(requiredInsuranceCoverage(activity(false, -10, 0, 0, 0)) === 0,
        "insurance: internal-only loss → no external coverage required");
+
+// ── Coordination floor: three cases by externality footprint ─────────────────
+//
+// Case 1 — local externality. All external parties reside in the deciding
+// jurisdiction. Unilateral action is fully sufficient; no leakage.
+assert(coordinationFloor({
+  decidingJurisdiction: "FR",
+  affectedParties: [
+    { id: "p1", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "p2", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+  ],
+  capitalDeltas: { natural: { p1: -5, p2: -5 } },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+}) === 0, "Case 1 (local): floor = 0 → unilateral fully sufficient");
+
+// Case 2 — trade-coupled externality. 70% of external loss falls outside
+// the deciding jurisdiction. Border adjustments carry the brake to the
+// consumption point; without them, leakage is 70%.
+const case2 = {
+  decidingJurisdiction: "FR",
+  affectedParties: [
+    { id: "fr", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "br", external: true, jurisdiction: "BR", shadowPrices: { natural: 1 } },
+  ],
+  capitalDeltas: { natural: { fr: -3, br: -7 } },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+};
+assert(Math.abs(coordinationFloor(case2) - 0.7) < 1e-9,
+       "Case 2 (trade): floor = 0.7 → border adjustments needed");
+
+// Case 3 — global externality. Damage is spread over many jurisdictions;
+// the deciding country bears a small share. Floor → 1 means almost all of
+// the brake authority lives outside the country. Unilateral action leaks
+// in proportion to (1 − share).
+const case3 = {
+  decidingJurisdiction: "FR",
+  affectedParties: Array.from({ length: 10 }, (_, i) => ({
+    id: `c${i}`, external: true,
+    jurisdiction: i === 0 ? "FR" : `X${i}`,
+    shadowPrices: { natural: 1 },
+  })),
+  capitalDeltas: { natural: Object.fromEntries(
+    Array.from({ length: 10 }, (_, i) => [`c${i}`, -1])
+  ) },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+};
+assert(Math.abs(coordinationFloor(case3) - 0.9) < 1e-9,
+       "Case 3 (global): floor = 0.9 → coordination is constitutive of the brake");
+
+// Gains by external parties do not contribute to the leakage calculation:
+// the brake exists to address harm, not to net harm against benefit.
+assert(coordinationFloor({
+  decidingJurisdiction: "FR",
+  affectedParties: [
+    { id: "fr", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "us", external: true, jurisdiction: "US", shadowPrices: { natural: 1 } },
+  ],
+  capitalDeltas: { natural: { fr: -10, us: +10 } },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+}) === 0, "coord: external gains elsewhere do not net against losses at home");
+
+// No deciding jurisdiction declared → returns 0 (cannot compute leakage).
+// Conservative: callers must opt in to spatial analysis.
+assert(coordinationFloor(activity(true, -10, 0, 0, 0)) === 0,
+       "coord: no decidingJurisdiction → 0 (analysis not applicable)");

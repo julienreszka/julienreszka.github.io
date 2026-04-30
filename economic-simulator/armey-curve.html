@@ -4164,6 +4164,55 @@ function requiredInsuranceCoverage(a) {
   return Math.max(0, -externalLoss);
 }
 
+// ── Coordination floor: where the externality lives vs. who is braking ───────
+//
+// The criterion's natural unit is the externality's footprint, but our
+// institutions are geographic. coordinationFloor(a) reads the spatial
+// structure already encoded in affectedParties to answer: what fraction of
+// external loss falls on parties OUTSIDE the deciding jurisdiction?
+//
+// Three regimes fall out of the same number:
+//   floor ≈ 0   Case 1 — externality footprint ⊆ jurisdiction. Local courts
+//               and a unilateral insurance regime are fully sufficient.
+//   0 &lt; f &lt; 1   Case 2 — externality crosses borders via trade flows.
+//               Border adjustments (CBAM-style) or reciprocal liability
+//               recognition carry the brake to where the demand originates.
+//   floor → 1   Case 3 — externality is global (CO₂, ozone, antibiotic
+//               resistance, novel pathogens). No single country can brake
+//               unilaterally without leakage proportional to the floor.
+//               Coordination (climate clubs, treaty trusts, MFN reciprocity)
+//               is constitutive of the brake, not an enhancement.
+//
+// floor is also the leakage rate of unilateral action: 1 − floor of the
+// nominal damage is captured by acting alone; the rest escapes. This is
+// not a flaw in the criterion; it is information the criterion produces.
+//
+// a.decidingJurisdiction is the jurisdiction whose institutions are
+// applying the brake. Each affected party may carry a `jurisdiction` field.
+// Parties with no jurisdiction declared are treated as being inside the
+// deciding one (the conservative default — counts toward sufficient
+// coverage rather than toward leakage).
+function coordinationFloor(a) {
+  const j = a.decidingJurisdiction;
+  if (!j) return 0; // no jurisdiction declared → cannot compute leakage
+
+  const externalParties = a.affectedParties.filter(p =&gt; p.external);
+  let totalLoss = 0;
+  let outsideLoss = 0;
+  for (const p of externalParties) {
+    const partyLoss = CAPITAL_KINDS.reduce((s, k) =&gt; {
+      const ce = certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 1);
+      const dK = a.capitalDeltas?.[k]?.[p.id] ?? 0;
+      return s + Math.min(0, ce * dK);
+    }, 0);
+    if (partyLoss &gt;= 0) continue; // gains do not enter leakage analysis
+    totalLoss += -partyLoss;
+    const outside = p.jurisdiction !== undefined &amp;&amp; p.jurisdiction !== j;
+    if (outside) outsideLoss += -partyLoss;
+  }
+  return totalLoss === 0 ? 0 : outsideLoss / totalLoss;
+}
+
 // ── Assertions (truth-table style; throw on failure) ─────────────────────────
 function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 
@@ -4232,7 +4281,72 @@ assert(requiredInsuranceCoverage(activity(true, -10, 0, 0, 0)) === 10,
 assert(requiredInsuranceCoverage(activity(true,  +5, 0, 0, 0)) === 0,
        "insurance: external gain → no coverage required");
 assert(requiredInsuranceCoverage(activity(false, -10, 0, 0, 0)) === 0,
-       "insurance: internal-only loss → no external coverage required");</code></pre> tags below.
+       "insurance: internal-only loss → no external coverage required");
+
+// ── Coordination floor: three cases by externality footprint ─────────────────
+//
+// Case 1 — local externality. All external parties reside in the deciding
+// jurisdiction. Unilateral action is fully sufficient; no leakage.
+assert(coordinationFloor({
+  decidingJurisdiction: "FR",
+  affectedParties: [
+    { id: "p1", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "p2", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+  ],
+  capitalDeltas: { natural: { p1: -5, p2: -5 } },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+}) === 0, "Case 1 (local): floor = 0 → unilateral fully sufficient");
+
+// Case 2 — trade-coupled externality. 70% of external loss falls outside
+// the deciding jurisdiction. Border adjustments carry the brake to the
+// consumption point; without them, leakage is 70%.
+const case2 = {
+  decidingJurisdiction: "FR",
+  affectedParties: [
+    { id: "fr", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "br", external: true, jurisdiction: "BR", shadowPrices: { natural: 1 } },
+  ],
+  capitalDeltas: { natural: { fr: -3, br: -7 } },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+};
+assert(Math.abs(coordinationFloor(case2) - 0.7) &lt; 1e-9,
+       "Case 2 (trade): floor = 0.7 → border adjustments needed");
+
+// Case 3 — global externality. Damage is spread over many jurisdictions;
+// the deciding country bears a small share. Floor → 1 means almost all of
+// the brake authority lives outside the country. Unilateral action leaks
+// in proportion to (1 − share).
+const case3 = {
+  decidingJurisdiction: "FR",
+  affectedParties: Array.from({ length: 10 }, (_, i) =&gt; ({
+    id: `c${i}`, external: true,
+    jurisdiction: i === 0 ? "FR" : `X${i}`,
+    shadowPrices: { natural: 1 },
+  })),
+  capitalDeltas: { natural: Object.fromEntries(
+    Array.from({ length: 10 }, (_, i) =&gt; [`c${i}`, -1])
+  ) },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+};
+assert(Math.abs(coordinationFloor(case3) - 0.9) &lt; 1e-9,
+       "Case 3 (global): floor = 0.9 → coordination is constitutive of the brake");
+
+// Gains by external parties do not contribute to the leakage calculation:
+// the brake exists to address harm, not to net harm against benefit.
+assert(coordinationFloor({
+  decidingJurisdiction: "FR",
+  affectedParties: [
+    { id: "fr", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "us", external: true, jurisdiction: "US", shadowPrices: { natural: 1 } },
+  ],
+  capitalDeltas: { natural: { fr: -10, us: +10 } },
+  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+}) === 0, "coord: external gains elsewhere do not net against losses at home");
+
+// No deciding jurisdiction declared → returns 0 (cannot compute leakage).
+// Conservative: callers must opt in to spatial analysis.
+assert(coordinationFloor(activity(true, -10, 0, 0, 0)) === 0,
+       "coord: no decidingJurisdiction → 0 (analysis not applicable)");</code></pre> tags below.
             -->
 <pre><code>// Capital kinds — module-level constant, not per-call state.
 const CAPITAL_KINDS = [
@@ -4838,6 +4952,70 @@ assert(shouldBrake(activity(true, -10, 1, 1, 1)) === true, "both filters passed 
             it returns the policy size the operator must hold, derived from
             exactly the same certainty-equivalent prices that feed
             <code>shouldBrake</code>.
+          </p>
+
+          <h4 data-i18n="heading.coordination-floor">When does one country suffice? Three cases</h4>
+          <p data-i18n="prose.coordination-floor-intro-p">
+            The criterion's natural unit is the externality's footprint, but
+            our institutions are geographic. Whether per-country implementation
+            is sufficient depends on a quantity the framework already encodes:
+            the share of external loss that falls on parties <em>outside</em>
+            the deciding jurisdiction. <code>coordinationFloor(a)</code> reads
+            that share directly from <code>affectedParties</code>. The number
+            it returns sorts activities into three structurally different
+            regimes &mdash; not a continuum but three different problems.
+          </p>
+          <ul data-i18n="list.coordination-floor-cases">
+            <li>
+              <strong>Case 1 &mdash; local externality (floor &asymp; 0).</strong>
+              All external parties reside in the deciding jurisdiction:
+              water pollution, regional smog, soil contamination, urban noise,
+              land-use change, most labour conditions. Per-country
+              implementation is not just adequate; it is optimal. There is
+              no leakage problem because the externality cannot leak across
+              a border it does not cross. <em>Most of what governments
+              actually regulate falls here.</em>
+            </li>
+            <li>
+              <strong>Case 2 &mdash; trade-coupled externality (0 &lt; floor &lt; 1).</strong>
+              Water embedded in agricultural exports, deforestation behind
+              cattle exports, labour conditions in supply chains. The harm
+              happens in country B but the demand pull comes from country A.
+              The brake belongs at the <em>consumption</em> point, not the
+              production point. Border adjustments (the EU's CBAM is the
+              early version) carry the brake to where the demand actually
+              originates &mdash; this is not a workaround, it is the correct
+              location of the brake when the producer-side framing is wrong.
+            </li>
+            <li>
+              <strong>Case 3 &mdash; global externality (floor &rarr; 1).</strong>
+              Greenhouse gases, ozone-depleting substances, ocean fishery
+              collapse, antibiotic resistance, weapons-grade fissile material,
+              gain-of-function pathogens. The externality is genuinely
+              fungible across all geography. Coordination is constitutive
+              of the brake, not an enhancement. Climate clubs (Nordhaus 2015),
+              MFN reciprocity, and linked liability schemes all converge to
+              the same result: leakage falls toward zero as the coordinated
+              bloc approaches global market share. Below ~50% of global
+              activity in the bloc, leakage is significant; above ~70% it
+              is <em>de minimis</em>.
+            </li>
+          </ul>
+          <p data-i18n="prose.coordination-floor-conclusion-p">
+            This makes the &quot;competitiveness&quot; objection precise.
+            The objection has bite for Case 3 specifically &mdash; not as
+            a flaw in the criterion, but as a coordination problem the
+            criterion correctly identifies. For Cases 1 and 2 the objection
+            is a category error: country A's residents win on inclusive
+            wealth even when country A's GDP-share-of-cement-production
+            falls. The Changing Wealth of Nations data shows the pattern
+            repeatedly &mdash; resource-dependent economies post rising
+            GDP per capita and falling per-capita inclusive wealth. They
+            are &quot;competitive&quot; only on the wrong metric. The
+            criterion's job is to make the right metric legible, including
+            when unilateral action is sufficient (most cases), partial
+            (trade-coupled cases), or genuinely insufficient without
+            coordination (planet-scale cases).
           </p>
 
           <h4 data-i18n="heading.what-falsifies-this">What would falsify this</h4>
