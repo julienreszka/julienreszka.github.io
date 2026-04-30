@@ -4093,6 +4093,33 @@ const CAPITAL_KINDS = [
 //
 // confidence = 0 is the "I cannot trust this" degenerate case, expressed as a
 // limit of the same pricing rule rather than a separate code path.
+//
+// ── Out of scope (deliberate, not oversights) ────────────────────────────────
+//
+// These are scope decisions, named here so they are easy to find if scope
+// expands. The criterion is intentionally narrow; the items below are upstream
+// or orthogonal concerns that would muddy it if folded in.
+//
+//   • Internal-party schema errors. inputsAreTrustworthy does not check
+//     internal parties' shadowPrices keys against CAPITAL_KINDS, and
+//     capitalDeltas entries referencing internal parties pass the gate
+//     unflagged. Both behaviors are consistent with the stated invariant
+//     (internal parties may appear in capitalDeltas for bookkeeping;
+//     shouldBrake filters them out before summing). If the invariant ever
+//     changes, the two places to update are the gate's first for-loop and
+//     the construction of knownPartyIds.
+//
+//   • Temporal structure. All capital deltas are treated as contemporaneous.
+//     Discounting, phasing, and path-dependence (e.g. damage that grows if
+//     not arrested early) are upstream concerns: they must be priced into the
+//     shadow prices before inputs reach this code.
+//
+//   • Distributional weights. Welfare changes are aggregated by summing,
+//     so a party losing $10 of natural capital exactly offsets a party
+//     gaining $10 of natural capital at shadow price 1. Whether that
+//     aggregation should be weighted by income, vulnerability, or political
+//     representation is a prior question the pricing step must resolve;
+//     the criterion takes the resulting prices as given.
 function certaintyEquivalentPrice(p) {
   if (typeof p === "number") return p;                  // scalar point estimate
   const mean = p?.mean ?? 0;  // ?? 0: a price object with no mean is no signal
@@ -4176,6 +4203,32 @@ function inputsAreTrustworthy(a) {
           reasons.push(`unknown party ID in capitalDeltas["${kind}"]: "${partyId}" — not in affectedParties (typo?)`);
       }
     }
+  }
+  return { ok: reasons.length === 0, reasons };
+}
+
+// Sibling gate over the brake descriptor. Same shape as inputsAreTrustworthy
+// — { ok, reasons } — but a separate function because brake is optional and
+// has a different signature than the activity. Callers compose them:
+//   if (!inputsAreTrustworthy(a).ok || !brakeIsWellFormed(brake).ok)
+//     refuseToDecide();
+//
+// Catches the failure modes that brake = {} cannot defend against:
+//   • non-numeric or non-finite values (NaN, Infinity, strings)
+//   • negative values (a "negative deadweight loss" silently flips Q2)
+// A missing brake (undefined / null) is treated as the documented Q1-only
+// case and passes — that's the brake = {} default of shouldBrake, made
+// explicit here.
+function brakeIsWellFormed(brake) {
+  const reasons = [];
+  if (brake == null) return { ok: true, reasons }; // Q1-only mode; documented default
+  for (const field of ["deadweightLoss", "enforcementCost", "captureRisk"]) {
+    const v = brake[field];
+    if (v === undefined) continue; // missing → 0 by ?? convention; not an error
+    if (typeof v !== "number" || !Number.isFinite(v))
+      reasons.push(`brake.${field} is not a finite number: ${String(v)}`);
+    else if (v &lt; 0)
+      reasons.push(`brake.${field} is negative: ${v} — costs cannot be negative`);
   }
   return { ok: reasons.length === 0, reasons };
 }
@@ -4574,7 +4627,34 @@ assert(inputsAreTrustworthy(deltaPartyTypo).reasons.length === 1 &amp;&amp;
 
 // Clean capitalDeltas with correct kind and party ID passes.
 assert(inputsAreTrustworthy(activity(true, -10, 1, 1, 1)[0]).ok === true,
-  "gate: correct capitalDeltas kind and party ID pass schema check");</code></pre>
+  "gate: correct capitalDeltas kind and party ID pass schema check");
+
+// ── brakeIsWellFormed: brake-descriptor validation ───────────────────────────
+//
+// brake = {} and brake = undefined are valid (Q1-only mode, documented).
+// What's caught here is values that look numeric but break Q2: negatives,
+// NaN, Infinity, strings.
+
+assert(brakeIsWellFormed(undefined).ok === true,
+  "brake: undefined → ok (Q1-only mode)");
+assert(brakeIsWellFormed({}).ok === true,
+  "brake: empty object → ok (all fields default to 0)");
+assert(brakeIsWellFormed({ deadweightLoss: 1, enforcementCost: 2, captureRisk: 3 }).ok === true,
+  "brake: clean positive numbers → ok");
+
+assert(brakeIsWellFormed({ deadweightLoss: -1 }).ok === false,
+  "brake: negative deadweightLoss flagged");
+assert(brakeIsWellFormed({ captureRisk: NaN }).ok === false,
+  "brake: NaN captureRisk flagged");
+assert(brakeIsWellFormed({ enforcementCost: Infinity }).ok === false,
+  "brake: Infinity enforcementCost flagged");
+assert(brakeIsWellFormed({ deadweightLoss: "3" }).ok === false,
+  "brake: string deadweightLoss flagged (typeof !== number)");
+
+// All three fields malformed → three reasons (not short-circuited).
+assert(brakeIsWellFormed({
+  deadweightLoss: -1, enforcementCost: NaN, captureRisk: "0"
+}).reasons.length === 3, "brake: accumulates all reasons, no short-circuit");</code></pre>
           </details>
           <p data-i18n="prose.iwc-subsumes-p">
             This single inequality subsumes the standard candidates for "what
