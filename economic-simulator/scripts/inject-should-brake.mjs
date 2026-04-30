@@ -6,6 +6,7 @@
 // Usage:  node scripts/inject-should-brake.mjs
 
 import { readFileSync, writeFileSync } from "fs";
+import { execSync } from "child_process";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -13,6 +14,7 @@ const __dir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dir, "..");
 const jsSrc = resolve(root, "should-brake.js");
 const htmlSrc = resolve(root, "armey-curve.html");
+const indexSrc = resolve(root, "index.html");
 
 // ── 1. Read source files ──────────────────────────────────────────────────────
 const js = readFileSync(jsSrc, "utf8");
@@ -67,4 +69,31 @@ if (updated === html) {
 } else {
   writeFileSync(htmlSrc, updated, "utf8");
   console.log("armey-curve.html updated from should-brake.js.");
+}
+
+// ── 5. Update dateModified in index.html ─────────────────────────────────────
+// Use the git commit date of should-brake.js as the authoritative last-modified
+// date. Falls back to today if the file is not yet tracked by git.
+let isoDate;
+try {
+  isoDate = execSync(
+    `git log -1 --format=%cs -- "${jsSrc}"`,
+    { cwd: root, encoding: "utf8" }
+  ).trim();
+  if (!isoDate) throw new Error("no commit");
+} catch {
+  isoDate = new Date().toISOString().slice(0, 10);
+}
+
+const indexHtml = readFileSync(indexSrc, "utf8");
+const updatedIndex = indexHtml.replace(
+  /"dateModified": "\d{4}-\d{2}-\d{2}"/,
+  `"dateModified": "${isoDate}"`
+);
+
+if (updatedIndex === indexHtml) {
+  console.log(`index.html dateModified already "${isoDate}".`);
+} else {
+  writeFileSync(indexSrc, updatedIndex, "utf8");
+  console.log(`index.html dateModified updated to "${isoDate}".`);
 }

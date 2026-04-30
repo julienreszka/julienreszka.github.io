@@ -4131,6 +4131,16 @@ function shouldBrake(a, brake = {}) {
 // to decide when the data pipeline is compromised — separate from the
 // criterion itself, so bad-faith "we can't trust the inputs" arguments have
 // a single, explicit place to live where they can be debated on merits.
+//
+// Design note — two concerns in one gate:
+//   The epistemic checks below (measurementIntegrity, priceVetted) answer
+//   "can we trust the measurement and pricing pipeline?". The schema checks
+//   (CAPITAL_KINDS keys, party IDs in capitalDeltas) answer "is the data
+//   structure well-formed?". Keeping both here means there is still one
+//   place where "do not proceed" lives. If they are ever split — e.g.
+//   because schema errors should throw rather than accumulate reasons, or
+//   because a caller wants schema validation without epistemic gating — the
+//   seam is between the two for-loops below.
 function inputsAreTrustworthy(a) {
   const reasons = [];
   for (const p of a.affectedParties.filter(x =&gt; x.external)) {
@@ -4145,6 +4155,17 @@ function inputsAreTrustworthy(a) {
   // capitalDeltas schema: kind keys must be in CAPITAL_KINDS; party IDs must
   // match IDs declared in affectedParties. Both classes of typo produce silent
   // zeros in every computation, so they are detectable only here.
+  //
+  // Invariant — internal parties in capitalDeltas:
+  //   knownPartyIds includes ALL parties (external and internal). A delta
+  //   entry for an internal party therefore passes this check rather than
+  //   being flagged as an unknown ID. This is intentional: capitalDeltas
+  //   may legitimately record internal-party changes for bookkeeping, and
+  //   shouldBrake silently ignores them (it filters to external parties
+  //   before summing). The silence in both places is consistent design, not
+  //   an oversight. If the intended invariant were "capitalDeltas must only
+  //   reference external parties", this check would use a filtered set and
+  //   flag internal-party entries explicitly.
   const knownPartyIds = new Set(a.affectedParties.map(p =&gt; p.id));
   for (const kind of Object.keys(a.capitalDeltas ?? {})) {
     if (!CAPITAL_KINDS.includes(kind)) {
