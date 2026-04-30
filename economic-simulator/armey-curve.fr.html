@@ -4151,6 +4151,9 @@ function certaintyEquivalentPrice(p) {
 // Pure decision: external parties lose inclusive wealth on net, AND
 // the brake itself is cost-effective.
 // Missing shadow prices contribute 0 (no signal), not 1 (arbitrary assumption).
+// Typo detection lives in inputsAreTrustworthy; shouldBrake treats unknown kinds
+// as zero by the ?? 0 convention, so the gate must be in the call chain for the
+// guard to fire.
 //
 // brake defaults to {} so Q2 always passes (cost = 0). This is intentional for
 // Q1-only testing ("is there external harm at all?"), but a caller who forgets
@@ -4184,6 +4187,20 @@ function inputsAreTrustworthy(a) {
     const unknownKinds = Object.keys(p.shadowPrices ?? {}).filter(k =&gt; !CAPITAL_KINDS.includes(k));
     if (unknownKinds.length &gt; 0)
       reasons.push(`unknown capital kinds for "${p.id}": ${unknownKinds.join(", ")} — not in CAPITAL_KINDS (typo?)`);
+  }
+  // capitalDeltas schema: kind keys must be in CAPITAL_KINDS; party IDs must
+  // match IDs declared in affectedParties. Both classes of typo produce silent
+  // zeros in every computation, so they are detectable only here.
+  const knownPartyIds = new Set(a.affectedParties.map(p =&gt; p.id));
+  for (const kind of Object.keys(a.capitalDeltas ?? {})) {
+    if (!CAPITAL_KINDS.includes(kind)) {
+      reasons.push(`unknown capital kind in capitalDeltas: "${kind}" — not in CAPITAL_KINDS (typo?)`);
+    } else {
+      for (const partyId of Object.keys(a.capitalDeltas[kind])) {
+        if (!knownPartyIds.has(partyId))
+          reasons.push(`unknown party ID in capitalDeltas["${kind}"]: "${partyId}" — not in affectedParties (typo?)`);
+      }
+    }
   }
   return { ok: reasons.length === 0, reasons };
 }
@@ -4309,8 +4326,10 @@ function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 function activity(external, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
   return [
     {
-      affectedParties: [{ id: "p", external, shadowPrices: { natural: 1 },
-                          measurementIntegrity: true, priceVetted: true }],
+      affectedParties: [{
+        id: "p", external, shadowPrices: { natural: 1 },
+        measurementIntegrity: true, priceVetted: true
+      }],
       capitalDeltas: { natural: { p: naturalDelta } },
     },
     { deadweightLoss, enforcementCost, captureRisk },
@@ -4319,9 +4338,9 @@ function activity(external, naturalDelta, deadweightLoss, enforcementCost, captu
 
 // Core Q1/Q2 logic.
 assert(shouldBrake(...activity(false, -10, 0, 0, 0)) === false, "Q1: internal party only → leave alone");
-assert(shouldBrake(...activity(true,  +10, 0, 0, 0)) === false, "Q1: external party gains → leave alone");
-assert(shouldBrake(...activity(true,   -5, 3, 2, 1)) === false, "Q2: brake costs 6 &gt; damage 5 → leave alone");
-assert(shouldBrake(...activity(true,  -10, 1, 1, 1)) === true,  "both filters passed → BRAKE");
+assert(shouldBrake(...activity(true, +10, 0, 0, 0)) === false, "Q1: external party gains → leave alone");
+assert(shouldBrake(...activity(true, -5, 3, 2, 1)) === false, "Q2: brake costs 6 &gt; damage 5 → leave alone");
+assert(shouldBrake(...activity(true, -10, 1, 1, 1)) === true, "both filters passed → BRAKE");
 
 // ── certaintyEquivalentPrice: direct unit tests ───────────────────────────────
 // These test the formula in isolation. If a regression lands here the failure
@@ -4414,7 +4433,7 @@ const typo = {
 assert(inputsAreTrustworthy(typo).ok === false,
   "gate: unknown capital kind (typo) is flagged");
 assert(inputsAreTrustworthy(typo).reasons.length === 1 &amp;&amp;
-       inputsAreTrustworthy(typo).reasons[0].includes("naturel"),
+  inputsAreTrustworthy(typo).reasons[0].includes("naturel"),
   "gate: names the unknown kind in the reason");
 
 // Clean: both fields explicitly true. Absent fields are also flagged — true is
@@ -4428,7 +4447,7 @@ assert(inputsAreTrustworthy(activity(true, -10, 1, 1, 1)[0]).ok === true,
 // insurer covers harms, not aggregates.
 assert(requiredInsuranceCoverage(activity(true, -10, 0, 0, 0)[0]) === 10,
   "insurance: external loss of 10 → required cover of 10");
-assert(requiredInsuranceCoverage(activity(true,  +5, 0, 0, 0)[0]) === 0,
+assert(requiredInsuranceCoverage(activity(true, +5, 0, 0, 0)[0]) === 0,
   "insurance: external gain → no coverage required");
 assert(requiredInsuranceCoverage(activity(false, -10, 0, 0, 0)[0]) === 0,
   "insurance: internal-only loss → no external coverage required");
@@ -4500,8 +4519,8 @@ assert(coordinationFloor(activity(true, -10, 0, 0, 0)[0]).floor === 0,
 assert(coordinationFloor({
   decidingJurisdiction: "FR",
   affectedParties: [
-    { id: "local",   external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
-    { id: "unknown", external: true,                     shadowPrices: { natural: 1 } },
+    { id: "local", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "unknown", external: true, shadowPrices: { natural: 1 } },
   ],
   capitalDeltas: { natural: { local: -5, unknown: -5 } },
 }).undeclaredCount === 1, "coord: undeclaredCount flags parties with losses but no jurisdiction field");
@@ -4517,7 +4536,7 @@ assert(coordinationFloor({
 assert(shouldBrake({
   affectedParties: [
     { id: "a", external: true, shadowPrices: { natural: 1 } },
-    { id: "b", external: true, shadowPrices: { human:   1 } },
+    { id: "b", external: true, shadowPrices: { human: 1 } },
   ],
   capitalDeltas: { natural: { a: -6 }, human: { b: -6 } },
 }, { deadweightLoss: 8, enforcementCost: 0, captureRisk: 0 }) === true,
@@ -4526,7 +4545,7 @@ assert(shouldBrake({
 assert(shouldBrake({
   affectedParties: [
     { id: "a", external: true, shadowPrices: { natural: 1 } },
-    { id: "b", external: true, shadowPrices: { human:   1 } },
+    { id: "b", external: true, shadowPrices: { human: 1 } },
   ],
   capitalDeltas: { natural: { a: -6 }, human: { b: -6 } },
 }, { deadweightLoss: 13, enforcementCost: 0, captureRisk: 0 }) === false,
@@ -4541,7 +4560,46 @@ assert(requiredInsuranceCoverage({
   }],
   capitalDeltas: { natural: { c: -4 }, human: { c: -3 } },
 }) === 10,  // 1×4 + 2×3 = 4 + 6 = 10
-  "aggregation: single party, two kinds — insurance covers 4 + 6 = 10");</code></pre>
+  "aggregation: single party, two kinds — insurance covers 4 + 6 = 10");
+
+// ── capitalDeltas schema checks in inputsAreTrustworthy ───────────────────────
+//
+// A misspelled kind key in capitalDeltas (e.g. "natrual") is as silent as a
+// misspelled shadowPrices key — the ?? 0 fallback swallows it. Likewise, a
+// misspelled party ID (e.g. "pp" instead of "p") lands in no party's row.
+// Both are now caught by the gate alongside the shadowPrices typo guard.
+
+// Misspelled kind key in capitalDeltas.
+const deltaKindTypo = {
+  affectedParties: [{
+    id: "p", external: true, measurementIntegrity: true, priceVetted: true,
+    shadowPrices: { natural: 1 },
+  }],
+  capitalDeltas: { natrual: { p: -10 } },  // "natrual" instead of "natural"
+};
+assert(inputsAreTrustworthy(deltaKindTypo).ok === false,
+  "gate: misspelled kind key in capitalDeltas is flagged");
+assert(inputsAreTrustworthy(deltaKindTypo).reasons.length === 1 &amp;&amp;
+  inputsAreTrustworthy(deltaKindTypo).reasons[0].includes("natrual"),
+  "gate: names the misspelled kind from capitalDeltas in the reason");
+
+// Misspelled party ID in capitalDeltas.
+const deltaPartyTypo = {
+  affectedParties: [{
+    id: "p", external: true, measurementIntegrity: true, priceVetted: true,
+    shadowPrices: { natural: 1 },
+  }],
+  capitalDeltas: { natural: { pp: -10 } },  // "pp" instead of "p"
+};
+assert(inputsAreTrustworthy(deltaPartyTypo).ok === false,
+  "gate: misspelled party ID in capitalDeltas is flagged");
+assert(inputsAreTrustworthy(deltaPartyTypo).reasons.length === 1 &amp;&amp;
+  inputsAreTrustworthy(deltaPartyTypo).reasons[0].includes("pp"),
+  "gate: names the misspelled party ID from capitalDeltas in the reason");
+
+// Clean capitalDeltas with correct kind and party ID passes.
+assert(inputsAreTrustworthy(activity(true, -10, 1, 1, 1)[0]).ok === true,
+  "gate: correct capitalDeltas kind and party ID pass schema check");</code></pre>
           </details>
           <p data-i18n="prose.iwc-subsumes-p">Cette inégalité unique subsume les candidats standard pour « ce que
             le gouvernement devrait freiner » :</p>
