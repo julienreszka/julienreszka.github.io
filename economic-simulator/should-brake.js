@@ -7,14 +7,16 @@ const CAPITAL_KINDS = [
   "institutional", // rule of law, trust, contract enforcement
 ];
 
-// ── Two functions, one concern each ──────────────────────────────────────────
+// ── Three functions, one concern each ───────────────────────────────────────
 //
-//   shouldBrake(a)            : pure decision, trusts its inputs
-//   inputsAreTrustworthy(a)   : optional upstream gate over data quality
+//   shouldBrake(a, brake)     : pure decision, trusts its inputs
+//   inputsAreTrustworthy(a)   : optional upstream gate over activity data
+//   brakeIsWellFormed(brake)  : optional upstream gate over the brake descriptor
 //
 // Calling code composes them:
-//   if (!inputsAreTrustworthy(a).ok) refuseToDecide();
-//   else act(shouldBrake(a));
+//   if (!inputsAreTrustworthy(a).ok || !brakeIsWellFormed(brake).ok)
+//     refuseToDecide();
+//   else act(shouldBrake(a, brake));
 //
 // The criterion itself is small and stable. The epistemic stack
 // (measurement → vetting → pricing) lives upstream as a separate concern.
@@ -77,6 +79,14 @@ const CAPITAL_KINDS = [
 //     shouldBrake filters them out before summing). If the invariant ever
 //     changes, the two places to update are the gate's first for-loop and
 //     the construction of knownPartyIds.
+//
+//   • Price-descriptor validation. brakeIsWellFormed sets the precedent that
+//     descriptor fields get range-checked (negative cost, NaN, Infinity).
+//     There is no analogous priceIsWellFormed for shadow-price descriptors,
+//     so confidence: 1.5 or sd: -2 produces a mathematically defined but
+//     economically meaningless result. certaintyEquivalentPrice is
+//     deliberately a pure formula; if untrusted price objects ever reach
+//     this code, add the sibling validator next to brakeIsWellFormed.
 //
 //   • Temporal structure. All capital deltas are treated as contemporaneous.
 //     Discounting, phasing, and path-dependence (e.g. damage that grows if
