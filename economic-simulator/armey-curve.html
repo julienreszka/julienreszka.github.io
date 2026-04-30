@@ -4135,6 +4135,9 @@ function inputsAreTrustworthy(a) {
       reasons.push(`measurementIntegrity not confirmed for "${p.id}" — unknown is not safe`);
     if (p.priceVetted !== true)
       reasons.push(`priceVetted not confirmed for "${p.id}" — unknown is not safe`);
+    const unknownKinds = Object.keys(p.shadowPrices ?? {}).filter(k =&gt; !CAPITAL_KINDS.includes(k));
+    if (unknownKinds.length &gt; 0)
+      reasons.push(`unknown capital kinds for "${p.id}": ${unknownKinds.join(", ")} — not in CAPITAL_KINDS (typo?)`);
   }
   return { ok: reasons.length === 0, reasons };
 }
@@ -4274,6 +4277,24 @@ assert(shouldBrake(...activity(true,  +10, 0, 0, 0)) === false, "Q1: external pa
 assert(shouldBrake(...activity(true,   -5, 3, 2, 1)) === false, "Q2: brake costs 6 &gt; damage 5 → leave alone");
 assert(shouldBrake(...activity(true,  -10, 1, 1, 1)) === true,  "both filters passed → BRAKE");
 
+// ── certaintyEquivalentPrice: direct unit tests ───────────────────────────────
+// These test the formula in isolation. If a regression lands here the failure
+// message names the function and the inputs, not a downstream Q1/Q2 label.
+assert(certaintyEquivalentPrice(7) === 7,
+  "cep: scalar passthrough");
+assert(certaintyEquivalentPrice({}) === 0,
+  "cep: no mean → 0 (no signal, not 1)");
+assert(certaintyEquivalentPrice({ mean: 1 }) === 1,
+  "cep: mean=1, all defaults → p* = 1");
+assert(certaintyEquivalentPrice({ mean: 1, sd: 1 }) === 0.5,
+  "cep: reversible, sd=1 → p* = 1 − 0.5×1 = 0.5");
+assert(certaintyEquivalentPrice({ mean: 1, sd: 1, irreversible: true }) === 0,
+  "cep: irreversible, sd=1 → p* = max(0, 1 − 2×1) = 0");
+assert(certaintyEquivalentPrice({ mean: 2, confidence: 0.5 }) === 1,
+  "cep: confidence=0.5, no sd → p* = 2×0.5 = 1");
+assert(Math.abs(certaintyEquivalentPrice({ mean: 2, sd: 1, confidence: 0.5 }) - 0.5) &lt; 1e-9,
+  "cep: mean=2, sd=1, confidence=0.5 → p* = 2×0.5 − 0.5×1 = 0.5");
+
 // The next three tests exercise certaintyEquivalentPrice in isolation via shouldBrake.
 // They deliberately omit measurementIntegrity and priceVetted — that's inputsAreTrustworthy's
 // domain, not shouldBrake's. Running inputsAreTrustworthy on these inputs would flag them;
@@ -4332,6 +4353,23 @@ const unvetted = {
   capitalDeltas: { natural: { ind: -10 } },
 };
 assert(inputsAreTrustworthy(unvetted).ok === false, "gate: detects unvetted prices");
+
+// CAPITAL_KINDS typo guard: a misspelled kind (e.g. "naturel") is flagged by
+// inputsAreTrustworthy rather than silently contributing 0. This is the only
+// enforcement point — CAPITAL_KINDS is the authoritative list and nothing in
+// the computation itself can distinguish a typo from a genuinely zero exposure.
+const typo = {
+  affectedParties: [{
+    id: "tp", external: true, measurementIntegrity: true, priceVetted: true,
+    shadowPrices: { naturel: 1 },  // deliberate misspelling of "natural"
+  }],
+  capitalDeltas: { natural: { tp: -10 } },
+};
+assert(inputsAreTrustworthy(typo).ok === false,
+  "gate: unknown capital kind (typo) is flagged");
+assert(inputsAreTrustworthy(typo).reasons.length === 1 &amp;&amp;
+       inputsAreTrustworthy(typo).reasons[0].includes("naturel"),
+  "gate: names the unknown kind in the reason");
 
 // Clean: both fields explicitly true. Absent fields are also flagged — true is
 // an explicit opt-in, not a default, so missing = unknown = flagged.
@@ -4420,7 +4458,44 @@ assert(coordinationFloor({
     { id: "unknown", external: true,                     shadowPrices: { natural: 1 } },
   ],
   capitalDeltas: { natural: { local: -5, unknown: -5 } },
-}).undeclaredCount === 1, "coord: undeclaredCount flags parties with losses but no jurisdiction field");</code></pre>
+}).undeclaredCount === 1, "coord: undeclaredCount flags parties with losses but no jurisdiction field");
+
+// ── Multi-party, multi-kind aggregation ───────────────────────────────────────
+//
+// shouldBrake sums across both external parties AND capital kinds. These tests
+// exercise the aggregation paths that single-party, single-kind tests cannot reach.
+
+// Two external parties in different capital kinds. Individual losses (6 each)
+// are below the brake cost (8) in isolation, but their sum (12) exceeds it.
+// This confirms the reducer sums across both dimensions before comparing.
+assert(shouldBrake({
+  affectedParties: [
+    { id: "a", external: true, shadowPrices: { natural: 1 } },
+    { id: "b", external: true, shadowPrices: { human:   1 } },
+  ],
+  capitalDeltas: { natural: { a: -6 }, human: { b: -6 } },
+}, { deadweightLoss: 8, enforcementCost: 0, captureRisk: 0 }) === true,
+  "aggregation: two parties, two kinds, combined loss 12 &gt; brake cost 8 → BRAKE");
+
+assert(shouldBrake({
+  affectedParties: [
+    { id: "a", external: true, shadowPrices: { natural: 1 } },
+    { id: "b", external: true, shadowPrices: { human:   1 } },
+  ],
+  capitalDeltas: { natural: { a: -6 }, human: { b: -6 } },
+}, { deadweightLoss: 13, enforcementCost: 0, captureRisk: 0 }) === false,
+  "aggregation: combined loss 12 &lt; brake cost 13 → leave alone");
+
+// requiredInsuranceCoverage with one party losing across two capital kinds.
+// The insurer covers the full scope of harm; losses in each kind accumulate.
+assert(requiredInsuranceCoverage({
+  affectedParties: [{
+    id: "c", external: true,
+    shadowPrices: { natural: 1, human: 2 },
+  }],
+  capitalDeltas: { natural: { c: -4 }, human: { c: -3 } },
+}) === 10,  // 1×4 + 2×3 = 4 + 6 = 10
+  "aggregation: single party, two kinds — insurance covers 4 + 6 = 10");</code></pre>
           </details>
           <p data-i18n="prose.iwc-subsumes-p">
             This single inequality subsumes the standard candidates for "what
