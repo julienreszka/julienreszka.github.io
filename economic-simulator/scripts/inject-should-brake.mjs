@@ -63,17 +63,9 @@ const before = html.slice(0, codeStart + CODE_OPEN.length);
 const after = html.slice(codeEnd);
 const updated = before + payload + after;
 
-// ── 4. Write back only if changed ────────────────────────────────────────────
-if (updated === html) {
-  console.log("armey-curve.html is already up to date.");
-} else {
-  writeFileSync(htmlSrc, updated, "utf8");
-  console.log("armey-curve.html updated from should-brake.js.");
-}
-
-// ── 5. Update dateModified in index.html ─────────────────────────────────────
-// Use the git commit date of should-brake.js as the authoritative last-modified
-// date. Falls back to today if the file is not yet tracked by git.
+// ── Resolve the authoritative last-modified date once ─────────────────────────
+// Used by both the visible <time> stamp in armey-curve.html and the
+// JSON-LD dateModified in index.html.
 let isoDate;
 try {
   isoDate = execSync(
@@ -85,6 +77,21 @@ try {
   isoDate = new Date().toISOString().slice(0, 10);
 }
 
+// ── 4. Write back only if changed (code block + <time> stamp) ────────────────
+// Also update the visible <time datetime="…">…</time> in the same file so the
+// "Last updated" date shown to readers tracks the JS source, not a manual edit.
+const updatedWithDate = updated.replace(
+  /<time datetime="\d{4}-\d{2}-\d{2}">\d{4}-\d{2}-\d{2}<\/time>/,
+  `<time datetime="${isoDate}">${isoDate}</time>`
+);
+if (updatedWithDate === html) {
+  console.log("armey-curve.html is already up to date.");
+} else {
+  writeFileSync(htmlSrc, updatedWithDate, "utf8");
+  console.log("armey-curve.html updated from should-brake.js.");
+}
+
+// ── 5. Update dateModified in index.html ─────────────────────────────────────
 const indexHtml = readFileSync(indexSrc, "utf8");
 const updatedIndex = indexHtml.replace(
   /"dateModified": "\d{4}-\d{2}-\d{2}"/,
