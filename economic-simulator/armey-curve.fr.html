@@ -9,11 +9,11 @@
     <meta
       name="description"
       data-i18n-content="meta.description"
-      content="J’ai testé la courbe d’Armey sur 151 pays. Les dépenses publiques freinent monotonement la croissance (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Si l’État est structurellement un frein, la bonne question n’est pas « combien » mais « sur quoi ». Le critère de richesse inclusive : freiner une activité uniquement quand elle réduit la richesse inclusive ET qu’une partie affectée n’a jamais consenti. Simulateur interactif + essai en 11 sections."
+      content="J'ai testé la courbe d'Armey sur 151 pays. Les dépenses publiques freinent monotonement la croissance (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Si l'État est structurellement un frein, la bonne question n'est pas « combien » mais « sur quoi ». Le critère de richesse inclusive : freiner une activité uniquement quand elle impose une perte de richesse nette sur des parties externes ET que le frein est rentable. Simulateur interactif + essai en 11 sections."
     />
     <meta
       name="keywords"
-      content="Armey curve, government spending, economic growth, fiscal policy, public economics, power law model, inclusive wealth, selective brake, Pigou, Coase, Dasgupta Review, Buchanan Tullock, externalities, consent, objective criterion, interactive simulator"
+      content="Armey curve, government spending, economic growth, fiscal policy, public economics, power law model, inclusive wealth, selective brake, Pigou, Coase, Dasgupta Review, Buchanan Tullock, externalities, objective criterion, interactive simulator"
     />
     <meta name="author" content="Julien Reszka" />
     <meta name="robots" content="index, follow" />
@@ -28,7 +28,7 @@
     <meta
       property="og:description"
       data-i18n-content="meta.og.description"
-      content="Les dépenses publiques freinent monotonement la croissance sur 151 pays (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Si c’est un frein, visez-le — freinez uniquement quand l’activité réduit la richesse inclusive ET sans consentement. Trois quadrants sur quatre disent à l’État de ne rien faire."
+      content="Les dépenses publiques freinent monotonement la croissance sur 151 pays (loi de puissance > quadratique, R² 0,42 vs 0,39, n=113). Si c'est un frein, visez-le — freinez uniquement quand l'activité impose une perte de richesse nette sur des parties externes ET que le frein est rentable. Trois cellules sur quatre disent à l'État de ne rien faire."
     />
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="2024-01-01T00:00:00Z" />
@@ -51,7 +51,7 @@
     <meta
       name="twitter:description"
       data-i18n-content="meta.twitter.description"
-      content="J’ai testé la courbe d’Armey sur 151 pays. Les dépenses freinent monotonement la croissance — mais la vraie réponse n’est pas « moins », c’est « visez ». Freinez uniquement quand la richesse inclusive recule ET sans consentement. Trois quadrants sur quatre : ne rien faire."
+      content="J'ai testé la courbe d'Armey sur 151 pays. Les dépenses freinent monotonement la croissance — mais la vraie réponse n'est pas « moins », c'est « visez ». Freinez uniquement quand la richesse inclusive recule pour les parties externes ET que le frein est rentable. Trois cellules sur quatre : ne rien faire."
     />
     <meta name="twitter:creator" content="@julienreszka" />
 
@@ -204,7 +204,7 @@
                 "name": "If government spending always slows growth, what should government actually do?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "The empirical curve answers 'how much' but not 'on what'. The article proposes a two-condition rule: government should brake an activity only when (1) it shrinks inclusive wealth — the present value of all productive capital stocks, produced, human, natural, knowledge, and institutional — and (2) some affected party never consented to bear the cost. Activities that satisfy both conditions are genuine negative externalities: pollution, resource depletion beyond regeneration rates, systemic financial risk. Activities that fail either condition — consensual transactions, wealth-creating innovation, or lifestyle choices that harm only the chooser — fall outside the criterion's scope."
+                  "text": "The empirical curve answers 'how much' but not 'on what'. The article proposes a two-condition rule: government should brake an activity only when (1) it imposes a net wealth loss on external parties — those who bear a cost or receive a benefit without choosing to participate in the transaction — summed across all capital types (produced, human, natural, knowledge, institutional), and (2) the brake is cost-effective (deadweight loss + enforcement cost + capture risk ≤ |ΔW_ext|). Activities satisfying both conditions are genuine negative externalities: pollution, resource depletion beyond regeneration rates, systemic financial risk. Activities that fail either condition — voluntary transactions between willing parties, wealth-creating innovation, or choices affecting only internal participants — fall outside the criterion's scope."
                 }
               },
               {
@@ -217,18 +217,18 @@
               },
               {
                 "@type": "Question",
-                "name": "What does the 2×2 quadrant diagram show?",
+                "name": "What does the 2×2 diagram show?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Two binary questions — did all affected parties consent? does inclusive wealth grow or shrink? — produce four quadrants. Three of the four tell government to do nothing: (1) consensual and wealth-growing: encourage or leave alone; (2) consensual and wealth-shrinking: leave alone, it is their loss and their choice; (3) non-consensual and wealth-growing: rare, investigate but do not reflexively brake. Only the fourth quadrant — non-consensual and wealth-shrinking — gives government objective standing to act. This is a much narrower licence than 'whatever the median voter wants' and a much wider one than 'government should never act'."
+                  "text": "Two binary questions produce four cells: does the activity impose a net wealth loss on external parties (ΔW_ext < 0)? and is the brake cost-effective (brake cost ≤ |ΔW_ext|)? Three of the four cells tell government to do nothing. Only the bottom-left cell — an external wealth loss that a cost-effective brake can address — gives government objective standing to act. This is a much narrower licence than 'whatever the median voter wants' and a much wider one than 'government should never act'."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Does the criterion add a third condition beyond wealth and consent?",
+                "name": "What are the two conditions in the criterion?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Yes. Even when both conditions are met — wealth shrinks, consent absent — government should still refrain if the brake itself costs more than the damage it prevents. The third filter sums deadweight loss (the Harberger triangle), enforcement cost, and expected regulatory capture risk, and compares that total to the magnitude of the wealth loss. If brakeCost > |ΔW|, the cure is worse than the disease. This is the standard public-choice corrective: Pigou taxes and Coasian bargaining only dominate unregulated markets when transaction and governance costs are low enough."
+                  "text": "The criterion has two sequential conditions. First: does the activity impose a net wealth loss on external parties — those outside the transaction? This is ΔW_ext < 0 across all capital types. Second: is the brake cost-effective? The total cost of intervention — deadweight loss (Harberger triangle), enforcement cost, and expected regulatory capture risk — must not exceed |ΔW_ext|. Both conditions must hold for government to have objective standing to act."
                 }
               }
 <!-- FAQ-JSONLD-END -->
@@ -520,9 +520,8 @@
         .iwc-gloss strong { color: #e2e8f0; }
       }
 
-      /* IWC 2×2 verdict table. The four quadrants get distinct colors so the
-         reader can see at a glance: green = encourage, blue = leave alone,
-         amber = unusual, red = brake. */
+      /* IWC 2×2 verdict table. The four cells get distinct colors:
+         green/blue = leave alone, amber = cure worse than disease, red = brake. */
       table.iwc-2x2 { border-collapse: collapse; width: 100%; max-width: 720px; margin: 12px 0; font-size: 0.95em; }
       table.iwc-2x2 th, table.iwc-2x2 td {
         border: 1px solid #cfd8e3;
@@ -640,7 +639,7 @@
 
       /* Inclusive Wealth Criterion decision flowchart.
          Vertical spine pattern: the "continue" path runs straight down
-         (Q1 -> Q2 -> Q3 -> BRAKE); each "leave alone" exit branches
+         (Q1 -> Q2 -> BRAKE); each "leave alone" exit branches
          sideways via a short horizontal connector. Works at all widths. */
       .iwc-flow {
         display: flex;
@@ -942,15 +941,16 @@
       <aside aria-label="L’argument en trois temps" data-i18n-aria-label="aria.argument" style="margin: 18px 0 24px; padding: 16px 20px; background: rgba(255,255,255,0.04); border-left: 3px solid #f4d35e; border-radius: 6px; font-size: 0.96em; line-height: 1.55;">
         <!-- ARGUMENT-ASIDE:START -->
         <!-- i18n:prose.argument-aside:start -->
-<div style="font-size: 0.72em; font-weight: 700; letter-spacing: 0.12em; color: #f4d35e; margin-bottom: 8px;">L’ARGUMENT EN TROIS TEMPS</div>
+<div style="font-size: 0.72em; font-weight: 700; letter-spacing: 0.12em; color: #f4d35e; margin-bottom: 8px;">L'ARGUMENT EN TROIS TEMPS</div>
         <ol style="margin: 0; padding-left: 22px;">
-          <li style="margin-bottom: 6px;"><strong>L’État ralentit l’activité économique agrégée.</strong> Le
-            <a href="#armey-simulator" style="color:#90caf9;">simulateur</a> montre que la relation est monotonement négative — pas de point optimal de la courbe d’Armey entre 15 et 25 % du PIB.</li>
-          <li style="margin-bottom: 6px;"><strong>La question politique n’est donc pas &laquo; combien ? &raquo; — mais &laquo; pour quoi ? &raquo;</strong>
-            Si l’État est structurellement un frein, on ne le minimise pas, on le
-            <a href="#selective-brake" style="color:#90caf9;">cible</a>. Les freins sont utiles précisément parce qu’ils ralentissent.</li>
+          <li style="margin-bottom: 6px;"><strong>L'État ralentit l'activité économique agrégée.</strong> Le
+            <a href="#armey-simulator" style="color:#90caf9;">simulateur</a> montre que la relation est monotonement négative — pas de point optimal de la courbe d'Armey entre 15 et 25 % du PIB.</li>
+          <li style="margin-bottom: 6px;"><strong>La question politique n'est donc pas &laquo; combien ? &raquo; — mais &laquo; pour quoi ? &raquo;</strong>
+            Si l'État est structurellement un frein, on ne le minimise pas, on le
+            <a href="#selective-brake" style="color:#90caf9;">cible</a>. Les freins sont utiles précisément parce qu'ils ralentissent.</li>
           <li><strong>Ciblez-le selon une règle objective, pas selon les préférences.</strong> Le
-            <a href="#inclusive-wealth-criterion" style="color:#90caf9;">Critère de richesse inclusive</a> : freiner une activité uniquement si elle réduit la richesse inclusive <em>et</em> qu’une partie concernée n’a jamais consenti. Trois des quatre quadrants disent à l’État de ne rien faire.</li>
+            <a href="#inclusive-wealth-criterion" style="color:#90caf9;">Critère de richesse inclusive</a> : freiner une activité uniquement si elle impose une perte de richesse nette sur des parties externes ET que le frein est rentable.
+            Trois cellules sur quatre disent à l'État de ne rien faire.</li>
         </ol>
         <p style="margin: 10px 0 0; font-size: 0.88em; opacity: 0.8;">Raccourcis :
           <a href="#cut-gains-table" style="color:#90caf9;">Gain de croissance d'une coupe de 5 points</a> ·
@@ -3924,8 +3924,8 @@
           <h4 data-i18n="heading.whole-rule-2x2">La règle complète en un tableau 2×2</h4>
           <p>
             Before the formula, the verdict it produces. Two binary questions
-            decide every case: was consent present, and does inclusive wealth
-            grow or shrink?
+            decide every case: does the activity impose a net wealth loss on
+            parties outside the transaction, and is the brake cost-effective?
           </p>
           <!-- i18n:prose.iwc-2x2-table:start -->
           <div class="table-scroll">
@@ -3933,20 +3933,20 @@
               <thead>
                 <tr>
                   <th></th>
-                  <th>Consentement ✓ (toutes les parties ont accepté)</th>
-                  <th>Consentement ✗ (des tiers supportent le coût)</th>
+                  <th>Coût du frein &le; |&Delta;W<sub>ext</sub>|<br><span class="math-note">l'intervention est rentable</span></th>
+                  <th>Coût du frein &gt; |&Delta;W<sub>ext</sub>|<br><span class="math-note">le remède est pire que le mal</span></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>$\Delta W > 0$</strong><br><span class="math-note">la richesse augmente</span></td>
-                  <td class="iwc-q-encourage">Encourager / laisser faire — création de valeur volontaire</td>
-                  <td class="iwc-q-unusual">Rare ; investiguer pourquoi quelqu'un est lésé par une activité à bilan positif</td>
+                  <td><strong>$\Delta W_{\text{ext}} \geq 0$</strong><br><span class="math-note">aucun préjudice externe net</span></td>
+                  <td class="iwc-q-encourage">Laisser faire &mdash; aucune légitimité objective à agir</td>
+                  <td class="iwc-q-leave">Laisser faire &mdash; aucune légitimité objective à agir</td>
                 </tr>
                 <tr>
-                  <td><strong>$\Delta W < 0$</strong><br><span class="math-note">la richesse diminue</span></td>
-                  <td class="iwc-q-leave">Laisser faire — leur perte, leur choix (ex. hobby risqué)</td>
-                  <td class="iwc-q-brake">FREINER — le seul quadrant où le gouvernement a une légitimité objective</td>
+                  <td><strong>$\Delta W_{\text{ext}} < 0$</strong><br><span class="math-note">perte de richesse externe</span></td>
+                  <td class="iwc-q-brake">FREINER &mdash; la seule cellule où l'État a une légitimité objective</td>
+                  <td class="iwc-q-unusual">Laisser faire &mdash; les coûts du frein dépassent le dommage qu'il préviendrait</td>
                 </tr>
               </tbody>
             </table>
@@ -3954,14 +3954,12 @@
 <!-- /i18n:prose.iwc-2x2-table:end -->
           <!-- i18n:prose.iwc-formula-body:start -->
           <p>
-            Trois des quatre quadrants indiquent au gouvernement de ne rien faire.
-            Seul le coin inférieur droit justifie un frein. C'est une licence
+            Trois des quatre cellules indiquent au gouvernement de ne rien faire.
+            Seule la cellule inférieure gauche — une perte de richesse externe qu'un
+            frein rentable peut adresser — justifie une action. C'est une licence
             beaucoup plus étroite que « ce que veut l'électeur médian » &mdash;
             et beaucoup plus large que « le gouvernement ne devrait jamais agir ».
-            Le reste de cette section définit $\Delta W$ précisément, rend
-            &quot;le consentement&quot; non trivial, et ajoute une troisième
-            question (Q3) que le 2&times;2 ne peut pas capturer : le frein
-            lui-même est-il pire que le dommage ?
+            Le reste de cette section définit $\Delta W_{\text{ext}}$ précisément.
           </p>
 
           <h4 data-i18n="heading.formula-2x2">La formule derrière le tableau 2×2</h4>
@@ -3975,13 +3973,13 @@
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">1920 / 1960</div>
                 <div class="iwc-ped-name">Pigou &middot; Coase</div>
-                <div class="iwc-ped-tag">externalités &amp; consentement</div>
+                <div class="iwc-ped-tag">externalités &amp; transactions</div>
               </div>
               <div class="iwc-ped-arrow">&rarr;</div>
               <div class="iwc-ped-node">
                 <div class="iwc-ped-year">1962</div>
                 <div class="iwc-ped-name">Buchanan &amp; Tullock</div>
-                <div class="iwc-ped-tag">le consentement comme fondement politique</div>
+                <div class="iwc-ped-tag">coûts d'action collective en économie publique</div>
               </div>
             </div>
             <div class="iwc-ped-arrow iwc-ped-arrow-down">&darr;</div>
@@ -4024,9 +4022,7 @@
             <a href="https://econpapers.repec.org/article/aeaaecrev/v_3a67_3ay_3a1977_3ai_3a5_3ap_3a972-74.htm" target="_blank" rel="noopener">Hartwick (1977)</a>,
             <a href="https://www.aeaweb.org/articles?id=10.1257/0895330042162377" target="_blank" rel="noopener">Arrow, Dasgupta, M&auml;ler et al. (2004)</a>,
             <a href="https://www.gov.uk/government/publications/final-report-the-economics-of-biodiversity-the-dasgupta-review" target="_blank" rel="noopener">Dasgupta (2021)</a>.
-            La formule de richesse par prix fictifs ci-dessous suit Weitzman ; le
-            critère de frein filtré par le consentement est une synthèse originale &mdash;
-            chaque ingrédient a une source publiée, mais la règle unifiée n'est pas
+            Chaque ingrédient a une source publiée, mais la règle unifiée n'est pas
             énoncée dans un seul article.
           </p>
           <!-- IWC-PEDIGREE-END -->
@@ -4050,19 +4046,24 @@
             La croissance à long terme, honnêtement mesurée, est
             <span style="white-space:nowrap">$dW/dt > 0$</span>. Une activité est
             objectivement freinable si et seulement si elle réduit cette quantité
-            <em>pour les parties qui n'ont pas consenti à en supporter le coût</em> :
+            <em>pour les parties extérieures à la transaction</em> (celles qui
+            supportent un coût ou reçoivent un bénéfice sans avoir choisi de
+            s'engager), et seulement lorsque le frein lui-même est rentable :
           </p>
           <p class="iwc-eq">
             $$\text{Brake}(a) \iff \mathbb{E}\!\left[\sum_k p_k\,\Delta K_k^{(a)}\right] < 0$$
           </p>
-          <p class="iwc-eq-caption">(sur les parties qui n'ont pas consenti)</p>
+          <p class="iwc-eq-caption">(sommé sur les parties externes &mdash; celles extérieures à la transaction &mdash; et seulement si le coût du frein &le; |&Delta;W<sub>ext</sub>|)</p>
           <p class="iwc-gloss">
             <strong>En clair :</strong> appliquez le frein à l'activité $a$
             <em>si et seulement si</em> (« $\iff$ ») son effet <em>espéré</em>
             (« $\mathbb{E}$ ») sur la richesse totale, sommé sur chaque type de
-            capital, est négatif &mdash; en comptant uniquement les personnes qui
-            n'ont pas accepté d'en supporter le coût. $\Delta K_k^{(a)}$ signifie
+            capital, est négatif &mdash; en comptant uniquement les parties extérieures
+            à la transaction (celles qui supportent un coût ou reçoivent un bénéfice
+            sans avoir choisi de s'engager). $\Delta K_k^{(a)}$ signifie
             « la variation du capital de type $k$ causée par l'activité $a$ ».
+            Une seconde vérification (non montrée dans la formule) exige que le coût
+            du frein ne dépasse pas cette perte.
           </p>
 <!-- /i18n:prose.iwc-formula-body:end -->
           <details class="iwc-code" open>
@@ -4077,51 +4078,53 @@ const CAPITAL_KINDS = [
 ];
 
 // Should government brake activity `a`?
-// Returns true iff non-consenters lose inclusive wealth on net
+// Returns true iff external parties lose inclusive wealth on net (ΔW_ext &lt; 0)
 // and the brake itself is cost-effective.
 //
 // a = {
-//   affectedParties: [{ id, consented, shadowPrices: { [kind]: number } }],
+//   affectedParties: [{ id, external, shadowPrices: { [kind]: number } }],
 //   capitalDeltas:   { [kind]: { [partyId]: number } },
 //   deadweightLoss:  number,   // Harberger triangle estimate
 //   enforcementCost: number,   // budget cost of the brake
 //   captureRisk:     number,   // expected rent-seeking cost
 // }
+//
+// "external" means the party bears a cost or receives a benefit from the
+// activity without choosing to participate in it (standard economic definition
+// of an externality). Internal parties — those who voluntarily engaged — are
+// excluded from ΔW_ext regardless of whether they gain or lose.
 function shouldBrake(a) {
-  // Step 1: who is affected without having consented?
-  const nonConsenters = a.affectedParties.filter(p =&gt; !p.consented);
-  if (nonConsenters.length === 0) return false; // Q1: leave alone
-
-  // Step 2: sum (shadow price × capital change) over non-consenting parties.
-  // Uncertainty lives in the shadow prices; the sum itself is deterministic.
-  const expectedDeltaW = nonConsenters.reduce((total, p) =&gt;
+  // Q1: sum ΔW over external parties only.
+  // If no one is external, or external parties break even or gain, leave alone.
+  const externalParties = a.affectedParties.filter(p =&gt; p.external);
+  const deltaW_ext = externalParties.reduce((total, p) =&gt;
     total + CAPITAL_KINDS.reduce((s, k) =&gt;
       s + (p.shadowPrices?.[k] ?? 1) * (a.capitalDeltas?.[k]?.[p.id] ?? 0), 0), 0);
-  if (expectedDeltaW &gt;= 0) return false; // Q2: leave alone
+  if (deltaW_ext &gt;= 0) return false; // Q1: ΔW_ext ≥ 0 → leave alone
 
-  // Step 3: would the brake itself cost more than the damage?
+  // Q2: would the brake itself cost more than the external damage it prevents?
   const brakeCost = a.deadweightLoss + a.enforcementCost + a.captureRisk;
-  if (brakeCost &gt; -expectedDeltaW) return false; // Q3: cure worse than disease
+  if (brakeCost &gt; -deltaW_ext) return false; // Q2: cure worse than disease → leave alone
 
-  return true; // all three filters passed → BRAKE
+  return true; // both filters passed → BRAKE
 }
 
 // ── Assertions (truth-table style; throw on failure) ─────────────────────────
 function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 
 // Factory: one party affected only via "natural" capital (shadow price = 1).
-function activity(consented, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
+function activity(external, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
   return {
-    affectedParties: [{ id: "p", consented, shadowPrices: { natural: 1 } }],
+    affectedParties: [{ id: "p", external, shadowPrices: { natural: 1 } }],
     capitalDeltas: { natural: { p: naturalDelta } },
     deadweightLoss, enforcementCost, captureRisk,
   };
 }
 
-assert(shouldBrake(activity(true, -10, 0, 0, 0)) === false, "Q1: all consented → leave alone");
-assert(shouldBrake(activity(false, +10, 0, 0, 0)) === false, "Q2: non-consenter gains → leave alone");
-assert(shouldBrake(activity(false, -5, 3, 2, 1)) === false, "Q3: brake costs 6 &gt; damage 5 → leave alone");
-assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed → BRAKE");</code></pre>
+assert(shouldBrake(activity(false, -10, 0, 0, 0)) === false, "Q1: internal party only → leave alone");
+assert(shouldBrake(activity(true, +10, 0, 0, 0)) === false, "Q1: external party gains → leave alone");
+assert(shouldBrake(activity(true, -5, 3, 2, 1)) === false, "Q2: brake costs 6 &gt; damage 5 → leave alone");
+assert(shouldBrake(activity(true, -10, 1, 1, 1)) === true, "both filters passed → BRAKE");</code></pre>
           </details>
           <p data-i18n="prose.iwc-subsumes-p">Cette inégalité unique subsume les candidats standard pour « ce que
             le gouvernement devrait freiner » :</p>
@@ -4132,7 +4135,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                 <tr>
                   <th>Type d'activité</th>
                   <th>Quel $K_k$ diminue</th>
-                  <th>Comment le consentement fait défaut</th>
+                  <th>Pourquoi le coût est externe</th>
                 </tr>
               </thead>
               <tbody>
@@ -4142,7 +4145,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                     <em>pollution, congestion, risque systémique</em>
                   </td>
                   <td>air pur, infrastructures, stabilité financière</td>
-                  <td>les tiers n'ont jamais accepté de supporter le coût</td>
+                  <td>des tiers supportent le coût sans être dans la transaction</td>
                 </tr>
                 <tr>
                   <td>
@@ -4150,7 +4153,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                     <em>extraction au-delà de la régénération</em>
                   </td>
                   <td>$K_{\text{natural}}$, sans investissement compensatoire</td>
-                  <td>les générations futures absentes de la table (règle de Hartwick violée)</td>
+                  <td>les générations futures sont extérieures à la transaction (règle de Hartwick violée)</td>
                 </tr>
                 <tr>
                   <td>
@@ -4158,14 +4161,14 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                     <em>lobbying, capture réglementaire, piratage de brevets</em>
                   </td>
                   <td>$K_{\text{institutional}}$ s'érode ; $\sum p_k \Delta K_k < 0$ une fois cette érosion valorisée <span class="math-note">(les gains en capital produit sont plus que compensés par les pertes institutionnelles)</span></td>
-                  <td>processus capturé, pas d'échange volontaire</td>
+                  <td>processus capturé, pas d'échange volontaire ; les coûts tombent sur des outsiders</td>
                 </tr>
                 <tr>
                   <td>
                     <strong>Fraude, coercition, monopole par la force</strong>
                   </td>
                   <td>variable (institutionnel, produit, humain)</td>
-                  <td>consentement absent par définition</td>
+                  <td>les victimes sont externes à la transaction par définition</td>
                 </tr>
                 <tr>
                   <td>
@@ -4173,7 +4176,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                     <em>retraites par répartition financées par les travailleurs de demain</em>
                   </td>
                   <td>la créance de la jeune cohorte sur $\sum_k K_k$ <span class="math-note">(stock total de capital)</span></td>
-                  <td>les non-nés ne peuvent pas négocier le contrat</td>
+                  <td>les travailleurs non nés sont externes aux contrats négociés avant leur naissance</td>
                 </tr>
                 <tr>
                   <td>
@@ -4181,7 +4184,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
                     <em>prêts prédateurs, marketing trompeur</em>
                   </td>
                   <td>$K_{\text{human}}$ <span class="math-note">(capital humain)</span>, $K_{\text{produced}}$ <span class="math-note">(capital produit)</span> de la victime</td>
-                  <td>consentement nominal, pas éclairé</td>
+                  <td>la victime est externe : la désinformation lui a fait supporter des coûts qu'elle n'a pas sciemment acceptés</td>
                 </tr>
               </tbody>
             </table>
@@ -4191,21 +4194,19 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           À l'inverse, le critère <em>refuse</em> de condamner les activités
             qui sont simplement démodées, inefficaces ou mal aimées par les
             acteurs en place. Les choix de consommation d'adultes compétents
-            qui n'affectent qu'eux-mêmes laissent $\sum_k p_k \Delta K_k$ <span class="math-note">(variation de capital pondérée)</span> inchangé pour
-            les tiers non-consentants. Le critère est muet &mdash; ce qui est
+            qui n'affectent qu'eux-mêmes produisent $\Delta W_{\text{ext}} = 0$ &mdash; il
+            n'y a pas de parties externes. Le critère est muet &mdash; ce qui est
             exactement ce qu'une règle objective devrait faire là où aucun préjudice
             objectif n'existe.
         </p>
 
           <h4 data-i18n="heading.decision-in-sequence">La décision étape par étape</h4>
-          <p data-i18n="prose.decision-in-sequence">
-          Le 2×2 réduit le verdict à deux questions binaires, mais en omet une
+          <p data-i18n="prose.decision-in-sequence">Le 2×2 réduit le verdict à deux questions binaires, mais en omet une
             troisième que tout cadre honnête doit inclure : <em>le frein lui-même
             coûte-t-il plus que le préjudice qu’il prévient ?</em>
             L’action gouvernementale a son propre coût mort, ses frais d’exécution
             et son risque de captation. Le test complet comprend trois
-            vérifications séquentielles :
-        </p>
+            vérifications séquentielles :</p>
 
           <!-- IWC-FLOWCHART-START -->
           <div class="iwc-flow" role="img"
@@ -4219,32 +4220,14 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
                   <div class="iwc-q">Q1</div>
-                  <div>Des personnes affectées sans avoir consenti&nbsp;?</div>
-                </div>
-              </div>
-              <div class="iwc-exit" aria-label="Non : laisser faire" data-i18n-aria-label="aria.iwc-exit-no">
-                <span class="iwc-exit-label">Non</span>
-                <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Laisser faire</div>
-              </div>
-            </div>
-            <div class="iwc-spine">
-              <span class="iwc-spine-label">Oui</span>
-              <div class="iwc-arrow" aria-hidden="true"></div>
-            </div>
-
-            <div class="iwc-step">
-              <div class="iwc-step-main">
-                <div class="iwc-node iwc-decision">
-                  <div class="iwc-q">Q2</div>
-                  <div>$\sum_k p_k\,\Delta K_k$ pour les non-consentants</div>
-                  <div class="math-note" style="margin-top:3px">(somme de prix × variation du capital, par type de capital)</div>
+                  <div>$\Delta W_{\text{ext}} = \sum_k p_k\,\Delta K_k$ sur les parties externes</div>
+                  <div class="math-note" style="margin-top:3px">(variation de richesse pour les parties extérieures à la transaction)</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Supérieur ou égal à zéro : laisser faire" data-i18n-aria-label="aria.iwc-exit-zero">
                 <span class="iwc-exit-label">$\geq 0$</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Laisser faire</div>
+                <div class="iwc-node iwc-leave">Laisser faire &mdash; aucun préjudice externe</div>
               </div>
             </div>
             <div class="iwc-spine">
@@ -4255,14 +4238,14 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             <div class="iwc-step">
               <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
-                  <div class="iwc-q">Q3</div>
-                  <div>Le coût du frein (perte sèche, application, capture) dépasse-t-il le dommage de Q2&nbsp;?</div>
+                  <div class="iwc-q">Q2</div>
+                  <div>Le coût du frein (perte sèche, application, capture) dépasse-t-il |&Delta;W<sub>ext</sub>|&nbsp;?</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Oui : laisser faire" data-i18n-aria-label="aria.iwc-exit-yes">
                 <span class="iwc-exit-label">Oui</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Laisser faire</div>
+                <div class="iwc-node iwc-leave">Laisser faire &mdash; le remède est pire que le mal</div>
               </div>
             </div>
             <div class="iwc-spine">
@@ -4276,29 +4259,28 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <!-- IWC-FLOWCHART-END -->
 
           <p data-i18n="prose.iwc-q3-implicit">
-          Q3 est l’étape que la section a jusqu’ici laissée implicite. Elle importe
-            parce que de nombreuses activités échouent à Q1 et Q2 mais seraient
-            tout de même <em>aggravées</em> par une intervention &mdash; soit parce que
-            le mécanisme de frein lui-même est susceptible d’être capturé (mode
-            d’échec Q3 n° 1), soit parce que le remède coûte plus que le mal
-            (mode d’échec Q3 n° 2). Le critère n’autorise donc l’action que
-            lorsque les trois filtres sont validés.
+          Q2 est l'étape que la plupart des analyses politiques ignorent. Elle importe
+            parce que de nombreuses activités produisent un $\Delta W_{\text{ext}}$ négatif
+            mais seraient tout de même <em>aggravées</em> par une intervention &mdash; soit parce que
+            le mécanisme de frein est susceptible d'être capturé (mode d'échec Q2 n° 1),
+            soit parce que les coûts d'application dépassent le dommage (mode d'échec Q2 n° 2).
+            Le critère n'autorise l'action que lorsque les deux filtres sont validés.
         </p>
           <p data-i18n="prose.iwc-q3-qualitative">
-          Q3 est le plus qualitatif des trois, et il vaut la peine de le
-            souligner. La perte sèche dispose d’un estimateur classique (les
-            triangles de Harberger), le coût d’exécution a une ligne budgétaire,
-            mais le <em>risque de capture</em> &mdash; la probabilité que l’instrument
-            de frein soit détourné au profit de l’intérêt même qu’il était censé
+          Q2 est le plus qualitatif des deux, et il vaut la peine de le
+            souligner. La perte sèche dispose d'un estimateur classique (les
+            triangles de Harberger), le coût d'application a une ligne budgétaire,
+            mais le <em>risque de capture</em> &mdash; la probabilité que l'instrument
+            de frein soit détourné au profit de l'intérêt même qu'il était censé
             contraindre &mdash; est réellement difficile à chiffrer. La littérature
             sur la capture réglementaire
             (<a href="https://doi.org/10.2307/3003160" target="_blank" rel="noopener">Stigler 1971</a> ;
             <a href="https://doi.org/10.1093/oxrep/grj013" target="_blank" rel="noopener">Dal B&oacute; 2006</a>)
-            décrit le mécanisme mais n’offre pas de formule consensuelle. En
-            pratique, Q3 fonctionne comme un disjoncteur : si un secteur a de
+            décrit le mécanisme mais n'offre pas de formule consensuelle. En
+            pratique, Q2 fonctionne comme un disjoncteur : si un secteur a de
             solides antécédents de capture de son régulateur, relevez le seuil de
             preuve pour les nouveaux freins dans ce secteur ; sinon, traitez les
-            composantes de perte sèche et de coût d’exécution comme la partie
+            composantes de perte sèche et de coût d'application comme la partie
             contraignante du test.
         </p>
 
@@ -4309,43 +4291,40 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <strong>Une subvention au charbon.</strong>
             $\Delta K_{\text{naturel}} < 0$ (émissions, réserves épuisées) ;
             $\Delta K_{\text{humain}} < 0$ (dommages respiratoires pour les
-            populations sous le vent, qui n'ont jamais consenti) ; $\Delta K_{\text{produit}} > 0$
+            populations sous le vent, externes à la transaction) ; $\Delta K_{\text{produit}} > 0$
             (électricité moins chère, à court terme) ; $\Delta K_{\text{institutionnel}} < 0$
             (l'appareil de lobbying qui maintient la subvention érode lui-même
-            la neutralité de l'état de droit). Net : $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(perte de richesse pondérée)</span> pour
-            les parties non-consentantes. <strong>Verdict : freiner.</strong>
+            la neutralité de l'état de droit). Net : $\Delta W_{\text{ext}} < 0$ <span class="math-note">(perte de richesse externe)</span>.
+            <strong>Verdict : freiner.</strong>
         </p>
           <p data-i18n="prose.worked-example-grant-p">
-          
-            <strong>Une subvention à la recherche fondamentale.</strong> Le
+          <strong>Une subvention à la recherche fondamentale.</strong> Le
             cas est plus difficile que la subvention au charbon et mérite
             l'honnêteté. $\Delta K_{\text{savoir}} > 0$ (les résultats
             entrent dans le domaine public avec des effets de débordement
             positifs) ; $\Delta K_{\text{humain}} > 0$ (chercheurs
             formés) ; mais $\Delta K_{\text{produit}} < 0$ pour les
-            contribuables, qui financent la subvention par des transferts
-            contraints sans avoir été consultés ligne par ligne. C'est un
-            coût Q1 réel &mdash; le critère ne le neutralise pas parce que
-            la dotation a été votée. Le verdict dépend donc de Q2 :
-            l'espérance de $\sum_k p_k \Delta K_k$ sur les parties non
-            consentantes est-elle positive nette ? Pour la recherche
+            contribuables, qui sont des parties externes (ils financent la
+            subvention par des transferts contraints sans être participants
+            à la transaction de recherche). Le verdict dépend donc de Q1 :
+            $\Delta W_{\text{ext}}$ est-il négatif net ? Pour la recherche
             fondamentale, dont les retombées sont larges et non rivales, le
             gain de connaissance qui revient ensuite <em>aux mêmes
             contribuables</em> (médicaments moins chers, meilleurs matériaux,
             méthodes du domaine public) excède typiquement le coût fiscal par
-            tête &mdash; l'<em>activité</em> franchit donc Q2 et le critère
+            tête &mdash; donc $\Delta W_{\text{ext}} \geq 0$ et le critère
             renonce à la freiner. <strong>Verdict : ne pas freiner
             l'activité, mais le mécanisme de financement reste un coût réel
             que l'activité doit rembourser sous forme de retombées.</strong>
             Les subventions étroitement captées dont les retombées ne
             profitent qu'au bénéficiaire (subventions sectorielles
             spécifiques, infrastructures de ville-entreprise) ne remboursent
-            pas et échoueraient à Q2.
+            pas et échoueraient à Q1.
         </p>
           <p data-i18n="prose.worked-example-notice-p">
           Remarquez ce que le test n'a pas exigé : un vote, une intuition morale
             ou une opinion sur la politique énergétique. Il a seulement requis
-            de comptabiliser les effets sur le capital et de vérifier la colonne du consentement.
+            de comptabiliser les effets sur le capital pour les parties externes.
         </p>
 
           <p data-i18n="prose.dasgupta-reference-p">
@@ -4358,8 +4337,8 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             <a href="https://www.worldbank.org/en/publication/changing-wealth-of-nations" target="_blank" rel="noopener"><em>Changing Wealth of Nations</em> 2021 de la Banque mondiale</a>).
             Passés au crible IWC : $\Delta K_{\text{produit}} > 0$,
             mais $\Delta K_{\text{naturel}} \ll 0$ pour les parties
-            &mdash; générations futures, écosystèmes en aval &mdash; qui n'ont
-            jamais consenti à cet échange. Que
+            &mdash; générations futures, écosystèmes en aval &mdash; qui sont
+            externes à l'échange. Que
             $\sum_k p_k\,\Delta K_k$ soit globalement positif ou négatif
             dépend des prix d'ombre, ce qui est exactement ce que le Rapport Dasgupta affirme
             avoir omis de la comptabilité PIB standard. Le critère
@@ -4370,61 +4349,54 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             mesure une colonne d'un grand livre en faisant semblant que les autres n'existent pas.
         </p>
 
-          <h4 data-i18n="heading.what-consent-means">Ce que signifie réellement le « consentement » ici</h4>
-          <p data-i18n="prose.consent-intro-p">
-          &quot;Les parties affectées ont-elles consenti ?&quot; est l'étape du critère
-            la plus facilement abusée, car pour toute externalité suffisamment large
-            la réponse est trivialement &quot;non, le public qui respire l'air
-            n'a jamais signé de formulaire.&quot; Le filtre ne fait vraiment son travail
-            que lorsqu'il distingue l'échec <em>structurel</em> du consentement de
-            la plainte rhétorique :
-        </p>
+          <h4 data-i18n="heading.what-consent-means">Ce que signifie réellement « externe » ici</h4>
+          <p data-i18n="prose.consent-intro-p">&quot;Parties externes&quot; désigne celles qui supportent un coût ou reçoivent
+            un bénéfice d'une activité sans avoir choisi d'y participer.
+            C'est la définition économique standard d'une externalité. La
+            frontière importe parce que le critère est muet sur les préjudices
+            qui ne touchent que des participants volontaires &mdash; leur variation de
+            richesse est réelle, mais c'est leur choix de la supporter. Trois cas
+            valent la peine d'être distingués :</p>
           <ul data-i18n="list.consent-types">
-            
-            <li>
-              <strong>Échec de consentement avéré</strong> (Q1 = oui) : la
-              partie lésée est identifiable, n'a pas volontairement accepté
-              de supporter le coût en question, et les coûts de transaction
-              rendent la négociation individuelle impraticable. Trois familles
-              de cas : les externalités classiques (pollution sous le vent,
-              risque systémique transféré au fonds de garantie des dépôts), la
-              fraude envers une contrepartie, et les
-              <strong>transferts contraints</strong> &mdash; impôts,
-              conscription, expropriation &mdash; où la partie qui contribue
-              n'a jamais volontairement consenti à l'usage particulier de ses
-              ressources. La représentation agrège des préférences sur des
-              candidats ; elle ne transmet pas le consentement individuel sur
-              chaque mesure que l'organe élu adopte ensuite. Le critère traite
-              le financement contraint comme un coût Q1 réel, pas comme une
-              note de bas de page procédurale.
+                        <li>
+              <strong>Clairement externe</strong> : la partie lésée est
+              identifiable et n'a pas participé à la transaction du tout.
+              Les externalités classiques (pollution sous le vent, risque
+              systémique transféré au fonds de garantie des dépôts), la
+              fraude contre des contreparties, et les <strong>transferts
+              contraints</strong> &mdash; impôts, conscription, expropriation
+              &mdash; où la partie contributrice n'était pas un acteur
+              volontaire à l'utilisation particulière de ses ressources.
+              Le critère les traite comme de véritables coûts externes.
             </li>
             <li>
-              <strong>Consentement constructif</strong> (Q1 = non) : la
-              partie est librement entrée dans un arrangement qui intègre le
-              coût &mdash; un pool d'assurance dont les primes financent les
-              indemnisations, un code de déontologie accepté à l'entrée dans
-              une profession, un club dont les cotisations financent le
-              local, un contrat privé dont les termes ont été négociés. Le
-              trait déterminant est le caractère volontaire au moment de
-              l'adhésion : une personne qui peut refuser l'arrangement et s'en
-              aller a consenti à ses coûts.
+              <strong>Clairement interne</strong> : la partie est librement
+              entrée dans un arrangement qui intègre le coût &mdash; un pool
+              d'assurance dont les primes financent les indemnisations, un
+              code de conduite professionnel accepté à l'entrée, un club dont
+              les cotisations financent le local, un contrat privé dont les
+              termes ont été négociés. Le trait déterminant est la
+              participation volontaire : une personne qui pourrait refuser et
+              partir est une partie interne. Ses variations de richesse
+              n'entrent pas dans $\Delta W_{\text{ext}}$.
             </li>
             <li>
-              <strong>« Non-consentement » rhétorique</strong> : perdre un
-              vote sur une règle d'application générale qui n'impose aucun
-              coût contraint au plaignant, ou préférer un autre résultat
-              politique habillé en signature manquante. Le critère rejette
-              délibérément ces cas &mdash; sinon chaque perdant d'élection
-              aurait licence à freiner. La question pertinente est de savoir
-              si un coût réel est porté sans accord volontaire, pas de savoir
-              si le plaignant approuve le résultat.
+              <strong>Frontière contestée</strong> : un électeur qui perd sur
+              une ligne budgétaire, une génération future affectée par les
+              choix d'investissement d'aujourd'hui, un animal ou un
+              écosystème qui ne peut pas transiger du tout. Le critère exige
+              une convention ici &mdash; la standard est de traiter les
+              générations futures comme externes (d'où Hartwick) et les
+              écosystèmes non transactants comme externes via leurs prix
+              d'ombre sur $K_{\text{naturel}}$. Ce sont des valeurs par défaut
+              raisonnables, pas des dérivations.
             </li>
           </ul>
           <p data-i18n="prose.consent-coase-p">La lecture de Coase (1960) se prolonge : lorsque les coûts de transaction
-            sont faibles et que les parties sont identifiables, le consentement peut être atteint
-            en privé et Q1 échoue &mdash; le critère reste silencieux.
-            L'intervention pigouvienne n'est autorisée que lorsque la négociation est
-            structurellement impossible, pas simplement peu attrayante.</p>
+            sont faibles et que les parties sont identifiables, les externalités peuvent être
+            résolues en privé et $\Delta W_{\text{ext}} = 0$ &mdash; le critère reste
+            silencieux. L'intervention pigouvienne n'est autorisée que lorsque la
+            résolution privée est structurellement impossible, pas simplement peu attrayante.</p>
 
           <h4 data-i18n="heading.hard-cases">Les cas difficiles (où le critère est vraiment ambigu)</h4>
           <p data-i18n="prose.hard-cases-intro-p">Un cadre honnête nomme les cas qu'il ne résout pas clairement.
@@ -4440,23 +4412,23 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             <li>
               <strong>Comportement risqué volontaire avec externalités sociales.</strong>
               Tabac, moto sans casque, drogues récréatives.
-              Le consentement est partiel : l'utilisateur a accepté, le budget des urgences
-              n'a pas consenti. Le critère dit de freiner la partie externalité (par exemple
-              la tarification de l'assurance) <em>pas</em> l'activité elle-même.
+              L'utilisateur est une partie interne ; le budget des urgences est
+              externe. Le critère dit de freiner la partie externe (par exemple
+              la tarification d'assurance reflétant le risque réel) <em>pas</em>
+              l'activité elle-même.
             </li>
             <li>
               <strong>Activité frontière à haute variance.</strong> Recherche gain-de-fonction,
               géo-ingénierie non testée, nouveaux instruments financiers.
               L'opérateur d'espérance $\mathbb{E}$ est important : le risque de queue pour
-              les parties non-consentantes peut dominer même lorsque l'estimation centrale
-              de $\Delta W$ est positive. Le critère soutient
-              une précaution proportionnelle à la taille de la queue non-consentie.
+              les parties externes peut dominer même lorsque l'estimation centrale
+              de $\Delta W_{\text{ext}}$ est positive. Le critère soutient
+              une précaution proportionnelle à la taille de la queue externe.
             </li>
             <li>
               <strong>Effets sur les personnes à naître.</strong> Toute décision à long terme
-              manque techniquement du consentement de personnes qui n'existent pas encore.
-              Le critère doit tracer une ligne &mdash; généralement en
-              traitant les personnes à naître comme représentées par le taux d'actualisation $\rho$
+              affecte des personnes qui n'existent pas encore. Le critère les traite
+              comme des parties externes, représentées par le taux d'actualisation $\rho$
               et par une obligation de laisser $W$ non-décroissant (Hartwick).
               C'est une convention, pas une dérivation, et des gens de bonne foi
               sont en désaccord sur $\rho$.
@@ -4467,9 +4439,9 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <ul data-i18n="list.genuinely-objective">
             <li>
               <strong>L'objectivité du signe est robuste.</strong> Même quand les prix
-              d'ombre $p_k$ sont incertains, la <em>direction</em> de $\Delta W$
+              d'ombre $p_k$ sont incertains, la <em>direction</em> de $\Delta W_{\text{ext}}$
               est souvent non ambiguë : un monopole polluant subventionné réduit
-              presque chaque $K_k$ à la fois.
+              presque chaque $K_k$ pour les outsiders à la fois.
             </li>
             <li>
               <strong>Il ne nécessite pas de jugements de valeur sur
@@ -4516,21 +4488,16 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               <a href="https://www.aeaweb.org/articles?id=10.1257/jel.45.3.686" target="_blank" rel="noopener">Nordhaus 2007</a>).
             </li>
             <li>
-              Les limites du consentement pour les personnes à naître et les inconscientes nécessitent une
-              convention.
-            </li>
-            <li>
-              Le filtre du consentement lui-même est un raffinement théorique, pas partie
-              d'aucun compte de richesse publié.
+              La frontière entre les parties internes et externes nécessite une
+              convention pour les cas contestés (générations futures, écosystèmes,
+              publics diffus).
             </li>
             <li>
               <strong>Le critère est muet sur la distribution au sein de
-              l'ensemble consentant.</strong> Deux politiques avec $\Delta W$ identique
-              peuvent avoir des profils d'équité très différents, et le test les
-              classera comme équivalentes. La richesse inclusive répond à &quot;le
-              gâteau grossit-il pour ceux qui n'ont pas consenti à supporter des coûts ?&quot;,
-              pas &quot;le gâteau est-il découpé équitablement entre ceux qui l'ont fait.&quot;
-              Cette deuxième question nécessite un outil différent.
+              l'ensemble interne.</strong> Deux politiques avec $\Delta W_{\text{ext}}$ identique
+              peuvent avoir des profils d'équité très différents parmi les participants,
+              et le test les classera comme équivalentes. Cette deuxième question
+              nécessite un outil différent.
             </li>
           </ul>
           <p data-i18n="prose.objectivity-leaks-conclusion-p">
@@ -4538,7 +4505,7 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
             Deux analystes honnêtes utilisant la richesse inclusive peuvent être en désaccord
             sur les magnitudes de manière substantielle &mdash; le fossé Stern&ndash;Nordhaus
             sur le coût social du carbone couvre environ un ordre de magnitude
-            &mdash; mais ils seront d'accord sur le <em>signe</em> de $\Delta W$ pour
+            &mdash; mais ils seront d'accord sur le <em>signe</em> de $\Delta W_{\text{ext}}$ pour
             la plupart des cas, ce qui est ce que le test de frein requiert réellement. Deux
             analystes utilisant « ce qui est bon pour la société » peuvent être en désaccord à l'infini
             et sur le signe aussi.
@@ -4547,8 +4514,8 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <h4 data-i18n="heading.policy-rule">La règle de politique publique qui en découle</h4>
           <p data-i18n="prose.policy-rule-quote-p" style="border-left:4px solid #007bff; padding-left:1em; font-style:italic">
           Les dépenses publiques devraient être ciblées sur les activités où
-            $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(le capital pondéré diminue)</span> pour les parties non-consentantes &mdash;
-            les activités qui réduisent la base de capital inclusive &mdash; et
+            $\sum_k p_k \Delta K_k < 0$ <span class="math-note">(le capital pondéré diminue)</span> pour les parties externes &mdash;
+            les activités qui réduisent la base de capital inclusive des outsiders &mdash; et
             retirées des activités où il est positif.
             <br /><strong>Ne pas taxer la production ; taxer l'épuisement.</strong>
         </p>
@@ -4606,14 +4573,8 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
               le travail et le capital, le critère échoue.
             </li>
             <li>
-              Si le filtre du consentement signalait systématiquement des activités que
-              les mesures de bien-être indépendantes (espérance de vie, migration par les préférences révélées,
-              bien-être subjectif) montraient être nettes-positives pour
-              les parties affectées, le terme de consentement est mal spécifié.
-            </li>
-            <li>
               Si l'incertitude des prix d'ombre s'avérait inverser le <em>signe</em>
-              de $\Delta W$ <span class="math-note">(variation de la richesse totale)</span> (pas seulement sa magnitude) pour la plupart des
+              de $\Delta W_{\text{ext}}$ <span class="math-note">(variation de la richesse externe)</span> (pas seulement sa magnitude) pour la plupart des
               activités pertinentes pour les politiques, le critère perdrait sa revendication
               à l'objectivité du signe.
             </li>
@@ -4629,14 +4590,14 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <p>
             Le critère rend un verdict par <em>action</em>. Le transposer à
             des gouvernements entiers est direct : la légitimité d'un régime
-            est la part de ses actes coercitifs qui franchissent les trois
+            est la part de ses actes coercitifs qui franchissent les deux
             filtres. Un gouvernement qui freine la pollution, la fraude,
             l'épuisement des ressources et le risque systémique utilise son
-            instrument dans le quadrant que le critère autorise. Un
-            gouvernement qui freine des échanges consentis, le travail
+            instrument dans la cellule que le critère autorise. Un
+            gouvernement qui freine des échanges volontaires, le travail
             productif ou la consommation pacifique entre adultes compétents
-            utilise le même instrument contre le mauvais quadrant &mdash; pied
-            sur la pédale de frein là où il devrait être levé.
+            applique le frein là où $\Delta W_{\text{ext}} \geq 0$ &mdash;
+            pied sur la pédale de frein là où il devrait être levé.
           </p>
 <!-- /i18n:prose.legitimacy-section:end -->
 
@@ -6107,22 +6068,25 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
           <details>
             <summary data-i18n="faq.9.q">Si les dépenses publiques freinent toujours la croissance, que devrait réellement faire l'État ?</summary>
           <!-- i18n:faq.9.html:start -->
-<p>
-              La courbe empirique répond à <em>combien</em> mais pas à
-              <em>pour quoi</em>. L'article propose une règle à deux conditions :
-              le gouvernement ne doit freiner une activité que lorsque (1) elle
-              réduit la <strong>richesse inclusive</strong> &mdash; la valeur
-              actualisée de tous les stocks de capital productif : produit,
-              humain, naturel, de connaissance et institutionnel &mdash; et (2)
-              une partie affectée n'a <strong>jamais consenti</strong> à
-              supporter le coût. Les activités satisfaisant les deux conditions
-              sont de véritables externalités négatives : pollution, épuisement
-              des ressources au-delà des taux de régénération, risque financier
-              systémique. Les activités qui échouent à l'une ou l'autre condition
-              &mdash; transactions consensuelles, innovations créatrices de
-              richesse, ou choix de mode de vie ne nuisant qu'au choix lui-même
-              &mdash; sont hors du champ du critère.
-            </p>
+          <p>
+                        La courbe empirique répond à <em>combien</em> mais pas à
+                        <em>pour quoi</em>. L'article propose une règle à deux conditions :
+                        le gouvernement ne doit freiner une activité que lorsque (1) elle
+                        impose une perte de richesse nette sur des
+                        <strong>parties externes</strong> &mdash; celles qui supportent un
+                        coût sans être participantes à la transaction &mdash; sommée sur
+                        tous les types de capital (produit, humain, naturel, savoir,
+                        institutionnel), et (2) le frein lui-même est
+                        <strong>rentable</strong> (perte sèche, coût d'application et risque
+                        de capture réglementaire ensemble inférieurs au dommage). Les
+                        activités satisfaisant les deux conditions sont de véritables
+                        externalités négatives : pollution, épuisement des ressources
+                        au-delà des taux de régénération, risque financier systémique. Les
+                        activités qui échouent à l'une ou l'autre condition &mdash;
+                        transactions internes, innovations créatrices de richesse, ou choix
+                        de mode de vie ne produisant aucun préjudice externe &mdash; sont
+                        hors du champ du critère.
+                      </p>
 <!-- /i18n:faq.9.html:end -->
           </details>
           <details>
@@ -6145,41 +6109,39 @@ assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed 
 <!-- /i18n:faq.10.html:end -->
           </details>
           <details>
-            <summary data-i18n="faq.11.q">Que montre le diagramme en quadrants 2×2 ?</summary>
+            <summary data-i18n="faq.11.q">Que montre le diagramme 2×2 ?</summary>
           <!-- i18n:faq.11.html:start -->
-<p>
-              Deux questions binaires &mdash; toutes les parties affectées
-              ont-elles consenti ? la richesse inclusive augmente-t-elle ou
-              diminue-t-elle ? &mdash; produisent quatre quadrants. Trois des
-              quatre disent à l'État de ne rien faire : consensuel et
-              enrichissant (encourager ou laisser faire) ; consensuel et
-              appauvrissant (laisser faire &mdash; leur perte, leur choix) ;
-              non consensuel et enrichissant (rare ; investiguer mais ne pas
-              freiner par réflexe). Seul le quatrième quadrant &mdash;
-              non consensuel et appauvrissant &mdash; donne à l'État une
-              légitimité objective pour agir. C'est un mandat bien plus étroit
-              que &ldquo;ce que veut l'électeur médian&rdquo; et bien plus large
-              que &ldquo;l'État ne devrait jamais agir.&rdquo;
-            </p>
+          <p>
+                        Deux questions binaires produisent quatre cellules : y a-t-il une
+                        perte de richesse nette pour les parties extérieures à la transaction
+                        ($\Delta W_{\text{ext}} < 0$) ? et le frein est-il rentable
+                        (coût du frein &le; |&Delta;W<sub>ext</sub>|) ?
+                        Trois des quatre cellules disent à l'État de ne rien faire. Seule
+                        la cellule où les parties externes perdent de la richesse nette ET
+                        où le frein est rentable donne à l'État une légitimité objective pour
+                        agir. C'est un mandat bien plus étroit que &ldquo;ce que veut
+                        l'électeur médian&rdquo; et bien plus large que &ldquo;l'État ne
+                        devrait jamais agir.&rdquo;
+                      </p>
 <!-- /i18n:faq.11.html:end -->
           </details>
           <details>
-            <summary data-i18n="faq.12.q">Le critère ajoute-t-il une troisième condition au-delà de la richesse et du consentement ?</summary>
+            <summary data-i18n="faq.12.q">Quelles sont les deux conditions du critère ?</summary>
           <!-- i18n:faq.12.html:start -->
-<p>
-              Oui. Même lorsque les deux conditions sont réunies &mdash; la
-              richesse diminue, le consentement est absent &mdash; l'État devrait
-              tout de même s'abstenir si le frein lui-même coûte plus que le
-              dommage qu'il prévient. Le troisième filtre additionne la perte
-              sèche (le triangle de Harberger), le coût d'application et le
-              risque attendu de capture réglementaire, et compare ce total à
-              l'ampleur de la perte de richesse. Si
-              <code>coûtFrein &gt; |&Delta;W|</code>, le remède est pire que le
-              mal. C'est le correctif standard de l'école des choix publics :
-              les taxes pigouviennes et la négociation coasienne ne dominent les
-              marchés non réglementés que lorsque les coûts de transaction et de
-              gouvernance sont suffisamment faibles pour les rendre réalisables.
-            </p>
+          <p>
+                        Le critère a deux conditions séquentielles. Première : l'activité
+                        impose-t-elle une perte de richesse nette sur des parties externes
+                        &mdash; celles extérieures à la transaction (parties qui supportent
+                        un coût sans avoir choisi de participer) ? Cela se mesure comme
+                        $\Delta W_{\text{ext}} < 0$ sur tous les types de capital. Si
+                        oui, deuxième : le frein est-il rentable ? Le coût total de
+                        l'intervention &mdash; perte sèche (le triangle de Harberger),
+                        coût d'application et risque attendu de capture réglementaire &mdash;
+                        doit être inférieur à l'ampleur de la perte de richesse externe. Si
+                        <code>coûtFrein &gt; |&Delta;W<sub>ext</sub>|</code>, le remède est
+                        pire que le mal. Les deux conditions doivent être réunies pour que
+                        l'État ait une légitimité objective à agir.
+                      </p>
 <!-- /i18n:faq.12.html:end -->
           </details>
 <!-- FAQ-DETAILS-END -->

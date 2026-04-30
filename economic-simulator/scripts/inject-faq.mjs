@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // scripts/inject-faq.mjs
-// Reads faq-data.mjs and splices both the JSON-LD block and the visible
+// Reads armey-curve.en.json and splices both the JSON-LD block and the visible
 // <details> block into armey-curve.html at the anchor comments it manages.
 //
 // Anchor comments (must be present in armey-curve.html):
@@ -12,11 +12,21 @@
 import { readFileSync, writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
-import { FAQ } from "../faq-data.mjs";
 
 const __dir = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dir, "..");
 const htmlSrc = resolve(root, "armey-curve.html");
+
+// ── 0. Load FAQ array from locale JSON ───────────────────────────────────────
+const enJson = JSON.parse(readFileSync(resolve(root, "armey-curve.en.json"), "utf8"));
+const FAQ = [];
+for (let i = 0; enJson[`faq.${i}.q`] !== undefined; i++) {
+  FAQ.push({
+    q: enJson[`faq.${i}.q`],
+    jsonA: enJson[`faq.${i}.jsonA`],
+    html: enJson[`faq.${i}.html`],
+  });
+}
 
 // ── 1. Build JSON-LD mainEntity array ─────────────────────────────────────────
 function buildJsonLd() {
@@ -100,5 +110,5 @@ if (html === original) {
   console.log("armey-curve.html FAQ is already up to date.");
 } else {
   writeFileSync(htmlSrc, html, "utf8");
-  console.log("armey-curve.html FAQ updated from faq-data.mjs.");
+  console.log("armey-curve.html FAQ updated from armey-curve.en.json.");
 }

@@ -8,48 +8,50 @@ const CAPITAL_KINDS = [
 ];
 
 // Should government brake activity `a`?
-// Returns true iff non-consenters lose inclusive wealth on net
+// Returns true iff external parties lose inclusive wealth on net (ΔW_ext < 0)
 // and the brake itself is cost-effective.
 //
 // a = {
-//   affectedParties: [{ id, consented, shadowPrices: { [kind]: number } }],
+//   affectedParties: [{ id, external, shadowPrices: { [kind]: number } }],
 //   capitalDeltas:   { [kind]: { [partyId]: number } },
 //   deadweightLoss:  number,   // Harberger triangle estimate
 //   enforcementCost: number,   // budget cost of the brake
 //   captureRisk:     number,   // expected rent-seeking cost
 // }
+//
+// "external" means the party bears a cost or receives a benefit from the
+// activity without choosing to participate in it (standard economic definition
+// of an externality). Internal parties — those who voluntarily engaged — are
+// excluded from ΔW_ext regardless of whether they gain or lose.
 function shouldBrake(a) {
-  // Step 1: who is affected without having consented?
-  const nonConsenters = a.affectedParties.filter(p => !p.consented);
-  if (nonConsenters.length === 0) return false; // Q1: leave alone
-
-  // Step 2: sum (shadow price × capital change) over non-consenting parties.
-  // Uncertainty lives in the shadow prices; the sum itself is deterministic.
-  const expectedDeltaW = nonConsenters.reduce((total, p) =>
+  // Q1: sum ΔW over external parties only.
+  // If no one is external, or external parties break even or gain, leave alone.
+  const externalParties = a.affectedParties.filter(p => p.external);
+  const deltaW_ext = externalParties.reduce((total, p) =>
     total + CAPITAL_KINDS.reduce((s, k) =>
       s + (p.shadowPrices?.[k] ?? 1) * (a.capitalDeltas?.[k]?.[p.id] ?? 0), 0), 0);
-  if (expectedDeltaW >= 0) return false; // Q2: leave alone
+  if (deltaW_ext >= 0) return false; // Q1: ΔW_ext ≥ 0 → leave alone
 
-  // Step 3: would the brake itself cost more than the damage?
+  // Q2: would the brake itself cost more than the external damage it prevents?
   const brakeCost = a.deadweightLoss + a.enforcementCost + a.captureRisk;
-  if (brakeCost > -expectedDeltaW) return false; // Q3: cure worse than disease
+  if (brakeCost > -deltaW_ext) return false; // Q2: cure worse than disease → leave alone
 
-  return true; // all three filters passed → BRAKE
+  return true; // both filters passed → BRAKE
 }
 
 // ── Assertions (truth-table style; throw on failure) ─────────────────────────
 function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 
 // Factory: one party affected only via "natural" capital (shadow price = 1).
-function activity(consented, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
+function activity(external, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
   return {
-    affectedParties: [{ id: "p", consented, shadowPrices: { natural: 1 } }],
+    affectedParties: [{ id: "p", external, shadowPrices: { natural: 1 } }],
     capitalDeltas: { natural: { p: naturalDelta } },
     deadweightLoss, enforcementCost, captureRisk,
   };
 }
 
-assert(shouldBrake(activity(true, -10, 0, 0, 0)) === false, "Q1: all consented → leave alone");
-assert(shouldBrake(activity(false, +10, 0, 0, 0)) === false, "Q2: non-consenter gains → leave alone");
-assert(shouldBrake(activity(false, -5, 3, 2, 1)) === false, "Q3: brake costs 6 > damage 5 → leave alone");
-assert(shouldBrake(activity(false, -10, 1, 1, 1)) === true, "all filters passed → BRAKE");
+assert(shouldBrake(activity(false, -10, 0, 0, 0)) === false, "Q1: internal party only → leave alone");
+assert(shouldBrake(activity(true, +10, 0, 0, 0)) === false, "Q1: external party gains → leave alone");
+assert(shouldBrake(activity(true, -5, 3, 2, 1)) === false, "Q2: brake costs 6 > damage 5 → leave alone");
+assert(shouldBrake(activity(true, -10, 1, 1, 1)) === true, "both filters passed → BRAKE");

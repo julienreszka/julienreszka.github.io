@@ -144,10 +144,10 @@ const HEADINGS = [
   },
   {
     key: "heading.what-consent-means",
-    old: `<h4>What &quot;consent&quot; actually means here</h4>`,
-    new_: `<h4 data-i18n="heading.what-consent-means">What &quot;consent&quot; actually means here</h4>`,
-    en: "What \u201cconsent\u201d actually means here",
-    fr: "Ce que signifie réellement le \u00ab\u00a0consentement\u00a0\u00bb ici",
+    old: `<h4>What &quot;external&quot; actually means here</h4>`,
+    new_: `<h4 data-i18n="heading.what-consent-means">What &quot;external&quot; actually means here</h4>`,
+    en: "What \u201cexternal\u201d actually means here",
+    fr: "Ce que signifie réellement \u00ab\u00a0externe\u00a0\u00bb ici",
   },
   {
     key: "heading.hard-cases",

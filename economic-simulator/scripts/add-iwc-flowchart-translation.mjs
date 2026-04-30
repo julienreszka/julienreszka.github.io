@@ -40,32 +40,14 @@ fr['prose.iwc-flowchart'] = `            <div class="iwc-node iwc-start">Activit
               <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
                   <div class="iwc-q">Q1</div>
-                  <div>Des personnes affectées sans avoir consenti&nbsp;?</div>
-                </div>
-              </div>
-              <div class="iwc-exit" aria-label="Non : laisser faire" data-i18n-aria-label="aria.iwc-exit-no">
-                <span class="iwc-exit-label">Non</span>
-                <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Laisser faire</div>
-              </div>
-            </div>
-            <div class="iwc-spine">
-              <span class="iwc-spine-label">Oui</span>
-              <div class="iwc-arrow" aria-hidden="true"></div>
-            </div>
-
-            <div class="iwc-step">
-              <div class="iwc-step-main">
-                <div class="iwc-node iwc-decision">
-                  <div class="iwc-q">Q2</div>
-                  <div>$\\sum_k p_k\\,\\Delta K_k$ pour les non-consentants</div>
-                  <div class="math-note" style="margin-top:3px">(somme de prix × variation du capital, par type de capital)</div>
+                  <div>$\\Delta W_{\\text{ext}} = \\sum_k p_k\\,\\Delta K_k$ sur les parties externes</div>
+                  <div class="math-note" style="margin-top:3px">(variation de richesse pour les parties extérieures à la transaction)</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Supérieur ou égal à zéro : laisser faire" data-i18n-aria-label="aria.iwc-exit-zero">
                 <span class="iwc-exit-label">$\\geq 0$</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Laisser faire</div>
+                <div class="iwc-node iwc-leave">Laisser faire &mdash; aucun préjudice externe</div>
               </div>
             </div>
             <div class="iwc-spine">
@@ -76,14 +58,14 @@ fr['prose.iwc-flowchart'] = `            <div class="iwc-node iwc-start">Activit
             <div class="iwc-step">
               <div class="iwc-step-main">
                 <div class="iwc-node iwc-decision">
-                  <div class="iwc-q">Q3</div>
-                  <div>Le coût du frein (perte sèche, application, capture) dépasse-t-il le dommage de Q2&nbsp;?</div>
+                  <div class="iwc-q">Q2</div>
+                  <div>Le coût du frein (perte sèche, application, capture) dépasse-t-il |&Delta;W<sub>ext</sub>|&nbsp;?</div>
                 </div>
               </div>
               <div class="iwc-exit" aria-label="Oui : laisser faire" data-i18n-aria-label="aria.iwc-exit-yes">
                 <span class="iwc-exit-label">Oui</span>
                 <span class="iwc-exit-line" aria-hidden="true"></span>
-                <div class="iwc-node iwc-leave">Laisser faire</div>
+                <div class="iwc-node iwc-leave">Laisser faire &mdash; le remède est pire que le mal</div>
               </div>
             </div>
             <div class="iwc-spine">
