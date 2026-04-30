@@ -4051,12 +4051,24 @@ const CAPITAL_KINDS = [
 // (measurement → vetting → pricing) lives upstream as a separate concern.
 //
 // a = {
-//   affectedParties: [{ id, external, shadowPrices: { [kind]: price } }],
-//   capitalDeltas:   { [kind]: { [partyId]: number } },
+//   affectedParties: [{ id, external, shadowPrices: { [kind]: price },
+//                       measurementIntegrity?: true,  // explicit opt-in; absence is flagged
+//                       priceVetted?: true,           // explicit opt-in; absence is flagged
+//                       jurisdiction?: string }],     // for coordinationFloor
+//   capitalDeltas:      { [kind]: { [partyId]: number } },
+//   decidingJurisdiction?: string,                    // for coordinationFloor
+// }
+//
+// brake = {
 //   deadweightLoss:  number,   // Harberger triangle estimate
 //   enforcementCost: number,   // budget cost of the brake
-//   captureRisk:     number,   // expected rent-seeking cost
+//   captureRisk:     number,   // expected rent-seeking cost (instrument-specific)
 // }
+//
+// captureRisk belongs on the brake descriptor, not the activity, because it
+// depends on the instrument chosen: Pigouvian tax → high (rate-setting is
+// capturable); strict liability + competitive insurance → low (insurer pays,
+// so they audit). Same activity, very different captureRisk.
 //
 // "external" means the party bears a cost or receives a benefit from the
 // activity without choosing to participate in it (standard economic definition
@@ -4092,15 +4104,16 @@ function certaintyEquivalentPrice(p) {
 
 // Pure decision: external parties lose inclusive wealth on net, AND
 // the brake itself is cost-effective.
-function shouldBrake(a) {
+// Missing shadow prices contribute 0 (no signal), not 1 (arbitrary assumption).
+function shouldBrake(a, brake = {}) {
   const externalParties = a.affectedParties.filter(p =&gt; p.external);
   const deltaW_ext = externalParties.reduce((total, p) =&gt;
     total + CAPITAL_KINDS.reduce((s, k) =&gt;
-      s + certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 1)
+      s + certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 0)
       * (a.capitalDeltas?.[k]?.[p.id] ?? 0), 0), 0);
   if (deltaW_ext &gt;= 0) return false;                    // Q1: no net external harm
 
-  const brakeCost = a.deadweightLoss + a.enforcementCost + a.captureRisk;
+  const brakeCost = (brake.deadweightLoss ?? 0) + (brake.enforcementCost ?? 0) + (brake.captureRisk ?? 0);
   if (brakeCost &gt; -deltaW_ext) return false;            // Q2: cure worse than disease
 
   return true;
@@ -4113,10 +4126,10 @@ function shouldBrake(a) {
 function inputsAreTrustworthy(a) {
   const reasons = [];
   for (const p of a.affectedParties.filter(x =&gt; x.external)) {
-    if (p.measurementIntegrity === false)
-      reasons.push(`measurement compromised for "${p.id}" (oracle problem)`);
-    if (p.priceVetted === false)
-      reasons.push(`shadow prices unvetted for "${p.id}" (cross-reference required)`);
+    if (p.measurementIntegrity !== true)
+      reasons.push(`measurementIntegrity not confirmed for "${p.id}" — unknown is not safe`);
+    if (p.priceVetted !== true)
+      reasons.push(`priceVetted not confirmed for "${p.id}" — unknown is not safe`);
   }
   return { ok: reasons.length === 0, reasons };
 }
@@ -4156,10 +4169,16 @@ function inputsAreTrustworthy(a) {
 //   coverage &gt; 0  → activity must hold a policy of at least this size
 //   coverage = 0  → no required coverage (no net external harm priced in)
 function requiredInsuranceCoverage(a) {
+  // Losses aggregate across all capital kinds and all external parties —
+  // the insurer covers the full scope of harm, not a net. Missing prices
+  // contribute 0 (no signal) rather than 1 (arbitrary assumption).
+  // Note: the coverage amount depends on the same shadow prices the insurer
+  // will correct via underwriting — this is an input to that negotiation,
+  // not its output. The circularity is resolved iteratively, not analytically.
   const externalParties = a.affectedParties.filter(p =&gt; p.external);
   const externalLoss = externalParties.reduce((total, p) =&gt;
     total + CAPITAL_KINDS.reduce((s, k) =&gt; {
-      const ce = certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 1);
+      const ce = certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 0);
       const dK = a.capitalDeltas?.[k]?.[p.id] ?? 0;
       return s + Math.min(0, ce * dK); // only losses count, gains do not net out
     }, 0), 0);
@@ -4193,45 +4212,57 @@ function requiredInsuranceCoverage(a) {
 // applying the brake. Each affected party may carry a `jurisdiction` field.
 // Parties with no jurisdiction declared are treated as being inside the
 // deciding one (the conservative default — counts toward sufficient
-// coverage rather than toward leakage).
+// coverage rather than toward leakage). The returned { floor, undeclaredCount }
+// makes this assumption visible: undeclaredCount &gt; 0 means floor is a lower
+// bound, not a precise estimate.
 function coordinationFloor(a) {
   const j = a.decidingJurisdiction;
-  if (!j) return 0; // no jurisdiction declared → cannot compute leakage
+  if (!j) return { floor: 0, undeclaredCount: 0 }; // cannot compute leakage
 
   const externalParties = a.affectedParties.filter(p =&gt; p.external);
   let totalLoss = 0;
   let outsideLoss = 0;
+  let undeclaredCount = 0; // external parties with losses but no jurisdiction field
   for (const p of externalParties) {
     const partyLoss = CAPITAL_KINDS.reduce((s, k) =&gt; {
-      const ce = certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 1);
+      const ce = certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 0);
       const dK = a.capitalDeltas?.[k]?.[p.id] ?? 0;
       return s + Math.min(0, ce * dK);
     }, 0);
     if (partyLoss &gt;= 0) continue; // gains do not enter leakage analysis
     totalLoss += -partyLoss;
-    const outside = p.jurisdiction !== undefined &amp;&amp; p.jurisdiction !== j;
-    if (outside) outsideLoss += -partyLoss;
+    if (p.jurisdiction === undefined) {
+      undeclaredCount++; // treated as inside j — biases floor toward 0
+    } else if (p.jurisdiction !== j) {
+      outsideLoss += -partyLoss;
+    }
   }
-  return totalLoss === 0 ? 0 : outsideLoss / totalLoss;
+  const floor = totalLoss === 0 ? 0 : outsideLoss / totalLoss;
+  return { floor, undeclaredCount };
 }
 
 // ── Assertions (truth-table style; throw on failure) ─────────────────────────
 function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 
-// Factory: one party affected only via "natural" capital (shadow price = 1).
+// Factory: returns [a, brake] — spread into shouldBrake(...activity(...)).
+// Parties carry measurementIntegrity: true and priceVetted: true (clean baseline);
+// the gate treats absent fields as unconfirmed, so explicit true is required.
 function activity(external, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
-  return {
-    affectedParties: [{ id: "p", external, shadowPrices: { natural: 1 } }],
-    capitalDeltas: { natural: { p: naturalDelta } },
-    deadweightLoss, enforcementCost, captureRisk,
-  };
+  return [
+    {
+      affectedParties: [{ id: "p", external, shadowPrices: { natural: 1 },
+                          measurementIntegrity: true, priceVetted: true }],
+      capitalDeltas: { natural: { p: naturalDelta } },
+    },
+    { deadweightLoss, enforcementCost, captureRisk },
+  ];
 }
 
-// Core Q1/Q2 logic — unchanged by the refactor.
-assert(shouldBrake(activity(false, -10, 0, 0, 0)) === false, "Q1: internal party only → leave alone");
-assert(shouldBrake(activity(true, +10, 0, 0, 0)) === false, "Q1: external party gains → leave alone");
-assert(shouldBrake(activity(true, -5, 3, 2, 1)) === false, "Q2: brake costs 6 &gt; damage 5 → leave alone");
-assert(shouldBrake(activity(true, -10, 1, 1, 1)) === true, "both filters passed → BRAKE");
+// Core Q1/Q2 logic.
+assert(shouldBrake(...activity(false, -10, 0, 0, 0)) === false, "Q1: internal party only → leave alone");
+assert(shouldBrake(...activity(true,  +10, 0, 0, 0)) === false, "Q1: external party gains → leave alone");
+assert(shouldBrake(...activity(true,   -5, 3, 2, 1)) === false, "Q2: brake costs 6 &gt; damage 5 → leave alone");
+assert(shouldBrake(...activity(true,  -10, 1, 1, 1)) === true,  "both filters passed → BRAKE");
 
 // Statistical uncertainty: irreversible damage with sd ≈ mean collapses p* to 0.
 // Research that shrinks sd raises p* and re-engages the brake.
@@ -4241,7 +4272,6 @@ assert(shouldBrake({
     shadowPrices: { natural: { mean: 1, sd: 1, irreversible: true } }
   }],
   capitalDeltas: { natural: { p: -10 } },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
 }) === false, "uncertainty: irreversible + sd≥mean → p*=0 → leave alone (Arrow 1972)");
 
 // Adversarial uncertainty: confidence = 0 collapses p* to 0 — same effect
@@ -4253,44 +4283,55 @@ assert(shouldBrake({
     shadowPrices: { natural: { mean: 1, sd: 0, confidence: 0 } }
   }],
   capitalDeltas: { natural: { p: -10 } },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
 }) === false, "confidence=0 → p*=0 → leave alone (no brake on untrusted data)");
+
+// Positive confidence test: partial confidence (0.8) still engages the brake when
+// the adjusted loss (0.8 × 10 = 8) exceeds brake cost (3). Tests the mid-range
+// between full-trust (1) and zero-trust (0).
+assert(shouldBrake({
+  affectedParties: [{
+    id: "p", external: true,
+    shadowPrices: { natural: { mean: 1, sd: 0, confidence: 0.8 } }
+  }],
+  capitalDeltas: { natural: { p: -10 } },
+}, { deadweightLoss: 3, enforcementCost: 0, captureRisk: 0 }) === true,
+  "confidence=0.8 → p*=0.8 → adjusted loss 8 &gt; brake cost 3 → BRAKE");
 
 // Trustworthiness gate is a separate concern. It reports problems; it does
 // not decide policy. Callers that want hard-fail behavior compose it.
 const tampered = {
   affectedParties: [{
-    id: "op", external: true, measurementIntegrity: false,
+    id: "op", external: true, measurementIntegrity: false, priceVetted: true,
     shadowPrices: { natural: 1 }
   }],
   capitalDeltas: { natural: { op: -10 } },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
 };
 assert(inputsAreTrustworthy(tampered).ok === false, "gate: detects compromised measurement");
-assert(inputsAreTrustworthy(tampered).reasons.length === 1, "gate: reports one reason");
+assert(inputsAreTrustworthy(tampered).reasons.length === 1, "gate: reports one reason (not two)");
 
 const unvetted = {
   affectedParties: [{
-    id: "ind", external: true, priceVetted: false,
+    id: "ind", external: true, priceVetted: false, measurementIntegrity: true,
     shadowPrices: { natural: 1 }
   }],
   capitalDeltas: { natural: { ind: -10 } },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
 };
 assert(inputsAreTrustworthy(unvetted).ok === false, "gate: detects unvetted prices");
 
-assert(inputsAreTrustworthy(activity(true, -10, 1, 1, 1)).ok === true,
-  "gate: clean inputs pass");
+// Clean: both fields explicitly true. Absent fields are also flagged — true is
+// an explicit opt-in, not a default, so missing = unknown = flagged.
+assert(inputsAreTrustworthy(activity(true, -10, 1, 1, 1)[0]).ok === true,
+  "gate: clean inputs pass (measurementIntegrity: true, priceVetted: true)");
 
 // Required insurance coverage = the size of the policy the operator must
 // hold to proceed. With shadow price 1 and external loss of 10, the
 // required cover is 10. Gains for other parties do not net out — the
 // insurer covers harms, not aggregates.
-assert(requiredInsuranceCoverage(activity(true, -10, 0, 0, 0)) === 10,
+assert(requiredInsuranceCoverage(activity(true, -10, 0, 0, 0)[0]) === 10,
   "insurance: external loss of 10 → required cover of 10");
-assert(requiredInsuranceCoverage(activity(true, +5, 0, 0, 0)) === 0,
+assert(requiredInsuranceCoverage(activity(true,  +5, 0, 0, 0)[0]) === 0,
   "insurance: external gain → no coverage required");
-assert(requiredInsuranceCoverage(activity(false, -10, 0, 0, 0)) === 0,
+assert(requiredInsuranceCoverage(activity(false, -10, 0, 0, 0)[0]) === 0,
   "insurance: internal-only loss → no external coverage required");
 
 // ── Coordination floor: three cases by externality footprint ─────────────────
@@ -4304,8 +4345,7 @@ assert(coordinationFloor({
     { id: "p2", external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
   ],
   capitalDeltas: { natural: { p1: -5, p2: -5 } },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
-}) === 0, "Case 1 (local): floor = 0 → unilateral fully sufficient");
+}).floor === 0, "Case 1 (local): floor = 0 → unilateral fully sufficient");
 
 // Case 2 — trade-coupled externality. 70% of external loss falls outside
 // the deciding jurisdiction. Border adjustments carry the brake to the
@@ -4317,9 +4357,8 @@ const case2 = {
     { id: "br", external: true, jurisdiction: "BR", shadowPrices: { natural: 1 } },
   ],
   capitalDeltas: { natural: { fr: -3, br: -7 } },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
 };
-assert(Math.abs(coordinationFloor(case2) - 0.7) &lt; 1e-9,
+assert(Math.abs(coordinationFloor(case2).floor - 0.7) &lt; 1e-9,
   "Case 2 (trade): floor = 0.7 → border adjustments needed");
 
 // Case 3 — global externality. Damage is spread over many jurisdictions;
@@ -4338,9 +4377,8 @@ const case3 = {
       Array.from({ length: 10 }, (_, i) =&gt; [`c${i}`, -1])
     )
   },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
 };
-assert(Math.abs(coordinationFloor(case3) - 0.9) &lt; 1e-9,
+assert(Math.abs(coordinationFloor(case3).floor - 0.9) &lt; 1e-9,
   "Case 3 (global): floor = 0.9 → coordination is constitutive of the brake");
 
 // Gains by external parties do not contribute to the leakage calculation:
@@ -4352,13 +4390,22 @@ assert(coordinationFloor({
     { id: "us", external: true, jurisdiction: "US", shadowPrices: { natural: 1 } },
   ],
   capitalDeltas: { natural: { fr: -10, us: +10 } },
-  deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
-}) === 0, "coord: external gains elsewhere do not net against losses at home");
+}).floor === 0, "coord: external gains elsewhere do not net against losses at home");
 
-// No deciding jurisdiction declared → returns 0 (cannot compute leakage).
-// Conservative: callers must opt in to spatial analysis.
-assert(coordinationFloor(activity(true, -10, 0, 0, 0)) === 0,
-  "coord: no decidingJurisdiction → 0 (analysis not applicable)");</code></pre>
+// No deciding jurisdiction → { floor: 0, undeclaredCount: 0 }.
+assert(coordinationFloor(activity(true, -10, 0, 0, 0)[0]).floor === 0,
+  "coord: no decidingJurisdiction → floor = 0 (analysis not applicable)");
+
+// undeclaredCount surfaces the assumption: parties with no jurisdiction field
+// are treated as inside the deciding jurisdiction, biasing floor toward 0.
+assert(coordinationFloor({
+  decidingJurisdiction: "FR",
+  affectedParties: [
+    { id: "local",   external: true, jurisdiction: "FR", shadowPrices: { natural: 1 } },
+    { id: "unknown", external: true,                     shadowPrices: { natural: 1 } },
+  ],
+  capitalDeltas: { natural: { local: -5, unknown: -5 } },
+}).undeclaredCount === 1, "coord: undeclaredCount flags parties with losses but no jurisdiction field");</code></pre>
           </details>
           <p data-i18n="prose.iwc-subsumes-p">
             This single inequality subsumes the standard candidates for "what
