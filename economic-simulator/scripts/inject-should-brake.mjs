@@ -29,7 +29,13 @@ const payload = escaped.trimEnd();
 
 // ── 3. Locate the target block via its unique anchor ─────────────────────────
 // The block is the first (and only) <details class="iwc-code"> element.
+// IMPORTANT: the <details> contains an HTML comment that itself contains the
+// literal text "<pre><code>" as part of its instruction prose.  We must search
+// for the real <pre><code> tag AFTER the comment closes (-->), not just after
+// the <details> opening, otherwise the inject lands inside the comment and the
+// visible block is never updated.
 const OPEN_ANCHOR = '<details class="iwc-code"';
+const COMMENT_CLOSE = "-->";
 const CODE_OPEN = "<pre><code>";
 const CODE_CLOSE = "</code></pre>";
 
@@ -39,7 +45,12 @@ if (anchorStart === -1) {
   process.exit(1);
 }
 
-const codeStart = html.indexOf(CODE_OPEN, anchorStart);
+// Skip past the closing --> of the instruction comment before searching for
+// the real <pre><code> tag.
+const commentClose = html.indexOf(COMMENT_CLOSE, anchorStart);
+const searchFrom = commentClose === -1 ? anchorStart : commentClose + COMMENT_CLOSE.length;
+
+const codeStart = html.indexOf(CODE_OPEN, searchFrom);
 const codeEnd = html.indexOf(CODE_CLOSE, codeStart);
 if (codeStart === -1 || codeEnd === -1) {
   console.error("ERROR: Could not find <pre><code>…</code></pre> after the anchor.");
