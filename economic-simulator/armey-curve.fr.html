@@ -4141,7 +4141,7 @@ const CAPITAL_KINDS = [
 // limit of the same pricing rule rather than a separate code path.
 function certaintyEquivalentPrice(p) {
   if (typeof p === "number") return p;                  // scalar point estimate
-  const mean = p?.mean ?? 1;
+  const mean = p?.mean ?? 0;  // ?? 0: a price object with no mean is no signal
   const sd = p?.sd ?? 0;
   const confidence = p?.confidence ?? 1;                // default: fully trusted
   const lambda = p?.irreversible ? 2.0 : 0.5;       // risk aversion weight
@@ -4151,6 +4151,11 @@ function certaintyEquivalentPrice(p) {
 // Pure decision: external parties lose inclusive wealth on net, AND
 // the brake itself is cost-effective.
 // Missing shadow prices contribute 0 (no signal), not 1 (arbitrary assumption).
+//
+// brake defaults to {} so Q2 always passes (cost = 0). This is intentional for
+// Q1-only testing ("is there external harm at all?"), but a caller who forgets
+// the brake descriptor in production gets an optimistically cheap answer.
+// Convention: always pass an explicit brake when the instrument is known.
 function shouldBrake(a, brake = {}) {
   const externalParties = a.affectedParties.filter(p =&gt; p.external);
   const deltaW_ext = externalParties.reduce((total, p) =&gt;
@@ -4269,6 +4274,11 @@ function coordinationFloor(a) {
   let totalLoss = 0;
   let outsideLoss = 0;
   let undeclaredCount = 0; // external parties with losses but no jurisdiction field
+  // Note: parties with no shadow prices have zero computed loss (via ?? 0) and
+  // therefore don't appear in totalLoss OR in undeclaredCount. A party that is
+  // both jurisdiction-undeclared and price-undeclared is entirely invisible to
+  // this function — not flagged, not counted. undeclaredCount is a lower bound
+  // on how many unknown parties are being treated as inside the jurisdiction.
   for (const p of externalParties) {
     const partyLoss = CAPITAL_KINDS.reduce((s, k) =&gt; {
       const ce = certaintyEquivalentPrice(p.shadowPrices?.[k] ?? 0);
@@ -4309,6 +4319,11 @@ assert(shouldBrake(...activity(false, -10, 0, 0, 0)) === false, "Q1: internal pa
 assert(shouldBrake(...activity(true,  +10, 0, 0, 0)) === false, "Q1: external party gains → leave alone");
 assert(shouldBrake(...activity(true,   -5, 3, 2, 1)) === false, "Q2: brake costs 6 &gt; damage 5 → leave alone");
 assert(shouldBrake(...activity(true,  -10, 1, 1, 1)) === true,  "both filters passed → BRAKE");
+
+// The next three tests exercise certaintyEquivalentPrice in isolation via shouldBrake.
+// They deliberately omit measurementIntegrity and priceVetted — that's inputsAreTrustworthy's
+// domain, not shouldBrake's. Running inputsAreTrustworthy on these inputs would flag them;
+// that's expected. These are unit tests of the pricing formula, not the full pipeline.
 
 // Statistical uncertainty: irreversible damage with sd ≈ mean collapses p* to 0.
 // Research that shrinks sd raises p* and re-engages the brake.
