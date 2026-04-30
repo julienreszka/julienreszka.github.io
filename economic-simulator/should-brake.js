@@ -12,12 +12,21 @@ const CAPITAL_KINDS = [
 // and the brake itself is cost-effective.
 //
 // a = {
-//   affectedParties: [{ id, external, shadowPrices: { [kind]: number | { mean, sd?, irreversible? } } }],
+//   affectedParties: [{ id, external,
+//                        measurementIntegrity: bool | undefined,  // oracle tamper-evident?
+//                        priceVetted:          bool | undefined,  // independently cross-referenced?
+//                        shadowPrices: { [kind]: number | { mean, sd?, irreversible? } } }],
 //   capitalDeltas:   { [kind]: { [partyId]: number } },
 //   deadweightLoss:  number,   // Harberger triangle estimate
 //   enforcementCost: number,   // budget cost of the brake
 //   captureRisk:     number,   // expected rent-seeking cost
 // }
+//
+// Trust hierarchy (each layer is a validity precondition for the next):
+//   measurementIntegrity → priceVetted → certainty-equivalent pricing → shouldBrake
+// Corruption at any layer propagates upward regardless of how clean the layers
+// above it are. A tampered sensor invalidates vetting; unvetted prices invalidate
+// the CE calculation; a biased CE invalidates the brake decision.
 //
 // "external" means the party bears a cost or receives a benefit from the
 // activity without choosing to participate in it (standard economic definition
@@ -41,14 +50,26 @@ function certaintyEquivalentPrice(p) {
 }
 
 function shouldBrake(a) {
-  // Precondition: all external parties' shadow prices must have been
-  // independently cross-referenced — against financial disclosures, credit
-  // markets, insurance premiums, and comparable-transaction prices — before
-  // this function is called. Self-declared conflicts of interest are
-  // insufficient. If any external party is explicitly marked unvetted
-  // (priceVetted: false), the result is undefined and we throw rather than
-  // silently returning a value that cannot be trusted.
+  // Precondition 0: measurement integrity — the physical stocks that anchor
+  // shadow prices must come from tamper-evident sources: satellite remote
+  // sensing, adversarially motivated competing observers, or cryptographically
+  // attested hardware. A single controllable sensor (the "hair dryer attack")
+  // invalidates every layer above it regardless of how rigorous the vetting is.
+  // If any external party is explicitly marked as having compromised measurements
+  // (measurementIntegrity: false), we throw — the inputs cannot be trusted.
   const externalParties = a.affectedParties.filter(p => p.external);
+  const compromisedParty = externalParties.find(p => p.measurementIntegrity === false);
+  if (compromisedParty) throw new Error(
+    `shouldBrake: measurement integrity compromised for party "${compromisedParty.id}". ` +
+    `Physical stock data must come from tamper-evident sources (satellite remote sensing, ` +
+    `adversarially motivated competing observers, or cryptographically attested hardware). ` +
+    `A single controllable sensor invalidates all downstream vetting and pricing.`
+  );
+  // Precondition 1: price vetting — shadow prices must have been independently
+  // cross-referenced against financial disclosures, credit markets, insurance
+  // premiums, and comparable-transaction prices. Self-declared conflicts of
+  // interest are insufficient. If any external party is explicitly marked
+  // unvetted (priceVetted: false), the result is undefined and we throw.
   const unvettedParty = externalParties.find(p => p.priceVetted === false);
   if (unvettedParty) throw new Error(
     `shouldBrake: shadow prices for party "${unvettedParty.id}" have not been ` +
@@ -74,10 +95,11 @@ function shouldBrake(a) {
 function assert(ok, msg) { if (!ok) throw new Error("✗ " + msg); }
 
 // Factory: one party affected only via "natural" capital (shadow price = 1).
-// priceVetted defaults to true — existing assertions test Q1/Q2 logic only.
+// measurementIntegrity and priceVetted both default to true — existing
+// assertions test Q1/Q2 logic only.
 function activity(external, naturalDelta, deadweightLoss, enforcementCost, captureRisk) {
   return {
-    affectedParties: [{ id: "p", external, priceVetted: true, shadowPrices: { natural: 1 } }],
+    affectedParties: [{ id: "p", external, measurementIntegrity: true, priceVetted: true, shadowPrices: { natural: 1 } }],
     capitalDeltas: { natural: { p: naturalDelta } },
     deadweightLoss, enforcementCost, captureRisk,
   };
@@ -106,9 +128,23 @@ assert(shouldBrake({
 let threw = false;
 try {
   shouldBrake({
-    affectedParties: [{ id: "industry", external: true, priceVetted: false, shadowPrices: { natural: 1 } }],
+    affectedParties: [{ id: "industry", external: true, measurementIntegrity: true, priceVetted: false, shadowPrices: { natural: 1 } }],
     capitalDeltas: { natural: { industry: -10 } },
     deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
   });
 } catch { threw = true; }
 assert(threw, "unvetted prices: shouldBrake must throw, not silently return a value");
+
+// Tampered measurement (the oracle problem): even with priceVetted: true,
+// a compromised physical measurement invalidates the entire chain.
+// e.g. heating a sensor to manipulate a prediction market that settles
+// against it — the chain breaks at the foundation, not at the vetting layer.
+let threwOnTamper = false;
+try {
+  shouldBrake({
+    affectedParties: [{ id: "operator", external: true, measurementIntegrity: false, priceVetted: true, shadowPrices: { natural: 1 } }],
+    capitalDeltas: { natural: { operator: -10 } },
+    deadweightLoss: 0, enforcementCost: 0, captureRisk: 0,
+  });
+} catch { threwOnTamper = true; }
+assert(threwOnTamper, "tampered measurement: shouldBrake must throw even if prices are vetted");
