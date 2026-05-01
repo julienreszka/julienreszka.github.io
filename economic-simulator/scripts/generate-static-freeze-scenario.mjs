@@ -79,6 +79,13 @@ if (sel) {
   </p>`;
 }
 
+// ── Latest year label ─────────────────────────────────────────────────────────
+const latestYears = dataPoints.map(d => d.latestYear).filter(Boolean);
+const modeYear = latestYears.length
+  ? latestYears.sort((a, b) => latestYears.filter(v => v === b).length - latestYears.filter(v => v === a).length)[0]
+  : null;
+const latestYearSubtitle = modeYear ? String(modeYear) : 'latest available';
+
 // ── Table rows ────────────────────────────────────────────────────────────────
 const above = dataPoints.filter(d => d.spending > TARGET).slice(0, 30);
 const tbody = above.map(d => {
@@ -103,7 +110,7 @@ const tableHtml = above.length === 0
   : `<table style="width:100%;border-collapse:collapse;">
   <thead><tr class="table-header-muted" style="font-size:0.82em;">
     <th style="text-align:left;padding:3px 8px" data-i18n="table.cutgains.country">Country</th>
-    <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">latest available</span></th>
+    <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${latestYearSubtitle}</span></th>
     <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.freeze-years-to-static">Years to ${TARGET.toFixed(1)}%</th>
     <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.freeze-after-10">After 10 years</th>
   </tr></thead>
