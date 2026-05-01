@@ -7768,6 +7768,30 @@ assert(brakeIsWellFormed({
 
         // Update country data
         countryData = processedData;
+
+        // Enrich each country with IMF latestSpending/latestYear from fallback-data.json
+        // so the freeze scenario always shows the most recent (2024) spending level.
+        if (window.fallbackData) {
+          const latestByName = new Map();
+          for (const period of ['structural','long','decade','recent']) {
+            const bucket = window.fallbackData[period];
+            if (!bucket) continue;
+            for (const group of Object.values(bucket)) {
+              for (const c of group) {
+                if (!latestByName.has(c.name) && c.latestSpending != null) {
+                  latestByName.set(c.name, { latestSpending: c.latestSpending, latestYear: c.latestYear ?? null });
+                }
+              }
+            }
+          }
+          for (const group of Object.values(countryData)) {
+            for (const c of group) {
+              const hit = latestByName.get(c.name);
+              if (hit) { c.latestSpending = hit.latestSpending; c.latestYear = hit.latestYear; }
+            }
+          }
+        }
+
         isDataLoaded = true;
 
         // Update the UI to show data is loaded
