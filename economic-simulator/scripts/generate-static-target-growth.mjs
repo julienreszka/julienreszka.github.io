@@ -72,11 +72,11 @@ console.log(`Model-implied target spending for ${TARGET}% growth: ${globalTarget
 
 // ── Period label ──────────────────────────────────────────────────────────────
 const PERIOD_LABELS = {
-  recent: '2018–2023',
-  decade: '2014–2023',
-  long: '2010–2023',
-  structural: '2005–2023',
-  extended: '1995–2023',
+  recent: '2019–2024',
+  decade: '2014–2024',
+  long: '2004–2024',
+  structural: '1994–2024',
+  extended: '1990–2024',
 };
 const periodRange = PERIOD_LABELS[PERIOD] ?? PERIOD;
 
