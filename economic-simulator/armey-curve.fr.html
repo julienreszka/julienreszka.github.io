@@ -9802,12 +9802,13 @@ assert(brakeIsWellFormed({
           </tr>`;
         }).join('');
 
+        const latestYearLabel = (() => { const yrs = sortedAll.map(d => d.latestYear).filter(Boolean); if (!yrs.length) return ''; const mode = yrs.sort((a,b)=>yrs.filter(v=>v===b).length-yrs.filter(v=>v===a).length)[0]; return mode ? String(mode) : ''; })();
         const tableHtml = above.length === 0
           ? '<p style="font-size:0.85em; color:rgba(255,255,255,0.5); font-style:italic;">' + _noneAbove + '</p>'
           : `<table style="width:100%;border-collapse:collapse;">
               <thead><tr class="table-header-muted" style="font-size:0.82em;">
                 <th style="text-align:left;padding:3px 8px">${_colCountry}</th>
-                <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_colSpending}</th>
+                <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_colSpending}${latestYearLabel ? '<br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">' + latestYearLabel + '</span>' : ''}</th>
                 <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_colYearsTo}</th>
                 <th style="text-align:right;padding:3px 8px;white-space:nowrap">${_colAfter10}</th>
               </tr></thead>
