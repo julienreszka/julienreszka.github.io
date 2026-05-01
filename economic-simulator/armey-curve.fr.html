@@ -8209,20 +8209,20 @@ assert(brakeIsWellFormed({
         .getContext("2d");
       let chartArmey;
 
-      function getCountryDataToShow(skipSEFilter = false, ignoreNone = false) {
+      function getCountryDataToShow(skipSEFilter = false, ignoreNone = false, allCountries = false) {
         if (!isDataLoaded) return [];
 
         const selection = document.getElementById("country-select").value;
         if (selection === "none" && !ignoreNone) return [];
 
-        const excludeResource = document.getElementById("exclude-resource")?.checked;
-        const excludeExternal = document.getElementById("exclude-external")?.checked;
-        const excludeConflict = document.getElementById("exclude-conflict")?.checked;
-        const excludeGdpDistorted = document.getElementById("exclude-gdpdistorted")?.checked;
-        const excludeSE = !skipSEFilter && document.getElementById("exclude-se-outliers")?.checked;
+        const excludeResource = !allCountries && document.getElementById("exclude-resource")?.checked;
+        const excludeExternal = !allCountries && document.getElementById("exclude-external")?.checked;
+        const excludeConflict = !allCountries && document.getElementById("exclude-conflict")?.checked;
+        const excludeGdpDistorted = !allCountries && document.getElementById("exclude-gdpdistorted")?.checked;
+        const excludeSE = !skipSEFilter && !allCountries && document.getElementById("exclude-se-outliers")?.checked;
 
         let base;
-        if (selection === "all" || (selection === "none" && ignoreNone)) {
+        if (allCountries || selection === "all" || (selection === "none" && ignoreNone)) {
           base = [
             ...countryData.developed,
             ...countryData.developing,
@@ -9870,7 +9870,7 @@ assert(brakeIsWellFormed({
         if (!out) return;
         if (!isDataLoaded) return;
         const _i18nFS = window.i18n || {};
-        const dataPoints = getCountryDataToShow(false, true);
+        const dataPoints = getCountryDataToShow(false, true, true);
         if (!dataPoints || dataPoints.length === 0) {
           out.innerHTML = '<p style="font-size:0.85em; color:rgba(255,255,255,0.4); font-style:italic;">' + (_i18nFS['js.freeze.load-data'] || 'Load country data to populate this scenario.') + '</p>';
           return;
