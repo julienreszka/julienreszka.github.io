@@ -38,18 +38,18 @@ const allRows = [...(bucket.developed ?? []), ...(bucket.developing ?? [])];
 const dataPoints = allRows
   .filter(c => !EXCLUDED_NAMES.has(c.name))
   .filter(c => c.spending > 1)
-  .map(c => ({ name: c.name, spending: c.spending, growth: c.growth }))
+  .map(c => ({ name: c.name, spending: c.latestSpending ?? c.spending, growth: c.growth, latestYear: c.latestYear ?? null }))
   .sort((a, b) => b.spending - a.spending);
 
 console.log(`Loaded ${dataPoints.length} countries for period "${PERIOD}"`);
 
 // ── Period label ──────────────────────────────────────────────────────────────
 const PERIOD_LABELS = {
-  recent: '2018–2023',
-  decade: '2014–2023',
-  long: '2010–2023',
-  structural: '2005–2023',
-  extended: '1995–2023',
+  recent: '2019–2024',
+  decade: '2014–2024',
+  long: '2004–2024',
+  structural: '1994–2024',
+  extended: '1990–2024',
 };
 const periodRange = PERIOD_LABELS[PERIOD] ?? PERIOD;
 
@@ -72,8 +72,9 @@ if (sel) {
   if (yrs === 0) yrStr = '<span style="color:rgba(100,220,100,0.9)" data-i18n="js.freeze.already-at-target">already at or below target</span>';
   else if (!isFinite(yrs)) yrStr = '<span style="color:rgba(255,140,80,0.9)" data-i18n="js.freeze.never">never \u2014 spending grows \u2265 GDP</span>';
   else yrStr = '<strong>' + yrs.toFixed(1) + ' <span data-i18n="js.freeze.years">years</span></strong>';
+  const yearLabel = sel.latestYear ? ` (${sel.latestYear})` : '';
   headlineHtml = `<p style="font-size:0.95em; margin:0 0 10px;">
-    <strong>${sel.name}</strong>: ${sel.spending.toFixed(1)}% \u2192 ${TARGET.toFixed(1)}% <span data-i18n="js.freeze.in">in</span> ${yrStr}.
+    <strong>${sel.name}</strong>: ${sel.spending.toFixed(1)}%${yearLabel} \u2192 ${TARGET.toFixed(1)}% <span data-i18n="js.freeze.in">in</span> ${yrStr}.
     <span style="opacity:0.75; font-size:0.92em;"><span data-i18n="js.freeze.after-10-years">After 10 years:</span> ${reach10.toFixed(1)}%. <span data-i18n="js.freeze.after-20-years">After 20 years:</span> ${reach20.toFixed(1)}%.</span>
   </p>`;
 }
@@ -102,7 +103,7 @@ const tableHtml = above.length === 0
   : `<table style="width:100%;border-collapse:collapse;">
   <thead><tr class="table-header-muted" style="font-size:0.82em;">
     <th style="text-align:left;padding:3px 8px" data-i18n="table.cutgains.country">Country</th>
-    <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">${periodRange}</span></th>
+    <th style="text-align:right;padding:3px 8px;white-space:nowrap"><span data-i18n="table.col.avg-spending">Avg. spending %</span><br><span style="font-weight:normal;font-size:0.9em;opacity:0.7">latest available</span></th>
     <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.freeze-years-to-static">Years to ${TARGET.toFixed(1)}%</th>
     <th style="text-align:right;padding:3px 8px;white-space:nowrap" data-i18n="table.col.freeze-after-10">After 10 years</th>
   </tr></thead>
