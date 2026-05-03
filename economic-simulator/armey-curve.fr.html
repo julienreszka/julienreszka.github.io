@@ -5999,6 +5999,29 @@ assert(brakeIsWellFormed({
               un taux de croissance annuel inférieur de 0,5 à 1 point de
               pourcentage » — un résultat robuste selon différentes méthodologies
             </li>
+            <li>
+              <strong>Méthodes de panel dynamique (précédence temporelle) :</strong>
+              Les méthodes qui conditionnent sur l'histoire propre de chaque pays
+              fournissent des preuves causales bien plus solides que les coupes
+              transversales statiques.
+              <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8586.2012.00438.x"
+                 target="_blank" rel="noopener">Christie (2014)</a>
+              utilise une régression à seuil avec découpage d'échantillon dans un
+              panel entre pays pour tester la non-linéarité tout en traitant
+              explicitement l'endogénéité via la structure de retard ; la relation
+              négative subsiste selon les régimes de seuil.
+              <a href="https://www.sciencedirect.com/science/article/pii/S0165176515005194"
+                 target="_blank" rel="noopener">Asimakopoulos &amp; Karavias (2016)</a>
+              étendent cette approche par la GMM non linéaire sur panel — qui
+              instrumente l'endogénéité par les niveaux et différences retardés
+              — sur un large jeu de données entre pays, et confirment un effet
+              négatif statistiquement significatif dans les sous-échantillons
+              développés et en développement, au-dessus comme en dessous du
+              seuil optimal estimé de taille gouvernementale. La GMM conditionnant
+              sur la trajectoire historique des dépenses et de la croissance, elle
+              est nettement plus robuste à l'endogénéité inverse que les simples
+              corrélations en coupe transversale
+            </li>
           </ul>
 
           <h4 data-i18n="heading.natural-experiments">Les expériences naturelles : des pays qui ont changé de cap</h4>
@@ -6136,7 +6159,26 @@ assert(brakeIsWellFormed({
               <strong>Absence de variables de contrôle :</strong> Le modèle
               utilise une seule variable. Une régression multivariée contrôlant
               la démographie, l'ouverture commerciale et la qualité
-              institutionnelle serait plus rigoureuse
+              institutionnelle serait plus rigoureuse.
+              Une réponse partielle existe dans les données infra-nationales :
+              les aires métropolitaines américaines et les cantons suisses
+              partagent avec leurs pairs une même monnaie, politique monétaire,
+              tradition juridique et culture, si bien que les régressions entre
+              unités au sein de ces systèmes éliminent la plupart des objections
+              de variables omises qui affectent les comparaisons entre pays.
+              <a href="https://www.deanstansel.com/s/JUE-Stansel-2005.pdf"
+                 target="_blank" rel="noopener">Stansel (2005)</a>
+              examine 314 aires métropolitaines américaines et montre que les
+              unités plus petites et plus décentralisées fiscalement atteignent
+              une croissance du revenu à long terme plus rapide.
+              <a href="https://www.tandfonline.com/doi/abs/10.1080/00036840500392334"
+                 target="_blank" rel="noopener">Schaltegger &amp; Torgler (2006)</a>
+              utilisent un panel des 26 cantons suisses de 1981 à 2001 et trouvent
+              « une relation négative assez robuste entre la taille de l’État et
+              la croissance économique » qui résiste aux effets fixes par canton
+              et aux tendances temporelles.
+              Ces résultats intra-pays sont plus difficiles à rejeter comme
+              artefacts géographiques ou liés à l'héritage juridique
             </li>
             <li>
               <strong>Composition des dépenses :</strong> Toutes les dépenses
@@ -7120,6 +7162,35 @@ assert(brakeIsWellFormed({
             <li id="ref-wagner">
               Wagner, A. (1893). <em>Grundlegung der politischen Ökonomie</em>.
               3rd edition. Leipzig.
+            </li>
+            <li id="ref-christie">
+              Christie, T. (2014). “The Effect of Government Spending on
+              Economic Growth: Testing the Non-linear Hypothesis.”
+              <em>Bulletin of Economic Research</em>, 66(1), 2–14.
+              <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8586.2012.00438.x"
+                 target="_blank" rel="noopener">doi:10.1111/j.1467-8586.2012.00438.x</a>
+            </li>
+            <li id="ref-asimakopoulos">
+              Asimakopoulos, S. &amp; Karavias, Y. (2016). “The Impact of
+              Government Size on Economic Growth: A Threshold Analysis.”
+              <em>Economics Letters</em>, 139, 65–68.
+              <a href="https://www.sciencedirect.com/science/article/pii/S0165176515005194"
+                 target="_blank" rel="noopener">doi:10.1016/j.econlet.2015.12.010</a>
+            </li>
+            <li id="ref-stansel">
+              Stansel, D. (2005). “Local Decentralization and Local Economic
+              Growth: A Cross-Sectional Examination of US Metropolitan Areas.”
+              <em>Journal of Urban Economics</em>, 57(1), 55–72.
+              <a href="https://www.deanstansel.com/s/JUE-Stansel-2005.pdf"
+                 target="_blank" rel="noopener">[PDF]</a>
+            </li>
+            <li id="ref-schaltegger">
+              Schaltegger, C. A. &amp; Torgler, B. (2006). “Growth Effects of
+              Public Expenditure on the State and Local Level: Evidence from
+              a Sample of Rich Governments.”
+              <em>Applied Economics</em>, 38(10), 1181–1192.
+              <a href="https://www.tandfonline.com/doi/abs/10.1080/00036840500392334"
+                 target="_blank" rel="noopener">doi:10.1080/00036840500392334</a>
             </li>
           </ol>
         </div>

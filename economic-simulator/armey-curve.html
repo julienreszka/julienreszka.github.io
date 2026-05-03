@@ -6068,6 +6068,28 @@ assert(brakeIsWellFormed({
               point lower annual growth rate" — a result robust across different
               methodologies
             </li>
+            <li>
+              <strong>Dynamic Panel Methods (Temporal Precedence):</strong>
+              Methods that condition on each country’s own history provide
+              much stronger causal evidence than static cross-sections.
+              <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8586.2012.00438.x"
+                 target="_blank" rel="noopener">Christie (2014)</a>
+              uses threshold regression with sample-splitting in a cross-country
+              panel to test non-linearity while explicitly addressing
+              endogeneity through the lag structure; the negative relationship
+              survives across threshold regimes.
+              <a href="https://www.sciencedirect.com/science/article/pii/S0165176515005194"
+                 target="_blank" rel="noopener">Asimakopoulos &amp; Karavias (2016)</a>
+              extend this using non-linear panel GMM — which instruments for
+              endogeneity using lagged levels and differences — on a large
+              cross-country dataset and confirm a statistically significant
+              negative effect in both developed and developing sub-samples,
+              both above and below the estimated optimal government-size
+              threshold. Because GMM conditions on the historical trajectory
+              of both spending and growth, it is substantially more robust to
+              the reverse-causality concern than simple cross-sectional
+              correlations
+            </li>
           </ul>
 
           <h4 data-i18n="heading.natural-experiments">The Natural Experiments: Countries That Changed Course</h4>
@@ -6191,7 +6213,25 @@ assert(brakeIsWellFormed({
             <li>
               <strong>No Controls:</strong> The model uses a single variable. A
               multivariate regression controlling for demographics, trade
-              openness, and institutional quality would be more rigorous
+              openness, and institutional quality would be more rigorous.
+              A partial answer exists in sub-national evidence: US metro areas
+              and Swiss cantons share a common currency, monetary policy, legal
+              tradition, and culture with their peers, so cross-unit regressions
+              within these systems eliminate most of the omitted-variable
+              objections that plague cross-country comparisons.
+              <a href="https://www.deanstansel.com/s/JUE-Stansel-2005.pdf"
+                 target="_blank" rel="noopener">Stansel (2005)</a>
+              examines 314 US metropolitan areas and finds that smaller,
+              more fiscally decentralized units achieve faster long-run income
+              growth.
+              <a href="https://www.tandfonline.com/doi/abs/10.1080/00036840500392334"
+                 target="_blank" rel="noopener">Schaltegger &amp; Torgler (2006)</a>
+              use a panel of all 26 Swiss cantons from 1981 to 2001 and find
+              &ldquo;a fairly robust negative relationship between government
+              size and economic growth&rdquo; that survives controls for
+              canton fixed effects and time trends.
+              These within-country results are harder to dismiss as artifacts
+              of geography or legal heritage
             </li>
             <li>
               <strong>Spending Composition:</strong> Not all government
@@ -7093,6 +7133,35 @@ assert(brakeIsWellFormed({
             <li id="ref-wagner">
               Wagner, A. (1893). <em>Grundlegung der politischen Ökonomie</em>.
               3rd edition. Leipzig.
+            </li>
+            <li id="ref-christie">
+              Christie, T. (2014). “The Effect of Government Spending on
+              Economic Growth: Testing the Non-linear Hypothesis.”
+              <em>Bulletin of Economic Research</em>, 66(1), 2–14.
+              <a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/j.1467-8586.2012.00438.x"
+                 target="_blank" rel="noopener">doi:10.1111/j.1467-8586.2012.00438.x</a>
+            </li>
+            <li id="ref-asimakopoulos">
+              Asimakopoulos, S. &amp; Karavias, Y. (2016). “The Impact of
+              Government Size on Economic Growth: A Threshold Analysis.”
+              <em>Economics Letters</em>, 139, 65–68.
+              <a href="https://www.sciencedirect.com/science/article/pii/S0165176515005194"
+                 target="_blank" rel="noopener">doi:10.1016/j.econlet.2015.12.010</a>
+            </li>
+            <li id="ref-stansel">
+              Stansel, D. (2005). “Local Decentralization and Local Economic
+              Growth: A Cross-Sectional Examination of US Metropolitan Areas.”
+              <em>Journal of Urban Economics</em>, 57(1), 55–72.
+              <a href="https://www.deanstansel.com/s/JUE-Stansel-2005.pdf"
+                 target="_blank" rel="noopener">[PDF]</a>
+            </li>
+            <li id="ref-schaltegger">
+              Schaltegger, C. A. &amp; Torgler, B. (2006). “Growth Effects of
+              Public Expenditure on the State and Local Level: Evidence from
+              a Sample of Rich Governments.”
+              <em>Applied Economics</em>, 38(10), 1181–1192.
+              <a href="https://www.tandfonline.com/doi/abs/10.1080/00036840500392334"
+                 target="_blank" rel="noopener">doi:10.1080/00036840500392334</a>
             </li>
           </ol>
         </div>
