@@ -1,0 +1,77 @@
+{
+  "_comment": "Canonical model ranking for the structural period (2005-2023, N=113 after exclusions). Edit this file, then run: node scripts/update-ranking-static.mjs",
+  "period": "2005-2023",
+  "n": 113,
+  "models": [
+    {
+      "rank": 1,
+      "key": "power-law",
+      "name": "Power Law",
+      "r2": 0.4219,
+      "ci": "[0.28, 0.55]",
+      "aic": 53.29,
+      "pValue": "<0.001",
+      "coverage": "69%"
+    },
+    {
+      "rank": 2,
+      "key": "inverse",
+      "name": "Inverse",
+      "r2": 0.4192,
+      "ci": "[0.28, 0.55]",
+      "aic": 53.82,
+      "pValue": "<0.001",
+      "coverage": "70%"
+    },
+    {
+      "rank": 3,
+      "key": "log-linear",
+      "name": "Log-Linear",
+      "r2": 0.4167,
+      "ci": "[0.27, 0.55]",
+      "aic": 54.31,
+      "pValue": "<0.001",
+      "coverage": "69%"
+    },
+    {
+      "rank": 4,
+      "key": "exponential",
+      "name": "Exponential",
+      "r2": 0.4106,
+      "ci": "[0.27, 0.54]",
+      "aic": 55.48,
+      "pValue": "<0.001",
+      "coverage": "68%"
+    },
+    {
+      "rank": 5,
+      "key": "free-quadratic",
+      "name": "Free Quadratic",
+      "r2": 0.4083,
+      "ci": "[0.27, 0.54]",
+      "aic": 57.92,
+      "pValue": "<0.001",
+      "coverage": "70%"
+    },
+    {
+      "rank": 6,
+      "key": "linear",
+      "name": "Linear",
+      "r2": 0.3892,
+      "ci": "[0.25, 0.53]",
+      "aic": 59.51,
+      "pValue": "<0.001",
+      "coverage": "68%"
+    },
+    {
+      "rank": 7,
+      "key": "quadratic",
+      "name": "Quadratic",
+      "r2": 0.3856,
+      "ci": "[0.24, 0.52]",
+      "aic": 62.17,
+      "pValue": "<0.001",
+      "coverage": "67%"
+    }
+  ]
+}
