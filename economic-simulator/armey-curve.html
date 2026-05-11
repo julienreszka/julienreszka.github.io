@@ -10269,50 +10269,8 @@ assert(brakeIsWellFormed({
           }
         });
 
-      // ── URL hash state ────────────────────────────────────────────────────
-      function encodeHashState() {
-        const params = new URLSearchParams();
-        params.set('model', document.getElementById('curve-type-select').value);
-        params.set('period', document.getElementById('time-period-select').value);
-        params.set('group', document.getElementById('country-select').value);
-        params.set('minyears', document.getElementById('min-years-select').value);
-        if (document.getElementById('exclude-resource').checked) params.set('exres', '1');
-        if (document.getElementById('exclude-external').checked) params.set('exext', '1');
-        if (document.getElementById('exclude-conflict').checked) params.set('excon', '1');
-        if (document.getElementById('exclude-gdpdistorted').checked) params.set('exgdp', '1');
-        if (!document.getElementById('exclude-se-outliers').checked) params.set('exse', '0');
-        const hl = document.getElementById('highlight-country-select').value;
-        if (hl !== 'none') params.set('hl', hl);
-        history.replaceState(null, '', '#' + params.toString());
-      }
-
-      function restoreHashState() {
-        const hash = location.hash.slice(1);
-        if (!hash || hash.startsWith('armey') || hash.startsWith('theory') || hash.startsWith('faq') || hash.startsWith('cite') || hash.startsWith('references') || hash.startsWith('embed') || hash.startsWith('selective')) return;
-        try {
-          const params = new URLSearchParams(hash);
-          if (params.has('model')) document.getElementById('curve-type-select').value = params.get('model');
-          if (params.has('period')) document.getElementById('time-period-select').value = params.get('period');
-          if (params.has('group')) document.getElementById('country-select').value = params.get('group');
-          if (params.has('minyears')) document.getElementById('min-years-select').value = params.get('minyears');
-          document.getElementById('exclude-resource').checked = params.get('exres') === '1';
-          document.getElementById('exclude-external').checked = params.get('exext') === '1';
-          document.getElementById('exclude-conflict').checked = params.get('excon') === '1';
-          document.getElementById('exclude-gdpdistorted').checked = params.get('exgdp') === '1';
-          if (params.has('exse')) document.getElementById('exclude-se-outliers').checked = params.get('exse') !== '0';
-        } catch(e) {}
-      }
-
-      // Patch updateArmeySimulation to also encode state
-      const _origUpdate = updateArmeySimulation;
-      updateArmeySimulation = function() {
-        _origUpdate();
-        if (isDataLoaded) encodeHashState();
-      };
-
       // Initial simulation and data loading
       function _initSimulator() {
-        restoreHashState();
         toggleParameterGroups();
         updateArmeySimulation();
         updateDataStatus((window.i18n||{})['js.status.loading-api'] || "Loading data from World Bank API...");
