@@ -7663,27 +7663,13 @@ assert(brakeIsWellFormed({
         .catch(function() { /* silently ignore — full init will retry */ });
     </script>
 
-    <!-- Chart.js: loaded lazily when the simulator scrolls into view -->
+    <!-- Chart.js: loaded eagerly so the chart autofits on first render -->
     <script>
       (function() {
-        var loaded = false;
-        function loadChart() {
-          if (loaded) return;
-          loaded = true;
-          var s = document.createElement('script');
-          s.src = 'https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js';
-          s.onload = function() { _initSimulator(); };
-          document.head.appendChild(s);
-        }
-        var target = document.getElementById('armey-section');
-        if ('IntersectionObserver' in window) {
-          var obs = new IntersectionObserver(function(entries) {
-            if (entries[0].isIntersecting) { obs.disconnect(); loadChart(); }
-          }, { rootMargin: '200px' });
-          obs.observe(target);
-        } else {
-          loadChart(); // fallback: load immediately
-        }
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js';
+        s.onload = function() { _initSimulator(); };
+        document.head.appendChild(s);
       })();
     </script>
 
