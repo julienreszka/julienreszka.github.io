@@ -1,0 +1,227 @@
+[
+  {
+    "slug": "argument-in-three-moves",
+    "q": "Government is a brake. Here's the math.",
+    "a": "Three moves: (1) Government spending monotonically slows economic growth — the data shows no sweet spot at 15–25% of GDP, just a steadily declining power law. (2) If government is structurally a brake, the question isn't 'how much?' but 'on what?' — brakes are useful precisely because they slow things down. (3) Aim it by an objective rule: brake an activity only if it imposes a net wealth loss on external parties AND the brake is cost-effective. Three of four cells in the decision matrix tell government to do nothing."
+  },
+  {
+    "slug": "what-is-the-armey-curve",
+    "q": "The economic theory that gave politicians cover to spend more — and got the data wrong",
+    "a": "The Armey Curve is a theoretical relationship between government spending as a percentage of GDP and economic growth. It proposes an inverted-U shape with an optimal government size around 20–30% of GDP. Cross-country data challenges this: a power law (monotonically decreasing) relationship fits the evidence consistently better."
+  },
+  {
+    "slug": "does-more-spending-reduce-growth",
+    "q": "Is your government quietly making you poorer?",
+    "a": "Cross-country World Bank data consistently shows a negative correlation between government spending as a share of GDP and GDP growth rates. Countries with smaller governments (Singapore ~15%, Bangladesh ~9%) tend to outgrow high-spending peers. The relationship fits a Power Law better than the traditional Quadratic Armey Curve: R²=0.42 vs 0.39 across 113 countries in the 2005–2023 structural sample."
+  },
+  {
+    "slug": "optimal-size-of-government",
+    "q": "Every economist says there's a 'sweet spot' for government size. The data says there isn't.",
+    "a": "The data does not support a precise optimal size. Unlike the quadratic Armey Curve which implies a sweet spot, power law models suggest growth is highest at the lowest feasible spending levels. Countries below 25% of GDP consistently outgrow higher-spending peers, but a precise constitutional cap cannot be derived from a single cross-country regression."
+  },
+  {
+    "slug": "what-should-government-be-used-for",
+    "q": "If government spending always slows growth, what is it actually good for?",
+    "a": "If government spending reliably slows economic activity, its most defensible use is as a selective brake on harmful activity — pollution, overfishing, systemic financial risk — where private actors impose costs on others. A government focused on correcting negative externalities through liability rules or narrow targeted regulations can improve welfare while remaining small in budget terms."
+  },
+  {
+    "slug": "nordic-countries",
+    "q": "The Nordic countries are rich and spend 50% of GDP. Doesn't that disprove everything?",
+    "a": "Yes — but their growth rates are not high. Denmark averaged ~1.3% and Finland ~0.9% GDP growth in the 2005–2023 structural period: exactly where the power law model places high-spending countries. Their wealth is a legacy of industrialisation built when governments were smaller. Sweden cut spending from 67% to ~49% of GDP between 1993 and 2007 and had its strongest growth decades immediately after. Wealth (a stock) persists long after the conditions that created it change; growth rates (a flow) respond more quickly."
+  },
+  {
+    "slug": "why-dont-economists-promote-power-law",
+    "q": "Why do economists keep using a model they know is wrong?",
+    "a": "A public-choice dynamic is likely at work: when governments fund most economic research and policy positions, institutional incentives favour frameworks compatible with continued government involvement. As James Buchanan argued, economists respond to incentives like everyone else — theory tends to lag evidence when political convenience and funding structures favour a particular conclusion."
+  },
+  {
+    "slug": "east-asian-growth-model",
+    "q": "South Korea grew at 9% with an interventionist state. Doesn't that break the theory?",
+    "a": "Not necessarily. South Korea and Taiwan achieved 7–9% growth with moderate spending (~18–20% GDP) alongside significant industrial policy. Their experience shows that total spending level and institutional quality — not the absence of all state intervention — are what cross-country regressions primarily capture. Targeted programs within a lean overall budget are different from broad high-spending welfare states."
+  },
+  {
+    "slug": "pre-wwii-history",
+    "q": "Governments used to spend 12% of GDP. Growth was faster. What happened?",
+    "a": "Before World War II, Western European governments spent roughly 10–15% of GDP and annual per-capita growth ran at ~2–3% — consistent with where the power law curve projects at those spending levels. The post-war expansion of the welfare state shifted every major Western economy rightward along the curve into the low-growth zone. Where high-spending economies have sustained rapid growth, compositional factors — high investment shares, catch-up convergence, or off-budget financing — tend to account for the exception."
+  },
+  {
+    "slug": "failed-states-low-spending",
+    "q": "What about countries with almost no government? Don't they just collapse?",
+    "a": "No country in the World Bank panel has government spending below ~8% of GDP. Territories with near-zero formal government either collapse and lose World Bank coverage, or informalize so completely that GDP measurement breaks down. The data cannot speak to the sub-8% range, and what institutions classify as 'state failure' often means 'a territory that permits transactions we have prohibited' — those transactions represent real welfare gains by revealed preference."
+  },
+  {
+    "slug": "what-should-government-do",
+    "q": "If government is a brake on growth, when should it actually press the pedal?",
+    "a": "The empirical curve answers 'how much' but not 'on what'. The article proposes a two-condition rule: government should brake an activity only when (1) it imposes a net wealth loss on external parties — those who bear cost without being participants in the transaction — summed across all capital kinds (produced, human, natural, knowledge, institutional), and (2) the brake is cost-effective (deadweight loss + enforcement cost + capture risk ≤ |ΔW_ext|). Activities satisfying both conditions are genuine negative externalities: pollution, resource depletion beyond regeneration rates, systemic financial risk."
+  },
+  {
+    "slug": "why-inclusive-wealth",
+    "q": "GDP went up. Natural capital fell 40%. Which number should we believe?",
+    "a": "GDP can be inflated by the very pathologies a brake should target. Extracting an oil field boosts GDP while depleting natural capital; transfer payments cycle through GDP without creating wealth; coerced transactions register as economic activity. Inclusive wealth — the shadow-price sum of all productive capital stocks — cannot be gamed the same way: depleting natural capital without reinvesting elsewhere shrinks it by construction. The framework follows the Dasgupta Review (2021) and the Arrow–Dasgupta–Mäler (2004) unified wealth accounting tradition."
+  },
+  {
+    "slug": "what-does-2x2-show",
+    "q": "One diagram reduces all of politics to four cells. Three of them say: do nothing.",
+    "a": "Two binary questions produce four cells: does the activity impose a net wealth loss on external parties (ΔW_ext < 0)? and is the brake cost-effective (brake cost ≤ |ΔW_ext|)? Three of the four cells tell government to do nothing. Only the cell where external parties lose wealth on net AND the brake is cost-effective gives government objective standing to act. This is a much narrower licence than 'whatever the median voter wants' and a much wider one than 'government should never act'."
+  },
+  {
+    "slug": "two-conditions-in-criterion",
+    "q": "Two questions that determine whether government has any business intervening",
+    "a": "The criterion has two sequential conditions. First: does the activity impose a net wealth loss on external parties — those outside the transaction who bear cost without choosing to participate? This is measured as ΔW_ext < 0 across all capital kinds. If yes, second: is the brake cost-effective? The total cost of intervening — deadweight loss (the Harberger triangle), enforcement cost, and expected regulatory capture risk — must be less than the magnitude of the external wealth loss. Both conditions must pass before government has objective standing to act."
+  },
+  {
+    "slug": "why-power-law-not-quadratic",
+    "q": "The textbook Armey Curve predicts negative growth rates. Why is it still in textbooks?",
+    "a": "The quadratic Armey Curve predicts impossible negative growth rates at high spending levels and requires an upturn at low spending levels that simply does not appear in the data. The power law model (growth = β₀ × spending⁻ᵅ) achieves R²≈0.42 vs 0.39 for the quadratic across 113 countries, has lower AIC, and is monotonically decreasing — matching the actual cross-country pattern without producing mathematical artifacts. Power laws are also theoretically coherent: the braking force of government spending should be scale-free, not bell-curve-shaped."
+  },
+  {
+    "slug": "what-is-r-squared",
+    "q": "One number explains 42% of why some countries grow and others stagnate",
+    "a": "R² measures how much of the variation in countries' growth rates the model explains. A perfect fit is 1.0; a score of 0 means the model is no better than predicting the average growth rate for every country; negative values mean the model is worse than that baseline. The power law achieves R²≈0.42, meaning government spending share alone explains about 42% of the variation in growth across 113 countries. In cross-country macroeconomics, R² above 0.20 is considered a strong single-variable result — most economic outcomes are shaped by dozens of factors."
+  },
+  {
+    "slug": "what-is-aic",
+    "q": "How do you choose between economic models when they all fit the data badly?",
+    "a": "AIC (Akaike Information Criterion) ranks competing models by balancing how well they fit the data against how many parameters they use — simpler models are rewarded. Lower AIC = better model. Unlike R², AIC is useful for comparing models even when none fits well: it tells you which is the least bad option. The power law wins on both R² and AIC vs the traditional quadratic Armey Curve across the 113-country structural sample."
+  },
+  {
+    "slug": "reverse-causality",
+    "q": "Maybe rich countries just choose bigger governments. How do we know which way the arrow points?",
+    "a": "Reverse causality is the strongest objection and deserves honest engagement. Three specific threats exist: (1) rich countries may choose larger welfare states as a luxury good; (2) aging populations drive both higher spending (pensions, healthcare) and lower growth; (3) recessions mechanically increase spending while reducing growth. However, the natural experiments — countries that cut spending and boomed (Canada 1995–2005, Sweden post-1993, Estonia post-1992, Ireland 1980s) versus countries that expanded and stagnated (France, Italy, Japan) — consistently point in the same direction. The relationship survives controls for income level and multiple time periods."
+  },
+  {
+    "slug": "natural-experiments",
+    "q": "Canada, Sweden, Estonia, Ireland all cut spending and boomed. Coincidence?",
+    "a": "Countries that cut spending and boomed: Canada cut federal spending by 10 points of GDP in 1995–2000 and had its strongest growth decade. Sweden cut from 67% to ~49% between 1993 and 2007 — its growth accelerated immediately. Estonia cut massively post-1992 and became one of the fastest-growing economies in Europe. Ireland cut in the late 1980s and entered the Celtic Tiger period. Countries that expanded and stagnated: France, Italy, Belgium, and Japan all expanded welfare states and saw sustained low growth. The directional consistency across very different institutional contexts is what gives the causal story traction."
+  },
+  {
+    "slug": "freeze-scenario",
+    "q": "What if France can't cut spending? There's a slower path — and the math is brutal.",
+    "a": "For countries where a one-shot spending cut is politically impossible, there is a slower path: hold real spending flat while the economy grows. The spending/GDP ratio falls automatically each year by a factor of (1 + real spending growth) / (1 + real GDP growth). This is the Canada 1995–2005 and Sweden post-1993 playbook. At 0% real spending growth and 2% real GDP growth, the ratio drops by ~1.96% per year. The simulator's freeze scenario calculates exactly how many years this takes to reach any target spending level for each country."
+  },
+  {
+    "slug": "why-cuts-are-hard-at-high-spending",
+    "q": "France cuts 5 points of spending. Why does growth barely move?",
+    "a": "The power law curve is steep at low spending and flat at high spending. For the model growth = β₀ × spending⁻ᵅ, the marginal growth gain from a cut falls as (spending)⁻⁽ᵅ⁺¹⁾. A country at 20% spending gains roughly (50/20)^(α+1) times more from the same cut than a country at 50%. With α≈1.5, that ratio is about 6×. This means France or Germany cutting 5 points of spending gains far less than Singapore at the same level. The political economy of high-spending countries is therefore trapped: the cure is real but the immediate payoff is small relative to the disruption."
+  },
+  {
+    "slug": "what-intercept-means",
+    "q": "How fast would the economy grow with zero government? Here's the model's answer.",
+    "a": "The intercept represents the natural economic growth rate in the absence of government intervention. This baseline reflects entrepreneurial innovation (human creativity driving new products), voluntary exchange (wealth creation through mutually beneficial trade), capital accumulation (private savings and investment), knowledge spillovers (information sharing between economic actors), competition (market pressure driving efficiency), and specialisation (gains from division of labour). Historical evidence suggests this baseline runs at roughly 2–4% annually in developed economies."
+  },
+  {
+    "slug": "what-is-selective-brake",
+    "q": "The problem isn't that government slows the economy. It's that it slows all of it equally.",
+    "a": "A selective brake uses government's inherent capacity to slow economic activity deliberately on the parts of the economy we want less of — pollution, overfishing, systemic financial risk — rather than applying it indiscriminately across the whole economy. The problem is that most real-world government spending (wages, transfers, subsidies, procurement) is not a targeted instrument: it applies the same braking force to productive and unproductive activity alike. The aggregate data captures this reality — countries with large governments are not primarily running externality-correction programs; they are running redistribution and public employment programs."
+  },
+  {
+    "slug": "what-is-external-party",
+    "q": "Who counts as a victim? The legal definition that decides everything.",
+    "a": "'External parties' are those who bear a cost or receive a benefit from an activity without choosing to participate in it — the standard economic definition of an externality. A clearly external party is identifiable and did not participate in the transaction at all (pollution downwind, systemic risk shifted to deposit-insurance fund, coerced taxation). A clearly internal party freely entered an arrangement that priced the cost in (an insurance pool, a club, a negotiated contract). Contested cases include future generations (treated as external via Hartwick's rule) and ecosystems (treated as external via shadow prices on natural capital)."
+  },
+  {
+    "slug": "coal-subsidy-example",
+    "q": "Run a coal subsidy through the math. How fast does it fail?",
+    "a": "No. ΔK_natural < 0 (emissions, depleted reserves); ΔK_human < 0 (respiratory damage in downwind populations, external to the transaction); ΔK_produced > 0 (cheaper electricity short-term); ΔK_institutional < 0 (the lobbying apparatus sustaining the subsidy erodes rule-of-law neutrality). Net: ΔW_ext < 0. The activity imposes an external wealth loss. If a cost-effective brake exists (carbon pricing, liability), both conditions pass. Verdict: brake."
+  },
+  {
+    "slug": "basic-research-example",
+    "q": "Is funding science a legitimate use of coercion? The criterion gives a complicated answer.",
+    "a": "The case is genuinely hard. ΔK_knowledge > 0 (results enter the public domain with positive spillovers); ΔK_human > 0 (trained researchers); but ΔK_produced < 0 for taxpayers — who are external parties (they fund the grant through coerced transfers without being participants in the research transaction). The verdict turns on whether the knowledge gains that eventually accrue back to the same taxpayers (cheaper medicine, better materials, public-domain methods) exceed the per-capita tax cost. For basic research with broad, non-rivalrous spillovers, this is likely yes — so the criterion declines to brake it. Narrowly captured grants that spill over only to the recipient (industry-specific subsidies, company-town infrastructure) fail Q1."
+  },
+  {
+    "slug": "childhood-development-example",
+    "q": "Salt iodisation costs $0.05 per person and raises IQ by up to 15 points. How does that score?",
+    "a": "Yes. Children are categorically external parties: they cannot choose to participate in, exit, or negotiate the conditions of their upbringing. Parental and state decisions impose irreversible costs on the child as an external party. ΔK_human is deeply negative from adverse childhood experiences; childhood blood-lead at 10 μg/dL reduces IQ by 2–5 points with documented downstream crime and earnings effects; iodine deficiency during pregnancy costs 10–15 IQ points at a brake cost of ~US$0.05/person/year for salt iodisation. Heckman's estimates of US$7–13 return per dollar on high-quality early childhood programmes clear the cost-effectiveness test comfortably. Verdict: brake environmental and nutritional externalities imposing costs on children."
+  },
+  {
+    "slug": "hard-cases-criterion",
+    "q": "Where does the criterion break down? Four cases it can't cleanly resolve.",
+    "a": "Four cases: (1) Public-goods underprovision (defence, basic research, contagious-disease surveillance) — there is no activity to brake, only one to start; a Samuelson-style public-goods rule is needed for the production side. (2) Voluntary risky behaviour with social spillovers (smoking, motorcycling without a helmet, recreational drugs) — the user is internal; the emergency-room budget is external; the criterion says price the external portion, not ban the activity. (3) High-variance frontier activity (gain-of-function research, novel financial instruments) — tail risk to external parties can dominate even when the central estimate of ΔW_ext is positive. (4) Effects on the unborn — the criterion treats future generations as external parties represented by the discount rate, which involves an ethical convention people of good faith disagree about."
+  },
+  {
+    "slug": "where-objectivity-leaks",
+    "q": "This framework claims to be objective. Here's where that claim gets shaky.",
+    "a": "Four places where calibration disputes arise: (1) Shadow prices for institutional and natural capital are estimated, not observed — institutional capital is not yet integrated into any official wealth account. (2) Shadow prices are partly endogenous to the policy being evaluated. (3) The discount rate ρ involves an ethical choice (Stern vs Nordhaus spans roughly an order of magnitude on the social cost of carbon). (4) The internal/external boundary requires a convention for contested cases. But these are calibration disputes, not criterion disputes. Two honest analysts can disagree substantially on magnitudes while agreeing on the sign of ΔW_ext for most cases — and the sign is all the brake test requires."
+  },
+  {
+    "slug": "what-to-tax",
+    "q": "The short list of things that actually deserve to be taxed — and the long list that don't",
+    "a": "A small, specific list: carbon, methane, particulates, and congestion (classical Pigouvian); resource extraction above the regeneration rate (severance/depletion taxes); land value — Henry George's tax on unearned location rent, which captures wealth without distorting production; financial leverage above systemic-risk thresholds; unfunded pension liabilities (force amortisation rather than rollover); monopoly rents that rest on regulatory capture rather than productivity. What it would NOT tax: labour income, corporate profits earned competitively, capital gains on productive investment, or consumption choices of competent adults."
+  },
+  {
+    "slug": "why-green-taxes-fail",
+    "q": "France collects €33B/year from fuel taxes — and can't afford for people to stop buying fuel",
+    "a": "Because the state acquires a fiscal stake in the activity continuing. France's TICPE fuel tax generates ~€33B/year that flows into the general budget — the Treasury cannot afford for fossil fuel consumption to actually shrink. A brake applied for revenue purposes rather than to address an external wealth loss is not a brake aimed at the criterion's target; it is rent extraction. The criterion requires that brake costs go to those harmed (or into insurance pools), not to the Treasury. This is why strict liability with mandatory insurance — not a Pigouvian tax — is the instrument the criterion most naturally recommends."
+  },
+  {
+    "slug": "strict-liability-insurance",
+    "q": "There's one policy tool that self-enforces, can't be captured, and costs the Treasury nothing",
+    "a": "Strict liability with mandatory insurance covering the maximum credible loss — no liability cap, in a competitive insurance market, not subsidised by the state. This is the only instrument that simultaneously: prices the externality not the transaction (the premium tracks expected damage); self-enforces (binary: the operator either holds a policy or they don't); builds in adversarial verification (the insurer pays out on harm, so they price it correctly and audit the operator); and gives the state no fiscal stake in the activity continuing (premiums go to insurers, not the Treasury). If the maximum credible loss exceeds insurance market capacity, no policy is written and the activity is braked by the absence of coverage."
+  },
+  {
+    "slug": "coordination-between-countries",
+    "q": "When is it enough to act alone — and when does unilateral action just shift the damage elsewhere?",
+    "a": "It depends on the share of external loss that falls outside the deciding jurisdiction. Three regimes: (1) Local externality (water pollution, regional smog, land-use change) — all external parties reside in the deciding jurisdiction. Per-country action is optimal; no leakage problem. (2) Trade-coupled externality (deforestation behind cattle exports, embedded water) — harm happens in country B, demand pull comes from country A. The brake belongs at the consumption point; border adjustments like the EU's CBAM are the correct instrument. (3) Global externality (greenhouse gases, ozone depletion, ocean fishery collapse, gain-of-function pathogens) — the externality is genuinely fungible across geography. Coordination is constitutive of the brake: below ~50% of global activity in the coordinated bloc, leakage is significant; above ~70% it is de minimis."
+  },
+  {
+    "slug": "competitiveness-objection",
+    "q": "Won't taxing pollution just send factories to countries that don't?",
+    "a": "The competitiveness objection has bite specifically for global externalities (Case 3) — not as a flaw in the criterion, but as a coordination problem the criterion correctly identifies. For local and trade-coupled externalities (Cases 1 and 2) the objection is a category error: country A's residents gain on inclusive wealth even when country A's GDP-share of cement production falls. The Changing Wealth of Nations data shows this repeatedly — resource-dependent economies post rising GDP per capita and falling per-capita inclusive wealth. They are 'competitive' only on the wrong metric."
+  },
+  {
+    "slug": "legitimacy-of-government",
+    "q": "A simple test for whether your government is doing its job or overstepping it",
+    "a": "A regime's legitimacy is the share of its coercive acts that pass the two filters. A government that brakes pollution, fraud, depletion, and systemic risk is using its instrument on the cell the criterion licenses. A government that brakes voluntary trade, productive labour, or peaceful consumption is applying the brake where ΔW_ext ≥ 0 — foot on the brake pedal where it should be off. The criterion gives a verdict per action; summing across a government's portfolio gives a measure of its objective standing to coerce."
+  },
+  {
+    "slug": "what-falsifies-criterion",
+    "q": "What evidence would prove this entire framework wrong?",
+    "a": "Two things: (1) If countries with depletion-style tax bases (Norway's sovereign wealth fund, Chilean copper royalties, Singapore's land-value capture, British Columbia's carbon tax) systematically showed worse long-run inclusive-wealth growth than peers that tax labour and capital, the criterion fails. (2) If shadow-price uncertainty turned out to flip the sign of ΔW_ext — not just its magnitude — for most policy-relevant activities, the criterion would lose its claim to sign objectivity. Current World Bank Changing Wealth of Nations data runs the other way: the listed countries outperform on inclusive wealth per capita. The prediction is testable and the dataset is public."
+  },
+  {
+    "slug": "power-laws-in-economics",
+    "q": "Pareto, Zipf, firm sizes — why does the same math keep appearing everywhere in economics?",
+    "a": "Power laws appear wherever a few extreme observations dominate and the relationship between variables is scale-free rather than bell-curve-shaped. Established examples: Pareto's Law (top 20% hold ~80% of wealth, tail decays as x⁻ᵅ with α≈1.5–3); Zipf's Law for city sizes (the nth-largest city is proportional to 1/n); firm size distribution (a handful of giants coexist with millions of small firms). The spending–growth relationship being scale-free makes theoretical sense: the braking effect of each additional unit of government spending does not reset to zero at any threshold — it compounds with the existing level, producing the characteristic steep-then-flat curve."
+  },
+  {
+    "slug": "how-traditional-theory-misled-policymakers",
+    "q": "How a 1980s economic model gave cover to 40 years of government expansion",
+    "a": "The quadratic model emerged in the 1980s from observing that both very small governments (often failed states with poor institutions) and very large governments (communist dictatorships) had slower growth than moderate-sized ones. But this compared functional with dysfunctional states, not different sizes of functional government. The 'optimal zone' framing gave academic cover to politicians who wanted to justify expanding government by claiming they were finding the sweet spot. In practice the quadratic model predicts impossible negative growth rates at high spending levels, revealing it as a mathematical artifact rather than an empirical description of reality."
+  },
+  {
+    "slug": "why-quadratic-survived",
+    "q": "An economic model that predicts impossible results. Why is it still the mainstream view?",
+    "a": "It offered something for multiple constituencies: politicians got an 'optimal zone' argument rather than a demand for maximum reduction; academics got a tractable, smooth curve amenable to econometric refinement; institutions got a framework compatible with incremental adjustment; voters got a story where spending and growth could coexist at the right level. The power law model is politically awkward because it implies growth is highest at the lowest feasible spending levels — no comfortable compromise zone — and because a large share of economic research is funded by governments that have an institutional interest in frameworks compatible with continued government involvement."
+  },
+  {
+    "slug": "what-else-explains-growth",
+    "q": "Government size explains 42% of growth differences. What explains the other 58%?",
+    "a": "Government size is strong but not the only factor. Key additional drivers: (1) Institutional quality — rule of law, regulatory efficiency, corruption control; (2) Development stage — poorer countries grow faster conditional on spending (beta-convergence); (3) Demographics and human capital — tertiary enrollment, life expectancy; (4) Economic structure and openness — trade openness, current account balance; (5) Capital formation rate — countries that invest more grow faster; (6) Macroeconomic stability — inflation drag on investment returns; (7) Terms-of-trade volatility — commodity-price risk exposure. The stepwise regression in the article shows capital formation and initial income as the two strongest residual predictors after spending is controlled."
+  },
+  {
+    "slug": "what-data-is-used",
+    "q": "151 countries, 18 years of data. Where does it all come from?",
+    "a": "All data comes from the World Bank's open database. Government expenditure: Total government expenditure as % of GDP (indicator GC.XPN.TOTL.GD.ZS), covering all spending on goods, services, wages, transfers, and subsidies. Economic growth: GDP growth (annual %, indicator NY.GDP.MKTP.KD.ZG) — real GDP growth in constant local currency. Averages are calculated over user-selected time periods (2005–2023 range). Countries are included only if they have at least 3 years of data in the selected period. The data is fetched live from the World Bank API; a fallback dataset is embedded for offline use."
+  },
+  {
+    "slug": "which-countries-excluded",
+    "q": "Why removing 38 countries from the sample makes the signal twice as strong",
+    "a": "Four exclusion categories, each with a specific theoretical justification: (1) Resource-dependent economies — grow via commodity windfalls unrelated to government size, creating noise without signal. (2) Externally-funded states — have aid-distorted budgets that make the spending/GDP ratio misleading. (3) Conflict/fragile states — have suppressed growth from instability that is independent of spending level. (4) GDP-distorted economies — have artificially inflated or deflated GDP figures. With these filters, the sample drops from ~151 to ~113 countries; R² rises from ~0.24 to ~0.42, confirming the excluded groups add noise rather than signal."
+  },
+  {
+    "slug": "planet-1992-2014",
+    "q": "We doubled produced capital and destroyed 40% of natural capital. The GDP chart looked fine.",
+    "a": "The Dasgupta Review reports that over 1992–2014, global per-capita produced capital roughly doubled while per-capita natural capital fell by roughly 40%, corroborated by the World Bank's Changing Wealth of Nations 2021. Through the Inclusive Wealth Criterion lens: ΔK_produced > 0 but ΔK_natural << 0 for parties — future generations, downstream ecosystems — external to the trade. Whether the sum is net-positive or net-negative depends on shadow prices that standard GDP accounting omits entirely. A growth statistic that aggregates +100% produced capital with −40% natural capital into a single cheerful headline is measuring one column of a ledger while pretending the others do not exist."
+  },
+  {
+    "slug": "singapore-switzerland-norway",
+    "q": "Three countries that spend government money differently — and consistently beat the growth curve",
+    "a": "These are precisely the countries that explicitly reinvest government revenue back into capital stocks rather than consuming it. Singapore's CPF system channels contributions into productive investment. Switzerland's fiscal rules keep federal spending below 35% of GDP with a structural surplus requirement. Norway deposits oil revenues into the Government Pension Fund Global (sovereign wealth fund) rather than spending them on current consumption. Under the Inclusive Wealth Criterion, their government spending appears as ΔK ≥ 0 across the inclusive-wealth ledger — unlike transfer-heavy governments where ΔK ≤ 0 for most outlays."
+  },
+  {
+    "slug": "dasgupta-review",
+    "q": "The UK Treasury commissioned a review that concluded GDP is the wrong number to optimise",
+    "a": "The Dasgupta Review (2021) is a major independent review commissioned by the UK Treasury, led by Sir Partha Dasgupta of Cambridge, on the economics of biodiversity. Its central contribution relevant here: it operationalises inclusive wealth — the shadow-price sum of produced, human, natural, and knowledge capital — as the correct welfare metric for policy evaluation, replacing GDP. Its Headline Message 2 documents the 1992–2014 divergence between rising produced capital and falling natural capital globally. The article uses the Dasgupta framework as the empirical and theoretical foundation for the Inclusive Wealth Criterion that determines when government has objective standing to act."
+  }
+]
