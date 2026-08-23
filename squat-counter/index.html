@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Squat Counter — Julien Reszka</title>
+    <meta
+      name="description"
+      content="Count your squats automatically using your phone's accelerometer. Keep your phone in your pocket and go."
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter:400,600,700,800&display=swap"
+    />
+    <style>
+      :root {
+        --bg1: #f8fafc;
+        --bg2: #e0e7ef;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --text: #222;
+        --text-soft: #4a5a6a;
+        --text-faint: #7b8794;
+        --accent: #2563eb;
+        --accent2: #38bdf8;
+        --accent-dark: #1e40af;
+        --danger: #ef4444;
+        --ok: #16a34a;
+        --track-bg: #eef2f7;
+        --shadow: rgba(60, 60, 120, 0.08);
+        --border: rgba(37, 99, 235, 0.12);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg1: #181c20;
+          --bg2: #232b36;
+          --card-bg: rgba(30, 36, 44, 0.97);
+          --text: #e5e7eb;
+          --text-soft: #b6c2d1;
+          --text-faint: #8b98a8;
+          --accent: #60a5fa;
+          --accent2: #38bdf8;
+          --accent-dark: #93c5fd;
+          --danger: #f87171;
+          --ok: #4ade80;
+          --track-bg: #1c2733;
+          --shadow: rgba(20, 20, 40, 0.22);
+          --border: rgba(96, 165, 250, 0.18);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+        color: var(--text);
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem 3rem;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 460px;
+      }
+      .back {
+        display: inline-block;
+        font-size: 0.85rem;
+        color: var(--text-faint);
+        text-decoration: none;
+        margin-bottom: 0.75rem;
+      }
+      .back:hover {
+        color: var(--accent);
+      }
+      h1 {
+        font-size: 1.7rem;
+        font-weight: 800;
+        margin: 0 0 0.3rem;
+        letter-spacing: -0.5px;
+      }
+      .sub {
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        margin: 0 0 1.25rem;
+        line-height: 1.4;
+      }
+      .card {
+        background: var(--card-bg);
+        border-radius: 1.25rem;
+        box-shadow: 0 8px 32px var(--shadow);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .status-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        margin-bottom: 1rem;
+      }
+      .dot {
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--text-faint);
+        flex-shrink: 0;
+        transition: background 0.2s;
+      }
+      .dot.ready {
+        background: var(--accent2);
+      }
+      .dot.live {
+        background: var(--ok);
+        box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5);
+        animation: pulse 1.4s infinite;
+      }
+      @keyframes pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.45);
+        }
+        70% {
+          box-shadow: 0 0 0 8px rgba(22, 163, 74, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+        }
+      }
+      .counter {
+        text-align: center;
+        margin: 0.5rem 0 1.25rem;
+      }
+      .count {
+        font-size: 5.5rem;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -2px;
+        color: var(--accent);
+        transition: transform 0.12s ease;
+      }
+      .count.bump {
+        transform: scale(1.12);
+      }
+      .count-label {
+        font-size: 0.85rem;
+        color: var(--text-faint);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-top: 0.25rem;
+      }
+      .btn-row {
+        display: flex;
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      button {
+        font-family: inherit;
+        border: none;
+        border-radius: 0.9rem;
+        cursor: pointer;
+        font-weight: 700;
+        transition: transform 0.15s, background 0.2s, opacity 0.2s;
+      }
+      button:active {
+        transform: scale(0.97);
+      }
+      .btn-primary {
+        flex: 1;
+        background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+        color: #fff;
+        font-size: 1.05rem;
+        padding: 0.95rem 0;
+        box-shadow: 0 2px 12px rgba(37, 99, 235, 0.18);
+      }
+      .btn-primary.stop {
+        background: linear-gradient(90deg, #ef4444 0%, #f97316 100%);
+      }
+      .btn-primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .btn-secondary {
+        background: var(--track-bg);
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        padding: 0.95rem 1.1rem;
+      }
+      .manual-row {
+        display: flex;
+        gap: 0.6rem;
+        margin-top: 0.6rem;
+      }
+      .manual-row button {
+        flex: 1;
+        background: var(--track-bg);
+        color: var(--text);
+        font-size: 1.2rem;
+        padding: 0.6rem 0;
+      }
+      canvas {
+        width: 100%;
+        height: 110px;
+        display: block;
+        border-radius: 0.75rem;
+        background: var(--track-bg);
+        margin-top: 1rem;
+      }
+      details {
+        margin-top: 0.9rem;
+        font-size: 0.85rem;
+      }
+      summary {
+        cursor: pointer;
+        color: var(--text-faint);
+        font-weight: 600;
+        outline: none;
+      }
+      .setting {
+        margin-top: 0.9rem;
+      }
+      .setting label {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        margin-bottom: 0.3rem;
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+      .sens-row {
+        display: flex;
+        gap: 0.4rem;
+        margin-top: 0.3rem;
+      }
+      .sens-row button {
+        flex: 1;
+        padding: 0.5rem 0;
+        font-size: 0.8rem;
+        background: var(--track-bg);
+        color: var(--text-soft);
+      }
+      .sens-row button.active {
+        background: var(--accent);
+        color: #fff;
+      }
+      .debug {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.72rem;
+        color: var(--text-faint);
+        margin-top: 0.6rem;
+        line-height: 1.5;
+        white-space: pre-wrap;
+      }
+      .note {
+        font-size: 0.8rem;
+        color: var(--text-faint);
+        line-height: 1.5;
+      }
+      .note b {
+        color: var(--text-soft);
+      }
+      .steps {
+        margin: 0.4rem 0 0;
+        padding-left: 1.1rem;
+      }
+      .steps li {
+        margin-bottom: 0.3rem;
+      }
+      .error-box {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: var(--danger);
+        border-radius: 0.75rem;
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        display: none;
+      }
+      .error-box.show {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <a class="back" href="../index.html">&larr; Julien Reszka's Github Pages</a>
+      <h1>🏋️ Squat Counter</h1>
+      <p class="sub">
+        Uses your phone's accelerometer to detect and count squats
+        automatically — keep the phone in your pocket and just move.
+      </p>
+
+      <div class="error-box" id="errorBox"></div>
+
+      <div class="card">
+        <div class="status-row">
+          <span class="dot" id="statusDot"></span>
+          <span id="statusText">Checking device support…</span>
+        </div>
+
+        <div class="counter">
+          <div class="count" id="count">0</div>
+          <div class="count-label">squats</div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-primary" id="mainBtn" disabled>
+            Enable Motion Sensors
+          </button>
+          <button class="btn-secondary" id="resetBtn">Reset</button>
+        </div>
+
+        <div class="manual-row">
+          <button id="minusBtn" aria-label="Subtract one squat">&minus;1</button>
+          <button id="plusBtn" aria-label="Add one squat">+1</button>
+        </div>
+
+        <canvas id="chart" width="600" height="220"></canvas>
+
+        <details>
+          <summary>Sensitivity &amp; advanced settings</summary>
+          <div class="setting">
+            <label><span>Sensitivity</span></label>
+            <div class="sens-row">
+              <button data-sens="low">Low</button>
+              <button data-sens="medium" class="active">Medium</button>
+              <button data-sens="high">High</button>
+            </div>
+          </div>
+          <div class="setting">
+            <label
+              ><span>Detection threshold</span
+              ><span id="threshVal"></span
+            ></label>
+            <input
+              type="range"
+              id="threshSlider"
+              min="0.6"
+              max="4"
+              step="0.1"
+              value="2"
+            />
+          </div>
+          <label
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.4rem;
+              margin-top: 0.8rem;
+              font-size: 0.85rem;
+              color: var(--text-soft);
+            "
+          >
+            <input type="checkbox" id="debugToggle" />
+            Show raw sensor debug values
+          </label>
+          <div class="debug" id="debug" style="display: none"></div>
+        </details>
+      </div>
+
+      <div class="card">
+        <p class="note">
+          <b>How to use it</b>
+        </p>
+        <ol class="steps note">
+          <li>Tap <b>Enable Motion Sensors</b> (iPhone will ask permission).</li>
+          <li>Put your phone in your pocket, waistband, or armband.</li>
+          <li>Tap <b>Start</b>, stand still for a second, then squat away.</li>
+          <li>
+            Each rep gets a beep/vibration and a live count. If it misses a
+            rep or over-counts, use <b>&minus;1 / +1</b> or adjust
+            sensitivity above.
+          </li>
+        </ol>
+        <p class="note" style="margin-top: 0.6rem">
+          Detection is based on the magnitude of acceleration, so it works
+          regardless of which way the phone is oriented in your pocket. It
+          needs a real phone/tablet with a motion sensor — this won't work on
+          a laptop.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        "use strict";
+
+        // ---------- DOM ----------
+        const statusDot = document.getElementById("statusDot");
+        const statusText = document.getElementById("statusText");
+        const mainBtn = document.getElementById("mainBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const plusBtn = document.getElementById("plusBtn");
+        const minusBtn = document.getElementById("minusBtn");
+        const countEl = document.getElementById("count");
+        const errorBox = document.getElementById("errorBox");
+        const canvas = document.getElementById("chart");
+        const ctx = canvas.getContext("2d");
+        const threshSlider = document.getElementById("threshSlider");
+        const threshVal = document.getElementById("threshVal");
+        const sensButtons = document.querySelectorAll(".sens-row button");
+        const debugToggle = document.getElementById("debugToggle");
+        const debugEl = document.getElementById("debug");
+
+        // ---------- State ----------
+        let count = 0;
+        let permissionGranted = false;
+        let listening = false;
+
+        // Signal processing state
+        let baseline = 9.81; // slow-adapting resting magnitude
+        let fast = 9.81; // fast-smoothed magnitude
+        let lastSampleTime = null;
+        let detState = "idle"; // idle -> down -> up
+        let detStateStart = 0;
+        let lastSquatTime = 0;
+
+        // Tunables (mid-range defaults; adjustable via sensitivity/slider)
+        let threshold = 2.0; // m/s^2 deviation from baseline to trigger down/up transitions
+        const SETTLE_BAND = 0.5; // how close to baseline counts as "settled"
+        const MIN_SQUAT_MS = 400; // fastest plausible squat
+        const MAX_SQUAT_MS = 6000; // longest plausible squat before we give up
+        const REFRACTORY_MS = 350; // minimum gap between counted reps
+        const TAU_SLOW = 2.2; // seconds, baseline time constant
+        const TAU_FAST = 0.12; // seconds, fast-smoothing time constant
+
+        // Rolling buffer for the chart
+        const BUFFER_SECONDS = 6;
+        let history = []; // {t, mag, baseline, fast}
+
+        // ---------- Support check ----------
+        const hasDeviceMotion = "DeviceMotionEvent" in window;
+        const isSecure =
+          window.isSecureContext ||
+          location.protocol === "https:" ||
+          location.hostname === "localhost";
+
+        function setStatus(text, cls) {
+          statusText.textContent = text;
+          statusDot.className = "dot" + (cls ? " " + cls : "");
+        }
+
+        function showError(msg) {
+          errorBox.textContent = msg;
+          errorBox.classList.add("show");
+        }
+
+        if (!hasDeviceMotion) {
+          setStatus("This browser doesn't expose motion sensors.", "");
+          showError(
+            "DeviceMotionEvent isn't available here. Try a modern mobile browser (Safari on iOS, Chrome on Android)."
+          );
+          mainBtn.disabled = true;
+        } else if (!isSecure) {
+          setStatus("Needs HTTPS to access motion sensors.", "");
+          showError("Motion sensors require a secure (https) connection.");
+          mainBtn.disabled = true;
+        } else {
+          setStatus("Ready. Tap Enable Motion Sensors.", "ready");
+          mainBtn.disabled = false;
+        }
+
+        // ---------- Audio feedback (works cross-platform, unlike vibrate on iOS) ----------
+        let audioCtx = null;
+        function beep() {
+          try {
+            if (!audioCtx) {
+              const AC = window.AudioContext || window.webkitAudioContext;
+              audioCtx = new AC();
+            }
+            if (audioCtx.state === "suspended") audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = "sine";
+            osc.frequency.value = 880;
+            gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(
+              0.18,
+              audioCtx.currentTime + 0.01
+            );
+            gain.gain.exponentialRampToValueAtTime(
+              0.001,
+              audioCtx.currentTime + 0.15
+            );
+            osc.connect(gain).connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.16);
+          } catch (e) {
+            /* audio not available, ignore */
+          }
+        }
+
+        function vibrate() {
+          if (navigator.vibrate) {
+            try {
+              navigator.vibrate(80);
+            } catch (e) {}
+          }
+        }
+
+        // ---------- Counting ----------
+        function incrementCount() {
+          count += 1;
+          countEl.textContent = String(count);
+          countEl.classList.remove("bump");
+          // force reflow to restart animation
+          void countEl.offsetWidth;
+          countEl.classList.add("bump");
+          beep();
+          vibrate();
+        }
+
+        resetBtn.addEventListener("click", () => {
+          count = 0;
+          countEl.textContent = "0";
+          detState = "idle";
+          history = [];
+        });
+        plusBtn.addEventListener("click", () => {
+          count += 1;
+          countEl.textContent = String(count);
+        });
+        minusBtn.addEventListener("click", () => {
+          count = Math.max(0, count - 1);
+          countEl.textContent = String(count);
+        });
+
+        // ---------- Sensitivity presets ----------
+        const SENS_PRESETS = { low: 3.0, medium: 2.0, high: 1.2 };
+        function applySensitivity(name) {
+          threshold = SENS_PRESETS[name];
+          threshSlider.value = threshold;
+          threshVal.textContent = threshold.toFixed(1) + " m/s²";
+          sensButtons.forEach((b) =>
+            b.classList.toggle("active", b.dataset.sens === name)
+          );
+        }
+        sensButtons.forEach((b) => {
+          b.addEventListener("click", () => applySensitivity(b.dataset.sens));
+        });
+        threshSlider.addEventListener("input", () => {
+          threshold = parseFloat(threshSlider.value);
+          threshVal.textContent = threshold.toFixed(1) + " m/s²";
+          sensButtons.forEach((b) => b.classList.remove("active"));
+        });
+        applySensitivity("medium");
+
+        debugToggle.addEventListener("change", () => {
+          debugEl.style.display = debugToggle.checked ? "block" : "none";
+        });
+
+        // ---------- Motion handling ----------
+        function handleMotion(event) {
+          const now =
+            typeof event.timeStamp === "number" && event.timeStamp > 0
+              ? event.timeStamp
+              : performance.now();
+
+          const g = event.accelerationIncludingGravity;
+          let x, y, z;
+          if (g && (g.x !== null || g.y !== null || g.z !== null)) {
+            x = g.x || 0;
+            y = g.y || 0;
+            z = g.z || 0;
+          } else if (event.acceleration) {
+            // Some browsers only expose gravity-removed acceleration; add
+            // back an assumed 1g so the magnitude baseline still behaves.
+            x = event.acceleration.x || 0;
+            y = event.acceleration.y || 0;
+            z = (event.acceleration.z || 0) + 9.81;
+          } else {
+            return;
+          }
+
+          const mag = Math.sqrt(x * x + y * y + z * z);
+
+          if (lastSampleTime === null) {
+            lastSampleTime = now;
+            baseline = mag;
+            fast = mag;
+          }
+          const dt = Math.max(0, Math.min(0.5, (now - lastSampleTime) / 1000));
+          lastSampleTime = now;
+
+          const aFast = 1 - Math.exp(-dt / TAU_FAST);
+          fast += aFast * (mag - fast);
+
+          const dev = fast - baseline;
+
+          // Only let the baseline drift while we're at rest, so a squat's
+          // own motion never drags the reference point along with it.
+          if (detState === "idle" && Math.abs(dev) < SETTLE_BAND) {
+            const aSlow = 1 - Math.exp(-dt / TAU_SLOW);
+            baseline += aSlow * (mag - baseline);
+          }
+
+          runDetector(dev, now);
+          pushHistory(now, mag);
+
+          if (debugToggle.checked) {
+            debugEl.textContent =
+              `mag: ${mag.toFixed(2)}  fast: ${fast.toFixed(
+                2
+              )}  baseline: ${baseline.toFixed(2)}\n` +
+              `dev: ${dev.toFixed(2)}  state: ${detState}  thresh: ±${threshold.toFixed(
+                1
+              )}`;
+          }
+        }
+
+        function runDetector(dev, now) {
+          switch (detState) {
+            case "idle":
+              if (dev < -threshold) {
+                detState = "down";
+                detStateStart = now;
+              }
+              break;
+            case "down":
+              if (now - detStateStart > MAX_SQUAT_MS) {
+                detState = "idle";
+                break;
+              }
+              if (dev > threshold) {
+                detState = "up";
+              }
+              break;
+            case "up":
+              if (now - detStateStart > MAX_SQUAT_MS) {
+                detState = "idle";
+                break;
+              }
+              if (
+                Math.abs(dev) < SETTLE_BAND &&
+                now - detStateStart > MIN_SQUAT_MS &&
+                now - lastSquatTime > REFRACTORY_MS
+              ) {
+                lastSquatTime = now;
+                detState = "idle";
+                incrementCount();
+              }
+              break;
+          }
+        }
+
+        function pushHistory(t, mag) {
+          history.push({ t, mag, baseline, fast });
+          const cutoff = t - BUFFER_SECONDS * 1000;
+          while (history.length && history[0].t < cutoff) history.shift();
+        }
+
+        // ---------- Chart drawing ----------
+        function resizeCanvas() {
+          const rect = canvas.getBoundingClientRect();
+          const dpr = window.devicePixelRatio || 1;
+          canvas.width = Math.max(1, Math.round(rect.width * dpr));
+          canvas.height = Math.max(1, Math.round(110 * dpr));
+        }
+        window.addEventListener("resize", resizeCanvas);
+
+        function draw() {
+          requestAnimationFrame(draw);
+          const w = canvas.width;
+          const h = canvas.height;
+          const styles = getComputedStyle(document.documentElement);
+          const trackColor = styles.getPropertyValue("--track-bg").trim();
+          const accent = styles.getPropertyValue("--accent").trim();
+          const faint = styles.getPropertyValue("--text-faint").trim();
+
+          ctx.clearRect(0, 0, w, h);
+          ctx.fillStyle = trackColor || "#eef2f7";
+          ctx.fillRect(0, 0, w, h);
+
+          if (history.length < 2) return;
+
+          const tNow = history[history.length - 1].t;
+          const tMin = tNow - BUFFER_SECONDS * 1000;
+
+          let magMin = Infinity,
+            magMax = -Infinity;
+          for (const p of history) {
+            if (p.mag < magMin) magMin = p.mag;
+            if (p.mag > magMax) magMax = p.mag;
+          }
+          const pad = Math.max(1, (magMax - magMin) * 0.2);
+          magMin -= pad;
+          magMax += pad;
+          if (magMax - magMin < 2) {
+            const mid = (magMax + magMin) / 2;
+            magMin = mid - 1;
+            magMax = mid + 1;
+          }
+
+          const xFor = (t) => ((t - tMin) / (tNow - tMin || 1)) * w;
+          const yFor = (v) => h - ((v - magMin) / (magMax - magMin)) * h;
+
+          // baseline line
+          ctx.beginPath();
+          ctx.strokeStyle = faint || "#7b8794";
+          ctx.globalAlpha = 0.6;
+          ctx.lineWidth = 1;
+          ctx.setLineDash([4, 4]);
+          const by = yFor(history[history.length - 1].baseline);
+          ctx.moveTo(0, by);
+          ctx.lineTo(w, by);
+          ctx.stroke();
+          ctx.setLineDash([]);
+          ctx.globalAlpha = 1;
+
+          // magnitude trace
+          ctx.beginPath();
+          ctx.strokeStyle = accent || "#2563eb";
+          ctx.lineWidth = 2;
+          history.forEach((p, i) => {
+            const x = xFor(p.t);
+            const y = yFor(p.mag);
+            if (i === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          });
+          ctx.stroke();
+        }
+
+        // ---------- Start/stop ----------
+        function startListening() {
+          window.addEventListener("devicemotion", handleMotion, true);
+          listening = true;
+          lastSampleTime = null;
+          detState = "idle";
+          mainBtn.textContent = "Stop";
+          mainBtn.classList.add("stop");
+          setStatus("Listening — go ahead and squat.", "live");
+        }
+
+        function stopListening() {
+          window.removeEventListener("devicemotion", handleMotion, true);
+          listening = false;
+          mainBtn.textContent = "Start";
+          mainBtn.classList.remove("stop");
+          setStatus("Paused.", "ready");
+        }
+
+        function requestMotionPermission() {
+          const DME = window.DeviceMotionEvent;
+          if (typeof DME.requestPermission === "function") {
+            return DME.requestPermission();
+          }
+          return Promise.resolve("granted");
+        }
+
+        mainBtn.addEventListener("click", () => {
+          if (!permissionGranted) {
+            mainBtn.disabled = true;
+            requestMotionPermission()
+              .then((result) => {
+                mainBtn.disabled = false;
+                if (result === "granted") {
+                  permissionGranted = true;
+                  mainBtn.textContent = "Start";
+                  setStatus("Permission granted. Tap Start.", "ready");
+                } else {
+                  setStatus("Motion permission denied.", "");
+                  showError(
+                    "Motion access was denied. On iPhone, enable it under Settings → Safari → Motion & Orientation Access, then reload this page."
+                  );
+                }
+              })
+              .catch((err) => {
+                mainBtn.disabled = false;
+                setStatus("Couldn't request motion permission.", "");
+                showError(
+                  "This must be opened over https and tapped directly (not from an in-app browser) to request sensor access."
+                );
+              });
+            return;
+          }
+
+          if (!listening) startListening();
+          else stopListening();
+        });
+
+        resizeCanvas();
+        requestAnimationFrame(draw);
+      })();
+    </script>
+  </body>
+</html>
