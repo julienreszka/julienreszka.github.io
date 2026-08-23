@@ -334,6 +334,45 @@
       .error-box.show {
         display: block;
       }
+      .stat-card {
+        text-align: left;
+      }
+      .stat-figure {
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--text-faint);
+        margin-bottom: 0.4rem;
+      }
+      .stat-number {
+        font-size: 3rem;
+        font-weight: 800;
+        letter-spacing: -1.5px;
+        color: var(--accent);
+        line-height: 1;
+      }
+      .stat-desc {
+        font-size: 0.95rem;
+        color: var(--text-soft);
+        line-height: 1.45;
+        margin: 0.7rem 0 0;
+      }
+      .stat-source {
+        font-size: 0.78rem;
+        color: var(--text-faint);
+        line-height: 1.4;
+        margin: 0.8rem 0 0;
+        padding-top: 0.7rem;
+        border-top: 1px solid var(--border);
+      }
+      .stat-source a {
+        color: var(--text-faint);
+        text-decoration: underline;
+      }
+      .stat-source a:hover {
+        color: var(--accent);
+      }
     </style>
   </head>
   <body>
@@ -421,6 +460,28 @@
             Clear saved history
           </button>
         </details>
+      </div>
+
+      <div class="card stat-card">
+        <div class="stat-figure">Figure</div>
+        <div class="stat-number">5.4x</div>
+        <p class="stat-desc">
+          Higher risk of death within 6 years for adults who scored lowest on
+          a simple sit-to-stand test, versus those who scored highest, among
+          2,002 adults.
+        </p>
+        <p class="stat-source">
+          Source: Brito, L.B.B. et al., <em
+            >Ability to Sit and Rise from the Floor as a Predictor of
+            All-Cause Mortality</em
+          >, European Journal of Preventive Cardiology, 2014. Via
+          <a
+            href="https://julienreszka.com/blog/if-i-could-only-do-one-exercise-it-would-be-squats/"
+            target="_blank"
+            rel="noopener"
+            >julienreszka.com</a
+          >.
+        </p>
       </div>
 
       <div class="card">
