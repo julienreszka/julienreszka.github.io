@@ -520,6 +520,13 @@
           }
         }
 
+        // ---------- Analytics ----------
+        function track(name, params) {
+          if (typeof gtag === "function") {
+            gtag("event", name, params || {});
+          }
+        }
+
         // ---------- Counting ----------
         function incrementCount() {
           count += 1;
@@ -533,6 +540,7 @@
         }
 
         resetBtn.addEventListener("click", () => {
+          track("squat_reset", { squat_count: count });
           count = 0;
           countEl.textContent = "0";
           detState = "idle";
@@ -541,10 +549,12 @@
         plusBtn.addEventListener("click", () => {
           count += 1;
           countEl.textContent = String(count);
+          track("manual_adjust", { direction: "increment", squat_count: count });
         });
         minusBtn.addEventListener("click", () => {
           count = Math.max(0, count - 1);
           countEl.textContent = String(count);
+          track("manual_adjust", { direction: "decrement", squat_count: count });
         });
 
         // ---------- Sensitivity presets ----------
@@ -558,12 +568,21 @@
           );
         }
         sensButtons.forEach((b) => {
-          b.addEventListener("click", () => applySensitivity(b.dataset.sens));
+          b.addEventListener("click", () => {
+            applySensitivity(b.dataset.sens);
+            track("sensitivity_change", { level: b.dataset.sens });
+          });
         });
         threshSlider.addEventListener("input", () => {
           threshold = parseFloat(threshSlider.value);
           threshVal.textContent = threshold.toFixed(1) + " m/s²";
           sensButtons.forEach((b) => b.classList.remove("active"));
+        });
+        threshSlider.addEventListener("change", () => {
+          track("sensitivity_change", {
+            level: "custom",
+            threshold: threshold,
+          });
         });
         applySensitivity("medium");
 
@@ -743,6 +762,8 @@
         }
 
         // ---------- Start/stop ----------
+        let sessionStartCount = 0;
+
         function startListening() {
           window.addEventListener("devicemotion", handleMotion, true);
           listening = true;
@@ -751,6 +772,8 @@
           mainBtn.textContent = "Stop";
           mainBtn.classList.add("stop");
           setStatus("Listening — go ahead and squat.", "live");
+          sessionStartCount = count;
+          track("session_start");
         }
 
         function stopListening() {
@@ -759,6 +782,10 @@
           mainBtn.textContent = "Start";
           mainBtn.classList.remove("stop");
           setStatus("Paused.", "ready");
+          track("session_stop", {
+            squat_count: count,
+            session_squat_count: count - sessionStartCount,
+          });
         }
 
         function requestMotionPermission() {
@@ -779,11 +806,13 @@
                   permissionGranted = true;
                   mainBtn.textContent = "Start";
                   setStatus("Permission granted. Tap Start.", "ready");
+                  track("motion_permission_result", { result: "granted" });
                 } else {
                   setStatus("Motion permission denied.", "");
                   showError(
                     "Motion access was denied. On iPhone, enable it under Settings → Safari → Motion & Orientation Access, then reload this page."
                   );
+                  track("motion_permission_result", { result: "denied" });
                 }
               })
               .catch((err) => {
@@ -792,6 +821,7 @@
                 showError(
                   "This must be opened over https and tapped directly (not from an in-app browser) to request sensor access."
                 );
+                track("motion_permission_result", { result: "error" });
               });
             return;
           }
