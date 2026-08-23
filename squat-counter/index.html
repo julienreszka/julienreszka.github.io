@@ -776,7 +776,7 @@
           track("session_start");
         }
 
-        function stopListening() {
+        function stopListening(reason) {
           window.removeEventListener("devicemotion", handleMotion, true);
           listening = false;
           mainBtn.textContent = "Start";
@@ -785,8 +785,16 @@
           track("session_stop", {
             squat_count: count,
             session_squat_count: count - sessionStartCount,
+            end_reason: reason || "user_stop",
+            transport_type: "beacon",
           });
         }
+
+        // Catches tab close / navigation / backgrounding so sessions the
+        // user never explicitly stopped still get a session_stop event.
+        window.addEventListener("pagehide", () => {
+          if (listening) stopListening("page_unload");
+        });
 
         function requestMotionPermission() {
           const DME = window.DeviceMotionEvent;
