@@ -9,7 +9,7 @@
     <title>Squat Counter — Julien Reszka</title>
     <meta
       name="description"
-      content="Count your squats automatically using your phone's accelerometer. Keep your phone in your pocket and go."
+      content="Count your squats automatically using your phone's accelerometer. Works best held in your hand."
     />
     <link
       rel="stylesheet"
@@ -169,6 +169,39 @@
         letter-spacing: 1.5px;
         margin-top: 0.25rem;
       }
+      .today-stat {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        margin-top: 0.5rem;
+      }
+      .day-list {
+        list-style: none;
+        margin: 0.6rem 0 0;
+        padding: 0;
+      }
+      .day-list li {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        padding: 0.35rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .day-list li:last-child {
+        border-bottom: none;
+      }
+      .day-list li span:last-child {
+        font-weight: 700;
+        color: var(--text);
+      }
+      .clear-history {
+        margin-top: 0.7rem;
+        background: none;
+        color: var(--danger);
+        font-size: 0.8rem;
+        padding: 0.4rem 0;
+        text-decoration: underline;
+      }
       .btn-row {
         display: flex;
         gap: 0.6rem;
@@ -309,7 +342,8 @@
       <h1>🏋️ Squat Counter</h1>
       <p class="sub">
         Uses your phone's accelerometer to detect and count squats
-        automatically — keep the phone in your pocket and just move.
+        automatically — works best held in your hand, since your pocket
+        muffles and dampens the motion.
       </p>
 
       <div class="error-box" id="errorBox"></div>
@@ -323,6 +357,7 @@
         <div class="counter">
           <div class="count" id="count">0</div>
           <div class="count-label">squats</div>
+          <div class="today-stat" id="todayStat">0 today</div>
         </div>
 
         <div class="btn-row">
@@ -378,6 +413,14 @@
           </label>
           <div class="debug" id="debug" style="display: none"></div>
         </details>
+
+        <details open>
+          <summary>Daily history</summary>
+          <ul class="day-list" id="dayList"></ul>
+          <button class="clear-history" id="clearHistoryBtn">
+            Clear saved history
+          </button>
+        </details>
       </div>
 
       <div class="card">
@@ -386,7 +429,11 @@
         </p>
         <ol class="steps note">
           <li>Tap <b>Enable Motion Sensors</b> (iPhone will ask permission).</li>
-          <li>Put your phone in your pocket, waistband, or armband.</li>
+          <li>
+            Hold the phone firmly in your hand — this works best. A tight
+            waistband or armband can work too, but a loose pocket tends to
+            muffle the motion and miss reps.
+          </li>
           <li>Tap <b>Start</b>, stand still for a second, then squat away.</li>
           <li>
             Each rep gets a beep/vibration and a live count. If it misses a
@@ -396,9 +443,15 @@
         </ol>
         <p class="note" style="margin-top: 0.6rem">
           Detection is based on the magnitude of acceleration, so it works
-          regardless of which way the phone is oriented in your pocket. It
+          regardless of which way the phone is oriented — but the tighter and
+          more secure it is against your body, the cleaner the signal. It
           needs a real phone/tablet with a motion sensor — this won't work on
           a laptop.
+        </p>
+        <p class="note" style="margin-top: 0.6rem">
+          Daily totals are saved only in this browser's local storage on this
+          device — clearing site data or switching browsers/phones will lose
+          the history.
         </p>
       </div>
     </div>
@@ -423,6 +476,9 @@
         const sensButtons = document.querySelectorAll(".sens-row button");
         const debugToggle = document.getElementById("debugToggle");
         const debugEl = document.getElementById("debug");
+        const todayStatEl = document.getElementById("todayStat");
+        const dayListEl = document.getElementById("dayList");
+        const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 
         // ---------- State ----------
         let count = 0;
@@ -527,6 +583,97 @@
           }
         }
 
+        // ---------- Daily rep log (localStorage) ----------
+        const DAILY_LOG_KEY = "squatCounter:dailyReps";
+
+        function todayKey() {
+          const d = new Date();
+          return (
+            d.getFullYear() +
+            "-" +
+            String(d.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(d.getDate()).padStart(2, "0")
+          );
+        }
+
+        function loadDailyLog() {
+          try {
+            const raw = localStorage.getItem(DAILY_LOG_KEY);
+            return raw ? JSON.parse(raw) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+
+        function saveDailyLog(data) {
+          try {
+            localStorage.setItem(DAILY_LOG_KEY, JSON.stringify(data));
+          } catch (e) {
+            /* private browsing / quota exceeded — fail silently */
+          }
+        }
+
+        function addRepsToday(delta) {
+          const data = loadDailyLog();
+          const key = todayKey();
+          data[key] = Math.max(0, (data[key] || 0) + delta);
+          saveDailyLog(data);
+          renderDailyLog(data);
+        }
+
+        function formatDayLabel(key) {
+          if (key === todayKey()) return "Today";
+          const y = new Date();
+          y.setDate(y.getDate() - 1);
+          const yesterdayKey =
+            y.getFullYear() +
+            "-" +
+            String(y.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(y.getDate()).padStart(2, "0");
+          if (key === yesterdayKey) return "Yesterday";
+          const d = new Date(key + "T00:00:00");
+          return d.toLocaleDateString(undefined, {
+            month: "short",
+            day: "numeric",
+          });
+        }
+
+        function renderDailyLog(data) {
+          data = data || loadDailyLog();
+          const today = data[todayKey()] || 0;
+          todayStatEl.textContent = `${today} today`;
+
+          const days = Object.keys(data)
+            .sort()
+            .reverse()
+            .slice(0, 14);
+          if (!days.length) {
+            dayListEl.innerHTML =
+              '<li><span class="note">No reps logged yet.</span></li>';
+            return;
+          }
+          dayListEl.innerHTML = days
+            .map(
+              (k) =>
+                `<li><span>${formatDayLabel(k)}</span><span>${
+                  data[k]
+                }</span></li>`
+            )
+            .join("");
+        }
+
+        clearHistoryBtn.addEventListener("click", () => {
+          if (!confirm("Clear all saved daily rep history on this device?"))
+            return;
+          try {
+            localStorage.removeItem(DAILY_LOG_KEY);
+          } catch (e) {}
+          renderDailyLog({});
+          track("history_cleared");
+        });
+
         // ---------- Counting ----------
         function incrementCount() {
           count += 1;
@@ -537,6 +684,7 @@
           countEl.classList.add("bump");
           beep();
           vibrate();
+          addRepsToday(1);
         }
 
         resetBtn.addEventListener("click", () => {
@@ -549,11 +697,13 @@
         plusBtn.addEventListener("click", () => {
           count += 1;
           countEl.textContent = String(count);
+          addRepsToday(1);
           track("manual_adjust", { direction: "increment", squat_count: count });
         });
         minusBtn.addEventListener("click", () => {
           count = Math.max(0, count - 1);
           countEl.textContent = String(count);
+          addRepsToday(-1);
           track("manual_adjust", { direction: "decrement", squat_count: count });
         });
 
@@ -840,6 +990,7 @@
 
         resizeCanvas();
         requestAnimationFrame(draw);
+        renderDailyLog();
       })();
     </script>
   </body>
