@@ -83,26 +83,12 @@
       </p>
       <div id="article-root">
         <ul class="article-list">
-          <li data-slug="free-apps-like-zombies-run"><a href="free-apps-like-zombies-run.html">5 Free Apps Like Zombies, Run! (That Don't Require a Subscription)</a></li>
-          <li data-slug="zombies-run-vs-night-chase"><a href="zombies-run-vs-night-chase.html">Zombies, Run! vs Night Chase: Which GPS Zombie Game Is Right for You?</a></li>
-          <li data-slug="immersive-running-apps-without-audio"><a href="immersive-running-apps-without-audio.html">The Best Immersive Running Apps That Don't Rely on Audio</a></li>
-          <li data-slug="gamify-running-hate-cardio"><a href="gamify-running-hate-cardio.html">How to Gamify Running When You Absolutely Hate Cardio</a></li>
-          <li data-slug="running-games-for-adults"><a href="running-games-for-adults.html">7 Running Games for Adults Who Find Jogging Boring</a></li>
-          <li data-slug="running-motivation-for-beginners"><a href="running-motivation-for-beginners.html">Running Motivation for Beginners: Why You Need a Quest, Not a Stopwatch</a></li>
-          <li data-slug="how-to-stop-finding-running-boring"><a href="how-to-stop-finding-running-boring.html">How to Stop Finding Running Boring: 5 Gamified Strategies</a></li>
-          <li data-slug="run-trackers-without-subscription"><a href="run-trackers-without-subscription.html">Best Run Trackers Without a Subscription (or an App Download)</a></li>
-          <li data-slug="browser-based-gps-running-games"><a href="browser-based-gps-running-games.html">How to Play GPS Running Games in Your Browser (No App Required)</a></li>
-          <li data-slug="strava-alternatives-casual-runners"><a href="strava-alternatives-casual-runners.html">Strava Alternatives for Casual Runners Who Hate Leaderboards</a></li>
-          <li data-slug="gamified-interval-training-fartlek"><a href="gamified-interval-training-fartlek.html">Gamified Interval Training: How to Use &quot;Chases&quot; for Fartlek Runs</a></li>
-          <li data-slug="best-gps-fitness-games"><a href="best-gps-fitness-games.html">The Best GPS Fitness Games to Play Outside This Summer</a></li>
-          <li data-slug="gamify-walking-apps"><a href="gamify-walking-apps.html">Can You Gamify Walking? The Best Apps for Walkers and Joggers</a></li>
-          <li data-slug="fun-ways-to-run-outside"><a href="fun-ways-to-run-outside.html">Fun Ways to Run Outside: Ditch the Treadmill with Location-Based Games</a></li>
-          <li data-slug="free-outdoor-fitness-games-students"><a href="free-outdoor-fitness-games-students.html">Free Outdoor Fitness Games for Teens and College Students</a></li>
-          <li data-slug="zombie-chase-apps-run-faster"><a href="zombie-chase-apps-run-faster.html">Zombie Chase Running Apps: Do They Actually Make You Run Faster?</a></li>
-          <li data-slug="gamification-transforms-cardio"><a href="gamification-transforms-cardio.html">How Gamification Transforms Cardio From a Chore Into a Game</a></li>
-          <li data-slug="pedometer-vs-live-map-chases"><a href="pedometer-vs-live-map-chases.html">Pedometer Apps vs. Live Map Chases: A Better Way to Move</a></li>
+          <li><a href="free-apps-like-zombies-run.html">5 Free Apps Like Zombies, Run! (That Don't Require a Subscription)</a></li>
+          <li><a href="zombies-run-vs-night-chase.html">Zombies, Run! vs Night Chase: Which GPS Zombie Game Is Right for You?</a></li>
+          <li><a href="immersive-running-apps-without-audio.html">The Best Immersive Running Apps That Don't Rely on Audio</a></li>
+          <li><a href="gamify-running-hate-cardio.html">How to Gamify Running When You Absolutely Hate Cardio</a></li>
         </ul>
-        <p class="note" id="moreComingSoon" style="display: none; margin-top: 0.9rem"></p>
+        <p class="note" style="margin-top: 0.9rem">14 more articles coming soon.</p>
       </div>
 
       <div class="cta-card">
@@ -114,42 +100,5 @@
         <a class="btn" href="../index.html">Play free</a>
       </div>
     </div>
-
-    <script>
-      (function () {
-        "use strict";
-        var MIN_WORDS = 150; // keep in sync with assets/article.js
-        var items = document.querySelectorAll(".article-list li[data-slug]");
-        var pending = items.length;
-        var hiddenCount = 0;
-        var noteEl = document.getElementById("moreComingSoon");
-
-        items.forEach(function (li) {
-          fetch(li.dataset.slug + ".md")
-            .then(function (r) {
-              return r.ok ? r.text() : "";
-            })
-            .then(function (md) {
-              var wc = md.trim().split(/\s+/).filter(Boolean).length;
-              if (wc < MIN_WORDS) {
-                li.remove();
-                hiddenCount++;
-              }
-            })
-            .catch(function () {
-              li.remove();
-              hiddenCount++;
-            })
-            .then(function () {
-              pending--;
-              if (pending === 0 && hiddenCount > 0 && noteEl) {
-                noteEl.textContent =
-                  hiddenCount + " more article" + (hiddenCount === 1 ? "" : "s") + " coming soon.";
-                noteEl.style.display = "block";
-              }
-            });
-        });
-      })();
-    </script>
   </body>
 </html>
