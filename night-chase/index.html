@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Night Chase — Free Zombie Run Game</title>
+    <meta
+      name="description"
+      content="Free zombie chase game for your run. Zombies hunt your real GPS position on a dark map of your actual streets. No app, no account, no ads."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://julienreszka.github.io/night-chase/"
+    />
+    <meta property="og:title" content="Night Chase - Julien Reszka" />
+    <meta
+      property="og:description"
+      content="Free zombie chase game for your run. Zombies hunt your real GPS position on a dark map of your actual streets. No app, no account, no ads."
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta
+      property="twitter:url"
+      content="https://julienreszka.github.io/night-chase/"
+    />
+    <meta property="twitter:title" content="Night Chase - Julien Reszka" />
+    <meta
+      property="twitter:description"
+      content="Free zombie chase game for your run. Zombies hunt your real GPS position on a dark map of your actual streets. No app, no account, no ads."
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter:400,600,700,800&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-CGGYE2S105"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-CGGYE2S105");
+    </script>
+
+    <style>
+      :root {
+        --bg1: #f8fafc;
+        --bg2: #e0e7ef;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --text: #222;
+        --text-soft: #4a5a6a;
+        --text-faint: #7b8794;
+        --accent: #2563eb;
+        --accent2: #38bdf8;
+        --danger: #ef4444;
+        --ok: #16a34a;
+        --track-bg: #eef2f7;
+        --shadow: rgba(60, 60, 120, 0.08);
+        --border: rgba(37, 99, 235, 0.12);
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg1: #181c20;
+          --bg2: #232b36;
+          --card-bg: rgba(30, 36, 44, 0.97);
+          --text: #e5e7eb;
+          --text-soft: #b6c2d1;
+          --text-faint: #8b98a8;
+          --accent: #60a5fa;
+          --accent2: #38bdf8;
+          --danger: #f87171;
+          --ok: #4ade80;
+          --track-bg: #1c2733;
+          --shadow: rgba(20, 20, 40, 0.22);
+          --border: rgba(96, 165, 250, 0.18);
+        }
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background: linear-gradient(135deg, var(--bg1) 0%, var(--bg2) 100%);
+        color: var(--text);
+        margin: 0;
+        min-height: 100vh;
+      }
+
+      /* ---------- Landing screen ---------- */
+      #landing {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1.5rem 1rem 3rem;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 460px;
+      }
+      .back {
+        display: inline-block;
+        font-size: 0.85rem;
+        color: var(--text-faint);
+        text-decoration: none;
+        margin-bottom: 0.75rem;
+      }
+      .back:hover {
+        color: var(--accent);
+      }
+      h1 {
+        font-size: 1.7rem;
+        font-weight: 800;
+        margin: 0 0 0.3rem;
+        letter-spacing: -0.5px;
+      }
+      .sub {
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        margin: 0 0 1.25rem;
+        line-height: 1.4;
+      }
+      .card {
+        background: var(--card-bg);
+        border-radius: 1.25rem;
+        box-shadow: 0 8px 32px var(--shadow);
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+      }
+      .mode-row {
+        display: flex;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+      }
+      .mode-btn {
+        flex: 1;
+        background: var(--track-bg);
+        color: var(--text-soft);
+        border: 2px solid transparent;
+        border-radius: 0.9rem;
+        padding: 0.9rem 0.5rem;
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 0.92rem;
+        cursor: pointer;
+        text-align: center;
+        transition: border-color 0.15s, color 0.15s;
+      }
+      .mode-btn .mb-desc {
+        display: block;
+        font-weight: 400;
+        font-size: 0.75rem;
+        color: var(--text-faint);
+        margin-top: 0.2rem;
+      }
+      .mode-btn.active {
+        border-color: var(--accent);
+        color: var(--accent);
+      }
+      .pace-row {
+        display: none;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.6rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        color: var(--text-soft);
+      }
+      .pace-row.show {
+        display: flex;
+      }
+      .pace-row input {
+        width: 70px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        padding: 0.4rem 0.5rem;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border);
+        background: var(--track-bg);
+        color: var(--text);
+      }
+      button.primary {
+        width: 100%;
+        font-family: inherit;
+        border: none;
+        border-radius: 0.9rem;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 1.05rem;
+        padding: 0.95rem 0;
+        color: #fff;
+        background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
+        box-shadow: 0 2px 12px rgba(37, 99, 235, 0.18);
+        transition: transform 0.15s, opacity 0.2s;
+      }
+      button.primary:active {
+        transform: scale(0.98);
+      }
+      button.primary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .error-box {
+        background: rgba(239, 68, 68, 0.1);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: var(--danger);
+        border-radius: 0.75rem;
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+        display: none;
+      }
+      .error-box.show {
+        display: block;
+      }
+      .note {
+        font-size: 0.8rem;
+        color: var(--text-faint);
+        line-height: 1.5;
+      }
+      .note b {
+        color: var(--text-soft);
+      }
+      .steps {
+        margin: 0.4rem 0 0;
+        padding-left: 1.1rem;
+      }
+      .steps li {
+        margin-bottom: 0.3rem;
+      }
+      .today-stat {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        margin-top: -0.4rem;
+        margin-bottom: 1rem;
+      }
+
+      /* ---------- Game screen ---------- */
+      #game {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: #0b0e12;
+      }
+      #map {
+        position: absolute;
+        inset: 0;
+        background: #0b0e12;
+      }
+      /* Fake a dark basemap from standard OSM tiles (no API key needed) */
+      .nc-dark-tiles {
+        filter: invert(1) hue-rotate(180deg) brightness(0.92) contrast(0.9)
+          saturate(0.6);
+      }
+      .hud-top {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 500;
+        display: flex;
+        gap: 0.5rem;
+        padding: calc(0.6rem + env(safe-area-inset-top)) 0.6rem 0.6rem;
+        pointer-events: none;
+      }
+      .hud-stat {
+        flex: 1;
+        background: rgba(15, 18, 24, 0.82);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 0.8rem;
+        padding: 0.45rem 0.3rem;
+        text-align: center;
+        color: #e5e7eb;
+      }
+      .hud-stat .v {
+        font-size: 1.05rem;
+        font-weight: 800;
+        line-height: 1.1;
+      }
+      .hud-stat .l {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: #93a2b8;
+        margin-top: 0.15rem;
+      }
+      .hud-bottom {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 500;
+        padding: 0.7rem 0.7rem calc(0.8rem + env(safe-area-inset-bottom));
+        background: linear-gradient(
+          to top,
+          rgba(11, 14, 18, 0.92) 20%,
+          rgba(11, 14, 18, 0)
+        );
+      }
+      .battery-wrap {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 0.6rem;
+      }
+      .battery-track {
+        flex: 1;
+        height: 10px;
+        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.12);
+        overflow: hidden;
+      }
+      .battery-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #4ade80, #22d3ee);
+        transition: width 0.3s;
+      }
+      .battery-label {
+        font-size: 0.7rem;
+        color: #b6c2d1;
+        min-width: 74px;
+        text-align: right;
+      }
+      .game-btn-row {
+        display: flex;
+        gap: 0.6rem;
+      }
+      .game-btn {
+        flex: 1;
+        font-family: inherit;
+        font-weight: 700;
+        font-size: 0.95rem;
+        border: none;
+        border-radius: 0.8rem;
+        padding: 0.85rem 0;
+        cursor: pointer;
+        color: #fff;
+      }
+      .game-btn.shove {
+        background: linear-gradient(90deg, #f97316 0%, #ef4444 100%);
+      }
+      .game-btn.shove:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+      .game-btn.end {
+        background: rgba(255, 255, 255, 0.12);
+        flex: 0 0 auto;
+        padding: 0.85rem 1.1rem;
+      }
+      .ammo-chip {
+        position: absolute;
+        top: calc(4.6rem + env(safe-area-inset-top));
+        right: 0.7rem;
+        z-index: 500;
+        background: rgba(15, 18, 24, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        color: #fff;
+        padding: 0.35rem 0.6rem;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        font-weight: 700;
+      }
+      .toast {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        z-index: 900;
+        background: rgba(20, 24, 30, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: #fff;
+        padding: 1rem 1.4rem;
+        border-radius: 1rem;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-align: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      .bite-flash {
+        position: absolute;
+        inset: 0;
+        background: rgba(239, 68, 68, 0.35);
+        z-index: 800;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s;
+      }
+      .bite-flash.show {
+        opacity: 1;
+      }
+
+      /* ---------- Summary screen ---------- */
+      #summary {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(10, 13, 17, 0.94);
+        color: #fff;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+      .summary-card {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 1.5rem;
+        padding: 2rem 1.75rem;
+        max-width: 380px;
+        width: 100%;
+        text-align: center;
+      }
+      .summary-card h2 {
+        margin: 0 0 0.3rem;
+        font-size: 1.6rem;
+      }
+      .summary-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin: 1.4rem 0;
+      }
+      .summary-grid div {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 0.8rem;
+        padding: 0.7rem 0.4rem;
+      }
+      .summary-grid .v {
+        font-size: 1.3rem;
+        font-weight: 800;
+      }
+      .summary-grid .l {
+        font-size: 0.7rem;
+        color: #93a2b8;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 0.2rem;
+      }
+
+      /* Leaflet marker tweaks */
+      .nc-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.6));
+      }
+      .nc-player {
+        font-size: 26px;
+      }
+      .nc-zombie {
+        font-size: 22px;
+        opacity: 0.85;
+      }
+      .nc-zombie.close {
+        font-size: 30px;
+        animation: nc-pulse 0.7s infinite;
+      }
+      @keyframes nc-pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.18);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ===================== LANDING ===================== -->
+    <div id="landing">
+      <div class="wrap">
+        <a class="back" href="../index.html">&larr; Julien Reszka's Github Pages</a>
+        <h1>🧟 Night Chase</h1>
+        <p class="sub">
+          Free zombie chase for your run. Zombies hunt your live GPS position
+          on a dark map of your actual streets &mdash; keep moving and they
+          fall behind, stop and they catch up.
+        </p>
+
+        <div class="error-box" id="errorBox"></div>
+
+        <div class="card">
+          <div class="mode-row">
+            <button class="mode-btn active" data-mode="survival" id="modeSurvival">
+              🧟 Survival
+              <span class="mb-desc">Outrun the horde</span>
+            </button>
+            <button class="mode-btn" data-mode="training" id="modeTraining">
+              🎯 Training
+              <span class="mb-desc">Hold a target pace</span>
+            </button>
+          </div>
+
+          <div class="pace-row" id="paceRow">
+            <span>Target pace</span>
+            <div style="display: flex; align-items: center; gap: 0.3rem">
+              <input type="number" id="paceMin" min="2" max="15" value="6" />
+              <span>:</span>
+              <input type="number" id="paceSec" min="0" max="59" value="0" />
+              <span>min/km</span>
+            </div>
+          </div>
+
+          <div class="today-stat" id="todayStat">0.0 km run today</div>
+
+          <button class="primary" id="startBtn">Enable Location &amp; Start</button>
+        </div>
+
+        <div class="card">
+          <p class="note"><b>How it works</b></p>
+          <ol class="steps note">
+            <li>Grant location access, then start a run outdoors.</li>
+            <li>
+              In <b>Survival</b>, zombies spawn nearby and head straight for
+              you. Tap a 💀 once it's close to shoot it (costs 1 ammo &mdash;
+              collect 📦 crates as you run). The
+              <b>SHOVE</b> button pushes back every nearby zombie at once, but
+              costs a full battery bar, which charges as you cover distance.
+            </li>
+            <li>
+              In <b>Training</b>, there's no horde &mdash; just a live
+              pace readout against your target, for structured runs.
+            </li>
+            <li>Getting caught costs a life. Three strikes ends the run.</li>
+          </ol>
+        </div>
+
+        <div class="card">
+          <p class="note">
+            <b>Before you start</b>
+          </p>
+          <p class="note" style="margin-top: 0.4rem">
+            Zombies move in a straight line toward your position &mdash; they
+            don't pathfind along actual streets. The screen must stay on and
+            this tab foregrounded the whole run (it requests a wake lock, but
+            backgrounding the browser or locking the phone will pause
+            tracking &mdash; a real browser limitation, not a bug). Works
+            best held in hand, outdoors, with a clear GPS signal.
+          </p>
+          <p class="note" style="margin-top: 0.6rem">
+            Free, no account, no ads, no server &mdash; everything runs in
+            this tab. Not affiliated with any existing zombie-run app; this
+            is an independent build in the same spirit. Run history is saved
+            only in this browser's local storage on this device.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== GAME ===================== -->
+    <div id="game">
+      <div id="map"></div>
+
+      <div class="hud-top">
+        <div class="hud-stat"><div class="v" id="hudDistance">0.00</div><div class="l">km</div></div>
+        <div class="hud-stat"><div class="v" id="hudPace">--:--</div><div class="l">pace /km</div></div>
+        <div class="hud-stat"><div class="v" id="hudTime">00:00</div><div class="l">time</div></div>
+        <div class="hud-stat"><div class="v" id="hudZombies">0</div><div class="l">nearby</div></div>
+        <div class="hud-stat"><div class="v" id="hudLives">❤️❤️❤️</div><div class="l">lives</div></div>
+      </div>
+
+      <div class="ammo-chip" id="ammoChip" style="display: none">📦 0</div>
+
+      <div class="bite-flash" id="biteFlash"></div>
+      <div class="toast" id="toast"></div>
+
+      <div class="hud-bottom">
+        <div class="battery-wrap" id="batteryWrap">
+          <div class="battery-track">
+            <div class="battery-fill" id="batteryFill"></div>
+          </div>
+          <div class="battery-label" id="batteryLabel">Shove: 0%</div>
+        </div>
+        <div class="game-btn-row">
+          <button class="game-btn shove" id="shoveBtn" disabled>
+            🛡️ SHOVE
+          </button>
+          <button class="game-btn end" id="endBtn">End</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== SUMMARY ===================== -->
+    <div id="summary">
+      <div class="summary-card">
+        <h2 id="summaryTitle">Run complete</h2>
+        <p class="note" id="summarySub" style="color: #93a2b8"></p>
+        <div class="summary-grid">
+          <div><div class="v" id="sumDistance">0.0 km</div><div class="l">Distance</div></div>
+          <div><div class="v" id="sumTime">0:00</div><div class="l">Time</div></div>
+          <div><div class="v" id="sumPace">--:--</div><div class="l">Avg pace</div></div>
+          <div><div class="v" id="sumZombies">0</div><div class="l">Zombies shot</div></div>
+        </div>
+        <button class="primary" id="backBtn">Back</button>
+      </div>
+    </div>
+
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script>
+      (function () {
+        "use strict";
+
+        // ---------- Analytics ----------
+        function track(name, params) {
+          if (typeof gtag === "function") gtag("event", name, params || {});
+        }
+
+        // ---------- Geo math ----------
+        const R_EARTH = 6371000;
+        function toRad(d) {
+          return (d * Math.PI) / 180;
+        }
+        function toDeg(r) {
+          return (r * 180) / Math.PI;
+        }
+        function haversine(a, b) {
+          const dphi = toRad(b.lat - a.lat);
+          const dlambda = toRad(b.lng - a.lng);
+          const phi1 = toRad(a.lat);
+          const phi2 = toRad(b.lat);
+          const s =
+            Math.sin(dphi / 2) ** 2 +
+            Math.cos(phi1) * Math.cos(phi2) * Math.sin(dlambda / 2) ** 2;
+          return 2 * R_EARTH * Math.atan2(Math.sqrt(s), Math.sqrt(1 - s));
+        }
+        function bearing(a, b) {
+          const phi1 = toRad(a.lat);
+          const phi2 = toRad(b.lat);
+          const dlambda = toRad(b.lng - a.lng);
+          const y = Math.sin(dlambda) * Math.cos(phi2);
+          const x =
+            Math.cos(phi1) * Math.sin(phi2) -
+            Math.sin(phi1) * Math.cos(phi2) * Math.cos(dlambda);
+          return (toDeg(Math.atan2(y, x)) + 360) % 360;
+        }
+        function destinationPoint(p, bearingDeg, distanceMeters) {
+          const delta = distanceMeters / R_EARTH;
+          const theta = toRad(bearingDeg);
+          const phi1 = toRad(p.lat);
+          const lambda1 = toRad(p.lng);
+          const phi2 = Math.asin(
+            Math.sin(phi1) * Math.cos(delta) +
+              Math.cos(phi1) * Math.sin(delta) * Math.cos(theta)
+          );
+          const lambda2 =
+            lambda1 +
+            Math.atan2(
+              Math.sin(theta) * Math.sin(delta) * Math.cos(phi1),
+              Math.cos(delta) - Math.sin(phi1) * Math.sin(phi2)
+            );
+          return {
+            lat: toDeg(phi2),
+            lng: ((toDeg(lambda2) + 540) % 360) - 180,
+          };
+        }
+
+        // ---------- Difficulty ----------
+        function isDaytime() {
+          const h = new Date().getHours();
+          return h >= 6 && h < 19;
+        }
+        function difficultyConfig() {
+          return isDaytime()
+            ? {
+                label: "day",
+                spawnIntervalSec: 25,
+                maxZombies: 4,
+                speed: 2.7,
+                giveUpSec: 60,
+              }
+            : {
+                label: "night",
+                spawnIntervalSec: 45,
+                maxZombies: 2,
+                speed: 2.3,
+                giveUpSec: 150,
+              };
+        }
+
+        const CLOSE_RANGE = 25; // m, tappable
+        const CATCH_RANGE = 8; // m, bites you
+        const COLLECT_RANGE = 15; // m, powerup pickup
+        const SPAWN_MIN_DIST = 110;
+        const SPAWN_MAX_DIST = 220;
+        const POWERUP_MIN_DIST = 60;
+        const POWERUP_MAX_DIST = 150;
+        const POWERUP_INTERVAL_SEC = 50;
+        const MAX_POWERUPS = 3;
+        const BATTERY_PER_METER = 100 / 700; // full bar per 700m
+
+        // ---------- DOM ----------
+        const landing = document.getElementById("landing");
+        const gameEl = document.getElementById("game");
+        const summaryEl = document.getElementById("summary");
+        const errorBox = document.getElementById("errorBox");
+        const startBtn = document.getElementById("startBtn");
+        const modeSurvival = document.getElementById("modeSurvival");
+        const modeTraining = document.getElementById("modeTraining");
+        const paceRow = document.getElementById("paceRow");
+        const paceMinInput = document.getElementById("paceMin");
+        const paceSecInput = document.getElementById("paceSec");
+        const todayStatEl = document.getElementById("todayStat");
+
+        const hudDistance = document.getElementById("hudDistance");
+        const hudPace = document.getElementById("hudPace");
+        const hudTime = document.getElementById("hudTime");
+        const hudZombies = document.getElementById("hudZombies");
+        const hudLives = document.getElementById("hudLives");
+        const ammoChip = document.getElementById("ammoChip");
+        const batteryFill = document.getElementById("batteryFill");
+        const batteryLabel = document.getElementById("batteryLabel");
+        const batteryWrap = document.getElementById("batteryWrap");
+        const shoveBtn = document.getElementById("shoveBtn");
+        const endBtn = document.getElementById("endBtn");
+        const toastEl = document.getElementById("toast");
+        const biteFlashEl = document.getElementById("biteFlash");
+        const backBtn = document.getElementById("backBtn");
+
+        // ---------- Daily log (localStorage) ----------
+        const DAILY_LOG_KEY = "nightChase:dailyDistanceMeters";
+        function todayKey() {
+          const d = new Date();
+          return (
+            d.getFullYear() +
+            "-" +
+            String(d.getMonth() + 1).padStart(2, "0") +
+            "-" +
+            String(d.getDate()).padStart(2, "0")
+          );
+        }
+        function loadDailyLog() {
+          try {
+            const raw = localStorage.getItem(DAILY_LOG_KEY);
+            return raw ? JSON.parse(raw) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+        function saveDailyLog(data) {
+          try {
+            localStorage.setItem(DAILY_LOG_KEY, JSON.stringify(data));
+          } catch (e) {}
+        }
+        function addDistanceToday(meters) {
+          const data = loadDailyLog();
+          const key = todayKey();
+          data[key] = (data[key] || 0) + meters;
+          saveDailyLog(data);
+          renderTodayStat(data);
+        }
+        function renderTodayStat(data) {
+          data = data || loadDailyLog();
+          const km = (data[todayKey()] || 0) / 1000;
+          todayStatEl.textContent = `${km.toFixed(1)} km run today`;
+        }
+        renderTodayStat();
+
+        // ---------- Mode selection ----------
+        let mode = "survival";
+        modeSurvival.addEventListener("click", () => setMode("survival"));
+        modeTraining.addEventListener("click", () => setMode("training"));
+        function setMode(m) {
+          mode = m;
+          modeSurvival.classList.toggle("active", m === "survival");
+          modeTraining.classList.toggle("active", m === "training");
+          paceRow.classList.toggle("show", m === "training");
+        }
+
+        function showError(msg) {
+          errorBox.textContent = msg;
+          errorBox.classList.add("show");
+        }
+
+        // ---------- Audio / feedback ----------
+        let audioCtx = null;
+        function tone(freq, dur, gainPeak) {
+          try {
+            if (!audioCtx) {
+              const AC = window.AudioContext || window.webkitAudioContext;
+              audioCtx = new AC();
+            }
+            if (audioCtx.state === "suspended") audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = "sine";
+            osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(
+              gainPeak,
+              audioCtx.currentTime + 0.01
+            );
+            gain.gain.exponentialRampToValueAtTime(
+              0.001,
+              audioCtx.currentTime + dur
+            );
+            osc.connect(gain).connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + dur + 0.02);
+          } catch (e) {}
+        }
+        function vibrate(pattern) {
+          if (navigator.vibrate) {
+            try {
+              navigator.vibrate(pattern);
+            } catch (e) {}
+          }
+        }
+        function shootSound() {
+          tone(660, 0.1, 0.15);
+        }
+        function biteSound() {
+          tone(160, 0.35, 0.2);
+          vibrate([120, 60, 120]);
+        }
+        function shoveSound() {
+          tone(340, 0.25, 0.18);
+          vibrate(80);
+        }
+        function pickupSound() {
+          tone(880, 0.12, 0.15);
+        }
+
+        let toastTimer = null;
+        function showToast(text) {
+          toastEl.textContent = text;
+          toastEl.classList.add("show");
+          clearTimeout(toastTimer);
+          toastTimer = setTimeout(() => toastEl.classList.remove("show"), 1400);
+        }
+
+        // ---------- Map ----------
+        let map = null;
+        let playerMarker = null;
+        const zombieMarkers = new Map();
+        const powerupMarkers = new Map();
+
+        function initMap(center) {
+          map = L.map("map", {
+            zoomControl: false,
+            attributionControl: true,
+          }).setView([center.lat, center.lng], 17);
+          L.tileLayer(
+            "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            {
+              attribution:
+                '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              subdomains: "abc",
+              maxZoom: 19,
+              className: "nc-dark-tiles",
+            }
+          ).addTo(map);
+
+          playerMarker = L.marker([center.lat, center.lng], {
+            icon: L.divIcon({
+              className: "",
+              html: '<div class="nc-icon nc-player">🏃</div>',
+              iconSize: [30, 30],
+              iconAnchor: [15, 15],
+            }),
+            zIndexOffset: 1000,
+          }).addTo(map);
+        }
+
+        function markerFor(store, id, emojiClass, emoji) {
+          if (store.has(id)) return store.get(id);
+          const m = L.marker([0, 0], {
+            icon: L.divIcon({
+              className: "",
+              html: `<div class="nc-icon ${emojiClass}">${emoji}</div>`,
+              iconSize: [30, 30],
+              iconAnchor: [15, 15],
+            }),
+          }).addTo(map);
+          store.set(id, m);
+          return m;
+        }
+
+        // ---------- Game state ----------
+        let running = false;
+        let watchId = null;
+        let wakeLock = null;
+        let tickTimer = null;
+        let clockTimer = null;
+
+        let playerPos = null;
+        let lastFixTime = null;
+        let heading = 0;
+        let distance = 0; // meters
+        let startTime = null;
+        let lives = 3;
+        let ammo = 0;
+        let battery = 0;
+        let zombiesShot = 0;
+        let zombies = []; // {id, pos, speed, minDist, lastGainTime, spawnTime}
+        let powerups = []; // {id, pos, type}
+        let zombieIdSeq = 1;
+        let powerupIdSeq = 1;
+        let lastSpawnTime = 0;
+        let lastPowerupTime = 0;
+        let recentSpeeds = []; // for pace smoothing
+
+        function resetState() {
+          playerPos = null;
+          lastFixTime = null;
+          heading = 0;
+          distance = 0;
+          startTime = performance.now();
+          lives = 3;
+          ammo = 0;
+          battery = 0;
+          zombiesShot = 0;
+          zombies = [];
+          powerups = [];
+          lastSpawnTime = 0;
+          lastPowerupTime = 0;
+          recentSpeeds = [];
+        }
+
+        // ---------- Start / stop ----------
+        startBtn.addEventListener("click", () => {
+          if (!("geolocation" in navigator)) {
+            showError("This browser doesn't support geolocation.");
+            return;
+          }
+          startBtn.disabled = true;
+          startBtn.textContent = "Requesting location…";
+          navigator.geolocation.getCurrentPosition(
+            (pos) => {
+              startBtn.disabled = false;
+              startBtn.textContent = "Enable Location & Start";
+              beginRun(pos);
+            },
+            (err) => {
+              startBtn.disabled = false;
+              startBtn.textContent = "Enable Location & Start";
+              showError(
+                "Location access was denied or unavailable. Enable it for this site in your browser settings and try again."
+              );
+              track("location_permission_result", { result: "denied" });
+            },
+            { enableHighAccuracy: true, timeout: 15000 }
+          );
+        });
+
+        async function beginRun(initialPos) {
+          track("location_permission_result", { result: "granted" });
+          resetState();
+          playerPos = {
+            lat: initialPos.coords.latitude,
+            lng: initialPos.coords.longitude,
+          };
+          lastFixTime = performance.now();
+
+          landing.style.display = "none";
+          summaryEl.style.display = "none";
+          gameEl.style.display = "block";
+          ammoChip.style.display = mode === "survival" ? "block" : "none";
+          batteryWrap.style.display = mode === "survival" ? "flex" : "none";
+          shoveBtn.style.display = mode === "survival" ? "block" : "none";
+          hudZombies.parentElement.style.display =
+            mode === "survival" ? "block" : "none";
+          hudLives.parentElement.style.display =
+            mode === "survival" ? "block" : "none";
+
+          initMap(playerPos);
+
+          try {
+            if ("wakeLock" in navigator) {
+              wakeLock = await navigator.wakeLock.request("screen");
+            }
+          } catch (e) {
+            /* wake lock not available/denied — run continues, screen may sleep */
+          }
+          document.addEventListener("visibilitychange", reacquireWakeLock);
+
+          watchId = navigator.geolocation.watchPosition(
+            onPosition,
+            () => {},
+            { enableHighAccuracy: true, maximumAge: 2000, timeout: 20000 }
+          );
+
+          tickTimer = setInterval(gameTick, 1000);
+          clockTimer = setInterval(updateClockHud, 1000);
+          running = true;
+          track("run_start", { mode: mode, difficulty: difficultyConfig().label });
+        }
+
+        async function reacquireWakeLock() {
+          if (running && document.visibilityState === "visible" && "wakeLock" in navigator) {
+            try {
+              wakeLock = await navigator.wakeLock.request("screen");
+            } catch (e) {}
+          }
+        }
+
+        function endRun(reason) {
+          if (!running) return;
+          running = false;
+          if (watchId !== null) navigator.geolocation.clearWatch(watchId);
+          clearInterval(tickTimer);
+          clearInterval(clockTimer);
+          document.removeEventListener("visibilitychange", reacquireWakeLock);
+          if (wakeLock) {
+            wakeLock.release().catch(() => {});
+            wakeLock = null;
+          }
+
+          addDistanceToday(distance);
+
+          const elapsedSec = (performance.now() - startTime) / 1000;
+          const km = distance / 1000;
+          const paceSecPerKm = km > 0.05 ? elapsedSec / km : null;
+
+          track("run_end", {
+            mode: mode,
+            reason: reason,
+            distance_m: Math.round(distance),
+            duration_s: Math.round(elapsedSec),
+            zombies_shot: zombiesShot,
+            lives_left: lives,
+          });
+
+          document.getElementById("summaryTitle").textContent =
+            reason === "caught" ? "You got caught!" : "Run complete";
+          document.getElementById("summarySub").textContent =
+            reason === "caught"
+              ? "The horde got you. Better luck next time."
+              : "Nice work.";
+          document.getElementById("sumDistance").textContent =
+            km.toFixed(2) + " km";
+          document.getElementById("sumTime").textContent = fmtTime(elapsedSec);
+          document.getElementById("sumPace").textContent = paceSecPerKm
+            ? fmtPace(paceSecPerKm)
+            : "--:--";
+          document.getElementById("sumZombies").textContent = zombiesShot;
+
+          gameEl.style.display = "none";
+          summaryEl.style.display = "flex";
+
+          for (const m of zombieMarkers.values()) map.removeLayer(m);
+          for (const m of powerupMarkers.values()) map.removeLayer(m);
+          zombieMarkers.clear();
+          powerupMarkers.clear();
+          if (map) {
+            map.remove();
+            map = null;
+          }
+        }
+
+        endBtn.addEventListener("click", () => endRun("stopped"));
+        backBtn.addEventListener("click", () => {
+          summaryEl.style.display = "none";
+          landing.style.display = "flex";
+          renderTodayStat();
+        });
+
+        // ---------- Position handling ----------
+        function onPosition(pos) {
+          const fix = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+          const accuracy = pos.coords.accuracy || 999;
+          const now = performance.now();
+          const dt = (now - lastFixTime) / 1000;
+
+          if (playerPos) {
+            const d = haversine(playerPos, fix);
+            const impliedSpeed = dt > 0 ? d / dt : 0;
+            if (accuracy <= 30 && impliedSpeed <= 8 && d >= 1) {
+              distance += d;
+              heading = bearing(playerPos, fix);
+              recentSpeeds.push(impliedSpeed);
+              if (recentSpeeds.length > 5) recentSpeeds.shift();
+            }
+          }
+
+          playerPos = fix;
+          lastFixTime = now;
+
+          if (playerMarker) playerMarker.setLatLng([fix.lat, fix.lng]);
+          if (map) map.panTo([fix.lat, fix.lng], { animate: true });
+
+          checkPowerupCollection();
+          checkCatch();
+        }
+
+        function currentPaceSecPerKm() {
+          if (!recentSpeeds.length) return null;
+          const avg =
+            recentSpeeds.reduce((a, b) => a + b, 0) / recentSpeeds.length;
+          if (avg < 0.3) return null;
+          return 1000 / avg;
+        }
+
+        function fmtPace(secPerKm) {
+          if (!secPerKm || !isFinite(secPerKm)) return "--:--";
+          const m = Math.floor(secPerKm / 60);
+          const s = Math.round(secPerKm % 60);
+          return `${m}:${String(s).padStart(2, "0")}`;
+        }
+        function fmtTime(totalSec) {
+          const m = Math.floor(totalSec / 60);
+          const s = Math.round(totalSec % 60);
+          return `${m}:${String(s).padStart(2, "0")}`;
+        }
+
+        // ---------- HUD ----------
+        function updateClockHud() {
+          if (!startTime) return;
+          const elapsed = (performance.now() - startTime) / 1000;
+          hudTime.textContent = fmtTime(elapsed);
+          hudDistance.textContent = (distance / 1000).toFixed(2);
+          hudPace.textContent = fmtPace(currentPaceSecPerKm());
+        }
+
+        function updateSurvivalHud() {
+          hudZombies.textContent = zombies.length;
+          hudLives.textContent = "❤️".repeat(Math.max(0, lives)) || "💀";
+          ammoChip.textContent = `📦 ${ammo}`;
+          battery = Math.min(100, battery);
+          batteryFill.style.width = battery.toFixed(0) + "%";
+          batteryLabel.textContent = `Shove: ${battery.toFixed(0)}%`;
+          shoveBtn.disabled = battery < 100 || zombies.length === 0;
+        }
+
+        // ---------- Zombies ----------
+        function spawnZombie() {
+          const cfg = difficultyConfig();
+          if (zombies.length >= cfg.maxZombies) return;
+          const spawnBearing = Math.random() * 360;
+          const spawnDist =
+            SPAWN_MIN_DIST + Math.random() * (SPAWN_MAX_DIST - SPAWN_MIN_DIST);
+          const pos = destinationPoint(playerPos, spawnBearing, spawnDist);
+          const z = {
+            id: zombieIdSeq++,
+            pos: pos,
+            speed: cfg.speed * (0.85 + Math.random() * 0.3),
+            minDist: haversine(pos, playerPos),
+            lastGainTime: performance.now(),
+            close: false,
+          };
+          zombies.push(z);
+        }
+
+        function spawnPowerup() {
+          if (powerups.length >= MAX_POWERUPS || !playerPos) return;
+          const b =
+            heading + (Math.random() * 70 - 35); // roughly ahead of travel
+          const dist =
+            POWERUP_MIN_DIST +
+            Math.random() * (POWERUP_MAX_DIST - POWERUP_MIN_DIST);
+          const pos = destinationPoint(playerPos, b, dist);
+          const type = Math.random() < 0.5 ? "ammo" : "slow";
+          powerups.push({ id: powerupIdSeq++, pos: pos, type: type });
+        }
+
+        let slowUntil = 0;
+
+        function gameTick() {
+          if (!running || !playerPos) return;
+
+          if (mode === "survival") {
+            battery = Math.min(
+              100,
+              battery
+            );
+
+            const cfg = difficultyConfig();
+            const nowMs = performance.now();
+
+            if (
+              nowMs - lastSpawnTime > cfg.spawnIntervalSec * 1000 ||
+              (zombies.length === 0 && nowMs - startTime > 8000)
+            ) {
+              spawnZombie();
+              lastSpawnTime = nowMs;
+            }
+            if (nowMs - lastPowerupTime > POWERUP_INTERVAL_SEC * 1000) {
+              spawnPowerup();
+              lastPowerupTime = nowMs;
+            }
+
+            const speedMul = nowMs < slowUntil ? 0.5 : 1;
+            const survivors = [];
+            for (const z of zombies) {
+              const d = haversine(z.pos, playerPos);
+              if (d < z.minDist - 2) {
+                z.minDist = d;
+                z.lastGainTime = nowMs;
+              }
+              const stale = nowMs - z.lastGainTime > cfg.giveUpSec * 1000;
+              if (stale && d > z.minDist + 15) {
+                continue; // lost your scent, despawn
+              }
+              const b = bearing(z.pos, playerPos);
+              const step = z.speed * speedMul * 1; // 1s tick
+              z.pos =
+                step >= d ? { ...playerPos } : destinationPoint(z.pos, b, step);
+              z.close = d < CLOSE_RANGE;
+              survivors.push(z);
+            }
+            zombies = survivors;
+
+            renderZombies();
+            renderPowerups();
+            updateSurvivalHud();
+          }
+        }
+
+        function renderZombies() {
+          const seen = new Set();
+          for (const z of zombies) {
+            seen.add(z.id);
+            const m = markerFor(zombieMarkers, z.id, "nc-zombie", "🧟");
+            m.setLatLng([z.pos.lat, z.pos.lng]);
+            const el = m.getElement();
+            if (el) {
+              const inner = el.querySelector(".nc-icon");
+              if (inner) {
+                inner.classList.toggle("close", z.close);
+                inner.textContent = z.close ? "💀" : "🧟";
+              }
+            }
+            m.off("click");
+            if (z.close) {
+              m.on("click", () => shootZombie(z.id));
+            }
+          }
+          for (const [id, m] of zombieMarkers) {
+            if (!seen.has(id)) {
+              map.removeLayer(m);
+              zombieMarkers.delete(id);
+            }
+          }
+        }
+
+        function renderPowerups() {
+          const seen = new Set();
+          for (const p of powerups) {
+            seen.add(p.id);
+            const emoji = p.type === "ammo" ? "📦" : "⚡";
+            const m = markerFor(powerupMarkers, p.id, "nc-icon", emoji);
+            m.setLatLng([p.pos.lat, p.pos.lng]);
+          }
+          for (const [id, m] of powerupMarkers) {
+            if (!seen.has(id)) {
+              map.removeLayer(m);
+              powerupMarkers.delete(id);
+            }
+          }
+        }
+
+        function shootZombie(id) {
+          if (ammo <= 0) {
+            showToast("No ammo! Grab a 📦 crate.");
+            return;
+          }
+          const idx = zombies.findIndex((z) => z.id === id);
+          if (idx === -1) return;
+          const z = zombies[idx];
+          const d = haversine(z.pos, playerPos);
+          if (d >= CLOSE_RANGE) return;
+          zombies.splice(idx, 1);
+          ammo -= 1;
+          zombiesShot += 1;
+          shootSound();
+          showToast("Zombie down!");
+          track("zombie_shot", { zombies_shot: zombiesShot });
+          const m = zombieMarkers.get(id);
+          if (m) {
+            map.removeLayer(m);
+            zombieMarkers.delete(id);
+          }
+          updateSurvivalHud();
+        }
+
+        shoveBtn.addEventListener("click", () => {
+          if (battery < 100 || zombies.length === 0) return;
+          for (const z of zombies) {
+            const b = bearing(playerPos, z.pos);
+            z.pos = destinationPoint(z.pos, b, 60);
+            z.minDist = Math.max(z.minDist, haversine(z.pos, playerPos));
+            z.lastGainTime = performance.now();
+          }
+          battery = 0;
+          shoveSound();
+          showToast("Shoved the horde back!");
+          track("shove_used", { zombies_affected: zombies.length });
+          renderZombies();
+          updateSurvivalHud();
+        });
+
+        function checkPowerupCollection() {
+          if (!playerPos || !powerups.length) return;
+          const remaining = [];
+          for (const p of powerups) {
+            const d = haversine(p.pos, playerPos);
+            if (d < COLLECT_RANGE) {
+              if (p.type === "ammo") {
+                ammo += 3;
+                showToast("+3 ammo");
+              } else {
+                slowUntil = performance.now() + 20000;
+                showToast("Zombies slowed!");
+              }
+              pickupSound();
+              track("powerup_collected", { type: p.type });
+              const m = powerupMarkers.get(p.id);
+              if (m) {
+                map.removeLayer(m);
+                powerupMarkers.delete(p.id);
+              }
+            } else {
+              remaining.push(p);
+            }
+          }
+          powerups = remaining;
+          updateSurvivalHud();
+        }
+
+        function checkCatch() {
+          if (mode !== "survival" || !playerPos) return;
+          for (const z of zombies) {
+            const d = haversine(z.pos, playerPos);
+            if (d < CATCH_RANGE) {
+              lives -= 1;
+              biteSound();
+              biteFlashEl.classList.add("show");
+              setTimeout(() => biteFlashEl.classList.remove("show"), 250);
+              track("zombie_caught", { lives_left: lives });
+              const b = bearing(playerPos, z.pos);
+              z.pos = destinationPoint(z.pos, b, 40);
+              z.minDist = haversine(z.pos, playerPos);
+              z.lastGainTime = performance.now();
+              if (lives <= 0) {
+                endRun("caught");
+                return;
+              }
+              updateSurvivalHud();
+              break;
+            }
+          }
+        }
+
+        // Battery charges with distance covered while running (survival only)
+        const _origOnPosition = onPosition;
+        onPosition = function (pos) {
+          const before = distance;
+          _origOnPosition(pos);
+          if (mode === "survival") {
+            const gained = distance - before;
+            if (gained > 0) battery += gained * BATTERY_PER_METER;
+          }
+        };
+      })();
+    </script>
+  </body>
+</html>
