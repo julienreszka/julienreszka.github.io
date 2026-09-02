@@ -472,6 +472,27 @@
         letter-spacing: 0.5px;
         margin-top: 0.2rem;
       }
+      .summary-grid div.new-record {
+        background: rgba(250, 204, 21, 0.12);
+        box-shadow: inset 0 0 0 1px rgba(250, 204, 21, 0.45);
+      }
+      .summary-grid div.new-record .v {
+        color: #facc15;
+      }
+      .record-tag {
+        display: block;
+        font-size: 0.6rem;
+        font-weight: 800;
+        color: #facc15;
+        margin-top: 0.15rem;
+        letter-spacing: 0.3px;
+      }
+      .best-stat {
+        font-size: 0.85rem;
+        color: var(--text-soft);
+        margin-top: -0.4rem;
+        margin-bottom: 1rem;
+      }
 
       /* Leaflet marker tweaks */
       .nc-icon {
@@ -540,6 +561,7 @@
           </div>
 
           <div class="today-stat" id="todayStat">0.0 km run today</div>
+          <div class="best-stat" id="bestStat"></div>
 
           <button class="primary" id="startBtn">Enable Location &amp; Start</button>
         </div>
@@ -634,10 +656,10 @@
         <h2 id="summaryTitle">Run complete</h2>
         <p class="note" id="summarySub" style="color: #93a2b8"></p>
         <div class="summary-grid">
-          <div><div class="v" id="sumDistance">0.0 km</div><div class="l">Distance</div></div>
-          <div><div class="v" id="sumTime">0:00</div><div class="l">Time</div></div>
+          <div id="statDistance"><div class="v" id="sumDistance">0.0 km</div><div class="l">Distance</div></div>
+          <div id="statTime"><div class="v" id="sumTime">0:00</div><div class="l">Time</div></div>
           <div><div class="v" id="sumPace">--:--</div><div class="l">Avg pace</div></div>
-          <div><div class="v" id="sumZombies">0</div><div class="l">Zombies shot</div></div>
+          <div id="statZombies"><div class="v" id="sumZombies">0</div><div class="l">Zombies shot</div></div>
         </div>
         <button class="primary" id="backBtn">Back</button>
       </div>
@@ -752,6 +774,7 @@
         const paceMinInput = document.getElementById("paceMin");
         const paceSecInput = document.getElementById("paceSec");
         const todayStatEl = document.getElementById("todayStat");
+        const bestStatEl = document.getElementById("bestStat");
 
         const hudDistance = document.getElementById("hudDistance");
         const hudPace = document.getElementById("hudPace");
@@ -807,6 +830,54 @@
         }
         renderTodayStat();
 
+        // ---------- Personal bests (localStorage) ----------
+        const BEST_KEYS = {
+          survival: "nightChase:bestSurvival",
+          training: "nightChase:bestTraining",
+        };
+        function loadBest(m) {
+          try {
+            const raw = localStorage.getItem(BEST_KEYS[m]);
+            return raw ? JSON.parse(raw) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+        function saveBest(m, data) {
+          try {
+            localStorage.setItem(BEST_KEYS[m], JSON.stringify(data));
+          } catch (e) {}
+        }
+        function renderBestStat() {
+          const b = loadBest(mode);
+          const parts = [];
+          if (mode === "survival") {
+            if (b.timeSec) parts.push(`\u{1F3C6} ${fmtTime(b.timeSec)} survived`);
+            if (b.zombiesShot) parts.push(`${b.zombiesShot} zombies shot`);
+            if (b.distanceM) parts.push(`${(b.distanceM / 1000).toFixed(1)} km`);
+          } else {
+            if (b.distanceM) parts.push(`\u{1F3C6} ${(b.distanceM / 1000).toFixed(1)} km`);
+            if (b.timeSec) parts.push(fmtTime(b.timeSec));
+          }
+          bestStatEl.textContent = parts.length
+            ? "Best: " + parts.join(" · ")
+            : "No runs yet — set your first record.";
+        }
+
+        // Returns which stats were just improved, and persists the new bests.
+        function updateBests(m, stats) {
+          const b = loadBest(m);
+          const broke = {};
+          for (const key of Object.keys(stats)) {
+            if (stats[key] > (b[key] || 0)) {
+              b[key] = stats[key];
+              broke[key] = true;
+            }
+          }
+          saveBest(m, b);
+          return broke;
+        }
+
         // ---------- Mode selection ----------
         let mode = "survival";
         modeSurvival.addEventListener("click", () => setMode("survival"));
@@ -816,7 +887,9 @@
           modeSurvival.classList.toggle("active", m === "survival");
           modeTraining.classList.toggle("active", m === "training");
           paceRow.classList.toggle("show", m === "training");
+          renderBestStat();
         }
+        renderBestStat();
 
         function showError(msg) {
           errorBox.textContent = msg;
@@ -1063,6 +1136,18 @@
           const km = distance / 1000;
           const paceSecPerKm = km > 0.05 ? elapsedSec / km : null;
 
+          const bestStats =
+            mode === "survival"
+              ? { timeSec: elapsedSec, zombiesShot: zombiesShot, distanceM: distance }
+              : { timeSec: elapsedSec, distanceM: distance };
+          const broke = updateBests(mode, bestStats);
+          if (Object.keys(broke).length) {
+            track("new_personal_best", {
+              mode: mode,
+              stats: Object.keys(broke).join(","),
+            });
+          }
+
           track("run_end", {
             mode: mode,
             reason: reason,
@@ -1086,6 +1171,10 @@
             : "--:--";
           document.getElementById("sumZombies").textContent = zombiesShot;
 
+          setStatRecord("statDistance", broke.distanceM);
+          setStatRecord("statTime", broke.timeSec);
+          setStatRecord("statZombies", broke.zombiesShot);
+
           gameEl.style.display = "none";
           summaryEl.style.display = "flex";
 
@@ -1099,11 +1188,28 @@
           }
         }
 
+        function setStatRecord(elId, isNew) {
+          const el = document.getElementById(elId);
+          el.classList.toggle("new-record", !!isNew);
+          let tag = el.querySelector(".record-tag");
+          if (isNew) {
+            if (!tag) {
+              tag = document.createElement("span");
+              tag.className = "record-tag";
+              tag.textContent = "\u{1F3C6} New record";
+              el.appendChild(tag);
+            }
+          } else if (tag) {
+            tag.remove();
+          }
+        }
+
         endBtn.addEventListener("click", () => endRun("stopped"));
         backBtn.addEventListener("click", () => {
           summaryEl.style.display = "none";
           landing.style.display = "flex";
           renderTodayStat();
+          renderBestStat();
         });
 
         // ---------- Position handling ----------
