@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Multi Mediq: generator ogłoszeń</title>
+    <style>
+      @font-face { font-family: "Plus Jakarta Sans"; font-weight: 700; font-display: swap; src: url(fonts/plus-jakarta-sans-latin-700-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+      @font-face { font-family: "Plus Jakarta Sans"; font-weight: 700; font-display: swap; src: url(fonts/plus-jakarta-sans-latin-ext-700-normal.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+      @font-face { font-family: "Plus Jakarta Sans"; font-weight: 800; font-display: swap; src: url(fonts/plus-jakarta-sans-latin-800-normal.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+      @font-face { font-family: "Plus Jakarta Sans"; font-weight: 800; font-display: swap; src: url(fonts/plus-jakarta-sans-latin-ext-800-normal.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+      @font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url(fonts/Inter-500.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+      @font-face { font-family: "Inter"; font-weight: 500; font-display: swap; src: url(fonts/inter-latin-ext-500-normal.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+      @font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url(fonts/Inter-600.woff2) format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212, U+2215; }
+      @font-face { font-family: "Inter"; font-weight: 600; font-display: swap; src: url(fonts/inter-latin-ext-600-normal.woff2) format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20AB, U+20AD-20C0, U+2113; }
+
+      :root { --navy: #1e3a5f; --teal: #1ba6a6; --teal-d: #14807f; --grey: #f3f5f8; --muted: #6a7c93; --line: #dce2ea; --white: #ffffff; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; }
+      body { background: var(--grey); color: var(--navy); font-family: Inter, system-ui, sans-serif; font-weight: 500; font-size: 16px; line-height: 1.45; }
+      header { background: var(--navy); color: #fff; padding: 18px 16px; }
+      header .in, main { max-width: 1240px; margin: 0 auto; }
+      header .in { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+      header img { height: 40px; width: auto; display: block; }
+      header h1 { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: 22px; letter-spacing: -0.02em; margin: 0; }
+      main { padding: 20px 16px 48px; display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 24px; align-items: start; }
+      @media (max-width: 900px) { main { grid-template-columns: minmax(0, 1fr); } }
+      .card { background: var(--white); border: 1px solid #edf0f4; border-radius: 20px; box-shadow: 0 10px 28px rgba(30, 58, 95, 0.08); padding: 20px; }
+      h2 { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 800; font-size: 19px; letter-spacing: -0.02em; margin: 0 0 14px; }
+      label { display: block; font-weight: 600; font-size: 14px; color: var(--muted); margin: 14px 0 6px; }
+      input[type="text"], input[type="date"], select, textarea { width: 100%; min-width: 0; font: inherit; color: var(--navy); background: #fff; border: 2px solid var(--line); border-radius: 12px; padding: 11px 12px; }
+      input:focus, select:focus, textarea:focus, button:focus-visible { outline: 3px solid rgba(27, 166, 166, 0.35); outline-offset: 1px; border-color: var(--teal); }
+      .rows { display: grid; gap: 10px; }
+      .row { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 44px; gap: 8px; }
+      .hint { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
+      button { font: inherit; font-weight: 600; cursor: pointer; border-radius: 12px; border: 2px solid var(--line); background: #fff; color: var(--navy); padding: 10px 14px; }
+      button.primary { background: var(--teal-d); border-color: var(--teal-d); color: #fff; }
+      button.primary:hover { background: #0f6d6c; }
+      button.x { padding: 0; font-size: 20px; line-height: 1; color: var(--muted); }
+      .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+      .previews { display: grid; gap: 20px; }
+      .pair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.76fr); gap: 20px; align-items: start; }
+      @media (max-width: 620px) { .pair { grid-template-columns: minmax(0, 1fr); } }
+      .shot h3 { font-family: "Plus Jakarta Sans", sans-serif; font-weight: 700; font-size: 16px; margin: 0; }
+      .shot .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
+      .shot small { color: var(--muted); font-weight: 500; }
+      canvas { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--grey); }
+      textarea { min-height: 190px; resize: vertical; line-height: 1.5; }
+      #copied { color: var(--teal-d); font-weight: 600; font-size: 14px; align-self: center; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="in">
+        <img src="logo-white.png" alt="Multi Mediq" />
+        <h1>Generator ogłoszeń o terminach</h1>
+      </div>
+    </header>
+    <main>
+      <section class="card" aria-label="Dane ogłoszenia">
+        <h2>Dane ogłoszenia</h2>
+        <label for="spec">Specjalizacja</label>
+        <select id="spec"></select>
+        <label for="title">Tytuł na grafice</label>
+        <input id="title" type="text" autocomplete="off" />
+        <label for="name">Imię i nazwisko</label>
+        <input id="name" type="text" autocomplete="off" placeholder="np. Paulina Wawrzyniak" />
+        <label for="kicker">Nagłówek</label>
+        <input id="kicker" type="text" autocomplete="off" />
+        <label>Terminy (data i wolne godziny)</label>
+        <div class="rows" id="rows"></div>
+        <p class="hint">Godziny oddziel przecinkami, np. 10:30, 11:30. Najwyżej 5 terminów.</p>
+        <div class="actions"><button type="button" id="add">+ Dodaj termin</button></div>
+        <label for="photo">Własne zdjęcie (opcjonalnie)</label>
+        <input id="photo" type="file" accept="image/*" />
+        <p class="hint">Tylko zdjęcia, do których gabinet ma prawa. Zdjęcie nie jest nigdzie wysyłane.</p>
+        <div class="actions"><button type="button" id="nophoto" hidden>Usuń zdjęcie</button></div>
+      </section>
+
+      <section class="previews" aria-label="Grafiki">
+        <div class="pair">
+          <div class="card shot">
+            <div class="top"><h3>Post <small>1080 × 1350</small></h3><button type="button" class="primary" data-dl="post">Pobierz PNG</button></div>
+            <canvas id="c-post" width="1080" height="1350"></canvas>
+          </div>
+          <div class="card shot">
+            <div class="top"><h3>Relacja <small>1080 × 1920</small></h3><button type="button" class="primary" data-dl="story">Pobierz PNG</button></div>
+            <canvas id="c-story" width="1080" height="1920"></canvas>
+          </div>
+        </div>
+        <div class="card shot">
+          <div class="top"><h3>Ekran w poczekalni <small>1920 × 1080</small></h3><button type="button" class="primary" data-dl="screen">Pobierz PNG</button></div>
+          <canvas id="c-screen" width="1920" height="1080"></canvas>
+        </div>
+        <div class="card">
+          <h2>Tekst posta</h2>
+          <textarea id="caption" readonly aria-label="Tekst posta"></textarea>
+          <div class="actions"><button type="button" class="primary" id="copy">Kopiuj tekst</button><span id="copied" role="status"></span></div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      "use strict";
+      // The look of the Multi Mediq films: navy and teal on pale grey, white cards, Plus Jakarta Sans and Inter.
+      const K = { WHITE: "#FFFFFF", GREY: "#F3F5F8", NAVY: "#1E3A5F", TEAL: "#1BA6A6", TEAL_L: "#3CC9C5", MUTED: "#6A7C93", GHOST: "#C6CFDB" };
+      const HEAD = '"Plus Jakarta Sans", sans-serif';
+      const TEXT = "Inter, sans-serif";
+      const PHONE = "662 518 713";
+      const ADDRESS = "ul. Św. Idziego 40, Mikorzyn";
+      const navy = (a) => `rgba(30,58,95,${a})`;
+      const teal = (a) => `rgba(27,166,166,${a})`;
+
+      // Line icons on a 24 × 24 grid (Lucide, ISC licence; "vessel" and "skin" are the films' own).
+      const ICONS = {
+        "heart-pulse": ["M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5", "M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27"],
+        bone: ["M17 10c.7-.7 1.69 0 2.5 0a2.5 2.5 0 1 0 0-5 .5.5 0 0 1-.5-.5 2.5 2.5 0 1 0-5 0c0 .81.7 1.8 0 2.5l-7 7c-.7.7-1.69 0-2.5 0a2.5 2.5 0 0 0 0 5c.28 0 .5.22.5.5a2.5 2.5 0 1 0 5 0c0-.81-.7-1.8 0-2.5Z"],
+        brain: ["M12 18V5", "M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4", "M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5", "M17.997 5.125a4 4 0 0 1 2.526 5.77", "M18 18a4 4 0 0 0 2-7.464", "M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517", "M6 18a4 4 0 0 1-2-7.464", "M6.003 5.125a4 4 0 0 0-2.526 5.77"],
+        venus: ["M12 15v7", "M9 19h6", [12, 9, 6]],
+        ear: ["M6 8.5a6.5 6.5 0 1 1 13 0c0 6-6 6-6 10a3.5 3.5 0 1 1-7 0", "M15 8.5a2.5 2.5 0 0 0-5 0v1a2 2 0 1 1 0 4"],
+        droplet: ["M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5C6 11.1 5 13 5 15a7 7 0 0 0 7 7z"],
+        eye: ["M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0", [12, 12, 3]],
+        "message-circle": ["M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719"],
+        "person-standing": [[12, 5, 1], "m9 20 3-6 3 6", "m6 8 6 2 6-2", "M12 10v4"],
+        phone: ["M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384"],
+        "scan-line": ["M3 7V5a2 2 0 0 1 2-2h2", "M17 3h2a2 2 0 0 1 2 2v2", "M21 17v2a2 2 0 0 1-2 2h-2", "M7 21H5a2 2 0 0 1-2-2v-2", "M7 12h10"],
+        stethoscope: ["M11 2v2", "M5 2v2", "M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1", "M8 15a6 6 0 0 0 12 0v-3", [20, 10, 2]],
+        vessel: ["M8 21.5v-6c0-3.5-5-4.5-5-9.5V2.5", "M8 15.5c0-3.5 5-4.5 5-9.5V2.5", "M5 9.5C5 8 8 7 8 4.5V2.5", "M18.5 12.5c1.7 2.3 3 3.8 3 5.7a3 3 0 0 1-6 0c0-1.9 1.3-3.4 3-5.7z"],
+        skin: ["M3 7.5V19.5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7.5", "M3 7.5c1.5-.9 3-.9 4.5 0s3 .9 4.5 0 3-.9 4.5 0 3 .9 4.5 0", "M3 12.5c1.5-1.7 3-1.7 4.5 0s3 1.7 4.5 0 3-1.7 4.5 0 3 1.7 4.5 0", "M17.5 2c-.9 4-2 8.5-2.5 12.5", [14.7, 16.5, 1.7]],
+      };
+      // The practices of the clinic, as the title a person carries. `letter`: where no icon fits, as in the films.
+      const SPECS = [
+        { t: "Kardiolog", icon: "heart-pulse" }, { t: "Ortopeda", icon: "bone" }, { t: "Neurolog", icon: "brain" },
+        { t: "Ginekolog", icon: "venus" }, { t: "Urolog", letter: "U" }, { t: "Laryngolog", icon: "ear" },
+        { t: "Endokrynolog", letter: "E" }, { t: "Diabetolog", icon: "droplet" }, { t: "Dermatolog", icon: "skin" },
+        { t: "Okulista", icon: "eye" }, { t: "Reumatolog", letter: "R" }, { t: "Angiolog", letter: "A" },
+        { t: "Chirurg ogólny", letter: "C" }, { t: "Chirurg naczyniowy", icon: "vessel" }, { t: "Psycholog", icon: "message-circle" },
+        { t: "Fizjoterapeuta", icon: "person-standing" }, { t: "Badanie USG", icon: "scan-line" }, { t: "Inna specjalizacja", icon: "stethoscope", custom: true },
+      ];
+      const DAYS = ["niedziela", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota"];
+      const MAX_ROWS = 5;
+
+      // ── State ─────────────────────────────────────────────────────────────
+      const $ = (id) => document.getElementById(id);
+      const tomorrow = () => { const d = new Date(Date.now() + 864e5); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+      let state = { spec: 15, title: SPECS[15].t, name: "", kicker: "Dostępne terminy wizyt", rows: [{ date: tomorrow(), hours: "10:30, 11:30" }] };
+      try {
+        const saved = JSON.parse(localStorage.getItem("mm-ogloszenie") || "null");
+        if (saved && Array.isArray(saved.rows) && SPECS[saved.spec]) state = { ...state, ...saved, rows: saved.rows.slice(0, MAX_ROWS) };
+      } catch (e) { /* storage is a convenience only */ }
+      const save = () => { try { localStorage.setItem("mm-ogloszenie", JSON.stringify(state)); } catch (e) { /* same */ } };
+      let photo = null; // never stored: it stays in this tab
+      const logos = { white: new Image(), grey: new Image() };
+      logos.white.src = "logo-white.png";
+      logos.grey.src = "logo-grey.png";
+
+      // ── What the form says, made ready to draw ────────────────────────────
+      const fmtDate = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m ? `${Number(m[3])}.${m[2]}` : ""; };
+      const weekday = (iso) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || ""); return m ? DAYS[new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])).getDay()] : ""; };
+      // "18.30" and "18" are written the films' way: "18:30", "18:00".
+      const hours = (s) => (s || "").split(/[,;\s]+/).filter(Boolean).map((t) => (/^\d{1,2}$/.test(t) ? `${t}:00` : t.replace(/(\d)\.(\d{2})/g, "$1:$2")));
+      const model = () => ({
+        spec: SPECS[state.spec],
+        title: state.title.trim() || SPECS[state.spec].t,
+        name: state.name.trim(),
+        kicker: state.kicker.trim(),
+        rows: state.rows.map((r) => ({ date: fmtDate(r.date), day: weekday(r.date), hours: hours(r.hours) })).filter((r) => r.date || r.hours.length),
+      });
+      const caption = (m) => {
+        const lines = [[m.title, m.name].filter(Boolean).join(" ")];
+        if (m.rows.length) {
+          lines.push("", `${m.kicker || "Dostępne terminy wizyt"}:`);
+          for (const r of m.rows) lines.push(`• ${[r.date && `${r.date}${r.day ? ` (${r.day})` : ""}`, r.hours.length ? `godz. ${r.hours.join(", ")}` : ""].filter(Boolean).join(", ")}`);
+        }
+        lines.push("", `Rejestracja wizyt: tel. ${PHONE}`, `Specjalistyczne Gabinety Lekarskie Multi Mediq, ${ADDRESS}`);
+        return lines.join("\n");
+      };
+
+      // ── Drawing helpers ───────────────────────────────────────────────────
+      const font = (ctx, weight, size, family) => {
+        ctx.font = `${weight} ${size}px ${family}`;
+        if ("letterSpacing" in ctx) ctx.letterSpacing = family === HEAD ? `${(-0.02 * size).toFixed(2)}px` : "0px";
+      };
+      const width = (ctx, t) => ctx.measureText(t).width;
+      const fit = (ctx, t, weight, family, max, min, maxW) => {
+        for (let s = max; s > min; s -= 1) { font(ctx, weight, s, family); if (width(ctx, t) <= maxW) return s; }
+        return min;
+      };
+      const wrap = (ctx, t, maxW) => {
+        const out = [];
+        let line = "";
+        for (const w of t.split(/\s+/).filter(Boolean)) {
+          const next = line ? `${line} ${w}` : w;
+          if (line && width(ctx, next) > maxW) { out.push(line); line = w; } else line = next;
+        }
+        if (line) out.push(line);
+        return out;
+      };
+      // One line if it fits at `keep` of the size or more; otherwise two lines, as large as they go.
+      const linesFit = (ctx, t, weight, max, maxW, keep) => {
+        const one = fit(ctx, t, weight, HEAD, max, Math.round(max * keep), maxW);
+        font(ctx, weight, one, HEAD);
+        if (width(ctx, t) <= maxW) return { size: one, lines: [t] };
+        for (let s = max; s > 24; s -= 1) { font(ctx, weight, s, HEAD); const l = wrap(ctx, t, maxW); if (l.length <= 2 && l.every((x) => width(ctx, x) <= maxW)) return { size: s, lines: l }; }
+        font(ctx, weight, 24, HEAD);
+        return { size: 24, lines: wrap(ctx, t, maxW).slice(0, 2) };
+      };
+      const rrect = (ctx, x, y, w, h, r) => {
+        const q = Math.min(r, w / 2, h / 2);
+        ctx.beginPath();
+        ctx.moveTo(x + q, y);
+        ctx.arcTo(x + w, y, x + w, y + h, q);
+        ctx.arcTo(x + w, y + h, x, y + h, q);
+        ctx.arcTo(x, y + h, x, y, q);
+        ctx.arcTo(x, y, x + w, y, q);
+        ctx.closePath();
+      };
+      const icon = (ctx, name, x, y, size, color, sw) => {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(size / 24, size / 24);
+        ctx.strokeStyle = color;
+        ctx.lineWidth = sw;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        for (const p of ICONS[name]) {
+          if (typeof p === "string") ctx.stroke(new Path2D(p));
+          else { ctx.beginPath(); ctx.arc(p[0], p[1], p[2], 0, Math.PI * 2); ctx.stroke(); }
+        }
+        ctx.restore();
+      };
+      const badge = (ctx, spec, x, y, d) => {
+        ctx.fillStyle = K.TEAL;
+        ctx.beginPath();
+        ctx.arc(x + d / 2, y + d / 2, d / 2, 0, Math.PI * 2);
+        ctx.fill();
+        if (spec.icon) icon(ctx, spec.icon, x + d * 0.24, y + d * 0.24, d * 0.52, K.WHITE, 1.9);
+        else { font(ctx, 700, d * 0.5, HEAD); ctx.fillStyle = K.WHITE; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(spec.letter, x + d / 2, y + d / 2 + d * 0.02); ctx.textAlign = "left"; }
+      };
+      const cover = (ctx, img, x, y, w, h) => {
+        const s = Math.max(w / img.naturalWidth, h / img.naturalHeight);
+        const iw = img.naturalWidth * s, ih = img.naturalHeight * s;
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(x, y, w, h);
+        ctx.clip();
+        ctx.drawImage(img, x + (w - iw) / 2, y + (h - ih) * 0.35, iw, ih);
+        const g = ctx.createLinearGradient(0, y, 0, y + h);
+        g.addColorStop(0, navy(0.66));
+        g.addColorStop(1, navy(0.86));
+        ctx.fillStyle = g;
+        ctx.fillRect(x, y, w, h);
+        ctx.restore();
+      };
+      const logo = (ctx, dark, x, y, w) => {
+        const img = dark ? logos.white : logos.grey;
+        if (img.complete && img.naturalWidth) ctx.drawImage(img, x, y, w, Math.round((w * 276) / 900));
+      };
+
+      // The practice, the title and the name. Returns its height; `draw` false only measures.
+      // `column`: the badge stands above the words (the wide frame); otherwise beside them.
+      const head = (ctx, m, x, y, w, dark, column, draw) => {
+        const d = column ? 130 : 124;
+        const tx = column ? x : x + d + 32;
+        const tw = column ? w : w - d - 32;
+        const kSize = column ? 32 : 34;
+        const tf = linesFit(ctx, m.title, 800, 84, tw, 0.8);
+        const nf = linesFit(ctx, m.name || "Imię i nazwisko", 700, column ? 52 : 56, tw, 0.72);
+        const tH = tf.lines.length * tf.size * 1.1;
+        const wordsH = (m.kicker ? kSize * 1.3 + 10 : 0) + tH + 14 + nf.lines.length * nf.size * 1.15;
+        const H = column ? d + 40 + wordsH : Math.max(d, wordsH);
+        if (!draw) return H;
+        badge(ctx, m.spec, x, column ? y : y + (H - d) / 2, d);
+        let cy = column ? y + d + 40 : y + (H - wordsH) / 2;
+        ctx.textAlign = "left";
+        ctx.textBaseline = "middle";
+        if (m.kicker) {
+          font(ctx, 600, kSize, TEXT);
+          ctx.fillStyle = dark ? K.TEAL_L : K.MUTED;
+          ctx.fillText(m.kicker, tx, cy + kSize * 0.65, tw);
+          cy += kSize * 1.3 + 10;
+        }
+        font(ctx, 800, tf.size, HEAD);
+        ctx.fillStyle = dark ? K.WHITE : K.NAVY;
+        for (const l of tf.lines) { ctx.fillText(l, tx, cy + tf.size * 0.55); cy += tf.size * 1.1; }
+        cy += 14;
+        font(ctx, 700, nf.size, HEAD);
+        ctx.fillStyle = m.name ? (dark ? "rgba(255,255,255,0.92)" : K.NAVY) : dark ? "rgba(255,255,255,0.35)" : K.GHOST;
+        for (const l of nf.lines) { ctx.fillText(l, tx, cy + nf.size * 0.575); cy += nf.size * 1.15; }
+        return H;
+      };
+
+      // The hours of one date as pills, set from the right; one line, or two when one would be too small.
+      const pills = (ctx, tokens, maxW, maxH, base) => {
+        // two lines share the hours evenly, so the second never holds a lone one
+        const lay = (s, n) => {
+          font(ctx, 800, s, HEAD);
+          const cut = n === 1 ? tokens.length : Math.ceil(tokens.length / 2);
+          const lines = [tokens.slice(0, cut), tokens.slice(cut)].filter((l) => l.length).map((l) => l.map((t) => ({ t, w: width(ctx, t) + s * 1.24 })));
+          if (lines.some((l) => l.reduce((a, c) => a + c.w, 0) + (l.length - 1) * s * 0.32 > maxW)) return null;
+          const h = lines.length * s * 1.75 + (lines.length - 1) * s * 0.3;
+          return h <= maxH ? { s, lines, h } : null;
+        };
+        const best = (n) => { for (let s = Math.round(base); s >= 14; s -= 1) { const r = lay(s, n); if (r) return r; } return null; };
+        const one = best(1), two = tokens.length > 2 ? best(2) : null;
+        if (one && (!two || one.s >= base * 0.7 || one.s >= two.s)) return one;
+        return two || one;
+      };
+      const rowsBlock = (n, zoneH, maxH, gap) => { const h = Math.min(maxH, (zoneH - gap * (n - 1)) / Math.max(n, 1)); return { h, total: n * h + gap * (n - 1) }; };
+      const drawRows = (ctx, rows, x, y, w, h, gap) => {
+        rows.forEach((r, i) => {
+          const ry = y + i * (h + gap);
+          const rad = Math.min(36, h * 0.3);
+          ctx.save();
+          ctx.shadowColor = navy(0.12);
+          ctx.shadowBlur = 44;
+          ctx.shadowOffsetY = 18;
+          ctx.fillStyle = K.WHITE;
+          rrect(ctx, x, ry, w, h, rad);
+          ctx.fill();
+          ctx.restore();
+          ctx.save();
+          rrect(ctx, x, ry, w, h, rad);
+          ctx.clip();
+          ctx.fillStyle = K.TEAL;
+          ctx.fillRect(x, ry, 10, h);
+          ctx.restore();
+          ctx.strokeStyle = "#EDF0F4";
+          ctx.lineWidth = 2;
+          rrect(ctx, x, ry, w, h, rad);
+          ctx.stroke();
+
+          const padL = Math.min(52, 24 + h * 0.14), padR = Math.min(46, 20 + h * 0.13);
+          const cy = ry + h / 2;
+          let leftW = 0;
+          ctx.textAlign = "left";
+          ctx.textBaseline = "middle";
+          if (h >= 132) {
+            // the date above its weekday
+            const ds = Math.min(78, h * 0.36), ws = ds * 0.5, total = ds + ds * 0.14 + ws;
+            font(ctx, 800, ds, HEAD);
+            ctx.fillStyle = K.NAVY;
+            ctx.fillText(r.date, x + padL, cy - total / 2 + ds * 0.54);
+            leftW = width(ctx, r.date);
+            font(ctx, 700, ws, HEAD);
+            ctx.fillStyle = K.MUTED;
+            ctx.fillText(r.day, x + padL, cy - total / 2 + ds * 1.14 + ws * 0.54);
+            leftW = Math.max(leftW, width(ctx, r.day));
+          } else {
+            const ds = Math.min(60, h * 0.46), ws = ds * 0.56;
+            font(ctx, 800, ds, HEAD);
+            ctx.fillStyle = K.NAVY;
+            ctx.fillText(r.date, x + padL, cy + ds * 0.04);
+            leftW = width(ctx, r.date);
+            font(ctx, 700, ws, HEAD);
+            ctx.fillStyle = K.MUTED;
+            ctx.fillText(r.day, x + padL + leftW + ds * 0.3, cy + ds * 0.08);
+            leftW += ds * 0.3 + width(ctx, r.day);
+          }
+          if (!r.hours.length) return;
+          const availW = w - padL - padR - leftW - (leftW ? 36 : 0);
+          const p = pills(ctx, r.hours, availW, h - Math.max(20, h * 0.2), Math.min(60, h * 0.3));
+          if (!p) return;
+          font(ctx, 800, p.s, HEAD);
+          const ph = p.s * 1.75;
+          let py = cy - p.h / 2;
+          for (const line of p.lines) {
+            let px = x + w - padR - (line.reduce((a, c) => a + c.w, 0) + (line.length - 1) * p.s * 0.32);
+            for (const c of line) {
+              ctx.fillStyle = teal(0.13);
+              rrect(ctx, px, py, c.w, ph, ph / 2);
+              ctx.fill();
+              ctx.fillStyle = K.NAVY;
+              ctx.textAlign = "center";
+              ctx.fillText(c.t, px + c.w / 2, py + ph / 2 + p.s * 0.04);
+              px += c.w + p.s * 0.32;
+            }
+            py += ph + p.s * 0.3;
+          }
+          ctx.textAlign = "left";
+        });
+      };
+
+      // The navy bar every image ends on: where to register. `stack`: the number under its label.
+      const bar = (ctx, x, y, w, h, stack) => {
+        ctx.save();
+        ctx.shadowColor = navy(0.22);
+        ctx.shadowBlur = 56;
+        ctx.shadowOffsetY = 26;
+        ctx.fillStyle = K.NAVY;
+        rrect(ctx, x, y, w, h, 44);
+        ctx.fill();
+        ctx.restore();
+        const label = "Rejestracja wizyt", number = `tel. ${PHONE}`;
+        ctx.textBaseline = "middle";
+        if (stack) {
+          const pad = 56, ls = 40;
+          icon(ctx, "phone", x + pad, y + h * 0.29 - ls * 0.52, ls * 1.04, K.TEAL_L, 2.2);
+          font(ctx, 600, ls, TEXT);
+          ctx.fillStyle = K.TEAL_L;
+          ctx.textAlign = "left";
+          ctx.fillText(label, x + pad + ls * 1.5, y + h * 0.29 + 2);
+          const ns = fit(ctx, number, 800, HEAD, 96, 40, w - pad * 2);
+          font(ctx, 800, ns, HEAD);
+          ctx.fillStyle = K.WHITE;
+          ctx.fillText(number, x + pad, y + h * 0.69);
+          return;
+        }
+        // side by side: both shrink together until they fit
+        let k = 1;
+        for (; k > 0.5; k -= 0.02) {
+          font(ctx, 600, 56 * k, TEXT);
+          const lw = 58 * k + 26 * k + width(ctx, label);
+          font(ctx, 800, 96 * k, HEAD);
+          if (lw + 60 + width(ctx, number) <= w - 120) break;
+        }
+        icon(ctx, "phone", x + 56, y + h / 2 - 29 * k, 58 * k, K.TEAL_L, 2.2);
+        font(ctx, 600, 56 * k, TEXT);
+        ctx.fillStyle = K.TEAL_L;
+        ctx.textAlign = "left";
+        ctx.fillText(label, x + 56 + 84 * k, y + h / 2 + 2);
+        font(ctx, 800, 96 * k, HEAD);
+        ctx.fillStyle = K.WHITE;
+        ctx.textAlign = "right";
+        ctx.fillText(number, x + w - 64, y + h / 2 + 3);
+        ctx.textAlign = "left";
+      };
+
+      // ── The three frames ──────────────────────────────────────────────────
+      // Post and story: logo, then the practice and the dates, then the bar. The story keeps clear of the
+      // top and the foot, where the app lays its own controls.
+      const drawTall = (ctx, m, W, H, story) => {
+        const M = 72, top = story ? 250 : 64, bottom = story ? 1610 : H - 72;
+        const barH = 200, barY = bottom - barH, logoW = 300, logoH = 92;
+        ctx.fillStyle = K.GREY;
+        ctx.fillRect(0, 0, W, H);
+        const hH = head(ctx, m, M, 0, W - 2 * M, false, false, false);
+        const n = m.rows.length, rowMax = n <= 2 ? 250 : 210;
+        let headY, rowsTop;
+        if (photo) {
+          headY = top + logoH + 52;
+          const photoBottom = headY + hH + 60;
+          cover(ctx, photo, 0, 0, W, photoBottom);
+          rowsTop = photoBottom + 44;
+        }
+        const zoneTop = top + logoH + 44, zoneBottom = barY - 48;
+        let rb;
+        if (photo) {
+          rb = rowsBlock(n, zoneBottom - rowsTop, rowMax, 20);
+          rowsTop += (zoneBottom - rowsTop - rb.total) / 2;
+        } else {
+          rb = rowsBlock(n, zoneBottom - zoneTop - hH - (n ? 52 : 0), rowMax, 20);
+          headY = zoneTop + (zoneBottom - zoneTop - hH - (n ? 52 + rb.total : 0)) / 2;
+          rowsTop = headY + hH + 52;
+        }
+        logo(ctx, !!photo, M, top, logoW);
+        font(ctx, 500, 28, TEXT);
+        ctx.fillStyle = photo ? "rgba(255,255,255,0.82)" : K.MUTED;
+        ctx.textAlign = "right";
+        ctx.textBaseline = "middle";
+        ctx.fillText(ADDRESS, W - M, top + logoH / 2);
+        ctx.textAlign = "left";
+        head(ctx, m, M, headY, W - 2 * M, !!photo, false, true);
+        if (n) drawRows(ctx, m.rows, M, rowsTop, W - 2 * M, rb.h, 20);
+        bar(ctx, M, barY, W - 2 * M, barH, true);
+      };
+      // The waiting-room screen: the practice on the left, the dates on the right, the bar along the foot.
+      const drawWide = (ctx, m, W, H) => {
+        ctx.fillStyle = K.GREY;
+        ctx.fillRect(0, 0, W, H);
+        const lx = photo ? 90 : 120, lw = photo ? 500 : 540;
+        if (photo) cover(ctx, photo, 0, 0, 680, H);
+        logo(ctx, !!photo, lx, 84, 280);
+        const colTop = 210, colBottom = photo ? 990 : 770;
+        const hH = head(ctx, m, lx, 0, lw, !!photo, true, false);
+        head(ctx, m, lx, colTop + Math.max(0, (colBottom - colTop - hH) / 2), lw, !!photo, true, true);
+        const n = m.rows.length, rb = rowsBlock(n, 674, 200, 28);
+        if (n) drawRows(ctx, m.rows, 730, 96 + (674 - rb.total) / 2, 1070, rb.h, 28);
+        if (photo) bar(ctx, 730, 812, 1070, 172, false);
+        else bar(ctx, 120, 812, 1680, 172, false);
+      };
+      const FRAMES = { post: (ctx, m) => drawTall(ctx, m, 1080, 1350, false), story: (ctx, m) => drawTall(ctx, m, 1080, 1920, true), screen: (ctx, m) => drawWide(ctx, m, 1920, 1080) };
+
+      const render = () => {
+        const m = model();
+        for (const k of Object.keys(FRAMES)) FRAMES[k]($(`c-${k}`).getContext("2d"), m);
+        $("caption").value = caption(m);
+      };
+
+      // ── The form ──────────────────────────────────────────────────────────
+      const changed = () => { save(); render(); };
+      const paintRows = () => {
+        const box = $("rows");
+        box.textContent = "";
+        state.rows.forEach((r, i) => {
+          const row = document.createElement("div");
+          row.className = "row";
+          const d = Object.assign(document.createElement("input"), { type: "date", value: r.date });
+          d.setAttribute("aria-label", `Data, termin ${i + 1}`);
+          d.addEventListener("input", () => { r.date = d.value; changed(); });
+          const h = Object.assign(document.createElement("input"), { type: "text", value: r.hours, placeholder: "10:30, 11:30", autocomplete: "off" });
+          h.setAttribute("aria-label", `Godziny, termin ${i + 1}`);
+          h.addEventListener("input", () => { r.hours = h.value; changed(); });
+          const x = Object.assign(document.createElement("button"), { type: "button", className: "x", textContent: "×" });
+          x.setAttribute("aria-label", `Usuń termin ${i + 1}`);
+          x.addEventListener("click", () => { state.rows.splice(i, 1); paintRows(); changed(); });
+          row.append(d, h, x);
+          box.append(row);
+        });
+        $("add").disabled = state.rows.length >= MAX_ROWS;
+      };
+      SPECS.forEach((s, i) => $("spec").append(Object.assign(document.createElement("option"), { value: String(i), textContent: s.custom ? "Inna (wpisz tytuł poniżej)" : s.t })));
+      $("spec").value = String(state.spec);
+      $("title").value = state.title;
+      $("name").value = state.name;
+      $("kicker").value = state.kicker;
+      $("spec").addEventListener("change", () => {
+        state.spec = Number($("spec").value);
+        state.title = SPECS[state.spec].custom ? "" : SPECS[state.spec].t;
+        $("title").value = state.title;
+        if (SPECS[state.spec].custom) $("title").focus();
+        changed();
+      });
+      for (const k of ["title", "name", "kicker"]) $(k).addEventListener("input", () => { state[k] = $(k).value; changed(); });
+      $("add").addEventListener("click", () => { if (state.rows.length < MAX_ROWS) { state.rows.push({ date: "", hours: "" }); paintRows(); changed(); } });
+      $("photo").addEventListener("change", () => {
+        const file = $("photo").files[0];
+        if (!file) return;
+        const img = new Image();
+        img.onload = () => { photo = img; $("nophoto").hidden = false; render(); };
+        img.src = URL.createObjectURL(file);
+      });
+      $("nophoto").addEventListener("click", () => { photo = null; $("photo").value = ""; $("nophoto").hidden = true; render(); });
+      const slug = (s) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+      document.querySelectorAll("[data-dl]").forEach((b) => b.addEventListener("click", () => {
+        const k = b.dataset.dl, m = model();
+        $(`c-${k}`).toBlob((blob) => {
+          const a = Object.assign(document.createElement("a"), { href: URL.createObjectURL(blob), download: `multi-mediq_${slug([m.title, m.name].filter(Boolean).join(" ")) || "ogloszenie"}_${{ post: "post", story: "relacja", screen: "ekran" }[k]}.png` });
+          document.body.append(a);
+          a.click();
+          a.remove();
+          setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+        }, "image/png");
+      }));
+      $("copy").addEventListener("click", async () => {
+        const t = $("caption");
+        try { await navigator.clipboard.writeText(t.value); } catch (e) { t.select(); document.execCommand("copy"); }
+        $("copied").textContent = "Skopiowano";
+        setTimeout(() => { $("copied").textContent = ""; }, 2000);
+      });
+
+      paintRows();
+      render();
+      // Draw again once the faces and the logos are in: a canvas does not repaint on its own.
+      const sample = "Aąćęłńóśźż 0123456789";
+      Promise.all(["700", "800"].map((w) => document.fonts.load(`${w} 40px "Plus Jakarta Sans"`, sample)).concat(["500", "600"].map((w) => document.fonts.load(`${w} 40px Inter`, sample)))).then(render, render);
+      for (const img of Object.values(logos)) img.addEventListener("load", render);
+    </script>
+  </body>
+</html>
