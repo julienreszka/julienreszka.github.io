@@ -33,6 +33,8 @@
       input:focus, select:focus, textarea:focus, button:focus-visible { outline: 3px solid rgba(27, 166, 166, 0.35); outline-offset: 1px; border-color: var(--teal); }
       .rows { display: grid; gap: 10px; }
       .row { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 44px; gap: 8px; }
+      /* on a phone the hours get a line of their own, so a few of them stay readable */
+      @media (max-width: 520px) { .rows { gap: 16px; } .row { grid-template-columns: minmax(0, 1fr) 44px; } .row input[type="text"] { grid-column: 1 / -1; grid-row: 2; } }
       .formtop { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
       .formtop h2 { margin: 0; }
       .hint { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
