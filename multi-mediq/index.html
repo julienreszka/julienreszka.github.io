@@ -532,9 +532,9 @@
       // the n-th day from today on which the registration is open (Sundays are skipped)
       const openDay = (n) => { const d = new Date(); for (let left = n; left > 0; ) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0) left -= 1; } return iso(d); };
       const DEMOS = [
-        { spec: 0, name: "lek. Anna Kowalska", rows: [[1, "10:30, 11:30"], [3, "16:00, 16:30, 17:00"]] },
+        { spec: 0, name: "lek. Anna Kowalska", photo: true, rows: [[1, "10:30, 11:30"], [3, "16:00, 16:30, 17:00"]] },
         { spec: 13, name: "dr n. med. Jan Nowak", rows: [[2, "10:00, 13:30"]] },
-        { spec: 15, name: "mgr Maria Wiśniewska", rows: [[1, "18:30"], [2, "9:00, 9:40, 10:20"], [4, "15:00, 15:40"], [5, "8:30, 9:10"]] },
+        { spec: 15, name: "mgr Maria Wiśniewska", photo: true, rows: [[1, "18:30"], [2, "9:00, 9:40, 10:20"], [4, "15:00, 15:40"], [5, "8:30, 9:10"]] },
       ];
       let demoAt = 0;
       $("demo").addEventListener("click", () => {
@@ -543,6 +543,11 @@
         $("spec").value = String(state.spec);
         for (const k of ["title", "name", "kicker"]) $(k).value = state[k];
         paintRows();
+        // with the clinic's own reception photo, or plain: the demos show both looks
+        $("photo").value = "";
+        photo = null;
+        $("nophoto").hidden = !d.photo;
+        if (d.photo) { const img = new Image(); img.onload = () => { if (!$("nophoto").hidden) { photo = img; render(); } }; img.src = "demo-recepcja.jpg"; }
         changed();
       });
       $("add").addEventListener("click", () => { if (state.rows.length < MAX_ROWS) { state.rows.push({ date: "", hours: "" }); paintRows(); changed(); } });
