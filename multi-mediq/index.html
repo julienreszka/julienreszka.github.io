@@ -33,6 +33,8 @@
       input:focus, select:focus, textarea:focus, button:focus-visible { outline: 3px solid rgba(27, 166, 166, 0.35); outline-offset: 1px; border-color: var(--teal); }
       .rows { display: grid; gap: 10px; }
       .row { display: grid; grid-template-columns: minmax(0, 150px) minmax(0, 1fr) 44px; gap: 8px; }
+      .formtop { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+      .formtop h2 { margin: 0; }
       .hint { font-size: 13px; color: var(--muted); margin: 6px 0 0; }
       button { font: inherit; font-weight: 600; cursor: pointer; border-radius: 12px; border: 2px solid var(--line); background: #fff; color: var(--navy); padding: 10px 14px; }
       button.primary { background: var(--teal-d); border-color: var(--teal-d); color: #fff; }
@@ -59,7 +61,7 @@
     </header>
     <main>
       <section class="card" aria-label="Dane ogłoszenia">
-        <h2>Dane ogłoszenia</h2>
+        <div class="formtop"><h2>Dane ogłoszenia</h2><button type="button" id="demo">Wczytaj demo</button></div>
         <label for="spec">Specjalizacja</label>
         <select id="spec"></select>
         <label for="title">Tytuł na grafice</label>
@@ -523,6 +525,24 @@
         changed();
       });
       for (const k of ["title", "name", "kicker"]) $(k).addEventListener("input", () => { state[k] = $(k).value; changed(); });
+      // Demo entries with made-up names, so the result can be shown at once; each press loads the next one.
+      const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+      // the n-th day from today on which the registration is open (Sundays are skipped)
+      const openDay = (n) => { const d = new Date(); for (let left = n; left > 0; ) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0) left -= 1; } return iso(d); };
+      const DEMOS = [
+        { spec: 0, name: "lek. Anna Kowalska", rows: [[1, "10:30, 11:30"], [3, "16:00, 16:30, 17:00"]] },
+        { spec: 13, name: "dr n. med. Jan Nowak", rows: [[2, "10:00, 13:30"]] },
+        { spec: 15, name: "mgr Maria Wiśniewska", rows: [[1, "18:30"], [2, "9:00, 9:40, 10:20"], [4, "15:00, 15:40"], [5, "8:30, 9:10"]] },
+      ];
+      let demoAt = 0;
+      $("demo").addEventListener("click", () => {
+        const d = DEMOS[demoAt++ % DEMOS.length];
+        state = { spec: d.spec, title: SPECS[d.spec].t, name: d.name, kicker: "Dostępne terminy wizyt", rows: d.rows.map(([n, h]) => ({ date: openDay(n), hours: h })) };
+        $("spec").value = String(state.spec);
+        for (const k of ["title", "name", "kicker"]) $(k).value = state[k];
+        paintRows();
+        changed();
+      });
       $("add").addEventListener("click", () => { if (state.rows.length < MAX_ROWS) { state.rows.push({ date: "", hours: "" }); paintRows(); changed(); } });
       $("photo").addEventListener("change", () => {
         const file = $("photo").files[0];
