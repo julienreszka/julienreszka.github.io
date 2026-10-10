@@ -50,7 +50,7 @@
       .shot .top { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 12px; }
       .shot small { color: var(--muted); font-weight: 500; }
       canvas { display: block; width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--grey); }
-      textarea { min-height: 190px; resize: vertical; line-height: 1.5; }
+      textarea { min-height: 120px; resize: none; overflow: hidden; line-height: 1.5; }
       #copied { color: var(--teal-d); font-weight: 600; font-size: 14px; align-self: center; }
     </style>
   </head>
@@ -486,10 +486,13 @@
       };
       const FRAMES = { post: (ctx, m) => drawTall(ctx, m, 1080, 1350, false), story: (ctx, m) => drawTall(ctx, m, 1080, 1920, true), screen: (ctx, m) => drawWide(ctx, m, 1920, 1080) };
 
+      // the post text is always shown whole: its box grows and shrinks with it
+      const growCaption = () => { const t = $("caption"); t.style.height = "auto"; t.style.height = `${t.scrollHeight + 4}px`; };
       const render = () => {
         const m = model();
         for (const k of Object.keys(FRAMES)) FRAMES[k]($(`c-${k}`).getContext("2d"), m);
         $("caption").value = caption(m);
+        growCaption();
       };
 
       // ── The form ──────────────────────────────────────────────────────────
@@ -583,6 +586,7 @@
       const sample = "Aąćęłńóśźż 0123456789";
       Promise.all(["700", "800"].map((w) => document.fonts.load(`${w} 40px "Plus Jakarta Sans"`, sample)).concat(["500", "600"].map((w) => document.fonts.load(`${w} 40px Inter`, sample)))).then(render, render);
       for (const img of Object.values(logos)) img.addEventListener("load", render);
+      window.addEventListener("resize", growCaption);
     </script>
   </body>
 </html>
